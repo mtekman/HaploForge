@@ -2,13 +2,13 @@
 var marker_map = {} // rsID --> index in Person.data array
 var pedigree = [];
 
-var Person = function(id, male, affected){
+var Person = function(id, gender, affected, mother, father){
 	this.id = id;
-	this.male = male; ;		// True false
+	this.gender = gender;	// 1 - male, 2-female, 0-unknown
 	this.affected = affected ; 	// 0,1,2
 
-	this.mother = 0; this.father = 0;
-	this.data = []; 		//Array of nodes
+	this.mother = mother; this.father = father;
+	this.haplo_data = []; 	//Array of alleles, each allele an array of nodes
 };
 
 var Node = function(allele){
@@ -18,13 +18,6 @@ var Node = function(allele){
 }
 
 
-var processFile = function(file){
-	"Reads the haplofile, maps the markers to array indices, and populates pedigree array with persons"
-	this.processHeaders(){;};
-	this.processIndividuals(){;};
-};
-
-
-var groupNodes = function(){
-	"Looks for the longest common substring of an allele, recursively searching up from offspring to founder"
-}
+//var groupNodes = function(){
+//	"Looks for the longest common substring of an allele, recursively searching up from offspring to founder"
+//}
