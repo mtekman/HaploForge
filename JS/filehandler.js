@@ -1,94 +1,87 @@
-//Requires LineReader to be loaded first, make sure this is the case in index.html
-
-function HaploData(file, format) {
-	//"Reads the haplofile, maps the markers to array indices, and populates pedigree array with persons"
-    var family_map = {}; // fam_id ---> pedigree map --> person
-    var marker_map = {}; // rs_id --> array index across allele data
+//"Reads the haplofile, maps the markers to array indices, and populates pedigree array with persons"
+function processInput(text_unformatted, type)
+{
+    var text = text_unformatted.split('\n');
     
-    function waitFinished(vari){
-		var sett = false;
-		
-		var timer = setInterval(function(){
-			if (vari.length > 5) {
-				clearInterval(timer);
-				callback();
-			}
-		},1000);
-		
-		return;
-	}
-    
+    var num_alleles_markers = -1;   // number of alleles and markers should match
 
-    if (format === "Allegro") {
-        
-        //For some reason parseInt wont work properly as a lambda map function.... wtf?
-        function toInt(arg){return parseInt(arg);}
-        
+    if (type === "allegro")
+    {    
         var header_lines = [],
-            start_extract = -1;
-        
-        var lr = new FileReader();
-        var text;
-//        lr.onload = function(e){
-//            text = e.target.result.split('\n');
-//        };
-        lr.onloadend = function(e){
-            text = e.target.result;
-        };
-        lr.readAsText(file);
-        
-        setTimeout(function(){alert(text);}, 1000);
-        //lr.close();
-        
-        alert(text);
+            start_extract = -1
+    
+        for (var l=0; l< text.length; l++){
+            var line = text[l];
 
-        for (var line in text){
-//            alert(line);
+            if (line.length < 5 ) continue;
             
-            if (line.substr(0,1) === " ") {
-                start_extract = line.lastIndexOf("    ") +4;
-                header_lines.push(line.slice(1,6));
-            }        
-            else
-            {
+            if (line.substr(0,1) === " ") {                             //Temp store header data
+                start_extract = line.lastIndexOf("    ") +4;            //
+                header_lines.push(line);                                //
+            }
+            
+            else                                                        //Populate family map
+            {                                                           //
                 var people_info = line.substring(0,start_extract-1).trim().split(/\s+/).map(toInt), 
                     haplo_info = line.substring(start_extract).trim().split(/\s+/).map(toInt);
-                        
-                var fam = people_info[0], 
-                    id = people_info[1],
-                    pat = people_info[2],
-                    mat = people_info[3],
-                    sex = people_info[4],
-                    affect = people_info[5];
 
-                //sanity check
-                if (!(fam in family_map))
-                    family_map[fam] = {};
-            
-                if (!(id in family_map[fam])){
-                    var pers = new Person(id, sex, affect, mat, pat);
+                var fam = people_info[0], id  = people_info[1],
+                    pat = people_info[2], mat = people_info[3],
+                    sex = people_info[4], aff = people_info[5];
+
+                if (!(fam in family_map)) family_map[fam] = {};         //sanity check...
+
+                if (!(id in family_map[fam])) {
+                    var pers = new Person(id, sex, aff, mat, pat);
                     family_map[fam][id] = pers;                    
                 }
 
-                //Retrieves twice if necc, but neater
-                family_map[fam][id].haplo_data.push( haplo_info );
-                //console.log(family_map[fam][id])
+                family_map[fam][id].haplo_data.push( haplo_info );      //retrieves twice if needed, neater
+                
+                if (num_alleles_markers === -1) 
+                    num_alleles_markers = haplo_info.length;
+                else 
+                    assert(num_alleles_markers == haplo_info.length, 
+                           "Number of alleles do not match previous records: Line "+ l+ "!");
             }
         }
-                
-        console.log(header_lines);
-//        console.log(family_map);    
+        
+        var count_markers = 0;                              //Process header lines --> Transpose matrix
+                                                            //
+        for (var col=start_extract; col < header_lines[0].length; col++){
+            var col_string = "";
+
+            for (var row=header_lines.length; row > 0 ;)
+                col_string += header_lines[--row][col];
+
+            col_string = col_string.trim();
+            
+            if (col_string!=="") marker_array.push(col_string);
+        }
+        assert(marker_array.length == num_alleles_markers, 
+               "Marker map length does not match with haplo data: "
+               + marker_array.length+" and " + num_alleles_markers);
+        
+//        console.log(family_map);
+//        console.log(marker_array);
     }
     
-    console.log(header_lines);
-    for (var l=0; l< 10; l++){
-        console.log(header_lines[l]);
-    }
+    else if (type === "Other"){}
 }
+
 
 function processFile() {
     var file = document.getElementById("file_upload").files[0],
-        type = "Allegro";
+        type = "allegro";
     
-    HaploData(file, type);
+    var lr = new FileReader();
+
+    lr.onloadend = function(e){
+        processInput(e.target.result, type);
+        connectAllIndividuals();
+        buildSimpleGraph(10,10);
+    };
+    lr.readAsText(file);
+    
+    
 }
