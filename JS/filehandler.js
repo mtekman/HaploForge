@@ -4,6 +4,20 @@ function HaploData(file, format) {
 	//"Reads the haplofile, maps the markers to array indices, and populates pedigree array with persons"
     var family_map = {}; // fam_id ---> pedigree map --> person
     var marker_map = {}; // rs_id --> array index across allele data
+    
+    function waitFinished(vari){
+		var sett = false;
+		
+		var timer = setInterval(function(){
+			if (vari.length > 5) {
+				clearInterval(timer);
+				callback();
+			}
+		},1000);
+		
+		return;
+	}
+    
 
     if (format === "Allegro") {
         
@@ -22,7 +36,9 @@ function HaploData(file, format) {
             text = e.target.result;
         };
         lr.readAsText(file);
-        lr.close();
+        
+        setTimeout(function(){alert(text);}, 1000);
+        //lr.close();
         
         alert(text);
 
