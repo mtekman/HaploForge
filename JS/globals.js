@@ -16,7 +16,8 @@ var nodeSize = 10;
 var horiz_space = 50,
     vert_space = 50;
 
-ctx.strokeStyle = 'black';
+ctx.strokeStyle = 'blue';
+ctx.font = "bold 10px Courier";
 
 var col_affs = [
     'grey',        // 0 - Unknown

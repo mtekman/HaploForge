@@ -24,18 +24,18 @@ function assert(bool, message){                     //General error handling
 // ------------ Canvas Tools --------------
 function drawSquare(c_x,c_y, color){    
     ctx.beginPath();
-    ctx.fillRect(c_x-nodeSize,c_y-nodeSize,nodeSize*2,nodeSize*2);
+    ctx.rect(c_x-nodeSize,c_y-nodeSize,nodeSize*2,nodeSize*2);
     ctx.fillStyle = color;
-    ctx.fill()
+    ctx.fill();
     ctx.stroke();
     ctx.closePath();
 }
 
 function drawCircle(c_x,c_y, color){    
     ctx.beginPath();
-    ctx.arcTo(c_x,c_y, nodeSize,0, Math.PI*2);
+    ctx.arc(c_x,c_y, nodeSize,0, Math.PI*2);
     ctx.fillStyle = color;
-    ctx.fill()
+    ctx.fill();
     ctx.stroke();
     ctx.closePath();
 }
@@ -56,6 +56,7 @@ function drawDiamond(c_x,c_y, color){
 function drawLine(s_x, s_y, e_x, e_y){
     ctx.beginPath();
     ctx.moveTo(s_x,s_y); ctx.lineTo(e_x,e_y);
+    ctx.strokeStyle = 'black';
     ctx.stroke();
     ctx.closePath();
 }
@@ -63,11 +64,11 @@ function drawLine(s_x, s_y, e_x, e_y){
     
 
 
-function drawPerson(c_x,c_y, gender, affectation)
+function drawPerson(c_x,c_y, id, gender, aff)
 {
-    function drawMale  () {  drawSquare (c_x,c_y, col_affs[affectation])   }
-    function drawFemale() {  drawCircle (c_x,c_y, col_affs[affectation])   }
-    function drawAmbig () {  drawDiamond(c_x,c_y, col_affs[affectation])   }
+    function drawMale  () {  drawSquare (c_x,c_y, col_affs[aff])   }
+    function drawFemale() {  drawCircle (c_x,c_y, col_affs[aff])   }
+    function drawAmbig () {  drawDiamond(c_x,c_y, col_affs[aff])   }
     
     switch(gender){
             case 0: drawAmbig(); break;
@@ -76,4 +77,8 @@ function drawPerson(c_x,c_y, gender, affectation)
             default:
                 assert(false, "No gender for index "+gender);
     }
+    
+    //Add Text
+    ctx.fillStyle = "black";
+    ctx.fillText(id, c_x - nodeSize/2, c_y - nodeSize - 1);   
 }

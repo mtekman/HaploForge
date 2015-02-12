@@ -79,7 +79,7 @@ function processFile() {
     lr.onloadend = function(e){
         processInput(e.target.result, type);
         connectAllIndividuals();
-        buildSimpleGraph(10,10);
+        buildSimpleGraph(100,100);
     };
     lr.readAsText(file);
     
