@@ -22,7 +22,7 @@ function assert(bool, message){                     //General error handling
 //}
 
 // ------------ Canvas Tools --------------
-function drawSquare(c_x,c_y, color){    
+function drawSquare([c_x,c_y], color){    
     ctx.beginPath();
     ctx.rect(c_x-nodeSize,c_y-nodeSize,nodeSize*2,nodeSize*2);
     ctx.fillStyle = color;
@@ -31,7 +31,7 @@ function drawSquare(c_x,c_y, color){
     ctx.closePath();
 }
 
-function drawCircle(c_x,c_y, color){    
+function drawCircle([c_x,c_y], color){    
     ctx.beginPath();
     ctx.arc(c_x,c_y, nodeSize,0, Math.PI*2);
     ctx.fillStyle = color;
@@ -40,7 +40,7 @@ function drawCircle(c_x,c_y, color){
     ctx.closePath();
 }
 
-function drawDiamond(c_x,c_y, color){
+function drawDiamond([c_x,c_y], color){
     ctx.beginPath();
     ctx.moveTo(c_x - nodeSize, c_y);
     ctx.lineTo(c_x, c_y - nodeSize);
@@ -53,7 +53,7 @@ function drawDiamond(c_x,c_y, color){
     ctx.closePath();
 }
 
-function drawLine(s_x, s_y, e_x, e_y){
+function drawLine([s_x, s_y], [e_x, e_y]){
     ctx.beginPath();
     ctx.moveTo(s_x,s_y); ctx.lineTo(e_x,e_y);
     ctx.strokeStyle = 'black';
@@ -63,12 +63,11 @@ function drawLine(s_x, s_y, e_x, e_y){
     
     
 
-
-function drawPerson(c_x,c_y, id, gender, aff)
+function drawPerson(coords, id, gender, aff)
 {
-    function drawMale  () {  drawSquare (c_x,c_y, col_affs[aff])   }
-    function drawFemale() {  drawCircle (c_x,c_y, col_affs[aff])   }
-    function drawAmbig () {  drawDiamond(c_x,c_y, col_affs[aff])   }
+    function drawMale  () {  drawSquare (coords, col_affs[aff])   }
+    function drawFemale() {  drawCircle (coords, col_affs[aff])   }
+    function drawAmbig () {  drawDiamond(coords, col_affs[aff])   }
     
     switch(gender){
             case 0: drawAmbig(); break;

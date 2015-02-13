@@ -13,6 +13,22 @@ var Person = function(id, gender, affected, mother, father){
     this.children = [] //Added by connect method later
 };
 
+Person.prototype.isMate = function(pers2){
+    for (var m=0; m < this.mates.length; m++)
+        if (pers2.id == this.mates[m].id) return true;
+    return false;
+}
+
+Person.prototype.isChild = function(pers2){
+    for (var c=0; c < this.children.length; c++)
+        if (pers2.id == this.children[c].id) return true;
+    return false;
+}
+
+Person.prototype.isFounder = function(){
+    return (this.mother === 0 && this.father === 0);
+}
+
 
 
 // Conjoined map, needed for pedigree but would recurse inifinitely for graphics

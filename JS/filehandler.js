@@ -79,7 +79,10 @@ function processFile() {
     lr.onloadend = function(e){
         processInput(e.target.result, type);
         connectAllIndividuals();
-        buildSimpleGraph(100,100);
+        populateGenerationGrid();
+//        console.log(unique_graph_objs);
+        graphInitPos();
+        drawGraph();
     };
     lr.readAsText(file);
     
