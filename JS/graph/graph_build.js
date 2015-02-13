@@ -124,6 +124,7 @@ function populateGenerationGrid() {
 
     //First root indiv
     var root = function(){for (var one in family_map) for (var two in family_map[one]) return family_map[one][two];}
+    
     //Populate gridmap
     addNodeArray(root(), 0);
     
