@@ -79,5 +79,5 @@ function drawPerson(coords, id, gender, aff)
     
     //Add Text
     ctx.fillStyle = "black";
-    ctx.fillText(id, c_x - nodeSize/2, c_y - nodeSize - 1);   
+    ctx.fillText(id, coords[0] - nodeSize/2, coords[1] - nodeSize - 1);   
 }

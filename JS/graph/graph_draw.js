@@ -3,25 +3,26 @@
 First pass -- gives unique_graph_obs initial coords based on
               generation_grid_ids ordering
 */
-function graphInitPos(){
+function graphInitPos(start_x, start_y){
     // Descending down the generations.
     // Main founders are at top
     
-    var y_pos = 0;
+    var y_pos = start_y;
     
     // Init Nodes
     for (var gen=0; gen < generation_grid_ids.length; gen++){
-        var x_pos = 0;
+        var x_pos = start_x;
         
-        for (var p=0; p < generation_grid_ids[gen]; p++)
+        for (var p=0; p < generation_grid_ids[gen].length; p++)
         {
             var pers_id = generation_grid_ids[gen][p],
                 nodepers = unique_graph_objs[pers_id];
             
             nodepers.center_pos = [x_pos, y_pos];
+            //console.log("setting "+nodepers.person.id+" to "+nodepers.center_pos);
             x_pos += horiz_space;            
         }        
-        y_pos += vert_space;
+        y_pos += vert_space+20;
     }
     
     // Init Edges
@@ -29,10 +30,7 @@ function graphInitPos(){
         var obj = unique_graph_objs[go];        
         
         if (obj instanceof Edge)
-        {
-            console.log("start");            
-            var mateline;
-            
+        {           
             switch(obj.type){
                     case 0: //Mateline
                         obj.start_pos = unique_graph_objs[obj.start_join_id].center_pos;
@@ -40,22 +38,20 @@ function graphInitPos(){
                         break;
                     
                     case 1: //ParentLine
-                         mateline = unique_graph_objs[obj.start_join_id];
-                         console.log("fin1");
-                         console.log(obj.start_join_id);
+                         var mateline = unique_graph_objs[obj.start_join_id];
                          console.log(mateline);
-                         console.log("fin2");
                          obj.start_pos = [ Math.floor(                              // center of X's
                                             (mateline.start_pos[0] + mateline.end_pos[0])/2
                                          ),  mateline.start_pos[1] ];
-                         obj.end_pos = [obj.start_pos[0], obj.start_pos[1] + vert_space];
-                         mateline = 0;
-                        
+                         obj.end_pos = [obj.start_pos[0], obj.start_pos[1] + vert_space];                       
                         break;
                     
                     case 2: //ChildLine
-                        obj.start_pos = unique_graph_objs[obj.start_join_id].end_pos;
+                        obj.start_pos = [
+							unique_graph_objs[obj.start_join_id].start_pos[0],
+							unique_graph_objs[obj.start_join_id].start_pos[1] + vert_space ]
                         obj.end_pos = unique_graph_objs[obj.end_join_id].center_pos;
+//                        console.log(obj.start_pos);
                         break;
                     
                     default:
@@ -68,7 +64,8 @@ function graphInitPos(){
 
 function drawGraph(){
     for (var go in unique_graph_objs){
-        var obj = unique_graph_objs[obj];
+        var obj = unique_graph_objs[go];
+        console.log(obj.id+" and "+go);
         
         if (obj instanceof Edge) 
             drawLine(obj.start_pos, obj.end_pos);

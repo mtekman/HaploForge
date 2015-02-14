@@ -59,6 +59,8 @@ function pairID(id1, id2) { return id1 + id2; }
                            parentline <-- childline []
                                           childline  --> Node
 */
+
+// PROB: 76211 and 76212 never get a mateline, and 21's childline is linked to the wrong peeps -- FIX
 function addTrioEdges(moth, fath, child) {
     //= Assume all indivs are != 0
     
@@ -67,28 +69,22 @@ function addTrioEdges(moth, fath, child) {
         u_childline = pairID(u_parntline, child.id);
     
     //= Edges
-    var matesline, parntline, childline;
-    
-    if (!(u_matesline in unique_graph_objs)) {
-        matesline = new Edge(u_matesline, moth.id, fath.id, 0);
-        unique_graph_objs[u_matesline] = matesline;
-    }
-    
-    if (!(u_childline in unique_graph_objs)) {
-        childline = new Edge(u_childline, u_parntline, child.id, 2);
-        unique_graph_objs[u_childline] = childline;
-    }
+    if (!(u_matesline in unique_graph_objs))
+        unique_graph_objs[u_matesline] = new Edge(u_matesline, moth.id, fath.id, 0);
 
-    if (!(u_parntline in unique_graph_objs)) {
-        parntline = new Edge(u_parntline, matesline, -1, 1); // Any parent line from a matesline will
-        unique_graph_objs[u_parntline] = parntline;          // immediately hang from it
-    }                                                        // child.ids are not given, since a NodePerson
-                                                             // will point to it.
-                                                             // The Draw function is NOT recursive, remember.
+    if (!(u_parntline in unique_graph_objs))
+        unique_graph_objs[u_parntline] = new Edge(u_parntline, u_matesline, -1, 1); 
+        // Any parent line from a matesline will immediately hang from it
+        // child.ids are not given, since a NodePerson will point to it.
+        // The Draw function is NOT recursive, remember.
+
+    if (!(u_childline in unique_graph_objs))
+        unique_graph_objs[u_childline] = new Edge(u_childline, u_parntline, child.id, 2);
+
     //= Nodes
-    unique_graph_objs[moth.id]  = new NodePerson(moth, parntline, -1);
-    unique_graph_objs[fath.id]  = new NodePerson(fath, parntline, -1);
-    unique_graph_objs[child.id] = new NodePerson(child,-1, childline);    
+    unique_graph_objs[moth.id]  = new NodePerson(moth, u_parntline, -1);
+    unique_graph_objs[fath.id]  = new NodePerson(fath, u_parntline, -1);
+    unique_graph_objs[child.id] = new NodePerson(child,-1, u_childline);    
 }
 
 function populateGenerationGrid() {

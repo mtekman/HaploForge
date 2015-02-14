@@ -81,7 +81,7 @@ function processFile() {
         connectAllIndividuals();
         populateGenerationGrid();
 //        console.log(unique_graph_objs);
-        graphInitPos();
+        graphInitPos(100,100);
         drawGraph();
     };
     lr.readAsText(file);
