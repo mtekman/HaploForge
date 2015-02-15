@@ -10,7 +10,7 @@ Steps:
    4. Populate unique edges and render after
   - Allowed edges: [0]parent-mate, [1] parent-to-parentline, [2] child-to-parentline
   - Struct: { 0: horiz line
-              1: parent_line: 
+              1: parent_line:
                       connector from center of PAR_i and PAR_j extending down vert line
                       initiated from parent on parent.children.length > 0,
               2: child_conn :
@@ -29,25 +29,25 @@ var unique_graph_objs = {},
 
 
 var NodePerson = function (pers, mateline, childline) {
-    this.person = pers;
-    
-    this.center_pos = [0, 0];
-    
-    this.mateline_id  = mateline;  //Node to mateline, -1 for child with no offspring
-    this.childline_id = childline;
+  this.person = pers;
+
+  this.center_pos = [-1, -1];
+
+  this.mateline_id  = mateline;  //Node to mateline, -1 for child with no offspring
+  this.childline_id = childline;
 };
 
 
 var Edge = function (id, from, to, type) {
-    this.start_pos = [0, 0];
-    this.end_pos = [0, 0];
+  this.start_pos = [-1, -1];
+  this.end_pos = [-1, -1];
 
-                                      // ids are arrays, average from all
-    this.start_join_id = from;       // where it starts joining from [node or edge]
-    this.end_join_id = to;          // -1 = not set
-    
-    this.type = type; // 0 - mateline, 1 - parentline, 2 - childline
-    this.id = id; //Pair ID
+  // ids are arrays, average from all
+  this.start_join_id = from;       // where it starts joining from [node or edge]
+  this.end_join_id = to;          // -1 = not set
+
+  this.type = type; // 0 - mateline, 1 - parentline, 2 - childline
+  this.id = id; //Pair ID
 };
 
 
@@ -62,71 +62,66 @@ function pairID(id1, id2) { return id1 + id2; }
 
 // PROB: 76211 and 76212 never get a mateline, and 21's childline is linked to the wrong peeps -- FIX
 function addTrioEdges(moth, fath, child) {
-    //= Assume all indivs are != 0
-    
-    var u_matesline = pairID(moth.id, fath.id),
-        u_parntline = pairID(moth.id + fath.id, child.id),
-        u_childline = pairID(u_parntline, child.id);
-    
-    //= Edges
-    if (!(u_matesline in unique_graph_objs))
-        unique_graph_objs[u_matesline] = new Edge(u_matesline, moth.id, fath.id, 0);
+  //= Assume all indivs are != 0
 
-    if (!(u_parntline in unique_graph_objs))
-        unique_graph_objs[u_parntline] = new Edge(u_parntline, u_matesline, -1, 1); 
-        // Any parent line from a matesline will immediately hang from it
-        // child.ids are not given, since a NodePerson will point to it.
-        // The Draw function is NOT recursive, remember.
+  var u_matesline = pairID(moth.id     + fath.id , 11000),
+      u_parntline = pairID(moth.id     + fath.id , 44000),
+      u_childline = pairID(u_parntline + child.id, 99000);
 
-    if (!(u_childline in unique_graph_objs))
-        unique_graph_objs[u_childline] = new Edge(u_childline, u_parntline, child.id, 2);
+  //= Edges
+  unique_graph_objs[u_matesline] = new Edge(u_matesline, moth.id, fath.id, 0);
+  unique_graph_objs[u_parntline] = new Edge(u_parntline, u_matesline, -1, 1);
+  // Any parent line from a matesline will immediately hang from it
+  // child.ids are not given, since a NodePerson will point to it.
+  // The Draw function is NOT recursive, remember.
+  unique_graph_objs[u_childline] = new Edge(u_childline, u_parntline, child.id, 2);
 
-    //= Nodes
-    unique_graph_objs[moth.id]  = new NodePerson(moth, u_parntline, -1);
-    unique_graph_objs[fath.id]  = new NodePerson(fath, u_parntline, -1);
-    unique_graph_objs[child.id] = new NodePerson(child,-1, u_childline);    
+  //= Nodes
+  unique_graph_objs[moth.id ] = new NodePerson( moth, u_parntline, -1);
+  unique_graph_objs[fath.id ] = new NodePerson( fath, u_parntline, -1);
+  unique_graph_objs[child.id] = new NodePerson(child,-1, u_childline);
 }
 
 function populateGenerationGrid() {
-    var generation_gridmap_ids = {}; // Essentially an array, but indices are given
+  var generation_gridmap_ids = {}; // Essentially an array, but indices are given
 
-    // Recur.
-    function addNodeArray(obj_pers, level){
-        if (obj_pers.id in unique_graph_objs) return;
+  // Recur.
+  function addNodeArray(obj_pers, level){
+    if (obj_pers.id in unique_graph_objs) return;
 
-        // Add current
-        unique_graph_objs[obj_pers.id] = 1; // temp place holder
-        
-        if (!(level in generation_gridmap_ids)) 
-            generation_gridmap_ids[level] = [];
-        
-        generation_gridmap_ids[level].push(obj_pers.id);
+    // Add current
+    unique_graph_objs[obj_pers.id] = 1; // temp place holder
 
-        //Parents
-        if (obj_pers.mother != 0) addNodeArray(obj_pers.mother, level - 1);
-        if (obj_pers.father != 0) addNodeArray(obj_pers.father, level - 1);
-        
-        if (obj_pers.mother != 0 && obj_pers.father != 0)
-            addTrioEdges(obj_pers.mother, obj_pers.father, obj_pers);   //Add relevant edges
+    if (!(level in generation_gridmap_ids))
+      generation_gridmap_ids[level] = [];
 
-        for (var c=0; c < obj_pers.children.length; c++)                //Childs
-            addNodeArray(obj_pers.children[c], level +1);
+    generation_gridmap_ids[level].push(obj_pers.id);
 
-        for (var m=0; m < obj_pers.mates.length; m++)                   //Mates
-            addNodeArray(obj_pers.mates[m], level);
+    //Parents
+    if (obj_pers.mother != 0) addNodeArray(obj_pers.mother, level - 1);
+    if (obj_pers.father != 0) addNodeArray(obj_pers.father, level - 1);
 
-        return;
-    }
+    if (obj_pers.mother != 0 && obj_pers.father != 0)
+      addTrioEdges(obj_pers.mother, obj_pers.father, obj_pers);     //Add relevant edges
 
-    //First root indiv
-    var root = function(){for (var one in family_map) for (var two in family_map[one]) return family_map[one][two];}
-    
-    //Populate gridmap
-    addNodeArray(root(), 0);
-    
-    //Convert gridmap into gridarray
-    var keys = [];    
-    for (var k in generation_gridmap_ids) keys.push(parseInt(k)); keys.sort();
-    for (var k=0; k < keys.length; k++)
-        generation_grid_ids.push(generation_gridmap_ids[keys[k]]);
+    for (var c=0; c < obj_pers.children.length; c++)                //Childs
+      addNodeArray(obj_pers.children[c], level +1);
+
+    for (var m=0; m < obj_pers.mates.length; m++)                   //Mates
+      addNodeArray(obj_pers.mates[m], level);
+
+    return;
+  }
+
+  //First root indiv
+  var root = function(){for (var one in family_map) for (var two in family_map[one]) return family_map[one][two];}
+
+  //Populate gridmap
+  addNodeArray(root(), 0);
+
+  //Convert gridmap into gridarray
+  var keys = [];
+  for (var k in generation_gridmap_ids) keys.push(parseInt(k)); keys.sort();
+  for (var k=0; k < keys.length; k++)
+    generation_grid_ids.push(generation_gridmap_ids[keys[k]]);
 }

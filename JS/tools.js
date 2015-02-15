@@ -1,4 +1,4 @@
-function toInt(arg){                                // For some reason parseInt wont work properly 
+function toInt(arg){                                // For some reason parseInt wont work properly
     return parseInt(arg);                           // as a lambda function arg.... wtf?
 }
 
@@ -13,7 +13,7 @@ function assert(bool, message){                     //General error handling
 //                                                    // being name of the variable being waited on
 //
 //var waitFinished = function wait(key){                   // Function to handle asynchronous read methods
-//    if (!(key in data_ready)) 
+//    if (!(key in data_ready))
 //        data_ready[key] = false;
 //
 //    if (data_ready[key] == true) return;
@@ -22,7 +22,7 @@ function assert(bool, message){                     //General error handling
 //}
 
 // ------------ Canvas Tools --------------
-function drawSquare([c_x,c_y], color){    
+function drawSquare([c_x,c_y], color){
     ctx.beginPath();
     ctx.rect(c_x-nodeSize,c_y-nodeSize,nodeSize*2,nodeSize*2);
     ctx.fillStyle = color;
@@ -31,7 +31,7 @@ function drawSquare([c_x,c_y], color){
     ctx.closePath();
 }
 
-function drawCircle([c_x,c_y], color){    
+function drawCircle([c_x,c_y], color){
     ctx.beginPath();
     ctx.arc(c_x,c_y, nodeSize,0, Math.PI*2);
     ctx.fillStyle = color;
@@ -53,22 +53,24 @@ function drawDiamond([c_x,c_y], color){
     ctx.closePath();
 }
 
-function drawLine([s_x, s_y], [e_x, e_y]){
+function drawRLine([s_x, s_y], [e_x, e_y]){
     ctx.beginPath();
-    ctx.moveTo(s_x,s_y); ctx.lineTo(e_x,e_y);
+    ctx.moveTo(s_x,s_y);
+    ctx.lineTo(e_x,s_y);
+    ctx.lineTo(e_x,e_y);
     ctx.strokeStyle = 'black';
     ctx.stroke();
     ctx.closePath();
 }
-    
-    
+
+
 
 function drawPerson(coords, id, gender, aff)
 {
     function drawMale  () {  drawSquare (coords, col_affs[aff])   }
     function drawFemale() {  drawCircle (coords, col_affs[aff])   }
     function drawAmbig () {  drawDiamond(coords, col_affs[aff])   }
-    
+
     switch(gender){
             case 0: drawAmbig(); break;
             case 1: drawMale(); break;
@@ -76,8 +78,8 @@ function drawPerson(coords, id, gender, aff)
             default:
                 assert(false, "No gender for index "+gender);
     }
-    
+
     //Add Text
     ctx.fillStyle = "black";
-    ctx.fillText(id, coords[0] - nodeSize/2, coords[1] - nodeSize - 1);   
+    ctx.fillText(id, coords[0] - nodeSize/2, coords[1] - nodeSize - 1);
 }
