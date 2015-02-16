@@ -1,8 +1,16 @@
-
 /*
 First pass -- gives unique_graph_obs initial coords based on
               generation_grid_ids ordering
 */
+
+function calcEdges()
+{
+
+}
+
+
+
+
 function graphInitPos(start_x, start_y){
     // Descending down the generations.
     // Main founders are at top
@@ -35,55 +43,76 @@ function graphInitPos(start_x, start_y){
     }
 
     // Init Edges
-    for (var go in unique_graph_objs){
-        var obj = unique_graph_objs[go];
+    for(var go in unique_graph_objs)
+    {
+      var obj = unique_graph_objs[go];
 
-        if (obj instanceof Edge)
-        {
-            switch(obj.type){
-                    case 0: //Mateline
-                        obj.start_pos = unique_graph_objs[obj.start_join_id].center_pos;
-                        obj.end_pos = unique_graph_objs[obj.end_join_id].center_pos;
-                        break;
+      if (obj instanceof Edge)
+      {
+        switch(obj.type){
+          case 0: //Mateline
+            obj.start_pos = unique_graph_objs[obj.start_join_id].center_pos;
+            obj.end_pos = unique_graph_objs[obj.end_join_id].center_pos;
+            break;
 
-                    case 1: //ParentLine
-                         var mateline = unique_graph_objs[obj.start_join_id];
-                         obj.start_pos = [ Math.floor(                              // center of X's
-                                            (mateline.start_pos[0] + mateline.end_pos[0])/2
-                                         ),  mateline.start_pos[1] ];
-                         obj.end_pos = [obj.start_pos[0], obj.start_pos[1] + vert_space];
-                        break;
+          case 1: //ParentLine
+            var mateline = unique_graph_objs[obj.start_join_id];
+            obj.start_pos = [ Math.floor(                              // center of X's
+              (mateline.start_pos[0] + mateline.end_pos[0])/2
+            ),  mateline.start_pos[1] ];
+            obj.end_pos = [obj.start_pos[0], obj.start_pos[1] + vert_space];
+            break;
 
-                    case 2: //ChildLine
-                        obj.start_pos = [
-							unique_graph_objs[obj.start_join_id].start_pos[0],
-							unique_graph_objs[obj.start_join_id].start_pos[1] + vert_space ]
-                        obj.end_pos = unique_graph_objs[obj.end_join_id].center_pos;
-                        break;
+          case 2: //ChildLine
+            obj.start_pos = [
+              unique_graph_objs[obj.start_join_id].start_pos[0],
+              unique_graph_objs[obj.start_join_id].start_pos[1] + vert_space ]
+            obj.end_pos = unique_graph_objs[obj.end_join_id].center_pos;
+            break;
 
-                    default:
-                        assert(false,"Wrong type!");
-            }
+          default:
+            assert(false,"Wrong type!");
         }
+      }
     }
 }
 
 
-function drawGraph()
+
+function redrawSpecificLines(pers_id)
 {
-    for (var go in unique_graph_objs){
-         var obj = unique_graph_objs[go];
+    var npers = unique_graph_obs[pers_id];
 
-         if (obj instanceof Edge)
-             drawRLine(obj.start_pos, obj.end_pos);
+    /*
+    if (npers has mate ){
+        shift mates_y to npers_y
+        find mateline, reset coords to match mates
+        find childlines and update them too
+    }
+    */
+
+}
+
+
+function addGraph()
+{
+
+    //ADD lines (NOT redraw)
+    for (var go in unique_graph_objs){
+      var obj = unique_graph_objs[go];
+
+      if (obj instanceof Edge)
+        addRLine(obj.start_pos, obj.end_pos);
     }
 
 
+    //ADD nodes
     for (var go in unique_graph_objs){
-         var obj = unique_graph_objs[go];
+        var obj = unique_graph_objs[go];
 
-         if (obj instanceof NodePerson)
-             drawPerson(obj.center_pos, obj.person.id,
-                        obj.person.gender, obj.person.affected);
+        if (obj instanceof NodePerson)
+            addPerson(obj.center_pos, obj.person.id,
+                       obj.person.gender, obj.person.affected);
     }
+    finishDraw();
 }

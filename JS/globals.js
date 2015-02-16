@@ -2,22 +2,15 @@
 var family_map = {},            // fam_id ---> pedigree map --> person
     marker_array = [];          // array index  --> rs_id
 
-
-// Canvas globals
-var cnv = document.getElementById("canvy");
-cnv.width = window.innerWidth;
-cnv.height= window.innerHeight;
-
-var ctx = cnv.getContext("2d");
-
-
 // Draw globals
 var nodeSize = 10;
 var horiz_space = 50,
     vert_space = 50;
 
-ctx.strokeStyle = 'blue';
-ctx.font = "bold 10px Courier";
+var default_stroke_color = 'blue',
+    default_font = "bold 10px Courier";
+
+
 
 var col_affs = [
     'grey',        // 0 - Unknown
@@ -26,3 +19,10 @@ var col_affs = [
 
 
 
+function toInt(arg){                                // For some reason parseInt wont work properly
+    return parseInt(arg);                           // as a lambda function arg.... wtf?
+}
+
+function assert(bool, message){                     //General error handling
+    if (!bool) throw new Error(message);
+}
