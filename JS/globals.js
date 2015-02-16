@@ -10,6 +10,8 @@ var horiz_space = 50,
 var default_stroke_color = 'blue',
     default_font = "bold 10px Courier";
 
+var grid_rez = 10;
+
 
 
 var col_affs = [

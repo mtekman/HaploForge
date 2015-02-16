@@ -52,7 +52,16 @@ var Edge = function (id, from, to, type) {
 
 
 // Methods
-function pairID(id1, id2) { return id1 + id2; }
+function UUID(type, from_id, to_id){
+	// m Father_id Mother_id   // MAYBE UNITE m and p?
+	// p Father_id Mother_id
+	// c parentline child_id
+
+	// straightforward to find childline from two parents
+	// (e.g any keys starting with "c m F_id M_id"
+	return type+":"+from_id+"-"+to_id;
+}
+
 
 /*  Node <--> mateline
               mateline <-- parentline
@@ -64,9 +73,9 @@ function pairID(id1, id2) { return id1 + id2; }
 function addTrioEdges(moth, fath, child) {
   //= Assume all indivs are != 0
 
-  var u_matesline = pairID(moth.id     + fath.id , 11000),
-      u_parntline = pairID(moth.id     + fath.id , 44000),
-      u_childline = pairID(u_parntline + child.id, 99000);
+  var u_matesline = UUID('m', fath.id, moth.id),
+      u_parntline = UUID('p', fath.id, moth.id),
+      u_childline = UUID('c', u_parntline, child.id);
 
   //= Edges
   unique_graph_objs[u_matesline] = new Edge(u_matesline, moth.id, fath.id, 0);
@@ -77,8 +86,8 @@ function addTrioEdges(moth, fath, child) {
   unique_graph_objs[u_childline] = new Edge(u_childline, u_parntline, child.id, 2);
 
   //= Nodes
-  unique_graph_objs[moth.id ] = new NodePerson( moth, u_parntline, -1);
-  unique_graph_objs[fath.id ] = new NodePerson( fath, u_parntline, -1);
+  unique_graph_objs[moth.id ] = new NodePerson( moth, u_matesline, -1);
+  unique_graph_objs[fath.id ] = new NodePerson( fath, u_matesline, -1);
   unique_graph_objs[child.id] = new NodePerson(child,-1, u_childline);
 }
 
