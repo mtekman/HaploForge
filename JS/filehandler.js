@@ -79,8 +79,7 @@ function processFile() {
     lr.onloadend = function(e){
         processInput(e.target.result, type);
         connectAllIndividuals();
-        populateGenerationGrid();
-//        console.log(unique_graph_objs);
+        populateGrids_and_UniqueObjs();
         graphInitPos(100,100);
         addGraph();
     };

@@ -8,14 +8,6 @@ var stage = new Kinetic.Stage({
 var node_layer = new Kinetic.Layer(),
 	line_layer = new Kinetic.Layer(); //Below node_layer
 
-var line_map = {},
-	node_map = {};
-
-//Two representations of data -- unique_graph_objs (holding person data + x,y), and graphic maps above
-//TODO: remove duplicity. Ideally unique_graph_objs --> {kinetic_key, people data}
-
-
-
 
 // ------------ Kinetic Tools --------------
 function addSquare([c_x,c_y], color)
@@ -47,22 +39,24 @@ function addDiamond([c_x,c_y], color){
 }
 
 
-function addRLine(key, [s_x, s_y], [e_x, e_y]){
-	var ln = new Kinetic.Line({
-		points: [s_x, s_y, e_x, s_y, e_x, e_y],
-		stroke: 'black',
-		strokeWidth: 2
-	});
-
-	line_layer.add(ln);
-	line_map[key] = ln;
+function addRLine([s_x, s_y], [e_x, e_y]){
+	line_layer.add(
+		new Kinetic.Line({
+			points: [s_x, s_y, e_x, s_y, e_x, e_y],
+			stroke: 'black',
+			strokeWidth: 2
+		})
+	);
 }
 
 
 
-function addPerson(coords, id, gender, aff)
+//function addPerson(coords, id, gender, aff)
+function addPerson(person, t_x, t_y)
 {
-	var rez = 0;
+	var rez = 0,
+		gender = person.gender,
+		id = person.id;
 
 	function addMale  () {  rez = addSquare ([0,0], col_affs[aff])   }
 	function addFemale() {  rez = addCircle ([0,0], col_affs[aff])   }
@@ -85,11 +79,10 @@ function addPerson(coords, id, gender, aff)
 	});
 
 	var group = new Kinetic.Group({
-		x: coords[0], y: coords[1],
+		x: t_x, y: t_y,
 		draggable: true
 	});
-
-	node_map[id] = group;
+	group.person = person;
 
 	group.add(rez);
 	group.add(tex);
@@ -97,11 +90,15 @@ function addPerson(coords, id, gender, aff)
 	//On drag do
 	group.on('dragmove', function(e){
 		//Snap-to-grid
-		var x = e.target.attrs.x, y = e.target.attrs.y;
-		group.setX( Math.floor(x/grid_rez)*grid_rez );
-		group.setY( Math.floor(y/grid_rez)*grid_rez );
+// 		var x = e.target.attrs.x, y = e.target.attrs.y;
+// 		group.setX( Math.floor(x/grid_rez)*grid_rez );
+// 		group.setY( Math.floor(y/grid_rez)*grid_rez );
 
-		redrawSpecificLines(id);
+		redrawSpecifics(id, true);
+	});
+
+	group.on('dragend', function(){
+		redrawSpecifics(id);
 	});
 
 

@@ -8,7 +8,7 @@ var Person = function(id, gender, affected, mother, father){
 
 	this.mother = mother; this.father = father;
 	this.haplo_data = [];
-    
+
     this.mates = [];
     this.children = [] //Added by connect method later
 };
@@ -31,7 +31,7 @@ Person.prototype.isFounder = function(){
 
 
 
-// Conjoined map, needed for pedigree but would recurse inifinitely for graphics
+// Conjoined map, needed for pedigree but would recurse infinitely for graphics
 //
 function connectAllIndividuals()
 {
@@ -40,25 +40,25 @@ function connectAllIndividuals()
         {
             var new_root = family_map[famid][id];      //Assign father and mother to actual people
             var pers_father = 0, pers_mother = 0;
-            
+
             if (new_root.father != 0) {
                 pers_father = family_map[famid][new_root.father];
-                
+
                 new_root.father = pers_father;         // Add father to child
                 pers_father.children.push(new_root);   // And child to father
             }
 
             if (new_root.mother != 0){
                 pers_mother = family_map[famid][new_root.mother];
-                
+
                 new_root.mother = pers_mother;         // Add mother to child
                 pers_mother.children.push(new_root);   // And child to mother
             }
-            
+
             if (pers_father != 0 )                     //Add parents as mates to each other
                 if(pers_mother != 0) pers_father.mates.push(pers_mother);
                 else pers_father.mates.push(0);
-            
+
             if (pers_mother !=0 )
                 if(pers_father != 0) pers_mother.mates.push(pers_father);
                 else pers_mother.mates.push(0);
