@@ -25,7 +25,7 @@ Notes:
 
 //Seen by graph_draw.js
 var generation_grid_ids = {}, //fam_id --> [generation array]
-	unique_graph_objs = {}; // fam_id --> purely stores ids, this will be passed to node_map and line_map later
+	unique_graph_objs = {}; // fam_id --> Holds node and edge data, including pointers to graphics
 
 
 // Methods
@@ -44,31 +44,30 @@ function UUID(type, from_id, to_id){
 function populateGrids_and_UniqueObjs()
 {
 
-	// Recur.
 	function addFamMap(root)
 	{
 
-		var generation_gridmap_ids = {}; // Essentially an array, but indices are given
-		var unique_nodes_fam = {},
+		var generation_gridmap_ids = {}, // Essentially an array, but indices are given
+			unique_nodes_fam = {0:{graphics:null}},   // Add the zero id
 			unique_edges_fam = {};
 
 
 		// Hopefully this can be used to find inbreeding loops
 		function incrementNodes(id){
-			if (!(id  in unique_nodes_fam))
-				unique_nodes_fam = { graphics:null,		//set later by graph_draw
-									 count:0};
+			if (!(id in unique_nodes_fam))
+				unique_nodes_fam[id] = {graphics:null,		//set later by graph_draw
+									 	count:0};
 			unique_nodes_fam[id].count += 1;
 		}
 
 		function incrementEdges(id, start_join, end_join, typer){
-			if (!(id  in unique_edges_fam))
-				unique_edges_fam = {
+			if (!(id in unique_edges_fam))
+				unique_edges_fam[id] = {
 					graphics:null,		//set later by graph_draw
 					count:0,
 					type: typer,
-					start_join_id = start_join,
-					end_join_id = end_join};
+					start_join_id: start_join,          //Note: IDs, not positions
+					end_join_id: end_join};
 
 			unique_edges_fam[id].count += 1;
 		}
@@ -92,7 +91,7 @@ function populateGrids_and_UniqueObjs()
 		}
 
 
-
+		//Recurse...
 		function addNodeArray(obj_pers, level)
 		{
 			if (obj_pers.id in unique_nodes_fam) return;
@@ -156,3 +155,107 @@ function populateGrids_and_UniqueObjs()
 		}
 	}
 }
+
+
+// After populating, add graphics
+function graphInitPos(start_x, start_y){
+	var x_shift_fam = 0;
+
+
+	for (var fam in generation_grid_ids){
+		// Each fam gets their own group
+		var fam_group = addFamily(fam, x_shift_fam, 10);
+
+		// Descending down the generations.
+		// Main founders are at top
+		var y_pos = start_y,
+			gen_grid = generation_grid_ids[fam],
+			nodes = unique_graph_objs[fam].nodes,
+			edges = unique_graph_objs[fam].edges;
+
+		unique_graph_objs[fam].group = fam_group;
+
+		// Init Nodes, ordered by generation_grid_ids
+		for (var gen=0; gen < gen_grid.length; gen++){
+			var x_pos = start_x;
+
+			for (var p=0; p < gen_grid[gen].length; p++)
+			{
+				var pers_id = gen_grid[gen][p],
+					pers = family_map[fam][pers_id];
+
+				//Mother and Father already set? Center from there
+				var moth = null, fath = null;
+
+				if (pers.mother != 0 && pers.father != 0){
+					moth = nodes[pers.mother.id].graphics;
+					fath = nodes[pers.father.id].graphics;
+				}
+
+				if (moth != null && fath != null){
+					x_pos = Math.floor((moth.getX() + fath.getX())/2);
+				}
+
+				console.log(" DRAW="+pers_id);
+				pers.graphics = addPerson(pers, fam_group, x_pos, y_pos); 				//DRAW
+				console.log("DRAWN="+pers_id);
+				fam_group.add(pers.graphics); 											//BREAKS HERE -- FIX
+				console.log("ADDING TO FAM GROUP");
+
+				x_pos += horiz_space;
+			}
+			y_pos += vert_space + 25;
+		}
+
+		// Init Edges
+		for(var key in edges)
+		{
+			var edge = edges[key],
+				type = edge.type,
+				end_join_id = edge.end_join_id,  	  start_join_id = edge.start_join_id;
+
+			var	start_pos, end_pos;
+
+			if(type === 0){
+				//Mateline -- get indivs
+				start_pos = nodes[start_join_id].getPosition();
+				end_pos = nodes[end_join_id].getPosition();
+			}
+			else if (type === 1){
+				//ParentLine -- get mateline and drop
+				var mateline_points = edges[start_join_id].getPoints(),
+					mateline_center = [
+						Math.floor(
+						(mateline_points[0]
+						 + mateline_points[mateline_points.length-2])/2),
+						mateline_points[1]];
+
+				start_pos = mateline_center;
+				end_pos = [mateline_center[0], mateline_center[1] + vert_space];
+			}
+
+			else if(type === 2){
+				//ChildLine -- get parentline drop and child
+				var parentline_points = edges[start_join_id].getPosition(),
+					parentline_drop = [parentline_points[parentline_points.length-2],
+									   parentline_points[parentline_points.length-1]];
+
+				start_pos = parentline_drop;
+				end_pos = nodes[end_join_id].getPosition();
+			}
+			else assert(false,"Wrong type!");
+
+			edge.graphics = addRLine(fam_group, start_pos,end_pos); 					//DRAW
+
+			fam_group.add(edge.graphics);
+		}
+		x_shift_fam += 100;
+	}
+	finishDraw();
+}
+
+
+
+
+
+

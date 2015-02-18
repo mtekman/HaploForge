@@ -80,8 +80,9 @@ function processFile() {
         processInput(e.target.result, type);
         connectAllIndividuals();
         populateGrids_and_UniqueObjs();
+		console.log("T2");
         graphInitPos(100,100);
-        addGraph();
+		console.log("T3");
     };
     lr.readAsText(file);
 
