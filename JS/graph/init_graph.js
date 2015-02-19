@@ -80,9 +80,9 @@ function populateGrids_and_UniqueObjs()
 				u_childline = UUID('c', u_parntline, child.id);
 
 			//= Edges
-			incrementEdges(u_matesline, fath.id, moth.id);
-			incrementEdges(u_parntline, u_matesline, -1);
-			incrementEdges(u_childline, u_parntline, child.id);
+			incrementEdges(u_matesline, fath.id, moth.id, 0);
+			incrementEdges(u_parntline, u_matesline, -1, 1);
+			incrementEdges(u_childline, u_parntline, child.id, 2);
 
 			//= Nodes
 			incrementNodes(moth.id);
@@ -182,76 +182,86 @@ function graphInitPos(start_x, start_y){
 			for (var p=0; p < gen_grid[gen].length; p++)
 			{
 				var pers_id = gen_grid[gen][p],
-					pers = family_map[fam][pers_id];
+					pers = family_map[fam][pers_id],
+					n_pers = nodes[pers_id];
 
 				//Mother and Father already set? Center from there
-				var moth = null, fath = null;
+// 				var moth = null, fath = null;
 
-				if (pers.mother != 0 && pers.father != 0){
-					moth = nodes[pers.mother.id].graphics;
-					fath = nodes[pers.father.id].graphics;
-				}
+// 				if (pers.mother != 0 && pers.father != 0){
+// 					moth = nodes[pers.mother.id].graphics;
+// 					fath = nodes[pers.father.id].graphics;
+// 				}
 
-				if (moth != null && fath != null){
-					x_pos = Math.floor((moth.getX() + fath.getX())/2);
-				}
+// 				if (moth != null && fath != null){
+// 					x_pos = Math.floor((moth.getX() + fath.getX())/2);
+// 				}
+				n_pers.graphics = addPerson(pers, fam_group, x_pos, y_pos); 				//DRAW
 
-				console.log(" DRAW="+pers_id);
-				pers.graphics = addPerson(pers, fam_group, x_pos, y_pos); 				//DRAW
-				console.log("DRAWN="+pers_id);
-				fam_group.add(pers.graphics); 											//BREAKS HERE -- FIX
-				console.log("ADDING TO FAM GROUP");
 
 				x_pos += horiz_space;
 			}
 			y_pos += vert_space + 25;
 		}
 
-		// Init Edges
-		for(var key in edges)
-		{
-			var edge = edges[key],
-				type = edge.type,
-				end_join_id = edge.end_join_id,  	  start_join_id = edge.start_join_id;
 
-			var	start_pos, end_pos;
+		// Init Edges -- in order of Mateline, parentline, and childline
+		for (var tp = 0; tp <= 2; tp ++){
 
-			if(type === 0){
-				//Mateline -- get indivs
-				start_pos = nodes[start_join_id].getPosition();
-				end_pos = nodes[end_join_id].getPosition();
+			for(var key in edges)
+			{
+				var edge = edges[key],
+					type = edge.type,
+					end_join_id = edge.end_join_id,
+					start_join_id = edge.start_join_id;
+
+				if (type !== tp) continue;
+
+
+				var	start_pos, end_pos;
+
+				console.log(key);
+
+				if(type === 0){
+					//Mateline -- get indivs
+					start_pos = nodes[start_join_id].graphics.getPosition();
+					end_pos = nodes[end_join_id].graphics.getPosition();
+				}
+				else if (type === 1){
+					//ParentLine -- get mateline and drop
+					var mateline_points = edges[start_join_id].graphics.getPoints(),
+
+					start_pos = {
+						x: Math.floor( (mateline_points[0] + mateline_points[mateline_points.length-2])/2),
+						y: mateline_points[1]
+					};
+
+					end_pos = {
+						x: start_pos.x,
+						y: start_pos.y + vert_space
+					};
+				}
+
+				else if(type === 2){
+					//ChildLine -- get parentline drop and child
+					var parentline_points = edges[start_join_id].graphics.getPoints();
+
+					start_pos = {
+						x:parentline_points[parentline_points.length-2],
+						y:parentline_points[parentline_points.length-1]
+					};
+					end_pos = nodes[end_join_id].graphics.getPosition();
+				}
+				else assert(false,"Wrong type! "+key+", type= "+type);
+
+				edge.graphics = addRLine(fam_group, start_pos,end_pos); 					//DRAW
+				edge.graphics.moveToBottom();
 			}
-			else if (type === 1){
-				//ParentLine -- get mateline and drop
-				var mateline_points = edges[start_join_id].getPoints(),
-					mateline_center = [
-						Math.floor(
-						(mateline_points[0]
-						 + mateline_points[mateline_points.length-2])/2),
-						mateline_points[1]];
-
-				start_pos = mateline_center;
-				end_pos = [mateline_center[0], mateline_center[1] + vert_space];
-			}
-
-			else if(type === 2){
-				//ChildLine -- get parentline drop and child
-				var parentline_points = edges[start_join_id].getPosition(),
-					parentline_drop = [parentline_points[parentline_points.length-2],
-									   parentline_points[parentline_points.length-1]];
-
-				start_pos = parentline_drop;
-				end_pos = nodes[end_join_id].getPosition();
-			}
-			else assert(false,"Wrong type!");
-
-			edge.graphics = addRLine(fam_group, start_pos,end_pos); 					//DRAW
-
-			fam_group.add(edge.graphics);
 		}
 		x_shift_fam += 100;
 	}
 	finishDraw();
+	main_layer.draw();
 }
 
 

@@ -20,8 +20,8 @@ function processInput(text_unformatted, type)
                 header_lines.push(line);                                //
             }
 
-            else                                                        //Populate family map
-            {                                                           //
+			else{                                                        //Populate family map
+            	                                                         //
                 var people_info = line.substring(0,start_extract-1).trim().split(/\s+/).map(toInt),
                     haplo_info = line.substring(start_extract).trim().split(/\s+/).map(toInt);
 

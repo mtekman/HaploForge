@@ -11,10 +11,8 @@ var stage = new Kinetic.Stage({
 var main_layer = new Kinetic.Layer();
 
 
-var node_layer = new Kinetic.Layer(),
-	line_layer = new Kinetic.Layer();
-
-
+// var node_layer = new Kinetic.Layer(),
+// 	line_layer = new Kinetic.Layer();
 
 
 // ------------ Kinetic Tools --------------
@@ -47,14 +45,15 @@ function addDiamond([c_x,c_y], color){
 }
 
 
-function addRLine(fam_group, [s_x, s_y], [e_x, e_y]){
-	fam_group.add(
-		new Kinetic.Line({
-			points: [s_x, s_y, e_x, s_y, e_x, e_y],
-			stroke: 'black',
-			strokeWidth: 2
-		})
-	);
+function addRLine(fam_group, start, end){
+	var line = new Kinetic.Line({
+		points: [start.x, start.y, end.x, start.y, end.x, end.y],
+		stroke: 'black',
+		strokeWidth: 2
+	});
+
+	fam_group.add(line);
+	return line;
 }
 
 
@@ -81,8 +80,8 @@ function addFamily(fam_id, sx, sy){
 function addPerson(person, fam_group,  t_x, t_y)  //positions relative to family group
 {
 	var gender = person.gender,
-		id = person.id,
-		aff= person.affectation;
+		    id = person.id,
+		   aff = person.affectation;
 
 	function pedigreeShape(){
 		var shape = 0;
@@ -92,8 +91,8 @@ function addPerson(person, fam_group,  t_x, t_y)  //positions relative to family
 		function addAmbig () {  shape = addDiamond([0,0], col_affs[aff])   }
 
 		switch(gender){
-			case 0: addAmbig(); break;
-			case 1: addMale(); break;
+			case 0: addAmbig() ; break;
+			case 1: addMale()  ; break;
 			case 2: addFemale(); break;
 			default:
 				assert(false, "No gender for index "+gender);
@@ -118,33 +117,33 @@ function addPerson(person, fam_group,  t_x, t_y)  //positions relative to family
 		x: t_x, y: t_y,
 		draggable: true
 	});
-
 	group.add(shape);
 	group.add(tex);
-
 
 
 	//On drag do
 	group.on('dragmove', function(e){
 		//Snap-to-grid
-// 		var x = e.target.attrs.x, y = e.target.attrs.y;
-// 		group.setX( Math.floor(x/grid_rez)*grid_rez );
-// 		group.setY( Math.floor(y/grid_rez)*grid_rez );
+		var x = e.target.attrs.x, y = e.target.attrs.y;
+		group.setX( Math.floor(x/grid_rez)*grid_rez );
+		group.setY( Math.floor(y/grid_rez)*grid_rez );
 
-		redrawSpecifics(id, true);
+		moveMatesToo(id, fam_group.attrs.id);
 	});
 
 	group.on('dragend', function(){
-		redrawSpecifics(id);
+		redrawLines(id, fam_group.attrs.id);
 	});
 
 	//Assume addFamily has already been called
 	fam_group.add(group);
+	return group;
 }
 
 
 
 function finishDraw(){
-	stage.add(line_layer);
-	stage.add(node_layer);
+//	stage.add(line_layer);
+//	stage.add(node_layer);
+	stage.add(main_layer);
 }
