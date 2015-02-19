@@ -10,7 +10,7 @@ var horiz_space = 50,
 var default_stroke_color = 'blue',
     default_font = "bold 10px Courier";
 
-var grid_rez = 20;
+var grid_rez = nodeSize*2;
 
 
 

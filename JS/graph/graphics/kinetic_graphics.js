@@ -11,10 +11,6 @@ var stage = new Kinetic.Stage({
 var main_layer = new Kinetic.Layer();
 
 
-// var node_layer = new Kinetic.Layer(),
-// 	line_layer = new Kinetic.Layer();
-
-
 // ------------ Kinetic Tools --------------
 function addSquare([c_x,c_y], color)
 {
@@ -66,9 +62,11 @@ function addFamily(fam_id, sx, sy){
 		id: fam_id
 	});
 	var t = new Kinetic.Text({
+		x: 50,
 		text: fam_id,
-		fontStyle: 'Calibri', //change to global setting
-		fill: default_stroke_color
+		fontFamily: "Arial",
+		fontSize: 18,
+		fill: 'black'
 	})
 	g.add(t);
 
@@ -81,7 +79,7 @@ function addPerson(person, fam_group,  t_x, t_y)  //positions relative to family
 {
 	var gender = person.gender,
 		    id = person.id,
-		   aff = person.affectation;
+		   aff = person.affected;
 
 	function pedigreeShape(){
 		var shape = 0;
@@ -105,8 +103,7 @@ function addPerson(person, fam_group,  t_x, t_y)  //positions relative to family
 	var shape = pedigreeShape();
 
 	var tex = new Kinetic.Text({
-		x: - (""+id+"").length*3,
-		y: nodeSize + 8,
+		x: - (""+id+"").length*3,	y: nodeSize + 8,
 		text: id,
 		fontSize: 'Calibri', //change to global setting
 		fill: default_stroke_color
@@ -124,15 +121,11 @@ function addPerson(person, fam_group,  t_x, t_y)  //positions relative to family
 	//On drag do
 	group.on('dragmove', function(e){
 		//Snap-to-grid
-		var x = e.target.attrs.x, y = e.target.attrs.y;
-		group.setX( Math.floor(x/grid_rez)*grid_rez );
-		group.setY( Math.floor(y/grid_rez)*grid_rez );
+// 		var x = e.target.attrs.x, y = e.target.attrs.y;
+// 		group.setX( Math.floor(x/grid_rez)*grid_rez );
+// 		group.setY( Math.floor(y/grid_rez)*grid_rez );
 
-		moveMatesToo(id, fam_group.attrs.id);
-	});
-
-	group.on('dragend', function(){
-		redrawLines(id, fam_group.attrs.id);
+		redrawNodes(id, fam_group.attrs.id, true);
 	});
 
 	//Assume addFamily has already been called

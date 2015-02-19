@@ -61,9 +61,6 @@ function processInput(text_unformatted, type)
         assert(marker_array.length == num_alleles_markers,
                "Marker map length does not match with haplo data: "
                + marker_array.length+" and " + num_alleles_markers);
-
-//        console.log(family_map);
-//        console.log(marker_array);
     }
 
     else if (type === "Other"){}
@@ -80,9 +77,7 @@ function processFile() {
         processInput(e.target.result, type);
         connectAllIndividuals();
         populateGrids_and_UniqueObjs();
-		console.log("T2");
-        graphInitPos(100,100);
-		console.log("T3");
+        graphInitPos(nodeSize + 10,30);
     };
     lr.readAsText(file);
 

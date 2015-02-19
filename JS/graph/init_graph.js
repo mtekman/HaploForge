@@ -160,11 +160,13 @@ function populateGrids_and_UniqueObjs()
 // After populating, add graphics
 function graphInitPos(start_x, start_y){
 	var x_shift_fam = 0;
+	var max_x;
 
 
 	for (var fam in generation_grid_ids){
 		// Each fam gets their own group
 		var fam_group = addFamily(fam, x_shift_fam, 10);
+		max_x = 0;
 
 		// Descending down the generations.
 		// Main founders are at top
@@ -185,22 +187,11 @@ function graphInitPos(start_x, start_y){
 					pers = family_map[fam][pers_id],
 					n_pers = nodes[pers_id];
 
-				//Mother and Father already set? Center from there
-// 				var moth = null, fath = null;
-
-// 				if (pers.mother != 0 && pers.father != 0){
-// 					moth = nodes[pers.mother.id].graphics;
-// 					fath = nodes[pers.father.id].graphics;
-// 				}
-
-// 				if (moth != null && fath != null){
-// 					x_pos = Math.floor((moth.getX() + fath.getX())/2);
-// 				}
 				n_pers.graphics = addPerson(pers, fam_group, x_pos, y_pos); 				//DRAW
-
-
 				x_pos += horiz_space;
 			}
+			if(x_pos > max_x) max_x = x_pos;
+
 			y_pos += vert_space + 25;
 		}
 
@@ -217,10 +208,7 @@ function graphInitPos(start_x, start_y){
 
 				if (type !== tp) continue;
 
-
 				var	start_pos, end_pos;
-
-				console.log(key);
 
 				if(type === 0){
 					//Mateline -- get indivs
@@ -258,7 +246,7 @@ function graphInitPos(start_x, start_y){
 				edge.graphics.moveToBottom();
 			}
 		}
-		x_shift_fam += 100;
+		x_shift_fam += max_x;
 	}
 	finishDraw();
 	main_layer.draw();
