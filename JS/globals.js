@@ -5,12 +5,14 @@ var family_map = {},            // fam_id ---> pedigree map --> person
 // Draw globals
 var nodeSize = 10;
 var horiz_space = 50,
-    vert_space = 50;
+    vert_space = 50,
+	max_fam_width = 200; //px
 
 var default_stroke_color = 'blue',
     default_font = "bold 10px Courier";
 
-var grid_rez = nodeSize*2;
+var grid_rezY = nodeSize*6,
+	grid_rezX = nodeSize*2;
 
 
 

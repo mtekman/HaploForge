@@ -41,17 +41,28 @@ function addDiamond([c_x,c_y], color){
 }
 
 
-function addRLine(fam_group, start, end){
+
+
+function changeRLine(line, start, end){
+	var mid_y = Math.floor((start.y + end.y)/2),
+		m1    = {		x: start.x,		y: mid_y	},
+		m2    = {		x: end.x,       y: mid_y	};
+
+	line.setPoints([start.x, start.y, m1.x, m1.y, m2.x, m2.y, end.x, end.y]);
+// 	line.setPoints([start.x, start.y, end.x, end.y]); // -- simple
+}
+
+
+function addRLine(fam_group, start, end, consang=false){
 	var line = new Kinetic.Line({
-		points: [start.x, start.y, end.x, start.y, end.x, end.y],
-		stroke: 'black',
-		strokeWidth: 2
+		stroke: consang?'red':'black',
+		strokeWidth: consang?4:2
 	});
+	changeRLine(line, start, end);
 
 	fam_group.add(line);
 	return line;
 }
-
 
 
 // ------- Family Functions --------------
@@ -121,9 +132,10 @@ function addPerson(person, fam_group,  t_x, t_y)  //positions relative to family
 	//On drag do
 	group.on('dragmove', function(e){
 		//Snap-to-grid
-// 		var x = e.target.attrs.x, y = e.target.attrs.y;
-// 		group.setX( Math.floor(x/grid_rez)*grid_rez );
-// 		group.setY( Math.floor(y/grid_rez)*grid_rez );
+		var x = e.target.attrs.x;
+		var	y = e.target.attrs.y;
+		group.setX( (Math.floor(x/grid_rezX)*grid_rezX) );
+ 		group.setY( (Math.floor(y/grid_rezY)*grid_rezY) + 30 );
 
 		redrawNodes(id, fam_group.attrs.id, true);
 	});

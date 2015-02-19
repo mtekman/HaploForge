@@ -78,6 +78,7 @@ function processFile() {
         connectAllIndividuals();
         populateGrids_and_UniqueObjs();
         graphInitPos(nodeSize + 10,30);
+		console.log(unique_graph_objs);
     };
     lr.readAsText(file);
 

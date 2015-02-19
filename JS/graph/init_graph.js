@@ -67,7 +67,8 @@ function populateGrids_and_UniqueObjs()
 					count:0,
 					type: typer,
 					start_join_id: start_join,          //Note: IDs, not positions
-					end_join_id: end_join};
+					end_join_id: end_join,
+					double_line: false};        		// Consangineous
 
 			unique_edges_fam[id].count += 1;
 		}
@@ -76,13 +77,11 @@ function populateGrids_and_UniqueObjs()
 		function addTrioEdges(moth, fath, child) {
 			//= Assume all indivs are != 0
 			var u_matesline = UUID('m', fath.id, moth.id),
-				u_parntline = UUID('p', fath.id, moth.id),
-				u_childline = UUID('c', u_parntline, child.id);
+				u_childline = UUID('c', u_matesline, child.id);
 
 			//= Edges
 			incrementEdges(u_matesline, fath.id, moth.id, 0);
-			incrementEdges(u_parntline, u_matesline, -1, 1);
-			incrementEdges(u_childline, u_parntline, child.id, 2);
+			incrementEdges(u_childline, u_matesline, child.id, 2);
 
 			//= Nodes
 			incrementNodes(moth.id);
@@ -160,13 +159,11 @@ function populateGrids_and_UniqueObjs()
 // After populating, add graphics
 function graphInitPos(start_x, start_y){
 	var x_shift_fam = 0;
-	var max_x;
-
 
 	for (var fam in generation_grid_ids){
 		// Each fam gets their own group
 		var fam_group = addFamily(fam, x_shift_fam, 10);
-		max_x = 0;
+		var max_x = 0;
 
 		// Descending down the generations.
 		// Main founders are at top
@@ -181,7 +178,25 @@ function graphInitPos(start_x, start_y){
 		for (var gen=0; gen < gen_grid.length; gen++){
 			var x_pos = start_x;
 
-			for (var p=0; p < gen_grid[gen].length; p++)
+			var num_peeps = gen_grid[gen].length,
+				space_per_person = max_fam_width / num_peeps
+
+			/*
+			If max_fam = 21 (odd):
+
+			H-------------------H {n:2, gap:21          , pos: 01                   21}  //EVEN -- special case for n=2
+			H---------H---------H {n:3, gap:11          , pos: 01         11        21}  //ODD
+			H------H-----H------H {n:4, gap:8 7 8       , pos: 01    07     13      21}  //EVEN
+			H----H----H----H----H {n:5, gap:6           , pos: 01   06    11   16   21}  //ODD  ((11-1)/2)+1, ((21-11)/2)+1
+			H---H---H---H---H---H {n:6, gap:5           , pos: 01  05  09   13  17  21}  //EVEN
+			H--H---H--H--H---H--H {n:7, gap:4 5 4 4 5 4 , pos: 01 04  08  11 14  18 21}  //ODD
+
+			Fam width MUST be odd number of pixels for this to work properly
+
+
+			*/
+
+			for (var p=0; p < num_peeps; p++)
 			{
 				var pers_id = gen_grid[gen][p],
 					pers = family_map[fam][pers_id],
@@ -196,7 +211,7 @@ function graphInitPos(start_x, start_y){
 		}
 
 
-		// Init Edges -- in order of Mateline, parentline, and childline
+		// Init Edges -- in order of Mateline, and Childline
 		for (var tp = 0; tp <= 2; tp ++){
 
 			for(var key in edges)
@@ -208,41 +223,33 @@ function graphInitPos(start_x, start_y){
 
 				if (type !== tp) continue;
 
-				var	start_pos, end_pos;
+				var	start_pos, end_pos,
+					consang = false;
+
 
 				if(type === 0){
-					//Mateline -- get indivs
+					// Mateline
 					start_pos = nodes[start_join_id].graphics.getPosition();
 					end_pos = nodes[end_join_id].graphics.getPosition();
+					consang = checkConsanginuity(fam_group, start_join_id, end_join_id);
 				}
-				else if (type === 1){
-					//ParentLine -- get mateline and drop
+				else if(type === 2)
+				{
+					// Childline
 					var mateline_points = edges[start_join_id].graphics.getPoints(),
+						child_pos       = nodes[  end_join_id].graphics.getPosition();
 
 					start_pos = {
-						x: Math.floor( (mateline_points[0] + mateline_points[mateline_points.length-2])/2),
+						x: Math.floor((mateline_points[0] + mateline_points[2])/2),
 						y: mateline_points[1]
 					};
-
-					end_pos = {
-						x: start_pos.x,
-						y: start_pos.y + vert_space
-					};
+					end_pos = {	x: child_pos.x,	y: child_pos.y	};
 				}
 
-				else if(type === 2){
-					//ChildLine -- get parentline drop and child
-					var parentline_points = edges[start_join_id].graphics.getPoints();
-
-					start_pos = {
-						x:parentline_points[parentline_points.length-2],
-						y:parentline_points[parentline_points.length-1]
-					};
-					end_pos = nodes[end_join_id].graphics.getPosition();
-				}
 				else assert(false,"Wrong type! "+key+", type= "+type);
 
-				edge.graphics = addRLine(fam_group, start_pos,end_pos); 					//DRAW
+
+				edge.graphics = addRLine(fam_group, start_pos, end_pos, consang); 					//DRAW
 				edge.graphics.moveToBottom();
 			}
 		}
@@ -253,7 +260,31 @@ function graphInitPos(start_x, start_y){
 }
 
 
+// Hmm... needs work
+function checkConsanginuity(fam_id, pers1_id, pers2_id)
+{
+	return false;
+
+	var fam_map = family_map[fam_id],
+		pers1 = fam_map[pers1_id],
+		pers2 = fam_map[pers2_id];
 
 
+	while (true){
+		var m1 = pers1.mother, f1 = pers1.father,
+			m2 = pers2.mother, f2 = pers2.father;
+
+		if (m1.mother.id == m2.mother.id) return true;
+		if (m1.father.id == m2.father.id) return true;
+
+	}
+
+
+
+	while (pers1.mother !=0 && pers1.father != 0)
+
+
+	return false;
+}
 
 
