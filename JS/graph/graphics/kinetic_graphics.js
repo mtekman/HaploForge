@@ -131,11 +131,11 @@ function addPerson(person, fam_group,  t_x, t_y)  //positions relative to family
 
 	//On drag do
 	group.on('dragmove', function(e){
-		//Snap-to-grid
+		//Snap-to-grid  -- relative to parent (fam_group)
 		var x = e.target.attrs.x;
 		var	y = e.target.attrs.y;
 		group.setX( (Math.floor(x/grid_rezX)*grid_rezX) );
- 		group.setY( (Math.floor(y/grid_rezY)*grid_rezY) + 30 );
+ 		group.setY( (Math.floor(y/grid_rezY)*grid_rezY) );
 
 		redrawNodes(id, fam_group.attrs.id, true);
 	});

@@ -31,6 +31,17 @@ function redrawNodes(pers_id, fam_id, drawLinesToo=true)
 			//			if ((nmate_pos.x-npers_pos.x) < buffer)
 			//				nmate.setX(npers_pos.x + buffer+2);
 		}
+		//Update mate's mate's
+		for (var mm=0 ; mm < mate.mates.length; mm++){
+			var matemate_id  = mate.mates[mm].id;
+
+			if (matemate_id != pers_id){
+				var nmatemate     = node_map[matemate_id].graphics,
+					nmatemate_pos = nmatemate.getPosition();
+
+				nmatemate.setY(npers_pos.y);
+			}
+		}
 
 
 		if (drawLinesToo){
@@ -63,7 +74,7 @@ function redrawNodes(pers_id, fam_id, drawLinesToo=true)
 				}
 			}
 
-			// -- mate's childline, damn that is some sweet sweet coca
+			// -- mate's childline
 			if (mate.father !=0 /*&& mate.mother != 0*/)
 			{
 				var mates_mateline_id = UUID('m', mate.father.id, mate.mother.id),  //get
@@ -75,8 +86,41 @@ function redrawNodes(pers_id, fam_id, drawLinesToo=true)
 
 				changeRLine(edge_map[mates_childline_id].graphics, {x:sm_x,y:sm_y}, nmate_pos);
 			}
+
+			// -- mate's mate's mateline
+
 		}
 	}
+
+	//If last generation, move all sibs
+	var last_gen = generation_grid_ids[fam_id][generation_grid_ids[fam_id].length - 1];
+
+	if (last_gen.indexOf(pers_id)!== -1){
+
+		var parents_mateline = UUID('m', pers.father.id, pers.mother.id),
+			parents_ml_pos = edge_map[parents_mateline].graphics.getPoints();
+
+		for (var c=0; c < last_gen.length; c++){
+			var sib_id = last_gen[c],
+				n_sib = unique_graph_objs[fam_id].nodes[sib_id].graphics;
+
+			n_sib.setY(npers_pos.y);
+
+
+			if (drawLinesToo){ //Update childlines
+				var c_id = UUID('c', parents_mateline, sib_id);
+
+				var sm_x = Math.floor((parents_ml_pos[0]+parents_ml_pos[parents_ml_pos.length -2] )/2),
+					sm_y = parents_ml_pos[parents_ml_pos.length -1];
+
+				changeRLine(edge_map[c_id].graphics, {x:sm_x,y:sm_y}, n_sib.getPosition());
+			}
+
+		}
+	}
+
+
+
 
 	//Update own childnode.
 	if (drawLinesToo && (pers.father != 0 && pers.mother !=0))
@@ -91,5 +135,74 @@ function redrawNodes(pers_id, fam_id, drawLinesToo=true)
 		changeRLine(childline.graphics, {x:s4_x,y:s4_y}, npers_pos);
 	}
 }
+
+
+// Performs redrawNodes upon all
+function touchlines(){
+	for(var one in family_map){
+		for(var two in family_map[one]){
+
+			//simulate drag event
+			var e = new CustomEvent("dragmove", {target: {attrs: {x:10, y:10}}}),
+				o = unique_graph_objs[one].nodes[two];
+
+			o.graphics.dispatchEvent(e);
+		}
+	}
+}
+
+
+// Initial spacing of groups
+function spaceFamGroups(){
+
+	var leftover_gap = window.innerWidth,
+		num_fams = 0;
+
+	var global_minx = 9999999;
+
+	//First pass get leftover space
+	for (var fid in family_map){ //should be in this order
+		num_fams ++;
+		var nodes = unique_graph_objs[fid].nodes;
+
+		var min_x = 9999999, max_x = 0;
+
+		for (var nid in nodes){
+			if (nid === "0") continue;
+
+			var xer = nodes[nid].graphics.getX();
+
+			if (min_x > xer) min_x = xer;
+			if (max_x < xer) max_x = xer;
+		}
+
+		if (global_minx > min_x) global_minx = min_x;
+
+		leftover_gap -= max_x - min_x;
+	}
+
+	//Move groups
+
+	var buffer_x = nodeSize*4;
+	leftover_gap -= (buffer_x*2);
+	if (global_minx < 0) {
+		buffer_x -= global_minx;
+		leftover_gap -= global_minx
+	}
+
+	var gap_between = Math.floor(leftover_gap/(num_fams));
+
+	if (gap_between > 0){
+		var step = buffer_x;
+
+		for (var fid in family_map){
+			var group = unique_graph_objs[fid].group;
+			group.setX(group.getX() + step);
+
+			step += gap_between;
+		}
+	}
+}
+
 
 

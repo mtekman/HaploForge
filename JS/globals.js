@@ -4,9 +4,8 @@ var family_map = {},            // fam_id ---> pedigree map --> person
 
 // Draw globals
 var nodeSize = 10;
-var horiz_space = 50,
-    vert_space = 50,
-	max_fam_width = 200; //px
+var horiz_space = 60,
+    vert_space = 50;
 
 var default_stroke_color = 'blue',
     default_font = "bold 10px Courier";
@@ -14,6 +13,7 @@ var default_stroke_color = 'blue',
 var grid_rezY = nodeSize*6,
 	grid_rezX = nodeSize*2;
 
+var max_fam_width = 160;
 
 
 var col_affs = [
@@ -30,3 +30,9 @@ function toInt(arg){                                // For some reason parseInt 
 function assert(bool, message){                     //General error handling
     if (!bool) throw new Error(message);
 }
+
+
+
+// Graph obj globals
+var generation_grid_ids = {}, //fam_id --> [generation array]
+	unique_graph_objs = {}; // fam_id --> Holds node and edge data, including pointers to graphics

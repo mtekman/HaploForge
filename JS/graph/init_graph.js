@@ -23,10 +23,6 @@ Notes:
 
 */
 
-//Seen by graph_draw.js
-var generation_grid_ids = {}, //fam_id --> [generation array]
-	unique_graph_objs = {}; // fam_id --> Holds node and edge data, including pointers to graphics
-
 
 // Methods
 function UUID(type, from_id, to_id){
@@ -179,33 +175,67 @@ function graphInitPos(start_x, start_y){
 			var x_pos = start_x;
 
 			var num_peeps = gen_grid[gen].length,
-				space_per_person = max_fam_width / num_peeps
+				isOddNum = !((num_peeps%2)==0),
+				center_x = Math.floor(max_fam_width/2);
+
 
 			/*
-			If max_fam = 21 (odd):
-
-			H-------------------H {n:2, gap:21          , pos: 01                   21}  //EVEN -- special case for n=2
-			H---------H---------H {n:3, gap:11          , pos: 01         11        21}  //ODD
-			H------H-----H------H {n:4, gap:8 7 8       , pos: 01    07     13      21}  //EVEN
-			H----H----H----H----H {n:5, gap:6           , pos: 01   06    11   16   21}  //ODD  ((11-1)/2)+1, ((21-11)/2)+1
-			H---H---H---H---H---H {n:6, gap:5           , pos: 01  05  09   13  17  21}  //EVEN
-			H--H---H--H--H---H--H {n:7, gap:4 5 4 4 5 4 , pos: 01 04  08  11 14  18 21}  //ODD
-
-			Fam width MUST be odd number of pixels for this to work properly
-
-
+			Everyone is spaced one horiz_space apart, but centred:
+			-	odd number of people in a row: centre middle perp
+			-	even number of people in a row: space middle two half horiz_space from center
+			and then expand out
 			*/
 
-			for (var p=0; p < num_peeps; p++)
-			{
-				var pers_id = gen_grid[gen][p],
-					pers = family_map[fam][pers_id],
-					n_pers = nodes[pers_id];
+			//Can't be helped, JS doesn't support macros...
+			function placePerp(index, posx){
+				var perp_id = gen_grid[gen][index],
+					perp = family_map[fam][perp_id],
+					n_perp = nodes[perp_id]
 
-				n_pers.graphics = addPerson(pers, fam_group, x_pos, y_pos); 				//DRAW
-				x_pos += horiz_space;
+
+				n_perp.graphics = addPerson(perp, fam_group, posx, y_pos);
+
+// 				posx  = Math.floor(posx/grid_rezX)*grid_rezX;
+// 				y_pos = Math.floor(y_pos/grid_rezY)*grid_rezY;
+
+				if(posx > max_x) max_x = posx;
 			}
-			if(x_pos > max_x) max_x = x_pos;
+
+			var start1, start2;
+
+			if (isOddNum)
+			{
+				var center_ind = Math.floor(num_peeps/2);
+				placePerp(center_ind, center_x);
+
+				//Expansion
+				var tmp1 = center_ind,
+					tmp2 = center_ind;
+
+				start1 = center_x,
+				start2 = center_x;
+
+				while(tmp1 > 0){
+					placePerp(--tmp1, start1 -= horiz_space);
+					placePerp(++tmp2, start2 += horiz_space);
+				}
+			}
+			else {
+				var center2_ind = (num_peeps/2),
+					center1_ind = center2_ind - 1;
+
+				//Expansion
+				var tmp1 = center2_ind,
+					tmp2 = center1_ind;
+
+				start1 = center_x + Math.floor(horiz_space/2);
+				start2 = center_x - Math.floor(horiz_space/2);
+
+				while (tmp1 > 0){
+					placePerp(--tmp1, start1 -= horiz_space);
+					placePerp(++tmp2, start2 += horiz_space);
+				}
+			}
 
 			y_pos += vert_space + 25;
 		}
@@ -253,9 +283,14 @@ function graphInitPos(start_x, start_y){
 				edge.graphics.moveToBottom();
 			}
 		}
-		x_shift_fam += max_x;
+		x_shift_fam += max_x + 20;
 	}
+
+	//Go over everyone and touch their lines
 	finishDraw();
+	touchlines();
+	spaceFamGroups();
+
 	main_layer.draw();
 }
 
