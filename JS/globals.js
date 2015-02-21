@@ -39,3 +39,9 @@ function assert(bool, message){                     //General error handling
 // Graph obj globals
 var generation_grid_ids = {}, //fam_id --> [generation array]
 	unique_graph_objs = {}; // fam_id --> Holds node and edge data, including pointers to graphics
+
+
+
+// Button
+var butt_w = 50,
+	butt_h = 20;

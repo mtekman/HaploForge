@@ -41,27 +41,31 @@ function addDiamond([c_x,c_y], color){
 }
 
 
-// function addArc(fam_group, start, end){
-// 	var b_arc = new Kinetic.Shape({
-// 		drawFunc: function(canvas){
-// 			var ctx = canvas.getContext('2d');
-// 			ctx.beginPath();
-// 			ctx.moveTo(start.x, start.y);
-// 			ctx.bezierCurveTo( Math.floor( (start.x + end.x) / 2), start.y - 10);
-// 			ctx.bezierCurveTo( end.x, end.y );
-// 			ctx.endPath();
-// 			canvas.stroke(this);
-// 		},
-// 		stroke: 'black',
-// 		strokeWidth: 2
-// 	});
 
-// 	fam_group.add(b_arc);
-// 	return b_arc;
-// }
+function addButton(message, xp, yp, callback){
+	var group = new Kinetic.Group({x: xp, y: yp});
 
+	var rec = new Kinetic.Rect({
+		x: -5, y: -5,
+		width: butt_w,
+		height: butt_h,
+		fill: 'grey',
+		stroke: 'black',
+		strokeWidth: 2
+	});
 
-// function changeArc(
+	var tex = new Kinetic.Text({
+		text: message,
+		fontSize: 12,
+		fill: 'white'
+	});
+
+	group.add(rec);
+	group.add(tex);
+	group.on('click', callback);
+
+	return group;
+}
 
 
 function changeRLine(line, start, end)
@@ -172,13 +176,6 @@ function addPerson(person, fam_group,  t_x, t_y)  //positions relative to family
 }
 
 
-function drawHaploType(pers_id){
-	/* TAG IT ONTO THEIR GROUP */
-}
-
-
 function finishDraw(){
-//	stage.add(line_layer);
-//	stage.add(node_layer);
 	stage.add(main_layer);
 }
