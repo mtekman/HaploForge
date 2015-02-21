@@ -41,16 +41,43 @@ function addDiamond([c_x,c_y], color){
 }
 
 
+// function addArc(fam_group, start, end){
+// 	var b_arc = new Kinetic.Shape({
+// 		drawFunc: function(canvas){
+// 			var ctx = canvas.getContext('2d');
+// 			ctx.beginPath();
+// 			ctx.moveTo(start.x, start.y);
+// 			ctx.bezierCurveTo( Math.floor( (start.x + end.x) / 2), start.y - 10);
+// 			ctx.bezierCurveTo( end.x, end.y );
+// 			ctx.endPath();
+// 			canvas.stroke(this);
+// 		},
+// 		stroke: 'black',
+// 		strokeWidth: 2
+// 	});
+
+// 	fam_group.add(b_arc);
+// 	return b_arc;
+// }
 
 
-function changeRLine(line, start, end){
-	var mid_y = Math.floor((start.y + end.y)/2),
-		m1    = {		x: start.x,		y: mid_y	},
-		m2    = {		x: end.x,       y: mid_y	};
+// function changeArc(
 
-	line.setPoints([start.x, start.y, m1.x, m1.y, m2.x, m2.y, end.x, end.y]);
-// 	line.setPoints([start.x, start.y, end.x, end.y]); // -- simple
+
+function changeRLine(line, start, end)
+{
+	if (!use_right_angles) line.setPoints([start.x, start.y, end.x, end.y]);
+	else {
+		var mid_y = Math.floor((start.y + end.y)/2),
+			m1    = {		x: start.x,		y: mid_y	},
+			m2    = {		x: end.x,       y: mid_y	};
+
+		line.setPoints([start.x, start.y, m1.x, m1.y, m2.x, m2.y, end.x, end.y]);
+	}
 }
+
+
+
 
 
 function addRLine(fam_group, start, end, consang=false){
@@ -109,12 +136,11 @@ function addPerson(person, fam_group,  t_x, t_y)  //positions relative to family
 		return shape;
 	}
 
-
 	//Add Shape and text Text
 	var shape = pedigreeShape();
 
 	var tex = new Kinetic.Text({
-		x: - (""+id+"").length*3,	y: nodeSize + 8,
+		x: - (""+id+"").length*3,	y: nodeSize + 10,
 		text: id,
 		fontSize: 'Calibri', //change to global setting
 		fill: default_stroke_color
@@ -132,19 +158,23 @@ function addPerson(person, fam_group,  t_x, t_y)  //positions relative to family
 	//On drag do
 	group.on('dragmove', function(e){
 		//Snap-to-grid  -- relative to parent (fam_group)
-		var x = e.target.attrs.x;
-		var	y = e.target.attrs.y;
-		group.setX( (Math.floor(x/grid_rezX)*grid_rezX) );
- 		group.setY( (Math.floor(y/grid_rezY)*grid_rezY) );
-
+		if (use_grid){
+			var x = e.target.attrs.x;
+			var	y = e.target.attrs.y;
+			group.setX( (Math.floor(x/grid_rezX)*grid_rezX) );
+			group.setY( (Math.floor(y/grid_rezY)*grid_rezY) );
+		}
 		redrawNodes(id, fam_group.attrs.id, true);
 	});
-
 	//Assume addFamily has already been called
 	fam_group.add(group);
 	return group;
 }
 
+
+function drawHaploType(pers_id){
+	/* TAG IT ONTO THEIR GROUP */
+}
 
 
 function finishDraw(){

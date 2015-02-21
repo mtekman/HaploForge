@@ -138,17 +138,19 @@ function redrawNodes(pers_id, fam_id, drawLinesToo=true)
 
 
 // Performs redrawNodes upon all
-function touchlines(){
+function touchlines(grid_use=true){
+	use_grid = grid_use;
+
 	for(var one in family_map){
-		for(var two in family_map[one]){
-
-			//simulate drag event
+		for(var two in family_map[one])
+		{	//simulate drag event
 			var e = new CustomEvent("dragmove", {target: {attrs: {x:10, y:10}}}),
-				o = unique_graph_objs[one].nodes[two];
+				o = unique_graph_objs[one].nodes[two].graphics;
 
-			o.graphics.dispatchEvent(e);
+			o.dispatchEvent(e);
 		}
 	}
+	use_grid = true;
 }
 
 
@@ -204,5 +206,14 @@ function spaceFamGroups(){
 	}
 }
 
+function linesShow(fid, show){
+	//Hide lines
+	var edges = unique_graph_objs[fid].edges;
+	for (var eid in edges)
+		show?edges[eid].graphics.show():edges[eid].graphics.hide();
+
+	main_layer.draw();
+
+}
 
 

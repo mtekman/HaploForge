@@ -13,7 +13,10 @@ var default_stroke_color = 'blue',
 var grid_rezY = nodeSize*6,
 	grid_rezX = nodeSize*2;
 
-var max_fam_width = 160;
+var max_fam_width = 160
+
+var use_right_angles = true,
+	use_grid = true;
 
 
 var col_affs = [

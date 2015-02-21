@@ -1,26 +1,35 @@
 <!DOCTYPE html PUBLIC"-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
-<head>
-<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
-<meta content="utf-8" http-equiv="encoding">
-<title>Haplotype Reconstruction</title>
-<h1> test </h1>
-<link rel="stylesheet" href="main.css" type="text/css" >
-</head>
-<body>
-  <input type="file" id="file_upload" onchange="processFile();" />
-    <div id='container' ></div>
-    <canvas id="canvy" />
+    <head>
+        <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+        <meta content="utf-8" http-equiv="encoding">
+        <title>Haplotype Reconstruction</title>
+        <h1> test </h1>
 
-    <script src="JS/frameworks/kinetic-v5.1.0.js" ></script>
-    <script src="JS/graph/graphics/kinetic_graphics.js" ></script>
 
-    <script src="JS/globals.js" ></script>
-    <script src="JS/pedigree.js" ></script>
+        <link rel="stylesheet" type="text/css" href="main.css" >
+    </head>
+    <body>
+        <div id="buttons" >
+            <input type="file" id="file_upload" onchange="processFile();" /><br />
+            <input type="checkbox" id="rlines" onchange="toggleRAng()"  checked=true >rlines</input><br />
+            <input type="button" id="haps" onclick="setAlign()"  checked=true >change</input><br />
+        </div>
 
-    <script src="JS/graph/graph_draw.js" ></script>
-    <script src="JS/graph/init_graph.js" ></script>
+        <div id='container' ><!-- StRaNgE dRaGoNs --></div>
 
-    <script src="JS/filehandler.js" ></script>
-</body>
+        <script src="JS/frameworks/kinetic-v5.1.0.js" ></script>
+        <script src="JS/graph/graphics/kinetic_graphics.js" ></script>
+
+        <script src="JS/globals.js" ></script>
+        <script src="JS/pedigree.js" ></script>
+
+        <script src="JS/graph/graph_draw.js" ></script>
+        <script src="JS/graph/init_graph.js" ></script>
+        <script src="JS/graph/haplo_draw.js" ></script>
+
+        <script src="JS/button_actions.js" ></script>
+
+        <script src="JS/filehandler.js" ></script>
+    </body>
 </html>

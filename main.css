@@ -1,5 +1,13 @@
-#canvy {
-    border-radius: 5px;
-    border-style: "red solid";
-    background-color: "red";    
+#container {
+    background-color:#F9F6F2;
+	position:absolute;
+	left:0px;
+	top:0px;
+}
+
+#buttons {
+	position:absolute;
+	left:0px;
+	bottom:0px;
+	z-index:10;
 }
