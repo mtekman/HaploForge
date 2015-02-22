@@ -42,6 +42,7 @@ function transitionToggle(fam_id, toggler, lineswitch=true, use_y=true, groupmov
 				x: toggler?start_x:pos_pos.x,
 				y: toggler?start_y:pos_pos.y,
 				duration:0.8,								// Slightly faster than group
+				easing: Kinetic.Easings.EaseIn
 			});
 			tween.play();
 			start_x += spacingx;
@@ -73,7 +74,8 @@ function transitionToggle(fam_id, toggler, lineswitch=true, use_y=true, groupmov
 				linesShow(fam_id, true);
 				touchlines(!toggler);
 				transition_happening = false;
-			}
+			},
+			easing: Kinetic.Easings.EaseOut
 		});
 		tt.play();
 		transition_happening = true;
@@ -92,7 +94,8 @@ function transitionToggle(fam_id, toggler, lineswitch=true, use_y=true, groupmov
 // Start/Stop HaploMode
 function toggle_haplomode(fam_id)
 {
-	if (transition_happening) return; 						// Ignore overclicks
+	if (transition_happening)
+		return; 											// Ignore overclicks
 
 	if (toggle_horiz) toggle_horizAlign(fam_id);  			// Unalign if aligned first
 
