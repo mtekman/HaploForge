@@ -45,3 +45,7 @@ var generation_grid_ids = {}, //fam_id --> [generation array]
 // Button
 var butt_w = 50,
 	butt_h = 20;
+
+// Haplo
+var min_haplo_x = horiz_space,
+	max_haplo_x = horiz_space + 30;

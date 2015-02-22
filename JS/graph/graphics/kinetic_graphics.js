@@ -112,6 +112,11 @@ function addFamily(fam_id, sx, sy){
 	})
 	g.add(t);
 
+	g.on('dblclick', function(){
+		toggle_haplomode(fam_id);
+		g.moveToTop();
+	});
+
 	main_layer.add(g);
 	return g;
 }

@@ -7,5 +7,5 @@ function toggleRAng(){
 }
 
 function setAlign(){
-	toggle_haplomode(1004);
+//	toggle_haplomode();
 }
