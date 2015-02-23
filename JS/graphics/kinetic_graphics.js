@@ -10,6 +10,8 @@ var stage = new Kinetic.Stage({
 
 var main_layer = new Kinetic.Layer();
 
+//Create a seperate layer for haplomode!!!!
+
 
 // ------------ Kinetic Tools --------------
 function addSquare([c_x,c_y], color)
@@ -129,14 +131,14 @@ function addFamily(fam_id, sx, sy){
 
 
 /* This should draw all haplos in a loop */
-function addHaploBlocks(pers_grp, data){
+function addHaploBlocks(data){
 	var b1 = data[0],
 		b2 = data[1];
 
-	var grp = new Kinetic.Group({ x:0, y:(2*nodeSize)});
+	var grp = new Kinetic.Group({ x:0, y:((2*nodeSize)+10)});
 
 	var ind = 0;
-	while (++ind < b1.length){
+	while (ind < b1.length){
 		var tex = new Kinetic.Text({
 			x:-nodeSize,
 			y:ind*10,
@@ -145,9 +147,9 @@ function addHaploBlocks(pers_grp, data){
 			fontSize: 10,
 			fill: 'black'
 		});
+		ind ++;
 		grp.add(tex);
 	}
-	pers_grp.add(grp);
 	return grp;
 }
 

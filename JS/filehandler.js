@@ -10,7 +10,29 @@ function processInput(text_unformatted, type)
         var header_lines = [],
             start_extract = -1
 
-        for (var l=0; l< text.length; l++){
+
+		function handleHeaders(){
+			var count_markers = 0;                              //Process header lines --> Transpose matrix
+			//
+			for (var col=start_extract; col < header_lines[0].length; col++){
+				var col_string = "";
+
+				for (var row=header_lines.length; row > 0 ;)
+					col_string += header_lines[--row][col];
+
+				col_string = col_string.trim();
+
+				if (col_string!=="") marker_map[col_string] = count_markers++;
+
+			}
+			assert(Object.keys(marker_map).length === num_alleles_markers,
+				   "Marker map length does not match with haplo data: "
+				   + Object.keys(marker_map).length +" and " + num_alleles_markers);
+		};
+
+
+
+		for (var l=0; l< text.length; l++){
             var line = text[l];
 
             if (line.length < 5 ) continue;
@@ -46,21 +68,8 @@ function processInput(text_unformatted, type)
             }
         }
 
-        var count_markers = 0;                              //Process header lines --> Transpose matrix
-                                                            //
-        for (var col=start_extract; col < header_lines[0].length; col++){
-            var col_string = "";
+		handleHeaders();
 
-            for (var row=header_lines.length; row > 0 ;)
-                col_string += header_lines[--row][col];
-
-            col_string = col_string.trim();
-
-            if (col_string!=="") marker_array.push(col_string);
-        }
-        assert(marker_array.length === num_alleles_markers,
-               "Marker map length does not match with haplo data: "
-               + marker_array.length+" and " + num_alleles_markers);
     }
 
     else if (type === "Other"){}
@@ -79,6 +88,7 @@ function processFile() {
         populateGrids_and_UniqueObjs();
         graphInitPos(nodeSize + 10, grid_rezY);
 
+		assignHGroups();
     };
     lr.readAsText(file);
 

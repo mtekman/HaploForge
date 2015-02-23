@@ -1,22 +1,21 @@
-I had the sudden crazy idea to render haplotypes using three.js
-
-I just need to know whether the breakpoints/colouring are determined by Haplopainter or by allegro.
-Update: Determined by Haplopainter.
-
- - Functions to consider:
-   - ShuffleFounderColors();
-      - probably randomizes colours for already split data
-   - ProcessHaplotypes();
-      - Real fun begins at line 3318, where haplotypes are derived
-   - RedrawPed();	
-   - AdjustView() if !$batch;	
-   - DuplicateHaplotypes()
-
-Steps:
- - Render each haplotype number as an object node
- - Guess each node's inheritance by crawling up tree for unambigious alleles
- - for ambiguous alleles;
-    - implement viterbi
-    - work to unify both methods
 
 
+Haplotypes should have their own layer for quicker rendering:
+	On entering haplomode:
+	- Move current pedigree objects from main_layer to haplo_layer
+	- Transition to alignment
+	- render haplotypes on hapo_layer
+
+	On leaving haplomode:
+	- unload haplotypes
+	- Transition out of alignment
+	- move current pedigree from haplo_layer to main_layer
+	- haplo_layer.clear()
+
+
+
+Drag and scroll haplotypes:
+	- window = 15
+	- A view of about window haplotypes at any time,
+	  with the next window loaded in with a scroll up and
+	  the old window scrolled out of view and unloaded

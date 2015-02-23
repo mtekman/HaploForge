@@ -36,8 +36,8 @@ function longestCommon(alle1, alle2) {
 		var rez = {start:s_i, end:f_i};
 		found_sequences[f_i - s_i]= rez;
 	}
-// 	console.log(found_sequences);
-// 	console.log(alle1+"  "+alle2);
+	// 	console.log(found_sequences);
+	// 	console.log(alle1+"  "+alle2);
 
 	return found_sequences;
 }
@@ -98,9 +98,9 @@ function assignHGroups()
 					fath_hp = family_map[fam][fath_id].haplo_data;
 
 				child2parent_link(pers_hp, moth_hp, fath_hp);
-				console.log( pers_id, '-->', pers_hp );
 			}
 		}
+		console.log("hgroups fam =" + fam);
 	}
 }
 
@@ -109,41 +109,89 @@ function removeAmbi(){
 
 }
 
-//Third pass -- draw
-function addHaplos(){
-	for (var fam in generation_grid_ids) {
-		// Skip the first generation
-		for (var g = 1; g < generation_grid_ids[fam].length; g++)
+
+//Third pass -- add (do not draw)
+var haplos_generated = {};
+
+function addHaplos(fam, start_marker= 0, end_marker= 0){
+
+	var sta_index = 0,
+		end_index = HAP_DRAW_LIM;
+
+	if(start_marker !=0 && end_marker !=0 ){
+		sta_index = marker_map[start_marker],
+		end_index = marker_map[end_marker];
+
+		assert(end_index - sta_index <= HAP_DRAW_LIM, "data exceeds haplo limit");
+	}
+	else console.log("showing only the first", HAP_DRAW_LIM," for now.");
+
+
+	// Skip the first generation
+	for (var g = 0; g < generation_grid_ids[fam].length; g++)
+	{
+		for (var p =0; p < generation_grid_ids[fam][g].length; p++)
 		{
-			for (var p =0; p < generation_grid_ids[fam][g].length; p++)
-			{
-				var pers_id = generation_grid_ids[fam][g][p];
-				var	pers_hp = family_map[fam][pers_id].haplo_data;
-// 				console.log(pers_id, unique_graph_objs[fam]);
-				var	g_pers  = unique_graph_objs[fam].nodes[pers_id];
+			var pers_id = generation_grid_ids[fam][g][p];
+			var	pers_hp = family_map[fam][pers_id].haplo_data;
+
+			var data_alleles = [];
+			for (var al = 0; al < pers_hp.length; al++)
+				data_alleles.push(pers_hp[al].slice(sta_index, end_index+1));
+
+// 			console.log(pers_id, pers_hp);
+			var	g_pers  = unique_graph_objs[fam].nodes[pers_id];
 
 
-				var haplo_groupGFX = addHaploBlocks(g_pers.graphics, pers_hp);
-				g_pers.haplo_group = haplo_groupGFX;
-			}
+			g_pers.haplo_group = addHaploBlocks( data_alleles );
+			g_pers.graphics.add(g_pers.haplo_group);
+		}
+	}
+	haplos_generated[fam] = true;
+	console.log("adding "+fam+" haplos");
+	main_layer.draw();
+
+}
+
+
+function showHaplos(fam){
+	if (!(fam in haplos_generated)){
+		console.log("Haplos not generated for "+fam+", doing now...");
+		addHaplos(fam);
+		return;
+	}
+
+	for (var g = 1; g < generation_grid_ids[fam].length; g++)
+	{
+		for (var p =0; p < generation_grid_ids[fam][g].length; p++)
+		{
+			var pers_id = generation_grid_ids[fam][g][p];
+			var	g_pers  = unique_graph_objs[fam].nodes[pers_id];
+
+			g_pers.haplo_group.show();
 		}
 	}
 	main_layer.draw();
 }
 
 
-function hideHaplos(){
-	for (var fam in generation_grid_ids) {
-		// Skip the first generation
-		for (var g = 1; g < generation_grid_ids[fam].length; g++)
-		{
-			for (var p =0; p < generation_grid_ids[fam][g].length; p++)
-			{
-				var pers_id = generation_grid_ids[fam][g][p];
-				var	g_pers  = unique_graph_objs[fam].nodes[pers_id];
 
-				g_pers.haplo_group.hide();
-			}
+
+function hideHaplos(fam){
+	if (!(fam in haplos_generated)){
+		console.log("Haplos not generated, doing nothing");
+		return;
+	}
+
+
+	for (var g = 1; g < generation_grid_ids[fam].length; g++)
+	{
+		for (var p =0; p < generation_grid_ids[fam][g].length; p++)
+		{
+			var pers_id = generation_grid_ids[fam][g][p];
+			var	g_pers  = unique_graph_objs[fam].nodes[pers_id];
+
+			g_pers.haplo_group.hide();
 		}
 	}
 	main_layer.draw();

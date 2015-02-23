@@ -100,7 +100,7 @@ function toggle_haplomode(fam_id)
 
 	if (toggle_horiz) {
 		toggle_horizAlign(fam_id);  			// Unalign if aligned first
-		hideHaplos(); 							// Hide Haplotypes if shown
+		toggle_haplotypes(fam_id); 							// Hide Haplotypes if shown
 	}
 
 	toggle_haplo = !toggle_haplo;
@@ -155,15 +155,7 @@ function toggle_horizAlign(fam_id)
 
 //Within haplomode
 function toggle_haplotypes(fam_id){
-	toggle_haplobutton = !toggle_haplobutton;
-
-	if(toggle_haplobutton){
-		assignHGroups();
-		addHaplos();
-	}
-	else {
-		hideHaplos();
-	}
+	(toggle_haplobutton = !toggle_haplobutton)?showHaplos(fam_id):hideHaplos(fam_id);
 }
 
 

@@ -1,6 +1,6 @@
 //General storage, global scope
 var family_map = {},            // fam_id ---> pedigree map --> person
-    marker_array = [];          // array index  --> rs_id
+	marker_map = {};          // rs_id --> array index
 
 // Draw globals
 var nodeSize = 10;
@@ -14,6 +14,8 @@ var grid_rezY = nodeSize*6,
 	grid_rezX = nodeSize*2;
 
 var max_fam_width = 160
+
+var HAP_DRAW_LIM = 10; // No more than 30 haplotypes on screen
 
 var use_right_angles = true,
 	use_grid = true;
