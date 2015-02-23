@@ -23,7 +23,7 @@ function processInput(text_unformatted, type)
 			else{                                                        //Populate family map
             	                                                         //
                 var people_info = line.substring(0,start_extract-1).trim().split(/\s+/).map(toInt),
-                    haplo_info = line.substring(start_extract).trim().split(/\s+/).map(toInt);
+                    haplo_info  = line.substring(start_extract).trim().split(/\s+/).map(toHMap);
 
                 var fam = people_info[0], id  = people_info[1],
                     pat = people_info[2], mat = people_info[3],
@@ -58,7 +58,7 @@ function processInput(text_unformatted, type)
 
             if (col_string!=="") marker_array.push(col_string);
         }
-        assert(marker_array.length == num_alleles_markers,
+        assert(marker_array.length === num_alleles_markers,
                "Marker map length does not match with haplo data: "
                + marker_array.length+" and " + num_alleles_markers);
     }

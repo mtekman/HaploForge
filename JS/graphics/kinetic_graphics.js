@@ -96,6 +96,12 @@ function addRLine(fam_group, start, end, consang=false){
 }
 
 
+
+function finishDraw(){
+	stage.add(main_layer);
+}
+
+
 // ------- Family Functions --------------
 function addFamily(fam_id, sx, sy){
 	var g = new Kinetic.Group({
@@ -122,13 +128,42 @@ function addFamily(fam_id, sx, sy){
 }
 
 
+/* This should draw all haplos in a loop */
+function addHaploBlocks(pers_grp, data){
+	var b1 = data[0],
+		b2 = data[1];
+
+	var grp = new Kinetic.Group({ x:0, y:(2*nodeSize)});
+
+	var ind = 0;
+	while (++ind < b1.length){
+		var tex = new Kinetic.Text({
+			x:-nodeSize,
+			y:ind*10,
+			text: b1[ind].data+"  "+b2[ind].data,
+			fontFamily: "Arial",
+			fontSize: 10,
+			fill: 'black'
+		});
+		grp.add(tex);
+	}
+	pers_grp.add(grp);
+	return grp;
+}
+
+
+
+
+
 function addPerson(person, fam_group,  t_x, t_y)  //positions relative to family group
 {
 	var gender = person.gender,
-		    id = person.id,
-		   aff = person.affected;
+		id = person.id,
+		aff = person.affected;
 
-	function pedigreeShape(){
+
+	//Add Shape and text Text
+	var makeshape = function pedigreeShape(){
 		var shape = 0;
 
 		function addMale  () {  shape = addSquare ([0,0], col_affs[aff])   }
@@ -143,10 +178,7 @@ function addPerson(person, fam_group,  t_x, t_y)  //positions relative to family
 				assert(false, "No gender for index "+gender);
 		}
 		return shape;
-	}
-
-	//Add Shape and text Text
-	var shape = pedigreeShape();
+	};
 
 	var tex = new Kinetic.Text({
 		x: - (""+id+"").length*3,	y: nodeSize + 10,
@@ -160,7 +192,7 @@ function addPerson(person, fam_group,  t_x, t_y)  //positions relative to family
 		x: t_x, y: t_y,
 		draggable: true
 	});
-	group.add(shape);
+	group.add(makeshape());
 	group.add(tex);
 
 
@@ -175,12 +207,10 @@ function addPerson(person, fam_group,  t_x, t_y)  //positions relative to family
 		}
 		redrawNodes(id, fam_group.attrs.id, true);
 	});
+
 	//Assume addFamily has already been called
 	fam_group.add(group);
 	return group;
 }
 
 
-function finishDraw(){
-	stage.add(main_layer);
-}

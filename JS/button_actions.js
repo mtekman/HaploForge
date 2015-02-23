@@ -6,6 +6,7 @@ function toggleRAng(){
 	main_layer.draw();
 }
 
-function setAlign(){
-//	toggle_haplomode();
+function playalong(){
+	assignHGroups();
+	addHaplos();
 }

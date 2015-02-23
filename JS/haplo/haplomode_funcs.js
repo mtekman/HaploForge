@@ -20,16 +20,14 @@ function addHaploScreen(wi, he, fam_id){
 	var group = new Kinetic.Group({});
 
 	var bg = new Kinetic.Rect({
-		x: -nodeSize*2, y:-nodeSize,
-		width: wi,
-		height: he + nodeSize,
+		x: -nodeSize*2,            y:-nodeSize,
+		width: wi,           	   height: he + nodeSize,
 		fill: 'white',
-		stroke: 'black',
-		strokeWidth: 2
+		stroke: 'black', 		   strokeWidth: 2
 	});
 
 	var align_button = addHMButton("Align", function(){ toggle_horizAlign(fam_id);});
-	var haplo_button = addHMButton("Haplo", function(){ toggle_horizAlign(fam_id);});
+	var haplo_button = addHMButton("Haplo", function(){ toggle_haplotypes(fam_id);});
 
 	group.add(bg);
 	group.add(align_button);

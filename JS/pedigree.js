@@ -7,10 +7,10 @@ var Person = function(id, gender, affected, mother, father){
 	this.affected = affected ; 	     // 0,1,2
 
 	this.mother = mother; this.father = father;
-	this.haplo_data = [];
+	this.haplo_data = [];  			// marker_index ---> {data:, hgroup:}
 
     this.mates = [];
-    this.children = [] //Added by connect method later
+    this.children = [] 				// added by connect method later
 };
 
 Person.prototype.isMate = function(pers2){

@@ -1,5 +1,6 @@
 var toggle_haplo = false,
 	toggle_horiz = false,
+	toggle_haplobutton = false,
 	backg;
 
 
@@ -15,7 +16,7 @@ function transitionToggle(fam_id, toggler, lineswitch=true, use_y=true, groupmov
 		start_y = grid_rezY/2;
 
 
-//	n_caa.group.moveToTop();
+	//	n_caa.group.moveToTop();
 	linesShow(fam_id, false); 								// Hide lines during transition
 
 	var num_movers = Object.keys(n_caa.nodes).length;
@@ -97,7 +98,10 @@ function toggle_haplomode(fam_id)
 	if (transition_happening)
 		return; 											// Ignore overclicks
 
-	if (toggle_horiz) toggle_horizAlign(fam_id);  			// Unalign if aligned first
+	if (toggle_horiz) {
+		toggle_horizAlign(fam_id);  			// Unalign if aligned first
+		hideHaplos(); 							// Hide Haplotypes if shown
+	}
 
 	toggle_haplo = !toggle_haplo;
 
@@ -147,3 +151,20 @@ function toggle_horizAlign(fam_id)
 	else
 		transitionToggle(fam_id, toggle_horiz, lineswitch=true, use_y=false, groupmove=false);
 }
+
+
+//Within haplomode
+function toggle_haplotypes(fam_id){
+	toggle_haplobutton = !toggle_haplobutton;
+
+	if(toggle_haplobutton){
+		assignHGroups();
+		addHaplos();
+	}
+	else {
+		hideHaplos();
+	}
+}
+
+
+
