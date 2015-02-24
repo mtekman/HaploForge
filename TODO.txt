@@ -1,6 +1,6 @@
 
 
-Haplotypes should have their own layer for quicker rendering:
+Haplotypes should have their own layer for quicker rendering:  [ DONE -- no significant improvement in anims]
 	On entering haplomode:
 	- Move current pedigree objects from main_layer to haplo_layer
 	- Transition to alignment

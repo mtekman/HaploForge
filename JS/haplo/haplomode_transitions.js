@@ -4,10 +4,12 @@ var toggle_haplo = false,
 	backg;
 
 
-var transition_happening=false;
+var transition_happening=false,
+	backg;
 
 // General Transitions for nodes and or groups of a given fam
-function transitionToggle(fam_id, toggler, lineswitch=true, use_y=true, groupmove=true)
+// Assumes haplo_layer usage
+function transitionToggle(fam_id, toggler, lineswitch=true, use_y=true, groupmove=true, onfinishfunc=0)
 {
 	var gen_lines = generation_grid_ids[fam_id],
 		n_caa = unique_graph_objs[fam_id];
@@ -29,22 +31,27 @@ function transitionToggle(fam_id, toggler, lineswitch=true, use_y=true, groupmov
 	for (var g=0; g < gen_lines.length; g++){
 		for (var c=0; c < gen_lines[g].length; c++){
 			var ch_id = gen_lines[g][c],
-				n_chl = n_caa.nodes[ch_id];
+				n_chl = n_caa.nodes[ch_id],
+				gfx = n_chl.graphics;
 
 			n_chl.start_pos = n_chl.start_pos || [];
 			var pos_loc = n_chl.start_pos,
 				pos_pos;
 
-			if (toggler) pos_loc.push( n_chl.graphics.getPosition() );
+			if (toggler) pos_loc.push( gfx.getPosition() );
 			else pos_pos = pos_loc.pop();
 
+
+			// Set animation
 			var tween = new Kinetic.Tween({
-				node: n_chl.graphics,
+				node: gfx,
 				x: toggler?start_x:pos_pos.x,
 				y: toggler?start_y:pos_pos.y,
 				duration:0.8,								// Slightly faster than group
 				easing: Kinetic.Easings.EaseIn
 			});
+
+
 			tween.play();
 			start_x += spacingx;
 		}
@@ -75,6 +82,8 @@ function transitionToggle(fam_id, toggler, lineswitch=true, use_y=true, groupmov
 				linesShow(fam_id, true);
 				touchlines(!toggler);
 				transition_happening = false;
+				if (onfinishfunc!=0) onfinishfunc();
+				console.log("current_layer= "+n_caa.group.parent.attrs.id);
 			},
 			easing: Kinetic.Easings.EaseOut
 		});
@@ -98,18 +107,14 @@ function toggle_haplomode(fam_id)
 	if (transition_happening)
 		return; 											// Ignore overclicks
 
-	if (toggle_horiz) {
-		toggle_horizAlign(fam_id);  			// Unalign if aligned first
-		toggle_haplotypes(fam_id); 							// Hide Haplotypes if shown
-	}
+	if (toggle_horiz) toggle_horizAlign(fam_id); 			// Unalign if aligned first
+	if (toggle_haplobutton) toggle_haplotypes(fam_id);			// Hide Haplotypes if shown
+
 
 	toggle_haplo = !toggle_haplo;
 
-
-
-
-	var final_pos = transitionToggle(fam_id, toggle_haplo, lineswitch=true, use_y=true),
-		n_caa     = unique_graph_objs[fam_id];
+	var	n_caa     = unique_graph_objs[fam_id],
+		grp       = n_caa.group;
 
 	if (toggle_haplo){
 
@@ -120,20 +125,33 @@ function toggle_haplomode(fam_id)
 			fill: 'black',
 			opacity:0.5
 		});
+		grp.remove(); 										  // remove from parent but do not destroy;
+		haplo_layer.add(grp); 								  // add to haplo
 
-		var h_screen = addHaploScreen(final_pos.x, final_pos.y, fam_id);
+		var final_pos = transitionToggle(fam_id, toggle_haplo, lineswitch=true, use_y=true);
 
-		n_caa.haplo_background = h_screen;
+		n_caa.haplo_panel = addHaploScreen(final_pos.x, final_pos.y, fam_id);
+		n_caa.group.add(n_caa.haplo_panel);
+		n_caa.haplo_panel.moveToBottom();
 
-
-		n_caa.group.add(h_screen);
-		h_screen.moveToBottom();
-
-		main_layer.add(backg);
+		haplo_layer.add(backg);
 	}
 	else {
-		n_caa.haplo_background.remove();
-		backg.remove();
+		n_caa.haplo_panel.remove();
+		n_caa.haplo_panel.destroy();//
+
+		var callback = function(){
+			grp.remove(); 			  					  // remove from parent but do not destroy;
+			main_layer.add(grp); 						  // add to main
+			main_layer.draw();
+
+			haplo_layer.destroyChildren();
+		}
+
+		transitionToggle(fam_id, toggle_haplo, lineswitch=true, use_y=true, groupmove = true,
+						 onfinishfunc=callback);
+
+		backg.destroy();
 	}
 }
 

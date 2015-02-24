@@ -8,7 +8,8 @@ var stage = new Kinetic.Stage({
 /* All nodes (even across seperate families) share the same node layer,
    but are bound by family_group stored in unique_graph_objs[fam_id].group; */
 
-var main_layer = new Kinetic.Layer();
+var main_layer = new Kinetic.Layer({id:"main"}),
+	haplo_layer = new Kinetic.Layer({id:"haplo"});
 
 //Create a seperate layer for haplomode!!!!
 
@@ -101,6 +102,7 @@ function addRLine(fam_group, start, end, consang=false){
 
 function finishDraw(){
 	stage.add(main_layer);
+	stage.add(haplo_layer);
 }
 
 

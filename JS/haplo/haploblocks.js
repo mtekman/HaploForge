@@ -149,7 +149,7 @@ function addHaplos(fam, start_marker= 0, end_marker= 0){
 	}
 	haplos_generated[fam] = true;
 	console.log("adding "+fam+" haplos");
-	main_layer.draw();
+	haplo_layer.draw();
 
 }
 
@@ -161,7 +161,7 @@ function showHaplos(fam){
 		return;
 	}
 
-	for (var g = 1; g < generation_grid_ids[fam].length; g++)
+	for (var g = 0; g < generation_grid_ids[fam].length; g++)
 	{
 		for (var p =0; p < generation_grid_ids[fam][g].length; p++)
 		{
@@ -171,7 +171,7 @@ function showHaplos(fam){
 			g_pers.haplo_group.show();
 		}
 	}
-	main_layer.draw();
+	haplo_layer.draw();
 }
 
 
@@ -184,7 +184,7 @@ function hideHaplos(fam){
 	}
 
 
-	for (var g = 1; g < generation_grid_ids[fam].length; g++)
+	for (var g = 0; g < generation_grid_ids[fam].length; g++)
 	{
 		for (var p =0; p < generation_grid_ids[fam][g].length; p++)
 		{
@@ -194,7 +194,7 @@ function hideHaplos(fam){
 			g_pers.haplo_group.hide();
 		}
 	}
-	main_layer.draw();
+	haplo_layer.draw();
 }
 
 
