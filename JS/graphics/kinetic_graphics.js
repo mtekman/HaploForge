@@ -139,17 +139,17 @@ function addHaploBlocks(data){
 
 	var grp = new Kinetic.Group({ x:0, y:((2*nodeSize)+10)});
 
-	var ind = 0;
-	while (ind < b1.length){
+	var ind = -1;
+	while (++ind < b1.length){
+		console.log(ind);
 		var tex = new Kinetic.Text({
-			x:-nodeSize,
-			y:ind*10,
+			x:nodeSize,
+			y:ind*10 - nodeSize,
 			text: b1[ind].data+"  "+b2[ind].data,
 			fontFamily: "Arial",
 			fontSize: 10,
 			fill: 'black'
 		});
-		ind ++;
 		grp.add(tex);
 	}
 	return grp;

@@ -13,9 +13,15 @@ Haplotypes should have their own layer for quicker rendering:  [ DONE -- no sign
 	- haplo_layer.clear()
 
 
+Haplotypes should always be aligned [Done -- but with errors -- FIX!]
+
+
 
 Drag and scroll haplotypes:
 	- window = 15
 	- A view of about window haplotypes at any time,
 	  with the next window loaded in with a scroll up and
 	  the old window scrolled out of view and unloaded
+
+
+Xlinked scenario for haplotype reconstruction (two alleles to  choose from, not 4);

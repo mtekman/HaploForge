@@ -36,8 +36,6 @@ function longestCommon(alle1, alle2) {
 		var rez = {start:s_i, end:f_i};
 		found_sequences[f_i - s_i]= rez;
 	}
-	// 	console.log(found_sequences);
-	// 	console.log(alle1+"  "+alle2);
 
 	return found_sequences;
 }
@@ -54,7 +52,8 @@ function child2parent_link(pers_hp, moth_hp, fath_hp)
 
 	while (tmp_i++ < pers_hp.length)
 	{
-		// Each person's alleles' is one of four possible parental alleles
+		// Each person's alleles' is one of four possible parental alleles (autosomal)
+		// TODO: Sex-linked scenario
 		var a1 = fath_hp[0][tmp_i].data,
 			a2 = fath_hp[1][tmp_i].data,
 			a3 = moth_hp[0][tmp_i].data,
@@ -113,7 +112,7 @@ function removeAmbi(){
 //Third pass -- add (do not draw)
 var haplos_generated = {};
 
-function addHaplos(fam, start_marker= 0, end_marker= 0){
+function addHaplos(fam, parent_node, start_marker= 0, end_marker= 0){
 
 	var sta_index = 0,
 		end_index = HAP_DRAW_LIM;
@@ -144,72 +143,20 @@ function addHaplos(fam, start_marker= 0, end_marker= 0){
 
 
 			g_pers.haplo_group = addHaploBlocks( data_alleles );
-			g_pers.graphics.add(g_pers.haplo_group);
+
+			//set xcoords to that of g_pers
+			g_pers.haplo_group.setX( g_pers.graphics.getX() );
+
+			parent_node.add(g_pers.haplo_group);
 		}
 	}
 	haplos_generated[fam] = true;
 	console.log("adding "+fam+" haplos");
+
+	parent_node.show()
 	haplo_layer.draw();
 
 }
-
-
-function showHaplos(fam){
-	if (!(fam in haplos_generated)){
-		console.log("Haplos not generated for "+fam+", doing now...");
-		addHaplos(fam);
-		return;
-	}
-
-	for (var g = 0; g < generation_grid_ids[fam].length; g++)
-	{
-		for (var p =0; p < generation_grid_ids[fam][g].length; p++)
-		{
-			var pers_id = generation_grid_ids[fam][g][p];
-			var	g_pers  = unique_graph_objs[fam].nodes[pers_id];
-
-			g_pers.haplo_group.show();
-		}
-	}
-	haplo_layer.draw();
-}
-
-
-
-
-function hideHaplos(fam){
-	if (!(fam in haplos_generated)){
-		console.log("Haplos not generated, doing nothing");
-		return;
-	}
-
-
-	for (var g = 0; g < generation_grid_ids[fam].length; g++)
-	{
-		for (var p =0; p < generation_grid_ids[fam][g].length; p++)
-		{
-			var pers_id = generation_grid_ids[fam][g][p];
-			var	g_pers  = unique_graph_objs[fam].nodes[pers_id];
-
-			g_pers.haplo_group.hide();
-		}
-	}
-	haplo_layer.draw();
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

@@ -130,7 +130,14 @@ function toggle_haplomode(fam_id)
 
 		var final_pos = transitionToggle(fam_id, toggle_haplo, lineswitch=true, use_y=true);
 
-		n_caa.haplo_panel = addHaploScreen(final_pos.x, final_pos.y, fam_id);
+		console.log("1");
+		var panel_a_scroll = addHaploScreen(final_pos.x, final_pos.y, fam_id);
+		console.log("2");
+
+		n_caa.haplo_panel = panel_a_scroll[0];
+		n_caa.haplo_scroll = panel_a_scroll[1];
+		n_caa.haplo_pedbg = panel_a_scroll[2];
+
 		n_caa.group.add(n_caa.haplo_panel);
 		n_caa.haplo_panel.moveToBottom();
 
@@ -145,7 +152,7 @@ function toggle_haplomode(fam_id)
 			main_layer.add(grp); 						  // add to main
 			main_layer.draw();
 
-			haplo_layer.destroyChildren();
+//			haplo_layer.destroyChildren();
 		}
 
 		transitionToggle(fam_id, toggle_haplo, lineswitch=true, use_y=true, groupmove = true,
@@ -160,21 +167,63 @@ function toggle_haplomode(fam_id)
 function toggle_horizAlign(fam_id)
 {
 	if (transition_happening) return; 						// Ignore overclicks
-
-
 	toggle_horiz = !toggle_horiz;
 
-	if(toggle_horiz)
-		transitionToggle(fam_id, toggle_horiz, lineswitch=false, use_y=false, groupmove=false);
-	else
-		transitionToggle(fam_id, toggle_horiz, lineswitch=true, use_y=false, groupmove=false);
+	transitionToggle(fam_id, toggle_horiz, lineswitch=!toggle_horiz, use_y=false, groupmove=false);
+
+	function boxlim (horizontal){
+		var min_y = nodeSize*8; //starting point
+		if (horizontal) return min_y;
+		else
+			return min_y + ((nodeSize*2)+5)*(generation_grid_ids[fam_id].length-1);
+	}
+
+	var end_y = boxlim(toggle_horiz);
+
+
+
+	//Resize boxes dynamically:
+	var tt = new Kinetic.Tween({
+		node: unique_graph_objs[fam_id].haplo_pedbg,
+		height: end_y,
+		duration: 1
+	});
+	tt.play();
+
+	if (toggle_haplobutton){
+		var t2 = new Kinetic.Tween({
+			node: unique_graph_objs[fam_id].haplo_scroll,
+			y: end_y+nodeSize,
+			duration: 1
+		});
+		t2.play();
+	}
 }
 
 
 //Within haplomode
-function toggle_haplotypes(fam_id){
-	(toggle_haplobutton = !toggle_haplobutton)?showHaplos(fam_id):hideHaplos(fam_id);
+function toggle_haplotypes(fam){
+	toggle_haplobutton = !toggle_haplobutton;
+
+	var scroll_panel_grp = unique_graph_objs[fam].haplo_scroll;
+
+	if (!(fam in haplos_generated)){
+		if (toggle_haplobutton){
+			console.log("Haplos not generated for "+fam+", doing now...");
+			addHaplos(fam, scroll_panel_grp);
+		}
+		else console.log("Haplos not generated, doing nothing");
+		return;
+	}
+
+	toggle_haplobutton?scroll_panel_grp.show():scroll_panel_grp.hide();
+
+	scroll_panel_grp.getChildren().each(
+		function(n){
+			console.log(n);
+			toggle_haplobutton?scroll_panel_grp.add(n.haplo_group):n.haplo_group.remove();
+		}
+	);
+
+	haplo_layer.draw();
 }
-
-
-
