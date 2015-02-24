@@ -134,9 +134,10 @@ function toggle_haplomode(fam_id)
 		var panel_a_scroll = addHaploScreen(final_pos.x, final_pos.y, fam_id);
 		console.log("2");
 
-		n_caa.haplo_panel = panel_a_scroll[0];
-		n_caa.haplo_scroll = panel_a_scroll[1];
-		n_caa.haplo_pedbg = panel_a_scroll[2];
+		n_caa.haplo_panel  = panel_a_scroll[0]; 		// Entire panel
+		n_caa.haplo_scroll = panel_a_scroll[1]; 		// Scroll window (stays stationary
+		n_caa.haplo_area   = panel_a_scroll[2];  		// Haplotypes aregrouped (and draggable) here
+		n_caa.haplo_pedbg  = panel_a_scroll[3]; 		// Rect background
 
 		n_caa.group.add(n_caa.haplo_panel);
 		n_caa.haplo_panel.moveToBottom();
@@ -183,20 +184,18 @@ function toggle_horizAlign(fam_id)
 
 
 	//Resize boxes dynamically:
-	var tt = new Kinetic.Tween({
+	(new Kinetic.Tween({
 		node: unique_graph_objs[fam_id].haplo_pedbg,
 		height: end_y,
 		duration: 1
-	});
-	tt.play();
+	})).play();
 
 	if (toggle_haplobutton){
-		var t2 = new Kinetic.Tween({
+		(new Kinetic.Tween({
 			node: unique_graph_objs[fam_id].haplo_scroll,
-			y: end_y+nodeSize,
+			y: end_y,
 			duration: 1
-		});
-		t2.play();
+		})).play();
 	}
 }
 
@@ -205,7 +204,7 @@ function toggle_horizAlign(fam_id)
 function toggle_haplotypes(fam){
 	toggle_haplobutton = !toggle_haplobutton;
 
-	var scroll_panel_grp = unique_graph_objs[fam].haplo_scroll;
+	var scroll_panel_grp = unique_graph_objs[fam].haplo_area;
 
 	if (!(fam in haplos_generated)){
 		if (toggle_haplobutton){
@@ -218,12 +217,11 @@ function toggle_haplotypes(fam){
 
 	toggle_haplobutton?scroll_panel_grp.show():scroll_panel_grp.hide();
 
-	scroll_panel_grp.getChildren().each(
-		function(n){
-			console.log(n);
-			toggle_haplobutton?scroll_panel_grp.add(n.haplo_group):n.haplo_group.remove();
-		}
-	);
+// 	scroll_panel_grp.getChildren().each(
+// 		function(n){
+// 			toggle_haplobutton?scroll_panel_grp.add(n.haplo_group):n.haplo_group.remove();
+// 		}
+// 	);
 
 	haplo_layer.draw();
 }

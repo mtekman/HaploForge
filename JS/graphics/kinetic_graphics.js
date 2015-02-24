@@ -141,10 +141,9 @@ function addHaploBlocks(data){
 
 	var ind = -1;
 	while (++ind < b1.length){
-		console.log(ind);
 		var tex = new Kinetic.Text({
 			x:nodeSize,
-			y:ind*10 - nodeSize,
+			y:ind*HAP_VERT_SPA - nodeSize*2,
 			text: b1[ind].data+"  "+b2[ind].data,
 			fontFamily: "Arial",
 			fontSize: 10,
