@@ -56,6 +56,6 @@ function addHaploScreen(wi, he, fam_id)
 	total_group.add(ped_group);
 	total_group.add(scroll_window);
 
-	return [total_group, scroll_window, scroll_area, bg];
+	return [total_group, scroll_window, scroll_area, bg]; // read by toggle_haplomode in haplo/toggle.js
 }
 
