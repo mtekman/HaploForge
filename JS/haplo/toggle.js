@@ -118,11 +118,11 @@ function toggle_haplotypes(fam){
 		return;
 	}
 
-// 	scroll_panel_grp.show();
-
 	toggle_haplobutton?scroll_panel_grp.parent.show():scroll_panel_grp.parent.hide();
 
-	console.log(scroll_panel_grp);
+
+	console.log(unique_graph_objs[fam].nodes[generation_grid_ids[fam][0][0]]);
+
 
 // 	scroll_panel_grp.getChildren().each(
 // 		function(n){
