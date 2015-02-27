@@ -1,5 +1,3 @@
-//Third pass -- add (do not draw)
-var haplos_generated = {};
 
 function addHaplos(fam, parent_node, start_marker= 0, end_marker= 0){ //called by toggle_haplotypes in haplo/toggle.js
 
@@ -45,8 +43,6 @@ function addHaplos(fam, parent_node, start_marker= 0, end_marker= 0){ //called b
 			parent_node.add(g_pers.haplo_group);
 		}
 	}
-	haplos_generated[fam] = true;
-	console.log("adding "+fam+" haplos");
 
 	parent_node.parent.show();
 	haplo_layer.draw();

@@ -3,7 +3,7 @@ var transition_happening=false;
 
 // General Transitions for nodes and or groups of a given fam
 // Assumes haplo_layer usage
-function transitionToggle(fam_id, toggler, lineswitch=true, use_y=true, groupmove=true, onfinishfunc=0)
+function transitionToggle(fam_id, toggler, lineswitch=true, use_y=true, groupmove=true, onfinishfunc=0, draggable=true)
 {
 	var gen_lines = generation_grid_ids[fam_id],
 		n_caa = unique_graph_objs[fam_id];
@@ -34,6 +34,8 @@ function transitionToggle(fam_id, toggler, lineswitch=true, use_y=true, groupmov
 
 			if (toggler) pos_loc.push( gfx.getPosition() );
 			else pos_pos = pos_loc.pop();
+
+			gfx.setDraggable(draggable);
 
 
 			// Set animation

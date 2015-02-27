@@ -30,15 +30,13 @@ function toggle_haplomode(fam_id)
 		grp.remove(); 										  // remove from parent but do not destroy;
 		haplo_layer.add(grp); 								  // add to haplo
 
-		var final_pos = transitionToggle(fam_id, toggle_haplo, lineswitch=true, use_y=true);
+		var final_pos = transitionToggle(fam_id, toggle_haplo, lineswitch=true, use_y=true, groupmove=true, onfinishfunc=0, draggable=!toggle_haplo);
 
-		console.log("1");
 		var panel_a_scroll = addHaploScreen(final_pos.x, final_pos.y, fam_id);
-		console.log("2");
 
 		n_caa.haplo_panel  = panel_a_scroll[0]; 		// Entire panel
 		n_caa.haplo_scroll = panel_a_scroll[1]; 		// Scroll window (stays stationary
-		n_caa.haplo_area   = panel_a_scroll[2];  		// Haplotypes aregrouped (and draggable) here
+		n_caa.haplo_area   = panel_a_scroll[2];  		// Haplotypes are grouped (and draggable) here
 		n_caa.haplo_pedbg  = panel_a_scroll[3]; 		// Rect background
 
 		n_caa.group.add(n_caa.haplo_panel);
@@ -72,7 +70,7 @@ function toggle_horizAlign(fam_id)
 	if (transition_happening) return; 						// Ignore overclicks
 	toggle_horiz = !toggle_horiz;
 
-	transitionToggle(fam_id, toggle_horiz, lineswitch=!toggle_horiz, use_y=false, groupmove=false);
+	transitionToggle(fam_id, toggle_horiz, lineswitch=!toggle_horiz, use_y=false, groupmove=false, onfinishfunc=0, draggable=false);
 
 	function boxlim (horizontal){
 		var min_y = nodeSize*8; //starting point
@@ -109,26 +107,13 @@ function toggle_haplotypes(fam){
 
 	var scroll_panel_grp = unique_graph_objs[fam].haplo_area;
 
-	if (!(fam in haplos_generated)){
-		if (toggle_haplobutton){
-			console.log("Haplos not generated for "+fam+", doing now...");
-			addHaplos(fam, scroll_panel_grp);
-		}
-		else console.log("Haplos not generated, doing nothing");
-		return;
-	}
+	if (toggle_haplobutton)
+		addHaplos(fam, scroll_panel_grp);
+	else
+		scroll_panel_grp.destroyChildren();
+
 
 	toggle_haplobutton?scroll_panel_grp.parent.show():scroll_panel_grp.parent.hide();
-
-
-	console.log(unique_graph_objs[fam].nodes[generation_grid_ids[fam][0][0]]);
-
-
-// 	scroll_panel_grp.getChildren().each(
-// 		function(n){
-// 			toggle_haplobutton?scroll_panel_grp.add(n.haplo_group):n.haplo_group.remove();
-// 		}
-// 	);
 
 	haplo_layer.draw();
 }
