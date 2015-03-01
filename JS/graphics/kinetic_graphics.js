@@ -133,26 +133,31 @@ function addFamily(fam_id, sx, sy){
 
 
 /* This should draw all haplos in a loop */
-function addHaploBlocks(data){
+function addHaploBlocks(data, y_offs=0){
 	var b1 = data[0],
 		b2 = data[1];
 
 	var grp = new Kinetic.Group({ x:0, y:((2*nodeSize)+10)});
 
-	var ind = -1;
-	while (++ind < b1.length){
-		var tex = new Kinetic.Text({
-			x:nodeSize,
-			y:ind*HAP_VERT_SPA - nodeSize*2,
-			text: b1[ind].data+"  "+b2[ind].data,
-			fontFamily: "Arial",
-			fontSize: 10,
-			fill: 'black'
-		});
-		grp.add(tex);
-	}
+	var ind = -1, total_text="";
+	while (++ind < b1.length)
+		total_text += b1[ind].data + "   " + b2[ind].data +'\n';
+
+	var tex = new Kinetic.Text({
+		x:nodeSize,
+		y: y_offs - nodeSize*2,
+		text: total_text,
+		fontFamily: "Arial",
+		fontSize: 10,
+		fill: 'black'
+	});
+	grp.add(tex);
 	return grp;
 }
+
+
+
+
 
 
 

@@ -1,6 +1,7 @@
 var toggle_haplo = false,
 	toggle_horiz = false,
 	toggle_haplobutton = false,
+	transition_happening = false,
 	backg;
 
 // Start/Stop HaploMode
@@ -101,14 +102,16 @@ function toggle_horizAlign(fam_id)
 
 
 //Within haplomode
-function toggle_haplotypes(fam){
+function toggle_haplotypes(fam)
+{
+	if (transition_happening) return; 						// Ignore overclicks
 
 	toggle_haplobutton = !toggle_haplobutton;
 
 	var scroll_panel_grp = unique_graph_objs[fam].haplo_area;
 
 	if (toggle_haplobutton)
-		addHaplos(fam, scroll_panel_grp);
+		redrawHaplos(fam);
 	else
 		scroll_panel_grp.destroyChildren();
 

@@ -1,19 +1,26 @@
-
-function addHaplos(fam, parent_node, start_marker= 0, end_marker= 0){ //called by toggle_haplotypes in haplo/toggle.js
-
-	var sta_index = 0,
-		end_index = HAP_DRAW_LIM;
-
-	if(start_marker !=0 && end_marker !=0 ){
-		sta_index = marker_map[start_marker],
-		end_index = marker_map[end_marker];
-
-		assert(end_index - sta_index <= HAP_DRAW_LIM, "data exceeds haplo limit");
-	}
-	else console.log("showing only the first", HAP_DRAW_LIM," for now.");
+var sta_index = 0,
+	end_index = HAP_DRAW_LIM;
 
 
-	// Skip the first generation
+function addHaplos(fam, parent_node){ //called by toggle_haplotypes in haplo/toggle.js
+
+	//Add marker lines
+	var marker_text = function(){
+		var dd = [[],[]];
+
+		for (var d=sta_index; d <= end_index; d++){
+			dd[0].push( {data:""} );
+			dd[1].push( {data:marker_array[d]} );
+		}
+// 		console.log(dd);
+		return dd;
+	};
+	var fin = addHaploBlocks( marker_text() );
+	fin.setX( fin.getX() - 50 );
+
+	parent_node.add( fin );
+
+
 	for (var g = 0; g < generation_grid_ids[fam].length; g++)
 	{
 		for (var p =0; p < generation_grid_ids[fam][g].length; p++)
@@ -47,4 +54,33 @@ function addHaplos(fam, parent_node, start_marker= 0, end_marker= 0){ //called b
 	parent_node.parent.show();
 	haplo_layer.draw();
 
+}
+
+
+function redrawHaplos(fam_id){
+		var scroll_rect = unique_graph_objs[fam_id].haplo_scroll,
+			scroll_area = unique_graph_objs[fam_id].haplo_area;
+
+		var diff_y = scroll_rect.getY() - scroll_area.getY(),
+			index_start_delta = Math.floor( diff_y / HAP_VERT_SPA ) - 8;
+
+		scroll_area.destroyChildren();
+		scroll_area.setY(0);
+
+		sta_index += index_start_delta;
+		end_index += index_start_delta;
+
+// 		console.log("indexes = ", sta_index, end_index);
+// 		console.log("shifting by "+index_start_delta);
+
+		if (sta_index < 0){
+			sta_index = 0;
+			end_index = HAP_DRAW_LIM;
+		}
+		if (end_index > marker_array.length -1){
+			end_index = marker_array.length -1
+			sta_index = end_index - HAP_DRAW_LIM;
+		}
+
+		addHaplos(fam_id, scroll_area)
 }

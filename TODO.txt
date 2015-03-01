@@ -13,8 +13,7 @@ Haplotypes should have their own layer for quicker rendering:  [ DONE -- no sign
 	- haplo_layer.clear()
 
 
-Haplotypes should always be aligned [Done -- but with errors -- FIX!]
-
+Haplotypes should always be aligned [Done]
 
 
 Drag and scroll haplotypes:
@@ -22,6 +21,10 @@ Drag and scroll haplotypes:
 	- A view of about window haplotypes at any time,
 	  with the next window loaded in with a scroll up and
 	  the old window scrolled out of view and unloaded
+
+This is too slow?
+    - Too many kineticJS layers, maybe restrict it to the number of lines
+	  from the markers?
 
 
 Xlinked scenario for haplotype reconstruction (two alleles to  choose from, not 4);

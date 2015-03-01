@@ -22,7 +22,10 @@ function processInput(text_unformatted, type)
 
 				col_string = col_string.trim();
 
-				if (col_string!=="") marker_map[col_string] = count_markers++;
+				if (col_string!=="") {
+					marker_map[col_string] = count_markers++;
+					marker_array.push( col_string );
+				}
 
 			}
 			assert(Object.keys(marker_map).length === num_alleles_markers,
@@ -69,6 +72,10 @@ function processInput(text_unformatted, type)
         }
 
 		handleHeaders();
+
+		// Set HAP_DRAW_LIM to length of markers if dealing with a small set
+		if (marker_array.length-1 < HAP_DRAW_LIM)
+			HAP_DRAW_LIM = marker_array.length - 1;
 
     }
 

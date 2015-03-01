@@ -97,9 +97,6 @@ function redrawNodes(pers_id, fam_id, drawLinesToo=true)
 
 	if (last_gen.indexOf(pers_id)!== -1){
 
-		var parents_mateline = UUID('m', pers.father.id, pers.mother.id),
-			parents_ml_pos = edge_map[parents_mateline].graphics.getPoints();
-
 		for (var c=0; c < last_gen.length; c++){
 			var sib_id = last_gen[c],
 				n_sib = unique_graph_objs[fam_id].nodes[sib_id].graphics;
@@ -108,10 +105,16 @@ function redrawNodes(pers_id, fam_id, drawLinesToo=true)
 
 
 			if (drawLinesToo){ //Update childlines
-				var c_id = UUID('c', parents_mateline, sib_id);
+				var sib_pers = family_map[fam_id][sib_id],
+					sib_moth = sib_pers.mother.id,
+					sib_fath = sib_pers.father.id;  // safe to assume last gen has parents
 
-				var sm_x = Math.floor((parents_ml_pos[0]+parents_ml_pos[parents_ml_pos.length -2] )/2),
-					sm_y = parents_ml_pos[parents_ml_pos.length -1];
+				var m_id = UUID('m', sib_fath, sib_moth),
+					m_points = edge_map[m_id].graphics.getPoints();
+				var c_id = UUID('c', m_id, sib_id);
+
+				var sm_x = Math.floor((m_points[0]+m_points[m_points.length -2] )/2),
+					sm_y = m_points[m_points.length -1];
 
 				changeRLine(edge_map[c_id].graphics, {x:sm_x,y:sm_y}, n_sib.getPosition());
 			}
