@@ -56,7 +56,7 @@ function addHaploScreen(wi, he, fam_id)
 		}
 	});
 
-	scroll_area__.on('mouseup mouseout', function(){
+	scroll_area__.on('mouseup', function(){
 		redrawHaplos(fam_id);
 	});
 

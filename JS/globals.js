@@ -58,3 +58,6 @@ var butt_w = 50,
 // Haplo
 var min_haplo_x = horiz_space,
 	max_haplo_x = horiz_space + 30;
+
+
+var SEXLINKED = false;

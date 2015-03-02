@@ -70,8 +70,8 @@ function redrawHaplos(fam_id){
 		sta_index += index_start_delta;
 		end_index += index_start_delta;
 
-// 		console.log("indexes = ", sta_index, end_index);
-// 		console.log("shifting by "+index_start_delta);
+		console.log("indexes = ", sta_index, end_index);
+		console.log("shifting by "+index_start_delta);
 
 		if (sta_index < 0){
 			sta_index = 0;
