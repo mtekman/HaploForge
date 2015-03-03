@@ -25,8 +25,8 @@ function addHaplos(fam, parent_node){ //called by toggle_haplotypes in haplo/tog
 	{
 		for (var p =0; p < generation_grid_ids[fam][g].length; p++)
 		{
-			var pers_id = generation_grid_ids[fam][g][p];
-			var	pers_hp = family_map[fam][pers_id].haplo_data;
+			var pers_id = generation_grid_ids[fam][g][p],
+				pers_hp = family_map[fam][pers_id].haplo_data;
 
 			var data_alleles = [];
 			for (var al = 0; al < pers_hp.length; al++)

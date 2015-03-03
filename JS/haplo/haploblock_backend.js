@@ -2,7 +2,8 @@
 var haplo_blocks = {}; // fam_id --> [b1,b2,b3,b4,b5,b6]
 
 
-var founder_allele_map = {}; // fam_id --> founder_id --> [haplo]
+var founder_allele_map = {}; 	// fam_id --> founder_id --> [haplo]
+var founder_allele_groups = {}; // fam_id --> founder
 // Everyone else's alleles are built from these
 
 
@@ -47,6 +48,26 @@ function longestCommon(alle1, alle2) {
 
 
 var hgroups = {'f0':0, 'f1':1, 'm0':2, 'm1':3};
+
+
+function child2parent_pointer( pers_hp ,moth_hp, fath_hp, gender){
+	/* pseudo
+
+	Non-founder alleles should ALWAYS reference a founder allele.
+	This is done by checking data with parent data and pushing the pointer.
+
+	Might be good to replace hgroups with the founder allele group.
+
+	Questions:
+	 - How to populate founder allele groups?
+	 - What values do they take (index or id)?
+	 - How are they referenced? (map or array?)
+	 - How to set parental founhder alleles if they're founders. -- INIT STAGE
+
+	*/
+}
+
+
 
 /* All triplets who are pushed into this function, at least one of them is not a founder (pers_hp).
    I think the idea here is to push founder alleles designations down from founders to non-founders.
