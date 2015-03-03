@@ -169,6 +169,7 @@ function assignHGroups()
 			}
 		}
 		console.log("hgroups fam =" + fam);
+// 		console.log(founder_allele_map);
 	}
 }
 

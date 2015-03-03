@@ -35,9 +35,6 @@ function toInt(arg){                                // For some reason parseInt 
     return parseInt(arg);                           // as a lambda function arg.... wtf?
 }
 
-function toHMap(arg){
-	return {data: arg, hgroup: null};
-}
 
 function assert(bool, message){                     //General error handling
     if (!bool) throw new Error(message);

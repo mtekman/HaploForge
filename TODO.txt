@@ -17,14 +17,14 @@ Haplotypes should always be aligned [Done]
 
 
 Drag and scroll haplotypes:
-	- window = 15
-	- A view of about window haplotypes at any time,
+	- window = 20 												[ DONE --]
+	- A view of about window haplotypes at any time,            [ DONE ]
 	  with the next window loaded in with a scroll up and
 	  the old window scrolled out of view and unloaded
-
-This is too slow?
-    - Too many kineticJS layers, maybe restrict it to the number of lines
-	  from the markers?
+	- Window needs an adjuster to be dynamically set to show N markers
+	  - Adjuster could be a slider that represents all M markers with start and stop bars
 
 
-Xlinked scenario for haplotype reconstruction (two alleles to  choose from, not 4);
+
+Xlinked scenario for haplotype reconstruction (two alleles to  choose from, not 4)
+  -- implemented inheritance patterns, now need to display it using the X_Dom scenario

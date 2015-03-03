@@ -1,3 +1,12 @@
+function toHMap(arg){
+	return {
+		data: arg,
+		hgroup: null, 			// hgroup is which allele it came from the parent
+		founder_pointer: null 	// points to the founder allele group (retrieved from parent, and recursively points to founder allele group)
+	};
+}
+
+
 //"Reads the haplofile, maps the markers to array indices, and populates pedigree array with persons"
 function processInput(text_unformatted, type)
 {
@@ -34,7 +43,7 @@ function processInput(text_unformatted, type)
 		};
 
 
-
+		// Handle haplo data
 		for (var l=0; l< text.length; l++){
             var line = text[l];
 
