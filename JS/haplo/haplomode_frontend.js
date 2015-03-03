@@ -23,11 +23,12 @@ function addHaploScreen(wi, he, fam_id)
 	var ped_group = new Kinetic.Group();
 
 	var bg = new Kinetic.Rect({
-		x: +nodeSize*2,            y:-nodeSize,
+		x: +nodeSize*2,
+		y: -nodeSize,
 		width: wi - nodeSize*2,
 		height: he + nodeSize,
 		fill: 'white',
-		stroke: 'black', 		   strokeWidth: 2
+		stroke: 'black', 		   strokeWidth: 2,
 	});
 
 	var align_button = addHMButton("Align", function(){ toggle_horizAlign(fam_id);});
@@ -49,9 +50,12 @@ function addHaploScreen(wi, he, fam_id)
 	var scroll_area__ = new Kinetic.Group({
 		draggable:true,
 		dragBoundFunc: function(pos){
+			var group_loc = this.parent.getAbsolutePosition();
+
 			return {
-				x: this.parent.getAbsolutePosition().x,
-				y: (Math.floor(pos.y/ HAP_VERT_SPA) * HAP_VERT_SPA)
+				x: group_loc.x,
+				//y: (Math.floor(pos.y/ HAP_VERT_SPA) * HAP_VERT_SPA)
+				y: group_loc.y + (Math.floor((pos.y - group_loc.y)/ HAP_VERT_SPA) * HAP_VERT_SPA)
 			};
 		}
 	});

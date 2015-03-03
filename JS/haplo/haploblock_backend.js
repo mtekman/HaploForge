@@ -103,16 +103,16 @@ function child2parent_link(pers_hp, moth_hp, fath_hp, gender)
 		if (my_a1.data === a0){ 										// Add 0
 			my_a1.hgroup.push( hgroups['f0'] )
 
-			if (my_a2.data === a2) my_a2.hgroups.push( hgroups['m0'] ); // 02 scen;
-			if (my_a2.data === a3) my_a2.hgroups.push( hgroups['m1'] ); // 03 scen;
+			if (my_a2.data === a2) my_a2.hgroup.push( hgroups['m0'] ); // 02 scen;
+			if (my_a2.data === a3) my_a2.hgroup.push( hgroups['m1'] ); // 03 scen;
 		}
 
 
 		if (my_a1.data === a1){ 										// Add 1
 			my_a1.hgroup.push( hgroups['f1'] )
 
-			if (my_a2.data === a2) my_a2.hgroups.push( hgroups['m0'] ); // 12 scen;
-			if (my_a2.data === a3) my_a2.hgroups.push( hgroups['m1'] ); // 13 scen;
+			if (my_a2.data === a2) my_a2.hgroup.push( hgroups['m0'] ); // 12 scen;
+			if (my_a2.data === a3) my_a2.hgroup.push( hgroups['m1'] ); // 13 scen;
 		}
 	}
 }
