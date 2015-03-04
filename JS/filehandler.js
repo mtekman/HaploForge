@@ -1,7 +1,6 @@
 function toHMap(arg){
 	return {
 		data: arg,
-		hgroup: null, 			// hgroup is which allele it came from the parent
 		founder_pointer: null 	// points to the founder allele group (retrieved from parent, and recursively points to founder allele group)
 	};
 }
