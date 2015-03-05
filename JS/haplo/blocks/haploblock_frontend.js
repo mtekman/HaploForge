@@ -30,7 +30,7 @@ function addHaplos(fam, parent_node){ //called by toggle_haplotypes in haplo/tog
 
 			var data_alleles = [];
 			for (var al = 0; al < pers_hp.length; al++)
-				data_alleles.push(pers_hp[al].slice(sta_index, end_index+1));
+				data_alleles.push(pers_hp[al].data_array.slice(sta_index, end_index+1));
 
 // 			console.log(pers_id, pers_hp);
 			var	g_pers  = unique_graph_objs[fam].nodes[pers_id];

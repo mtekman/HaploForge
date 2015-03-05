@@ -28,3 +28,15 @@ Drag and scroll haplotypes:
 
 Xlinked scenario for haplotype reconstruction (two alleles to  choose from, not 4)
   -- implemented inheritance patterns, now need to display it using the X_Dom scenario
+
+
+
+
+**Future Optimizations:**
+ -- At the moment haplotypes are stored in an Object array of {data:0(1 or 2), pointer:}.
+    -- This is wasteful of course, since
+			a) data is not contiguous across indices
+			b) data is 64-bit for 2-bit data
+	-- A solution would be to use a JS byte-array, but you would need to implement an associative pointer array too for each data array.
+
+	  -- Do now or do later? It genuinely might not matter.

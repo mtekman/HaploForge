@@ -1,9 +1,16 @@
-function toHMap(arg){
-	return {
-		data: arg,
-		founder_pointer: null 	// points to the founder allele group (retrieved from parent, and recursively points to founder allele group)
-	};
-}
+// Each locus in each person's allele has {data} and a {founder pointer}
+var Allele = function(data){
+	this.data_array = new Int8Array(data);
+	this.pter_array = [];
+	// points to the founder allele group (retrieved from parent, and recursively points to founder allele group)
+
+	//In order to pass pointers, I need to add properties to color_groups
+	for (var i=0; i < data.length; i++)
+		this.pter_array.push( {color_group: []} ); 	//Array due to phase ambiguity
+
+
+};
+
 
 
 //"Reads the haplofile, maps the markers to array indices, and populates pedigree array with persons"
@@ -56,7 +63,10 @@ function processInput(text_unformatted, type)
 			else{                                                        //Populate family map
             	                                                         //
                 var people_info = line.substring(0,start_extract-1).trim().split(/\s+/).map(toInt),
-                    haplo_info  = line.substring(start_extract).trim().split(/\s+/).map(toHMap);
+                    haplo_daaaa = line.substring(start_extract).trim().split(/\s+/).map(toInt),
+					haplo_info = new Allele(haplo_daaaa);
+
+
 
                 var fam = people_info[0], id  = people_info[1],
                     pat = people_info[2], mat = people_info[3],
@@ -72,9 +82,9 @@ function processInput(text_unformatted, type)
                 family_map[fam][id].haplo_data.push( haplo_info );      //retrieves twice if needed, neater
 
                 if (num_alleles_markers === -1)
-                    num_alleles_markers = haplo_info.length;
+                    num_alleles_markers = haplo_info.data_array.length;
                 else
-                    assert(num_alleles_markers == haplo_info.length,
+                    assert(num_alleles_markers == haplo_info.data_array.length,
                            "Number of alleles do not match previous records: Line "+ l+ "!");
             }
         }

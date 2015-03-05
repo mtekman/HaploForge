@@ -1,26 +1,39 @@
 var hgroup_colors = {}; // fam_id --> [founder_id], where array index = color/group
 
 
-function initFounderAlleles( fid, id ){
-	var perc_hdata = family_map[fid][id].haplo_data; // {data:, hgroup:, founder_allele:}
-
+function initFounderAlleles( fid, id )
+{
 	// Add founder to color group.
 	if (!(fid in hgroup_colors))
 		hgroup_colors[fid] = [];
 
-	hgroup_colors[fid].push( id );
 
 
-	for (var i=0; i < perc_hdata.length; i++)
-		perc_hdata[i].founder_pointer = hgroup_colors[fid].length; // index is color group
+	var perc_hdata = family_map[fid][id].haplo_data;
+
+	for (var a = 0; a < perc_hdata.length; a++) 			// current allele
+	{
+		hgroup_colors[fid].push( id ); 						// Push the same guy twice for both alleles
+															// Different colors (indices) will refer to the same (duplicated) id
+
+		var color_group = hgroup_colors[fid].length;
 		/*
 		This is the color group. If it just pointed to it's data, then only a 0 1 or 2 would propogate down through
 		the pedigree. Which would be MEANINGLESS, since we want to trace specific colors to individuals.
 
 		Only founders get unique ones. Non-founders simply trace these from their parents.
-
 		*/
 
+
+
+		var	allele_ptrs = perc_hdata[a].pter_array; 		// [array of m pointers (for m markers)]
+
+		for (var i=0; i < allele_ptrs.length; i++)
+			allele_ptrs[i].color_group = color_group;
+
+	}
+
+	console.log("founder "+id, perc_hdata);
 }
 
 
@@ -29,44 +42,57 @@ function initFounderAlleles( fid, id ){
 
 	Some assumptions:
 	- Founder pointers are already set (for founders)
+	- Always two alleles
 	- Paternal allele is first, and maternal is second.
 */
 function child2parent_link(pers_hp, moth_hp, fath_hp, gender)
 {
-	assert( pers_hp.length === moth_hp.length
-		   && pers_hp.length === fath_hp.length, "Allele lengths dont match");
+	assert(pers_hp[0].data_array.length === moth_hp[0].data_array.length
+	    && pers_hp[0].data_array.length === fath_hp[0].data_array.length
+		&& pers_hp[1].data_array.length === moth_hp[1].data_array.length
+		&& pers_hp[1].data_array.length === fath_hp[1].data_array.length, "Allele lengths dont match");
 
 	var tmp_i = 0;
 
-	while (tmp_i++ < pers_hp.length)
+	while (tmp_i++ < pers_hp[0].data_array.length - 1)
 	{
 		// Each persons allele is one of four possible parental alleles (autosomal)
-		var a0 = fath_hp[0][tmp_i],
-			a1 = fath_hp[1][tmp_i],  // Y allele, potential pitfall here -- input rows either follow a specific XY order, or need to do postproc.
-			a2 = moth_hp[0][tmp_i],
-			a3 = moth_hp[1][tmp_i];
+		var a0_ht = fath_hp[0].data_array[tmp_i],
+			a1_ht = fath_hp[1].data_array[tmp_i],  // Y allele, potential pitfall here -- input rows either follow a specific XY order, or need to do postproc.
+			a2_ht = moth_hp[0].data_array[tmp_i],
+			a3_ht = moth_hp[1].data_array[tmp_i];
+
+		if (a0_ht === a1_ht && a1_ht === a2_ht && a2_ht === a3_ht  && a3_ht === 0) continue; // Skip dead markers
+
+		var a0_pr = fath_hp[0].pter_array[tmp_i].color_group,
+			a1_pr = fath_hp[1].pter_array[tmp_i].color_group,
+			a2_pr = moth_hp[0].pter_array[tmp_i].color_group,
+			a3_pr = moth_hp[1].pter_array[tmp_i].color_group;
+
 
 		/* -- Sex-linked and male scenario:
-  		Assuming XY and XX are alleles 0 1 2 3;
+   		 Assuming XY and XX are alleles 0 1 2 3;
 		  female: 0{2,3} = 02 03
 		    male: 1{2,3} = 12 13
 		 */
 		if (SEXLINKED && gender === 1){ 						 // Sexlinked and male
-			var x_all = pers_hp[0][tmp_i],
-				y_all = pers_hp[1][tmp_i];
+			var x_ht = pers_hp[0].data_array[tmp_i],
+				y_ht = pers_hp[1].data_array[tmp_i];
 
-			x_all.founder_pointer = x_all.founder_pointer || []; // We use arrays because phase might not be clear
-																 // But it should be after linkage, no?
+			var x_pr = pers_hp[0].pter_array[tmp_i].color_group,
+				y_pr = pers_hp[1].pter_array[tmp_i].color_group;
 
-			y_all.founder_pointer = [ a1.founder_pointer ];		 // No ambiguity there
+// 			x_pr = []; 							  // initialised here I guess
 
-
-			if (x_all.data === a2.data) x_all.founder_pointer.push( a2.founder_pointer );  // Maternal set both
-			if (x_all.data === a3.data) x_all.founder_pointer.push( a3.founder_pointer );
+			y_pr = [ a1_pr ];	 // No ambiguity there
 
 
-// 			if (x_all.founder_pointer.length > 1)
-// 				console.log("Ambiguous1", pers_hp.parent, x_all);
+			if (x_ht === a2_ht) x_pr.push( a2_pr );  // Maternal set both
+			if (x_ht === a3_ht) x_pr.push( a3_pr );
+
+
+			if (x_pr.length > 1)
+				console.log("Ambiguous1");
 
 			continue;
 		}
@@ -75,34 +101,33 @@ function child2parent_link(pers_hp, moth_hp, fath_hp, gender)
 		with the condition that the opposing allele must be chosen from the remaining sister pair:
 		e.g: {0,1}{2,3} = 02 03 12 13
 		 */
-		var my_a1 = pers_hp[0][tmp_i],
-			my_a2 = pers_hp[1][tmp_i];
+		var m1_ht = pers_hp[0].data_array[tmp_i],
+			m2_ht = pers_hp[1].data_array[tmp_i];
 
-		my_a1.founder_pointer = my_a1.founder_pointer || [];
-		my_a2.founder_pointer = my_a2.founder_pointer || [];
+		var m1_pr = pers_hp[0].pter_array[tmp_i].color_group,
+			m2_pr = pers_hp[1].pter_array[tmp_i].color_group;
 
-		if (my_a1.data === a0.data){ 										// Add 0
-			my_a1.founder_pointer.push( a0.founder_pointer )
+		if (m1_ht === a0_ht){ 						   // Add 0
+			m1_pr.push( a0_pr )
 
-			if (my_a2.data === a2.data) my_a2.founder_pointer.push( a2.founder_pointer ); // 02 scen;
-			if (my_a2.data === a3.data) my_a2.founder_pointer.push( a3.founder_pointer ); // 03 scen;
+			if (m2_ht === a2_ht) m2_pr.push( a2_pr );  // 02 scen;
+			if (m2_ht === a3_ht) m2_pr.push( a3_pr );  // 03 scen;
 
-// 			if (my_a2.founder_pointer.length > 1)
-// 				console.log("Ambiguous2", pers_hp.parent, my_a2, a0, a1, a2, a3);
-
-		}
-
-		if (my_a1.data === a1.data){ 										// Add 1
-			my_a1.founder_pointer.push( a1.founder_pointer )
-
-			if (my_a2.data === a2.data) my_a2.founder_pointer.push( a2.founder_pointer ); // 12 scen;
-			if (my_a2.data === a3.data) my_a2.founder_pointer.push( a3.founder_pointer ); // 13 scen;
-
-// 			if (my_a2.founder_pointer.length > 1)
-// 				console.log("Ambiguous3", pers_hp.parent, my_a2, a0, a1, a2, a3);
+			if (m2_pr.length > 1)
+				console.log("Ambiguous2", m2_pr, a0_ht, a1_ht, a2_ht, a3_ht);
 
 		}
-		// Possible to get 4 pointers for my_a2
+
+		if (m1_ht === a1_ht){ 						  // Add 1
+			m1_pr.push( a1_pr )
+
+			if (m2_ht === a2_ht) m2_pr.push( a2_pr ); // 12 scen;
+			if (m2_ht === a3_ht) m2_pr.push( a3_pr ); // 13 scen;
+
+// 			if (m2_pr.length > 1)
+// 				console.log("Ambiguous3", m2_ht, a0_ht, a1_ht, a2_ht, a3_ht);
+		}
+		// Possible to get 4 pointers for m2_ht
 	}
 }
 
