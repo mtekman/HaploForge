@@ -141,7 +141,7 @@ function addHaploBlocks(data, y_offs=0){
 
 	var ind = -1, total_text="";
 	while (++ind < b1.length)
-		total_text += b1[ind].data + "   " + b2[ind].data +'\n';
+		total_text += b1[ind] + "   " + b2[ind] +'\n';
 
 	var tex = new Kinetic.Text({
 		x:nodeSize,

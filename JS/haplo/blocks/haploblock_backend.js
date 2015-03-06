@@ -7,15 +7,12 @@ function initFounderAlleles( fid, id )
 	if (!(fid in hgroup_colors))
 		hgroup_colors[fid] = [];
 
-
-
 	var perc_hdata = family_map[fid][id].haplo_data;
 
 	for (var a = 0; a < perc_hdata.length; a++) 			// current allele
 	{
 		hgroup_colors[fid].push( id ); 						// Push the same guy twice for both alleles
 															// Different colors (indices) will refer to the same (duplicated) id
-
 		var color_group = hgroup_colors[fid].length;
 		/*
 		This is the color group. If it just pointed to it's data, then only a 0 1 or 2 would propogate down through
@@ -23,18 +20,18 @@ function initFounderAlleles( fid, id )
 
 		Only founders get unique ones. Non-founders simply trace these from their parents.
 		*/
-
-
-
 		var	allele_ptrs = perc_hdata[a].pter_array; 		// [array of m pointers (for m markers)]
 
 		for (var i=0; i < allele_ptrs.length; i++)
 			allele_ptrs[i].color_group = color_group;
-
 	}
-
-	console.log("founder "+id, perc_hdata);
+// 	console.log("founder "+id, perc_hdata);
 }
+
+
+
+
+
 
 
 
@@ -82,17 +79,10 @@ function child2parent_link(pers_hp, moth_hp, fath_hp, gender)
 			var x_pr = pers_hp[0].pter_array[tmp_i].color_group,
 				y_pr = pers_hp[1].pter_array[tmp_i].color_group;
 
-// 			x_pr = []; 							  // initialised here I guess
-
-			y_pr = [ a1_pr ];	 // No ambiguity there
-
+			y_pr.push( a1_pr );	 // No ambiguity there
 
 			if (x_ht === a2_ht) x_pr.push( a2_pr );  // Maternal set both
 			if (x_ht === a3_ht) x_pr.push( a3_pr );
-
-
-			if (x_pr.length > 1)
-				console.log("Ambiguous1");
 
 			continue;
 		}
@@ -112,10 +102,6 @@ function child2parent_link(pers_hp, moth_hp, fath_hp, gender)
 
 			if (m2_ht === a2_ht) m2_pr.push( a2_pr );  // 02 scen;
 			if (m2_ht === a3_ht) m2_pr.push( a3_pr );  // 03 scen;
-
-			if (m2_pr.length > 1)
-				console.log("Ambiguous2", m2_pr, a0_ht, a1_ht, a2_ht, a3_ht);
-
 		}
 
 		if (m1_ht === a1_ht){ 						  // Add 1
@@ -123,17 +109,9 @@ function child2parent_link(pers_hp, moth_hp, fath_hp, gender)
 
 			if (m2_ht === a2_ht) m2_pr.push( a2_pr ); // 12 scen;
 			if (m2_ht === a3_ht) m2_pr.push( a3_pr ); // 13 scen;
-
-// 			if (m2_pr.length > 1)
-// 				console.log("Ambiguous3", m2_ht, a0_ht, a1_ht, a2_ht, a3_ht);
 		}
-		// Possible to get 4 pointers for m2_ht
 	}
 }
-
-
-
-
 
 
 
@@ -149,9 +127,7 @@ function assignHGroups()
 			initFounderAlleles( fam, founder_gen[p] )
 
 
-
-		for (var g = 1; g < generation_grid_ids[fam].length; g++)
-		{
+		for (var g = 1; g < generation_grid_ids[fam].length; g++){
 			for (var p =0; p < generation_grid_ids[fam][g].length; p++)
 			{
 				var pers_id = generation_grid_ids[fam][g][p],
@@ -175,15 +151,111 @@ function assignHGroups()
 			}
 		}
 		console.log("hgroups fam =" + fam);
-// 		console.log(founder_allele_map);
 	}
-	console.log(hgroup_colors);
+	console.log("colors=", hgroup_colors);
 }
 
-//Second pass -- expand ambiguous indices
-function removeAmbi(){
 
+
+/* Runs after AssignHgroups !
+
+ - Expands around ambiguous HTs to find the nearest encapsulating haploblock.
+
+ - If an ambiguous region is continuous, it searches for the *least* ambiguous incices
+   within the region and assigns a common color group (where possible) to these indices
+   which act as the new borders to expand from.
+
+ - Recursion may be required, though not wanted :(
+
+*/
+function removeAmbiguousPointers(fam)
+{
+	for (var g = 0; g < generation_grid_ids[fam].length; g++){
+		for (var p =0; p < generation_grid_ids[fam][g].length; p++)
+		{
+			var both_alleles = family_map[fam][p].haplo_data;
+
+			for (var a = 0; a < both_alleles.length; a++)
+			{
+				var ambig_indices_singles = [],
+					ambig_indices_regions = [],
+					pointer_array = both_alleles[a].pter_array;
+
+				var curr_index = 0;
+
+				// 1. Find ambiguous indices
+				var last_ambig = -100,
+					temp_group = new Int8Array(2),
+					temp_started_group = false;
+
+
+				while (curr_index++ < pointer_array.length - 1){
+					if (pointer_array[curr_index].color_group.length > 1){
+
+						if (curr_index === last_ambig + 1){ 			// identified the start of a continuous region
+							if (temp_started_group) {/* ignore ongoing */};
+							else {
+								temp_started_group = true;  // new region, starting from previous
+								temp_group[0] = last_ambig; // store previous
+
+							}
+						}
+						else{ 											// identified discontinuity
+							if (temp_started_group){
+								temp_group[1] = curr_index-1; 			// store previous
+								temp_started_group = false;
+
+								ambig_indices_regions.push( temp_group );
+								temp_group = new Int8Array(2); 			// reset
+							}
+							ambig_indices_singles.push( curr_index );
+						}
+						last_ambig = curr_index;
+					}
+				}
+
+
+				// 2. Find surrounding blocks for each ambiguous index,
+ 				//    if blocks aren't the same, measure their lengths and go for longest (or pick random?)
+				curr_index = 0;
+
+				while (curr_index++ < ambig_indices.length -1){
+					var ambig_index = ambig_indices[curr_index];
+
+					var back_index = ambig_index,
+						forw_index = ambig_index;
+
+					while (pointer_array[forw_index++].color_group.length > 1
+						  && forw_index < pointer_array.length){} 	//Search ahead for next unambiguous pointer
+
+					while (pointer_array[back_index--].color_grouplength > 1
+						  && back_index >= 0){} 					//Search back also;
+
+					//Compare colors
+					var color_back = pointer_array[back_index].color_group[0],
+						color_forw = pointer_array[forw_index].color_group[0];
+
+					if (color_back === color_forw){
+						pointer_array[ambig_index]
+					}
+
+
+
+				}
+
+
+			}
+		}
+	}
 }
+
+
+
+
+
+
+
+
 
 
 

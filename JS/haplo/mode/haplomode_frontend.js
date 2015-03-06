@@ -54,7 +54,6 @@ function addHaploScreen(wi, he, fam_id)
 
 			return {
 				x: group_loc.x,
-				//y: (Math.floor(pos.y/ HAP_VERT_SPA) * HAP_VERT_SPA)
 				y: group_loc.y + (Math.floor((pos.y - group_loc.y)/ HAP_VERT_SPA) * HAP_VERT_SPA)
 			};
 		}

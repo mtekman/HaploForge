@@ -79,7 +79,7 @@ function transitionToggle(fam_id, toggler, lineswitch=true, use_y=true, groupmov
 				touchlines(!toggler);
 				transition_happening = false;
 				if (onfinishfunc!=0) onfinishfunc();
-				console.log("current_layer= "+n_caa.group.parent.attrs.id);
+// 				console.log("current_layer= "+n_caa.group.parent.attrs.id);
 			},
 			easing: Kinetic.Easings.EaseOut
 		});

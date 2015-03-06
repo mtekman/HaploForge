@@ -9,8 +9,8 @@ function addHaplos(fam, parent_node){ //called by toggle_haplotypes in haplo/tog
 		var dd = [[],[]];
 
 		for (var d=sta_index; d <= end_index; d++){
-			dd[0].push( {data:""} );
-			dd[1].push( {data:marker_array[d]} );
+			dd[0].push( "" );
+			dd[1].push( marker_array[d] );
 		}
 // 		console.log(dd);
 		return dd;
@@ -30,9 +30,16 @@ function addHaplos(fam, parent_node){ //called by toggle_haplotypes in haplo/tog
 
 			var data_alleles = [];
 			for (var al = 0; al < pers_hp.length; al++)
-				data_alleles.push(pers_hp[al].data_array.slice(sta_index, end_index+1));
+			{
+				var one_allele_window = [];
+				for( var d=sta_index; d <= end_index; d++)
+					one_allele_window.push( pers_hp[al].data_array[d] );
 
+				data_alleles.push( one_allele_window);
+			}
+// 			console.log(data_alleles);
 // 			console.log(pers_id, pers_hp);
+
 			var	g_pers  = unique_graph_objs[fam].nodes[pers_id];
 
 
@@ -62,7 +69,7 @@ function redrawHaplos(fam_id){
 			scroll_area = unique_graph_objs[fam_id].haplo_area;
 
 		var diff_y = scroll_rect.getY() - scroll_area.getY(),
-			index_start_delta = Math.floor( diff_y / HAP_VERT_SPA ) - 8;
+			index_start_delta = Math.floor( diff_y / HAP_VERT_SPA ) - 15;
 
 		scroll_area.destroyChildren();
 		scroll_area.setY(0);
@@ -70,8 +77,8 @@ function redrawHaplos(fam_id){
 		sta_index += index_start_delta;
 		end_index += index_start_delta;
 
-		console.log("indexes = ", sta_index, end_index);
-		console.log("shifting by "+index_start_delta);
+// 		console.log("indexes = ", sta_index, end_index);
+// 		console.log("shifting by "+index_start_delta);
 
 		if (sta_index < 0){
 			sta_index = 0;
