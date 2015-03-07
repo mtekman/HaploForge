@@ -212,15 +212,20 @@ function removeAmbiguousPointers(fam)
 						}
 						last_ambig = curr_index;
 					}
+					else{ // Non-ambiguous, remove array and assign to first_elem
+						pointer_array[curr_index].color_group = pointer_array[curr_index].color_group[0];
+					}
 				}
 
 
 				// 2. Find surrounding blocks for each ambiguous index,
  				//    if blocks aren't the same, measure their lengths and go for longest (or pick random?)
+
+				// Process singles
 				curr_index = 0;
 
-				while (curr_index++ < ambig_indices.length -1){
-					var ambig_index = ambig_indices[curr_index];
+				while (curr_index++ < ambig_indices_singles.length -1){
+					var ambig_index = ambig_indices_singles[curr_index];
 
 					var back_index = ambig_index,
 						forw_index = ambig_index;
@@ -235,15 +240,52 @@ function removeAmbiguousPointers(fam)
 					var color_back = pointer_array[back_index].color_group[0],
 						color_forw = pointer_array[forw_index].color_group[0];
 
+					//Outcomes:
+
+					// a. colors match - yay
 					if (color_back === color_forw){
-						pointer_array[ambig_index]
+						pointer_array[ambig_index].color_group = color_back;
+						break;
 					}
 
+					// b. colors do not match, get block lengths pick largest
+					var len_back = 0, len_forw = 0;
+					while (  pointer_array[back_index--].color_group.length === 1
+						  && back_index >= 0) len_back ++;
+
+					while (  pointer_array[forw_index++].color_group.length === 1
+						  && forw_index < pointer_array.length) len_forw ++;
 
 
+					pointer_array[ambig_index].color_group = (len_forw > len_back)?color_forw:color_back;
 				}
 
+				// Process regions
+				curr_index = 0;
 
+				while (curr_index++ < ambig_indices_regions.length - 1)
+				{
+					var lower_index = ambig_indices_regions[curr_index][0],
+						upper_index = ambig_indices_regions[curr_index][1];
+
+					// Find the least ambiguous region
+					// How? Make a map of color groups, and sort the values
+					var map = {};
+					for (var r=lower_index; r <= upper_index; r++){
+						for (var c=0; c < pointer_array[r].color_group.length; c++){
+							var color = pointer_array[r].color_group[c];
+
+							if (!(color in map)) map[color] = [];
+							map[color].push( r );
+						}
+					}
+
+					// Sort map by num keys:
+					//    Pick sets such that:
+					//    * There is no index remaining in a group by itself
+					//    * Minimal number of sets (so picking largest is not necceasirily best)
+
+				}
 			}
 		}
 	}
