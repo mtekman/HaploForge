@@ -1,4 +1,5 @@
 var hgroup_colors = {}; // fam_id --> [founder_id], where array index = color/group
+var zero_color_grp = [-1];
 
 
 function initFounderAlleles( fid, id )
@@ -59,13 +60,18 @@ function child2parent_link(pers_hp, moth_hp, fath_hp, gender)
 			a2_ht = moth_hp[0].data_array[tmp_i],
 			a3_ht = moth_hp[1].data_array[tmp_i];
 
-		if (a0_ht === a1_ht && a1_ht === a2_ht && a2_ht === a3_ht  && a3_ht === 0) continue; // Skip dead markers
-
 		var a0_pr = fath_hp[0].pter_array[tmp_i].color_group,
 			a1_pr = fath_hp[1].pter_array[tmp_i].color_group,
 			a2_pr = moth_hp[0].pter_array[tmp_i].color_group,
 			a3_pr = moth_hp[1].pter_array[tmp_i].color_group;
 
+		if (a0_ht === 0) a0_pr = zero_color_grp;
+		if (a1_ht === 0) a1_pr = zero_color_grp;
+		if (a2_ht === 0) a2_pr = zero_color_grp;
+		if (a3_ht === 0) a3_pr = zero_color_grp;
+
+
+		if (a0_ht === a1_ht  && a1_ht === a2_ht	&& a2_ht === a3_ht  && a3_ht === 0) continue;
 
 		/* -- Sex-linked and male scenario:
    		 Assuming XY and XX are alleles 0 1 2 3;
@@ -151,6 +157,7 @@ function assignHGroups()
 			}
 		}
 		console.log("hgroups fam =" + fam);
+		removeAmbiguousPointers(fam);
 	}
 	console.log("colors=", hgroup_colors);
 }
@@ -173,7 +180,8 @@ function removeAmbiguousPointers(fam)
 	for (var g = 0; g < generation_grid_ids[fam].length; g++){
 		for (var p =0; p < generation_grid_ids[fam][g].length; p++)
 		{
-			var both_alleles = family_map[fam][p].haplo_data;
+			var id = generation_grid_ids[fam][g][p];
+			var both_alleles = family_map[fam][id].haplo_data;
 
 			for (var a = 0; a < both_alleles.length; a++)
 			{
@@ -193,7 +201,7 @@ function removeAmbiguousPointers(fam)
 					if (pointer_array[curr_index].color_group.length > 1){
 
 						if (curr_index === last_ambig + 1){ 			// identified the start of a continuous region
-							if (temp_started_group) {/* ignore ongoing */};
+							if (temp_started_group) {/* ignore ongoing */}
 							else {
 								temp_started_group = true;  // new region, starting from previous
 								temp_group[0] = last_ambig; // store previous
@@ -214,6 +222,11 @@ function removeAmbiguousPointers(fam)
 					}
 					else{ // Non-ambiguous, remove array and assign to first_elem
 						pointer_array[curr_index].color_group = pointer_array[curr_index].color_group[0];
+
+						if (pointer_array[curr_index].color_group === undefined){
+							console.log( "single=", pointer_array[curr_index].color_group );
+							console.log( "single=", both_alleles[a].data_array[curr_index])
+						}
 					}
 				}
 
@@ -268,23 +281,44 @@ function removeAmbiguousPointers(fam)
 					var lower_index = ambig_indices_regions[curr_index][0],
 						upper_index = ambig_indices_regions[curr_index][1];
 
+					console.log( lower_index, upper_index);
+
 					// Find the least ambiguous region
 					// How? Make a map of color groups, and sort the values
 					var map = {};
 					for (var r=lower_index; r <= upper_index; r++){
-						for (var c=0; c < pointer_array[r].color_group.length; c++){
+						console.log( pointer_array[r] );
+
+						for (var c=0; c < pointer_array[r].color_group.length; c++)
+						{
 							var color = pointer_array[r].color_group[c];
 
 							if (!(color in map)) map[color] = [];
 							map[color].push( r );
 						}
 					}
-
+					console.log(map);
+					continue;
 					// Sort map by num keys:
 					//    Pick sets such that:
 					//    * There is no index remaining in a group by itself
 					//    * Minimal number of sets (so picking largest is not necceasirily best)
+					for (var color_key in map){
+						var value_indices = map[color_key];
+						    value_indices.sort();
 
+						// Check if they're consecutive
+						var last_index = value_indices[0]-1, // peel first off
+							isConsecutive = true;
+
+						for (var c in value_indices){
+							if (c !== last_index + 1) {
+								isConsecutive = false;
+								break;
+							}
+							last_index = c;
+						}
+					}
 				}
 			}
 		}
