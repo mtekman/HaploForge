@@ -1,5 +1,5 @@
 var hgroup_colors = {}; // fam_id --> [founder_id], where array index = color/group
-var zero_color_grp = [-1];
+var zero_color_grp = -1;
 
 
 function initFounderAlleles( fid, id )
@@ -43,8 +43,14 @@ function initFounderAlleles( fid, id )
 	- Always two alleles
 	- Paternal allele is first, and maternal is second.
 */
-function child2parent_link(pers_hp, moth_hp, fath_hp, gender)
+function child2parent_link(pers, moth, fath)
 {
+	var pers_hp = pers.haplo_data,
+		moth_hp = moth.haplo_data,
+		fath_hp = fath.haplo_data,
+		gender = pers.gender;
+
+
 	assert(pers_hp[0].data_array.length === moth_hp[0].data_array.length
 	    && pers_hp[0].data_array.length === fath_hp[0].data_array.length
 		&& pers_hp[1].data_array.length === moth_hp[1].data_array.length
@@ -65,6 +71,10 @@ function child2parent_link(pers_hp, moth_hp, fath_hp, gender)
 			a2_pr = moth_hp[0].pter_array[tmp_i].color_group,
 			a3_pr = moth_hp[1].pter_array[tmp_i].color_group;
 
+
+// 		if (a0_pr === undefined || a1_pr === undefined
+// 			|| a2_pr === undefined || a3_pr === undefined)
+
 		if (a0_ht === 0) a0_pr = zero_color_grp;
 		if (a1_ht === 0) a1_pr = zero_color_grp;
 		if (a2_ht === 0) a2_pr = zero_color_grp;
@@ -73,22 +83,24 @@ function child2parent_link(pers_hp, moth_hp, fath_hp, gender)
 
 		if (a0_ht === a1_ht  && a1_ht === a2_ht	&& a2_ht === a3_ht  && a3_ht === 0) continue;
 
+		var m1_ht = pers_hp[0].data_array[tmp_i],  				// X allele
+			m2_ht = pers_hp[1].data_array[tmp_i];  				// Y allele
+
+		var m1_pr = pers_hp[0].pter_array[tmp_i].color_group,
+			m2_pr = pers_hp[1].pter_array[tmp_i].color_group; 	// Y pointer
+
+
 		/* -- Sex-linked and male scenario:
    		 Assuming XY and XX are alleles 0 1 2 3;
 		  female: 0{2,3} = 02 03
 		    male: 1{2,3} = 12 13
 		 */
 		if (SEXLINKED && gender === 1){ 						 // Sexlinked and male
-			var x_ht = pers_hp[0].data_array[tmp_i],
-				y_ht = pers_hp[1].data_array[tmp_i];
 
-			var x_pr = pers_hp[0].pter_array[tmp_i].color_group,
-				y_pr = pers_hp[1].pter_array[tmp_i].color_group;
+			m2_pr.push( a1_pr );	 // No ambiguity there
 
-			y_pr.push( a1_pr );	 // No ambiguity there
-
-			if (x_ht === a2_ht) x_pr.push( a2_pr );  // Maternal set both
-			if (x_ht === a3_ht) x_pr.push( a3_pr );
+			if (m1_ht === a2_ht) m1_pr.push( a2_pr );  // Maternal set both
+			if (m1_ht === a3_ht) m1_pr.push( a3_pr );
 
 			continue;
 		}
@@ -97,12 +109,6 @@ function child2parent_link(pers_hp, moth_hp, fath_hp, gender)
 		with the condition that the opposing allele must be chosen from the remaining sister pair:
 		e.g: {0,1}{2,3} = 02 03 12 13
 		 */
-		var m1_ht = pers_hp[0].data_array[tmp_i],
-			m2_ht = pers_hp[1].data_array[tmp_i];
-
-		var m1_pr = pers_hp[0].pter_array[tmp_i].color_group,
-			m2_pr = pers_hp[1].pter_array[tmp_i].color_group;
-
 		if (m1_ht === a0_ht){ 						   // Add 0
 			m1_pr.push( a0_pr )
 
@@ -116,6 +122,7 @@ function child2parent_link(pers_hp, moth_hp, fath_hp, gender)
 			if (m2_ht === a2_ht) m2_pr.push( a2_pr ); // 12 scen;
 			if (m2_ht === a3_ht) m2_pr.push( a3_pr ); // 13 scen;
 		}
+// 		console.log("setting undefined pointers...", moth.id, fath.id, tmp_i, m1_pr, m2_pr);
 	}
 }
 
@@ -148,12 +155,10 @@ function assignHGroups()
 					continue;
 				}
 
-				var pers_hp = pers.haplo_data,
-					moth_hp = family_map[fam][moth_id].haplo_data,
-					fath_hp = family_map[fam][fath_id].haplo_data;
+				var moth = family_map[fam][moth_id],
+					fath = family_map[fam][fath_id];
 
-				child2parent_link(pers_hp, moth_hp, fath_hp,
-								  pers.gender);    	// needed for sexlinked
+				child2parent_link(pers, moth, fath);
 			}
 		}
 		console.log("hgroups fam =" + fam);
@@ -220,14 +225,13 @@ function removeAmbiguousPointers(fam)
 						}
 						last_ambig = curr_index;
 					}
-					else{ // Non-ambiguous, remove array and assign to first_elem
-						pointer_array[curr_index].color_group = pointer_array[curr_index].color_group[0];
+// 					else{ // Non-ambiguous, remove array and assign to first_elem
+// 						if (pointer_array[curr_index].color_group === undefined){
+// 							console.log("undefined =", id, "@", both_alleles[a].data_array[curr_index]);
+// 						}
+// 						pointer_array[curr_index].color_group = pointer_array[curr_index].color_group[0];
 
-						if (pointer_array[curr_index].color_group === undefined){
-							console.log( "single=", pointer_array[curr_index].color_group );
-							console.log( "single=", both_alleles[a].data_array[curr_index])
-						}
-					}
+// 					}
 				}
 
 
@@ -287,7 +291,12 @@ function removeAmbiguousPointers(fam)
 					// How? Make a map of color groups, and sort the values
 					var map = {};
 					for (var r=lower_index; r <= upper_index; r++){
-						console.log( pointer_array[r] );
+
+						//founder alleles are unambiguous
+						if (typeof pointer_array[r].color_group === "number") continue;
+
+						if (pointer_array[r].color_group === undefined)
+							console.log("undefined, id="+id+", marker="+r+", all="+both_alleles[a].data_array[r]+", pter=", pointer_array[r]);
 
 						for (var c=0; c < pointer_array[r].color_group.length; c++)
 						{
