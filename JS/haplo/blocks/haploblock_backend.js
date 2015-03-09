@@ -1,5 +1,6 @@
 var hgroup_colors = {}; // fam_id --> [founder_id], where array index = color/group
-var zero_color_grp = [-1];
+var zero_color_grp = [-1],
+	null_color_grp = -2;
 
 
 function initFounderAlleles( fid, id )
@@ -177,6 +178,9 @@ function assignHGroups()
 */
 function removeAmbiguousPointers(fam)
 {
+	var MIN_HAP_STRETCH = 2;
+
+
 	for (var g = 0; g < generation_grid_ids[fam].length; g++){
 		for (var p =0; p < generation_grid_ids[fam][g].length; p++)
 		{
@@ -262,15 +266,19 @@ function removeAmbiguousPointers(fam)
 					}
 
 					// b. colors do not match, get block lengths pick largest
-					var len_back = 0, len_forw = 0;
-					while (  pointer_array[back_index--].color_group.length === 1
-						  && back_index >= 0) len_back ++;
+					// Just pick random for now
+					pointer_array[ambig_index].color_group = color_forw;
 
-					while (  pointer_array[forw_index++].color_group.length === 1
-						  && forw_index < pointer_array.length) len_forw ++;
+// 					var len_back = 0, len_forw = 0;
+// 					while (  pointer_array[back_index--].color_group.length === 1
+// 						  && back_index >= 0) len_back ++;
+
+// 					while (  pointer_array[forw_index++].color_group.length === 1
+// 						  && forw_index < pointer_array.length) len_forw ++;
 
 
-					pointer_array[ambig_index].color_group = (len_forw > len_back)?color_forw:color_back;
+// 					pointer_array[ambig_index].color_group = (len_forw > len_back)?color_forw:color_back;
+
 				}
 
 				// Process regions
@@ -284,8 +292,98 @@ function removeAmbiguousPointers(fam)
 					console.log( lower_index, upper_index);
 
 					// Find the least ambiguous region
-					// How? Make a map of color groups, and sort the values
-					var map = {};
+					var possible_sequences = [];
+
+
+					// Step through region, checking that each newly detected color group must cover
+					// at least the min stretch, or else be discarded
+
+					//The start colors determines the number of times we loop over the region
+					var iter = lower_index + 1;
+
+					var start_colors = pointer_array[iter].color_group
+					while ( true ){
+
+						for (var s=0; s < start_colors.length; s++){
+							var current_group_counter = 0,
+								last_group = -1;
+
+							var group = start_colors[s],
+							var possib_sequences_for_start = [];
+							var stepForward = 0; //amount to move after a (un)successful lookahead
+
+							// This loop looks ahead
+							var look_index = iter,
+								consec_group = [],  			// This gets cleared a lot
+								current_potential = []
+
+							while ( true ){
+								var continuing_group = false;
+
+								// Search next for ongoing group
+								var next_colors = pointer_array[look_index].color_group;
+
+								for (var n=0; n < next_colors.length; n++){
+									var new_group = next_colors[n];
+
+									if (new_group === group){
+										continuing_group = true;
+										current_group_counter += 1
+										break;
+									}
+								}
+
+								// Did we find the same group?
+								if (continuing_group){
+									//Yes, increment and move on
+									look_index +=1;
+									consec_group.push(group);
+									continue;
+
+								}
+								// Did not find group, change:
+								// Pick
+
+								// Did the last group pass the heuristic?
+
+								if (current_group_counter >= MIN_HAP_STRETCH){
+									//Yes, add it to the current array
+									current_potential = current_potential.concat(consec_group);
+									stepForward += current_group_counter;
+									break;
+								}
+
+
+
+						}
+
+
+
+					}
+
+
+
+					while (true){
+						last_color_stretch.shift();
+
+						var colors = pointer_array[iter].color_group;
+
+						//Check to see if curr_color exists in region
+						for (var c =0; c < colors.length ; c++)
+						{
+							var col = colors[c];
+
+							if (col === last_col)
+								current_color_stretch
+								if (current_color_stretch >= MIN_HAP_STRETCH)
+
+						}
+
+
+						last_color_stretch.push(curr_color);
+					}
+
+
 					for (var r=lower_index; r <= upper_index; r++){
 						console.log( pointer_array[r] );
 
