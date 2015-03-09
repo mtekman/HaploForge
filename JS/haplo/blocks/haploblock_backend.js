@@ -3,7 +3,6 @@ var hgroup_colors = {}; // fam_id --> [founder_id], where array index = color/gr
 var zero_color_grp = -1,
 	null_color_grp = -2;
 
-
 function initFounderAlleles( fid, id )
 {
 	// Add founder to color group.
@@ -211,8 +210,8 @@ function removeAmbiguousPointers(fam)
 					if (pointer_array[curr_index].color_group.length > 1){
 
 						if (curr_index === last_ambig + 1){ 			// identified the start of a continuous region
-							if (temp_started_group) {/* ignore ongoing */}
-							else {
+							if (!(temp_started_group))
+							{
 								temp_started_group = true;  // new region, starting from previous
 								temp_group[0] = last_ambig; // store previous
 
