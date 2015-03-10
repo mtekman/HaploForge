@@ -123,6 +123,7 @@ function child2parent_link(pers, moth, fath)
 			if (m2_ht === a2_ht) m2_pr.push( a2_pr ); // 12 scen;
 			if (m2_ht === a3_ht) m2_pr.push( a3_pr ); // 13 scen;
 		}
+
 // 		console.log("setting undefined pointers...", moth.id, fath.id, tmp_i, m1_pr, m2_pr);
 	}
 }
@@ -185,7 +186,6 @@ function removeAmbiguousPointers(fam)
 {
 	var MIN_HAP_STRETCH = 2;
 
-
 	for (var g = 0; g < generation_grid_ids[fam].length; g++){
 		for (var p =0; p < generation_grid_ids[fam][g].length; p++)
 		{
@@ -194,19 +194,28 @@ function removeAmbiguousPointers(fam)
 
 			for (var a = 0; a < both_alleles.length; a++)
 			{
+
 				var ambig_indices_singles = [],
 					ambig_indices_regions = [],
 					pointer_array = both_alleles[a].pter_array;
+
+				console.log(id, pointer_array);
 
 				var curr_index = 0;
 
 				// 1. Find ambiguous indices
 				var last_ambig = -100,
-					temp_group = new Int8Array(2),
+					temp_group = [0,0],
 					temp_started_group = false;
 
 
 				while (curr_index++ < pointer_array.length - 1){
+
+					if (pointer_array[curr_index].color_group === undefined){
+						console.log("id="+id+", a="+a+", index="+curr_index);
+					}
+
+
 					if (pointer_array[curr_index].color_group.length > 1){
 
 						if (curr_index === last_ambig + 1){ 			// identified the start of a continuous region
@@ -222,8 +231,10 @@ function removeAmbiguousPointers(fam)
 								temp_group[1] = curr_index-1; 			// store previous
 								temp_started_group = false;
 
+// 								console.log("group", temp_group);
+
 								ambig_indices_regions.push( temp_group );
-								temp_group = new Int8Array(2); 			// reset
+								temp_group = [0,0]; 			// reset
 							}
 							ambig_indices_singles.push( curr_index );
 						}
@@ -273,16 +284,6 @@ function removeAmbiguousPointers(fam)
 					// Just pick random for now
 					pointer_array[ambig_index].color_group = color_forw;
 
-// 					var len_back = 0, len_forw = 0;
-// 					while (  pointer_array[back_index--].color_group.length === 1
-// 						  && back_index >= 0) len_back ++;
-
-// 					while (  pointer_array[forw_index++].color_group.length === 1
-// 						  && forw_index < pointer_array.length) len_forw ++;
-
-
-// 					pointer_array[ambig_index].color_group = (len_forw > len_back)?color_forw:color_back;
-
 				}
 
 				// Process regions
@@ -293,138 +294,65 @@ function removeAmbiguousPointers(fam)
 					var lower_index = ambig_indices_regions[curr_index][0],
 						upper_index = ambig_indices_regions[curr_index][1];
 
-					console.log( lower_index, upper_index);
+// 					console.log( lower_index, upper_index, id, a);
 
-					// Find the least ambiguous region
-					var possible_sequences = [];
+					var iter = lower_index,
+						working_path = [];
 
+					while (iter <= upper_index){
 
-					// Step through region, checking that each newly detected color group must cover
-					// at least the min stretch, or else be discarded
+// 						console.log(iter, "<=", upper_index);
+						try{
+							for (var g=0; g < pointer_array[iter].color_group.length; g++)
+							{
+								var current_group = pointer_array[iter].color_group[g],
+									next_group;
 
-					//The start colors determines the number of times we loop over the region
-					var iter = lower_index + 1;
+// 								console.log(current_group);
 
-					var start_colors = pointer_array[iter].color_group
-					while ( true ){
+								//Look ahead
+								var cind = iter;
 
-						for (var s=0; s < start_colors.length; s++){
-							var current_group_counter = 0,
-								last_group = -1;
-
-							var group = start_colors[s],
-							var possib_sequences_for_start = [];
-							var stepForward = 0; //amount to move after a (un)successful lookahead
-
-							// This loop looks ahead
-							var look_index = iter,
-								consec_group = [],  			// This gets cleared a lot
-								current_potential = []
-
-							while ( true ){
-								var continuing_group = false;
-
-								// Search next for ongoing group
-								var next_colors = pointer_array[look_index].color_group;
-
-								for (var n=0; n < next_colors.length; n++){
-									var new_group = next_colors[n];
-
-									if (new_group === group){
-										continuing_group = true;
-										current_group_counter += 1
-										break;
-									}
+								do {
+									next_group = pointer_array[cind++].color_group;
+// 									console.log(next_group);
 								}
+								while (next_group.indexOf(current_group)!==-1 && cind!=upper_index);
 
-								// Did we find the same group?
-								if (continuing_group){
-									//Yes, increment and move on
-									look_index +=1;
-									consec_group.push(group);
-									continue;
+								// Found a new number at this stage
 
-								}
-								// Did not find group, change:
-								// Pick
+								var length_of_stretch = cind - iter;
 
-								// Did the last group pass the heuristic?
+								if (length_of_stretch >= MIN_HAP_STRETCH)
+								{
+									//Yes, add old number to working path;
+									for (var g=0; g < length_of_stretch;
+										 g++ && working_path.push( current_group ) );
 
-								if (current_group_counter >= MIN_HAP_STRETCH){
-									//Yes, add it to the current array
-									current_potential = current_potential.concat(consec_group);
-									stepForward += current_group_counter;
+									// Change iter to move forwards:
+									iter += length_of_stretch;
 									break;
+
+									//After break, iter moves forwards and gets a new num
 								}
-
-
-
-						}
-
-
-
-					}
-
-
-
-					while (true){
-						last_color_stretch.shift();
-
-						var colors = pointer_array[iter].color_group;
-
-						//Check to see if curr_color exists in region
-						for (var c =0; c < colors.length ; c++)
-						{
-							var col = colors[c];
-
-							if (col === last_col)
-								current_color_stretch
-								if (current_color_stretch >= MIN_HAP_STRETCH)
-
-						}
-
-
-						last_color_stretch.push(curr_color);
-					}
-
-
-					for (var r=lower_index; r <= upper_index; r++){
-
-						//founder alleles are unambiguous
-						if (typeof pointer_array[r].color_group === "number") continue;
-
-						if (pointer_array[r].color_group === undefined)
-							console.log("undefined, id="+id+", marker="+r+", all="+both_alleles[a].data_array[r]+", pter=", pointer_array[r]);
-
-						for (var c=0; c < pointer_array[r].color_group.length; c++)
-						{
-							var color = pointer_array[r].color_group[c];
-
-							if (!(color in map)) map[color] = [];
-							map[color].push( r );
-						}
-					}
-					console.log(map);
-					continue;
-					// Sort map by num keys:
-					//    Pick sets such that:
-					//    * There is no index remaining in a group by itself
-					//    * Minimal number of sets (so picking largest is not necceasirily best)
-					for (var color_key in map){
-						var value_indices = map[color_key];
-						    value_indices.sort();
-
-						// Check if they're consecutive
-						var last_index = value_indices[0]-1, // peel first off
-							isConsecutive = true;
-
-						for (var c in value_indices){
-							if (c !== last_index + 1) {
-								isConsecutive = false;
-								break;
+								// Otherwise we don't advance.
+								// Try next number in group
+								// g advances
 							}
-							last_index = c;
+							// We skip this marker and try the search again
+							iter ++;
+						} catch (e){
+							console.log("Error @", iter, pointer_array);
+							console.log(e);
+							throw new Error("ASDA");
 						}
+
+					}
+
+					//Here assign the solution to the pointer_array
+					if (working_path.length != 0){
+						for (var t=lower_index; t <= upper_index; t++)
+							pointer_array[t].color_group = working_path[t - lower_index];
 					}
 				}
 			}
