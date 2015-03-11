@@ -8,6 +8,8 @@ var Allele = function(data){
 	for (var i=0; i < data.length; i++)
 		this.pter_array.push( {color_group: []} ); 	//Array due to phase ambiguity
 
+	this.haplogroup_array;
+	// ^ Empty until pter_array is completely unambiguous, where pter_array is then deleted (dereferenced, left for GC)
 
 };
 

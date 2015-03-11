@@ -27,11 +27,8 @@ function initFounderAlleles( fid, id )
 		for (var i=0; i < allele_ptrs.length; i++)
 			allele_ptrs[i].color_group = color_group;
 	}
-// 	console.log("founder "+id, perc_hdata);
+//  	console.log("founder "+id);
 }
-
-
-
 
 
 
@@ -82,13 +79,24 @@ function child2parent_link(pers, moth, fath)
 		if (a3_ht === 0) a3_pr = zero_color_grp;
 
 
-		if (a0_ht === a1_ht  && a1_ht === a2_ht	&& a2_ht === a3_ht  && a3_ht === 0) continue;
+// 		if (a0_ht === a1_ht  && a1_ht === a2_ht	&& a2_ht === a3_ht  && a3_ht === 0) continue;
 
 		var m1_ht = pers_hp[0].data_array[tmp_i],  				// X allele
 			m2_ht = pers_hp[1].data_array[tmp_i];  				// Y allele
 
 		var m1_pr = pers_hp[0].pter_array[tmp_i].color_group,
 			m2_pr = pers_hp[1].pter_array[tmp_i].color_group; 	// Y pointer
+
+		if (m1_pr.length !== 0 ){
+			console.log("m1_pr not [], for "+pers.id+" @ "+tmp_i, m1_pr);
+			throw new Error("");
+
+		}
+
+		if (m2_pr.length !== 0 ){
+			console.log("m2_pr not [], for "+pers.id+" @ "+tmp_i, m2_pr);
+			throw new Error("");
+		}
 
 
 		/* -- Sex-linked and male scenario:
@@ -124,8 +132,45 @@ function child2parent_link(pers, moth, fath)
 			if (m2_ht === a3_ht) m2_pr.push( a3_pr ); // 13 scen;
 		}
 
-// 		console.log("setting undefined pointers...", moth.id, fath.id, tmp_i, m1_pr, m2_pr);
+		//Set -1's to non-ambiguous (set)
+		if (m1_pr[0] === zero_color_grp){
+			var all_zero = true;
+			for (var z = 0; z < m1_pr.length; z++)
+				if (m1_pr[z] !== zero_color_grp){
+					all_zero = false;
+					break;
+				}
+			if (all_zero)
+				while (m1_pr.length !==1) m1_pr.pop();
+		}
+
+		if (m2_pr[0] === zero_color_grp){
+			var all_zero = true;
+			for (var z = 0; z < m2_pr.length; z++)
+				if (m2_pr[z] !== zero_color_grp){
+					all_zero = false;
+					break;
+				}
+			if (all_zero)
+				while (m2_pr.length !==1) m2_pr.pop();
+		}
+
+
+
+
 	}
+
+// 	if (pers.id === 7652){
+// 		for (var y= 1090; y <= 1110; y++)
+// 			console.log("7652 after @ "+y,
+// 						pers_hp[0].data_array[y],
+// 						pers_hp[1].data_array[y],
+// 						pers_hp[0].pter_array[y].color_group,
+// 						pers_hp[1].pter_array[y].color_group);
+// 		throw new Error("stop");
+// 	}
+
+
 }
 
 
@@ -161,214 +206,18 @@ function assignHGroups()
 					fath = family_map[fam][fath_id];
 
 				child2parent_link(pers, moth, fath);
+				console.log("alleles for "+pers_id, pers.haplo_data);
 			}
 		}
 		console.log("hgroups fam =" + fam);
 		removeAmbiguousPointers(fam);
+
 	}
-	console.log("colors=", hgroup_colors);
+
+	copyPointersAndClean(fam);
+
+// 	console.log("colors=", hgroup_colors);
 }
-
-
-
-/* Runs after AssignHgroups !
-
- - Expands around ambiguous HTs to find the nearest encapsulating haploblock.
-
- - If an ambiguous region is continuous, it searches for the *least* ambiguous incices
-   within the region and assigns a common color group (where possible) to these indices
-   which act as the new borders to expand from.
-
- - Recursion may be required, though not wanted :(
-
-*/
-function removeAmbiguousPointers(fam)
-{
-	var MIN_HAP_STRETCH = 2;
-
-	for (var g = 0; g < generation_grid_ids[fam].length; g++){
-		for (var p =0; p < generation_grid_ids[fam][g].length; p++)
-		{
-			var id = generation_grid_ids[fam][g][p];
-			var both_alleles = family_map[fam][id].haplo_data;
-
-			for (var a = 0; a < both_alleles.length; a++)
-			{
-
-				var ambig_indices_singles = [],
-					ambig_indices_regions = [],
-					pointer_array = both_alleles[a].pter_array;
-
-				console.log(id, pointer_array);
-
-				var curr_index = 0;
-
-				// 1. Find ambiguous indices
-				var last_ambig = -100,
-					temp_group = [0,0],
-					temp_started_group = false;
-
-
-				while (curr_index++ < pointer_array.length - 1){
-
-					if (pointer_array[curr_index].color_group === undefined){
-						console.log("id="+id+", a="+a+", index="+curr_index);
-					}
-
-
-					if (pointer_array[curr_index].color_group.length > 1){
-
-						if (curr_index === last_ambig + 1){ 			// identified the start of a continuous region
-							if (!(temp_started_group))
-							{
-								temp_started_group = true;  // new region, starting from previous
-								temp_group[0] = last_ambig; // store previous
-
-							}
-						}
-						else{ 											// identified discontinuity
-							if (temp_started_group){
-								temp_group[1] = curr_index-1; 			// store previous
-								temp_started_group = false;
-
-// 								console.log("group", temp_group);
-
-								ambig_indices_regions.push( temp_group );
-								temp_group = [0,0]; 			// reset
-							}
-							ambig_indices_singles.push( curr_index );
-						}
-						last_ambig = curr_index;
-					}
-// 					else{ // Non-ambiguous, remove array and assign to first_elem
-// 						if (pointer_array[curr_index].color_group === undefined){
-// 							console.log("undefined =", id, "@", both_alleles[a].data_array[curr_index]);
-// 						}
-// 						pointer_array[curr_index].color_group = pointer_array[curr_index].color_group[0];
-
-// 					}
-				}
-
-
-				// 2. Find surrounding blocks for each ambiguous index,
- 				//    if blocks aren't the same, measure their lengths and go for longest (or pick random?)
-
-				// Process singles
-				curr_index = 0;
-
-				while (curr_index++ < ambig_indices_singles.length -1){
-					var ambig_index = ambig_indices_singles[curr_index];
-
-					var back_index = ambig_index,
-						forw_index = ambig_index;
-
-					while (pointer_array[forw_index++].color_group.length > 1
-						  && forw_index < pointer_array.length){} 	//Search ahead for next unambiguous pointer
-
-					while (pointer_array[back_index--].color_grouplength > 1
-						  && back_index >= 0){} 					//Search back also;
-
-					//Compare colors
-					var color_back = pointer_array[back_index].color_group[0],
-						color_forw = pointer_array[forw_index].color_group[0];
-
-					//Outcomes:
-
-					// a. colors match - yay
-					if (color_back === color_forw){
-						pointer_array[ambig_index].color_group = color_back;
-						break;
-					}
-
-					// b. colors do not match, get block lengths pick largest
-					// Just pick random for now
-					pointer_array[ambig_index].color_group = color_forw;
-
-				}
-
-				// Process regions
-				curr_index = 0;
-
-				while (curr_index++ < ambig_indices_regions.length - 1)
-				{
-					var lower_index = ambig_indices_regions[curr_index][0],
-						upper_index = ambig_indices_regions[curr_index][1];
-
-// 					console.log( lower_index, upper_index, id, a);
-
-					var iter = lower_index,
-						working_path = [];
-
-					while (iter <= upper_index){
-
-// 						console.log(iter, "<=", upper_index);
-						try{
-							for (var g=0; g < pointer_array[iter].color_group.length; g++)
-							{
-								var current_group = pointer_array[iter].color_group[g],
-									next_group;
-
-// 								console.log(current_group);
-
-								//Look ahead
-								var cind = iter;
-
-								do {
-									next_group = pointer_array[cind++].color_group;
-// 									console.log(next_group);
-								}
-								while (next_group.indexOf(current_group)!==-1 && cind!=upper_index);
-
-								// Found a new number at this stage
-
-								var length_of_stretch = cind - iter;
-
-								if (length_of_stretch >= MIN_HAP_STRETCH)
-								{
-									//Yes, add old number to working path;
-									for (var g=0; g < length_of_stretch;
-										 g++ && working_path.push( current_group ) );
-
-									// Change iter to move forwards:
-									iter += length_of_stretch;
-									break;
-
-									//After break, iter moves forwards and gets a new num
-								}
-								// Otherwise we don't advance.
-								// Try next number in group
-								// g advances
-							}
-							// We skip this marker and try the search again
-							iter ++;
-						} catch (e){
-							console.log("Error @", iter, pointer_array);
-							console.log(e);
-							throw new Error("ASDA");
-						}
-
-					}
-
-					//Here assign the solution to the pointer_array
-					if (working_path.length != 0){
-						for (var t=lower_index; t <= upper_index; t++)
-							pointer_array[t].color_group = working_path[t - lower_index];
-					}
-				}
-			}
-		}
-	}
-}
-
-
-
-
-
-
-
-
-
-
 
 
 
