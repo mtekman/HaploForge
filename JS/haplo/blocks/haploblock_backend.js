@@ -1,7 +1,6 @@
 var hgroup_colors = {}; // fam_id --> [founder_id], where array index = color/group
 
-var zero_color_grp = -1,
-	null_color_grp = -2;
+var zero_color_grp = -1;
 
 function initFounderAlleles( fid, id )
 {
@@ -25,12 +24,21 @@ function initFounderAlleles( fid, id )
 		var	allele_ptrs = perc_hdata[a].pter_array; 		// [array of m pointers (for m markers)]
 
 		for (var i=0; i < allele_ptrs.length; i++)
-			allele_ptrs[i].color_group = color_group;
+			allele_ptrs[i].color_group = [color_group];
+
+// 		console.log("founder "+id+" "+a, allele_ptrs[0].color_group, perc_hdata[a].data_array[0]);
 	}
-//  	console.log("founder "+id);
 }
 
 
+
+function pushAll(from, to){
+// 	console.log("called", from, to);
+	for (var j=0; j < from.color_group.length; j++){
+		if (to.color_group.indexOf( from.color_group[j] )==-1)
+			to.color_group.push( from.color_group[j] );
+	}
+}
 
 
 
@@ -54,9 +62,9 @@ function child2parent_link(pers, moth, fath)
 		&& pers_hp[1].data_array.length === moth_hp[1].data_array.length
 		&& pers_hp[1].data_array.length === fath_hp[1].data_array.length, "Allele lengths dont match");
 
-	var tmp_i = 0;
+	var tmp_i = -1;
 
-	while (tmp_i++ < pers_hp[0].data_array.length - 1)
+	while (++tmp_i < pers_hp[0].data_array.length)
 	{
 		// Each persons allele is one of four possible parental alleles (autosomal)
 		var a0_ht = fath_hp[0].data_array[tmp_i],
@@ -64,19 +72,19 @@ function child2parent_link(pers, moth, fath)
 			a2_ht = moth_hp[0].data_array[tmp_i],
 			a3_ht = moth_hp[1].data_array[tmp_i];
 
-		var a0_pr = fath_hp[0].pter_array[tmp_i].color_group,
-			a1_pr = fath_hp[1].pter_array[tmp_i].color_group,
-			a2_pr = moth_hp[0].pter_array[tmp_i].color_group,
-			a3_pr = moth_hp[1].pter_array[tmp_i].color_group;
+		var a0_pr = fath_hp[0].pter_array[tmp_i],
+			a1_pr = fath_hp[1].pter_array[tmp_i],
+			a2_pr = moth_hp[0].pter_array[tmp_i],
+			a3_pr = moth_hp[1].pter_array[tmp_i];
 
 
 // 		if (a0_pr === undefined || a1_pr === undefined
 // 			|| a2_pr === undefined || a3_pr === undefined)
 
-		if (a0_ht === 0) a0_pr = zero_color_grp;
-		if (a1_ht === 0) a1_pr = zero_color_grp;
-		if (a2_ht === 0) a2_pr = zero_color_grp;
-		if (a3_ht === 0) a3_pr = zero_color_grp;
+		if (a0_ht === 0) a0_pr.color_group = [zero_color_grp];
+		if (a1_ht === 0) a1_pr.color_group = [zero_color_grp];
+		if (a2_ht === 0) a2_pr.color_group = [zero_color_grp];
+		if (a3_ht === 0) a3_pr.color_group = [zero_color_grp];
 
 
 // 		if (a0_ht === a1_ht  && a1_ht === a2_ht	&& a2_ht === a3_ht  && a3_ht === 0) continue;
@@ -84,16 +92,16 @@ function child2parent_link(pers, moth, fath)
 		var m1_ht = pers_hp[0].data_array[tmp_i],  				// X allele
 			m2_ht = pers_hp[1].data_array[tmp_i];  				// Y allele
 
-		var m1_pr = pers_hp[0].pter_array[tmp_i].color_group,
-			m2_pr = pers_hp[1].pter_array[tmp_i].color_group; 	// Y pointer
+		var m1_pr = pers_hp[0].pter_array[tmp_i],
+			m2_pr = pers_hp[1].pter_array[tmp_i]; 	// Y pointer
 
-		if (m1_pr.length !== 0 ){
+		if (m1_pr.color_group.length !== 0 ){
 			console.log("m1_pr not [], for "+pers.id+" @ "+tmp_i, m1_pr);
 			throw new Error("");
 
 		}
 
-		if (m2_pr.length !== 0 ){
+		if (m2_pr.color_group.length !== 0 ){
 			console.log("m2_pr not [], for "+pers.id+" @ "+tmp_i, m2_pr);
 			throw new Error("");
 		}
@@ -106,10 +114,10 @@ function child2parent_link(pers, moth, fath)
 		 */
 		if (SEXLINKED && gender === 1){ 						 // Sexlinked and male
 
-			m2_pr.push( a1_pr );	 // No ambiguity there
+			pushAll(a1_pr,m2_pr);	 // No ambiguity there
 
-			if (m1_ht === a2_ht) m1_pr.push( a2_pr );  // Maternal set both
-			if (m1_ht === a3_ht) m1_pr.push( a3_pr );
+			if (m1_ht === a2_ht) pushAll(a2_pr, m1_pr); // Maternal set both
+			if (m1_ht === a3_ht) pushAll(a3_pr, m1_pr);
 
 			continue;
 		}
@@ -119,58 +127,19 @@ function child2parent_link(pers, moth, fath)
 		e.g: {0,1}{2,3} = 02 03 12 13
 		 */
 		if (m1_ht === a0_ht){ 						   // Add 0
-			m1_pr.push( a0_pr )
+			pushAll(a0_pr, m1_pr);
 
-			if (m2_ht === a2_ht) m2_pr.push( a2_pr );  // 02 scen;
-			if (m2_ht === a3_ht) m2_pr.push( a3_pr );  // 03 scen;
+			if (m2_ht === a2_ht) pushAll(a2_pr, m2_pr);// 02 scen;
+			if (m2_ht === a3_ht) pushAll(a3_pr, m2_pr);// 03 scen;
 		}
 
 		if (m1_ht === a1_ht){ 						  // Add 1
-			m1_pr.push( a1_pr )
+			pushAll(a1_pr, m1_pr);
 
-			if (m2_ht === a2_ht) m2_pr.push( a2_pr ); // 12 scen;
-			if (m2_ht === a3_ht) m2_pr.push( a3_pr ); // 13 scen;
+			if (m2_ht === a2_ht) pushAll(a2_pr, m2_pr); // 12 scen;
+			if (m2_ht === a3_ht) pushAll(a3_pr, m2_pr); // 13 scen;
 		}
-
-		//Set -1's to non-ambiguous (set)
-		if (m1_pr[0] === zero_color_grp){
-			var all_zero = true;
-			for (var z = 0; z < m1_pr.length; z++)
-				if (m1_pr[z] !== zero_color_grp){
-					all_zero = false;
-					break;
-				}
-			if (all_zero)
-				while (m1_pr.length !==1) m1_pr.pop();
-		}
-
-		if (m2_pr[0] === zero_color_grp){
-			var all_zero = true;
-			for (var z = 0; z < m2_pr.length; z++)
-				if (m2_pr[z] !== zero_color_grp){
-					all_zero = false;
-					break;
-				}
-			if (all_zero)
-				while (m2_pr.length !==1) m2_pr.pop();
-		}
-
-
-
-
 	}
-
-// 	if (pers.id === 7652){
-// 		for (var y= 1090; y <= 1110; y++)
-// 			console.log("7652 after @ "+y,
-// 						pers_hp[0].data_array[y],
-// 						pers_hp[1].data_array[y],
-// 						pers_hp[0].pter_array[y].color_group,
-// 						pers_hp[1].pter_array[y].color_group);
-// 		throw new Error("stop");
-// 	}
-
-
 }
 
 
@@ -206,7 +175,8 @@ function assignHGroups()
 					fath = family_map[fam][fath_id];
 
 				child2parent_link(pers, moth, fath);
-				console.log("alleles for "+pers_id, pers.haplo_data);
+// 				console.log("non-founder", pers_id, pers.haplo_data[0].pter_array[0].color_group, pers.haplo_data[0].data_array[0]);
+// 				console.log("non-founder", pers_id, pers.haplo_data[1].pter_array[0].color_group, pers.haplo_data[1].data_array[0]);
 			}
 		}
 		console.log("hgroups fam =" + fam);

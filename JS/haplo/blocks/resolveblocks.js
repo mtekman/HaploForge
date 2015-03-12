@@ -1,3 +1,84 @@
+var max_distance_before_split = 50; // 50bp for non-continuous segments before a new block is defined.
+
+
+
+function findRoughBlocks(pointer_array){
+
+	var index = 0,
+		blocks = [];  // blocks: { group:num, start:index, end:index}
+
+	var started_block = false,
+		last_color = -2,
+		last_cont_index = -1,
+		temp_block = {};
+
+
+
+	do {
+		var color_array = pointer_array[index].color_group;
+
+
+		if (color_array.length === 1){
+
+			var color = color_array[0];
+
+			// Detected a change in block (or forced)
+			if (color === zero_color_grp){
+				index ++;
+				continue;
+			}
+
+			if (color !== last_color || ((index - last_cont_index) > max_distance_before_split)){
+
+				if (started_block){
+					temp_block.end = last_cont_index;
+					blocks.push( temp_block );
+
+					temp_block = {};
+					started_block = false;
+				}
+
+				if (!(started_block)){
+					started_block = true;
+					temp_block = {group:color, beg:index, end:-1};
+				}
+			}
+
+			last_cont_index = index;
+			last_color = color;
+		}
+		else { // Ambiguous -- attempt to rough an ambiguous stretch through the non-amb section. If you don't make it to the otherside, throw error..
+
+			//Check if current non-ambig color is in the block, and press on
+
+			// THIS ONLY WORKS IF THE AMBIGUOUS REGION IS WITHIN A NON-AMBIG BLOCK!!!!
+
+			if (color_array.indexOf(temp_block.group) !== -1){
+				for (var m=0; m < color_array; m++)
+					color_array.pop();
+
+				color_array.push( temp_block.group );
+			}
+			else{
+				console.error("@ "+index, color_array, temp_block.group)
+				throw new Error("indeed..");
+			}
+		}
+	}
+	while(index++ < pointer_array.length-1);
+
+
+	if (started_block){
+		temp_block.end = last_cont_index;
+		blocks.push( temp_block );
+
+		temp_block = {};
+		started_block = false;
+	}
+
+	console.log(pointer_array.map( function(n){ return n.color_group;}) );
+}
+
 
 /* Runs after AssignHgroups !
 
@@ -27,7 +108,7 @@ function removeAmbiguousPointers(fam)
 					ambig_indices_regions = [],
 					pointer_array = both_alleles[a].pter_array;
 
-				var curr_index = 0;
+				var curr_index = -1;
 
 				// 1. Find ambiguous indices
 				var last_ambig = -100,
@@ -35,51 +116,67 @@ function removeAmbiguousPointers(fam)
 					temp_started_group = false;
 
 
-				while (curr_index < pointer_array.length - 1){
+				// We can get a good understanding of what the allele should look like if we just examine the singles
+				// and estimate block boundaries
 
-					if (pointer_array[curr_index].color_group === undefined){
-						console.log("id="+id+", a="+a+", index="+curr_index);
-					}
+				if (id === 9 && a === 0){
+					console.log(id, a);
+					console.group()
+					findRoughBlocks(pointer_array);
+					console.groupEnd();
+				}
+				continue;
+// 				throw new Error("stop");
+
+				while (++curr_index < pointer_array.length)
+				{
+
+					if (curr_index < 420)
+						if (pointer_array[curr_index].color_group.length === 1)
+							console.log(curr_index, pointer_array[curr_index].color_group);
+
 
 
 					if (pointer_array[curr_index].color_group.length > 1){
 
-						if (curr_index === last_ambig + 1){ 			// identified the start of a continuous region
+						if (curr_index === last_ambig + 1){ 						// identified the start of a continuous region
 							if (!(temp_started_group))
 							{
-								temp_started_group = true;  // new region, starting from previous
-								temp_group[0] = last_ambig; // store previous
+								temp_started_group = true;  						// new region, starting from previous
+								temp_group[0] = last_ambig-1; 						// store previous
 
 							}
 						}
-						else{ 											// identified discontinuity
+						else{ 														// identified discontinuity
 							if (temp_started_group){
-								temp_group[1] = curr_index-1; 			// store previous
+								temp_group[1] = curr_index-1; 						// store previous
 								temp_started_group = false;
 
-// 								console.log("group", temp_group);
+								if (temp_group[1] - temp_group[0] <= 2)
+									ambig_indices_singles.push( temp_group[1] -1 );
+								else
+									ambig_indices_regions.push( temp_group );
 
-								ambig_indices_regions.push( temp_group );
-								temp_group = [0,0]; 			// reset
+								temp_group = [0,0]; 								// reset
 							}
-							ambig_indices_singles.push( curr_index );
+							else{
+								temp_started_group = true;
+								temp_group[0] = curr_index - 1;
+							}
 						}
 						last_ambig = curr_index;
 					}
-					curr_index ++;
 
-// 					else{ // Non-ambiguous, remove array and assign to first_elem
-// 						if (pointer_array[curr_index].color_group === undefined){
-// 							console.log("undefined =", id, "@", both_alleles[a].data_array[curr_index]);
-// 						}
-// 						pointer_array[curr_index].color_group = pointer_array[curr_index].color_group[0];
-
-// 					}
+					//else unambiguous
 				}
 				if (temp_started_group){
-// 					console.log("HERE", curr_index);
-					temp_group[1] = curr_index;
-					ambig_indices_regions.push( temp_group);
+					temp_group[1] = curr_index-1; 			// store previous
+					temp_started_group = false;
+
+					if (temp_group[1] - temp_group[0] === 2)
+						ambig_indices_singles.push( temp_group[1] -1 );
+					else
+						ambig_indices_regions.push( temp_group );
 				};
 
 
@@ -107,7 +204,7 @@ function removeAmbiguousPointers(fam)
 						  && back_index >= 0){} 					//Search back also;
 
 // 					if (forw_index > 1700){
-// 						console.log("single",back_index, forw_index, "target:", ambig_index);
+						console.log("single",back_index, forw_index, "target:", ambig_index);
 
 // 						for (var f = back_index; f <= forw_index; f++)
 // 							console.log("  "+f+":", pointer_array[f].color_group);
@@ -139,8 +236,15 @@ function removeAmbiguousPointers(fam)
 					var lower_index = ambig_indices_regions[curr_index][0],
 						upper_index = ambig_indices_regions[curr_index][1];
 
-// 					if (upper_index > 1700)
-					console.log("region",lower_index, upper_index);
+//  					if (upper_index < 300){
+// 						console.log("region",lower_index, upper_index);
+// 						for (var f =lower_index-1; f < upper_index+1; f++)
+// 							console.log("  "+f,pointer_array[f].color_group);
+// 					}
+
+					iter ++;
+					continue;
+
 
 					var iter = lower_index,
 						working_path = [];
@@ -151,8 +255,6 @@ function removeAmbiguousPointers(fam)
 						{
 							var current_group = pointer_array[iter].color_group[k],
 								next_group;
-
-//							console.log(current_group);
 
 							//Look ahead
 							var cind = iter;
@@ -184,7 +286,7 @@ function removeAmbiguousPointers(fam)
 							// k advances
 						}
 						// We skip this marker and try the search again
-// 						iter ++;
+ 						iter ++;
 
 						//Here assign the solution to the pointer_array
 						console.log(working_path);
@@ -218,14 +320,13 @@ function copyPointersAndClean(fam){
 			{
 				var pointer_array = both_alleles[a].pter_array;
 
-				both_alleles[a].haplogroup_array = new Int8Array(pointer_array.length);
+				//both_alleles[a].haplogroup_array = new Int8Array(pointer_array.length);
 
-// 				try {
-					for (var b=0; b < pointer_array.length; b++){
-		//				if (pointer_array[b].color_group === undefined)
-        //    				console.log("  "+id+" @ "+b);
+				for (var b=0; b < pointer_array.length; b++){
+// 					if (pointer_array[b].color_group.length > 1)
+//            				console.log("  "+id+" @ "+b, pointer_array[b].color_group, both_alleles[a].data_array[b]);
 // 						both_alleles[a].haplogroup_array[b] = pointer_array[b].color_group[0];
-					}
+				}
 // 					delete both_alleles[a].pter_array;
 //
 // 				} catch (e) {
@@ -233,7 +334,7 @@ function copyPointersAndClean(fam){
 // 				}
 			}
 
-			console.log("cleaned "+id, both_alleles);
+//			console.log("cleaned "+id, both_alleles);
 		}
 	}
 }
