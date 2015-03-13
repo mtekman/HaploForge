@@ -47,23 +47,6 @@ function findRoughBlocks(pointer_array){
 			last_cont_index = index;
 			last_color = color;
 		}
-		else { // Ambiguous -- attempt to rough an ambiguous stretch through the non-amb section. If you don't make it to the otherside, throw error..
-
-			//Check if current non-ambig color is in the block, and press on
-
-			// THIS ONLY WORKS IF THE AMBIGUOUS REGION IS WITHIN A NON-AMBIG BLOCK!!!!
-
-			if (color_array.indexOf(temp_block.group) !== -1){
-				for (var m=0; m < color_array; m++)
-					color_array.pop();
-
-				color_array.push( temp_block.group );
-			}
-			else{
-				console.error("@ "+index, color_array, temp_block.group)
-				throw new Error("indeed..");
-			}
-		}
 	}
 	while(index++ < pointer_array.length-1);
 

@@ -37,6 +37,121 @@ function longestCommon(alle1, alle2) {
 }
 
 
+function cutting(){
+// 	var array = [[4],[4,5,6],[4,5],[3,4,9],[8,9],[8,10,11],[8,10,11],[8]],
+	var array = [[4,5,6],[4,5],[3,4,9],[8,9],[8,10,11],[8,10,11]],
+		arrayOfIndexes = (function (){
+			var arr = [];
+			for (var k=0; k < array.length; k++){
+				arr.push({
+					index: array[k].length-1,
+					last_split: 0
+				})
+			}
+			arr.push({index:0, last_split:0}); 							//dummy index, needed for jumping back
+
+			return arr;
+		})();
+
+
+
+	var cloneTill = function(array, till){
+		var new_arr = [];
+		for (var l=0; l < till; l++)
+			new_arr.push( array[l] );
+		return new_arr;
+	};
+
+
+	var numset = 0,
+		bestset = 99999;
+
+	var path_list = [],
+		best_path = [],
+		temppath = [];
+
+
+
+	var row = 0,
+		min_stretch_len = 2;
+
+	while (true){
+
+
+		var color_index = arrayOfIndexes[row];
+		console.log("path="+temppath);
+
+		//Test finished
+		var jumpBack = false;
+
+		if (row === 0){
+			if (color_index.index < 0) break; 					//No more paths to explore after jumping back.
+			numset = 0;
+		}
+
+		if (row === array.length){
+
+			if (numset < bestset){
+				bestset = numset;
+				best_path = temppath;
+			}
+			path_list.push ( temppath );
+
+			jumpBack = true;
+		}
+
+		if (color_index.index < 0) jumpBack = true;
+
+
+		if (jumpBack){
+// 			console.log( ">>jumprow:"+row+"-->"+color_index.last_split
+// 						  +", index to:"+(arrayOfIndexes[color_index.last_split].index - 1)+'\n');
+
+			// jump back to last split
+			row = color_index.last_split;
+			temppath = cloneTill(temppath, row);
+
+			arrayOfIndexes[row].index--;
+			continue;
+		}
+
+		//We have an unexplored color
+		var color = array[row][color_index.index];
+//  		console.log("    trying color='"+color+"'");
+
+
+		//Perform lookahead
+		var stretch = row;
+		while ( stretch < array.length  && array[stretch].indexOf(color)!== -1){
+			temppath.push(color);
+			stretch ++;
+		}
+		stretch -= row;
+
+		// Unsuccessful
+		if (stretch < min_stretch_len){
+// 			console.log("    failed (too short)");
+			while(stretch --> 0) temppath.pop(); 	// clear changes
+
+			arrayOfIndexes[row].index--; 			// next attempt at this row will try a different index
+			continue;
+		}
+
+		// Successfully found a new color. Splitting
+// 		console.log("    worked, arrayOfIndexes["+(row+stretch)+"].last_split = "+row);
+		arrayOfIndexes[row+stretch].last_split = row; // this row is where we split
+
+		row += stretch;
+		numset ++;
+	}
+	console.log("sols", path_list);
+	console.log("best path=", best_path);
+}
+
+
+cutting();
+
+
 function testIterate(){
 
 	var num_array = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19],
@@ -61,5 +176,3 @@ function testIterate(){
 	// Surely the size of index would double up for 8 -> 16 bits?
 
 }
-
-testIterate();
