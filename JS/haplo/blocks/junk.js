@@ -67,15 +67,16 @@ function cutting(){
 		bestset = 99999;
 
 	var path_list = [],
-		best_path = [],
+		best_path = null,
 		temppath = [];
-
-
 
 	var row = 0,
 		min_stretch_len = 2;
 
+	var num_cycles= 0;
+
 	while (true){
+		num_cycles ++;
 
 
 		var color_index = arrayOfIndexes[row];
@@ -146,6 +147,7 @@ function cutting(){
 	}
 	console.log("sols", path_list);
 	console.log("best path=", best_path);
+	console.log("num cycles=", num_cycles);
 }
 
 
