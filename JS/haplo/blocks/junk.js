@@ -44,7 +44,7 @@ function cutting(array, start=0, end=array.length-1)
 		var arr = [];
 		for (var k=start; k <= end; k++){
 			arr.push({
-				index: array[k].length-1,
+				index: array[k].color_group.length-1,
 				last_split: 0
 			})
 		}
@@ -65,8 +65,8 @@ function cutting(array, start=0, end=array.length-1)
 	var numset = 0,
 		bestset = 99999;
 
-	var path_list = [],
-		best_path = null,
+	var path_list = [];
+	var	best_path = null,
 		temppath = [];
 
 	var row = 0,
@@ -74,11 +74,12 @@ function cutting(array, start=0, end=array.length-1)
 		min_stretch_len = 2;
 
 	var num_cycles= 0;
-
-	console.time("yer");
+//
+// 	console.time("yer");
 
 	while (true){
-		num_cycles ++;
+ 		if (num_cycles ++ > 90) break;
+
 
 		actual_row = row + start;
 
@@ -100,7 +101,6 @@ function cutting(array, start=0, end=array.length-1)
 				best_path = temppath;
 			}
 			path_list.push ( temppath );
-
 			jumpBack = true;
 		}
 
@@ -108,8 +108,7 @@ function cutting(array, start=0, end=array.length-1)
 
 
 		if (jumpBack){
-			console.log( ">>jumprow:"+actual_row+"-->"+color_index.last_split
-						  +", index to:"+(arrayOfIndexes[color_index.last_split].index - 1)+'\n');
+			console.log( ">>jumprow:"+actual_row+"-->"+color_index.last_split+", index to:"+(arrayOfIndexes[color_index.last_split].index - 1)+'\n');
 
 			// jump back to last split
 			row = color_index.last_split;
@@ -121,15 +120,23 @@ function cutting(array, start=0, end=array.length-1)
 
 		//We have an unexplored color
 
-		var color = array[actual_row][color_index.index];
- 		console.log("    trying color='"+color+"'");
-
+		var color = array[actual_row].color_group[color_index.index];
+		console.log("    trying color='"+color+"'");
 
 		//Perform lookahead
 		var stretch = actual_row;
-		while ( stretch <= end && array[stretch].indexOf(color)!== -1){
-			temppath.push(color);
-			stretch ++;
+		while ( stretch <= end ){
+			var new_colors = array[stretch].color_group;
+
+			if (new_colors[0] === -1){
+				temppath.push(-1)
+				stretch ++;
+			}
+			else if (new_colors.indexOf(color)!== -1){
+				temppath.push(color);
+				stretch ++;
+			}
+			else break;
 		}
 		stretch -= actual_row;
 
@@ -138,6 +145,7 @@ function cutting(array, start=0, end=array.length-1)
 			console.log("    failed (too short)");
 			while(stretch --> 0) temppath.pop(); 	// clear changes
 
+
 			arrayOfIndexes[row].index--; 			// next attempt at this row will try a different index
 			continue;
 		}
@@ -145,19 +153,44 @@ function cutting(array, start=0, end=array.length-1)
 		// Successfully found a new color. Splitting
 		console.log("    worked, arrayOfIndexes["+(actual_row+stretch)+"].last_split = "+actual_row);
 		arrayOfIndexes[row+stretch].last_split = row; // this row is where we split
+		arrayOfIndexes[row+stretch].index++; 		  // somehow this is needed...
 
 		row += stretch;
 		numset ++;
 	}
-	console.timeEnd("yer");
+// 	console.timeEnd("yer");
 
 	console.log("sols", path_list);
-	console.log("best path=", best_path);
+// 	console.log("best path=", best_path);
 	console.log("num cycles=", num_cycles);
+	return best_path;
 }
 
-var array = [[5,4],[4,5,6],[4,5],[3,4,9],[8,9],[8,10,11],[8,10,11],[11,8]];
-cutting(array);//,5,6);
+// var array = [[4,5,6],[4,5],[3,4,9],[8,9],[8,10,11],[8,10,11]]
+var array = [
+	[4,9],
+	[4,9],
+	[4,5,11],
+	[4,5,11],
+	[-1],
+	[8,5],
+	[8,6],
+	[8,6],
+	[8]
+];
+var test_array = [];
+
+for (var q=0; q < array.length; q++){
+	var arr = [];
+	for (var p=0; p < array[q].length; p++){
+		arr.push( array[q][p]);
+	}
+	test_array.push( {color_group: arr} );
+}
+
+
+
+console.log( cutting(test_array) );
 
 
 function testIterate(){

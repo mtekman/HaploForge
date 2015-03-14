@@ -1,4 +1,114 @@
 var max_distance_before_split = 50; // 50bp for non-continuous segments before a new block is defined.
+var min_stretch_len = 2;
+
+
+function resolveAmbiguousRegions(array, start=0, end=array.length-1)
+{
+// 	console.log(array);
+
+	var arrayOfIndexes = (function (){
+		var arr = [];
+		for (var k=start; k <= end; k++){
+			arr.push({
+				index: array[k].color_group.length-1,
+				last_split: 0
+			})
+		}
+		arr.push({index:0, last_split:0}); 							//dummy index, needed for jumping back
+
+		return arr;
+	})();
+
+
+	var cloneTill = function(array, till){
+		var new_arr = [];
+		for (var l=0; l < till; l++)new_arr.push( array[l] );
+		return new_arr;
+	};
+
+
+	var numset = 0, bestset = 99999;
+
+// 	var path_list = [];
+	var	best_path = null, temppath = [];
+
+	var row = 0, actual_row = start;
+
+// 	var num_cycles= 0;
+// 	console.time("yer");
+
+	while (true){
+// 		num_cycles ++;
+		actual_row = row + start;
+
+		var color_index = arrayOfIndexes[row];
+		console.log("path="+temppath);
+
+		var jumpBack = false;
+
+		if (row === 0){
+			if (color_index.index < 0) break; 					//No more paths to explore after jumping back.
+			numset = 0;
+		}
+
+		if (row === arrayOfIndexes.length-1)
+		{
+			if (numset < bestset){
+				bestset = numset;
+				best_path = temppath;
+			}
+// 			path_list.push ( temppath );
+			jumpBack = true;
+		}
+
+		if (color_index.index < 0) jumpBack = true;
+
+		if (jumpBack){
+			console.log( ">>jumprow:"+actual_row+"-->"+color_index.last_split+", index to:"+(arrayOfIndexes[color_index.last_split].index - 1)+'\n');
+
+			// jump back to last split
+			row = color_index.last_split;
+			temppath = cloneTill(temppath, row);
+
+			arrayOfIndexes[row].index--;
+			continue;
+		}
+
+		//We have an unexplored color
+		var color = array[actual_row].color_group[color_index.index];
+		console.log("    trying color='"+color+"'");
+
+		//Perform lookahead
+		var stretch = actual_row;
+		while ( stretch <= end && array[stretch].color_group.indexOf(color)!== -1){
+			temppath.push(color);
+			stretch ++;
+		}
+		stretch -= actual_row;
+
+		// Unsuccessful
+		if (stretch < min_stretch_len){
+			console.log("    failed (too short)");
+			while(stretch --> 0) temppath.pop(); 	// clear changes
+
+			arrayOfIndexes[row].index--; 			// next attempt at this row will try a different index
+			continue;
+		}
+		// Successfully found a new color. Splitting
+		console.log("    worked, arrayOfIndexes["+(actual_row+stretch)+"].last_split = "+actual_row);
+		arrayOfIndexes[row+stretch].last_split = row; // this row is where we split
+
+		row += stretch;
+		numset ++;
+	}
+// 	console.timeEnd("yer");
+
+// 	console.log("sols", path_list);
+// 	console.log("best path=", best_path);
+// 	console.log("num cycles=", num_cycles);
+	return best_path;
+}
+
 
 
 
@@ -105,7 +215,8 @@ function removeAmbiguousPointers(fam)
 				if (id === 9 && a === 0){
 					console.log(id, a);
 					console.group()
-					findRoughBlocks(pointer_array);
+					var sib = resolveAmbiguousRegions(pointer_array);
+					console.log(sib);
 					console.groupEnd();
 				}
 				continue;
