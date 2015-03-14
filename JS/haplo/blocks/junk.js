@@ -37,22 +37,21 @@ function longestCommon(alle1, alle2) {
 }
 
 
-function cutting(){
-// 	var array = [[4],[4,5,6],[4,5],[3,4,9],[8,9],[8,10,11],[8,10,11],[8]],
-	var array = [[4,5,6],[4,5],[3,4,9],[8,9],[8,10,11],[8,10,11]],
-		arrayOfIndexes = (function (){
-			var arr = [];
-			for (var k=0; k < array.length; k++){
-				arr.push({
-					index: array[k].length-1,
-					last_split: 0
-				})
-			}
-			arr.push({index:0, last_split:0}); 							//dummy index, needed for jumping back
 
-			return arr;
-		})();
+function cutting(array, start=0, end=array.length-1)
+{
+	var arrayOfIndexes = (function (){
+		var arr = [];
+		for (var k=start; k <= end; k++){
+			arr.push({
+				index: array[k].length-1,
+				last_split: 0
+			})
+		}
+		arr.push({index:0, last_split:0}); 							//dummy index, needed for jumping back
 
+		return arr;
+	})();
 
 
 	var cloneTill = function(array, till){
@@ -71,13 +70,17 @@ function cutting(){
 		temppath = [];
 
 	var row = 0,
+		actual_row = start,
 		min_stretch_len = 2;
 
 	var num_cycles= 0;
 
+	console.time("yer");
+
 	while (true){
 		num_cycles ++;
 
+		actual_row = row + start;
 
 		var color_index = arrayOfIndexes[row];
 		console.log("path="+temppath);
@@ -90,7 +93,7 @@ function cutting(){
 			numset = 0;
 		}
 
-		if (row === array.length){
+		if (row === arrayOfIndexes.length-1){
 
 			if (numset < bestset){
 				bestset = numset;
@@ -105,8 +108,8 @@ function cutting(){
 
 
 		if (jumpBack){
-// 			console.log( ">>jumprow:"+row+"-->"+color_index.last_split
-// 						  +", index to:"+(arrayOfIndexes[color_index.last_split].index - 1)+'\n');
+			console.log( ">>jumprow:"+actual_row+"-->"+color_index.last_split
+						  +", index to:"+(arrayOfIndexes[color_index.last_split].index - 1)+'\n');
 
 			// jump back to last split
 			row = color_index.last_split;
@@ -117,21 +120,22 @@ function cutting(){
 		}
 
 		//We have an unexplored color
-		var color = array[row][color_index.index];
-//  		console.log("    trying color='"+color+"'");
+
+		var color = array[actual_row][color_index.index];
+ 		console.log("    trying color='"+color+"'");
 
 
 		//Perform lookahead
-		var stretch = row;
-		while ( stretch < array.length  && array[stretch].indexOf(color)!== -1){
+		var stretch = actual_row;
+		while ( stretch <= end && array[stretch].indexOf(color)!== -1){
 			temppath.push(color);
 			stretch ++;
 		}
-		stretch -= row;
+		stretch -= actual_row;
 
 		// Unsuccessful
 		if (stretch < min_stretch_len){
-// 			console.log("    failed (too short)");
+			console.log("    failed (too short)");
 			while(stretch --> 0) temppath.pop(); 	// clear changes
 
 			arrayOfIndexes[row].index--; 			// next attempt at this row will try a different index
@@ -139,19 +143,21 @@ function cutting(){
 		}
 
 		// Successfully found a new color. Splitting
-// 		console.log("    worked, arrayOfIndexes["+(row+stretch)+"].last_split = "+row);
+		console.log("    worked, arrayOfIndexes["+(actual_row+stretch)+"].last_split = "+actual_row);
 		arrayOfIndexes[row+stretch].last_split = row; // this row is where we split
 
 		row += stretch;
 		numset ++;
 	}
+	console.timeEnd("yer");
+
 	console.log("sols", path_list);
 	console.log("best path=", best_path);
 	console.log("num cycles=", num_cycles);
 }
 
-
-cutting();
+var array = [[5,4],[4,5,6],[4,5],[3,4,9],[8,9],[8,10,11],[8,10,11],[11,8]];
+cutting(array);//,5,6);
 
 
 function testIterate(){
