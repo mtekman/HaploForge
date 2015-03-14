@@ -183,9 +183,6 @@ function assignHGroups()
 		removeAmbiguousPointers(fam);
 
 	}
-
-	copyPointersAndClean(fam);
-
 // 	console.log("colors=", hgroup_colors);
 }
 

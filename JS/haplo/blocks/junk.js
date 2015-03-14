@@ -76,10 +76,8 @@ function cutting(array, start=0, end=array.length-1)
 	var num_cycles= 0;
 //
 // 	console.time("yer");
-
 	while (true){
  		if (num_cycles ++ > 90) break;
-
 
 		actual_row = row + start;
 
@@ -94,18 +92,18 @@ function cutting(array, start=0, end=array.length-1)
 			numset = 0;
 		}
 
-		if (row === arrayOfIndexes.length-1){
-
+		if (row === arrayOfIndexes.length-1)
+		{
 			if (numset < bestset){
 				bestset = numset;
 				best_path = temppath;
 			}
-			path_list.push ( temppath );
+			path_list.push ( [temppath, numset] );
 			jumpBack = true;
 		}
 
-		if (color_index.index < 0) jumpBack = true;
-
+		if (color_index.index < 0)
+			jumpBack = true;
 
 		if (jumpBack){
 			console.log( ">>jumprow:"+actual_row+"-->"+color_index.last_split+", index to:"+(arrayOfIndexes[color_index.last_split].index - 1)+'\n');
@@ -115,16 +113,26 @@ function cutting(array, start=0, end=array.length-1)
 			temppath = cloneTill(temppath, row);
 
 			arrayOfIndexes[row].index--;
+
+			numset --;
 			continue;
 		}
 
 		//We have an unexplored color
-
 		var color = array[actual_row].color_group[color_index.index];
 		console.log("    trying color='"+color+"'");
 
+ 		if (color === -1){
+ 			console.log("    zero group, skipping");
+ 			temppath.push(-1);
+ 			row ++;
+			actual_row ++;
+ 			continue;
+ 		}
+
 		//Perform lookahead
 		var stretch = actual_row;
+
 		while ( stretch <= end ){
 			var new_colors = array[stretch].color_group;
 
@@ -145,7 +153,6 @@ function cutting(array, start=0, end=array.length-1)
 			console.log("    failed (too short)");
 			while(stretch --> 0) temppath.pop(); 	// clear changes
 
-
 			arrayOfIndexes[row].index--; 			// next attempt at this row will try a different index
 			continue;
 		}
@@ -161,22 +168,23 @@ function cutting(array, start=0, end=array.length-1)
 // 	console.timeEnd("yer");
 
 	console.log("sols", path_list);
-// 	console.log("best path=", best_path);
+	console.log("best path=", best_path);
 	console.log("num cycles=", num_cycles);
 	return best_path;
 }
 
-// var array = [[4,5,6],[4,5],[3,4,9],[8,9],[8,10,11],[8,10,11]]
+// var array = [[4,5,6],[4,5],[-1],[3,4,9],[-1],[-1],[8,9],[8,10,11],[8,10,11]]
 var array = [
-	[4,9],
-	[4,9],
-	[4,5,11],
-	[4,5,11],
 	[-1],
-	[8,5],
-	[8,6],
-	[8,6],
-	[8]
+	[-1],
+	[-1],
+	[-1],
+	[-1],
+	[-1],
+	[-1],
+	[-1],
+	[-1],
+	[-1],
 ];
 var test_array = [];
 
