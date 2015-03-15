@@ -28,14 +28,19 @@ function addHaplos(fam, parent_node){ //called by toggle_haplotypes in haplo/tog
 			var pers_id = generation_grid_ids[fam][g][p],
 				pers_hp = family_map[fam][pers_id].haplo_data;
 
-			var data_alleles = [];
+			var data_alleles = [],
+				data_hapgrps = [];
 			for (var al = 0; al < pers_hp.length; al++)
 			{
-				var one_allele_window = [];
-				for( var d=sta_index; d <= end_index; d++)
-					one_allele_window.push( pers_hp[al].data_array[d] );
+				var one_allele_window = [],
+					one_hapgrp_window = [];
 
-				data_alleles.push( one_allele_window);
+				for( var d=sta_index; d <= end_index; d++){
+					one_allele_window.push( pers_hp[al].data_array[d] );
+					one_hapgrp_window.push( pers_hp[al].haplogroup_array[d] );
+				}
+				data_alleles.push( one_allele_window );
+				data_hapgrps.push( one_hapgrp_window );
 			}
 // 			console.log(data_alleles);
 // 			console.log(pers_id, pers_hp);
@@ -49,7 +54,8 @@ function addHaplos(fam, parent_node){ //called by toggle_haplotypes in haplo/tog
 				g_pers.haplo_group.destroy();
 			}
 
-			g_pers.haplo_group = addHaploBlocks( data_alleles );
+			console.log("HAPLO");
+			g_pers.haplo_group = addHaploBlocks( data_alleles, data_hapgrps, fam );
 
 			//set xcoords to that of g_pers
 			g_pers.haplo_group.setX( g_pers.graphics.getX() );

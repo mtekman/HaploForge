@@ -2,6 +2,14 @@ var max_distance_before_split = 50; // 50bp for non-continuous segments before a
 var min_stretch_len = 2;
 
 
+var cloneTill = function(array, till){
+	var new_arr = [];
+	for (var l=0; l < till; l++)
+		new_arr.push( array[l] );
+	return new_arr;
+};
+
+
 function resolveAmbiguousRegions(array, start=0, end=array.length-1)
 {
 	var arrayOfIndexes = (function (){
@@ -16,14 +24,6 @@ function resolveAmbiguousRegions(array, start=0, end=array.length-1)
 
 		return arr;
 	})();
-
-
-	var cloneTill = function(array, till){
-		var new_arr = [];
-		for (var l=0; l < till; l++)
-			new_arr.push( array[l] );
-		return new_arr;
-	};
 
 
 	var numset = 0,
@@ -41,13 +41,12 @@ function resolveAmbiguousRegions(array, start=0, end=array.length-1)
 
 		var color_index = arrayOfIndexes[row];
 
-		//Test finished
-		var jumpBack = false;
-
 		if (row === 0){
 			if (color_index.index < 0) break; 					//No more paths to explore after jumping back.
 			numset = 0;
 		}
+
+		var jumpBack = false;
 
 		if (row === arrayOfIndexes.length-1)
 		{
@@ -60,8 +59,8 @@ function resolveAmbiguousRegions(array, start=0, end=array.length-1)
 
 		if (color_index.index < 0) jumpBack = true;
 
+		//Jump back to last split
 		if (jumpBack){
-			// jump back to last split
 			row = color_index.last_split;
 			temppath = cloneTill(temppath, row);
 
@@ -150,7 +149,7 @@ function removeAmbiguousPointers(fam)
 					group_array[curr_index] = nonambig[curr_index];
 
 				delete both_alleles[a].pter_array;
-				console.log(id, both_alleles[a]);
+// 				console.log(id, both_alleles[a]);
 			}
 		}
 	}

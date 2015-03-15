@@ -1,4 +1,5 @@
 var hgroup_colors = {}; // fam_id --> [founder_id], where array index = color/group
+var unique_colors = {}; // fam_id --> [color --> hex]
 
 var zero_color_grp = -1;
 
@@ -10,11 +11,11 @@ function initFounderAlleles( fid, id )
 
 	var perc_hdata = family_map[fid][id].haplo_data;
 
-	for (var a = 0; a < perc_hdata.length; a++) 			// current allele
+	for (var a = 0; a < perc_hdata.length; a++) 	// current allele
 	{
-		hgroup_colors[fid].push( id ); 						// Push the same guy twice for both alleles
-															// Different colors (indices) will refer to the same (duplicated) id
 		var color_group = hgroup_colors[fid].length;
+		hgroup_colors[fid].push( id );				// Push the same guy twice for both alleles
+													// Different colors (indices) will refer to the same (duplicated) id
 		/*
 		This is the color group. If it just pointed to it's data, then only a 0 1 or 2 would propogate down through
 		the pedigree. Which would be MEANINGLESS, since we want to trace specific colors to individuals.
@@ -29,6 +30,8 @@ function initFounderAlleles( fid, id )
 // 		console.log("founder "+id+" "+a, allele_ptrs[0].color_group, perc_hdata[a].data_array[0]);
 	}
 }
+
+
 
 
 
@@ -144,6 +147,50 @@ function child2parent_link(pers, moth, fath)
 
 
 
+var hsv2rgb = function(h,s,v) {
+	var rgb, i, data = [];
+	if (s === 0) {
+		rgb = [v,v,v];
+	} else {
+		h = h / 60;
+		i = Math.floor(h);
+		data = [v*(1-s), v*(1-s*(h-i)), v*(1-s*(1-(h-i)))];
+		switch(i) {
+			case 0:	rgb = [v, data[2], data[0]];break;
+			case 1:	rgb = [data[1], v, data[0]];break;
+			case 2:	rgb = [data[0], v, data[2]];break;
+			case 3:	rgb = [data[0], data[1], v];break;
+			case 4:	rgb = [data[2], data[0], v];break;
+			default:rgb = [v, data[0], data[1]];break;
+		}
+	}
+	return '#' + rgb.map(function(x){
+		return ("0" + Math.round(x*255).toString(16)).slice(-2);
+	}).join('');
+};
+
+
+
+function makeUniqueColors(fam)
+{
+	var num_colors = hgroup_colors[fam].length,
+		step_color = Math.floor(255 / num_colors)
+
+	var sat = 200,
+		val = 200,
+		hue = 0;
+
+	if (!(fam in unique_colors))
+		unique_colors[fam] = [];
+
+	for (var c=0; c < num_colors; c++){
+		unique_colors[fam][c] = hsv2rgb(hue, sat, val);
+		hue += step_color;
+	}
+}
+
+
+
 // First pass -- assign groups
 function assignHGroups()
 {
@@ -181,9 +228,8 @@ function assignHGroups()
 		}
 		console.log("hgroups fam =" + fam);
 		removeAmbiguousPointers(fam);
-
+		makeUniqueColors(fam);
 	}
-// 	console.log("colors=", hgroup_colors);
 }
 
 
