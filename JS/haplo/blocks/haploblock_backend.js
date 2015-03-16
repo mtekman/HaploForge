@@ -1,5 +1,5 @@
-var hgroup_colors = {}; // fam_id --> [founder_id], where array index = color/group
-var unique_colors = {}; // fam_id --> [color --> hex]
+var hgroup_colors = {}, // fam_id --> [founder_id], where array index = color/group
+	unique_colors = {}; // fam_id --> [color --> hex]
 
 var zero_color_grp = -1;
 
@@ -174,10 +174,10 @@ var hsv2rgb = function(h,s,v) {
 function makeUniqueColors(fam)
 {
 	var num_colors = hgroup_colors[fam].length,
-		step_color = Math.floor(255 / num_colors)
+		step_color = Math.floor(255 / (num_colors+1))
 
-	var sat = 200,
-		val = 200,
+	var sat = 250,
+		val = 100,
 		hue = 0;
 
 	if (!(fam in unique_colors))
@@ -229,6 +229,8 @@ function assignHGroups()
 		console.log("hgroups fam =" + fam);
 		removeAmbiguousPointers(fam);
 		makeUniqueColors(fam);
+
+		console.log(unique_colors);
 	}
 }
 

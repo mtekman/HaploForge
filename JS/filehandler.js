@@ -116,6 +116,8 @@ function processFile() {
         graphInitPos(nodeSize + 10, grid_rezY);
 
 		assignHGroups();
+		console.log(marker_map["rs4148618"]);
+		console.log(marker_map["2279900"]);
     };
     lr.readAsText(file);
 

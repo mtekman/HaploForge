@@ -1,6 +1,10 @@
 TODO:
 
-Fix haplo color blocks, especially for those between rs4148618 and rs2279900
+Window needs an adjuster to be dynamically set to show N markers
+ - Adjuster could be a slider that represents all M markers with start and stop bars
+
+
+
 Fix scrolling when Align mode is initiated.
 
 
@@ -9,6 +13,7 @@ Fix scrolling when Align mode is initiated.
 
 
 DONE:
+Fix haplo color blocks, especially for those between rs4148618 and rs2279900 [DONE]
 
 Haplotypes should have their own layer for quicker rendering:  [ DONE -- no significant improvement in anims]
 	On entering haplomode:
@@ -31,8 +36,6 @@ Drag and scroll haplotypes:
 	- A view of about window haplotypes at any time,            [ DONE ]
 	  with the next window loaded in with a scroll up and
 	  the old window scrolled out of view and unloaded
-	- Window needs an adjuster to be dynamically set to show N markers
-	  - Adjuster could be a slider that represents all M markers with start and stop bars
 
 
 

@@ -136,10 +136,46 @@ function addFamily(fam_id, sx, sy){
 /* This should draw all haplos in a loop */
 function addHaploBlocks(data_tx, data_grp=0, fam=0)
 {
+	var grp = new Kinetic.Group({ x:0, y:((2*nodeSize)+10)});
+
+	if (data_grp!==0){
+		var haplo = new Kinetic.Group({});
+
+		//Process blocks
+		var offs
+		for (var j=0; j <2; j++){
+
+			var ind = 0;
+			while (ind < data_grp[j].length)
+			{
+				var iter = ind,	 				// start of block
+					color_group = data_grp[j][iter];
+
+				while (  data_grp[j][++iter] === color_group
+					   && iter < data_grp[j].length);
+
+				var spac = Math.floor(HAP_VERT_SPA *1.5);
+
+				var rec = new Kinetic.Rect({
+					x: (HAP_VERT_SPA - 5) + j*spac,
+					y: ((ind-2) * HAP_VERT_SPA),
+					width: spac,
+					height: (iter-ind) * HAP_VERT_SPA,
+					fill: unique_colors[fam][color_group],
+					strokeWidth: 1,
+					stroke: 'white'
+				});
+				haplo.add( rec );
+
+				ind = iter;
+			}
+		}
+		grp.add(haplo);
+	}
+
 	var b1 = data_tx[0], 	// Haplotype
 		b2 = data_tx[1];
 
-	var grp = new Kinetic.Group({ x:0, y:((2*nodeSize)+10)});
 
 	//Process Text
 	var ind = -1, total_text="";
@@ -156,38 +192,6 @@ function addHaploBlocks(data_tx, data_grp=0, fam=0)
 	});
 	grp.add(tex);
 
-	if (data_grp!==0){
-		console.log( data_grp );
-		var haplo = new Kinetic.Group({});
-
-		//Process blocks
-		for (var j=0; j <2; j++){
-
-			ind = 0;
-			while (ind < data_grp[j].length)
-			{
-				var iter = ind,	 				// start of block
-					color_group = data_grp[j][iter];
-
-				while (  data_grp[j][++iter] === color_group
-					  && iter < data_grp[j].length);
-
-				var rec = new Kinetic.Rect({
-					x: 3*j * HAP_VERT_SPA,
-					y: (ind-2) * HAP_VERT_SPA,
-					width: HAP_VERT_SPA,
-					height: iter * HAP_VERT_SPA,
-					fill: unique_colors[fam][color_group],
-					strokeWidth: 2,
-					stroke: default_stroke_color
-				});
-				haplo.add( rec );
-
-				ind = iter;
-			}
-		}
-		grp.add(haplo);
-	}
 	return grp;
 }
 

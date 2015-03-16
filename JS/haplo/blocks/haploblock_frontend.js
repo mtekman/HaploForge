@@ -53,8 +53,6 @@ function addHaplos(fam, parent_node){ //called by toggle_haplotypes in haplo/tog
 				g_pers.haplo_group.destroyChildren();
 				g_pers.haplo_group.destroy();
 			}
-
-			console.log("HAPLO");
 			g_pers.haplo_group = addHaploBlocks( data_alleles, data_hapgrps, fam );
 
 			//set xcoords to that of g_pers
@@ -70,30 +68,37 @@ function addHaplos(fam, parent_node){ //called by toggle_haplotypes in haplo/tog
 }
 
 
-function redrawHaplos(fam_id){
-		var scroll_rect = unique_graph_objs[fam_id].haplo_scroll,
-			scroll_area = unique_graph_objs[fam_id].haplo_area;
+function redrawHaplos(fam_id, starting=0){
+	var scroll_rect = unique_graph_objs[fam_id].haplo_scroll,
+		scroll_area = unique_graph_objs[fam_id].haplo_area;
 
+	scroll_area.destroyChildren();
+	scroll_area.setY(0);
+
+	if (starting !== 0)
+	{
+		sta_index = starting
+		end_index = starting + HAP_DRAW_LIM
+	}
+	else {
 		var diff_y = scroll_rect.getY() - scroll_area.getY(),
 			index_start_delta = Math.floor( diff_y / HAP_VERT_SPA ) - 15;
 
-		scroll_area.destroyChildren();
-		scroll_area.setY(0);
-
 		sta_index += index_start_delta;
 		end_index += index_start_delta;
+// 		console.log("shifting by "+index_start_delta);
+	}
 
 // 		console.log("indexes = ", sta_index, end_index);
-// 		console.log("shifting by "+index_start_delta);
 
-		if (sta_index < 0){
-			sta_index = 0;
-			end_index = HAP_DRAW_LIM;
-		}
-		if (end_index > marker_array.length -1){
-			end_index = marker_array.length -1
-			sta_index = end_index - HAP_DRAW_LIM;
-		}
+	if (sta_index < 0){
+		sta_index = 0;
+		end_index = HAP_DRAW_LIM;
+	}
+	if (end_index > marker_array.length -1){
+		end_index = marker_array.length -1
+		sta_index = end_index - HAP_DRAW_LIM;
+	}
 
-		addHaplos(fam_id, scroll_area)
+	addHaplos(fam_id, scroll_area)
 }

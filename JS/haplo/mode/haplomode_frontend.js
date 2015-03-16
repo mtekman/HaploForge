@@ -60,7 +60,7 @@ function addHaploScreen(wi, he, fam_id)
 	});
 
 	scroll_area__.on('mouseup', function(){
-		redrawHaplos(fam_id);
+		redrawHaplos(fam_id);; // starting=300
 	});
 
 	scroll_window.add(new Kinetic.Rect({
