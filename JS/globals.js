@@ -17,7 +17,7 @@ var grid_rezY = nodeSize*6,
 
 var max_fam_width = 160
 
-var HAP_DRAW_LIM = 20, // No more than 30 haplotypes on screen
+var HAP_DRAW_LIM = 100, // No more than 30 haplotypes on screen
 	HAP_VERT_SPA = 10;
 
 var use_right_angles = true,
@@ -55,6 +55,11 @@ var butt_w = 50,
 // Haplo
 var min_haplo_x = horiz_space,
 	max_haplo_x = horiz_space + 30;
+
+// Marker Slider
+var slideinp_w = 20,
+	slideinp_h = 5,
+	slider_height = 200;
 
 
 var SEXLINKED = false;

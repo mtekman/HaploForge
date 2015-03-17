@@ -17,7 +17,7 @@ function resetHMButtons(){
 	bhaploy_offset = 0;
 }
 
-
+// called in toggle.js
 function addHaploScreen(wi, he, fam_id)
 {
 	var ped_group = new Kinetic.Group();
@@ -58,14 +58,16 @@ function addHaploScreen(wi, he, fam_id)
 			};
 		}
 	});
-
 	scroll_area__.on('mouseup', function(){
-		redrawHaplos(fam_id);; // starting=300
+		redrawHaplos(fam_id); // starting=300
 	});
 
 	scroll_window.add(new Kinetic.Rect({
-		x: -butt_w, y:0, width: wi + butt_w, height: ((HAP_DRAW_LIM+1) * HAP_VERT_SPA)+nodeSize*2,
-		fill: 'white', stroke: 'black',
+		x: -butt_w, y:0,
+		width: wi + butt_w,
+		height: ((HAP_DRAW_LIM+1) * HAP_VERT_SPA)+nodeSize*2,
+		fill: 'white',
+		stroke: 'black',
 		strokeWidth: 2
 	}));
 	scroll_window.add(scroll_area__);
@@ -74,6 +76,11 @@ function addHaploScreen(wi, he, fam_id)
 	var total_group = new Kinetic.Group();
 	total_group.add(ped_group);
 	total_group.add(scroll_window);
+
+	//Add marker_line
+	var slider = makeSlider(100, -butt_w, 0);
+	rangeline_pos = slider.getAbsolutePosition();			// update pos
+ 	total_group.add( slider );
 
 	return [total_group, scroll_window, scroll_area__, bg]; // read by toggle_haplomode in haplo/toggle.js
 }

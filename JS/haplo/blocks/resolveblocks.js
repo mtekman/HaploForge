@@ -124,7 +124,6 @@ function resolveAmbiguousRegions(array, start=0, end=array.length-1)
    which act as the new borders to expand from.
 
  - Recursion may be required, though not wanted :(
-
 */
 function removeAmbiguousPointers(fam)
 {
@@ -135,18 +134,31 @@ function removeAmbiguousPointers(fam)
 			var id = generation_grid_ids[fam][g][p];
 			var both_alleles = family_map[fam][id].haplo_data;
 
+
 			for (var a = 0; a < both_alleles.length; a++)
 			{
 				var pointer_array = both_alleles[a].pter_array,
 					nonambig = resolveAmbiguousRegions(pointer_array);
+
+				if (nonambig === null){
+					console.error("Failed for "+id+" on allele "+a);
+
+					console.log(76521, family_map[fam][76521].haplo_data);
+					console.log(76611, family_map[fam][76611].haplo_data);
+					console.log(id, both_alleles);
+					nonambig = resolveAmbiguousRegions__DEBUG(pointer_array);
+					throw new Error ("null");
+				}
 
 				//Clean the pointers
 				var group_array = (both_alleles[a].haplogroup_array = new Int8Array(pointer_array.length));
 
 				var curr_index = -1;
 
-				while (++curr_index < pointer_array.length)
+				while (++curr_index < pointer_array.length){
+// 					console.log(id, curr_index);
 					group_array[curr_index] = nonambig[curr_index];
+				}
 
 				delete both_alleles[a].pter_array;
 // 				console.log(id, both_alleles[a]);
