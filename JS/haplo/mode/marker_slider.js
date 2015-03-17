@@ -54,8 +54,10 @@ function makeSlider(xer, yer)
 		return input_group;
 	}
 
-
-	var marker_slider = new Kinetic.Group({x:xer,y:yer,draggable:true});
+	var marker_slider = new Kinetic.Group({
+		x:xer,y:yer,
+		draggable:true
+	});
 
 	//Range line
 	var rangeline = new Kinetic.Line({
@@ -68,6 +70,9 @@ function makeSlider(xer, yer)
 
 	rangeline.on('mouseup', function (e){
 		rangeline_pos = this.getAbsolutePosition();
+		console.log("setting");
+		last_input1_posy = sl_input1.getAbsolutePosition().y;
+		last_input2_posy = sl_input2.getAbsolutionPosition().y;
 	});
 
 	// Sliding Window
@@ -128,7 +133,7 @@ var stage = new Kinetic.Stage({
 
 var layer = new Kinetic.Layer({})
 
-var mark_group = makeSlider(150, 200);
+var mark_group = makeSlider(150, 10);
 
 layer.add(mark_group);
 stage.add(layer);

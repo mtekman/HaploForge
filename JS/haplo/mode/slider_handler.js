@@ -39,8 +39,8 @@ function updateSlide()
 {
 	var offs = slideinp_w/2;
 
-	top_slider = [-offs, (last_input1_posy - slider_height) ];
-	bot_slider = [-offs, (last_input2_posy - slider_height) ];
+	top_slider = [-offs, (last_input1_posy - rangeline_pos.y) ];
+	bot_slider = [-offs, (last_input2_posy - rangeline_pos.y) ];
 
 	slwin_group.setY(0);
 
@@ -53,7 +53,7 @@ function updateSlide()
 		bot_slider[0] + offs, bot_slider[1]
 	]);
 	slwin_group.message.setText( last_input2_ind - last_input1_ind );
-	slwin_group.message.setY( (bot_slider[1] + top_slider[1])/2 );
+	slwin_group.message.setY(   (bot_slider[1] + top_slider[1])/2 );
 }
 
 /// ---------------------
