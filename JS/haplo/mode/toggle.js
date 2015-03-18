@@ -1,6 +1,7 @@
 var toggle_haplo = false,
 	toggle_horiz = false,
 	toggle_haplobutton = false,
+	toggle_zoommarkers = false,
 	transition_happening = false,
 	backg;
 
@@ -11,7 +12,8 @@ function toggle_haplomode(fam_id)
 		return; 											// Ignore overclicks
 
 	if (toggle_horiz) toggle_horizAlign(fam_id); 			// Unalign if aligned first
-	if (toggle_haplobutton) toggle_haplotypes(fam_id);			// Hide Haplotypes if shown
+	if (toggle_haplobutton) toggle_haplotypes(fam_id);		// Hide Haplotypes if shown
+	if (toggle_zoommarkers) toggle_zoomer(); 				// Hide zoomer
 
 
 	toggle_haplo = !toggle_haplo;
@@ -35,10 +37,12 @@ function toggle_haplomode(fam_id)
 
 		var panel_a_scroll = addHaploScreen(final_pos.x, final_pos.y, fam_id);
 
-		n_caa.haplo_panel  = panel_a_scroll[0]; 		// Entire panel
-		n_caa.haplo_scroll = panel_a_scroll[1]; 		// Scroll window (stays stationary
-		n_caa.haplo_area   = panel_a_scroll[2];  		// Haplotypes are grouped (and draggable) here
-		n_caa.haplo_pedbg  = panel_a_scroll[3]; 		// Rect background
+		n_caa.haplo_panel  = panel_a_scroll; 			// Entire panel
+		n_caa.haplo_scroll = panel_a_scroll.main_box; 	// Scroll window (stays stationary
+		n_caa.haplo_area   = panel_a_scroll.scrollable; // Haplotypes are grouped (and draggable) here
+		n_caa.haplo_pedgrp = panel_a_scroll.ped_grp;	// Ped Panel
+
+		n_caa.haplo_pedbg  = panel_a_scroll.ped_grp.background;		// Rect background
 
 		n_caa.group.add(n_caa.haplo_panel);
 		n_caa.haplo_panel.moveToBottom();
@@ -108,15 +112,38 @@ function toggle_haplotypes(fam)
 
 	toggle_haplobutton = !toggle_haplobutton;
 
-	var scroll_panel_grp = unique_graph_objs[fam].haplo_area;
+	var scroll_panel_grp = unique_graph_objs[fam].haplo_area,
+		zoom_button = unique_graph_objs[fam].haplo_pedgrp.zoomer;
 
-	if (toggle_haplobutton)
+	if (toggle_haplobutton){
 		redrawHaplos(fam);
-	else
+		scroll_panel_grp.parent.show();
+		zoom_button.show()
+	}
+	else{
 		scroll_panel_grp.destroyChildren();
-
-
-	toggle_haplobutton?scroll_panel_grp.parent.show():scroll_panel_grp.parent.hide();
-
+		scroll_panel_grp.parent.hide();
+		zoom_button.hide();
+	}
 	haplo_layer.draw();
+}
+
+
+//Within Haplomode
+function toggle_zoomer()
+{
+	if (transition_happening) return;
+
+	toggle_zoommarkers = !toggle_zoommarkers;
+
+	var marker_slid = makeSlider(0,0);
+
+	if (toggle_zoommarkers){
+		mscale_layer.add(marker_slid);
+		stage.add(mscale_layer);
+	}
+	else {
+		marker_slid.destroy();
+		stage.remove(mscale_layer);
+	}
 }

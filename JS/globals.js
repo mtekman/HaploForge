@@ -59,7 +59,7 @@ var min_haplo_x = horiz_space,
 // Marker Slider
 var slideinp_w = 20,
 	slideinp_h = 5,
-	slider_height = 200;
+	slider_height = innerHeight * 0.5;
 
 
 var SEXLINKED = false;

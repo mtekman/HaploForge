@@ -1,3 +1,4 @@
+var active_fam;
 
 var bhaplox_offset = -5,
 	bhaploy_offset = 0;
@@ -20,6 +21,8 @@ function resetHMButtons(){
 // called in toggle.js
 function addHaploScreen(wi, he, fam_id)
 {
+	active_fam = fam_id;
+
 	var ped_group = new Kinetic.Group();
 
 	var bg = new Kinetic.Rect({
@@ -28,16 +31,22 @@ function addHaploScreen(wi, he, fam_id)
 		width: wi - nodeSize*2,
 		height: he + nodeSize,
 		fill: 'white',
-		stroke: 'black', 		   strokeWidth: 2,
+		stroke: 'black',
+		strokeWidth: 2,
 	});
 
 	var align_button = addHMButton("Align", function(){ toggle_horizAlign(fam_id);});
 	var haplo_button = addHMButton("Haplo", function(){ toggle_haplotypes(fam_id);});
-
+	var zoom_button = addHMButton("Zoom", function(){ toggle_zoomer();});
 
 	ped_group.add(bg);
 	ped_group.add(align_button);
 	ped_group.add(haplo_button);
+	ped_group.add(zoom_button);
+
+	ped_group.zoomer = zoom_button;
+
+	zoom_button.hide(); //hide by default, enable from toggling haplotypes
 
 	resetHMButtons();
 
@@ -60,16 +69,21 @@ function addHaploScreen(wi, he, fam_id)
 	});
 	scroll_area__.on('mouseup', function(){
 		redrawHaplos(fam_id); // starting=300
+		updateInputsByIndex( sta_index, end_index );
+		updateSlide();
+		haplo_layer.draw();
 	});
 
-	scroll_window.add(new Kinetic.Rect({
+	var main_rect = new Kinetic.Rect({
 		x: -butt_w, y:0,
 		width: wi + butt_w,
-		height: ((HAP_DRAW_LIM+1) * HAP_VERT_SPA)+nodeSize*2,
+		height: ((HAP_DRAW_LIM+1) * HAP_VERT_SPA) + nodeSize*2,
 		fill: 'white',
 		stroke: 'black',
 		strokeWidth: 2
-	}));
+	});
+
+	scroll_window.add(main_rect);
 	scroll_window.add(scroll_area__);
 	scroll_window.hide();
 
@@ -77,11 +91,15 @@ function addHaploScreen(wi, he, fam_id)
 	total_group.add(ped_group);
 	total_group.add(scroll_window);
 
-	//Add marker_line
-	var slider = makeSlider(100, -butt_w, 0);
-	rangeline_pos = slider.getAbsolutePosition();			// update pos
- 	total_group.add( slider );
+	// Outside accessors
+	scroll_window.background = main_rect;
+	total_group.main_box = scroll_window;
+	total_group.scrollable = scroll_area__;
 
-	return [total_group, scroll_window, scroll_area__, bg]; // read by toggle_haplomode in haplo/toggle.js
+	ped_group.background = bg;
+
+	total_group.ped_grp = ped_group;
+
+	return total_group; // read by toggle_haplomode in haplo/toggle.js
 }
 

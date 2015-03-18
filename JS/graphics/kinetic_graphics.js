@@ -11,6 +11,15 @@ var stage = new Kinetic.Stage({
 var main_layer = new Kinetic.Layer({id:"main"}),
 	haplo_layer = new Kinetic.Layer({id:"haplo"});
 
+// Seperate mini-layer for marker slider
+var mscale_layer = new Kinetic.Layer({
+	id:"marker_scale",
+	x:0, y:0,
+	width:100,
+	height: slider_height + 20
+});
+
+
 
 //Create a seperate layer for haplomode!!!!
 

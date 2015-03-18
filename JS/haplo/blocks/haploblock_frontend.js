@@ -81,8 +81,7 @@ function redrawHaplos(fam_id, starting = 0){
 		var diff_y = scroll_rect.getAbsolutePosition().y - scroll_area.getAbsolutePosition().y,
 			index_start_delta = Math.floor( diff_y / HAP_VERT_SPA );
 
-		console.log("diffy="+diff_y, "ind_start_d="+index_start_delta);
-
+// 		console.log("diffy="+diff_y, "ind_start_d="+index_start_delta);
 		sta_index += index_start_delta;
 		end_index += index_start_delta;
 // 		console.log("shifting by "+index_start_delta);
