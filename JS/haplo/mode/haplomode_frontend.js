@@ -6,7 +6,8 @@ var bhaplox_offset = -5,
 // var old_scroll_pos_y = -1;
 
 
-function addHMButton(message, callback){
+function addHMButton(message, callback)
+{
 	var b = addButton(message, bhaplox_offset, bhaploy_offset, callback);
 
 	bhaploy_offset += butt_h + 5;
@@ -46,15 +47,19 @@ function addHaploScreen(wi, he, fam_id)
 
 	ped_group.zoomer = zoom_button;
 
-	zoom_button.hide(); //hide by default, enable from toggling haplotypes
+	//hide by default, enable from toggling haplotypes
+	zoom_button.hide();
 
 	resetHMButtons();
 
 	// Space for haplotypes to be rendered
 	//
 	// General HT window
-	var scroll_window = new Kinetic.Group({x: -nodeSize*2, y: he + nodeSize*2, id:"scroll_panel",
-										   draggable: false});
+	var scroll_window = new Kinetic.Group({
+		x: -nodeSize*2, y: he + nodeSize*2,
+		id:"scroll_panel",
+		draggable: false
+	});
 	// Where HTs are grouped
 	var scroll_area__ = new Kinetic.Group({
 		draggable:true,
@@ -71,7 +76,7 @@ function addHaploScreen(wi, he, fam_id)
 		redrawHaplos(fam_id); // starting=300
 		updateInputsByIndex( sta_index, end_index );
 		updateSlide();
-		haplo_layer.draw();
+		mscale_layer.draw();
 	});
 
 	var main_rect = new Kinetic.Rect({
@@ -99,6 +104,11 @@ function addHaploScreen(wi, he, fam_id)
 	ped_group.background = bg;
 
 	total_group.ped_grp = ped_group;
+
+//  	ped_group.move(    {x:haplomode_panel_xoffs, y:0});
+//  	scroll_window.move({x:haplomode_panel_xoffs, y:0});
+ 	total_group.move(  {x:haplomode_panel_xoffs, y:0});
+
 
 	return total_group; // read by toggle_haplomode in haplo/toggle.js
 }

@@ -2,24 +2,24 @@ var sta_index = 0,
 	end_index = HAP_DRAW_LIM;
 
 
-function addHaplos(fam, parent_node){ //called by toggle_haplotypes in haplo/toggle.js
-
+function getMarkerText(){
 	//Add marker lines
-	var marker_text = function(){
-		var dd = [[],[]];
+	var dd = [[],[]];
 
-		for (var d=sta_index; d <= end_index; d++){
-			dd[0].push( "" );
-			dd[1].push( marker_array[d] );
-		}
-// 		console.log(dd);
-		return dd;
-	};
-	var fin = addHaploBlocks( marker_text() );
-	fin.setX( fin.getX() - 50 );
+	for (var d=sta_index; d <= end_index; d++){
+		dd[0].push( "" );
+		dd[1].push( marker_array[d] );
+	}
+	// 		console.log(dd);
+	return dd;
+}
 
-	parent_node.add( fin );
+function addHaplos_OLD(fam, parent_node){ //called by toggle_haplotypes in haplo/toggle.js
 
+	var marker_gfx = addHaploBlocks( getMarkerText() );
+	marker_gfx.setX( marker_gfx.getX() - 50 );
+
+	parent_node.add( marker_gfx );
 
 	for (var g = 0; g < generation_grid_ids[fam].length; g++)
 	{
@@ -56,7 +56,7 @@ function addHaplos(fam, parent_node){ //called by toggle_haplotypes in haplo/tog
 			g_pers.haplo_group = addHaploBlocks( data_alleles, data_hapgrps, fam );
 
 			//set xcoords to that of g_pers
-			g_pers.haplo_group.setX( g_pers.graphics.getX() );
+			g_pers.haplo_group.setX( g_pers.graphics.getX() - haplomode_panel_xoffs );
 
 			parent_node.add(g_pers.haplo_group);
 		}
@@ -64,33 +64,45 @@ function addHaplos(fam, parent_node){ //called by toggle_haplotypes in haplo/tog
 
 	parent_node.parent.show();
 	haplo_layer.draw();
-
 }
 
 
-function redrawHaplos(fam_id, starting = 0){
+
+function addHaplos(fam, parent_node){ //called by toggle_haplotypes in haplo/toggle.js
+
+	var wanted_indivs = [];
+
+	for (var g = 0; g < generation_grid_ids[fam].length; g++)
+	{
+		for (var p =0; p < generation_grid_ids[fam][g].length; p++)
+		{
+			var pers_id = generation_grid_ids[fam][g][p],
+				pers_hp = family_map[fam][pers_id].haplo_data;
+
+			wanted_indivs.push(pers_id);
+		}
+	}
+	var haplos = addHaploBlocksAll( wanted_indivs );
+
+	parent_node.add( haplos );
+}
+
+
+function redrawHaplos(fam_id, resizeToo = false){
 	var scroll_rect = unique_graph_objs[fam_id].haplo_scroll,
 		scroll_area = unique_graph_objs[fam_id].haplo_area;
 
-	if (starting !== 0)
-	{
-		sta_index = starting;
-		end_index = starting + HAP_DRAW_LIM;
-	}
-	else {
-		var diff_y = scroll_rect.getAbsolutePosition().y - scroll_area.getAbsolutePosition().y,
-			index_start_delta = Math.floor( diff_y / HAP_VERT_SPA );
+	var diff_y = scroll_rect.getAbsolutePosition().y - scroll_area.getAbsolutePosition().y,
+		index_start_delta = Math.floor( diff_y / HAP_VERT_SPA );
 
-// 		console.log("diffy="+diff_y, "ind_start_d="+index_start_delta);
-		sta_index += index_start_delta;
-		end_index += index_start_delta;
-// 		console.log("shifting by "+index_start_delta);
-	}
+//	console.log("diffy="+diff_y, "ind_start_d="+index_start_delta);
+	sta_index += index_start_delta;
+	end_index += index_start_delta;
+//	console.log("shifting by "+index_start_delta);
 
 	// Delete after grabbing position
 	scroll_area.destroyChildren();
 	scroll_area.setY(0);
-
 
 // 	console.log("indexes = ", sta_index, end_index);
 
@@ -104,4 +116,7 @@ function redrawHaplos(fam_id, starting = 0){
 	}
 
 	addHaplos(fam_id, scroll_area)
+
+	if (resizeToo)
+		resizeCanvas();
 }

@@ -10,8 +10,8 @@ function inputDragFunc( abspos){
 	if (this.isTop){
 		var atstart = false;
 
-		if (abspos.y >= last_input2_posy - HAP_VERT_SPA)
-			abspos.y = last_input2_posy - HAP_VERT_SPA;
+		if (abspos.y >= last_input2_posy)
+			abspos.y = last_input2_posy;
 		if (abspos.y <= rangeline_pos.y)
 		{
 			abspos.y = rangeline_pos.y + 1;
@@ -26,8 +26,8 @@ function inputDragFunc( abspos){
 	else {
 		var atend = false;
 
-		if (abspos.y <= last_input1_posy + HAP_VERT_SPA)
-			abspos.y = last_input1_posy + HAP_VERT_SPA;
+		if (abspos.y <= last_input1_posy)
+			abspos.y = last_input1_posy;
  		if (abspos.y > rangeline_pos.y + slider_height){
 			abspos.y = rangeline_pos.y + slider_height;
 			atend = true;
@@ -73,7 +73,7 @@ function sliderDragFunc( p )
 
 function updateSlide()
 {
-	var offs = slideinp_w/2;
+	var offs = I_slider_offset;
 
 	i_slider_top_y = last_input1_posy - rangeline_pos.y;
 	i_slider_length= (last_input2_posy - last_input1_posy);
@@ -84,10 +84,10 @@ function updateSlide()
 	slwin_group.setY(i_slider_top_y);
 
 	slwin_group.line.setPoints([
-		top_slider[0] + offs, top_slider[1],
+		top_slider[0] + offs*2, top_slider[1],
 		top_slider[0], top_slider[1],
 		bot_slider[0], bot_slider[1],
-		bot_slider[0] + offs, bot_slider[1]
+		bot_slider[0] + offs*2, bot_slider[1]
 	]);
 
 	slwin_group.message.setText( last_input2_ind - last_input1_ind );

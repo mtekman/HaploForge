@@ -81,7 +81,8 @@ function resolveAmbiguousRegions(array, start=0, end=array.length-1)
 
 		//Perform lookahead
 		var stretch = actual_row;
-		while ( stretch <= end ){
+		while ( stretch <= end )
+		{
 			var new_colors = array[stretch].color_group;
 
 			if (new_colors[0] === zero_color_grp){
@@ -149,17 +150,16 @@ function removeAmbiguousPointers(fam)
 					nonambig = resolveAmbiguousRegions__DEBUG(pointer_array);
 					throw new Error ("null");
 				}
-
-				//Clean the pointers
+				//Clean pointers
 				var group_array = (both_alleles[a].haplogroup_array = new Int8Array(pointer_array.length));
 
 				var curr_index = -1;
 
-				while (++curr_index < pointer_array.length){
-// 					console.log(id, curr_index);
+				// 64-bit iterator, yet implicit 64 --> 8 bit conv: How? Fuck knows.
+				while (++curr_index < pointer_array.length)
 					group_array[curr_index] = nonambig[curr_index];
-				}
 
+				// Leave for GC
 				delete both_alleles[a].pter_array;
 // 				console.log(id, both_alleles[a]);
 			}

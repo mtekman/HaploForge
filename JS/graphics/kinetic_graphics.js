@@ -19,11 +19,6 @@ var mscale_layer = new Kinetic.Layer({
 	height: slider_height + 20
 });
 
-
-
-//Create a seperate layer for haplomode!!!!
-
-
 // ------------ Kinetic Tools --------------
 function addSquare([c_x,c_y], color)
 {
@@ -142,7 +137,10 @@ function addFamily(fam_id, sx, sy){
 }
 
 
-/* This should draw all haplos in a loop */
+/* This should draw all of a single person's haplos in a loop
+ Maybe try grabbing text across an entire family?
+   - one text object, as opposed to n (for n fams in ped)
+*/
 function addHaploBlocks(data_tx, data_grp=0, fam=0)
 {
 	var grp = new Kinetic.Group({ x:0, y:((2*nodeSize)+10)});
@@ -151,9 +149,8 @@ function addHaploBlocks(data_tx, data_grp=0, fam=0)
 		var haplo = new Kinetic.Group({});
 
 		//Process blocks
-		var offs
-		for (var j=0; j <2; j++){
-
+		for (var j=0; j <2; j++)
+		{
 			var ind = 0;
 			while (ind < data_grp[j].length)
 			{
@@ -205,6 +202,35 @@ function addHaploBlocks(data_tx, data_grp=0, fam=0)
 }
 
 
+
+function addHaploBlocksAll(list_of_haplotype_data, list_of_haplogroup_data = [])
+{
+	var grp = new Kinetic.Group({ x:0, y:((2*nodeSize)+10)});
+
+
+
+
+
+
+	var total_text="";
+
+	for (var m=sta_index; m <= end_index; m++)
+	{
+		total_text += marker_array[m] + haplomode_marker_buffer;
+
+		for (var i=0; i < list_of_haplotype_data.length; i++)
+			haplo_line += list_of_haplotype_data[i][0][m] + haplomode_ht_spacing + list_of_haplotype_data[i][1][m];
+
+		total_text +='\n';
+	}
+	var text = new Kinetic.Text({
+		x: nodeSize,
+
+	});
+
+
+
+}
 
 
 

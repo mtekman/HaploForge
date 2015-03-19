@@ -57,7 +57,6 @@ function toggle_haplomode(fam_id)
 			grp.remove(); 			  					  // remove from parent but do not destroy;
 			main_layer.add(grp); 						  // add to main
 			main_layer.draw();
-
 //			haplo_layer.destroyChildren();
 		}
 
@@ -136,14 +135,20 @@ function toggle_zoomer()
 
 	toggle_zoommarkers = !toggle_zoommarkers;
 
-	var marker_slid = makeSlider(0,0);
+	var marker_slid = getSlider(20,50);
 
 	if (toggle_zoommarkers){
 		mscale_layer.add(marker_slid);
 		stage.add(mscale_layer);
+
+		updateInputsByIndex(0, HAP_DRAW_LIM);
+		updateSlide();
 	}
 	else {
-		marker_slid.destroy();
+// 		marker_slid.destroy();
+// 		marker_slid.destroyChildren();
+		mscale_layer.destroyChildren();
 		stage.remove(mscale_layer);
 	}
+	mscale_layer.draw();
 }
