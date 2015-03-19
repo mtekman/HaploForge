@@ -70,7 +70,7 @@ function addHaplos_OLD(fam, parent_node){ //called by toggle_haplotypes in haplo
 
 function addHaplos(fam, parent_node){ //called by toggle_haplotypes in haplo/toggle.js
 
-	var wanted_indivs = [];
+	var haplodata_arr = [];
 
 	for (var g = 0; g < generation_grid_ids[fam].length; g++)
 	{
@@ -79,10 +79,13 @@ function addHaplos(fam, parent_node){ //called by toggle_haplotypes in haplo/tog
 			var pers_id = generation_grid_ids[fam][g][p],
 				pers_hp = family_map[fam][pers_id].haplo_data;
 
-			wanted_indivs.push(pers_id);
+			haplodata_arr.push( pers_hp );
 		}
 	}
-	var haplos = addHaploBlocksAll( wanted_indivs );
+
+// 	console.log( haplodata_arr );
+
+	var haplos = addHaploBlocksAll( haplodata_arr, fam );
 
 	parent_node.add( haplos );
 }

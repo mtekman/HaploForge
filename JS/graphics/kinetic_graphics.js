@@ -203,32 +203,72 @@ function addHaploBlocks(data_tx, data_grp=0, fam=0)
 
 
 
-function addHaploBlocksAll(list_of_haplotype_data, list_of_haplogroup_data = [])
+function addHaploBlocksAll(haploinfos, fam =0)
 {
 	var grp = new Kinetic.Group({ x:0, y:((2*nodeSize)+10)});
 
+	var haplo = new Kinetic.Group({});
+
+	//Process blocks
+	for (var q=0; q < haploinfos.length; q++)
+	{
+
+		for (var j=0; j <2; j++)
+		{
+			var one_hgroup = haploinfos[q][j].haplogroup_array;
+
+			var ind = sta_index;
+			while (ind < end_index)
+			{
+				var iter = ind,	 				// start of block
+					color_group = one_hgroup[iter];
+
+				while (  one_hgroup[++iter] === color_group
+					   && iter < end_index);
+
+				var spac = Math.floor(HAP_VERT_SPA *1.5);
+
+				var rec = new Kinetic.Rect({
+					x: (5*q*HAP_VERT_SPA) + (j*spac) -5,
+					y: ((ind-2) * HAP_VERT_SPA),
+					width: spac,
+					height: (iter-ind) * HAP_VERT_SPA,
+					fill: unique_colors[fam][color_group],
+					strokeWidth: 1,
+					stroke: 'white'
+				});
+				haplo.add( rec );
+
+				ind = iter;
+			}
+		}
+	}
+	grp.add(haplo);
 
 
-
-
-
+	// Text
 	var total_text="";
 
 	for (var m=sta_index; m <= end_index; m++)
 	{
 		total_text += marker_array[m] + haplomode_marker_buffer;
 
-		for (var i=0; i < list_of_haplotype_data.length; i++)
-			haplo_line += list_of_haplotype_data[i][0][m] + haplomode_ht_spacing + list_of_haplotype_data[i][1][m];
+		for (var i=0; i < haploinfos.length; i++)
+			total_text += haploinfos[i][0].data_array[m] + haplomode_ht_spacing + haploinfos[i][1].data_array[m];
 
 		total_text +='\n';
 	}
 	var text = new Kinetic.Text({
 		x: nodeSize,
-
+		y: -nodeSize*2,
+		text: total_text,
+		fontFamily: "Arial",
+		fontSize: 10,
+		fill: 'black'
 	});
+	grp.add(text);
 
-
+	return grp;
 
 }
 

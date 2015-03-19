@@ -14,6 +14,34 @@ var Allele = function(data){
 };
 
 
+// "Pads rs identifiers into fixed width string based on max length
+function washMarkerMap(){
+	var maxlen = 0;
+	for (var i= 0; i < marker_array.length; i++){
+		var len = marker_array[i].length;
+		if (len > maxlen)
+			maxlen = len;
+	}
+	var format = (
+		function(){
+			var m=maxlen,
+				tx="";
+			while(m --> 0){
+				tx +=" ";
+			}
+			return tx;}
+	)();
+
+	console.log(maxlen);
+
+	for (var i=0; i < marker_array.length; i++)
+		marker_array[i] = (marker_array[i] + format).slice(0,maxlen);
+
+	console.log(marker_array);
+}
+
+
+
 
 //"Reads the haplofile, maps the markers to array indices, and populates pedigree array with persons"
 function processInput(text_unformatted, type)
@@ -40,14 +68,14 @@ function processInput(text_unformatted, type)
 				col_string = col_string.trim();
 
 				if (col_string!=="") {
-					marker_map[col_string] = count_markers++;
+// 					marker_map[col_string] = count_markers++;
 					marker_array.push( col_string );
 				}
 
 			}
-			assert(Object.keys(marker_map).length === num_alleles_markers,
-				   "Marker map length does not match with haplo data: "
-				   + Object.keys(marker_map).length +" and " + num_alleles_markers);
+// 			assert(Object.keys(marker_map).length === num_alleles_markers,
+// 				   "Marker map length does not match with haplo data: "
+// 				   + Object.keys(marker_map).length +" and " + num_alleles_markers);
 		};
 
 
@@ -116,10 +144,9 @@ function processFile() {
         graphInitPos(nodeSize + 10, grid_rezY);
 
 		assignHGroups();
+		washMarkerMap();
 
 		document.getElementById("buttons").style.display = 'none'
     };
     lr.readAsText(file);
-
-
 }

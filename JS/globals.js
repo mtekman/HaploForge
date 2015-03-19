@@ -22,8 +22,8 @@ var HAP_DRAW_LIM = 100, // No more than 30 haplotypes on screen
 	HAP_VERT_SPA = 10;
 
 var haplomode_panel_xoffs = 100,
-	haplomode_marker_buffer = (function(){ var te=5,tx=""; while(te --> 0) tx +=" ";})(),
-	haplomode_ht_spacing = (function(){ var te=2,tx=""; while(te --> 0) tx +=" ";})(),
+	haplomode_marker_buffer = "     ",
+	haplomode_ht_spacing = "  ";
 
 var use_right_angles = true,
 	use_grid = true;
