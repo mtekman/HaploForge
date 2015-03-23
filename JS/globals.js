@@ -21,9 +21,8 @@ var HAP_DRAW_LIM = 100, // No more than 30 haplotypes on screen
 	HAP_MIN_DRAW = 50,  // Minimum before haplos aare updated on drag.
 	HAP_VERT_SPA = 10;
 
-var haplomode_panel_xoffs = 100,
-	haplomode_marker_buffer = "     ",
-	haplomode_ht_spacing = "  ";
+
+var haplomode_panel_xoffs = 100;
 
 var use_right_angles = true,
 	use_grid = true;
@@ -75,9 +74,31 @@ var slider_style = {
 	R_cap:'round',
 	I_stroke:'black',
 	I_strokeWidth:2,
-	I_fontFamily: 'Arial',
+	I_fontFamily: "monospace",
 	I_fontSize: 10,
 	I_fontColor: 'black'};
+
+
+var in2Space = function(int, char=" "){
+	var tx="";
+	while (int --> 0){tx += char};
+	return tx;
+}
+
+var haploblock_settings = {
+	marker_to_haplo: 5,
+	hts: 3,
+	ht_allele: 1,
+	space_pixels : 10, // number of pixels in a space
+	block_width : 12,
+	marker_scale : 2.4
+};
+
+var haploblock_buffers = {
+	marker_to_haplo : in2Space(haploblock_settings.marker_to_haplo),
+	hts : in2Space(haploblock_settings.hts),
+	ht_allele : in2Space(haploblock_settings.ht_allele)
+};
 
 
 

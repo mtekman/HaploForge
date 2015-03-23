@@ -32,12 +32,9 @@ function washMarkerMap(){
 			return tx;}
 	)();
 
-	console.log(maxlen);
-
 	for (var i=0; i < marker_array.length; i++)
 		marker_array[i] = (marker_array[i] + format).slice(0,maxlen);
 
-	console.log(marker_array);
 }
 
 

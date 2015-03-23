@@ -141,6 +141,7 @@ function addFamily(fam_id, sx, sy){
  Maybe try grabbing text across an entire family?
    - one text object, as opposed to n (for n fams in ped)
 */
+
 function addHaploBlocks(data_tx, data_grp=0, fam=0)
 {
 	var grp = new Kinetic.Group({ x:0, y:((2*nodeSize)+10)});
@@ -192,7 +193,7 @@ function addHaploBlocks(data_tx, data_grp=0, fam=0)
 		x:nodeSize,
 		y: -nodeSize*2,
 		text: total_text,
-		fontFamily: "Arial",
+		fontFamily: slider_style.I_fontFamily,
 		fontSize: 10,
 		fill: 'black'
 	});
@@ -226,12 +227,13 @@ function addHaploBlocksAll(haploinfos, fam =0)
 				while (  one_hgroup[++iter] === color_group
 					   && iter < end_index);
 
-				var spac = Math.floor(HAP_VERT_SPA *1.5);
-
 				var rec = new Kinetic.Rect({
-					x: (5*q*HAP_VERT_SPA) + (j*spac) -5,
+					x: haploblock_settings.space_pixels*(
+						(haploblock_settings.marker_to_haplo * haploblock_settings.marker_scale)
+						+ (q * haploblock_settings.hts)
+						+ (j * haploblock_settings.ht_allele) ),
 					y: ((ind-2) * HAP_VERT_SPA),
-					width: spac,
+					width: haploblock_settings.block_width,
 					height: (iter-ind) * HAP_VERT_SPA,
 					fill: unique_colors[fam][color_group],
 					strokeWidth: 1,
@@ -251,10 +253,13 @@ function addHaploBlocksAll(haploinfos, fam =0)
 
 	for (var m=sta_index; m <= end_index; m++)
 	{
-		total_text += marker_array[m] + haplomode_marker_buffer;
+		total_text += marker_array[m] + haploblock_buffers.marker_to_haplo;
 
 		for (var i=0; i < haploinfos.length; i++)
-			total_text += haploinfos[i][0].data_array[m] + haplomode_ht_spacing + haploinfos[i][1].data_array[m];
+			total_text +=  (haploblock_buffers.hts
+							+ haploinfos[i][0].data_array[m]
+							+ haploblock_buffers.ht_allele
+							+ haploinfos[i][1].data_array[m]);
 
 		total_text +='\n';
 	}
@@ -262,7 +267,7 @@ function addHaploBlocksAll(haploinfos, fam =0)
 		x: nodeSize,
 		y: -nodeSize*2,
 		text: total_text,
-		fontFamily: "Arial",
+		fontFamily: slider_style.I_fontFamily,
 		fontSize: 10,
 		fill: 'black'
 	});
