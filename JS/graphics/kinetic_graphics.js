@@ -228,16 +228,16 @@ function addHaploBlocksAll(haploinfos, fam =0)
 					   && iter < end_index);
 
 				var rec = new Kinetic.Rect({
-					x: haploblock_settings.space_pixels*(
-						(haploblock_settings.marker_to_haplo * haploblock_settings.marker_scale)
-						+ (q * haploblock_settings.hts)
-						+ (j * haploblock_settings.ht_allele) ),
+					x: haploblock_settings.marker_scale_px + (
+						haploblock_settings.space_pixels*(
+						(q * haploblock_settings.hts)
+						+ (j * haploblock_settings.ht_allele) )),
 					y: ((ind-2) * HAP_VERT_SPA),
 					width: haploblock_settings.block_width,
 					height: (iter-ind) * HAP_VERT_SPA,
 					fill: unique_colors[fam][color_group],
 					strokeWidth: 1,
-					stroke: 'white'
+					stroke: 'black'
 				});
 				haplo.add( rec );
 

@@ -1,3 +1,59 @@
+var in2Space = function(int, char=" "){
+	var tx="";
+	while (int --> 0){tx += char};
+	return tx;
+}
+
+var haploblock_settings = {
+	marker_to_haplo: 5,
+	hts: 3,
+	ht_allele: 1,
+	space_pixels : 18, // number of pixels in a space
+	block_width : 10,
+	marker_scale_px : 115
+};
+
+var haploblock_buffers = {
+	marker_to_haplo : in2Space(haploblock_settings.marker_to_haplo),
+	hts : in2Space(haploblock_settings.hts),
+	ht_allele : in2Space(haploblock_settings.ht_allele)
+};
+
+
+var stage = new Kinetic.Stage({
+	container:'container',
+	width: window.innerWidth,
+	height: window.innerHeight
+});
+
+var layer = new Kinetic.Layer({});
+stage.add(layer);
+
+
+var txx = new Kinetic.Text({
+	text:"rs12341      0 0     1 1     2 2",
+	fontFamily: "monospace",
+	fontSize: 10,
+	fill: 'black'
+});
+
+layer.add(txx);
+
+for (var k=0; k < 100; k++){
+
+	var xoffs = k * 6;
+
+	layer.add(new Kinetic.Line({
+		stroke:'black',
+		strokeWidth:0.5,
+		points:[ xoffs, 0, xoffs, 100]
+	}));
+}
+
+
+layer.draw();
+
+
 
 
 

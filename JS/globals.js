@@ -89,9 +89,9 @@ var haploblock_settings = {
 	marker_to_haplo: 5,
 	hts: 3,
 	ht_allele: 1,
-	space_pixels : 10, // number of pixels in a space
-	block_width : 12,
-	marker_scale : 2.4
+	space_pixels : 18, // number of pixels in a space
+	block_width : 10,
+	marker_scale_px : 115
 };
 
 var haploblock_buffers = {
