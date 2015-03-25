@@ -146,11 +146,11 @@ function updateHaploPositions(){
 	end_index = last_input2_ind;
 	HAP_DRAW_LIM = end_index - sta_index;
 
-	unique_graph_objs[active_fam]
+	unique_graph_objs
 		.haplo_panel
 		.main_box
 		.background
 		.setHeight( (HAP_DRAW_LIM+3) * HAP_VERT_SPA);
 
-	redrawHaplos(active_fam);
+	redrawHaplos();
 }

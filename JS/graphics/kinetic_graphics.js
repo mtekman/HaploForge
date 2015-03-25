@@ -204,7 +204,7 @@ function addHaploBlocks(data_tx, data_grp=0, fam=0)
 
 
 
-function addHaploBlocksAll(haploinfos, fam =0)
+function addHaploBlocksAll()
 {
 	var grp = new Kinetic.Group({ x:0, y:((2*nodeSize)+10)});
 
@@ -234,10 +234,13 @@ function addHaploBlocksAll(haploinfos, fam =0)
 					x: haploblock_spacers.marker_offset_px + (
 						(q * haploblock_spacers.person_offset_px)
 						+ (j * haploblock_spacers.block_offset_px) ),
+
 					y: ((ind - sta_index - 2) * HAP_VERT_SPA),
 					width: haploblock_spacers.block_width_px,
 					height: (iter-ind) * HAP_VERT_SPA,
-					fill: unique_colors[fam][color_group],
+
+					fill: unique_colors[color_group],
+
 					strokeWidth: 1,
 					stroke: 'white'
 				});

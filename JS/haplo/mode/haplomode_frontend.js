@@ -1,5 +1,3 @@
-var active_fam;
-
 var bhaplox_offset = -5,
 	bhaploy_offset = 0;
 
@@ -73,10 +71,10 @@ function addHaploScreen(wi, he, fam_id)
 		}
 	});
 	scroll_area__.on('mouseup', function(){
-		redrawHaplos(fam_id); // starting=300
-		//updateInputsByIndex( sta_index, end_index );
-		//updateSlide();
-		//mscale_layer.draw();
+		redrawHaplos(); // starting=300
+		updateInputsByIndex( sta_index, end_index );
+		updateSlide();
+		mscale_layer.draw();
 	});
 
 	var main_rect = new Kinetic.Rect({

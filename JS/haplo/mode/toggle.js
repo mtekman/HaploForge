@@ -18,8 +18,8 @@ function toggle_haplomode(fam_id)
 
 	toggle_haplo = !toggle_haplo;
 
-	var	n_caa     = unique_graph_objs[fam_id],
-		grp       = n_caa.group;
+	var	n_caa     = unique_graph_objs,
+		grp       = unique_graph_objs[fam_id].group;
 
 	if (toggle_haplo){
 
@@ -44,7 +44,7 @@ function toggle_haplomode(fam_id)
 
 		n_caa.haplo_pedbg  = panel_a_scroll.ped_grp.background;		// Rect background
 
-		n_caa.group.add(n_caa.haplo_panel);
+		grp.add(n_caa.haplo_panel);
 		n_caa.haplo_panel.moveToBottom();
 
 		haplo_layer.add(backg);
@@ -111,11 +111,11 @@ function toggle_haplotypes(fam)
 
 	toggle_haplobutton = !toggle_haplobutton;
 
-	var scroll_panel_grp = unique_graph_objs[fam].haplo_area,
-		zoom_button = unique_graph_objs[fam].haplo_pedgrp.zoomer;
+	var scroll_panel_grp = unique_graph_objs.haplo_area,
+		zoom_button = unique_graph_objs.haplo_pedgrp.zoomer;
 
 	if (toggle_haplobutton){
-		redrawHaplos(fam);
+		addHaplosFamily(fam);
 		scroll_panel_grp.parent.show();
 		zoom_button.show()
 	}

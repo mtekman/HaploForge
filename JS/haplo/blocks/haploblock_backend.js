@@ -1,20 +1,18 @@
-var hgroup_colors = {}, // fam_id --> [founder_id], where array index = color/group
-	unique_colors = {}; // fam_id --> [color --> hex]
+// Founder color groups are unique, even across families
+
+var hgroup_colors = [], // [founder_id], where array index = color/group
+	unique_colors = []; // [color --> hex]
 
 var zero_color_grp = -1;
 
 function initFounderAlleles( fid, id )
 {
-	// Add founder to color group.
-	if (!(fid in hgroup_colors))
-		hgroup_colors[fid] = [];
-
 	var perc_hdata = family_map[fid][id].haplo_data;
 
 	for (var a = 0; a < perc_hdata.length; a++) 	// current allele
 	{
-		var color_group = hgroup_colors[fid].length;
-		hgroup_colors[fid].push( id );				// Push the same guy twice for both alleles
+		var color_group = hgroup_colors.length;
+		hgroup_colors.push( id );					// Push the same guy twice for both alleles
 													// Different colors (indices) will refer to the same (duplicated) id
 		/*
 		This is the color group. If it just pointed to it's data, then only a 0 1 or 2 would propogate down through
@@ -171,20 +169,17 @@ var hsv2rgb = function(h,s,v) {
 
 
 
-function makeUniqueColors(fam)
+function makeUniqueColors()
 {
-	var num_colors = hgroup_colors[fam].length,
+	var num_colors = hgroup_colors.length,
 		step_color = Math.floor(255 / (num_colors+1))
 
 	var sat = 250,
 		val = 100,
 		hue = 0;
 
-	if (!(fam in unique_colors))
-		unique_colors[fam] = [];
-
 	for (var c=0; c < num_colors; c++){
-		unique_colors[fam][c] = hsv2rgb(hue, sat, val);
+		unique_colors[c] = hsv2rgb(hue, sat, val);
 		hue += step_color;
 	}
 }
@@ -228,8 +223,8 @@ function assignHGroups()
 		}
 		console.log("hgroups fam =" + fam);
 		removeAmbiguousPointers(fam);
-		makeUniqueColors(fam);
 	}
+	makeUniqueColors();
 }
 
 

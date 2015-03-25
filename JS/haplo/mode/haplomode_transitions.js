@@ -19,10 +19,16 @@ function transitionToggle(fam_id, toggler, lineswitch=true, use_y=true, groupmov
 
 	var num_movers = Object.keys(n_caa.nodes).length;
 
-	var spacingx = (window.innerWidth - start_x) / num_movers;
 
-	if (spacingx > max_haplo_x) spacingx = max_haplo_x;
-	else if (spacingx < min_haplo_x) spacingx = min_haplo_x;
+	var spacingx = min_haplo_x;
+
+
+	//Below used when addHaplos_OLD was in action
+
+// 	var spacingx = (window.innerWidth - start_x) / num_movers;
+//
+// 	if (spacingx > max_haplo_x) spacingx = max_haplo_x;
+// 	else if (spacingx < min_haplo_x) spacingx = min_haplo_x;
 
 	for (var g=0; g < gen_lines.length; g++){
 		for (var c=0; c < gen_lines[g].length; c++){
