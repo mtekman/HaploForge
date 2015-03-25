@@ -1,4 +1,4 @@
-
+var start_positionx_haplomode = butt_w + nodeSize + haplomode_panel_xoffs;
 var transition_happening=false;
 
 // General Transitions for nodes and or groups of a given fam
@@ -8,8 +8,10 @@ function transitionToggle(fam_id, toggler, lineswitch=true, use_y=true, groupmov
 	var gen_lines = generation_grid_ids[fam_id],
 		n_caa = unique_graph_objs[fam_id];
 
-	var start_x = butt_w + nodeSize + haplomode_panel_xoffs,
+	var start_x = start_positionx_haplomode,
 		start_y = grid_rezY/2;
+
+
 
 
 	//	n_caa.group.moveToTop();

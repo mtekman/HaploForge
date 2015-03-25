@@ -1,6 +1,8 @@
 var sta_index = 0,
 	end_index = HAP_DRAW_LIM;
 
+var haplodata_arr = []; // what addHaploBlocksAll uses (needs to be generated once per fam)
+
 
 function getMarkerText(){
 	//Add marker lines
@@ -70,24 +72,24 @@ function addHaplos_OLD(fam, parent_node){ //called by toggle_haplotypes in haplo
 
 function addHaplos(fam, parent_node){ //called by toggle_haplotypes in haplo/toggle.js
 
-	var haplodata_arr = [];
-
-	for (var g = 0; g < generation_grid_ids[fam].length; g++)
-	{
-		for (var p =0; p < generation_grid_ids[fam][g].length; p++)
+	// Regenerate family
+	if (haplodata_arr.length === 0){
+		for (var g = 0; g < generation_grid_ids[fam].length; g++)
 		{
-			var pers_id = generation_grid_ids[fam][g][p],
-				pers_hp = family_map[fam][pers_id].haplo_data;
+			for (var p =0; p < generation_grid_ids[fam][g].length; p++)
+			{
+				var pers_id = generation_grid_ids[fam][g][p],
+					pers_hp = family_map[fam][pers_id].haplo_data;
 
-			haplodata_arr.push( pers_hp );
+				haplodata_arr.push( pers_hp );
+			}
 		}
 	}
-
-// 	console.log( haplodata_arr );
-
 	var haplos = addHaploBlocksAll( haplodata_arr, fam );
 
 	parent_node.add( haplos );
+	parent_node.parent.show();
+	haplo_layer.draw();
 }
 
 
@@ -118,7 +120,7 @@ function redrawHaplos(fam_id, resizeToo = false){
 		sta_index = end_index - HAP_DRAW_LIM;
 	}
 
-	addHaplos(fam_id, scroll_area)
+	addHaplos(fam_id, scroll_area);
 
 	if (resizeToo)
 		resizeCanvas();

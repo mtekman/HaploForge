@@ -32,6 +32,8 @@ function washMarkerMap(){
 			return tx;}
 	)();
 
+	maxlen_marker = maxlen;
+
 	for (var i=0; i < marker_array.length; i++)
 		marker_array[i] = (marker_array[i] + format).slice(0,maxlen);
 

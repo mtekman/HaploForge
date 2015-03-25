@@ -219,31 +219,48 @@ function addHaploBlocksAll(haploinfos, fam =0)
 			var one_hgroup = haploinfos[q][j].haplogroup_array;
 
 			var ind = sta_index;
-			while (ind < end_index)
+			while (ind <= end_index)
 			{
 				var iter = ind,	 				// start of block
 					color_group = one_hgroup[iter];
 
 				while (  one_hgroup[++iter] === color_group
-					   && iter < end_index);
+					   && iter <= end_index);
+
+
+
 
 				var rec = new Kinetic.Rect({
-					x: haploblock_settings.marker_scale_px + (
-						haploblock_settings.space_pixels*(
-						(q * haploblock_settings.hts)
-						+ (j * haploblock_settings.ht_allele) )),
-					y: ((ind-2) * HAP_VERT_SPA),
-					width: haploblock_settings.block_width,
+					x: haploblock_spacers.marker_offset_px + (
+						(q * haploblock_spacers.person_offset_px)
+						+ (j * haploblock_spacers.block_offset_px) ),
+					y: ((ind - sta_index - 2) * HAP_VERT_SPA),
+					width: haploblock_spacers.block_width_px,
 					height: (iter-ind) * HAP_VERT_SPA,
 					fill: unique_colors[fam][color_group],
 					strokeWidth: 1,
-					stroke: 'black'
+					stroke: 'white'
 				});
 				haplo.add( rec );
 
 				ind = iter;
 			}
 		}
+		// For seeing the alignment
+
+// 		haplo.add( new Kinetic.Line({
+// 			x: (
+// 				haploblock_spacers.marker_offset_px
+// 				+ (q* haploblock_spacers.person_offset_px)
+// 				+ haploblock_spacers.block_width_px
+// 				+ 1),
+// 			y: -200,
+// 			points: [0,0,0,1000],
+// 			strokeWidth:1,
+// 			stroke:'red'
+// 		}));
+
+
 	}
 	grp.add(haplo);
 
@@ -253,18 +270,18 @@ function addHaploBlocksAll(haploinfos, fam =0)
 
 	for (var m=sta_index; m <= end_index; m++)
 	{
-		total_text += marker_array[m] + haploblock_buffers.marker_to_haplo;
+		total_text += marker_array[m] + haploblock_buffers.marker_offset;
 
 		for (var i=0; i < haploinfos.length; i++)
-			total_text +=  (haploblock_buffers.hts
+			total_text +=  (haploblock_buffers.ht_offset
 							+ haploinfos[i][0].data_array[m]
-							+ haploblock_buffers.ht_allele
+							+ haploblock_buffers.ht_2_ht
 							+ haploinfos[i][1].data_array[m]);
 
 		total_text +='\n';
 	}
 	var text = new Kinetic.Text({
-		x: nodeSize,
+		x: -38,
 		y: -nodeSize*2,
 		text: total_text,
 		fontFamily: slider_style.I_fontFamily,

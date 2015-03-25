@@ -74,9 +74,9 @@ function addHaploScreen(wi, he, fam_id)
 	});
 	scroll_area__.on('mouseup', function(){
 		redrawHaplos(fam_id); // starting=300
-		updateInputsByIndex( sta_index, end_index );
-		updateSlide();
-		mscale_layer.draw();
+		//updateInputsByIndex( sta_index, end_index );
+		//updateSlide();
+		//mscale_layer.draw();
 	});
 
 	var main_rect = new Kinetic.Rect({

@@ -50,6 +50,7 @@ function assert(bool, message){                     //General error handling
 var generation_grid_ids = {}, //fam_id --> [generation array]
 	unique_graph_objs = {}; // fam_id --> Holds node and edge data, including pointers to graphics
 
+var maxlen_marker = 0; // set by filehandler, read by addHaploBlocks
 
 
 // Button
@@ -85,21 +86,27 @@ var in2Space = function(int, char=" "){
 	return tx;
 }
 
+// units are em except when px is used
 var haploblock_settings = {
-	marker_to_haplo: 5,
-	hts: 3,
-	ht_allele: 1,
-	space_pixels : 18, // number of pixels in a space
-	block_width : 10,
-	marker_scale_px : 115
+	space_pixels: 6,    // 1em for monospace 10
+	marker_offset: 1,
+	ht_offset: 7,
+	ht_2_ht: 1
 };
-
+//Do not edit this!
 var haploblock_buffers = {
-	marker_to_haplo : in2Space(haploblock_settings.marker_to_haplo),
-	hts : in2Space(haploblock_settings.hts),
-	ht_allele : in2Space(haploblock_settings.ht_allele)
+	marker_offset : in2Space(haploblock_settings.marker_offset),
+	ht_offset : in2Space(haploblock_settings.ht_offset),
+	ht_2_ht : in2Space(haploblock_settings.ht_2_ht)
 };
 
+
+var haploblock_spacers = {
+	marker_offset_px: ((maxlen_marker+11)*haploblock_settings.space_pixels)+1,
+	person_offset_px: 10 * haploblock_settings.space_pixels,
+	block_width_px: HAP_VERT_SPA*1.2,
+	block_offset_px: (HAP_VERT_SPA*1.2) +2
+};
 
 
 var SEXLINKED = false;

@@ -229,8 +229,6 @@ function assignHGroups()
 		console.log("hgroups fam =" + fam);
 		removeAmbiguousPointers(fam);
 		makeUniqueColors(fam);
-
-		console.log(unique_colors);
 	}
 }
 

@@ -45,7 +45,7 @@ for (var k=0; k < 100; k++){
 
 	layer.add(new Kinetic.Line({
 		stroke:'black',
-		strokeWidth:0.5,
+		strokeWidth:1,
 		points:[ xoffs, 0, xoffs, 100]
 	}));
 }
