@@ -32,6 +32,8 @@ function washMarkerMap(){
 			return tx;}
 	)();
 
+	// Not 10 causes formatting problems in haplomode
+	maxlen = 10;
 	maxlen_marker = maxlen;
 
 	for (var i=0; i < marker_array.length; i++)

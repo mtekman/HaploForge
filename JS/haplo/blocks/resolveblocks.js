@@ -1,5 +1,4 @@
 var max_distance_before_split = 50; // 50bp for non-continuous segments before a new block is defined.
-var min_stretch_len = 2;
 
 
 var cloneTill = function(array, till){
@@ -12,6 +11,17 @@ var cloneTill = function(array, till){
 
 function resolveAmbiguousRegions(array, start=0, end=array.length-1)
 {
+	// Haploblocks from different founders are not
+	// of the same size, and indeed could be 1 marker long
+	//
+	// For over 200 markers, I assume the resolution is good
+	// enough that no block is less than 2 markers long
+
+	var min_stretch_len = 2;
+// 	if (marker_array.length < 200) min_stretch_len = 1;
+
+
+
 	var arrayOfIndexes = (function (){
 		var arr = [];
 		for (var k=start; k <= end; k++){
@@ -34,6 +44,8 @@ function resolveAmbiguousRegions(array, start=0, end=array.length-1)
 
 	var row = 0,
 		actual_row = start;
+
+	var current_stretch = min_stretch_len;
 
 	while (true)
 	{
@@ -88,20 +100,23 @@ function resolveAmbiguousRegions(array, start=0, end=array.length-1)
 			if (new_colors[0] === zero_color_grp){
 				temppath.push(zero_color_grp)
 				stretch ++;
+				current_stretch ++;
 			}
 			else if (new_colors.indexOf(color)!== -1){
 				temppath.push(color);
 				stretch ++;
+				current_stretch ++;
 			}
 			else break;
 		}
 		stretch -= actual_row;
 
 		// Unsuccessful
-		if (stretch < min_stretch_len){
+		if (current_stretch < min_stretch_len){
 			while(stretch --> 0) temppath.pop(); 	// clear changes
 
 			arrayOfIndexes[row].index--; 			// next attempt at this row will try a different index
+			current_stretch = 0;
 			continue;
 		}
 		// Successfully found a new color. Splitting
@@ -110,7 +125,9 @@ function resolveAmbiguousRegions(array, start=0, end=array.length-1)
 
 		row += stretch;
 		numset ++;
+		current_stretch = 0;
 	}
+
 	return best_path;
 }
 
@@ -138,15 +155,25 @@ function removeAmbiguousPointers(fam)
 
 			for (var a = 0; a < both_alleles.length; a++)
 			{
-				var pointer_array = both_alleles[a].pter_array,
-					nonambig = resolveAmbiguousRegions(pointer_array);
+				var flag = false;
 
-				if (nonambig === null){
+				var pointer_array, nonambig;
+
+				pointer_array = both_alleles[a].pter_array,
+				nonambig = resolveAmbiguousRegions(pointer_array);
+
+				if (flag || nonambig === null){
 					console.error("Failed for "+id+" on allele "+a);
 
-					console.log(76521, family_map[fam][76521].haplo_data);
-					console.log(76611, family_map[fam][76611].haplo_data);
-					console.log(id, both_alleles);
+					var child_obj = family_map[fam][id],
+						mother_id = child_obj.mother.id,
+						father_id = child_obj.father.id;
+
+					console.log(" Haplo data: father, mother, child ");
+					console.log(father_id, family_map[fam][father_id].haplo_data);
+ 					console.log(mother_id, family_map[fam][mother_id].haplo_data);
+					console.log(id, family_map[fam][id].haplo_data);
+
 					nonambig = resolveAmbiguousRegions__DEBUG(pointer_array);
 					throw new Error ("null");
 				}

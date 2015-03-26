@@ -1,5 +1,14 @@
 TODO:
 
+- Rewrite resolveblocks method, to incorporate different PAIRS of groups
+(instead of pushing everything in one go) -- this will mean changing the
+haploblock_Backend as well to push PAIRS.
+ - Does it actually need pairs? Surely each allele must be evaluated
+   seperately (because crossover is independent of a gametes sister allele)
+   - Maybe I'm just pushing the wrong groups? Need to explore for that subset again.
+
+
+DONE:
 Window needs an adjuster to be dynamically set to show N markers
  - Adjuster could be a slider that represents all M markers with start and stop bars
 
@@ -9,10 +18,6 @@ Fix scrolling when Align mode is initiated.
 
 
 
-
-
-
-DONE:
 Fix haplo color blocks, especially for those between rs4148618 and rs2279900 [DONE]
 
 Haplotypes should have their own layer for quicker rendering:  [ DONE -- no significant improvement in anims]

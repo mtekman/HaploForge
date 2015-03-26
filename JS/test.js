@@ -1,64 +1,10 @@
-var in2Space = function(int, char=" "){
-	var tx="";
-	while (int --> 0){tx += char};
-	return tx;
-}
-
-var haploblock_settings = {
-	marker_to_haplo: 5,
-	hts: 3,
-	ht_allele: 1,
-	space_pixels : 18, // number of pixels in a space
-	block_width : 10,
-	marker_scale_px : 115
-};
-
-var haploblock_buffers = {
-	marker_to_haplo : in2Space(haploblock_settings.marker_to_haplo),
-	hts : in2Space(haploblock_settings.hts),
-	ht_allele : in2Space(haploblock_settings.ht_allele)
-};
-
-
-var stage = new Kinetic.Stage({
-	container:'container',
-	width: window.innerWidth,
-	height: window.innerHeight
-});
-
-var layer = new Kinetic.Layer({});
-stage.add(layer);
-
-
-var txx = new Kinetic.Text({
-	text:"rs12341      0 0     1 1     2 2",
-	fontFamily: "monospace",
-	fontSize: 10,
-	fill: 'black'
-});
-
-layer.add(txx);
-
-for (var k=0; k < 100; k++){
-
-	var xoffs = k * 6;
-
-	layer.add(new Kinetic.Line({
-		stroke:'black',
-		strokeWidth:1,
-		points:[ xoffs, 0, xoffs, 100]
-	}));
-}
-
-
-layer.draw();
-
-
-
-
 
 function resolveAmbiguousRegions__DEBUG(array, start=0, end=array.length-1)
 {
+	var min_stretch_len = 2;
+	if (marker_array.length < 200) min_stretch_len = 1;
+
+
 	var arrayOfIndexes = (function (){
 		var arr = [];
 		for (var k=start; k <= end; k++){
@@ -81,8 +27,10 @@ function resolveAmbiguousRegions__DEBUG(array, start=0, end=array.length-1)
 		path_list = [];
 
 	var row = 0,
-		num_cycles = 0;
+		num_cycles = 0,
 		actual_row = start;
+
+	var current_stretch = min_stretch_len;
 
 	console.time("yer");
 
@@ -93,7 +41,7 @@ function resolveAmbiguousRegions__DEBUG(array, start=0, end=array.length-1)
 		actual_row = row + start;
 
 		var color_index = arrayOfIndexes[row];
-		console.log("path="+temppath);
+		console.log("path="+temppath+", color_index="+color_index.index);
 
 		if (row === 0){
 			if (color_index.index < 0) break; 					//No more paths to explore after jumping back.
@@ -115,6 +63,8 @@ function resolveAmbiguousRegions__DEBUG(array, start=0, end=array.length-1)
 
 		if (color_index.index < 0) jumpBack = true;
 
+
+
 		//Jump back to last split
 		if (jumpBack){
 			console.log( ">>jumprow:"+actual_row+"-->"+color_index.last_split+", index to:"+(arrayOfIndexes[color_index.last_split].index - 1)+'\n');
@@ -130,6 +80,7 @@ function resolveAmbiguousRegions__DEBUG(array, start=0, end=array.length-1)
 		//We have an unexplored color
 		var color = array[actual_row].color_group[color_index.index];
 		console.log("    trying color='"+color+"'");
+
 
 		if (color === -1){
 			console.log("    zero group, skipping");
@@ -147,18 +98,21 @@ function resolveAmbiguousRegions__DEBUG(array, start=0, end=array.length-1)
 			if (new_colors[0] === zero_color_grp){
 				temppath.push(zero_color_grp)
 				stretch ++;
+				current_stretch ++;
 			}
 			else if (new_colors.indexOf(color)!== -1){
 				temppath.push(color);
 				stretch ++;
+				current_stretch ++;
 			}
 			else break;
+
 		}
-		stretch -= actual_row;
+ 		stretch -= actual_row;
 
 		// Unsuccessful
-		if (stretch < min_stretch_len){
-			console.log("    failed (too short)");
+		if (current_stretch < min_stretch_len){
+			console.log("    failed (too short)", current_stretch+"<"+min_stretch_len);
 			while(stretch --> 0) temppath.pop(); 	// clear changes
 
 			arrayOfIndexes[row].index--; 			// next attempt at this row will try a different index
@@ -167,10 +121,12 @@ function resolveAmbiguousRegions__DEBUG(array, start=0, end=array.length-1)
 		// Successfully found a new color. Splitting
 		console.log("    worked, arrayOfIndexes["+(actual_row+stretch)+"].last_split = "+actual_row);
 		arrayOfIndexes[row+stretch].last_split = row; // this row is where we split
-		arrayOfIndexes[row+stretch].index++; 		  // somehow this is needed...
+// 		arrayOfIndexes[row+stretch].index++; 		  // somehow this is needed...
 
 		row += stretch;
 		numset ++;
+
+		current_stretch = 0;
 	}
 	console.timeEnd("yer");
 

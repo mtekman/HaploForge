@@ -68,42 +68,42 @@ function child2parent_link(pers, moth, fath)
 	while (++tmp_i < pers_hp[0].data_array.length)
 	{
 		// Each persons allele is one of four possible parental alleles (autosomal)
-		var a0_ht = fath_hp[0].data_array[tmp_i],
-			a1_ht = fath_hp[1].data_array[tmp_i],  // Y allele, potential pitfall here -- input rows either follow a specific XY order, or need to do postproc.
-			a2_ht = moth_hp[0].data_array[tmp_i],
-			a3_ht = moth_hp[1].data_array[tmp_i];
+		var f0_ht = fath_hp[0].data_array[tmp_i],
+			f1_ht = fath_hp[1].data_array[tmp_i],  // Y allele, potential pitfall here -- input rows either follow a specific XY order, or need to do postproc.
+			m0_ht = moth_hp[0].data_array[tmp_i],
+			m1_ht = moth_hp[1].data_array[tmp_i];
 
-		var a0_pr = fath_hp[0].pter_array[tmp_i],
-			a1_pr = fath_hp[1].pter_array[tmp_i],
-			a2_pr = moth_hp[0].pter_array[tmp_i],
-			a3_pr = moth_hp[1].pter_array[tmp_i];
-
-
-// 		if (a0_pr === undefined || a1_pr === undefined
-// 			|| a2_pr === undefined || a3_pr === undefined)
-
-		if (a0_ht === 0) a0_pr.color_group = [zero_color_grp];
-		if (a1_ht === 0) a1_pr.color_group = [zero_color_grp];
-		if (a2_ht === 0) a2_pr.color_group = [zero_color_grp];
-		if (a3_ht === 0) a3_pr.color_group = [zero_color_grp];
+		var f0_pr = fath_hp[0].pter_array[tmp_i],
+			f1_pr = fath_hp[1].pter_array[tmp_i],
+			m0_pr = moth_hp[0].pter_array[tmp_i],
+			m1_pr = moth_hp[1].pter_array[tmp_i];
 
 
-// 		if (a0_ht === a1_ht  && a1_ht === a2_ht	&& a2_ht === a3_ht  && a3_ht === 0) continue;
+// 		if (f0_pr === undefined || f1_pr === undefined
+// 			|| m0_pr === undefined || m1_pr === undefined)
 
-		var m1_ht = pers_hp[0].data_array[tmp_i],  				// X allele
-			m2_ht = pers_hp[1].data_array[tmp_i];  				// Y allele
+		if (f0_ht === 0) f0_pr.color_group = [zero_color_grp];
+		if (f1_ht === 0) f1_pr.color_group = [zero_color_grp];
+		if (m0_ht === 0) m0_pr.color_group = [zero_color_grp];
+		if (m1_ht === 0) m1_pr.color_group = [zero_color_grp];
 
-		var m1_pr = pers_hp[0].pter_array[tmp_i],
-			m2_pr = pers_hp[1].pter_array[tmp_i]; 	// Y pointer
 
-		if (m1_pr.color_group.length !== 0 ){
-			console.log("m1_pr not [], for "+pers.id+" @ "+tmp_i, m1_pr);
+// 		if (f0_ht === f1_ht  && f1_ht === m0_ht	&& m0_ht === m1_ht  && m1_ht === 0) continue;
+
+		var c0_ht = pers_hp[0].data_array[tmp_i],  				// X allele
+			c1_ht = pers_hp[1].data_array[tmp_i];  				// Y allele
+
+		var c0_pr = pers_hp[0].pter_array[tmp_i],
+			c1_pr = pers_hp[1].pter_array[tmp_i]; 				// Y pointer
+
+		if (c0_pr.color_group.length !== 0 ){
+			console.log("c0_pr not [], for "+pers.id+" @ "+tmp_i, c0_pr);
 			throw new Error("");
 
 		}
 
-		if (m2_pr.color_group.length !== 0 ){
-			console.log("m2_pr not [], for "+pers.id+" @ "+tmp_i, m2_pr);
+		if (c1_pr.color_group.length !== 0 ){
+			console.log("c1_pr not [], for "+pers.id+" @ "+tmp_i, c1_pr);
 			throw new Error("");
 		}
 
@@ -115,30 +115,53 @@ function child2parent_link(pers, moth, fath)
 		 */
 		if (SEXLINKED && gender === 1){ 						 // Sexlinked and male
 
-			pushAll(a1_pr,m2_pr);	 // No ambiguity there
+			pushAll(f1_pr,c1_pr);	 // ASSUMES that child's first allele is the paternal allele
 
-			if (m1_ht === a2_ht) pushAll(a2_pr, m1_pr); // Maternal set both
-			if (m1_ht === a3_ht) pushAll(a3_pr, m1_pr);
+			if (c0_ht === m0_ht) pushAll(m0_pr, c0_pr); // Maternal set both
+			if (c0_ht === m1_ht) pushAll(m1_pr, c0_pr);
 
 			continue;
 		}
 
-		/* -- Autosomal or female scenario
+		/*
+		-- Autosomal or female scenario
 		with the condition that the opposing allele must be chosen from the remaining sister pair:
 		e.g: {0,1}{2,3} = 02 03 12 13
-		 */
-		if (m1_ht === a0_ht){ 						   // Add 0
-			pushAll(a0_pr, m1_pr);
 
-			if (m2_ht === a2_ht) pushAll(a2_pr, m2_pr);// 02 scen;
-			if (m2_ht === a3_ht) pushAll(a3_pr, m2_pr);// 03 scen;
+		*/
+
+		// Child's first allele comes from father, push mother on alternate
+		if (c0_ht === f0_ht){ 						   // Add 0
+			c0_pr.color_group = [];
+			pushAll(f0_pr, c0_pr);
+
+			if (c1_ht === m0_ht) pushAll(m0_pr, c1_pr);// 02 scen;
+			if (c1_ht === m1_ht) pushAll(m1_pr, c1_pr);// 03 scen;
 		}
 
-		if (m1_ht === a1_ht){ 						  // Add 1
-			pushAll(a1_pr, m1_pr);
+		if (c0_ht === f1_ht){ 						  // Add 1
+			c1_pr.color_group = [];
+			pushAll(f1_pr, c0_pr);
 
-			if (m2_ht === a2_ht) pushAll(a2_pr, m2_pr); // 12 scen;
-			if (m2_ht === a3_ht) pushAll(a3_pr, m2_pr); // 13 scen;
+			if (c1_ht === m0_ht) pushAll(m0_pr, c1_pr); // 12 scen;
+			if (c1_ht === m1_ht) pushAll(m1_pr, c1_pr); // 13 scen;
+		}
+
+
+		// Child's first allele comes from mother, push father on alternate
+		if (c0_ht === m0_ht){ 						   // Add 0
+			c0_pr.color_group = [];
+			pushAll(m0_pr, c0_pr);
+
+			if (c1_ht === f0_ht) pushAll(f0_pr, c1_pr);// 02 scen;
+			if (c1_ht === f1_ht) pushAll(f1_pr, c1_pr);// 03 scen;
+		}
+		if (c0_ht === m1_ht){ 						   // Add 0
+			c1_pr.color_group = [];
+			pushAll(m1_pr, c0_pr);
+
+			if (c1_ht === f0_ht) pushAll(f0_pr, c1_pr);// 02 scen;
+			if (c1_ht === f1_ht) pushAll(f1_pr, c1_pr);// 03 scen;
 		}
 	}
 }
