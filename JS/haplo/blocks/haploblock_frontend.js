@@ -29,7 +29,7 @@ function addHaplosAnyone(id_map, parent_node)
 			haploinfos.push(pers_hp);
 		}
 	}
-	redrawHaplos();
+	redrawHaplos(true);
 }
 
 
@@ -50,7 +50,7 @@ function addHaplosFamily(fam, parent_node){ //called by toggle_haplotypes in hap
 		}
 	}
 // 		console.log("calling", haploinfos);
-	redrawHaplos();
+	redrawHaplos(true);
 }
 
 

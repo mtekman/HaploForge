@@ -43,7 +43,7 @@ function getSlider(xer, yer)
 			stroke: slider_style.I_stroke,
 			strokeWidth:slider_style.I_strokeWidth
 		});
-		input_group.on('mouseup', updateHaploPositions);
+		input_group.on('mouseup', function(){updateHaploPositions(true)});
 
 		input_group.add(mark_label);
 		input_group.add(line_out);

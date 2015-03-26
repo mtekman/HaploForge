@@ -137,7 +137,7 @@ function updateInputsByIndex(ind1, ind2)
 
 // ---- Called by mouseup events
 
-function updateHaploPositions(){
+function updateHaploPositions(resizecanvastoo=false){
 
 	if (!toggle_haplotypes) return;
 
@@ -152,5 +152,5 @@ function updateHaploPositions(){
 		.background
 		.setHeight( (HAP_DRAW_LIM+3) * HAP_VERT_SPA);
 
-	redrawHaplos();
+	redrawHaplos(resizecanvastoo);
 }
