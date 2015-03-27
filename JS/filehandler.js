@@ -10,8 +10,15 @@ var Allele = function(data){
 
 	this.haplogroup_array;
 	// ^ Empty until pter_array is completely unambiguous, where pter_array is then deleted (dereferenced, left for GC)
-
 };
+
+Allele.prototype.debug = function(){
+	return {
+		data: this.data_array,
+		groups: this.pter_array.map(function (n){return ""+n.color_group+"";})
+	};
+};
+
 
 
 // "Pads rs identifiers into fixed width string based on max length

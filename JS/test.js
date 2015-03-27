@@ -1,9 +1,7 @@
 
 function resolveAmbiguousRegions__DEBUG(array, start=0, end=array.length-1)
 {
-	var min_stretch_len = 2;
-	if (marker_array.length < 200) min_stretch_len = 1;
-
+	var min_stretch_len = 1;
 
 	var arrayOfIndexes = (function (){
 		var arr = [];
@@ -81,6 +79,9 @@ function resolveAmbiguousRegions__DEBUG(array, start=0, end=array.length-1)
 		var color = array[actual_row].color_group[color_index.index];
 		console.log("    trying color='"+color+"'");
 
+		if (color === undefined)
+			break;
+
 
 		if (color === -1){
 			console.log("    zero group, skipping");
@@ -115,13 +116,13 @@ function resolveAmbiguousRegions__DEBUG(array, start=0, end=array.length-1)
 			console.log("    failed (too short)", current_stretch+"<"+min_stretch_len);
 			while(stretch --> 0) temppath.pop(); 	// clear changes
 
-			arrayOfIndexes[row].index--; 			// next attempt at this row will try a different index
+// 			arrayOfIndexes[row].index--; 			// next attempt at this row will try a different index
 			continue;
 		}
 		// Successfully found a new color. Splitting
 		console.log("    worked, arrayOfIndexes["+(actual_row+stretch)+"].last_split = "+actual_row);
 		arrayOfIndexes[row+stretch].last_split = row; // this row is where we split
-// 		arrayOfIndexes[row+stretch].index++; 		  // somehow this is needed...
+		arrayOfIndexes[row+stretch].index++; 		  // somehow this is needed...
 
 		row += stretch;
 		numset ++;

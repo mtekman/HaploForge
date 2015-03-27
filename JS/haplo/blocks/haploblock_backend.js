@@ -42,6 +42,11 @@ function pushAll(from, to){
 }
 
 
+function debugHaploData(dat){
+	return { 0: dat[0].debug(),
+			 1: dat[1].debug()};
+}
+
 
 /*  Links non-founders to founders via parents. Potentially unphased, no error-checking at this stage
 
@@ -129,41 +134,83 @@ function child2parent_link(pers, moth, fath)
 		e.g: {0,1}{2,3} = 02 03 12 13
 
 		*/
+		function resetCheck(p1,p2){
+			var reset = (p1.color_group.length === 0 || p2.color_group.length === 0);
+			if (reset){
+				p1.color_group = [];
+				p2.color_group = [];
+			}
+		}
 
-		// Child's first allele comes from father, push mother on alternate
 		if (c0_ht === f0_ht){ 						   // Add 0
-			c0_pr.color_group = [];
 			pushAll(f0_pr, c0_pr);
 
 			if (c1_ht === m0_ht) pushAll(m0_pr, c1_pr);// 02 scen;
 			if (c1_ht === m1_ht) pushAll(m1_pr, c1_pr);// 03 scen;
 		}
+		resetCheck(c0_pr,c1_pr);
 
-		if (c0_ht === f1_ht){ 						  // Add 1
-			c1_pr.color_group = [];
+
+		if (c0_ht === f1_ht){ 		 					// Add 1
 			pushAll(f1_pr, c0_pr);
 
 			if (c1_ht === m0_ht) pushAll(m0_pr, c1_pr); // 12 scen;
 			if (c1_ht === m1_ht) pushAll(m1_pr, c1_pr); // 13 scen;
 		}
+		resetCheck(c0_pr,c1_pr);
 
 
-		// Child's first allele comes from mother, push father on alternate
-		if (c0_ht === m0_ht){ 						   // Add 0
-			c0_pr.color_group = [];
+		if (c0_ht === m0_ht){ 		 					// Add 2
 			pushAll(m0_pr, c0_pr);
 
-			if (c1_ht === f0_ht) pushAll(f0_pr, c1_pr);// 02 scen;
-			if (c1_ht === f1_ht) pushAll(f1_pr, c1_pr);// 03 scen;
+			if (c1_ht === f0_ht) pushAll(f0_pr, c1_pr); // 20 scen;
+			if (c1_ht === f1_ht) pushAll(f1_pr, c1_pr); // 21 scen;
 		}
-		if (c0_ht === m1_ht){ 						   // Add 0
-			c1_pr.color_group = [];
+		resetCheck(c0_pr,c1_pr);
+
+		if (c0_ht === m1_ht){ 		 					// Add 3
 			pushAll(m1_pr, c0_pr);
 
-			if (c1_ht === f0_ht) pushAll(f0_pr, c1_pr);// 02 scen;
-			if (c1_ht === f1_ht) pushAll(f1_pr, c1_pr);// 03 scen;
+			if (c1_ht === f0_ht) pushAll(f0_pr, c1_pr); // 30 scen;
+			if (c1_ht === f1_ht) pushAll(f1_pr, c1_pr); // 31 scen;
 		}
+		resetCheck(c0_pr,c1_pr);
 	}
+
+	//DEBUG
+	console.log("\n=====================");
+	console.log("F:", fath.id, debugHaploData(fath_hp));
+	console.log("M:", moth.id, debugHaploData(moth_hp));
+	console.log("Ci", pers.id, debugHaploData(pers_hp));
+
+
+	// Remove Ambigious regions. Must be done here so that next-gen
+	// deals only with clean data and not a hodge-podge of possible
+	// inheritance patterns.
+	var nonambig0 = resolveAmbiguousRegions(pers_hp[0].pter_array),
+		nonambig1 = resolveAmbiguousRegions(pers_hp[1].pter_array);
+
+	if (pers.id === 5)
+		resolveAmbiguousRegions__DEBUG(pers_hp[1].pter_array);
+
+
+	if (nonambig0===null){
+		console.log(pers.id, 0, pers_hp[0].debug());
+		throw new Error("");
+	}
+
+
+
+
+	var curr_index = -1;
+
+	//Overwrite person data
+	while( ++curr_index < nonambig0.length){
+		pers_hp[0].pter_array[curr_index].color_group = [ nonambig0[curr_index] ];
+		pers_hp[1].pter_array[curr_index].color_group = [ nonambig1[curr_index] ];
+	}
+
+	console.log("Cf", pers.id, debugHaploData(pers_hp));
 }
 
 
@@ -195,10 +242,10 @@ var hsv2rgb = function(h,s,v) {
 function makeUniqueColors()
 {
 	var num_colors = hgroup_colors.length,
-		step_color = Math.floor(255 / (num_colors+1))
+		step_color = Math.floor(255 / (num_colors))
 
-	var sat = 250,
-		val = 100,
+	var sat = 150,
+		val = 150,
 		hue = 0;
 
 	for (var c=0; c < num_colors; c++){
@@ -230,8 +277,8 @@ function assignHGroups()
 				var moth_id = pers.mother.id,
 					fath_id = pers.father.id;
 
-				// Person is a founder -- add and skip
 				if (moth_id == undefined){
+					// Person is a founder -- add and skip
 					initFounderAlleles( fam, pers_id );
 					continue;
 				}
@@ -240,8 +287,6 @@ function assignHGroups()
 					fath = family_map[fam][fath_id];
 
 				child2parent_link(pers, moth, fath);
-// 				console.log("non-founder", pers_id, pers.haplo_data[0].pter_array[0].color_group, pers.haplo_data[0].data_array[0]);
-// 				console.log("non-founder", pers_id, pers.haplo_data[1].pter_array[0].color_group, pers.haplo_data[1].data_array[0]);
 			}
 		}
 		console.log("hgroups fam =" + fam);

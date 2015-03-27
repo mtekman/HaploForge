@@ -17,7 +17,7 @@ function resolveAmbiguousRegions(array, start=0, end=array.length-1)
 	// For over 200 markers, I assume the resolution is good
 	// enough that no block is less than 2 markers long
 
-	var min_stretch_len = 2;
+	var min_stretch_len = 1;
 // 	if (marker_array.length < 200) min_stretch_len = 1;
 
 
@@ -45,7 +45,7 @@ function resolveAmbiguousRegions(array, start=0, end=array.length-1)
 	var row = 0,
 		actual_row = start;
 
-	var current_stretch = min_stretch_len;
+	var current_stretch = 0;
 
 	while (true)
 	{
@@ -121,7 +121,7 @@ function resolveAmbiguousRegions(array, start=0, end=array.length-1)
 		}
 		// Successfully found a new color. Splitting
 		arrayOfIndexes[row+stretch].last_split = row; // this row is where we split
-		arrayOfIndexes[row+stretch].index++; 		  // somehow this is needed...
+ 		arrayOfIndexes[row+stretch].index++; 		  // somehow this is needed...
 
 		row += stretch;
 		numset ++;
@@ -130,6 +130,7 @@ function resolveAmbiguousRegions(array, start=0, end=array.length-1)
 
 	return best_path;
 }
+
 
 
 
@@ -143,6 +144,7 @@ function resolveAmbiguousRegions(array, start=0, end=array.length-1)
 
  - Recursion may be required, though not wanted :(
 */
+
 function removeAmbiguousPointers(fam)
 {
 	for (var g = 0; g < generation_grid_ids[fam].length; g++)
@@ -152,43 +154,20 @@ function removeAmbiguousPointers(fam)
 			var id = generation_grid_ids[fam][g][p];
 			var both_alleles = family_map[fam][id].haplo_data;
 
-
 			for (var a = 0; a < both_alleles.length; a++)
 			{
-				var flag = false;
-
-				var pointer_array, nonambig;
-
-				pointer_array = both_alleles[a].pter_array,
-				nonambig = resolveAmbiguousRegions(pointer_array);
-
-				if (flag || nonambig === null){
-					console.error("Failed for "+id+" on allele "+a);
-
-					var child_obj = family_map[fam][id],
-						mother_id = child_obj.mother.id,
-						father_id = child_obj.father.id;
-
-					console.log(" Haplo data: father, mother, child ");
-					console.log(father_id, family_map[fam][father_id].haplo_data);
- 					console.log(mother_id, family_map[fam][mother_id].haplo_data);
-					console.log(id, family_map[fam][id].haplo_data);
-
-					nonambig = resolveAmbiguousRegions__DEBUG(pointer_array);
-					throw new Error ("null");
-				}
 				//Clean pointers
+				var pointer_array =  both_alleles[a].pter_array;
 				var group_array = (both_alleles[a].haplogroup_array = new Int8Array(pointer_array.length));
 
-				var curr_index = -1;
-
 				// 64-bit iterator, yet implicit 64 --> 8 bit conv: How? Fuck knows.
+
+				var curr_index = -1;
 				while (++curr_index < pointer_array.length)
-					group_array[curr_index] = nonambig[curr_index];
+					group_array[curr_index] = pointer_array[curr_index].color_group[0];
 
 				// Leave for GC
-				delete both_alleles[a].pter_array;
-// 				console.log(id, both_alleles[a]);
+ 				delete both_alleles[a].pter_array;
 			}
 		}
 	}
