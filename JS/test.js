@@ -1,8 +1,10 @@
 
 /* How about this:
 For each row, I test lookaheads of all indexes on that row.
- - The index with the greatest stretch is explored first
- - The next index is the
+ 1 The index with the greatest stretch is explored first
+ 2 The next row is the current row plus the greatest stretch
+ 3 Repeat 1 and 2 until end of array
+ 4 Jump back to last row
 
 
 
