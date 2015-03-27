@@ -1,4 +1,15 @@
 
+/* How about this:
+For each row, I test lookaheads of all indexes on that row.
+ - The index with the greatest stretch is explored first
+ - The next index is the
+
+
+
+
+*/
+
+
 function resolveAmbiguousRegions__DEBUG(array, start=0, end=array.length-1)
 {
 	var min_stretch_len = 1;
@@ -34,7 +45,7 @@ function resolveAmbiguousRegions__DEBUG(array, start=0, end=array.length-1)
 
 	while (true)
 	{
-		num_cycles ++;
+		if (num_cycles ++ > 50) break;
 
 		actual_row = row + start;
 
@@ -70,7 +81,7 @@ function resolveAmbiguousRegions__DEBUG(array, start=0, end=array.length-1)
 			row = color_index.last_split;
 			temppath = cloneTill(temppath, row);
 
-			arrayOfIndexes[row].index--;
+// 			arrayOfIndexes[row].index;
 			numset --;
 
 			continue;
@@ -79,8 +90,8 @@ function resolveAmbiguousRegions__DEBUG(array, start=0, end=array.length-1)
 		var color = array[actual_row].color_group[color_index.index];
 		console.log("    trying color='"+color+"'");
 
-		if (color === undefined)
-			break;
+// 		if (color === undefined)
+// 			break;
 
 
 		if (color === -1){
@@ -93,7 +104,8 @@ function resolveAmbiguousRegions__DEBUG(array, start=0, end=array.length-1)
 
 		//Perform lookahead
 		var stretch = actual_row;
-		while ( stretch <= end ){
+		while ( stretch <= end )
+		{
 			var new_colors = array[stretch].color_group;
 
 			if (new_colors[0] === zero_color_grp){
@@ -116,13 +128,13 @@ function resolveAmbiguousRegions__DEBUG(array, start=0, end=array.length-1)
 			console.log("    failed (too short)", current_stretch+"<"+min_stretch_len);
 			while(stretch --> 0) temppath.pop(); 	// clear changes
 
-// 			arrayOfIndexes[row].index--; 			// next attempt at this row will try a different index
+			arrayOfIndexes[row].index--; 			// next attempt at this row will try a different index
 			continue;
 		}
 		// Successfully found a new color. Splitting
 		console.log("    worked, arrayOfIndexes["+(actual_row+stretch)+"].last_split = "+actual_row);
 		arrayOfIndexes[row+stretch].last_split = row; // this row is where we split
-		arrayOfIndexes[row+stretch].index++; 		  // somehow this is needed...
+ 		arrayOfIndexes[row].index--; 		  // somehow this is needed...
 
 		row += stretch;
 		numset ++;

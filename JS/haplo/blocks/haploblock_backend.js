@@ -177,11 +177,14 @@ function child2parent_link(pers, moth, fath)
 		resetCheck(c0_pr,c1_pr);
 	}
 
-	//DEBUG
-	console.log("\n=====================");
-	console.log("F:", fath.id, debugHaploData(fath_hp));
-	console.log("M:", moth.id, debugHaploData(moth_hp));
-	console.log("Ci", pers.id, debugHaploData(pers_hp));
+	if (pers.id === 5){
+		//DEBUG
+		console.log("\n=====================");
+		console.log("F:", fath.id, debugHaploData(fath_hp));
+		console.log("M:", moth.id, debugHaploData(moth_hp));
+		console.log("Ci", pers.id, debugHaploData(pers_hp));
+		resolveAmbiguousRegions__DEBUG(pers_hp[1].pter_array);
+	}
 
 
 	// Remove Ambigious regions. Must be done here so that next-gen
@@ -190,8 +193,6 @@ function child2parent_link(pers, moth, fath)
 	var nonambig0 = resolveAmbiguousRegions(pers_hp[0].pter_array),
 		nonambig1 = resolveAmbiguousRegions(pers_hp[1].pter_array);
 
-	if (pers.id === 5)
-		resolveAmbiguousRegions__DEBUG(pers_hp[1].pter_array);
 
 
 	if (nonambig0===null){
