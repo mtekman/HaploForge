@@ -177,31 +177,67 @@ function child2parent_link(pers, moth, fath)
 		resetCheck(c0_pr,c1_pr);
 	}
 
-	if (pers.id === 5){
-		//DEBUG
-		console.log("\n=====================");
-		console.log("F:", fath.id, debugHaploData(fath_hp));
-		console.log("M:", moth.id, debugHaploData(moth_hp));
-		console.log("Ci", pers.id, debugHaploData(pers_hp));
-		resolveAmbiguousRegions__DEBUG(pers_hp[1].pter_array);
-	}
-
+// 		//DEBUG
+// 		console.log("\n=====================");
+// 		console.log("F:", fath.id, debugHaploData(fath_hp));
+// 		console.log("M:", moth.id, debugHaploData(moth_hp));
+	console.log("Ci", pers.id, debugHaploData(pers_hp));
 
 	// Remove Ambigious regions. Must be done here so that next-gen
 	// deals only with clean data and not a hodge-podge of possible
 	// inheritance patterns.
-	var nonambig0 = resolveAmbiguousRegions(pers_hp[0].pter_array),
-		nonambig1 = resolveAmbiguousRegions(pers_hp[1].pter_array);
 
 
+	/*
+	The problem here is that each child allele could inherit from one of four parental
+	chromosomes, but needs to do so in an exclusive fashion such that a maternal haploblock
+	does not also appear in the childs paternal haploblock
+	*** (i.e. no two blocks can have the same color across sister alleles)***
 
-	if (nonambig0===null){
-		console.log(pers.id, 0, pers_hp[0].debug());
-		throw new Error("");
+	To counter this, we try a standard run on a given allele and use the unique groups discovered
+	on the best resolved path of that allele as an exclusion list for the opposing allele.
+
+	This will prevent haploblocks from mixing.
+	*/
+
+	var res0 = resolveAmbiguousRegions__DEBUG(pers_hp[0].pter_array),
+		nonambig0 = res0[0],
+		unique_sets0 = res0[1];
+
+	console.log("u0", res0,'\n');
+
+	if (nonambig0 === null){
+		throw new Error ("Well, hmm.");
 	}
 
 
+	var res1 = resolveAmbiguousRegions__DEBUG(pers_hp[1].pter_array, unique_sets0),
+		nonambig1 = res1[0],
+		unique_sets1 = res1[1];
 
+	console.log("u1", res1,'\n');
+
+	// Nope, let's try switching
+	if (nonambig1 === null){
+		console.log("yeah...");
+
+		res1 = resolveAmbiguousRegions__DEBUG(pers_hp[1].pter_array);
+		nonambig1 = res1[0];
+		unique_sets1 = res1[1];
+
+		console.log(pers_hp[1].debug());
+		console.log("u2", res1,'\n');
+
+		res0 = resolveAmbiguousRegions__DEBUG(pers_hp[0].pter_array, unique_sets1);
+		nonambig0 = res0[0];
+		unique_sets0 = res0[1];
+
+		console.log("u3", res0,'\n');
+	}
+
+	if (nonambig0 === null){
+		throw new Error ("Well, crap.");
+	}
 
 	var curr_index = -1;
 

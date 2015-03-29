@@ -9,32 +9,30 @@ var cloneTill = function(array, till){
 };
 
 
+// Haploblocks from different founders are not
+// of the same size, and indeed could be 1 marker long
+//
+// For over 200 markers, I assume the resolution is good
+// enough that no block is less than 2 markers long
+
 function resolveAmbiguousRegions(array, start=0, end=array.length-1)
 {
-	// Haploblocks from different founders are not
-	// of the same size, and indeed could be 1 marker long
-	//
-	// For over 200 markers, I assume the resolution is good
-	// enough that no block is less than 2 markers long
-
 	var min_stretch_len = 1;
-// 	if (marker_array.length < 200) min_stretch_len = 1;
 
-
-
-	var arrayOfIndexes = (function (){
+	function indexedRows(){
 		var arr = [];
 		for (var k=start; k <= end; k++){
 			arr.push({
 				index: array[k].color_group.length-1,
 				last_split: 0
-			})
+			});
 		}
 		arr.push({index:0, last_split:0}); 							//dummy index, needed for jumping back
 
 		return arr;
-	})();
-
+	};
+	var arrayOfIndexes = indexedRows(), 							// this gets decremented
+		origIndexes = indexedRows(); 								// original copy
 
 	var numset = 0,
 		bestset = 99999;
@@ -45,7 +43,7 @@ function resolveAmbiguousRegions(array, start=0, end=array.length-1)
 	var row = 0,
 		actual_row = start;
 
-	var current_stretch = 0;
+	var current_stretch = min_stretch_len;
 
 	while (true)
 	{
@@ -69,14 +67,19 @@ function resolveAmbiguousRegions(array, start=0, end=array.length-1)
 			jumpBack = true;
 		}
 
+		// All routes for this index have been explored. Go back
 		if (color_index.index < 0) jumpBack = true;
+
 
 		//Jump back to last split
 		if (jumpBack){
+			// Restore this index
+			arrayOfIndexes[row].index = origIndexes[row].index;
+
+			// Row to jump back to
 			row = color_index.last_split;
 			temppath = cloneTill(temppath, row);
 
-			arrayOfIndexes[row].index--;
 			numset --;
 
 			continue;
@@ -84,7 +87,7 @@ function resolveAmbiguousRegions(array, start=0, end=array.length-1)
 		//We have an unexplored color
 		var color = array[actual_row].color_group[color_index.index];
 
-		if (color === -1){
+		if (color === zero_color_grp){
 			temppath.push(zero_color_grp);
 			row ++;
 			actual_row ++;
@@ -108,26 +111,28 @@ function resolveAmbiguousRegions(array, start=0, end=array.length-1)
 				current_stretch ++;
 			}
 			else break;
+
 		}
-		stretch -= actual_row;
+ 		stretch -= actual_row;
 
 		// Unsuccessful
 		if (current_stretch < min_stretch_len){
 			while(stretch --> 0) temppath.pop(); 	// clear changes
 
 			arrayOfIndexes[row].index--; 			// next attempt at this row will try a different index
-			current_stretch = 0;
 			continue;
 		}
+
 		// Successfully found a new color. Splitting
 		arrayOfIndexes[row+stretch].last_split = row; // this row is where we split
- 		arrayOfIndexes[row+stretch].index++; 		  // somehow this is needed...
+
+		arrayOfIndexes[row].index--;
 
 		row += stretch;
 		numset ++;
+
 		current_stretch = 0;
 	}
-
 	return best_path;
 }
 
