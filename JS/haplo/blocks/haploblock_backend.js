@@ -225,7 +225,6 @@ function child2parent_link(pers, moth, fath)
 		nonambig1 = res1[0];
 		unique_sets1 = res1[1];
 
-		console.log(pers_hp[1].debug());
 		console.log("u2", res1,'\n');
 
 		res0 = resolveAmbiguousRegions__DEBUG(pers_hp[0].pter_array, unique_sets1);
@@ -279,9 +278,9 @@ var hsv2rgb = function(h,s,v) {
 function makeUniqueColors()
 {
 	var num_colors = hgroup_colors.length,
-		step_color = Math.floor(255 / (num_colors))
+		step_color = (Math.floor(255 / (num_colors+1)));
 
-	var sat = 150,
+	var sat = 200,
 		val = 150,
 		hue = 0;
 

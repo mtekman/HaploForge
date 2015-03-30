@@ -19,18 +19,24 @@ function resolveAmbiguousRegions__DEBUG(array, exclude_list = [], start=0, end=a
 		inExcludeList = function (item){ return false;};
 	}
 	else if (exclude_list.length === 1){ 					// Single item given
-		inExcludeList = function (item){return item === exclude_list;};
+		inExcludeList = function (item){ return item === exclude_list;};
 	}
 	else{ 													// Whole list given
 		inExcludeList = function (item){ return (exclude_list.indexOf(item) !== -1);}
 	}
 
 
+	var is_single_indexed_allele = true;
+
 	function indexedRows(){
 		var arr = [];
 		for (var k=start; k <= end; k++){
+			var num_indexes = array[k].color_group.length-1;
+
+			if (num_indexes > 1) is_single_indexed_allele = false;
+
 			arr.push({
-				index: array[k].color_group.length-1,
+				index: num_indexes,
 				last_split: 0
 			});
 		}
@@ -41,6 +47,21 @@ function resolveAmbiguousRegions__DEBUG(array, exclude_list = [], start=0, end=a
 
 	var arrayOfIndexes = indexedRows(), 							// this gets decremented
 		origIndexes = indexedRows(); 								// original copy
+
+
+	// Check if allele is already non-ambig set
+	console.log("is_single", is_single_indexed_allele);
+
+	//Return if so
+	if (is_single_indexed_allele){
+		var unique = array.filter(function(item,i,ar){
+			return (item.color_group[0] !== zero_color_grp  && ar.indexOf(item.color_group[0]) === i);
+		});
+
+		console.log(unique);
+
+		return [array.map(function (n){return n.color_group[0];}), unique];
+	}
 
 
 	var numset = 0,
@@ -57,6 +78,9 @@ function resolveAmbiguousRegions__DEBUG(array, exclude_list = [], start=0, end=a
 	var current_stretch = min_stretch_len;
 
 // 	console.time("yer");
+
+	//Quick test to see if entire allele is -1
+
 
 	while (true)
 	{
@@ -109,13 +133,13 @@ function resolveAmbiguousRegions__DEBUG(array, exclude_list = [], start=0, end=a
 // 		console.log("    trying color='"+color+"'");
 
 		if (color === zero_color_grp){
-// 			console.log("    zero group, skipping");
+//  			console.log("    zero group, skipping");
 			temppath.push(zero_color_grp);
 			row ++;
 			actual_row ++;
+
 			continue;
 		}
-
 		// Exclude it? Try next
 		if (inExcludeList(color)){
 // 			console.log("   excluding "+color);
@@ -168,14 +192,15 @@ function resolveAmbiguousRegions__DEBUG(array, exclude_list = [], start=0, end=a
 	}
 // 	console.timeEnd("yer");
 
-	console.log("sols", path_list);
-	console.log("best path=", best_path);
+// 	console.log("holdover", temppath);
+// 	console.log("sols", path_list);
+// 	console.log("best path=", best_path);
 // 	console.log("num cycles=", num_cycles);
 
 	var unique = null;
 
 	if (best_path !== null)
-		unique = best_path.filter( function(item,i,ar){
+		unique = best_path.filter(function(item,i,ar){
 			return (item !== zero_color_grp  && ar.indexOf(item) === i);
 		});
 
