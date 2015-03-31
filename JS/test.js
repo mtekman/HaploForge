@@ -22,31 +22,10 @@ function a_star_bestfirst(array, exclude_list = [])
 		inExcludeList = function (item){ return (exclude_list.indexOf(item) !== -1);}
 	}
 
-
-	function indexedRows(){
-		var arr = [];
-		for (var k=0; k <= end; k++){
-			var num_indexes = array[k].color_group.length;
-
-			if (num_indexes > 1) is_single_indexed_allele = false;
-
-			arr.push({
-				index: num_indexes - 1,
-				last_split: 0
-			});
-		}
-		arr.push({index:0, last_split:0}); 							//dummy index, needed for jumping back
-
-		return arr;
-	};
-
-	var iterableIndexes = indexedRows();
-
-	var MAX_ROUTES = 10;    // maximum amount of working routes
+	var MAX_ROUTES = 4;    // maximum amount of working routes
 
 	var	exploring_routes = [[]], 		// initial zero route
 		zero_indexes = [];
-
 
 	var num_cycles = 0;
 
@@ -56,9 +35,9 @@ function a_star_bestfirst(array, exclude_list = [])
 		// discarding the rest
 		exploring_routes = exploring_routes.sort(function (a,b){ return b.length - a.length;}).slice(0,MAX_ROUTES);
 
-		console.log(exploring_routes);
+// 		console.log("routes=", exploring_routes);
 
-		if (num_cycles ++ > 100){
+		if (num_cycles ++ > 10){
 			console.error(num_cycles);
 			break;
 		}
@@ -75,9 +54,10 @@ function a_star_bestfirst(array, exclude_list = [])
 // 			}
 
 			// Various routes at this row
-			var num_colors = iterableIndexes[current_row].index;
+			//var num_colors = iterableIndexes[current_row];
+			var num_colors = array[current_row].color_group.length
 
-			console.log(num_colors);
+// 			console.log("    num_colors=", num_colors);
 
 			var ordered_routes = {};
 
@@ -102,6 +82,10 @@ function a_star_bestfirst(array, exclude_list = [])
 				}
 				ordered_routes[stretch-current_row] = current_color; // store color
 			}
+// 			console.log("    ordered_routes=", ordered_routes);
+
+			if (ordered_routes.length === 0)
+				continue;
 
 			var keys_rev_ord = Object.keys(ordered_routes).sort(function(a,b){return b-a});
 
@@ -115,11 +99,13 @@ function a_star_bestfirst(array, exclude_list = [])
 					new_r.push(  ordered_routes[k] ); 	// push the color k times
 
 				//Add the zeros
-				for (var z=0; z < zero_indexes.length; z++)
-					arrayOfIndices
-
+				for (var z=0; z < zero_indexes.length; z++){
+					var z_index = zero_indexes[z];
+					new_r[ z_index ] = zero_color_grp;
+				}
 				exploring_routes.push(new_r); 			// push the new path
 			}
+			console.log("    explored=",exploring_routes);
 		}
 	}
 	console.log("best_routes A*", exploring_routes);
