@@ -199,43 +199,51 @@ function child2parent_link(pers, moth, fath)
 
 	This will prevent haploblocks from mixing.
 	*/
+	var istarget = pers.id === 7;
 
-	var res0 = resolveAmbiguousRegions__DEBUG(pers_hp[0].pter_array),
+	var res0 = resolveAmbiguousRegions__DEBUG(pers_hp[0].pter_array, [], istarget),
 		nonambig0 = res0[0],
 		unique_sets0 = res0[1];
 
-	console.log("u0", res0,'\n');
+	debugconsole(istarget,"u0", res0,'\n');
+
+	if (istarget) throw new Error("FFD");
 
 	if (nonambig0 === null){
 		throw new Error ("Well, hmm.");
 	}
 
 
-	var res1 = resolveAmbiguousRegions__DEBUG(pers_hp[1].pter_array, unique_sets0),
+	var res1 = resolveAmbiguousRegions__DEBUG(pers_hp[1].pter_array, unique_sets0, istarget),
 		nonambig1 = res1[0],
 		unique_sets1 = res1[1];
 
-	console.log("u1", res1,'\n');
+
+	debugconsole(istarget,"u1", res1,'\n');
 
 	// Nope, let's try switching
 	if (nonambig1 === null){
-		console.log("yeah...");
+		debugconsole(istarget,"yeah...");
 
-		res1 = resolveAmbiguousRegions__DEBUG(pers_hp[1].pter_array);
+		res1 = resolveAmbiguousRegions__DEBUG(pers_hp[1].pter_array, [],istarget );
 		nonambig1 = res1[0];
 		unique_sets1 = res1[1];
 
-		console.log("u2", res1,'\n');
+		debugconsole(istarget,"u2", res1,'\n');
 
-		res0 = resolveAmbiguousRegions__DEBUG(pers_hp[0].pter_array, unique_sets1);
+		res0 = resolveAmbiguousRegions__DEBUG(pers_hp[0].pter_array, unique_sets1, istarget);
 		nonambig0 = res0[0];
 		unique_sets0 = res0[1];
 
-		console.log("u3", res0,'\n');
+		debugconsole(pers.id === 7,"u3", res0,'\n');
 	}
 
 	if (nonambig0 === null){
-		throw new Error ("Well, crap.");
+		debugconsole(istarget,"creating dummies...");
+		nonambig0 = pers_hp[0].pter_array.map(function (n){ return -1;});
+		nonambig1 = pers_hp[1].pter_array.map(function (n){ return -1;});
+
+// 		throw new Error ("Well, crap.");
 	}
 
 	var curr_index = -1;

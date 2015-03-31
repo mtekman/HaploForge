@@ -1,4 +1,135 @@
 
+function debugconsole(condition){
+	if (condition)
+		for (var a=1; a < arguments.length; a++)
+			console.log(arguments[a]);
+}
+
+function a_star_bestfirst(array, exclude_list = [])
+{
+	var end = array.length -1;
+
+	// Define excludelist function
+	var inExcludeList;
+
+	if (exclude_list.length === 0){ 						// No list given
+		inExcludeList = function (item){ return false;};
+	}
+	else if (exclude_list.length === 1){ 					// Single item given
+		inExcludeList = function (item){ return item === exclude_list;};
+	}
+	else{ 													// Whole list given
+		inExcludeList = function (item){ return (exclude_list.indexOf(item) !== -1);}
+	}
+
+
+	function indexedRows(){
+		var arr = [];
+		for (var k=0; k <= end; k++){
+			var num_indexes = array[k].color_group.length;
+
+			if (num_indexes > 1) is_single_indexed_allele = false;
+
+			arr.push({
+				index: num_indexes - 1,
+				last_split: 0
+			});
+		}
+		arr.push({index:0, last_split:0}); 							//dummy index, needed for jumping back
+
+		return arr;
+	};
+
+	var iterableIndexes = indexedRows();
+
+	var MAX_ROUTES = 10;    // maximum amount of working routes
+
+	var	exploring_routes = [[]], 		// initial zero route
+		zero_indexes = [];
+
+
+	var num_cycles = 0;
+
+	while (true)
+	{
+		//Sort current open routes, and take the top batch
+		// discarding the rest
+		exploring_routes = exploring_routes.sort(function (a,b){ return b.length - a.length;}).slice(0,MAX_ROUTES);
+
+		console.log(exploring_routes);
+
+		if (num_cycles ++ > 100){
+			console.error(num_cycles);
+			break;
+		}
+
+
+		for (var e=0; e < exploring_routes.length; e++)
+		{
+			// Current open route
+			var current_route = exploring_routes[e],
+				current_row = current_route.length;
+
+// 			if (current_row === end){
+// 				continue;
+// 			}
+
+			// Various routes at this row
+			var num_colors = iterableIndexes[current_row].index;
+
+			console.log(num_colors);
+
+			var ordered_routes = {};
+
+			// Look ahead by one
+			for (var c=0; c< num_colors; c++){
+				var current_color = array[current_row].color_group[c];
+
+				//Perform look ahead
+				var stretch = current_row;
+				while ( stretch <= end)
+				{
+					var new_colors = array[stretch].color_group;
+
+					if (new_colors.indexOf(current_color) === -1)
+						break;
+					else
+						stretch ++;
+
+					// Mark (but still count) zeros
+					if (new_colors.length === 1 && new_colors[0] === zero_color_grp)
+						zero_indexes.push( stretch );
+				}
+				ordered_routes[stretch-current_row] = current_color; // store color
+			}
+
+			var keys_rev_ord = Object.keys(ordered_routes).sort(function(a,b){return b-a});
+
+			// Add routes to current route
+			for (var k=0; k < keys_rev_ord; k++){
+
+				var new_r = current_route.slice(); 	//clone a new path for each fork
+
+				var len = k;
+				while(len --> 0)
+					new_r.push(  ordered_routes[k] ); 	// push the color k times
+
+				//Add the zeros
+				for (var z=0; z < zero_indexes.length; z++)
+					arrayOfIndices
+
+				exploring_routes.push(new_r); 			// push the new path
+			}
+		}
+	}
+	console.log("best_routes A*", exploring_routes);
+
+	return [exploring_routes[0],[]];
+}
+
+
+
+
 /* How about this:
 For each row, I test lookaheads of all indexes on that row.
  1 The index with the greatest stretch is explored first
@@ -7,9 +138,17 @@ For each row, I test lookaheads of all indexes on that row.
  4 Jump back to last row
 
 */
-function resolveAmbiguousRegions__DEBUG(array, exclude_list = [], start=0, end=array.length-1)
+function resolveAmbiguousRegions__DEBUG(array, exclude_list = [], debug=false)
 {
-	var min_stretch_len = 1;
+
+	if (debug)
+		return a_star_bestfirst(array);
+
+
+	var start =0,
+		end = array.length - 1;
+
+	var min_stretch_len = 10;
 
 
 	// Define excludelist function
@@ -31,12 +170,12 @@ function resolveAmbiguousRegions__DEBUG(array, exclude_list = [], start=0, end=a
 	function indexedRows(){
 		var arr = [];
 		for (var k=start; k <= end; k++){
-			var num_indexes = array[k].color_group.length-1;
+			var num_indexes = array[k].color_group.length;
 
 			if (num_indexes > 1) is_single_indexed_allele = false;
 
 			arr.push({
-				index: num_indexes,
+				index: num_indexes - 1,
 				last_split: 0
 			});
 		}
@@ -50,7 +189,7 @@ function resolveAmbiguousRegions__DEBUG(array, exclude_list = [], start=0, end=a
 
 
 	// Check if allele is already non-ambig set
-	console.log("is_single", is_single_indexed_allele);
+	if (debug) console.log("is_single", is_single_indexed_allele);
 
 	//Return if so
 	if (is_single_indexed_allele){
@@ -58,7 +197,7 @@ function resolveAmbiguousRegions__DEBUG(array, exclude_list = [], start=0, end=a
 			return (item.color_group[0] !== zero_color_grp  && ar.indexOf(item.color_group[0]) === i);
 		});
 
-		console.log(unique);
+		if (debug)  console.log(unique);
 
 		return [array.map(function (n){return n.color_group[0];}), unique];
 	}
@@ -81,15 +220,20 @@ function resolveAmbiguousRegions__DEBUG(array, exclude_list = [], start=0, end=a
 
 	//Quick test to see if entire allele is -1
 
+	var debug_path = [];
+
 
 	while (true)
 	{
-		if (num_cycles ++ > 500) break;
+		if (num_cycles ++ > 50){
+			console.error("num_cycles="+num_cycles);
+			break;
+		}
 
 		actual_row = row + start;
 
 		var color_index = arrayOfIndexes[row];
-// 		console.log("path="+temppath+", color_index="+color_index.index);
+		if (debug) console.log("path="+debug_path+", color_index="+color_index.index);
 
 		if (row === 0){
 			if (color_index.index < 0) break; 					//No more paths to explore after jumping back.
@@ -115,7 +259,7 @@ function resolveAmbiguousRegions__DEBUG(array, exclude_list = [], start=0, end=a
 
 		//Jump back to last split
 		if (jumpBack){
-// 			console.log( ">>jumprow:"+actual_row+"-->"+color_index.last_split+", index to:"+(arrayOfIndexes[color_index.last_split].index - 1)+'\n');
+			if (debug) console.log( ">>jumprow:"+actual_row+"-->"+color_index.last_split+", index to:"+(arrayOfIndexes[color_index.last_split].index - 1)+'\n');
 
 			// Restore this index
 			arrayOfIndexes[row].index = origIndexes[row].index;
@@ -126,11 +270,16 @@ function resolveAmbiguousRegions__DEBUG(array, exclude_list = [], start=0, end=a
 
 			numset --;
 
+			debug_path.pop();
+
 			continue;
 		}
 		//We have an unexplored color
 		var color = array[actual_row].color_group[color_index.index];
-// 		console.log("    trying color='"+color+"'");
+		if (debug) console.log("    trying color='"+color+"' @ "+actual_row);
+
+		debug_path.push( color );
+
 
 		if (color === zero_color_grp){
 //  			console.log("    zero group, skipping");
@@ -142,13 +291,13 @@ function resolveAmbiguousRegions__DEBUG(array, exclude_list = [], start=0, end=a
 		}
 		// Exclude it? Try next
 		if (inExcludeList(color)){
-// 			console.log("   excluding "+color);
+			if (debug) console.log("   excluding "+color);
 			arrayOfIndexes[row].index --;
 			continue;
 		}
 
 
-		//Perform lookahead
+		//Perform lookahead on all current indices and select the most likely
 		var stretch = actual_row;
 		while ( stretch <= end )
 		{
@@ -170,8 +319,9 @@ function resolveAmbiguousRegions__DEBUG(array, exclude_list = [], start=0, end=a
  		stretch -= actual_row;
 
 		// Unsuccessful
-		if (current_stretch < min_stretch_len){
-// 			console.log("    failed (too short)", current_stretch+"<"+min_stretch_len);
+		if (current_stretch < min_stretch_len
+		   && origIndexes[row].index > 1){
+			if (debug) console.log("    failed (too short)", current_stretch+"<"+min_stretch_len);
 			while(stretch --> 0) temppath.pop(); 	// clear changes
 
 			arrayOfIndexes[row].index--; 			// next attempt at this row will try a different index
@@ -179,7 +329,7 @@ function resolveAmbiguousRegions__DEBUG(array, exclude_list = [], start=0, end=a
 		}
 
 		// Successfully found a new color. Splitting
-// 		console.log("    worked, arrayOfIndexes["+(actual_row+stretch)+"].last_split = "+actual_row);
+		if (debug) console.log("    worked, arrayOfIndexes["+(actual_row+stretch)+"].last_split = "+actual_row);
 		arrayOfIndexes[row+stretch].last_split = row; // this row is where we split
 
 
@@ -190,12 +340,12 @@ function resolveAmbiguousRegions__DEBUG(array, exclude_list = [], start=0, end=a
 
 		current_stretch = 0;
 	}
-// 	console.timeEnd("yer");
+	if (debug) console.timeEnd("yer");
 
-// 	console.log("holdover", temppath);
-// 	console.log("sols", path_list);
-// 	console.log("best path=", best_path);
-// 	console.log("num cycles=", num_cycles);
+	if (debug) console.log("holdover", temppath);
+	if (debug) console.log("sols", path_list);
+	if (debug) console.log("best path=", best_path);
+	if (debug) console.log("num cycles=", num_cycles);
 
 	var unique = null;
 

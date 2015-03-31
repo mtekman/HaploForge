@@ -86,6 +86,26 @@ function populateGrids_and_UniqueObjs()
 		}
 
 
+		function intersect_safe(a, b)
+		{
+			var ai=0, bi=0;
+			var result = new Array();
+
+			while( ai < a.length && bi < b.length )
+			{
+				if      (a[ai].id < b[bi].id ){ ai++; }
+				else if (a[ai].id > b[bi].id ){ bi++; }
+				else /* they're equal */
+				{
+					result.push(a[ai]);
+					ai++;
+					bi++;
+				}
+			}
+			return result;
+		}
+
+
 		//Recurse...
 		function addNodeArray(obj_pers, level)
 		{
@@ -99,6 +119,18 @@ function populateGrids_and_UniqueObjs()
 
 			generation_gridmap_ids[level].push(obj_pers.id);
 
+			for (var m=0; m < obj_pers.mates.length; m++){                   	//Mates
+				addNodeArray(obj_pers.mates[m], level);
+
+				//Child from mate?
+				var shared_childs = intersect_safe(obj_pers.children, obj_pers.mates[m].children);
+// 				console.log(obj_pers.id, obj_pers.mates[m].id, shared_childs);
+
+				for (var c=0; c < shared_childs.length; c++)                	//Childs
+					addNodeArray(shared_childs[c], level +1);
+
+			}
+
 			//Parents
 			if (obj_pers.mother != 0) addNodeArray(obj_pers.mother, level - 1);
 			if (obj_pers.father != 0) addNodeArray(obj_pers.father, level - 1);
@@ -106,11 +138,7 @@ function populateGrids_and_UniqueObjs()
 			if (obj_pers.mother != 0 && obj_pers.father != 0)
 				addTrioEdges(obj_pers.mother, obj_pers.father, obj_pers);     	//Add relevant edges
 
-			for (var c=0; c < obj_pers.children.length; c++)                	//Childs
-				addNodeArray(obj_pers.children[c], level +1);
 
-			for (var m=0; m < obj_pers.mates.length; m++)                   	//Mates
-				addNodeArray(obj_pers.mates[m], level);
 
 			return;
 		}
@@ -118,9 +146,11 @@ function populateGrids_and_UniqueObjs()
 		addNodeArray(root, 0);
 
 		//Convert gridmap into gridarray
-		var keys = [];
-		for (var k in generation_gridmap_ids)
-			keys.push(parseInt(k)); keys.sort();
+		var level_offset = 20; 				// Sort function doesn't work on negative numbers...
+
+		var keys = Object.keys(generation_gridmap_ids).map(function (n){ return parseInt(n)+level_offset;});
+		keys.sort();
+		keys = keys.map(function (n){ return n-level_offset;});
 
 		var generation_grid_ids_fam = [];
 		for (var k=0; k < keys.length; k++)
