@@ -201,7 +201,7 @@ function child2parent_link(pers, moth, fath)
 	*/
 	var istarget = pers.id === 7;
 
-	var res0 = resolveAmbiguousRegions__DEBUG(pers_hp[0].pter_array, [], istarget),
+	var res0 = a_star_bestfirst(pers_hp[0].pter_array),
 		nonambig0 = res0[0],
 		unique_sets0 = res0[1];
 
@@ -214,7 +214,7 @@ function child2parent_link(pers, moth, fath)
 	}
 
 
-	var res1 = resolveAmbiguousRegions__DEBUG(pers_hp[1].pter_array, unique_sets0, istarget),
+	var res1 = a_star_bestfirst(pers_hp[1].pter_array, unique_sets0),
 		nonambig1 = res1[0],
 		unique_sets1 = res1[1];
 
@@ -225,13 +225,13 @@ function child2parent_link(pers, moth, fath)
 	if (nonambig1 === null){
 		debugconsole(istarget,"yeah...");
 
-		res1 = resolveAmbiguousRegions__DEBUG(pers_hp[1].pter_array, [],istarget );
+		res1 = a_star_bestfirst(pers_hp[1].pter_array);
 		nonambig1 = res1[0];
 		unique_sets1 = res1[1];
 
 		debugconsole(istarget,"u2", res1,'\n');
 
-		res0 = resolveAmbiguousRegions__DEBUG(pers_hp[0].pter_array, unique_sets1, istarget);
+		res0 = a_star_bestfirst(pers_hp[0].pter_array, unique_sets1);
 		nonambig0 = res0[0];
 		unique_sets0 = res0[1];
 
