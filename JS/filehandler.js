@@ -9,7 +9,10 @@ var Allele = function(data){
 		this.pter_array.push( {color_group: []} ); 	//Array due to phase ambiguity
 
 	this.haplogroup_array;
+	this.unique_groups = [];
 	// ^ Empty until pter_array is completely unambiguous, where pter_array is then deleted (dereferenced, left for GC)
+
+
 };
 
 Allele.prototype.debug = function(){

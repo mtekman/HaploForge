@@ -199,20 +199,31 @@ function child2parent_link(pers, moth, fath)
 
 	This will prevent haploblocks from mixing.
 	*/
+	var unique_groups = [
+		fath_hp[0].unique_groups,
+		fath_hp[1].unique_groups,
+		moth_hp[0].unique_groups,
+		moth_hp[1].unique_groups
+	];
+
 	var istarget = pers.id === 7;
 
-	var res0 = a_star_bestfirst(pers_hp[0].pter_array),
+	var res0, ind = -1;
+
+	while ((res0=a_star_bestfirst(pers_hp[0].pter_array, unique_groups[ind++]))[0] === null);
+
+
+
+
+	var res0 = a_star_bestfirst(pers_hp[0].pter_array, father_unique_allele0),
 		nonambig0 = res0[0],
 		unique_sets0 = res0[1];
 
 	debugconsole(istarget,"u0", res0,'\n');
 
-	if (istarget) throw new Error("FFD");
-
 	if (nonambig0 === null){
-		throw new Error ("Well, hmm.");
+		res0 = a_star_bestfirst(pers_hp[0].pter_array,
 	}
-
 
 	var res1 = a_star_bestfirst(pers_hp[1].pter_array, unique_sets0),
 		nonambig1 = res1[0],
@@ -243,12 +254,15 @@ function child2parent_link(pers, moth, fath)
 		nonambig0 = pers_hp[0].pter_array.map(function (n){ return -1;});
 		nonambig1 = pers_hp[1].pter_array.map(function (n){ return -1;});
 
-// 		throw new Error ("Well, crap.");
+		throw new Error ("Well, crap.");
 	}
 
-	var curr_index = -1;
+	pers_hp[0].unique_groups = unique_sets0;
+	pers_hp[1].unique_groups = unique_sets1;
+
 
 	//Overwrite person data
+	var curr_index = -1;
 	while( ++curr_index < nonambig0.length){
 		pers_hp[0].pter_array[curr_index].color_group = [ nonambig0[curr_index] ];
 		pers_hp[1].pter_array[curr_index].color_group = [ nonambig1[curr_index] ];

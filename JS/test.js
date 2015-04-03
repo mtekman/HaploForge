@@ -1,9 +1,12 @@
+//TODO: Parent haplotypes should be resolved before handling child
+// 		Feed parent haplotypes (mother father) as seperate exclusion lists
 
-// function debugconsole(condition){
-// 	if (condition)
-// 		for (var a=1; a < arguments.length; a++)
-// 			console.log(arguments[a]);
-// }
+
+function debugconsole(condition){
+	if (condition)
+		for (var a=1; a < arguments.length; a++)
+			console.log(arguments[a]);
+}
 
 
 var a_star_bestfirst__DEBUG = function(array, exclude_list)
@@ -31,35 +34,28 @@ var a_star_bestfirst__DEBUG = function(array, exclude_list)
 
 
 	var MAX_ROUTES = 4;    // maximum amount of working routes
-	var exploring_routes = [{array:[],numsets:0}]; 		// initial zero route
+
+	var exploring_routes = [{array:[],numsets:0}],	// initial zero route
+		complete_routes = [];
+
 	var route_map = {}; // routes explored already
 
 	var num_cycles = 0;
 
-	while (true)
-	{
-		//Sort current open routes, and take the top batch
-		// discarding the rest
-		exploring_routes = exploring_routes.sort(function (a,b){ return b.array.length - a.array.length;}).slice(0,MAX_ROUTES);
+	// Initially discard any colors that stretch only for a single index
+	var stretches_only = true;
 
-		// Happens after the splice and sort
-		if (exploring_routes[0].array.length === array.length){
-			break;
-		}
 
-		console.log("routes="+exploring_routes.map(function (n){ return "["+n.array+":"+n.numsets+"] "}));
+	while (true){
 
-		if (num_cycles ++ > 10){
-			console.log(num_cycles);
-			break;
-		}
-
-		var num_routes_now = exploring_routes.length;
-
-		for (var e=0; e < num_routes_now; e++)
+		while (exploring_routes.length !== 0)
 		{
+			num_cycles ++;
+			exploring_routes = exploring_routes.sort(function (a,b){ return b.array.length - a.array.length;}).slice(0,MAX_ROUTES);
+
 			// Current open route
-			var current_route = exploring_routes[e].array,
+			var current_route = exploring_routes[0].array,
+				current_nsets = exploring_routes[0].numsets,
 				current_row = current_route.length;
 
 			// Various routes at this row
@@ -79,15 +75,14 @@ var a_star_bestfirst__DEBUG = function(array, exclude_list)
 
 				console.log("    - trying color "+current_color);
 
-
 				if (inExcludeList(current_color)){
 					console.log("    - EXCLUDE!");
 					continue;
 				}
 
 				//Perform look ahead
-				var stretch = current_row+1;
-				while ( stretch < end )
+				var stretch = current_row + 1;
+				while ( stretch <= end )
 				{
 					var new_colors = array[stretch].color_group;
 					console.log("       - testing "+current_color+" against "+new_colors+" @i "+stretch);
@@ -103,13 +98,14 @@ var a_star_bestfirst__DEBUG = function(array, exclude_list)
 
 					stretch ++;
 				}
-				console.log("    - stretches for ",stretch - current_row, "until index", stretch);
+				stretch -= current_row;
+
+				console.log("    - stretches for ",stretch, "until index", stretch + current_row);
 
 				// Store color with key as the length of the stretch
-				ordered_routes[ stretch - current_row ] = current_color;
+				ordered_routes[ stretch ] = current_color;
 			}
 			var keys_rev_ord = Object.keys(ordered_routes).sort(function(a,b){return b-a});
-
 
 			console.log("    ordered_routes=", ordered_routes);
 			console.log("    reversed_order=", keys_rev_ord);
@@ -117,8 +113,18 @@ var a_star_bestfirst__DEBUG = function(array, exclude_list)
 			// Add routes to current route
 			for (var k=0; k < keys_rev_ord.length; k++){
 
-				var key = keys_rev_ord[k],
-					new_r = current_route.slice(); 			//clone a new path for each fork
+				var key = keys_rev_ord[k];
+
+				// No sig. change
+				if (stretches_only && key <= 1 ){
+					// Dead end route
+					console.log("    dead_end route, skipping");
+					continue;
+				}
+
+
+
+				var new_r = current_route.slice(); 			//clone a new path for each fork
 
 				var len = key;
 				while(len --> 0)
@@ -127,31 +133,56 @@ var a_star_bestfirst__DEBUG = function(array, exclude_list)
 				console.log("   - adding '"+ordered_routes[key]+"' "+key+"x  to ", new_r);
 
 				//Add the zeros
-				//  				for (var z_index in zero_indexes){
-				// 					if (new_r.length > z_index)
-				// 	 					new_r[ z_index ] = zero_color_grp;
-				//  				}
+// 				for (var z_index in zero_indexes){
+//					if (new_r.length > z_index)
+// 						new_r[ z_index ] = zero_color_grp;
+// 				}
 
+				var new_pack = {array: new_r, numsets:current_nsets+1};
 				var string_key = new_r.reduce( function(a,b){ return a+""+b;});
 
 				if (!(string_key in route_map)){
 					route_map[string_key] = 0;
-					exploring_routes.push({array:new_r, numsets:0}); 			// push the new path if unique
+					if (new_r.length === array.length)
+						complete_routes.push( new_pack ); // fin
+					else
+						exploring_routes.push( new_pack ); // push the new path if unique
 				}
 			}
-			console.log("    explored="+exploring_routes.map(function (n){ return "["+n+"] "}));
-			console.log("    on "+e+"/"+num_routes_now);
+
+			// Remove old route (now expanded)
+			exploring_routes.splice(0,1);
+
+			console.log("    explored="+exploring_routes.map(function (n){ return "["+n.array+"] "}));
+			console.log("    complete="+complete_routes.map(function (n){ return "["+n.array+"] "}));
 		}
-		console.log("next iter");
+
+		// Do we have results?
+		if (complete_routes.length === 0){
+			if (stretches_only){
+				stretches_only = false; 	// Next iter on array tries for single indexes
+				console.log("repeating without stretches");
+				exploring_routes = [{array:[],numsets:0}];	// initial zero route
+				continue;
+			}
+
+			console.error(arguments);
+			throw new Error("No match at all!");
+		}
+		break;
 	}
-	var best = exploring_routes[0].array;
+
+ 	var best;
+ 	if (complete_routes.length === 1) best = complete_routes[0].array;
+ 	else
+ 		best = complete_routes.sort( function (a,b) { return a.numsets - b.numsets;})[0].array;
 
 	var unique = best.filter(function(item,i,ar){
-		return (item.color_group[0] !== zero_color_grp  && ar.indexOf(item.color_group[0]) === i);
+		return (item !== zero_color_grp  && ar.indexOf(item) === i);
 	});
 
 
-	console.log("best_routes A*", exploring_routes);
+	console.log("best_routes A*", complete_routes);
 	console.log(" with best=", best);
 	console.log(" unique=", unique);
 	console.log("  in "+num_cycles+" cycles");
@@ -161,4 +192,25 @@ var a_star_bestfirst__DEBUG = function(array, exclude_list)
 	return [best, unique];
 }
 
-var a_star_bestfirst = new Function('array','exclude_list',a_star_bestfirst__DEBUG.toString().replace(/\n\s+console\.log.*;/g,""));
+var strre = a_star_bestfirst__DEBUG.toString()
+	.replace(/\n\s+console\.log.*;/g,"")
+	.replace(/}$/,"")
+	.replace("function (array, exclude_list)\n{\n","");
+
+// strre = strre.substr(0,100);
+// console.log(strre);
+
+var a_star_bestfirst = new Function(
+	'array',
+	'exclude_list',
+	strre
+);
+
+var	array = [
+	{color_group: [4,2,6]},
+	{color_group: [2,6]},
+	{color_group: [2,7]},
+	{color_group: [7]},
+	{color_group: [4,7]},
+	{color_group: [3,7]}];
+a_star_bestfirst__DEBUG(array,[]);
