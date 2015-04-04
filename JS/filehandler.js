@@ -18,10 +18,18 @@ var Allele = function(data){
 Allele.prototype.debug = function(){
 	return {
 		data: this.data_array,
-		groups: this.pter_array.map(function (n){return ""+n.color_group+"";})
+		groups: (this.pter_array.map(
+			function (n){
+				return ""+n.color_group+"";
+			}
+		)),
+		unique: this.unique_groups
+// 				).reduce(
+// 			function (s,a){
+// 				return s+"],["+a;
+// 			})
 	};
 };
-
 
 
 // "Pads rs identifiers into fixed width string based on max length

@@ -5,6 +5,16 @@ var hgroup_colors = [], // [founder_id], where array index = color/group
 
 var zero_color_grp = -1;
 
+
+//Get unique color groups in an allele
+var uniqueset = function(set){
+	return set.filter(function(item,i,ar){
+		return (item !== zero_color_grp  && ar.indexOf(item) === i);
+	});
+};
+
+
+
 function initFounderAlleles( fid, id )
 {
 	var perc_hdata = family_map[fid][id].haplo_data;
@@ -24,6 +34,9 @@ function initFounderAlleles( fid, id )
 
 		for (var i=0; i < allele_ptrs.length; i++)
 			allele_ptrs[i].color_group = [color_group];
+
+
+		allele_ptrs.unique_groups = [color_group];
 
 // 		console.log("founder "+id+" "+a, allele_ptrs[0].color_group, perc_hdata[a].data_array[0]);
 	}
@@ -199,73 +212,57 @@ function child2parent_link(pers, moth, fath)
 
 	This will prevent haploblocks from mixing.
 	*/
-	var unique_groups = [
-		fath_hp[0].unique_groups,
-		fath_hp[1].unique_groups,
-		moth_hp[0].unique_groups,
-		moth_hp[1].unique_groups
-	];
+	// 4 4 2 3 3 3
 
-	var istarget = pers.id === 7;
+	var maternal_exclusion = moth_hp[0].unique_groups.concat(moth_hp[1].unique_groups),
+		paternal_exclusion = fath_hp[0].unique_groups.concat(fath_hp[1].unique_groups);
 
-	var res0, ind = -1;
+	var istarget = pers.id === 10;
 
-	while ((res0=a_star_bestfirst(pers_hp[0].pter_array, unique_groups[ind++]))[0] === null);
+	var res0 = a_star_bestfirst(pers_hp[0].pter_array, maternal_exclusion),
+		res1;
+
+	// Didn't take with maternal, try paternal
+	if (res0 === null){
+		res0 = a_star_bestfirst(pers_hp[0].pter_array, paternal_exclusion);
+
+		if (res0 === null)
+			throw new Error( "Skipper's Log: No land in sight.");
 
 
+		res1 = a_star_bestfirst(pers_hp[1].pter_array, maternal_exclusion);
+	}
+	res1 = a_star_bestfirst(pers_hp[1].pter_array, paternal_exclusion);
 
+	if (res1 === null){
+		//If we're here, then chances are res0 is ambiguous - it has solutions
+		//for both exclusion scenarios.
 
-	var res0 = a_star_bestfirst(pers_hp[0].pter_array, father_unique_allele0),
-		nonambig0 = res0[0],
-		unique_sets0 = res0[1];
+		//We assume that it only tried the first, so we try the second
+ 		res0 = a_star_bestfirst(pers_hp[0].pter_array, paternal_exclusion);
+ 		res1 = a_star_bestfirst(pers_hp[1].pter_array, maternal_exclusion);
 
-	debugconsole(istarget,"u0", res0,'\n');
+		if (res0 === null || res1 === null)
+			throw new Error("Skipper's Log: It's been days...");
 
-	if (nonambig0 === null){
-		res0 = a_star_bestfirst(pers_hp[0].pter_array,
 	}
 
-	var res1 = a_star_bestfirst(pers_hp[1].pter_array, unique_sets0),
-		nonambig1 = res1[0],
-		unique_sets1 = res1[1];
 
+	var unique0 = res0.filter(function(item,i,ar){
+		return (item !== zero_color_grp  && ar.indexOf(item) === i);
+	});
+	var unique1 = res1.filter(function(item,i,ar){
+		return (item !== zero_color_grp  && ar.indexOf(item) === i);
+	});
 
-	debugconsole(istarget,"u1", res1,'\n');
-
-	// Nope, let's try switching
-	if (nonambig1 === null){
-		debugconsole(istarget,"yeah...");
-
-		res1 = a_star_bestfirst(pers_hp[1].pter_array);
-		nonambig1 = res1[0];
-		unique_sets1 = res1[1];
-
-		debugconsole(istarget,"u2", res1,'\n');
-
-		res0 = a_star_bestfirst(pers_hp[0].pter_array, unique_sets1);
-		nonambig0 = res0[0];
-		unique_sets0 = res0[1];
-
-		debugconsole(pers.id === 7,"u3", res0,'\n');
-	}
-
-	if (nonambig0 === null){
-		debugconsole(istarget,"creating dummies...");
-		nonambig0 = pers_hp[0].pter_array.map(function (n){ return -1;});
-		nonambig1 = pers_hp[1].pter_array.map(function (n){ return -1;});
-
-		throw new Error ("Well, crap.");
-	}
-
-	pers_hp[0].unique_groups = unique_sets0;
-	pers_hp[1].unique_groups = unique_sets1;
-
+	pers_hp[0].unique_groups = unique0;
+	pers_hp[1].unique_groups = unique1;
 
 	//Overwrite person data
 	var curr_index = -1;
-	while( ++curr_index < nonambig0.length){
-		pers_hp[0].pter_array[curr_index].color_group = [ nonambig0[curr_index] ];
-		pers_hp[1].pter_array[curr_index].color_group = [ nonambig1[curr_index] ];
+	while( ++curr_index < res0.length){
+		pers_hp[0].pter_array[curr_index].color_group = [ res0[curr_index] ];
+		pers_hp[1].pter_array[curr_index].color_group = [ res1[curr_index] ];
 	}
 
 	console.log("Cf", pers.id, debugHaploData(pers_hp));
@@ -300,10 +297,10 @@ var hsv2rgb = function(h,s,v) {
 function makeUniqueColors()
 {
 	var num_colors = hgroup_colors.length,
-		step_color = (Math.floor(255 / (num_colors+1)));
+		step_color = (Math.floor(360 / (num_colors)));
 
-	var sat = 200,
-		val = 150,
+	var sat = 33,
+		val = 51,
 		hue = 0;
 
 	for (var c=0; c < num_colors; c++){

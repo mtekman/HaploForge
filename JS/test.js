@@ -1,6 +1,9 @@
 //TODO: Parent haplotypes should be resolved before handling child
 // 		Feed parent haplotypes (mother father) as seperate exclusion lists
-
+// main_set extract between rs2271831 and rs11025273
+//
+//
+//
 
 function debugconsole(condition){
 	if (condition)
@@ -29,9 +32,7 @@ var a_star_bestfirst__DEBUG = function(array, exclude_list)
 		inExcludeList = function (item){ return (exclude_list.indexOf(item) !== -1);};
 
 
-
 	var end = array.length -1;
-
 
 	var MAX_ROUTES = 4;    // maximum amount of working routes
 
@@ -88,13 +89,14 @@ var a_star_bestfirst__DEBUG = function(array, exclude_list)
 					console.log("       - testing "+current_color+" against "+new_colors+" @i "+stretch);
 
 					// Only break on another non-zero group color
-					if (new_colors.length === 1){
-						if (new_colors[0] === zero_color_grp)
-							zero_indexes [stretch] = 0;
-
+					if (new_colors.indexOf(current_color) === -1){
+						if (new_colors.length === 1 && new_colors[0] === zero_color_grp){
+							zero_indexes[stretch] = 0;
+						}
+						else { //not a zero group
+							break;
+						}
 					}
-					else if (new_colors.indexOf(current_color) === -1)
-						break;
 
 					stretch ++;
 				}
@@ -133,16 +135,17 @@ var a_star_bestfirst__DEBUG = function(array, exclude_list)
 				console.log("   - adding '"+ordered_routes[key]+"' "+key+"x  to ", new_r);
 
 				//Add the zeros
-// 				for (var z_index in zero_indexes){
-//					if (new_r.length > z_index)
-// 						new_r[ z_index ] = zero_color_grp;
-// 				}
+ 				for (var z_index in zero_indexes){
+					if (new_r.length > z_index)
+ 						new_r[ z_index ] = zero_color_grp;
+ 				}
 
 				var new_pack = {array: new_r, numsets:current_nsets+1};
 				var string_key = new_r.reduce( function(a,b){ return a+""+b;});
 
 				if (!(string_key in route_map)){
 					route_map[string_key] = 0;
+
 					if (new_r.length === array.length)
 						complete_routes.push( new_pack ); // fin
 					else
@@ -152,6 +155,7 @@ var a_star_bestfirst__DEBUG = function(array, exclude_list)
 
 			// Remove old route (now expanded)
 			exploring_routes.splice(0,1);
+			zero_indexes = {};
 
 			console.log("    explored="+exploring_routes.map(function (n){ return "["+n.array+"] "}));
 			console.log("    complete="+complete_routes.map(function (n){ return "["+n.array+"] "}));
@@ -162,34 +166,34 @@ var a_star_bestfirst__DEBUG = function(array, exclude_list)
 			if (stretches_only){
 				stretches_only = false; 	// Next iter on array tries for single indexes
 				console.log("repeating without stretches");
-				exploring_routes = [{array:[],numsets:0}];	// initial zero route
+
+				// reset
+				complete_routes = [];
+				exploring_routes = [{array:[],numsets:0}];
+				route_map = {};
+
 				continue;
 			}
 
 			console.error(arguments);
-			throw new Error("No match at all!");
+			return null;
 		}
 		break;
 	}
-
  	var best;
- 	if (complete_routes.length === 1) best = complete_routes[0].array;
+
+ 	if (complete_routes.length === 1)
+		best = complete_routes[0].array;
  	else
  		best = complete_routes.sort( function (a,b) { return a.numsets - b.numsets;})[0].array;
 
-	var unique = best.filter(function(item,i,ar){
-		return (item !== zero_color_grp  && ar.indexOf(item) === i);
-	});
-
-
 	console.log("best_routes A*", complete_routes);
 	console.log(" with best=", best);
-	console.log(" unique=", unique);
 	console.log("  in "+num_cycles+" cycles");
 
 	console.log("SRC ARRAY=",array.map(function (a){return ""+a.color_group+"";}));
 
-	return [best, unique];
+	return best;
 }
 
 var strre = a_star_bestfirst__DEBUG.toString()
@@ -206,11 +210,17 @@ var a_star_bestfirst = new Function(
 	strre
 );
 
-var	array = [
-	{color_group: [4,2,6]},
-	{color_group: [2,6]},
-	{color_group: [2,7]},
-	{color_group: [7]},
-	{color_group: [4,7]},
-	{color_group: [3,7]}];
-a_star_bestfirst__DEBUG(array,[]);
+// var	array = [
+// 	[4,2,6],
+// 	[2,6],
+// 	[2,7],
+// 	[7],
+// 	[4,7],
+// 	[3,7]];
+
+// var array = [
+// 	[2,6],[2],[2,6],[2,6],[2],[2,6],[2],[2,6],[2],[2],[2,6],[2,6],[2,6],[2,6],[2,6],[2,6],[2],[2,6],[2,6],[2,6],[2,6],[2,6],[2,6],[2,6],[2],[2,6],[2],[2,6],[2,6],[2],[2],[2,6],[2],[2,6],[2,6],[2,6],[2,6],[2,6],[2,6],[2,6],[2,6],[2,6],[2],[2],[2,6],[2,6],[2,6],[2],[2,6],[2],[2],[2,6],[2,6],[2],[2,6],[2],[2,6],[2,6],[2,6],[2],[2,6],[2,6],[2,6],[2,6],[2],[2,6],[2]];
+
+// array = array.map(function(n){return {color_group:n};});
+
+// a_star_bestfirst__DEBUG(array,[]);
