@@ -40,6 +40,7 @@ function initFounderAlleles( fid, id )
 
 // 		console.log("founder "+id+" "+a, allele_ptrs[0].color_group, perc_hdata[a].data_array[0]);
 	}
+	console.log("Cf", id, debugHaploData(perc_hdata));
 }
 
 
@@ -104,7 +105,6 @@ function child2parent_link(pers, moth, fath)
 		if (f1_ht === 0) f1_pr.color_group = [zero_color_grp];
 		if (m0_ht === 0) m0_pr.color_group = [zero_color_grp];
 		if (m1_ht === 0) m1_pr.color_group = [zero_color_grp];
-
 
 // 		if (f0_ht === f1_ht  && f1_ht === m0_ht	&& m0_ht === m1_ht  && m1_ht === 0) continue;
 
@@ -216,6 +216,31 @@ function child2parent_link(pers, moth, fath)
 
 	var maternal_exclusion = moth_hp[0].unique_groups.concat(moth_hp[1].unique_groups),
 		paternal_exclusion = fath_hp[0].unique_groups.concat(fath_hp[1].unique_groups);
+
+	// Check for consanginuity (do earlier)
+	var consang_check = true;
+	if (consang_check){
+		// Kick out groups that overlap in both sets
+		var toKick = [];
+
+		for (var ov1=0; ov1 < maternal_exclusion.length; ov1++)
+			for (var ov2=0; ov2 < paternal_exclusion.length; ov2++)
+				if (maternal_exclusion[ov1] === paternal_exclusion[ov2])
+					toKick.push( maternal_exclusion[ov1]);
+
+		if (toKick.length !== 0){
+			for (var tk=0; tk < toKick.length; tk++){
+				var val = toKick[tk];
+
+				var maternal_index = maternal_exclusion.indexOf(val),
+					paternal_index = paternal_exclusion.indexOf(val);
+
+				maternal_exclusion.splice(maternal_index,1);
+				paternal_exclusion.splice(paternal_index,1);
+			}
+			console.log( moth.id+" and "+fath.id+" consanginous?", toKick);
+		}
+	}
 
 	var istarget = pers.id === 10;
 

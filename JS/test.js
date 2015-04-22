@@ -60,8 +60,7 @@ var a_star_bestfirst__DEBUG = function(array, exclude_list)
 				current_row = current_route.length;
 
 			// Various routes at this row
-			//var num_colors = iterableIndexes[current_row];
-			var num_colors = array[current_row].color_group.length
+			var num_colors = array[current_row].color_group.length;
 
 			console.log("-Route:", current_route);
 			console.log("    current_row=" + current_row);
@@ -102,7 +101,7 @@ var a_star_bestfirst__DEBUG = function(array, exclude_list)
 				}
 				stretch -= current_row;
 
-				console.log("    - stretches for ",stretch, "until index", stretch + current_row);
+				console.log("    - stretches for ",stretch, "before index", stretch + current_row);
 
 				// Store color with key as the length of the stretch
 				ordered_routes[ stretch ] = current_color;
@@ -176,7 +175,11 @@ var a_star_bestfirst__DEBUG = function(array, exclude_list)
 			}
 
 			console.error(arguments);
+
+
+			// return a_star_bestfirst__DEBUG(array);
 			return null;
+
 		}
 		break;
 	}
@@ -196,19 +199,39 @@ var a_star_bestfirst__DEBUG = function(array, exclude_list)
 	return best;
 }
 
-var strre = a_star_bestfirst__DEBUG.toString()
-	.replace(/\n\s+console\.log.*;/g,"")
-	.replace(/}$/,"")
-	.replace("function (array, exclude_list)\n{\n","");
 
-// strre = strre.substr(0,100);
-// console.log(strre);
+var starbest_body = (function() {
+	var entire = a_star_bestfirst__DEBUG.toString();
+
+	return entire.slice(entire.indexOf("{")+1, entire.lastIndexOf("}"));
+})();
+
+
+var strre = starbest_body.replace(/console\.log\(.*\)\;/g,"");
 
 var a_star_bestfirst = new Function(
 	'array',
 	'exclude_list',
 	strre
 );
+
+// var makeTextFile = function(text){
+// 	var data = new Blob([text], {type: 'text/plain'});
+// 	return window.URL.createObjectURL(data);
+// };
+
+
+// var lin1 = document.getElementById('downloadlink1'),
+// 	lin2 = document.getElementById('downloadlink2'),
+// 	lin3 = document.getElementById('downloadlink3');
+
+// lin1.href = makeTextFile( a_star_bestfirst__DEBUG.toString());
+// lin3.href = makeTextFile( a_star_bestfirst.toString() );
+
+// strre = strre.substr(0,100);
+// console.log(strre);
+
+
 
 // var	array = [
 // 	[4,2,6],
