@@ -20,8 +20,6 @@ function resetHMButtons(){
 // called in toggle.js
 function addHaploScreen(wi, he, fam_id)
 {
-	active_fam = fam_id;
-
 	var ped_group = new Kinetic.Group();
 
 	var bg = new Kinetic.Rect({

@@ -292,9 +292,6 @@ function graphInitPos(start_x, start_y){
 					start_pos = nodes[start_join_id].graphics.getPosition();
 					end_pos = nodes[end_join_id].graphics.getPosition();
 					consang = checkConsanginuity(fam, start_join_id, end_join_id);
-
-					if (consang) console.log(key);
-
 				}
 				else if(type === 2)
 				{

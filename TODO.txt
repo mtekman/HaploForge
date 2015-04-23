@@ -1,4 +1,23 @@
 TODO:
+======
+EDIT Haplomode to incorporate non-related individuals:
+   * Press a button to initiate a selection mode in the main pedview
+   * Tick all the members that you want (quick button to toggle all affecteds)
+   * Initiate haplomode
+
+   New HMode consists of:
+   	 * Lined up individuals (swappable) order
+   	 * Tools to highlight a region of SNPs (a messner file can be given)
+   	 * Tools to find stretches of homology:
+   	         * for single/double alleles across selected individuals
+   	         * for single/double alleles across selected indivs, barring other indivs
+
+
+DONE:
+======
+
+Window needs an adjuster to be dynamically set to show N markers
+ - Adjuster could be a slider that represents all M markers with start and stop bars
 
 - Rewrite resolveblocks method, to incorporate different PAIRS of groups
 (instead of pushing everything in one go) -- this will mean changing the
@@ -6,12 +25,6 @@ haploblock_Backend as well to push PAIRS.
  - Does it actually need pairs? Surely each allele must be evaluated
    seperately (because crossover is independent of a gametes sister allele)
    - Maybe I'm just pushing the wrong groups? Need to explore for that subset again.
-
-
-DONE:
-Window needs an adjuster to be dynamically set to show N markers
- - Adjuster could be a slider that represents all M markers with start and stop bars
-
 
 
 Fix scrolling when Align mode is initiated.
