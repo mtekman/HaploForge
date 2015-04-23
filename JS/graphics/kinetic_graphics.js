@@ -92,11 +92,20 @@ function changeRLine(line, start, end)
 
 
 
-function addRLine(fam_group, start, end, consang=false){
+function addRLine(fam_group, start, end, consang=false)
+{
 	var line = new Kinetic.Line({
-		stroke: consang?'red':'black',
-		strokeWidth: consang?4:2
+		stroke: 'black',
+		strokeWidth: 2
 	});
+
+	if(consang){
+		line.attrs.shadowColor = 'black';
+		line.attrs.shadowBlur = 0;
+		line.attrs.shadowOffsetY = -nodeSize/3;
+		line.attrs.shadowOpacity = 1;
+	}
+
 	changeRLine(line, start, end);
 
 	fam_group.add(line);

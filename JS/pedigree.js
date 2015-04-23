@@ -67,7 +67,6 @@ function connectAllIndividuals()
 //    console.log(family_map);
 }
 
-
 //var groupNodes = function(){
 //	"Looks for the longest common substring of an allele, recursively searching up from offspring to founder"
 //}

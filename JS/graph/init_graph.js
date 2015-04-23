@@ -291,7 +291,10 @@ function graphInitPos(start_x, start_y){
 					// Mateline
 					start_pos = nodes[start_join_id].graphics.getPosition();
 					end_pos = nodes[end_join_id].graphics.getPosition();
-					consang = checkConsanginuity(fam_group, start_join_id, end_join_id);
+					consang = checkConsanginuity(fam, start_join_id, end_join_id);
+
+					if (consang) console.log(key);
+
 				}
 				else if(type === 2)
 				{
@@ -310,6 +313,8 @@ function graphInitPos(start_x, start_y){
 
 
 				edge.graphics = addRLine(fam_group, start_pos, end_pos, consang); 					//DRAW
+				edge.consangineous = consang;
+
 				edge.graphics.moveToBottom();
 			}
 		}
@@ -325,31 +330,53 @@ function graphInitPos(start_x, start_y){
 }
 
 
-// Hmm... needs work
+// Find highest founder - A* best-first search
 function checkConsanginuity(fam_id, pers1_id, pers2_id)
 {
-	return false;
+	// console.log(family_map, fam_id);
+	// throw new Error("STAP");
 
-	var fam_map = family_map[fam_id],
-		pers1 = fam_map[pers1_id],
-		pers2 = fam_map[pers2_id];
+    var fam_map = family_map[fam_id],
+        pers1 = fam_map[pers1_id],
+        pers2 = fam_map[pers2_id];
 
+    // Find pers1 founder
+    var routes2 = [];
+    routes2.push( pers1 );
+    routes2.push( pers2 );
+     // = [pers1, pers2];
 
-	while (true){
-		var m1 = pers1.mother, f1 = pers1.father,
-			m2 = pers2.mother, f2 = pers2.father;
+    var complete = [];
+    var loopnum = 0;
 
-		if (m1.mother.id == m2.mother.id) return true;
-		if (m1.father.id == m2.father.id) return true;
+    // console.log(pers1.id+"  and  "+pers2.id);
+    while(routes2.length > 0 && loopnum++ < 100){
+        	var perc = routes2.shift(); // remove from search
 
-	}
+        	// console.log(" try:", perc.id);
 
+        	//Try mother + father
+	        if (perc.mother === 0 && perc.father === 0){
+	        	complete.push(perc.id);
+	        	continue;
+	        }
 
+        	if (perc.mother != 0) routes2.push(perc.mother);
+        	if (perc.father != 0) routes2.push(perc.father);
 
-	while (pers1.mother !=0 && pers1.father != 0)
+        	// console.log(" routes=", routes2.map( function(n){ return n.id;}));
+    }
 
+    // console.log("complete=", complete);
 
-	return false;
+    // throw new Error("AS");
+
+    //Find duplicates in complete
+    complete = complete.sort();
+    for (var a=0; a < complete.length -1; a++){
+    	if (complete[a+1] === complete[a])
+    		return true;
+    }
+
+    return false;
 }
-
-

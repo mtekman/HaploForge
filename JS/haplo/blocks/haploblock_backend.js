@@ -40,7 +40,7 @@ function initFounderAlleles( fid, id )
 
 // 		console.log("founder "+id+" "+a, allele_ptrs[0].color_group, perc_hdata[a].data_array[0]);
 	}
-	console.log("Cf", id, debugHaploData(perc_hdata));
+	// console.log("Cf", id, debugHaploData(perc_hdata));
 }
 
 
@@ -69,7 +69,7 @@ function debugHaploData(dat){
 	- Always two alleles
 	- Paternal allele is first, and maternal is second.
 */
-function child2parent_link(pers, moth, fath)
+function child2parent_link(pers, moth, fath, fam) // fam only needed for consang check.
 {
 	var pers_hp = pers.haplo_data,
 		moth_hp = moth.haplo_data,
@@ -194,7 +194,7 @@ function child2parent_link(pers, moth, fath)
 // 		console.log("\n=====================");
 // 		console.log("F:", fath.id, debugHaploData(fath_hp));
 // 		console.log("M:", moth.id, debugHaploData(moth_hp));
-	console.log("Ci", pers.id, debugHaploData(pers_hp));
+	// console.log("Ci", pers.id, debugHaploData(pers_hp));
 
 	// Remove Ambigious regions. Must be done here so that next-gen
 	// deals only with clean data and not a hodge-podge of possible
@@ -217,11 +217,14 @@ function child2parent_link(pers, moth, fath)
 	var maternal_exclusion = moth_hp[0].unique_groups.concat(moth_hp[1].unique_groups),
 		paternal_exclusion = fath_hp[0].unique_groups.concat(fath_hp[1].unique_groups);
 
-	// Check for consanginuity (do earlier)
-	var consang_check = true;
+	// Check for consanginuity
+	var key = "m:"+fath.id+"-"+moth.id;
+	var consang_check = unique_graph_objs[fam].edges[key].consangineous;
+
 	if (consang_check){
 		// Kick out groups that overlap in both sets
 		var toKick = [];
+		// console.log(key+" is said to be consangineous...");
 
 		for (var ov1=0; ov1 < maternal_exclusion.length; ov1++)
 			for (var ov2=0; ov2 < paternal_exclusion.length; ov2++)
@@ -238,8 +241,9 @@ function child2parent_link(pers, moth, fath)
 				maternal_exclusion.splice(maternal_index,1);
 				paternal_exclusion.splice(paternal_index,1);
 			}
-			console.log( moth.id+" and "+fath.id+" consanginous?", toKick);
+			// console.log("...and yes it is", toKick);
 		}
+		// else console.log("...and NO it isn't");
 	}
 
 	var istarget = pers.id === 10;
@@ -290,7 +294,7 @@ function child2parent_link(pers, moth, fath)
 		pers_hp[1].pter_array[curr_index].color_group = [ res1[curr_index] ];
 	}
 
-	console.log("Cf", pers.id, debugHaploData(pers_hp));
+	// console.log("Cf", pers.id, debugHaploData(pers_hp));
 }
 
 
@@ -366,7 +370,7 @@ function assignHGroups()
 				var moth = family_map[fam][moth_id],
 					fath = family_map[fam][fath_id];
 
-				child2parent_link(pers, moth, fath);
+				child2parent_link(pers, moth, fath, fam);
 			}
 		}
 		console.log("hgroups fam =" + fam);
