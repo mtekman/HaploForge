@@ -70,3 +70,110 @@ function connectAllIndividuals()
 //var groupNodes = function(){
 //	"Looks for the longest common substring of an allele, recursively searching up from offspring to founder"
 //}
+
+function determinePedigreeType()
+{
+    // Affecteds in each generation --> dominant
+    // if males have one allele --> sexlinked (easy):
+    //      if males have two alleles, but one of them is always zero --> sexlinked
+    //
+    // extra (unnecesary) checks:
+    //      if dominant and male-to-male transmission --> autosomal
+    //      if recessive and males are hemizygous and not all females are affected --> sexlinked
+
+    // We assume that all pedigrees are on the same chromosome -- pick the largest to examine.
+    var ped_id = (function largestPedigree(){
+        var max_memb=0, max_fam=0;
+        for (var fid in generation_grid_ids)
+        {
+            var num_memb = 0;
+            console.log(generation_grid_ids);
+
+            for (var g=0; g < generation_grid_ids[fid]; g++)
+                num_memb += generation_grid_ids[fid][g].length;
+
+            if (num_memb > max_memb){
+                max_memb = num_memb;
+                max_fam = fid;
+            }
+        }
+        return max_fam;
+    })();
+
+    console.log(ped_id);
+    throw new Error("AS");
+
+    SEXLINKED = function singleAlleleMale(){
+        var all_zero_Ychroms = 0;
+        var num_males_checked = 0;
+
+        var num_males_with_single_allele = 0;
+
+        for (var g =0; g < generation_grid_ids[ped_id].length; g++)
+        {
+            for (var p=0; p < generation_grid_ids[ped_id][g].length; p++)
+            {
+                var perc_id = generation_grid_ids[ped_id][g][p],
+                    perc = family_map[ped_id][perc_id];
+
+                //Determine if Y allele is zero for ALL males (not just one)
+                if ( perc.gender == MALE ){
+                    if (perc.haplo_data.length == 1)
+                        num_males_with_single_allele ++;
+
+                    else {
+                        var num_all_zero_alleles = 0;
+
+                        for (var a=0; a < perc.haplo_data; a++){
+                            var all_zeroes = true;
+
+                            for (var i=0; i < perc.haplo_data[a].data.length; i++ ){
+                                if (perc.haplo_data[a].data[i] !== 0){
+                                    all_zeroes = false;
+                                    break;
+                                }
+                            }
+                            if (all_zeroes)
+                                num_all_zero_alleles ++;
+                        }
+                        if (num_all_zero_alleles === 2)
+                            continue;  // skip this guy, completely uninformative
+
+                        all_zero_Ychroms += num_all_zero_alleles;
+                    }
+                    num_males_checked ++;
+                }
+            }
+        }
+        if (num_males_with_single_allele === num_males_checked) return true;
+        if (all_zero_Ychroms === num_males_checked) return true;
+        if (num_males_with_single_allele + all_zero_Ychroms === num_males_checked) return true;
+
+        return false;
+    }();
+
+    DOMINANT = function checkAffectedsInGens(){
+        var affected_in_each_gen = 0,
+            num_gens = generation_grid_ids[ped_id].length;
+
+        for (var g =0; g < generation_grid_ids[ped_id].length; g++)
+        {
+            var affecteds_in_gen = 0
+
+            for (var p=0; p < generation_grid_ids[ped_id][g].length; p++)
+            {
+                var perc_id = generation_grid_ids[ped_id][g][p],
+                    perc = family_map[ped_id][perc_id];
+
+                if (perc.affected === AFFECTED)
+                    affecteds_in_gen ++;
+            }
+            if (affecteds_in_gen > 0) affected_in_each_gen ++;
+        }
+
+        return affected_in_each_gen === num_gens;
+    }();
+
+    console.log("sexlinked=", SEXLINKED)
+    console.log("dominant=", DOMINANT)
+}

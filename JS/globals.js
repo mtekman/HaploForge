@@ -109,4 +109,10 @@ var haploblock_spacers = {
 };
 
 
-var SEXLINKED = false;
+var SEXLINKED = false,
+	DOMINANT = true;
+
+var MALE = 1,
+	FEMALE = 2,
+	UNAFFECTED = 1,
+	AFFECTED = 2;

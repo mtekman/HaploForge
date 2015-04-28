@@ -159,6 +159,7 @@ function processFile() {
     lr.onloadend = function(e){
         processInput(e.target.result, type);
         connectAllIndividuals();
+        determinePedigreeType();
         populateGrids_and_UniqueObjs();
         graphInitPos(nodeSize + 10, grid_rezY);
 

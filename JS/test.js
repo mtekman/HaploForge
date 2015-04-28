@@ -174,7 +174,7 @@ var a_star_bestfirst__DEBUG = function(array, exclude_list)
 				continue;
 			}
 
-			console.error(arguments);
+			// console.error(arguments);
 
 
 			// return a_star_bestfirst__DEBUG(array);
