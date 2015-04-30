@@ -216,8 +216,6 @@ function child2parent_link(pers, moth, fath, fam) // fam only needed for consang
 
 	This will prevent haploblocks from mixing.
 	*/
-	// 4 4 2 3 3 3
-
 	var maternal_exclusion = moth_hp[0].unique_groups.concat(moth_hp[1].unique_groups),
 		paternal_exclusion = fath_hp[0].unique_groups.concat(fath_hp[1].unique_groups);
 
@@ -247,14 +245,8 @@ function child2parent_link(pers, moth, fath, fam) // fam only needed for consang
 				maternal_exclusion.splice(maternal_index,1);
 				paternal_exclusion.splice(paternal_index,1);
 			}
-			// console.log("...and yes it is", toKick);
 		}
-		// else console.log("...and NO it isn't");
 	}
-
-
-
-	var istarget = pers.id === 10;
 
 	var res0 = a_star_bestfirst(pers_hp[0].pter_array, maternal_exclusion),
 		res1;
