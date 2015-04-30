@@ -76,7 +76,6 @@ function child2parent_link(pers, moth, fath, fam) // fam only needed for consang
 		fath_hp = fath.haplo_data,
 		gender = pers.gender;
 
-
 	assert(pers_hp[0].data_array.length === moth_hp[0].data_array.length
 	    && pers_hp[0].data_array.length === fath_hp[0].data_array.length
 		&& pers_hp[1].data_array.length === moth_hp[1].data_array.length
@@ -96,7 +95,6 @@ function child2parent_link(pers, moth, fath, fam) // fam only needed for consang
 			f1_pr = fath_hp[1].pter_array[tmp_i],
 			m0_pr = moth_hp[0].pter_array[tmp_i],
 			m1_pr = moth_hp[1].pter_array[tmp_i];
-
 
 // 		if (f0_pr === undefined || f1_pr === undefined
 // 			|| m0_pr === undefined || m1_pr === undefined)
@@ -133,7 +131,13 @@ function child2parent_link(pers, moth, fath, fam) // fam only needed for consang
 		 */
 		if (SEXLINKED && gender === 1){ 						 // Sexlinked and male
 
-			pushAll(f1_pr,c1_pr);	 // ASSUMES that child's first allele is the paternal allele
+			// console.log("Extra work for", pers.id);
+
+			// MASSIVE ASSUMPTIONS HERE:
+			// - The child's (male) second allele is the Y chrom, as is the father's
+			// - Only true if input file is set as such for males.
+
+			pushAll(f1_pr,c1_pr);
 
 			if (c0_ht === m0_ht) pushAll(m0_pr, c0_pr); // Maternal set both
 			if (c0_ht === m1_ht) pushAll(m1_pr, c0_pr);
@@ -217,6 +221,8 @@ function child2parent_link(pers, moth, fath, fam) // fam only needed for consang
 	var maternal_exclusion = moth_hp[0].unique_groups.concat(moth_hp[1].unique_groups),
 		paternal_exclusion = fath_hp[0].unique_groups.concat(fath_hp[1].unique_groups);
 
+
+
 	// Check for consanginuity
 	var key = "m:"+fath.id+"-"+moth.id;
 	var consang_check = unique_graph_objs[fam].edges[key].consangineous;
@@ -245,6 +251,8 @@ function child2parent_link(pers, moth, fath, fam) // fam only needed for consang
 		}
 		// else console.log("...and NO it isn't");
 	}
+
+
 
 	var istarget = pers.id === 10;
 
