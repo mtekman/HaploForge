@@ -167,6 +167,8 @@ function processFile() {
 		assignHGroups();
 		washMarkerMap();
 
+		toggle_haplomode(20);
+
 		document.getElementById("buttons").style.display = 'none'
     };
     lr.readAsText(file);

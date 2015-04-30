@@ -9,18 +9,15 @@ function transitionToggle(fam_id, toggler, lineswitch=true, use_y=true, groupmov
 		n_caa = unique_graph_objs[fam_id];
 
 	var start_x = start_positionx_haplomode,
-		start_y = grid_rezY/2;
-
-
-
+		start_y = use_y?0:nodeSize*2;
 
 	//	n_caa.group.moveToTop();
 	linesShow(fam_id, false); 								// Hide lines during transition
 
 	var num_movers = Object.keys(n_caa.nodes).length;
 
-
-	var spacingx = min_haplo_x;
+	var spacingx = min_haplo_x,
+		spacingy = 5;
 
 
 	//Below used when addHaplos_OLD was in action
@@ -31,12 +28,17 @@ function transitionToggle(fam_id, toggler, lineswitch=true, use_y=true, groupmov
 // 	else if (spacingx < min_haplo_x) spacingx = min_haplo_x;
 
 	for (var g=0; g < gen_lines.length; g++){
+
+		var incremental_y = 0;
+		if (use_y) incremental_y = (gen_lines[g].length+1) * spacingy;
+
 		for (var c=0; c < gen_lines[g].length; c++){
 			var ch_id = gen_lines[g][c],
 				n_chl = n_caa.nodes[ch_id],
 				gfx = n_chl.graphics;
 
 			n_chl.start_pos = n_chl.start_pos || [];
+
 			var pos_loc = n_chl.start_pos,
 				pos_pos;
 
@@ -44,23 +46,25 @@ function transitionToggle(fam_id, toggler, lineswitch=true, use_y=true, groupmov
 			else pos_pos = pos_loc.pop();
 
 			gfx.setDraggable(draggable);
-
+			gfx.setZIndex(-20);
 
 			// Set animation
 			var tween = new Kinetic.Tween({
 				node: gfx,
 				x: toggler?start_x:pos_pos.x,
-				y: toggler?start_y:pos_pos.y,
+				y: toggler?start_y+incremental_y:pos_pos.y,
 				duration:0.8,								// Slightly faster than group
 				easing: Kinetic.Easings.EaseIn
 			});
 
-
 			tween.play();
 			start_x += spacingx;
+
+			if (use_y)
+				incremental_y -= spacingy;
 		}
 		if (use_y)
-			start_y += (nodeSize*2)+6;
+			start_y += (nodeSize*2) + 6 + spacingy + incremental_y;
 	}
 
 

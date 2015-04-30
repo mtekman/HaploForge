@@ -213,7 +213,12 @@ function linesShow(fid, show){
 	//Hide lines
 	var edges = unique_graph_objs[fid].edges;
 	for (var eid in edges)
-		show?edges[eid].graphics.show():edges[eid].graphics.hide();
+		if (show){
+			edges[eid].graphics.show();
+			edges[eid].graphics.setZIndex(-21);
+		}
+		else
+			edges[eid].graphics.hide();
 
 	main_layer.draw();
 

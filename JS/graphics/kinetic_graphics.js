@@ -337,20 +337,32 @@ function addPerson(person, fam_group,  t_x, t_y)  //positions relative to family
 		return shape;
 	};
 
-	var tex = new Kinetic.Text({
-		x: - (""+id+"").length*3,	y: nodeSize + 10,
+
+	var label = new Kinetic.Group({
+		x: - (""+id+"").length*3,
+		y: nodeSize + 10
+	});
+
+	label.add(new Kinetic.Rect({
+		fill: 'white',
+		opacity: 0.8,
+		y: - nodeSize/2,
+		width: (""+id+"").length*6,
+		height: 8
+	}));
+
+	label.add(new Kinetic.Text({
 		text: id,
 		fontSize: 'Calibri', //change to global setting
 		fill: default_stroke_color
-	});
+	}));
 
 	//Each person is their own group of inter-related ojects
 	var group = new Kinetic.Group({
 		x: t_x, y: t_y,
 		draggable: true
 	});
-	group.add(makeshape());
-	group.add(tex);
+	group.add(makeshape()).add(label);
 
 
 	//On drag do

@@ -45,9 +45,10 @@ function toggle_haplomode(fam_id)
 		n_caa.haplo_pedbg  = panel_a_scroll.ped_grp.background;		// Rect background
 
 		grp.add(n_caa.haplo_panel);
-		n_caa.haplo_panel.moveToBottom();
+		n_caa.haplo_panel.setZIndex(-99);
 
 		haplo_layer.add(backg);
+		backg.setZIndex(-98);
 	}
 	else {
 		n_caa.haplo_panel.remove();
@@ -76,31 +77,27 @@ function toggle_horizAlign(fam_id)
 
 	transitionToggle(fam_id, toggle_horiz, lineswitch=!toggle_horiz, use_y=false, groupmove=false, onfinishfunc=0, draggable=false);
 
-	function boxlim (horizontal){
+	var end_y = (function boxlim(){
 		var min_y = nodeSize*8; //starting point
-		if (horizontal) return min_y;
+		if (toggle_horiz) return min_y;
 		else
 			return min_y + ((nodeSize*2)+5)*(generation_grid_ids[fam_id].length-1);
-	}
-
-	var end_y = boxlim(toggle_horiz);
-
-
+	})();
 
 	//Resize boxes dynamically:
 	(new Kinetic.Tween({
-		node: unique_graph_objs[fam_id].haplo_pedbg,
+		node: unique_graph_objs.haplo_pedbg,
 		height: end_y,
 		duration: 1
 	})).play();
 
-	if (toggle_haplobutton){
+	// if (toggle_haplobutton){
 		(new Kinetic.Tween({
-			node: unique_graph_objs[fam_id].haplo_scroll,
+			node: unique_graph_objs.haplo_scroll,
 			y: end_y,
 			duration: 1
 		})).play();
-	}
+	// }
 }
 
 

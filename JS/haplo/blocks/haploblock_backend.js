@@ -294,7 +294,7 @@ function child2parent_link(pers, moth, fath, fam) // fam only needed for consang
 		pers_hp[1].pter_array[curr_index].color_group = [ res1[curr_index] ];
 	}
 
-	// console.log("Cf", pers.id, debugHaploData(pers_hp));
+	console.log("Cf", pers.id, debugHaploData(pers_hp));
 }
 
 
