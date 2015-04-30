@@ -99,8 +99,17 @@ function transitionToggle(fam_id, toggler, lineswitch=true, use_y=true, groupmov
 		transition_happening = true;
 	}
 	else{
-		//If group not moving, still call the lineShow switch
-		linesShow(fam_id, lineswitch);
+		//If group not moving, still call the lineShow switch after 1 second delay if needed.
+		if (lineswitch){
+			(new Kinetic.Tween({
+				node: n_caa.group,
+				duration: 1,
+				onFinish: function(){
+					linesShow(fam_id, lineswitch);
+				}
+			})).play();
+		}
+
 	}
 
 	return {x:start_x, y:start_y};

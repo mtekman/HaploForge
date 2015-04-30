@@ -167,7 +167,8 @@ function processFile() {
 		assignHGroups();
 		washMarkerMap();
 
-		toggle_haplomode(20);
+		// toggle_haplomode(20);
+		startSelectionMode();
 
 		document.getElementById("buttons").style.display = 'none'
     };
