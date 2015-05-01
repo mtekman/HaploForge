@@ -5,7 +5,8 @@
 	related individuals.
 */
 
-var selection_items = {}; // fid"_"id: {box:Object, status:toggled}
+var selection_items = {}, // fid_id: {box:Object, selected:toggled, affected:bool}
+	toggle_selection_affecteds = false;
 
 
 function launchHaplomode(){
@@ -14,14 +15,14 @@ function launchHaplomode(){
 		- Create new haplomode (?) or update existing ( breakages likely )
 			- Merge later
 	 */
-	console.log( Object.keys(selection_items).filter( function(a){ return selection_items[a].status===true;}));
+	 
+	 
+	 console.log( Object.keys(selection_items).filter( function(a){ return selection_items[a].selected===true;}));
 }
 
 
 
 function startSelectionMode(){
-
-	var affected_ids = [];
 
 	// Main selection layer
 	var select_group = new Kinetic.Group({
@@ -36,13 +37,19 @@ function startSelectionMode(){
 
 	select_group.add(
 		addButton("Select Affecteds", 0, butt_h, function(){
-			for (var af=0; af < affected_ids.length; af ++){
-				var key = affected_ids[af],
-					box = selection_items[key].box
 
-				box.fire('click');
+			toggle_selection_affecteds = !toggle_selection_affecteds;
+
+			for (var key in selection_items){
+
+				var item = selection_items[key];
+				if (item.affected)
+					if( (toggle_selection_affecteds && !item.selected)
+					 || (!toggle_selection_affecteds && item.selected) )
+						item.box.fire('click');
 			}
-			console.log(affected_ids);
+
+			console.log("affecteds:", Object.keys(selection_items).filter( function (n){ return selection_items[n].affected === true;}));
 		})
 	);
 
@@ -62,35 +69,29 @@ function startSelectionMode(){
 		var border_offs = 3;
 
 		var rect = new Kinetic.Rect({
-			id: key,
 			x: pos.x - nodeSize - border_offs,
 			y: pos.y - nodeSize - border_offs,
 			width: (nodeSize *2) + 2*border_offs,
 			height: (nodeSize * 2) + 2*border_offs,
 			strokeAlpha: 0.5,
-			strokeWidth: 1,
-			stroke: 'green',
-			dash: [5,2]
+			strokeWidth: 3,
+			strokeEnabled: false,
+			stroke: 'orange',
 		});
 
 		rect.on('click', function(){
 			//Toggle selection
-			if (!selection_items[key].status){
-				this.setStrokeWidth(3);
-				this.dashEnabled(false);
-			}
-			else{
-				this.setStrokeWidth(1);
-				this.dashEnabled(true);
-			}
 
-			selection_items[key].status = !selection_items[key].status
+			this.setStrokeEnabled(!selection_items[key].selected);
+
+			selection_items[key].selected = !selection_items[key].selected
 			main_layer.draw();
 		});
 		return rect;
 	}
 
 	for (var fid in unique_graph_objs){
+
 		for (var node in unique_graph_objs[fid].nodes){
 
 			if (node == 0) continue;
@@ -98,16 +99,16 @@ function startSelectionMode(){
 			var key = fid+"_"+node
 
 			var gfx = unique_graph_objs[fid].nodes[node].graphics,
-				pos = gfx.getAbsolutePosition();
-
-			if (gfx.children[0].attrs.fill === 'red')
-				affected_ids.push(key);
-
-			var bounder = addBounder(pos, key);
-			select_group.add(bounder);
+				pos = gfx.getAbsolutePosition(),
+				bounder = addBounder(pos, key);
 
 			// By default not enabled
-			selection_items[key] = {box:bounder, status:false}
+			selection_items[key] = {
+				box:bounder, 
+				selected:false, 
+				affected:(gfx.children[0].attrs.fill === 'red') 
+			};
+			select_group.add(bounder);
 		}
 	}
 
