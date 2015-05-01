@@ -1,24 +1,50 @@
 // Mode to use for multiple familial selection
 
-/* TODO: Add buttons:
-	- Submit selection
-	- Select Affecteds
-
+/* 
 	Generate ped diagrams with number of generation connectors for 
 	related individuals.
 */
 
+var selection_items = {}; // fid"_"id: {box:Object, status:toggled}
+
+
+function launchHaplomode(){
+	/* TODO!
+		- Grab sub selection
+		- Create new haplomode (?) or update existing ( breakages likely )
+			- Merge later
+	 */
+	console.log( Object.keys(selection_items).filter( function(a){ return selection_items[a].status===true;}));
+}
+
+
 
 function startSelectionMode(){
 
-	var selection_items = {}; // fid"_"id: toggled status
+	var affected_ids = [];
 
+	// Main selection layer
 	var select_group = new Kinetic.Group({
 		x:0, y:0,
 		width: stage.getWidth(),
 		height: stage.getHeight()
 	});
 
+	select_group.add(
+		addButton("Submit", 0, 0, launchHaplomode)
+	);
+
+	select_group.add(
+		addButton("Select Affecteds", 0, butt_h, function(){
+			for (var af=0; af < affected_ids.length; af ++){
+				var key = affected_ids[af],
+					box = selection_items[key].box
+
+				box.fire('click');
+			}
+			console.log(affected_ids);
+		})
+	);
 
 	// var background = new Kinetic.Rect({
 	// 		x:0, y:0,
@@ -36,6 +62,7 @@ function startSelectionMode(){
 		var border_offs = 3;
 
 		var rect = new Kinetic.Rect({
+			id: key,
 			x: pos.x - nodeSize - border_offs,
 			y: pos.y - nodeSize - border_offs,
 			width: (nodeSize *2) + 2*border_offs,
@@ -48,7 +75,7 @@ function startSelectionMode(){
 
 		rect.on('click', function(){
 			//Toggle selection
-			if (!selection_items[key]){
+			if (!selection_items[key].status){
 				this.setStrokeWidth(3);
 				this.dashEnabled(false);
 			}
@@ -57,7 +84,7 @@ function startSelectionMode(){
 				this.dashEnabled(true);
 			}
 
-			selection_items[key] = !selection_items[key]
+			selection_items[key].status = !selection_items[key].status
 			main_layer.draw();
 		});
 		return rect;
@@ -70,16 +97,17 @@ function startSelectionMode(){
 
 			var key = fid+"_"+node
 
-			console.log(key);
-
 			var gfx = unique_graph_objs[fid].nodes[node].graphics,
 				pos = gfx.getAbsolutePosition();
 
-			var boundingbox = addBounder(pos, key)
-			select_group.add(boundingbox);
+			if (gfx.children[0].attrs.fill === 'red')
+				affected_ids.push(key);
+
+			var bounder = addBounder(pos, key);
+			select_group.add(bounder);
 
 			// By default not enabled
-			selection_items[key] = false;
+			selection_items[key] = {box:bounder, status:false}
 		}
 	}
 
