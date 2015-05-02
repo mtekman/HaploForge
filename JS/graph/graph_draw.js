@@ -1,7 +1,7 @@
 
 // TODO: Update node_map to point at unique_graph_obs.nodes, and retrieve family name
 
-function redrawNodes(pers_id, fam_id, drawLinesToo=true)
+function redrawNodes(pers_id, fam_id, drawLinesToo)
 {
 	var pers      = family_map[fam_id][pers_id],
 		node_map  = unique_graph_objs[fam_id].nodes,
@@ -141,7 +141,7 @@ function redrawNodes(pers_id, fam_id, drawLinesToo=true)
 
 
 // Performs redrawNodes upon all
-function touchlines(grid_use=true){
+function touchlines(grid_use){
 	use_grid = grid_use;
 
 	for(var one in family_map){

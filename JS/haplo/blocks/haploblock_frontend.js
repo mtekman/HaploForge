@@ -59,7 +59,7 @@ function addHaplosFamily(fam, parent_node){ //called by toggle_haplotypes in hap
 /* Redraws the current haplodata_arr group, regardless of who they are
 
 */
-function redrawHaplos(resizeToo = false){
+function redrawHaplos(resizeToo){
 	var scroll_rect = unique_graph_objs.haplo_scroll,
 		scroll_area = unique_graph_objs.haplo_area;
 
@@ -96,57 +96,3 @@ function redrawHaplos(resizeToo = false){
 	if (resizeToo)
 		resizeCanvas();
 }
-
-
-
-// function addHaplos_OLD(fam, parent_node){ //called by toggle_haplotypes in haplo/toggle.js
-
-// 	var marker_gfx = addHaploBlocks( getMarkerText() );
-// 	marker_gfx.setX( marker_gfx.getX() - 50 );
-
-// 	parent_node.add( marker_gfx );
-
-// 	for (var g = 0; g < generation_grid_ids[fam].length; g++)
-// 	{
-// 		for (var p =0; p < generation_grid_ids[fam][g].length; p++)
-// 		{
-// 			var pers_id = generation_grid_ids[fam][g][p],
-// 				pers_hp = family_map[fam][pers_id].haplo_data;
-
-// 			var data_alleles = [],
-// 				data_hapgrps = [];
-// 			for (var al = 0; al < pers_hp.length; al++)
-// 			{
-// 				var one_allele_window = [],
-// 					one_hapgrp_window = [];
-
-// 				for( var d=sta_index; d <= end_index; d++){
-// 					one_allele_window.push( pers_hp[al].data_array[d] );
-// 					one_hapgrp_window.push( pers_hp[al].haplogroup_array[d] );
-// 				}
-// 				data_alleles.push( one_allele_window );
-// 				data_hapgrps.push( one_hapgrp_window );
-// 			}
-// // 			console.log(data_alleles);
-// // 			console.log(pers_id, pers_hp);
-
-// 			var	g_pers  = unique_graph_objs[fam].nodes[pers_id];
-
-
-// 			// destroy all previous data
-// 			if (g_pers.haplo_group != undefined){
-// 				g_pers.haplo_group.destroyChildren();
-// 				g_pers.haplo_group.destroy();
-// 			}
-// 			g_pers.haplo_group = addHaploBlocks( data_alleles, data_hapgrps, fam );
-
-// 			//set xcoords to that of g_pers
-// 			g_pers.haplo_group.setX( g_pers.graphics.getX() - haplomode_panel_xoffs );
-
-// 			parent_node.add(g_pers.haplo_group);
-// 		}
-// 	}
-
-// 	parent_node.parent.show();
-// 	haplo_layer.draw();
-// }

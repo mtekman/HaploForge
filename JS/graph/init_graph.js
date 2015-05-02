@@ -170,7 +170,9 @@ function populateGrids_and_UniqueObjs()
 			var root = family_map[one][two];
 
 			//Populate gridmap and uniq map
-			var [generation_array, uniq_objs] = addFamMap(root);
+			var arr_obj = addFamMap(root);
+			var generation_array = arr_obj[0],
+				uniq_objs = arr_obj[1];
 
 			//Insert into global maps
 			generation_grid_ids[one] = generation_array;

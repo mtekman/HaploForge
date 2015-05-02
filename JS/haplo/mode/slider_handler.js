@@ -137,7 +137,7 @@ function updateInputsByIndex(ind1, ind2)
 
 // ---- Called by mouseup events
 
-function updateHaploPositions(resizecanvastoo=false){
+function updateHaploPositions(resizecanvastoo){
 
 	if (!toggle_haplotypes) return;
 

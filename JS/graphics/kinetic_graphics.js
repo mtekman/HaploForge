@@ -20,7 +20,7 @@ var mscale_layer = new Kinetic.Layer({
 });
 
 // ------------ Kinetic Tools --------------
-function addSquare([c_x,c_y], color)
+function addSquare(color)
 {
 	return new Kinetic.Rect({
 		x: - nodeSize,
@@ -34,17 +34,17 @@ function addSquare([c_x,c_y], color)
 }
 
 
-function addCircle([c_x,c_y], color)
+function addCircle(color)
 {
 	return new Kinetic.Circle({
-		x: c_x, y: c_y, radius: nodeSize,
+		x: 0, y: 0, radius: nodeSize,
 		fill: color, strokeWidth: 2,
 		stroke: default_stroke_color
 	})
 }
 
 
-function addDiamond([c_x,c_y], color){
+function addDiamond(color){
 	alert("fix lucy");
 }
 
@@ -92,7 +92,7 @@ function changeRLine(line, start, end)
 
 
 
-function addRLine(fam_group, start, end, consang=false)
+function addRLine(fam_group, start, end, consang)
 {
 	var line = new Kinetic.Line({
 		stroke: 'black',
@@ -144,73 +144,6 @@ function addFamily(fam_id, sx, sy){
 	main_layer.add(g);
 	return g;
 }
-
-
-/* This should draw all of a single person's haplos in a loop
- Maybe try grabbing text across an entire family?
-   - one text object, as opposed to n (for n fams in ped)
-*/
-
-function addHaploBlocks(data_tx, data_grp=0, fam=0)
-{
-	var grp = new Kinetic.Group({ x:0, y:((2*nodeSize)+10)});
-
-	if (data_grp!==0){
-		var haplo = new Kinetic.Group({});
-
-		//Process blocks
-		for (var j=0; j <2; j++)
-		{
-			var ind = 0;
-			while (ind < data_grp[j].length)
-			{
-				var iter = ind,	 				// start of block
-					color_group = data_grp[j][iter];
-
-				while (  data_grp[j][++iter] === color_group
-					   && iter < data_grp[j].length);
-
-				var spac = Math.floor(HAP_VERT_SPA *1.5);
-
-				var rec = new Kinetic.Rect({
-					x: (HAP_VERT_SPA - 5) + j*spac,
-					y: ((ind-2) * HAP_VERT_SPA),
-					width: spac,
-					height: (iter-ind) * HAP_VERT_SPA,
-					fill: unique_colors[fam][color_group],
-					strokeWidth: 1,
-					stroke: 'white'
-				});
-				haplo.add( rec );
-
-				ind = iter;
-			}
-		}
-		grp.add(haplo);
-	}
-
-	var b1 = data_tx[0], 	// Haplotype
-		b2 = data_tx[1];
-
-
-	//Process Text
-	var ind = -1, total_text="";
-	while (++ind < b1.length)
-		total_text += b1[ind] + "   " + b2[ind] +'\n';
-
-	var tex = new Kinetic.Text({
-		x:nodeSize,
-		y: -nodeSize*2,
-		text: total_text,
-		fontFamily: slider_style.I_fontFamily,
-		fontSize: 10,
-		fill: 'black'
-	});
-	grp.add(tex);
-
-	return grp;
-}
-
 
 
 function addHaploBlocksAll()
@@ -279,7 +212,6 @@ function addHaploBlocksAll()
 
 	// Text
 	var total_text="";
-
 	for (var m=sta_index; m <= end_index; m++)
 	{
 		total_text += marker_array[m] + haploblock_buffers.marker_offset;
@@ -323,9 +255,9 @@ function addPerson(person, fam_group,  t_x, t_y)  //positions relative to family
 	var makeshape = function pedigreeShape(){
 		var shape = 0;
 
-		function addMale  () {  shape = addSquare ([0,0], col_affs[aff])   }
-		function addFemale() {  shape = addCircle ([0,0], col_affs[aff])   }
-		function addAmbig () {  shape = addDiamond([0,0], col_affs[aff])   }
+		function addMale  () {  shape = addSquare (col_affs[aff])   }
+		function addFemale() {  shape = addCircle (col_affs[aff])   }
+		function addAmbig () {  shape = addDiamond(col_affs[aff])   }
 
 		switch(gender){
 			case 0: addAmbig() ; break;

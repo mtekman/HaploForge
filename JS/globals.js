@@ -80,9 +80,9 @@ var slider_style = {
 	I_fontColor: 'black'};
 
 
-var in2Space = function(int, char=" "){
+var in2Space = function(int){
 	var tx="";
-	while (int --> 0){tx += char};
+	while (int --> 0){tx += " "};
 	return tx;
 }
 
