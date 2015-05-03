@@ -18,14 +18,14 @@ var haploinfos; // what addHaploBlocksAll uses (needs to be generated once per f
 
 
 /* Called once - displays multiple individuals across any family */
-function addHaplosAnyone(id_map, parent_node)
+function addHaplosAnyone(haplofam_map, parent_node)
 {
 	haploinfos = []; //clean
 
-	for (var fid in id_map){
-		for (var p = 0; p< id_map[fid].length; p++){
-			var pers_id = id_map[fid][p],
-				pers_hp = family_map[fid][pers_id].haplo_data;
+	for (var fid in haplofam_map){
+		for (var pid in haplofam_map[fid])
+		{
+			var pers_hp = family_map[fid][pid].haplo_data;
 			haploinfos.push(pers_hp);
 		}
 	}

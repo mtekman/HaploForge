@@ -158,8 +158,8 @@ function touchlines(grid_use){
 
 
 // Initial spacing of groups
-function spaceFamGroups(){
-
+function spaceFamGroups()
+{
 	var leftover_gap = window.innerWidth,
 		num_fams = 0;
 
@@ -209,6 +209,7 @@ function spaceFamGroups(){
 	}
 }
 
+
 function linesShow(fid, show){
 	//Hide lines
 	var edges = unique_graph_objs[fid].edges;
@@ -221,7 +222,6 @@ function linesShow(fid, show){
 			edges[eid].graphics.hide();
 
 	main_layer.draw();
-
 }
 
 

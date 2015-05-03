@@ -18,7 +18,7 @@ function resetHMButtons(){
 }
 
 // called in toggle.js
-function addHaploScreen(wi, he, fam_id)
+function addHaploScreen(wi, he, haplofam_map)
 {
 	var ped_group = new Kinetic.Group();
 
@@ -32,9 +32,9 @@ function addHaploScreen(wi, he, fam_id)
 		strokeWidth: 2,
 	});
 
-	var align_button = addHMButton("Align", function(){ toggle_horizAlign(fam_id);});
-	var haplo_button = addHMButton("Haplo", function(){ toggle_haplotypes(fam_id);});
-	var zoom_button = addHMButton("Zoom", function(){ toggle_zoomer();});
+	var align_button = addHMButton("Align", function(){ toggle_horizAlign(haplofam_map);});
+	var haplo_button = addHMButton("Haplo", function(){ toggle_haplotypes(haplofam_map);});
+	var zoom_button  = addHMButton("Zoom",  function(){ toggle_zoomer();});
 
 	ped_group.add(bg);
 	ped_group.add(align_button);
@@ -104,7 +104,6 @@ function addHaploScreen(wi, he, fam_id)
 //  	ped_group.move(    {x:haplomode_panel_xoffs, y:0});
 //  	scroll_window.move({x:haplomode_panel_xoffs, y:0});
  	total_group.move(  {x:haplomode_panel_xoffs, y:0});
-
 
 	return total_group; // read by toggle_haplomode in haplo/toggle.js
 }

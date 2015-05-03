@@ -6,20 +6,20 @@ var toggle_haplo = false,
 	backg;
 
 // Start/Stop HaploMode
-function toggle_haplomode(fam_id)
+function toggle_haplomode(haplofam_map)
 {
 	if (transition_happening)
 		return; 											// Ignore overclicks
 
-	if (toggle_horiz) toggle_horizAlign(fam_id); 			// Unalign if aligned first
-	if (toggle_haplobutton) toggle_haplotypes(fam_id);		// Hide Haplotypes if shown
+	if (toggle_horiz) toggle_horizAlign(haplofam_map); 			// Unalign if aligned first
+	if (toggle_haplobutton) toggle_haplotypes(haplofam_map);		// Hide Haplotypes if shown
 	if (toggle_zoommarkers) toggle_zoomer(); 				// Hide zoomer
 
 
 	toggle_haplo = !toggle_haplo;
 
 	var	n_caa     = unique_graph_objs,
-		grp       = unique_graph_objs[fam_id].group;
+		grp       = unique_graph_objs[haplofam_map].group;
 
 	if (toggle_haplo){
 
@@ -33,9 +33,9 @@ function toggle_haplomode(fam_id)
 		grp.remove(); 										  // remove from parent but do not destroy;
 		haplo_layer.add(grp); 								  // add to haplo
 
-		var final_pos = transitionToggle(fam_id, toggle_haplo, lineswitch=true, use_y=true, groupmove=true, onfinishfunc=0, draggable=!toggle_haplo);
+		var final_pos = transitionToggle(haplofam_map, toggle_haplo, lineswitch=true, use_y=true, groupmove=true, onfinishfunc=0, draggable=!toggle_haplo);
 
-		var panel_a_scroll = addHaploScreen(final_pos.x, final_pos.y, fam_id);
+		var panel_a_scroll = addHaploScreen(final_pos.x, final_pos.y);
 
 		n_caa.haplo_panel  = panel_a_scroll; 			// Entire panel
 		n_caa.haplo_scroll = panel_a_scroll.main_box; 	// Scroll window (stays stationary
@@ -60,8 +60,7 @@ function toggle_haplomode(fam_id)
 			main_layer.draw();
 //			haplo_layer.destroyChildren();
 		}
-
-		transitionToggle(fam_id, toggle_haplo, lineswitch=true, use_y=true, groupmove = true,
+		transitionToggle(haplofam_map, toggle_haplo, lineswitch=true, use_y=true, groupmove = true,
 						 onfinishfunc=callback);
 
 		backg.destroy();
@@ -70,18 +69,18 @@ function toggle_haplomode(fam_id)
 
 
 //Within haplomode
-function toggle_horizAlign(fam_id)
+function toggle_horizAlign(haplofam_map)
 {
 	if (transition_happening) return; 						// Ignore overclicks
 	toggle_horiz = !toggle_horiz;
 
-	transitionToggle(fam_id, toggle_horiz, lineswitch=!toggle_horiz, use_y=false, groupmove=false, onfinishfunc=0, draggable=false);
+	transitionToggle(haplofam_map, toggle_horiz, lineswitch=!toggle_horiz, use_y=false, groupmove=false, onfinishfunc=0, draggable=false);
 
 	var end_y = (function boxlim(){
 		var min_y = nodeSize*8; //starting point
 		if (toggle_horiz) return min_y;
 		else
-			return min_y + ((nodeSize*2)+5)*(generation_grid_ids[fam_id].length-1);
+			return min_y + ((nodeSize*2)+5)*10; //(generation_grid_ids[fam_id].length-1);
 	})();
 
 	//Resize boxes dynamically:
@@ -102,7 +101,7 @@ function toggle_horizAlign(fam_id)
 
 
 //Within haplomode
-function toggle_haplotypes(fam)
+function toggle_haplotypes(haplofam_map)
 {
 	if (transition_happening) return; 						// Ignore overclicks
 
@@ -112,7 +111,8 @@ function toggle_haplotypes(fam)
 		zoom_button = unique_graph_objs.haplo_pedgrp.zoomer;
 
 	if (toggle_haplobutton){
-		addHaplosFamily(fam);
+//		addHaplosFamily(fam);
+		addHaplosAnyone(haplofam_map);
 		scroll_panel_grp.parent.show();
 		zoom_button.show()
 	}
