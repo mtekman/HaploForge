@@ -21,8 +21,26 @@ function toggle_haplomode(haplofam_map)
 	var	n_caa     = unique_graph_objs,
 		grp       = unique_graph_objs[haplofam_map].group;
 
-	if (toggle_haplo){
 
+	/* for each selected individual in each family in the haplofam_map
+		- 
+		- Consistent handling:
+		  - Single families bypass selection mode, -> tick all members of pedigree
+
+		  - Selection mode passes selected individuals mapped into families
+		  - Copy selected individual shapes onto haplo_layer and hide the shapes in main
+		    - if selected individuals in a family comprise the entire family, hide the lines for that family too
+		    - (attach a .all_selected var to the map value for that family)
+
+		  - Animate nodes into new positions.
+		  - Create new lines:
+		     - If entire family is selected, clone existing lines and retouch.
+		     - else create new lines showing degrees of seperation (sibs are simple n lines, gens have dos number in middle)
+
+	*/
+
+	if (toggle_haplo)
+	{
 		backg = new Kinetic.Rect({
 			x:0, y:0,
 			width: window.innerWidth,
@@ -30,8 +48,10 @@ function toggle_haplomode(haplofam_map)
 			fill: 'black',
 			opacity:0.5
 		});
-		grp.remove(); 										  // remove from parent but do not destroy;
-		haplo_layer.add(grp); 								  // add to haplo
+
+		haplo_layer.add(backg);
+		backg.setZIndex(-98);
+
 
 		var final_pos = transitionToggle(haplofam_map, toggle_haplo, lineswitch=true, use_y=true, groupmove=true, onfinishfunc=0, draggable=!toggle_haplo);
 
@@ -43,27 +63,39 @@ function toggle_haplomode(haplofam_map)
 		n_caa.haplo_pedgrp = panel_a_scroll.ped_grp;	// Ped Panel
 
 		n_caa.haplo_pedbg  = panel_a_scroll.ped_grp.background;		// Rect background
-
-		grp.add(n_caa.haplo_panel);
 		n_caa.haplo_panel.setZIndex(-99);
-
-		haplo_layer.add(backg);
-		backg.setZIndex(-98);
-	}
+	} 
 	else {
+		backg.destroy();
+
 		n_caa.haplo_panel.remove();
 		n_caa.haplo_panel.destroy();//
 
-		var callback = function(){
-			grp.remove(); 			  					  // remove from parent but do not destroy;
-			main_layer.add(grp); 						  // add to main
-			main_layer.draw();
-//			haplo_layer.destroyChildren();
-		}
-		transitionToggle(haplofam_map, toggle_haplo, lineswitch=true, use_y=true, groupmove = true,
-						 onfinishfunc=callback);
+// 		var callback = function(){
+// 			// grp.remove(); 			  					  // remove from parent but do not destroy;
+// 			// main_layer.add(grp); 						  // add to main
+// 			main_layer.draw();
+// //			haplo_layer.destroyChildren();
+// 		}
 
-		backg.destroy();
+		transitionToggle(haplofam_map, toggle_haplo, lineswitch=true, use_y=true, groupmove = true,
+						 onfinishfunc=0);
+	}
+
+
+
+		
+		grp.remove(); 										  // remove from parent but do not destroy;
+		haplo_layer.add(grp); 								  // add to haplo
+
+	
+
+		grp.add(n_caa.haplo_panel);
+
+	}
+	else {
+
+
 	}
 }
 
