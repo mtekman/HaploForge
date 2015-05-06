@@ -175,8 +175,15 @@ function populateGrids_and_UniqueObjs()
 				uniq_objs = arr_obj[1];
 
 			//Insert into global maps
-			generation_grid_ids[one] = generation_array;
 			unique_graph_objs[one] = uniq_objs;
+			
+			generation_grid_ids[one] = generation_array;
+
+			for (var g=0; g < generation_array; g++){
+				for (var i=0; i < generation_array[g]; i++){
+
+				}
+			}
 
 			break; //Once per fam
 		}
@@ -333,7 +340,7 @@ function graphInitPos(start_x, start_y){
 function checkConsanginuity(fam_id, pers1_id, pers2_id)
 {
 	// console.log(family_map, fam_id);
-	// throw new Error("STAP");
+	// throw new Error("STAHP");
 
     var fam_map = family_map[fam_id],
         pers1 = fam_map[pers1_id],
@@ -345,14 +352,12 @@ function checkConsanginuity(fam_id, pers1_id, pers2_id)
     routes2.push( pers2 );
      // = [pers1, pers2];
 
-    var complete = [];
-    var loopnum = 0;
+    var complete = [],
+    	loopnum = 0;
 
     // console.log(pers1.id+"  and  "+pers2.id);
     while(routes2.length > 0 && loopnum++ < 100){
         	var perc = routes2.shift(); // remove from search
-
-        	// console.log(" try:", perc.id);
 
         	//Try mother + father
 	        if (perc.mother === 0 && perc.father === 0){
@@ -365,10 +370,7 @@ function checkConsanginuity(fam_id, pers1_id, pers2_id)
 
         	// console.log(" routes=", routes2.map( function(n){ return n.id;}));
     }
-
     // console.log("complete=", complete);
-
-    // throw new Error("AS");
 
     //Find duplicates in complete
     complete = complete.sort();
