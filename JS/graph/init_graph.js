@@ -146,17 +146,7 @@ function populateGrids_and_UniqueObjs()
 		addNodeArray(root, 0);
 
 		//Convert gridmap into gridarray
-		var level_offset = 20; 				// Sort function doesn't work on negative numbers...
-
-		var keys = Object.keys(generation_gridmap_ids).map(function (n){ return parseInt(n)+level_offset;});
-		keys.sort();
-		keys = keys.map(function (n){ return n-level_offset;});
-
-		var generation_grid_ids_fam = [];
-		for (var k=0; k < keys.length; k++)
-			generation_grid_ids_fam.push(generation_gridmap_ids[keys[k]]);
-
-
+		var generation_grid_ids_fam = map2orderedArray(generation_gridmap_ids);
 		var uniq_map = {nodes: unique_nodes_fam, edges: unique_edges_fam};
 
 		return [generation_grid_ids_fam, uniq_map];

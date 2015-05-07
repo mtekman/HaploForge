@@ -9,15 +9,37 @@ var selection_items = {}, // fid_id: {box:Object, selected:toggled, affected:boo
 	toggle_selection_affecteds = false;
 
 
-function launchHaplomode(){
-	/* TODO!
-		- Grab sub selection
-		- Create new haplomode (?) or update existing ( breakages likely )
-			- Merge later
-	 */
-	 
-	 
-	 console.log( Object.keys(selection_items).filter( function(a){ return selection_items[a].selected===true;}));
+function launchHaplomode()
+{
+	var selection_map = function grabSelecteds(){
+		var idmap = {}
+
+		for (var fam_pid in selection_items){
+		  	var item = selection_items[fam_pid];
+
+		 	if (!item.selected) continue;
+		 	
+		 	var fam = fam_pid.split("_")[0],
+		 		pid = fam_pid.split("_")[1];
+
+		 	if (!(fam in idmap)){
+		 		idmap[fam] = {}; // generations, key first - array later
+		 	}
+
+		 	//Hopefully these are at the same level with few discrepencies
+		 	var generation = item.graphics.getY()
+
+		 	idmap[fam][generation] = idmap[fam][generation] || [];
+		 	idmap[fam][generation].push( pid );
+		 }
+
+		for (var fam in idmap)
+			idmap[fam] = map2orderedArray( idmap[fam] )
+
+		return idmap;
+	};
+
+	console.log( selection_map() );
 }
 
 
@@ -43,7 +65,9 @@ function startSelectionMode(){
 			for (var key in selection_items){
 
 				var item = selection_items[key];
-				if (item.affected)
+				var affected = (item.graphics.children[0].attrs.fill === 'red')
+
+				if (affected)
 					if( (toggle_selection_affecteds && !item.selected)
 					 || (!toggle_selection_affecteds && item.selected) )
 						item.box.fire('click');
@@ -91,9 +115,8 @@ function startSelectionMode(){
 	}
 
 	for (var fid in unique_graph_objs){
-
-		for (var node in unique_graph_objs[fid].nodes){
-
+		for (var node in unique_graph_objs[fid].nodes)
+		{
 			if (node == 0) continue;
 
 			var key = fid+"_"+node
@@ -104,15 +127,15 @@ function startSelectionMode(){
 
 			// By default not enabled
 			selection_items[key] = {
-				box:bounder, 
-				selected:false, 
-				affected:(gfx.children[0].attrs.fill === 'red') 
+				box:bounder,
+				selected:false,
+				graphics: gfx
+				// affected:(gfx.children[0].attrs.fill === 'red'),
+				// generation: gfx.getY()
 			};
 			select_group.add(bounder);
 		}
 	}
-
-
 	main_layer.add(select_group);
 	select_group.setZIndex(20);
 

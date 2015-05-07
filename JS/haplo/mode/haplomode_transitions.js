@@ -60,7 +60,6 @@ function transitionToggle(haplofam_map, toggler, lineswitch, use_y, groupmove, o
 					working_map = generation_grid_ids[fam_id];
 
 			}
-
 			
 		}
 

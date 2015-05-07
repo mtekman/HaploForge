@@ -44,6 +44,20 @@ function assert(bool, message){                     //General error handling
     if (!bool) throw new Error(message);
 }
 
+// for some reason keys wont sort numerically for negative keys
+function sortedKeys(mapper){
+	return Object.keys(mapper).sort(function (a,b){ return a - b});
+}
+
+function map2orderedArray(mapper){
+	var keys = sortedKeys(mapper);
+
+	var ordered_array = [];
+	for (var k=0; k < keys.length; k++)
+		ordered_array.push(mapper[keys[k]]);
+
+	return ordered_array;
+}
 
 
 // Graph obj globals
