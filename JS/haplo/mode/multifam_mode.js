@@ -39,7 +39,8 @@ function launchHaplomode()
 		return idmap;
 	};
 
-	console.log( selection_map() );
+	var lines = findDOSinSelection( selection_map() );
+	console.log( lines );
 }
 
 
