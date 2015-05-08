@@ -126,9 +126,17 @@ function findDOSinSelection(selection_map){
 
 				search( root, 0 );
 
-				console.log(sib_groups[sgr]);
+				console.log("sib_groups[sgr]", sib_groups[sgr]);
 
-				var sib_key = (sib_groups[sgr].length === 1)?perc.id:sib_groups[sgr].reduce(function(a,b){ return a.id+"_"+b.id;});
+				var sib_key;
+				if (sib_groups[sgr].length === 1){
+					sib_key = sib_groups[sgr][0].id
+				} else {
+					sib_key = ""+sib_groups[sgr][0].id+"";
+					for (var i=1; i < sib_groups[sgr].length; i++){
+						sib_key += "_"+sib_groups[sgr][i].id;
+					}
+				}
 
 				if (!( isEmpty(matelines) && isEmpty(directlines))){
 					sib_map[sib_key] = {

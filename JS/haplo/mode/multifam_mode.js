@@ -44,6 +44,13 @@ function launchHaplomode()
 }
 
 
+function selectFam(fam_id){
+	for (var key in selection_items){
+		if (key.split("_")[0] == fam_id)
+			selection_items[key].box.fire('click');
+	}
+}
+
 
 function startSelectionMode(){
 
@@ -66,7 +73,7 @@ function startSelectionMode(){
 			for (var key in selection_items){
 
 				var item = selection_items[key];
-				var affected = (item.graphics.children[0].attrs.fill === 'red')
+				var affected = (item.graphics.children[0].attrs.fill === col_affs[2])
 
 				if (affected)
 					if( (toggle_selection_affecteds && !item.selected)
