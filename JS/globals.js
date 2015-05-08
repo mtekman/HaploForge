@@ -59,6 +59,10 @@ function map2orderedArray(mapper){
 	return ordered_array;
 }
 
+function isEmpty(map){
+	return Object.keys(map).length === 0;
+}
+
 
 // Graph obj globals
 var generation_grid_ids = {}, //fam_id --> [generation array]

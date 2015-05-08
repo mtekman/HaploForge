@@ -1,42 +1,6 @@
 
-degrees_of_sep = {}; // fam --> id1 --> id2 --> num
-/* 
-num: {
-	 0: sibs,
-	 1: 1 gen up mother/father,
-	 2: 2 gen up grand mother/father
-	 3: 3 gen up ...
-	-1: no immediate relation, try:
-	    
-};
-
-*/
 
 function findDOSinSelection(selection_map){
-	/*Start with bottom gens
-	  queue_gen_array = [[],[],[]]
-	  
-	  Start at bottom of array (lowest gen level)
-
-	  For each level in the array:
-
-		  1. Grab current level individuals
-
-		  2. Find sibs (by a single check to see if parents match):
-				*! add a sibline and join each sib to it
-				Take one sib from each sibgroup to be used in search
-
-		  3. For each sibgroup:
-
-			 Forward search up parental lines. 
-			 If a match is found:
-			  *!  note the num gens.
-			  *!  add a line specification connecting parentline to subline
-
-			 If reached top, stop search for this sibgroup
-
-		   4. move up generation in queue_gen_array
-		   */
 
 	// Replace this as the main argument, if generations are not needed....
 	var selection_map_map = {}; // This is an actual map, no generations
@@ -84,7 +48,7 @@ function findDOSinSelection(selection_map){
 			console.log("sib_groups", sib_groups);
 
 
-			if (g === 0) continue;
+			// if (g === 0) continue;
 			// Don't need to scan up if no higher order members are selected
 
 			// 2. Recurse up for relations
@@ -92,28 +56,29 @@ function findDOSinSelection(selection_map){
 				var perc = sib_groups[sgr][0]; // only need first in each parental group
 				var root = perc;
 
-				var matelines = [],
-				directlines = [];
+				// Maps to reduce duplicate lines
+				var matelines = {},
+				directlines = {};
 				// siblines = []; // not needed, there's only one
 				
 				// Populates matelines and directlines, does not return anything.
 				var search = function recurseParents(root, level)
 				{
-					console.group();
-					console.log(level+": ",root.id)
+					// console.group();
+					// console.log(level+": ",root.id)
 
 
 					if (root === 0) {
-						console.log("returning -1");
-						console.groupEnd();
+						// console.log("returning -1");
+						// console.groupEnd();
 						return -1;
 					}
 
 					if (root.id !== perc.id){
 
 						if (root.id in selection_map_map[fam]){
-							console.log("MATCH for", root.id);
-							console.groupEnd();
+							// console.log("MATCH for", root.id);
+							// console.groupEnd();
 							return {
 								id: root.id,
 								dos: level
@@ -121,17 +86,6 @@ function findDOSinSelection(selection_map){
 						}
 					}
 
-					// for (var gen=g; gen >=0 ; gen--){
-					// 	for (var ite=0; ite < selection_map[fam][gen].length; ite++){
-					// 		if (root.id === selection_map[fam][gen][ite]){
-					// 			console.log("MATCH");
-					// 			return {
-					// 				id: root.id,
-					// 				dos: level
-					// 			};
-					// 		}
-					// 	}
-					// }
 
 					var moth_rez = recurseParents(root.mother, level + 1),
 						fath_rez = recurseParents(root.father, level + 1);
@@ -154,52 +108,37 @@ function findDOSinSelection(selection_map){
 
 						if (are_mates) {
 							// Push as a single connection
-							matelines.push({
-								dos:moth_rez.dos, 
-								moth:moth_rez.id, 
-								fath:fath_rez.id });
-
+							console.log("adding mateline for", root.id)
+							matelines[fath_rez.id+"_"+moth_rez.id] = moth_rez.dos;
 						} else {
 							// Push as seperate connectors
-							directlines.push({
-								dos:moth_rez.dos,
-								to: moth_rez.id
-							});
-
-							directlines.push({
-								dos:fath_rez.dos,
-								to: fath_rez.id
-							});
+							directlines[moth_rez.id] = moth_rez.dos;
+							directlines[fath_rez.id] = fath_rez.dos;
 						}
 					}
 
-					else if (moth_rez !== -1){
-						directlines.push({
-							dos:moth_rez.dos,
-							to: moth_rez.id
-						});
-					}
-					else if (fath_rez !== -1){
-						directlines.push({
-							dos:fath_rez.dos,
-							to: fath_rez.id
-						});
-					}
+					else if (moth_rez !== -1) directlines[moth_rez.id] = moth_rez.dos;
+					else if (fath_rez !== -1) directlines[fath_rez.id] = fath_rez.dos;
 
-					console.groupEnd();
+					// console.groupEnd();
 					return -1;
 				}
 
 				search( root, 0 );
 
-				var sib_key = Object.keys(sib_groups[sgr]).reduce( function(a,b){ return a+"_"+b;});
-				
-				sib_map[sib_key] = { 
-					matelines: matelines,
-					directlines: directlines
-				};
+				console.log(sib_groups[sgr]);
+
+				var sib_key = (sib_groups[sgr].length === 1)?perc.id:sib_groups[sgr].reduce(function(a,b){ return a.id+"_"+b.id;});
+
+				if (!( isEmpty(matelines) && isEmpty(directlines))){
+					sib_map[sib_key] = {
+						matelines: matelines,
+						directlines: directlines
+					};
+				}
 			}
 			fam_lines[fam] = sib_map;
 		}
 	}
+	return fam_lines
 }
