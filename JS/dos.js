@@ -22,174 +22,184 @@ function findDOSinSelection(selection_map){
 
 		  1. Grab current level individuals
 
-	  	  2. Find sibs (by a single check to see if parents match):
-	  	        *! add a sibline and join each sib to it
-	         	Take one sib from each sibgroup to be used in search
+		  2. Find sibs (by a single check to see if parents match):
+				*! add a sibline and join each sib to it
+				Take one sib from each sibgroup to be used in search
 
-	  	  3. For each sibgroup:
+		  3. For each sibgroup:
 
-	         Forward search up parental lines. 
-	         If a match is found:
-	          *!  note the num gens.
-	          *!  add a line specification connecting parentline to subline
+			 Forward search up parental lines. 
+			 If a match is found:
+			  *!  note the num gens.
+			  *!  add a line specification connecting parentline to subline
 
-	         If reached top, stop search for this sibgroup
+			 If reached top, stop search for this sibgroup
 
-	       4. move up generation in queue_gen_array
-	 */
+		   4. move up generation in queue_gen_array
+		   */
 
-	 var fam_lines = {}; // sib_map for each family, holds total lines to be drawn.
+	// Replace this as the main argument, if generations are not needed....
+	var selection_map_map = {}; // This is an actual map, no generations
+	
+	for (var fam in selection_map){
+		selection_map_map[fam] = {};
+		for (var g=0; g < selection_map[fam].length; g ++){
+			for (var i=0; i < selection_map[fam][g].length; i++){
+				var indiv_id = selection_map[fam][g][i];
+				selection_map_map[fam][indiv_id] = 1;
+			}
+		}
+	}
 
-	 for (var fam in selection_map){
-	 	var num_diff_gens = selection_map[fam].length -1;
+	var fam_lines = {}; // sib_map for each family, holds total lines to be drawn.
 
-	 	var sib_map = {}; //stores line data for each sibgroup, regardless of generation
+	for (var fam in selection_map){
+		var num_diff_gens = selection_map[fam].length -1;
 
-	 	for (var g=num_diff_gens; g >= 0; g--){
-	 		var current_gen = selection_map[fam][g];
+		var sib_map = {}; //stores line data for each sibgroup, regardless of generation
 
-	 		// 1. Make sib groups
-	 		var sib_groups = {};	// indivs sharing same immediate parents
+		for (var g=num_diff_gens; g >= 0; g--){
+			var current_gen = selection_map[fam][g];
 
-	 		for (var i1 = 0; i1 < current_gen.length; i1 ++){
-	 			var id = current_gen[i1],
-	 				perc = family_map[fam][id];
+			// 1. Make sib groups
+			var sib_groups = {};	// indivs sharing same immediate parents
 
-	 			var fm_key = perc.father.id+"_"+perc.mother.id;
-	 			sib_groups[fm_key].push(perc) || sib_groups[fm_key] = [];
-	 		}
+			for (var i1 = 0; i1 < current_gen.length; i1 ++){
+				var id = current_gen[i1],
+				perc = family_map[fam][id];
 
-	 		// 2. Recurse up for relations
-	 		for (var sgr in sib_groups){
-	 			var perc = sib_groups[sgr][0]; // only need first in each parental group
-	 			var root = perc;
+				// Only Non-founders can be sibs
+				var fm_key;
+				if (perc.father !== 0){
+					fm_key = perc.father.id+"_"+perc.mother.id;
+				}
+				else {
+					//Founders are in their own sibgroups
+					fm_key = perc.id;					
+				}
+				sib_groups[fm_key] = sib_groups[fm_key] || [];
+				sib_groups[fm_key].push(perc);
+			}
 
-	 			var matelines = [],
-	 				directlines = [];
-	 			// siblines = []; // not needed, there's only one
-	 			
-	 			// Populates matelines and directlines, does not return anything.
-	 			var search = function recurseParents(root, level)
-	 			{
- 					if (root === 0 || root.id === 0) return -1;
-
- 					for (var gen=g; gen < num_diff_gens; gen++){
- 						for (var ite=0; ite < selection_map[fam][gen].length; ite++){
- 							if (root.id === selection_map[fam][gen][ite])
- 								return {id: root.id,
- 										dos: level};
- 						}
- 					}
-	 				var moth_rez = recurseParents(root.mother, level + 1),
-	 					fath_rez = recurseParents(root.father, level + 1);
-
-	 				//If the connected at the same level, then check if they're mates.
-	 				if (moth_rez !== -1 && fath_rez !== -1)
-	 				{
-	 					var are_mates = false;
-
-	 					if (moth_rez.dos === fath_rez.dos){
-	 						var moth_perc = family_map[fam][moth_rez.id];
-
-	 						for (var m=0; m < moth_perc.mates.length; m++){
-	 							if (fath_rez.id === moth_perc.mates[m].id){
-	 								are_mates = true;
-	 								break;
-	 							}
-	 						}
-	 					}
-
- 						if (are_mates) {
- 							// Push as a single connection
- 							matelines.push({
- 								dos:moth_rez.dos, 
- 								moth:moth_rez.id, 
- 								fath:fath_rez.id });
- 						
- 						} else {
- 							// Push as seperate connectors
-		 					directlines.push({
-	 							dos:moth_rez.dos,
-	 							to: moth_rez.id
-	 						});
-
-	 						directlines.push({
-	 							dos:fath_rez.dos,
-	 							to: fath_rez.id
-	 						});
-	 					}
-	 				}
-
-	 				else if (moth_rez !== -1){
-	 					directlines.push({
- 							dos:moth_rez.dos,
- 							to: moth_rez.id
- 						});
-	 				}
-	 				else if (fath_rez !== -1){
-	 					directlines.push({
- 							dos:fath_rez.dos,
- 							to: fath_rez.id
- 						});
-	 				}
-	 			}
-	 			search( root, 0 );
-
-	 			var sib_key = Object.keys(sib_groups[sgr]).reduce( function(a,b){ return a+"_"+b;});
-	 			sib_map[sib_key] = { matelines: matelines,
-	 								 directlines: directlines };
-	 		}
-	 	}
- 		fam_lines[fam] = sib_map;
- 	}
- }
-}
+			console.log("sib_groups", sib_groups);
 
 
-function consang(fam_id, pers1_id, pers2_id)
-{
-	// console.log(family_map, fam_id);
-	// throw new Error("STAP");
+			if (g === 0) continue;
+			// Don't need to scan up if no higher order members are selected
 
-    var fam_map = family_map[fam_id],
-        pers1 = fam_map[pers1_id],
-        pers2 = fam_map[pers2_id];
+			// 2. Recurse up for relations
+			for (var sgr in sib_groups){
+				var perc = sib_groups[sgr][0]; // only need first in each parental group
+				var root = perc;
 
-    // Find pers1 founder
-    var routes2 = [];
-    routes2.push( pers1 );
-    routes2.push( pers2 );
-     // = [pers1, pers2];
+				var matelines = [],
+				directlines = [];
+				// siblines = []; // not needed, there's only one
+				
+				// Populates matelines and directlines, does not return anything.
+				var search = function recurseParents(root, level)
+				{
+					console.group();
+					console.log(level+": ",root.id)
 
-    var complete = [];
-    var loopnum = 0;
 
-    // console.log(pers1.id+"  and  "+pers2.id);
-    while(routes2.length > 0 && loopnum++ < 100){
-        	var perc = routes2.shift(); // remove from search
+					if (root === 0) {
+						console.log("returning -1");
+						console.groupEnd();
+						return -1;
+					}
 
-        	//Try mother + father
-	        if (perc.mother === 0 && perc.father === 0){
-	        	complete.push(perc.id);
-	        	continue;
-	        }
+					if (root.id !== perc.id){
 
-        	if (perc.mother != 0) routes2.push(perc.mother);
-        	if (perc.father != 0) routes2.push(perc.father);
+						if (root.id in selection_map_map[fam]){
+							console.log("MATCH for", root.id);
+							console.groupEnd();
+							return {
+								id: root.id,
+								dos: level
+							};
+						}
+					}
 
-        	// console.log(" routes=", routes2.map( function(n){ return n.id;}));
-    }
+					// for (var gen=g; gen >=0 ; gen--){
+					// 	for (var ite=0; ite < selection_map[fam][gen].length; ite++){
+					// 		if (root.id === selection_map[fam][gen][ite]){
+					// 			console.log("MATCH");
+					// 			return {
+					// 				id: root.id,
+					// 				dos: level
+					// 			};
+					// 		}
+					// 	}
+					// }
 
-    // console.log("complete=", complete);
+					var moth_rez = recurseParents(root.mother, level + 1),
+						fath_rez = recurseParents(root.father, level + 1);
 
-    // throw new Error("AS");
+					//If the connected at the same level, then check if they're mates.
+					if (moth_rez !== -1 && fath_rez !== -1)
+					{
+						var are_mates = false;
 
-    //Find duplicates in complete
-    complete = complete.sort();
-    for (var a=0; a < complete.length -1; a++){
-    	if (complete[a+1] === complete[a])
-    		return true;
-    }
+						if (moth_rez.dos === fath_rez.dos){
+							var moth_perc = family_map[fam][moth_rez.id];
 
-    return false;
+							for (var m=0; m < moth_perc.mates.length; m++){
+								if (fath_rez.id === moth_perc.mates[m].id){
+									are_mates = true;
+									break;
+								}
+							}
+						}
+
+						if (are_mates) {
+							// Push as a single connection
+							matelines.push({
+								dos:moth_rez.dos, 
+								moth:moth_rez.id, 
+								fath:fath_rez.id });
+
+						} else {
+							// Push as seperate connectors
+							directlines.push({
+								dos:moth_rez.dos,
+								to: moth_rez.id
+							});
+
+							directlines.push({
+								dos:fath_rez.dos,
+								to: fath_rez.id
+							});
+						}
+					}
+
+					else if (moth_rez !== -1){
+						directlines.push({
+							dos:moth_rez.dos,
+							to: moth_rez.id
+						});
+					}
+					else if (fath_rez !== -1){
+						directlines.push({
+							dos:fath_rez.dos,
+							to: fath_rez.id
+						});
+					}
+
+					console.groupEnd();
+					return -1;
+				}
+
+				search( root, 0 );
+
+				var sib_key = Object.keys(sib_groups[sgr]).reduce( function(a,b){ return a+"_"+b;});
+				
+				sib_map[sib_key] = { 
+					matelines: matelines,
+					directlines: directlines
+				};
+			}
+			fam_lines[fam] = sib_map;
+		}
+	}
 }
