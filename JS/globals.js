@@ -53,14 +53,19 @@ function map2orderedArray(mapper){
 	var keys = sortedKeys(mapper);
 
 	var ordered_array = [];
-	for (var k=0; k < keys.length; k++)
-		ordered_array.push(mapper[keys[k]]);
+
+	for (var k = 0; k < keys.length; k++){
+		var obj = mapper[keys[k]];
+		
+		// if (obj_isEmpty(obj))
+			ordered_array.push(obj);
+	}
 
 	return ordered_array;
 }
 
 function isEmpty(map){
-	return Object.keys(map).length === 0;
+	return Object.getOwnPropertyNames(map).length === 0;
 }
 
 

@@ -22,7 +22,8 @@ function findDOSinSelection(selection_map){
 
 		var sib_map = {}; //stores line data for each sibgroup, regardless of generation
 
-		for (var g=num_diff_gens; g >= 0; g--){
+		for (var g=num_diff_gens; g >= 0; g--)
+		{
 			var current_gen = selection_map[fam][g];
 
 			// 1. Make sib groups
@@ -128,24 +129,44 @@ function findDOSinSelection(selection_map){
 
 				console.log("sib_groups[sgr]", sib_groups[sgr]);
 
-				var sib_key;
-				if (sib_groups[sgr].length === 1){
-					sib_key = sib_groups[sgr][0].id
-				} else {
-					sib_key = ""+sib_groups[sgr][0].id+"";
+				if (!(g in sib_map)){
+					sib_map[g] = {};
+				}
+
+				var sib_key = sib_groups[sgr][0].id;
+
+				// Add the others if more than one sibs in group
+				if (!(sib_groups[sgr].length === 1))
+				{
 					for (var i=1; i < sib_groups[sgr].length; i++){
 						sib_key += "_"+sib_groups[sgr][i].id;
 					}
 				}
 
 				if (!( isEmpty(matelines) && isEmpty(directlines))){
-					sib_map[sib_key] = {
+					sib_map[g][sib_key] = {
 						matelines: matelines,
 						directlines: directlines
 					};
 				}
 			}
-			fam_lines[fam] = sib_map;
+
+			// Essentially map2OrderedArray, but nested version
+			// -- only occurence here
+			var sib_map2 = [];
+			for (var k in sib_map){
+				var empty= true;
+				for (var kk in sib_map[k]){
+					if (!( isEmpty( sib_map[k][kk] ) )) {
+						empty = false;
+						break;
+					}
+				}
+				if (!empty)
+					sib_map2.push(sib_map[k])
+			}
+
+			fam_lines[fam] = sib_map2;
 		}
 	}
 	return fam_lines

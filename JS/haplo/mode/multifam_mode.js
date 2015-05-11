@@ -9,6 +9,18 @@ var selection_items = {}, // fid_id: {box:Object, selected:toggled, affected:boo
 	toggle_selection_affecteds = false;
 
 
+
+function renderLinesAndNodes( line_map ){
+
+	for (var fid in line_map){
+		
+	}
+
+
+}
+
+
+
 function launchHaplomode()
 {
 	var selection_map = function grabSelecteds(){
@@ -40,6 +52,10 @@ function launchHaplomode()
 	};
 
 	var lines = findDOSinSelection( selection_map() );
+
+
+	renderLinesAndNodes( lines );
+
 	console.log( lines );
 }
 
@@ -138,8 +154,6 @@ function startSelectionMode(){
 				box:bounder,
 				selected:false,
 				graphics: gfx
-				// affected:(gfx.children[0].attrs.fill === 'red'),
-				// generation: gfx.getY()
 			};
 			select_group.add(bounder);
 		}
