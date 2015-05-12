@@ -10,10 +10,65 @@ var selection_items = {}, // fid_id: {box:Object, selected:toggled, affected:boo
 
 
 
-function renderLinesAndNodes( line_map ){
+function renderLinesAndNodes(line_map )
+{
+	// The line map is a generation array, so has a very top-bottom
+	// approach in line placement
+	var start_x = 10;
 
 	for (var fid in line_map){
-		
+		var start_y = 10;
+
+		for (var g=0; g < line_map[fid].length; g++){
+
+			// ConnectEEs and connectERs... 
+			for (var connectee in line_map[fid][g])
+			{
+				var sib_ids = connectee.split('_');
+
+				//Iterate over all sibs and hang from line.
+				var sib_line; // == coords
+
+
+				var directline = line_map[fid][g][connectee].directlines,
+					mateline = line_map[fid][g][connectee].matelines;
+
+				for (var dline in directline){
+
+				}
+
+				for (var mline in mateline)
+				{
+					var parents = mline.split('_'),
+						fath_id = parseInt(parents[0]),
+						moth_id = parseInt(parents[1]);
+
+					var fath_gfx = selection_items[fid + '_' + fath_id].graphics,
+						moth_gfx = selection_items[fid + '_' + moth_id].graphics;
+
+					//Place moth + fath
+					fath_gfx.setPosition( {x: start_x, y: start_y} );
+					start_x += vert_space					
+					moth_gfx.setPosition( {x: start_x, y: start_y} );
+
+					//Get existing line attribs
+					var consang = unique_graph_objs[fid].edges['m'+fath_id+'_'+moth_id].consanginous;
+
+					// Add mate line
+					addRLine_simple( fath_gfx.getAbsolutePosition(), moth_gfx.getAbsolutePosition(), consang );
+
+					// Add parent line, with DOS, to sib_line
+					var dos = mateline[mline];
+					addRLine_simple(  )
+
+
+				}
+
+
+			}
+		}
+
+
 	}
 
 
