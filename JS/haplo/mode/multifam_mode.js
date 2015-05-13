@@ -14,6 +14,8 @@ function renderLinesAndNodes(line_map )
 {
 	// The line map is a generation array, so has a very top-bottom
 	// approach in line placement
+	var lines_to_render = [];
+
 	var start_x = 10;
 
 	for (var fid in line_map){
@@ -22,19 +24,24 @@ function renderLinesAndNodes(line_map )
 		for (var g=0; g < line_map[fid].length; g++){
 
 			// ConnectEEs and connectERs... 
-			for (var connectee in line_map[fid][g])
+			for (var sgroup in line_map[fid][g])
 			{
-				var sib_ids = connectee.split('_');
+				var directline = line_map[fid][g][sgroup].directlines,
+					mateline = line_map[fid][g][sgroup].matelines;
 
-				//Iterate over all sibs and hang from line.
-				var sib_line; // == coords
-
-
-				var directline = line_map[fid][g][connectee].directlines,
-					mateline = line_map[fid][g][connectee].matelines;
+				var sib_line_anchor = null;
 
 				for (var dline in directline){
+					// var dos = directline[dline]
+					var to_gfx = unique_graph_objs[fid].nodes[dline].graphics;
+					to_gfx.setPosition( {x: start_x, y: start_y} );
+					start_x += horiz_space;
 
+					sib_line_anchor = {x: start_x - horiz_space, y: start_y + 5};
+
+					lines_to_render.push(
+						addRLine_simple( to_gfx.getAbsolutePosition(), sib_line_anchor, false)
+					);
 				}
 
 				for (var mline in mateline)
@@ -48,31 +55,69 @@ function renderLinesAndNodes(line_map )
 
 					//Place moth + fath
 					fath_gfx.setPosition( {x: start_x, y: start_y} );
-					start_x += vert_space					
+					start_x += horiz_space;
 					moth_gfx.setPosition( {x: start_x, y: start_y} );
 
 					//Get existing line attribs
-					var consang = unique_graph_objs[fid].edges['m'+fath_id+'_'+moth_id].consanginous;
+					// console.log(unique_graph_objs[fid].edges, fath_id, moth_id);
+					var consang = unique_graph_objs[fid].edges['m:'+fath_id+'-'+moth_id].consangineous;
 
 					// Add mate line
-					addRLine_simple( fath_gfx.getAbsolutePosition(), moth_gfx.getAbsolutePosition(), consang );
+					lines_to_render.push( 
+						addRLine_simple( fath_gfx.getAbsolutePosition(), moth_gfx.getAbsolutePosition(), consang )
+					);
 
 					// Add parent line, with DOS, to sib_line
-					var dos = mateline[mline];
-					addRLine_simple(  )
+					// var dos = mateline[mline];
+					if (sib_line_anchor === null){
+						sib_line_anchor = {x: start_x - horiz_space/2, y: start_y + 5};
+					}
 
+					lines_to_render.push( 
+						addRLine_simple( 
+							{x: start_x - horiz_space/2,
+						 	y: start_y},
+						 	sib_line_anchor,
+						 	false
+						)
+					);
 
+					start_x += horiz_space;
 				}
+				
+				//Iterate over all sibs and hang from anchor
+				var sib_ids = sgroup.split('_');
+
+				for (var s=0; s < sib_ids.length; s++)
+				{
+					var sib_id  = sib_ids[s],
+						sib_gfx = unique_graph_objs[fid].nodes[sib_id].graphics
+
+					var pos = {x: start_x, y: sib_line_anchor.y + 5};
+					sib_gfx.setPosition( pos );
+					start_x += horiz_space;
+
+					lines_to_render.push(
+						addRLine_simple( sib_line_anchor, pos, false )
+					);
+				}
+			} // end sib group
+		} // end gen
+	} // end fam
+
+	console.log("lines to render", lines_to_render);
 
 
-			}
-		}
-
-
+	for (var l=0; l < lines_to_render.length; l++){
+		main_layer.add(l);
 	}
+	main_layer.draw();
+	haplo_layer.draw();
+
+	touchLines();
 
 
-}
+} //
 
 
 
@@ -110,8 +155,6 @@ function launchHaplomode()
 
 
 	renderLinesAndNodes( lines );
-
-	console.log( lines );
 }
 
 
