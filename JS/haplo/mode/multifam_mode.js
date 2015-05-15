@@ -12,11 +12,28 @@ var selection_items = {}, // fid_id: {box:Object, selected:toggled, affected:boo
 
 function renderLinesAndNodes(line_map )
 {
+	var haplo_group = new Kinetic.Group({x:20, y:30, draggable:true});
+
+	haplo_layer.add( new Kinetic.Rect({
+		width: window.innerWidth,
+		height: window.innerHeight,
+		fill: 'black',
+		opacity: 0.5
+	}));
+
+	haplo_layer.add(haplo_group);
+
+	function setPosHaplo(gfx, pos ){
+		gfx.remove(); // from main
+		haplo_group.add(gfx);
+		gfx.setPosition( pos );
+	}
+
 	// The line map is a generation array, so has a very top-bottom
 	// approach in line placement
 	var lines_to_render = [];
+	var start_x = 0;
 
-	var start_x = 10;
 
 	for (var fid in line_map){
 		var start_y = 10;
@@ -34,10 +51,13 @@ function renderLinesAndNodes(line_map )
 				for (var dline in directline){
 					// var dos = directline[dline]
 					var to_gfx = unique_graph_objs[fid].nodes[dline].graphics;
-					to_gfx.setPosition( {x: start_x, y: start_y} );
+					setPosHaplo( to_gfx, {x: start_x, y: start_y} );
 					start_x += horiz_space;
 
-					sib_line_anchor = {x: start_x - horiz_space, y: start_y + 5};
+					sib_line_anchor = {
+						x: start_x - horiz_space,
+						y: start_y + 5
+					};
 
 					lines_to_render.push(
 						addRLine_simple( to_gfx.getAbsolutePosition(), sib_line_anchor, false)
@@ -54,9 +74,9 @@ function renderLinesAndNodes(line_map )
 						moth_gfx = selection_items[fid + '_' + moth_id].graphics;
 
 					//Place moth + fath
-					fath_gfx.setPosition( {x: start_x, y: start_y} );
+					setPosHaplo( fath_gfx, {x: start_x, y: start_y} );
 					start_x += horiz_space;
-					moth_gfx.setPosition( {x: start_x, y: start_y} );
+					setPosHaplo( moth_gfx, {x: start_x, y: start_y} );
 
 					//Get existing line attribs
 					// console.log(unique_graph_objs[fid].edges, fath_id, moth_id);
@@ -94,7 +114,7 @@ function renderLinesAndNodes(line_map )
 						sib_gfx = unique_graph_objs[fid].nodes[sib_id].graphics
 
 					var pos = {x: start_x, y: sib_line_anchor.y + 5};
-					sib_gfx.setPosition( pos );
+					setPosHaplo( sib_gfx, pos );
 					start_x += horiz_space;
 
 					lines_to_render.push(
@@ -106,16 +126,15 @@ function renderLinesAndNodes(line_map )
 	} // end fam
 
 	console.log("lines to render", lines_to_render);
-
+	// main_layer.hide();
 
 	for (var l=0; l < lines_to_render.length; l++){
-		main_layer.add(l);
+		haplo_group.add(l);
 	}
+	// touchLines();
+
 	main_layer.draw();
 	haplo_layer.draw();
-
-	touchLines();
-
 
 } //
 
