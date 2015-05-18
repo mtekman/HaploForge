@@ -57,8 +57,7 @@ function map2orderedArray(mapper){
 	for (var k = 0; k < keys.length; k++){
 		var obj = mapper[keys[k]];
 		
-		// if (obj_isEmpty(obj))
-			ordered_array.push(obj);
+		ordered_array.push(obj);
 	}
 
 	return ordered_array;

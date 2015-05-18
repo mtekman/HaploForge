@@ -23,22 +23,34 @@ function renderLinesAndNodes(line_map )
 
 	haplo_layer.add(haplo_group);
 
-	function setPosHaplo(gfx, pos ){
+	var start_x = 100;
+
+	var placement_map 
+	
+	function setPosHaplo(gfx, pos, id ){
 		gfx.remove(); // from main
 		haplo_group.add(gfx);
 		gfx.setPosition( pos );
+
+		start_x += horiz_space;
+		console.log("setting:", id, "startx=", start_x);
+
 	}
 
 	// The line map is a generation array, so has a very top-bottom
 	// approach in line placement
 	var lines_to_render = [];
-	var start_x = 0;
 
 
 	for (var fid in line_map){
 		var start_y = 10;
 
+		var drop_step = 20;
+		var drop_amount = 20;
+
 		for (var g=0; g < line_map[fid].length; g++){
+
+			start_y += 30;
 
 			// ConnectEEs and connectERs... 
 			for (var sgroup in line_map[fid][g])
@@ -51,11 +63,10 @@ function renderLinesAndNodes(line_map )
 				for (var dline in directline){
 					// var dos = directline[dline]
 					var to_gfx = unique_graph_objs[fid].nodes[dline].graphics;
-					setPosHaplo( to_gfx, {x: start_x, y: start_y} );
-					start_x += horiz_space;
+					setPosHaplo( to_gfx, {x: start_x, y: start_y}, dline );
 
 					sib_line_anchor = {
-						x: start_x - horiz_space,
+						x: start_x * 2,
 						y: start_y + 5
 					};
 
@@ -63,6 +74,7 @@ function renderLinesAndNodes(line_map )
 						addRLine_simple( to_gfx.getAbsolutePosition(), sib_line_anchor, false)
 					);
 				}
+
 
 				for (var mline in mateline)
 				{
@@ -74,9 +86,8 @@ function renderLinesAndNodes(line_map )
 						moth_gfx = selection_items[fid + '_' + moth_id].graphics;
 
 					//Place moth + fath
-					setPosHaplo( fath_gfx, {x: start_x, y: start_y} );
-					start_x += horiz_space;
-					setPosHaplo( moth_gfx, {x: start_x, y: start_y} );
+					setPosHaplo( fath_gfx, {x: start_x, y: start_y}, fath_id );
+					setPosHaplo( moth_gfx, {x: start_x, y: start_y}, moth_id );
 
 					//Get existing line attribs
 					// console.log(unique_graph_objs[fid].edges, fath_id, moth_id);
@@ -84,25 +95,25 @@ function renderLinesAndNodes(line_map )
 
 					// Add mate line
 					lines_to_render.push( 
-						addRLine_simple( fath_gfx.getAbsolutePosition(), moth_gfx.getAbsolutePosition(), consang )
+						addRLine_simple( 
+							fath_gfx.getPosition(), 
+							moth_gfx.getPosition(), consang )
 					);
 
 					// Add parent line, with DOS, to sib_line
 					// var dos = mateline[mline];
 					if (sib_line_anchor === null){
-						sib_line_anchor = {x: start_x - horiz_space/2, y: start_y + 5};
+						sib_line_anchor = {x: start_x - 3*horiz_space/2, y: start_y + drop_amount};
 					}
 
 					lines_to_render.push( 
 						addRLine_simple( 
-							{x: start_x - horiz_space/2,
+							{x: start_x - 3*horiz_space/2,
 						 	y: start_y},
 						 	sib_line_anchor,
 						 	false
 						)
 					);
-
-					start_x += horiz_space;
 				}
 				
 				//Iterate over all sibs and hang from anchor
@@ -113,28 +124,36 @@ function renderLinesAndNodes(line_map )
 					var sib_id  = sib_ids[s],
 						sib_gfx = unique_graph_objs[fid].nodes[sib_id].graphics
 
-					var pos = {x: start_x, y: sib_line_anchor.y + 5};
-					setPosHaplo( sib_gfx, pos );
-					start_x += horiz_space;
+					var pos = {x: start_x, y: sib_line_anchor.y + drop_amount};
+					setPosHaplo( sib_gfx, pos, sib_id )
+;
+					// Last generation sibs need to be spaced
+					if (g === 0)
+						start_x -= horiz_space;
 
 					lines_to_render.push(
 						addRLine_simple( sib_line_anchor, pos, false )
 					);
 				}
+
+				// start_x -= horiz_space;
 			} // end sib group
 		} // end gen
 	} // end fam
 
 	console.log("lines to render", lines_to_render);
-	// main_layer.hide();
+	main_layer.hide();
 
 	for (var l=0; l < lines_to_render.length; l++){
-		haplo_group.add(l);
+		haplo_group.add(lines_to_render[l]);
 	}
 	// touchLines();
 
 	main_layer.draw();
-	haplo_layer.draw();
+
+	resizeCanvas();
+	// haplo_layer.draw();
+
 
 } //
 
