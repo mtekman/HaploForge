@@ -23,27 +23,69 @@ function renderLinesAndNodes(line_map )
 
 	haplo_layer.add(haplo_group);
 
-	var start_x = 100;
+	var start_x = 0;
 
-	var placement_map 
+
+	var slot_map = {}; // 
+	var placemap = {};
+
+	var placemap = {}, // id --> pos
+		duplicates = {};
 	
-	function setPosHaplo(gfx, pos, id ){
+	function setPosHaplo(gfx, pos_y, id, fid, override_placement ){
 		gfx.remove(); // from main
 		haplo_group.add(gfx);
-		gfx.setPosition( pos );
 
-		start_x += horiz_space;
+		var key  = fid+'_'+id;
+
+		if (key in placemap){
+			// Find old position
+			var old_x = placemap[key];
+
+			//Free this slot
+			slot_map[old_x] = null;
+
+			//Look ahead and down shift all other items
+			var slot_keys = Object.keys(slot_map).sort();
+			for (var s=0; s < slot_keys.length-1; s++){
+				var slot_x = slot_keys[s];
+
+				if (slot_x < old_x) continue;
+
+				var gfx2 = slot_map[slot_x];
+				gfx2.setX(slot_x - horiz_space);
+				slot_map[slot_x - horiz_space] = gfx2;
+			}
+		}
+
+		if (start_x in slot_map)
+			slot_map[start_x] = null;
+
+		gfx.setPosition( {x: start_x, y: pos_y} );
+
+
+
 		console.log("setting:", id, "startx=", start_x);
 
+
+		if (key in placemap){
+			if (key in duplicates)
+				duplicates[key].push(start_x)
+			else
+				duplicates[key] = [placemap[key],start_x]
+		}
+		else
+			placemap[key] = start_x;
+
+		start_x += horiz_space;
 	}
 
 	// The line map is a generation array, so has a very top-bottom
 	// approach in line placement
 	var lines_to_render = [];
 
-
 	for (var fid in line_map){
-		var start_y = 10;
+		var start_y = 400;
 
 		var drop_step = 20;
 		var drop_amount = 20;
@@ -60,22 +102,6 @@ function renderLinesAndNodes(line_map )
 
 				var sib_line_anchor = null;
 
-				for (var dline in directline){
-					// var dos = directline[dline]
-					var to_gfx = unique_graph_objs[fid].nodes[dline].graphics;
-					setPosHaplo( to_gfx, {x: start_x, y: start_y}, dline );
-
-					sib_line_anchor = {
-						x: start_x * 2,
-						y: start_y + 5
-					};
-
-					lines_to_render.push(
-						addRLine_simple( to_gfx.getAbsolutePosition(), sib_line_anchor, false)
-					);
-				}
-
-
 				for (var mline in mateline)
 				{
 					var parents = mline.split('_'),
@@ -86,8 +112,8 @@ function renderLinesAndNodes(line_map )
 						moth_gfx = selection_items[fid + '_' + moth_id].graphics;
 
 					//Place moth + fath
-					setPosHaplo( fath_gfx, {x: start_x, y: start_y}, fath_id );
-					setPosHaplo( moth_gfx, {x: start_x, y: start_y}, moth_id );
+					setPosHaplo( fath_gfx, start_y, fath_id, fid, true );
+					setPosHaplo( moth_gfx, start_y, moth_id, fid, true );
 
 					//Get existing line attribs
 					// console.log(unique_graph_objs[fid].edges, fath_id, moth_id);
@@ -115,6 +141,25 @@ function renderLinesAndNodes(line_map )
 						)
 					);
 				}
+
+				// Directline
+				for (var dline in directline)
+				{
+					var to_gfx = unique_graph_objs[fid].nodes[dline].graphics;
+					setPosHaplo( to_gfx, start_y, dline, fid, true );
+
+					if (sib_line_anchor === null){
+						sib_line_anchor = {
+							x: start_x * 2,
+							y: start_y + 5
+						};
+					}
+
+					lines_to_render.push(
+						addRLine_simple( to_gfx.getAbsolutePosition(), sib_line_anchor, false)
+					);
+				}
+
 				
 				//Iterate over all sibs and hang from anchor
 				var sib_ids = sgroup.split('_');
@@ -125,12 +170,8 @@ function renderLinesAndNodes(line_map )
 						sib_gfx = unique_graph_objs[fid].nodes[sib_id].graphics
 
 					var pos = {x: start_x, y: sib_line_anchor.y + drop_amount};
-					setPosHaplo( sib_gfx, pos, sib_id )
+					setPosHaplo( sib_gfx, pos.y, sib_id, fid, false )
 ;
-					// Last generation sibs need to be spaced
-					if (g === 0)
-						start_x -= horiz_space;
-
 					lines_to_render.push(
 						addRLine_simple( sib_line_anchor, pos, false )
 					);
@@ -141,18 +182,19 @@ function renderLinesAndNodes(line_map )
 		} // end gen
 	} // end fam
 
-	console.log("lines to render", lines_to_render);
-	main_layer.hide();
+	// Iterate through placemap looking for gaps... you picked the wrong war.
+	console.log("duplicates", duplicates);
+	// main_layer.hide();
 
 	for (var l=0; l < lines_to_render.length; l++){
 		haplo_group.add(lines_to_render[l]);
 	}
 	// touchLines();
 
-	main_layer.draw();
+	// main_layer.draw();
 
-	resizeCanvas();
-	// haplo_layer.draw();
+	// resizeCanvas();
+	haplo_layer.draw();
 
 
 } //
