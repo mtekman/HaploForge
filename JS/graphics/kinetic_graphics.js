@@ -76,22 +76,59 @@ function addButton(message, xp, yp, callback){
 }
 
 
-function changeRLine(line, start, end)
+function changeRLine(line, start, end, offset_y)
 {
+	offset_y = offset_y || 0;
+
 	if (!use_right_angles) line.setPoints([start.x, start.y, end.x, end.y]);
 	else {
 		var mid_y = Math.floor((start.y + end.y)/2),
-			m1    = {		x: start.x,		y: mid_y	},
-			m2    = {		x: end.x,       y: mid_y	};
+			m1    = {	x: start.x,		y: (mid_y + offset_y)	},
+			m2    = {	x: end.x,   	y: (mid_y + offset_y)	};
 
 		line.setPoints([start.x, start.y, m1.x, m1.y, m2.x, m2.y, end.x, end.y]);
 	}
 }
 
 
+var overlapping_lines = {}; // ypos 
 
-function addRLine_simple(start, end, consang)
+function linesConflictY( st, en, ypos)
 {
+	var margin = 1;
+
+	// Test for conflict first
+	for (var y = ypos - margin; y < ypos; y++)
+		if (y in overlapping_lines)
+			return true;
+
+	//No conflict, add to line
+	for (var y=ypos-5; y < ypos +5; y++)
+		overlapping_lines[y] = true
+
+	return false
+}
+
+
+
+function addRLine_nonoverlapY(start, end, consang)
+{
+	var offy = 0;
+	while ( linesConflictY( start, end, offy ) ){
+		// Add offset to midpoint
+		offy -= 1;
+	}
+
+	return addRLine_simple(start,end, consang, offy);
+}
+
+
+
+function addRLine_simple(start, end, consang, offset_y)
+{
+	offset_y = offset_y || 0; // default
+
+
 	var line = new Kinetic.Line({
 		stroke: 'black',
 		strokeWidth: 2
@@ -103,8 +140,7 @@ function addRLine_simple(start, end, consang)
 		line.attrs.shadowOffsetY = -nodeSize/3;
 		line.attrs.shadowOpacity = 1;
 	}
-
-	changeRLine(line, start, end);
+	changeRLine(line, start, end, offset_y);
 
 	return line;
 }
@@ -113,19 +149,7 @@ function addRLine_simple(start, end, consang)
 
 function addRLine(fam_group, start, end, consang)
 {
-	var line = new Kinetic.Line({
-		stroke: 'black',
-		strokeWidth: 2
-	});
-
-	if(consang){
-		line.attrs.shadowColor = 'black';
-		line.attrs.shadowBlur = 0;
-		line.attrs.shadowOffsetY = -nodeSize/3;
-		line.attrs.shadowOpacity = 1;
-	}
-
-	changeRLine(line, start, end);
+	var line = addRLine_simple(start,end,consang)
 
 	fam_group.add(line);
 	return line;

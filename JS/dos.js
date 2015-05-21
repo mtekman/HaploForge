@@ -65,21 +65,12 @@ function findDOSinSelection(selection_map){
 				// Populates matelines and directlines, does not return anything.
 				var search = function recurseParents(root, level)
 				{
-					// console.group();
-					// console.log(level+": ",root.id)
-
-
-					if (root === 0) {
-						// console.log("returning -1");
-						// console.groupEnd();
+					if (root === 0)
 						return -1;
-					}
 
-					if (root.id !== perc.id){
-
+					if (root.id !== perc.id)
+					{
 						if (root.id in selection_map_map[fam]){
-							// console.log("MATCH for", root.id);
-							// console.groupEnd();
 							return {
 								id: root.id,
 								dos: level
@@ -87,15 +78,14 @@ function findDOSinSelection(selection_map){
 						}
 					}
 
-
 					var moth_rez = recurseParents(root.mother, level + 1),
 						fath_rez = recurseParents(root.father, level + 1);
 
-					//If the connected at the same level, then check if they're mates.
 					if (moth_rez !== -1 && fath_rez !== -1)
 					{
 						var are_mates = false;
 
+						//If the connected at the same level, then check if they're mates.
 						if (moth_rez.dos === fath_rez.dos){
 							var moth_perc = family_map[fam][moth_rez.id];
 
@@ -116,6 +106,9 @@ function findDOSinSelection(selection_map){
 							directlines[moth_rez.id] = moth_rez.dos;
 							directlines[fath_rez.id] = fath_rez.dos;
 						}
+
+						// Not connected at the same level, but are the indivs already connected?
+						for (var dg=0; dg < a)
 					}
 
 					else if (moth_rez !== -1) directlines[moth_rez.id] = moth_rez.dos;
@@ -169,5 +162,13 @@ function findDOSinSelection(selection_map){
 			fam_lines[fam] = sib_map2;
 		}
 	}
+	// console.log("fam_lines", fam_lines)
+
+
+	// If an indiv exists 
+
+
+
+
 	return fam_lines
 }

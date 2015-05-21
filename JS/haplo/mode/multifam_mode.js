@@ -42,7 +42,7 @@ function renderLinesAndNodes(line_map )
 
 			start_y += drop_amount;
 
-			// ConnectEEs and connectERs... 
+			// ConnectEEs and connectERs...  FUCK THIS
 			for (var sgroup in line_map[fid][g])
 			{
 				var directline = line_map[fid][g][sgroup].directlines,
@@ -60,11 +60,11 @@ function renderLinesAndNodes(line_map )
 
 					// Add mate line
 					var consang = unique_graph_objs[fid].edges['m:'+fath_id+'-'+moth_id].consangineous;
-					line_points[fid][fath_id] = {to:moth_id, consang:consang, drop:null, text:null};
+					line_points[fid][fath_id] = {to:moth_id, consang:consang, drop:null, text:null, lastgen:(g==line_map[fid].length-1)};
 					
 					// Sib line from mateline
 					var dos = mateline[mline];
-					line_points[fid][fath_id+'_'+moth_id] = {to: sgroup, consang: false, drop:drop_amount, text: dos};
+					line_points[fid][fath_id+'_'+moth_id] = {to: sgroup, consang: false, drop:drop_amount, text: dos, lastgen:(g==line_map[fid].length-1)};
 				}
 
 				// Directline
@@ -73,7 +73,7 @@ function renderLinesAndNodes(line_map )
 					sortXHaplo( start_y, dline, fid );
 
 					var dos = directline[dline]
-					line_points[fid][dline] = {to:sgroup, consang:false, drop:drop_amount, text:dos}
+					line_points[fid][dline] = {to:sgroup, consang:false, drop:drop_amount, text:dos, lastgen:(g==line_map[fid].length-1) }
 				}
 				
 				//Iterate over all sibs and hang from anchor
@@ -176,9 +176,23 @@ function renderLinesAndNodes(line_map )
 		 			var sib_id = sib_ids[s],
 		 				sib_gfx_pos = unique_graph_objs[fid].nodes[sib_id].graphics.getPosition();
 
-		 			haplo_group_lines.add( addRLine_simple(sib_anchor_pos, sib_gfx_pos, false) );
+		 			if (!info.lastgen)
+		 				haplo_group_lines.add( addRLine_nonoverlapY(sib_anchor_pos, sib_gfx_pos, false) );
+		 			else
+		 				haplo_group_lines.add( addRLine_simple(sib_anchor_pos, sib_gfx_pos, false) );
 		 		}
+
+		 		//Add dos info
+		 		haplo_group_lines.add( new Kinetic.Text({
+		 			x: sib_anchor_pos.x - 5, 
+		 			y: sib_anchor_pos.y + 5, 
+		 			text: info.text, 
+		 			fontSize: 20,
+					fill: 'white'}) 
+		 		);
 			}
+
+			// 
 
 
 
