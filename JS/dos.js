@@ -102,16 +102,32 @@ function findDOSinSelection(selection_map){
 							console.log("adding mateline for", root.id)
 							matelines[fath_rez.id+"_"+moth_rez.id] = moth_rez.dos;
 						} else {
-							// Push as seperate connectors
-							directlines[moth_rez.id] = moth_rez.dos;
-							directlines[fath_rez.id] = fath_rez.dos;
-						}
 
-						// Not connected at the same level, but are the indivs already connected at a higher level?
-						// Problem occurs with: 6 12 1122
-						// for (var dg = g; dg <= num_diff_gens; dg++ ){
-						// 	var 
-						// }
+							var link_found = false;
+
+							// Are they connected at another level?
+							var lower_dos_obj, higher_dos_obj;
+							
+							if (moth_rez.dos < fath_rez.dos){
+								lower_dos_obj = moth_rez;
+								higher_dos_obj = fath_rez;
+							}
+							else {
+								lower_dos_obj = fath_rez;
+								higher_dos_obj = moth_rez;
+							}
+
+							//Check if higher_dos_obj is linked to lower_one
+							
+
+
+
+							if (!link_found){
+								// No link - Push as seperate connectors
+								directlines[moth_rez.id] = moth_rez.dos;
+								directlines[fath_rez.id] = fath_rez.dos;
+							}
+						}
 					}
 
 					else if (moth_rez !== -1) directlines[moth_rez.id] = moth_rez.dos;
@@ -165,7 +181,7 @@ function findDOSinSelection(selection_map){
 			fam_lines[fam] = sib_map2;
 		}
 	}
-	// console.log("fam_lines", fam_lines)
+	console.log("fam_lines", fam_lines)
 
 
 	// If an indiv exists 

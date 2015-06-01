@@ -153,6 +153,10 @@ function renderLinesAndNodes(line_map )
 			 	else {  // DOS line -- direct
 			 		sib_anchor_pos = {x: from_gfx_pos.x, y:from_gfx_pos.y + info.drop/3};
 			 		haplo_group_lines.add( addRLine_simple(from_gfx_pos, sib_anchor_pos, false) );
+
+			 		for (var g=-; g < dg; g++){
+			 			var nunc = haplo_group_lines[g].nodes[g.id].graphics.getPosition();
+			 		}
 			 	}
 			}
 			else { // DOS line -- mate
