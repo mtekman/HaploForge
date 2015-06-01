@@ -107,8 +107,11 @@ function findDOSinSelection(selection_map){
 							directlines[fath_rez.id] = fath_rez.dos;
 						}
 
-						// Not connected at the same level, but are the indivs already connected?
-						for (var dg=0; dg < a)
+						// Not connected at the same level, but are the indivs already connected at a higher level?
+						// Problem occurs with: 6 12 1122
+						// for (var dg = g; dg <= num_diff_gens; dg++ ){
+						// 	var 
+						// }
 					}
 
 					else if (moth_rez !== -1) directlines[moth_rez.id] = moth_rez.dos;
