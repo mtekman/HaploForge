@@ -155,12 +155,12 @@ function findDOSinSelection(selection_map){
 					}
 				}
 
-				if (!( isEmpty(matelines) && isEmpty(directlines))){
+				// if (!( isEmpty(matelines) && isEmpty(directlines))){
 					sib_map[g][sib_key] = {
 						matelines: matelines,
 						directlines: directlines
 					};
-				}
+				// }
 			}
 
 			// Essentially map2OrderedArray, but nested version

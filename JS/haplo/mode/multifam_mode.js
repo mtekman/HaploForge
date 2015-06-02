@@ -26,9 +26,23 @@ function renderLinesAndNodes(line_map )
 		slot_array.push( [key,pos_y] );
 	}
 
+
 	// The line map is a generation array, so has a very top-bottom
 	// approach in line placement
 	var line_points = {};
+	var end_point_nodes_drawn = {}; // Nodes with lines already attached (no multiple lines)
+
+	function addLinePoint( fid, key, obj )
+	{
+		if (key in line_points[fid]){
+			var obj_eski = line_points[fid][key],
+				dos_eski = obj_eski.dos
+		}
+		else {
+			line_points[fid][key] = obj;
+		}
+
+	}
 
 	for (var fid in line_map){
 		var start_y = 400;
@@ -40,11 +54,15 @@ function renderLinesAndNodes(line_map )
 
 		for (var g=0; g < line_map[fid].length; g++){
 
-			start_y += drop_amount;
+			console.log("gen=", g, line_map[fid][g])
+
 
 			// ConnectEEs and connectERs...  FUCK THIS
 			for (var sgroup in line_map[fid][g])
 			{
+				console.log("SIB GROUP", sgroup)
+				start_y += drop_amount;
+
 				var directline = line_map[fid][g][sgroup].directlines,
 					mateline = line_map[fid][g][sgroup].matelines;
 
@@ -60,20 +78,35 @@ function renderLinesAndNodes(line_map )
 
 					// Add mate line
 					var consang = unique_graph_objs[fid].edges['m:'+fath_id+'-'+moth_id].consangineous;
-					line_points[fid][fath_id] = {to:moth_id, consang:consang, drop:null, text:null, lastgen:(g==line_map[fid].length-1)};
+
+					if (!(fath_id in line_points[fid]))
+						line_points[fid][fath_id] = [];
+
+					line_points[fid][fath_id].push({to:moth_id, consang:consang, drop:null, text:null, lastgen:(g==line_map[fid].length-1)});
 					
 					// Sib line from mateline
 					var dos = mateline[mline];
-					line_points[fid][fath_id+'_'+moth_id] = {to: sgroup, consang: false, drop:drop_amount, text: dos, lastgen:(g==line_map[fid].length-1)};
+
+					if (!(fath_id+'_'+moth_id in line_points[fid]))
+						line_points[fid][fath_id+'_'+moth_id] = [];
+
+					line_points[fid][fath_id+'_'+moth_id].push({to: sgroup, consang: false, drop:drop_amount, text: dos, lastgen:(g==line_map[fid].length-1)});
 				}
 
 				// Directline
 				for (var dline in directline)
 				{
+					start_y += drop_amount;
+
 					sortXHaplo( start_y, dline, fid );
 
 					var dos = directline[dline]
-					line_points[fid][dline] = {to:sgroup, consang:false, drop:drop_amount, text:dos, lastgen:(g==line_map[fid].length-1) }
+
+					addLinePoint(
+						fid, dline, 
+						{to:sgroup, consang:false, drop:drop_amount, 
+						 text:dos, lastgen:(g==line_map[fid].length-1)}
+					);
 				}
 				
 				//Iterate over all sibs and hang from anchor
@@ -123,77 +156,80 @@ function renderLinesAndNodes(line_map )
 		gfx.remove()
 		haplo_group_nodes.add(gfx);
 
-		gfx.setPosition( {x:start_x, y:y_pos});
+		gfx.setPosition( {x:start_x, y:y_pos} );
 
 		start_x += horiz_space;
 	}
 
+
+
 	// Render Lines
 	for (var fid in line_points){
 		for (var from in line_points[fid]){
-
-			var info = line_points[fid][from];
-
 			var start_ids = from.split('_')
 
-			var sib_anchor_pos = null;
+			for (var ml=0; ml < line_points[fid][from].length; ml++)
+			{
+				var info = line_points[fid][from][ml];
 
-			// Mateline or DOSline
-			if (start_ids.length === 1){
+				var sib_anchor_pos = null;
 
-				var from_gfx_pos = unique_graph_objs[fid].nodes[from].graphics.getPosition();
+				// Mateline or DOSline
+				if (start_ids.length === 1){
 
-				if (info.drop === null){ 	// Mateline
+					var from_gfx_pos = unique_graph_objs[fid].nodes[from].graphics.getPosition();
 
-					var to_id = info.to,
-						to_gfx_pos = unique_graph_objs[fid].nodes[to_id].graphics.getPosition();
+					if (info.drop === null){ 	// Mateline
 
-					haplo_group_lines.add( addRLine_simple(from_gfx_pos, to_gfx_pos, info.consang ) );
+						var to_id = info.to,
+							to_gfx_pos = unique_graph_objs[fid].nodes[to_id].graphics.getPosition();
+
+						haplo_group_lines.add( addRLine_simple(from_gfx_pos, to_gfx_pos, info.consang ) );
+					}
+				 	else {  
+				 		// DOS line -- direct
+				 		sib_anchor_pos = {x: from_gfx_pos.x, y:from_gfx_pos.y + info.drop/3};
+				 		haplo_group_lines.add( addRLine_simple(from_gfx_pos, sib_anchor_pos, false) );
+				 	}
 				}
-			 	else {  // DOS line -- direct
-			 		sib_anchor_pos = {x: from_gfx_pos.x, y:from_gfx_pos.y + info.drop/3};
-			 		haplo_group_lines.add( addRLine_simple(from_gfx_pos, sib_anchor_pos, false) );
+				else { // DOS line -- mate
+					var parent1_id = start_ids[0],
+						parent2_id = start_ids[1];
 
-			 		for (var g=-; g < dg; g++){
-			 			var nunc = haplo_group_lines[g].nodes[g.id].graphics.getPosition();
+					var parent1_gfx = unique_graph_objs[fid].nodes[parent1_id].graphics.getPosition(),
+						parent2_gfx = unique_graph_objs[fid].nodes[parent2_id].graphics.getPosition();
+
+					var mid_point_pos = {x: (parent1_gfx.x + parent2_gfx.x)/2, y: parent1_gfx.y};
+					sib_anchor_pos = {x:mid_point_pos.x, y:mid_point_pos.y + info.drop/3};
+
+					haplo_group_lines.add( addRLine_simple(mid_point_pos, sib_anchor_pos, false ));
+				}
+
+
+				if (sib_anchor_pos !== null){
+			 		var sib_ids = info.to.split('_');
+
+			 		for (var s=0; s < sib_ids.length; s++){
+			 			var sib_id = sib_ids[s],
+			 				sib_gfx_pos = unique_graph_objs[fid].nodes[sib_id].graphics.getPosition();
+
+			 			if (!info.lastgen)
+			 				haplo_group_lines.add( addRLine_nonoverlapY(sib_anchor_pos, sib_gfx_pos, false) );
+			 			else
+			 				haplo_group_lines.add( addRLine_simple(sib_anchor_pos, sib_gfx_pos, false) );
 			 		}
-			 	}
-			}
-			else { // DOS line -- mate
-				var parent1_id = start_ids[0],
-					parent2_id = start_ids[1];
 
-				var parent1_gfx = unique_graph_objs[fid].nodes[parent1_id].graphics.getPosition(),
-					parent2_gfx = unique_graph_objs[fid].nodes[parent2_id].graphics.getPosition();
-
-				var mid_point_pos = {x: (parent1_gfx.x + parent2_gfx.x)/2, y: parent1_gfx.y};
-				sib_anchor_pos = {x:mid_point_pos.x, y:mid_point_pos.y + info.drop/3};
-
-				haplo_group_lines.add( addRLine_simple(mid_point_pos, sib_anchor_pos, false ));
-			}
-
-
-			if (sib_anchor_pos !== null){
-		 		var sib_ids = info.to.split('_');
-
-		 		for (var s=0; s < sib_ids.length; s++){
-		 			var sib_id = sib_ids[s],
-		 				sib_gfx_pos = unique_graph_objs[fid].nodes[sib_id].graphics.getPosition();
-
-		 			if (!info.lastgen)
-		 				haplo_group_lines.add( addRLine_nonoverlapY(sib_anchor_pos, sib_gfx_pos, false) );
-		 			else
-		 				haplo_group_lines.add( addRLine_simple(sib_anchor_pos, sib_gfx_pos, false) );
-		 		}
-
-		 		//Add dos info
-		 		haplo_group_lines.add( new Kinetic.Text({
-		 			x: sib_anchor_pos.x - 5, 
-		 			y: sib_anchor_pos.y + 5, 
-		 			text: info.text, 
-		 			fontSize: 20,
-					fill: 'white'}) 
-		 		);
+			 		//Add dos info
+			 		if (info.text > 1){
+				 		haplo_group_lines.add( new Kinetic.Text({
+				 			x: sib_anchor_pos.x - 5, 
+				 			y: sib_anchor_pos.y + 5, 
+				 			text: info.text, 
+			 				fontSize: 20,
+							fill: 'white'}) 
+			 			);
+				 	}
+				}
 			}
 
 			// 
