@@ -35,13 +35,16 @@ function renderLinesAndNodes(line_map )
 	function addLinePoint( fid, key, obj )
 	{
 		if (key in line_points[fid]){
-			var obj_eski = line_points[fid][key],
-				dos_eski = obj_eski.dos
+			var eski_obj = line_points[fid][key],
+				eski_dos = eski_obj.dos
+
+			if (obj.dos < eski_dos){
+				line_points[fid][key] = obj; // Use new object if has a lower DOS
+			}
 		}
 		else {
 			line_points[fid][key] = obj;
 		}
-
 	}
 
 	for (var fid in line_map){
@@ -61,7 +64,7 @@ function renderLinesAndNodes(line_map )
 			for (var sgroup in line_map[fid][g])
 			{
 				console.log("SIB GROUP", sgroup)
-				start_y += drop_amount;
+				// start_y += drop_amount;
 
 				var directline = line_map[fid][g][sgroup].directlines,
 					mateline = line_map[fid][g][sgroup].matelines;
@@ -79,34 +82,59 @@ function renderLinesAndNodes(line_map )
 					// Add mate line
 					var consang = unique_graph_objs[fid].edges['m:'+fath_id+'-'+moth_id].consangineous;
 
-					if (!(fath_id in line_points[fid]))
-						line_points[fid][fath_id] = [];
-
-					line_points[fid][fath_id].push({to:moth_id, consang:consang, drop:null, text:null, lastgen:(g==line_map[fid].length-1)});
+					addLinePoint(
+						fid, fath_id,
+						{to:moth_id, consang:consang, drop:null, text:null, lastgen:(g==line_map[fid].length-1)}
+					);
 					
 					// Sib line from mateline
 					var dos = mateline[mline];
 
-					if (!(fath_id+'_'+moth_id in line_points[fid]))
-						line_points[fid][fath_id+'_'+moth_id] = [];
-
-					line_points[fid][fath_id+'_'+moth_id].push({to: sgroup, consang: false, drop:drop_amount, text: dos, lastgen:(g==line_map[fid].length-1)});
+					addLinePoint(
+						fid, fath_id+'_'+moth_id,
+						{to: sgroup, consang: false, drop:drop_amount, 
+						text: dos, lastgen:(g==line_map[fid].length-1)}
+					);
 				}
 
 				// Directline
 				for (var dline in directline)
 				{
-					start_y += drop_amount;
+					// Check if dline key is not already part of a mating, (just use that)
+					// Easier to check here than upstream
+					var found_existing_mateline = false;
+					var linep_keys = Object.keys(line_points[fid])
 
-					sortXHaplo( start_y, dline, fid );
+					for (var kk=0; kk < linep_keys.length; kk ++){
+						var key_ids = linep_keys[kk].split('_');
 
-					var dos = directline[dline]
+						if (key_ids.length != 2) key_ids = [key_ids]
 
-					addLinePoint(
-						fid, dline, 
-						{to:sgroup, consang:false, drop:drop_amount, 
-						 text:dos, lastgen:(g==line_map[fid].length-1)}
-					);
+						for (var ik=0; ik < key_ids.length; ik ++){
+							if (dline === key_ids[ik]){
+								found_existing_mateline = true;
+								break;
+							}
+						}
+						if (found_existing_mateline) break;
+
+						// Doesn't work for 76521 - 76611 - 5 - 7 - 8 for fam 1004
+						// but only because 76611 is not related to 5 at all (step mother?)
+					}
+
+					if (!(found_existing_mateline)){
+						start_y += drop_amount;
+
+						sortXHaplo( start_y, dline, fid );
+
+						var dos = directline[dline]
+
+						addLinePoint(
+							fid, dline, 
+							{to:sgroup, consang:false, drop:drop_amount, 
+							 text:dos, lastgen:(g==line_map[fid].length-1)}
+						);
+					}
 				}
 				
 				//Iterate over all sibs and hang from anchor
@@ -123,12 +151,113 @@ function renderLinesAndNodes(line_map )
 	} // end fam
 
 	console.log("line_map", line_points)
+	return {lp: line_points, sa: slot_array};
+}
 
-	
+
+function renderLines(line_points, haplo_group_lines){
+	// Render Lines
+	for (var fid in line_points){
+		for (var from in line_points[fid]){
+			var start_ids = from.split('_')
+
+			var info = line_points[fid][from];
+
+			var sib_anchor_pos = null;
+
+			// Mateline or DOSline
+			if (start_ids.length === 1){
+
+				var from_gfx_pos = unique_graph_objs[fid].nodes[from].graphics.getPosition();
+
+				if (info.drop === null){ 	// Mateline
+
+					var to_id = info.to,
+						to_gfx_pos = unique_graph_objs[fid].nodes[to_id].graphics.getPosition();
+
+					haplo_group_lines.add( addRLine_simple(from_gfx_pos, to_gfx_pos, info.consang ) );
+				}
+			 	else {  
+			 		// DOS line -- direct
+			 		sib_anchor_pos = {x: from_gfx_pos.x, y:from_gfx_pos.y + info.drop/3};
+			 		haplo_group_lines.add( addRLine_simple(from_gfx_pos, sib_anchor_pos, false) );
+			 	}
+			}
+			else { // DOS line -- mate
+				var parent1_id = start_ids[0],
+					parent2_id = start_ids[1];
+
+				var parent1_gfx = unique_graph_objs[fid].nodes[parent1_id].graphics.getPosition(),
+					parent2_gfx = unique_graph_objs[fid].nodes[parent2_id].graphics.getPosition();
+
+				var mid_point_pos = {x: (parent1_gfx.x + parent2_gfx.x)/2, y: parent1_gfx.y};
+				sib_anchor_pos = {x:mid_point_pos.x, y:mid_point_pos.y + info.drop/3};
+
+				haplo_group_lines.add( addRLine_simple(mid_point_pos, sib_anchor_pos, false ));
+			}
+
+
+			if (sib_anchor_pos !== null){
+		 		var sib_ids = info.to.split('_');
+
+		 		var min_x_of_sibgroup = 99999999999,
+		 			y_pos_of_any_sibline = 999999999;
+
+		 		for (var s=0; s < sib_ids.length; s++){
+		 			var sib_id = sib_ids[s],
+		 				sib_gfx_pos = unique_graph_objs[fid].nodes[sib_id].graphics.getPosition();
+
+		 			var sibline = null;
+		 			if (!info.lastgen)
+		 				sibline = addRLine_nonoverlapY(sib_anchor_pos, sib_gfx_pos, false);
+		 			else
+		 				sibline = addRLine_simple(sib_anchor_pos, sib_gfx_pos, false);
+
+		 			haplo_group_lines.add( sibline );
+
+		 			if(sib_gfx_pos.x < min_x_of_sibgroup){
+		 				min_x_of_sibgroup = sib_gfx_pos.x;
+		 				y_pos_of_any_sibline = sibline.getPoints()[3];
+		 			}
+		 		}
+
+		 		//Add dos info
+		 		if (info.text > 1){
+			 		haplo_group_lines.add( 
+			 			new Kinetic.Circle({
+			 				x: ((sib_anchor_pos.x + min_x_of_sibgroup) / 2),
+			 				y: y_pos_of_any_sibline, 
+			 				radius: 6,
+			 				fill: 'white',
+			 				stroke: 'black',
+			 				strokeWidth: 1
+			 			})
+			 		);
+
+			 		haplo_group_lines.add(
+			 			new Kinetic.Text({
+			 				x: ((sib_anchor_pos.x + min_x_of_sibgroup) / 2) - 3,
+			 				y: y_pos_of_any_sibline - 5,
+				 			text: info.text,
+			 				fontSize: 11,
+							fill: 'black'}) 
+		 			);
+			 	}
+			}
+		}
+	}
+
+	main_layer.draw();
+	haplo_layer.draw();
+}
+
+
+function render(line_points, slot_array){
 	//
 	// Render
 	//
 	var haplo_group_nodes = new Kinetic.Group();
+	var tween_nodes = [];
 	var haplo_group_lines = new Kinetic.Group();
 
 	haplo_layer.add( new Kinetic.Rect({
@@ -141,11 +270,12 @@ function renderLinesAndNodes(line_map )
 	haplo_layer.add(haplo_group_lines);
 	haplo_layer.add(haplo_group_nodes);
 
-
 	// Render Nodes
 	var start_x = 20;
+	var render_counter = slot_array.length - 1;
 
 	for (var fd=0; fd < slot_array.length; fd++){
+
 		var fid_id = slot_array[fd][0].split('_'),
 			y_pos = slot_array[fd][1];
 
@@ -156,101 +286,30 @@ function renderLinesAndNodes(line_map )
 		gfx.remove()
 		haplo_group_nodes.add(gfx);
 
-		gfx.setPosition( {x:start_x, y:y_pos} );
+		var tween = new Kinetic.Tween({
+			node: gfx,
+			x: start_x,
+			y: y_pos,
+			duration:0.8,
+			onFinish: function(){
+				console.log("FINISHED", render_counter)
+				if (render_counter-- === 0){
+					renderLines(line_points, haplo_group_lines)							
+				}
+			},
+			easing: Kinetic.Easings.EaseIn
+		});
+		tween_nodes.push(tween);
+
+		// gfx.setPosition( {x:start_x, y:y_pos} );
 
 		start_x += horiz_space;
 	}
 
-
-
-	// Render Lines
-	for (var fid in line_points){
-		for (var from in line_points[fid]){
-			var start_ids = from.split('_')
-
-			for (var ml=0; ml < line_points[fid][from].length; ml++)
-			{
-				var info = line_points[fid][from][ml];
-
-				var sib_anchor_pos = null;
-
-				// Mateline or DOSline
-				if (start_ids.length === 1){
-
-					var from_gfx_pos = unique_graph_objs[fid].nodes[from].graphics.getPosition();
-
-					if (info.drop === null){ 	// Mateline
-
-						var to_id = info.to,
-							to_gfx_pos = unique_graph_objs[fid].nodes[to_id].graphics.getPosition();
-
-						haplo_group_lines.add( addRLine_simple(from_gfx_pos, to_gfx_pos, info.consang ) );
-					}
-				 	else {  
-				 		// DOS line -- direct
-				 		sib_anchor_pos = {x: from_gfx_pos.x, y:from_gfx_pos.y + info.drop/3};
-				 		haplo_group_lines.add( addRLine_simple(from_gfx_pos, sib_anchor_pos, false) );
-				 	}
-				}
-				else { // DOS line -- mate
-					var parent1_id = start_ids[0],
-						parent2_id = start_ids[1];
-
-					var parent1_gfx = unique_graph_objs[fid].nodes[parent1_id].graphics.getPosition(),
-						parent2_gfx = unique_graph_objs[fid].nodes[parent2_id].graphics.getPosition();
-
-					var mid_point_pos = {x: (parent1_gfx.x + parent2_gfx.x)/2, y: parent1_gfx.y};
-					sib_anchor_pos = {x:mid_point_pos.x, y:mid_point_pos.y + info.drop/3};
-
-					haplo_group_lines.add( addRLine_simple(mid_point_pos, sib_anchor_pos, false ));
-				}
-
-
-				if (sib_anchor_pos !== null){
-			 		var sib_ids = info.to.split('_');
-
-			 		for (var s=0; s < sib_ids.length; s++){
-			 			var sib_id = sib_ids[s],
-			 				sib_gfx_pos = unique_graph_objs[fid].nodes[sib_id].graphics.getPosition();
-
-			 			if (!info.lastgen)
-			 				haplo_group_lines.add( addRLine_nonoverlapY(sib_anchor_pos, sib_gfx_pos, false) );
-			 			else
-			 				haplo_group_lines.add( addRLine_simple(sib_anchor_pos, sib_gfx_pos, false) );
-			 		}
-
-			 		//Add dos info
-			 		if (info.text > 1){
-				 		haplo_group_lines.add( new Kinetic.Text({
-				 			x: sib_anchor_pos.x - 5, 
-				 			y: sib_anchor_pos.y + 5, 
-				 			text: info.text, 
-			 				fontSize: 20,
-							fill: 'white'}) 
-			 			);
-				 	}
-				}
-			}
-
-			// 
-
-
-
-			// 	}
-
-			// 	haplo_group.add(
-			// 		addRLine_simple()
-
-			// 		)
-			// }
-		}
-	}
-
-
-	haplo_layer.draw();
-
-
-} //
+	
+	for (var t=0; t < tween_nodes.length;)
+		tween_nodes[t++].play();
+}
 
 
 
@@ -285,9 +344,9 @@ function launchHaplomode()
 	};
 
 	var lines = findDOSinSelection( selection_map() );
+	var res = renderLinesAndNodes( lines );
 
-
-	renderLinesAndNodes( lines );
+	render( res.lp, res.sa );
 }
 
 
