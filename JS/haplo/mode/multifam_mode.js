@@ -26,12 +26,12 @@ function renderLinesAndNodes(line_map )
 		slot_array.push( [key,pos_y] );
 	}
 
-
 	// The line map is a generation array, so has a very top-bottom
 	// approach in line placement
 	var line_points = {};
 	var end_point_nodes_drawn = {}; // Nodes with lines already attached (no multiple lines)
 
+	
 	function addLinePoint( fid, key, obj )
 	{
 		if (key in line_points[fid]){
@@ -143,8 +143,8 @@ function renderLinesAndNodes(line_map )
 
 				for (var s=0; s < sib_ids.length; s++)
 				{
-					sortXHaplo(sib_stepper, sib_ids[s], fid )
-					// sib_stepper -= back_step;
+					sortXHaplo(sib_stepper, sib_ids[s], fid );
+					// addLinePoint( fid, sib_ids[s], {to:sib_ids[s-1]})
 				}
 			} // end sib group
 		} // end gen
@@ -294,7 +294,7 @@ function render(line_points, slot_array){
 			onFinish: function(){
 				console.log("FINISHED", render_counter)
 				if (render_counter-- === 0){
-					renderLines(line_points, haplo_group_lines)							
+					renderLines(line_points, haplo_group_lines)
 				}
 			},
 			easing: Kinetic.Easings.EaseIn
@@ -309,6 +309,48 @@ function render(line_points, slot_array){
 	
 	for (var t=0; t < tween_nodes.length;)
 		tween_nodes[t++].play();
+}
+
+
+function alignSelection( group_nodes, group_lines, align )
+{
+	if (align){
+		group_lines.hide();
+		haplo_layer.draw();
+
+		var y_line = 400; // Set in globals
+		var tween_array = [];
+
+		for (var g=0; g < group_nodes.length; g++){
+			var nd = group_nodes[g];
+
+			nd.old_ypos = nd.getY();
+
+			tween_array.push(
+				new Kinetic.Tween({
+					node: nd,
+					y: y_line,
+					duration: 0.8,
+					easing: Kinetic.Easings.EaseIn
+				})
+			);
+		}
+
+	}
+
+
+	else {
+
+
+
+	}
+
+
+	for (var t=0; t < tween_array.length; t++)
+	{
+		tween_array[t].play();
+	}
+
 }
 
 
