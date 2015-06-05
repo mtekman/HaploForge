@@ -1,15 +1,77 @@
-// Mode to use for multiple familial selection
-
-/* 
-	Generate ped diagrams with number of generation connectors for 
-	related individuals.
-*/
-
-var selection_items = {}, // fid_id: {box:Object, selected:toggled, affected:bool}
-	toggle_selection_affecteds = false;
 
 
 
+function render(line_points, slot_array){
+	//
+	// Render
+	//
+	var haplo_group_nodes = new Kinetic.Group();
+	var tween_nodes = [];
+	var haplo_group_lines = new Kinetic.Group();
+
+
+	haplo_layer.add( new Kinetic.Rect({
+		width: window.innerWidth,
+		height: window.innerHeight,
+		fill: 'black',
+		opacity: 0.5
+	}));
+
+	haplo_layer.add(
+		addButton("align", 100, 100, function(){
+			alignSelection( haplo_group_nodes, haplo_group_lines);
+		})
+	);
+
+	haplo_layer.add(haplo_group_lines);
+	haplo_layer.add(haplo_group_nodes);
+
+	// Render Nodes
+	var start_x = 20;
+	var render_counter = slot_array.length - 1;
+
+	for (var fd=0; fd < slot_array.length; fd++){
+
+		var fid_id = slot_array[fd][0].split('_'),
+			y_pos = slot_array[fd][1];
+
+		var fid = fid_id[0], 
+			id = fid_id[1];
+
+		var gfx = unique_graph_objs[fid].nodes[id].graphics;
+
+		// Store old position before moving
+		gfx.main_layer_pos = gfx.getPosition();
+		gfx.remove()
+		
+		haplo_group_nodes.add(gfx);
+
+		var tween = new Kinetic.Tween({
+			node: gfx,
+			x: start_x,
+			y: y_pos,
+			duration:0.8,
+			onFinish: function(){
+				if (render_counter-- === 0){
+					renderLines(line_points, haplo_group_lines)
+				}
+			},
+			easing: Kinetic.Easings.EaseIn
+		});
+		tween_nodes.push(tween);
+
+		// gfx.setPosition( {x:start_x, y:y_pos} );
+
+		start_x += horiz_space;
+	}
+
+	for (var t=0; t < tween_nodes.length;)
+		tween_nodes[t++].play();
+}
+
+
+
+// Line map is given by DOS
 function renderLinesAndNodes(line_map )
 {
 	var slot_array = []; // index --> gfx
@@ -155,6 +217,9 @@ function renderLinesAndNodes(line_map )
 }
 
 
+
+
+
 function renderLines(line_points, haplo_group_lines){
 	// Render Lines
 	for (var fid in line_points){
@@ -249,249 +314,4 @@ function renderLines(line_points, haplo_group_lines){
 
 	main_layer.draw();
 	haplo_layer.draw();
-}
-
-
-function render(line_points, slot_array){
-	//
-	// Render
-	//
-	var haplo_group_nodes = new Kinetic.Group();
-	var tween_nodes = [];
-	var haplo_group_lines = new Kinetic.Group();
-
-	haplo_layer.add( new Kinetic.Rect({
-		width: window.innerWidth,
-		height: window.innerHeight,
-		fill: 'black',
-		opacity: 0.5
-	}));
-
-	haplo_layer.add(haplo_group_lines);
-	haplo_layer.add(haplo_group_nodes);
-
-	// Render Nodes
-	var start_x = 20;
-	var render_counter = slot_array.length - 1;
-
-	for (var fd=0; fd < slot_array.length; fd++){
-
-		var fid_id = slot_array[fd][0].split('_'),
-			y_pos = slot_array[fd][1];
-
-		var fid = fid_id[0], 
-			id = fid_id[1];
-
-		var gfx = unique_graph_objs[fid].nodes[id].graphics;
-		gfx.remove()
-		haplo_group_nodes.add(gfx);
-
-		var tween = new Kinetic.Tween({
-			node: gfx,
-			x: start_x,
-			y: y_pos,
-			duration:0.8,
-			onFinish: function(){
-				console.log("FINISHED", render_counter)
-				if (render_counter-- === 0){
-					renderLines(line_points, haplo_group_lines)
-				}
-			},
-			easing: Kinetic.Easings.EaseIn
-		});
-		tween_nodes.push(tween);
-
-		// gfx.setPosition( {x:start_x, y:y_pos} );
-
-		start_x += horiz_space;
-	}
-
-	
-	for (var t=0; t < tween_nodes.length;)
-		tween_nodes[t++].play();
-}
-
-
-function alignSelection( group_nodes, group_lines, align )
-{
-	if (align){
-		group_lines.hide();
-		haplo_layer.draw();
-
-		var y_line = 400; // Set in globals
-		var tween_array = [];
-
-		for (var g=0; g < group_nodes.length; g++){
-			var nd = group_nodes[g];
-
-			nd.old_ypos = nd.getY();
-
-			tween_array.push(
-				new Kinetic.Tween({
-					node: nd,
-					y: y_line,
-					duration: 0.8,
-					easing: Kinetic.Easings.EaseIn
-				})
-			);
-		}
-
-	}
-
-
-	else {
-
-
-
-	}
-
-
-	for (var t=0; t < tween_array.length; t++)
-	{
-		tween_array[t].play();
-	}
-
-}
-
-
-
-function launchHaplomode()
-{
-	var selection_map = function grabSelecteds(){
-		var idmap = {}
-
-		for (var fam_pid in selection_items){
-		  	var item = selection_items[fam_pid];
-
-		 	if (!item.selected) continue;
-		 	
-		 	var fam = fam_pid.split("_")[0],
-		 		pid = fam_pid.split("_")[1];
-
-		 	if (!(fam in idmap)){
-		 		idmap[fam] = {}; // generations, key first - array later
-		 	}
-
-		 	//Hopefully these are at the same level with few discrepencies
-		 	var generation = item.graphics.getY()
-
-		 	idmap[fam][generation] = idmap[fam][generation] || [];
-		 	idmap[fam][generation].push( pid );
-		 }
-
-		for (var fam in idmap)
-			idmap[fam] = map2orderedArray( idmap[fam] )
-
-		return idmap;
-	};
-
-	var lines = findDOSinSelection( selection_map() );
-	var res = renderLinesAndNodes( lines );
-
-	render( res.lp, res.sa );
-}
-
-
-function selectFam(fam_id){
-	for (var key in selection_items){
-		if (key.split("_")[0] == fam_id)
-			selection_items[key].box.fire('click');
-	}
-}
-
-
-function startSelectionMode(){
-
-	// Main selection layer
-	var select_group = new Kinetic.Group({
-		x:0, y:0,
-		width: stage.getWidth(),
-		height: stage.getHeight()
-	});
-
-	select_group.add(
-		addButton("Submit", 0, 0, launchHaplomode)
-	);
-
-	select_group.add(
-		addButton("Select Affecteds", 0, butt_h, function(){
-
-			toggle_selection_affecteds = !toggle_selection_affecteds;
-
-			for (var key in selection_items){
-
-				var item = selection_items[key];
-				var affected = (item.graphics.children[0].attrs.fill === col_affs[2])
-
-				if (affected)
-					if( (toggle_selection_affecteds && !item.selected)
-					 || (!toggle_selection_affecteds && item.selected) )
-						item.box.fire('click');
-			}
-
-			console.log("affecteds:", Object.keys(selection_items).filter( function (n){ return selection_items[n].affected === true;}));
-		})
-	);
-
-	// var background = new Kinetic.Rect({
-	// 		x:0, y:0,
-	// 		width: window.innerWidth,
-	// 		height: window.innerHeight,
-	// 		fill: 'black',
-	// 		opacity: 0.1
-	// 	});
-
-	// select_group.add(background);
-	// background.moveToBottom();
-
-	// Replicate existing objects with bounding square
-	function addBounder(pos, key){
-		var border_offs = 3;
-
-		var rect = new Kinetic.Rect({
-			x: pos.x - nodeSize - border_offs,
-			y: pos.y - nodeSize - border_offs,
-			width: (nodeSize *2) + 2*border_offs,
-			height: (nodeSize * 2) + 2*border_offs,
-			strokeAlpha: 0.5,
-			strokeWidth: 3,
-			strokeEnabled: false,
-			stroke: 'orange',
-		});
-
-		rect.on('click', function(){
-			//Toggle selection
-
-			this.setStrokeEnabled(!selection_items[key].selected);
-
-			selection_items[key].selected = !selection_items[key].selected
-			main_layer.draw();
-		});
-		return rect;
-	}
-
-	for (var fid in unique_graph_objs){
-		for (var node in unique_graph_objs[fid].nodes)
-		{
-			if (node == 0) continue;
-
-			var key = fid+"_"+node
-
-			var gfx = unique_graph_objs[fid].nodes[node].graphics,
-				pos = gfx.getAbsolutePosition(),
-				bounder = addBounder(pos, key);
-
-			// By default not enabled
-			selection_items[key] = {
-				box:bounder,
-				selected:false,
-				graphics: gfx
-			};
-			select_group.add(bounder);
-		}
-	}
-	main_layer.add(select_group);
-	select_group.setZIndex(20);
-
-	main_layer.draw();
 }
