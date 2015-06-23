@@ -1,39 +1,34 @@
 
-
-
 function render(line_points, slot_array){
 	//
 	// Render
 	//
+	var min_pos = {x:9999,y:9999}, max_pos = {x:0,y:0};
+
+	var render_group = new Kinetic.Group();
+
 	var haplo_group_nodes = new Kinetic.Group();
 	var tween_nodes = [];
 	var haplo_group_lines = new Kinetic.Group();
 
-
-	haplo_layer.add( new Kinetic.Rect({
-		width: window.innerWidth,
-		height: window.innerHeight,
-		fill: 'black',
-		opacity: 0.5
-	}));
-
-	haplo_layer.add(
-		addButton("align", 100, 100, function(){
-			alignSelection( haplo_group_nodes, haplo_group_lines);
-		})
-	);
-
-	haplo_layer.add(haplo_group_lines);
-	haplo_layer.add(haplo_group_nodes);
+	render_group.add(haplo_group_lines);
+	render_group.add(haplo_group_nodes);
 
 	// Render Nodes
 	var start_x = 20;
+
+	min_pos.x = start_x;
+
+	console.log("AT FUNCTION SLOT=", slot_array);
+
 	var render_counter = slot_array.length - 1;
 
 	for (var fd=0; fd < slot_array.length; fd++){
 
 		var fid_id = slot_array[fd][0].split('_'),
 			y_pos = slot_array[fd][1];
+	
+		if (min_pos.y > y_pos) min_pos.y = y_pos;
 
 		var fid = fid_id[0], 
 			id = fid_id[1];
@@ -53,7 +48,7 @@ function render(line_points, slot_array){
 			duration:0.8,
 			onFinish: function(){
 				if (render_counter-- === 0){
-					renderLines(line_points, haplo_group_lines)
+					mapLines(line_points, haplo_group_lines)
 				}
 			},
 			easing: Kinetic.Easings.EaseIn
@@ -63,19 +58,24 @@ function render(line_points, slot_array){
 		// gfx.setPosition( {x:start_x, y:y_pos} );
 
 		start_x += horiz_space;
+
+		if (start_x > max_pos.x) max_pos.x = start_x;
+		if (y_pos > max_pos.y) max_pos.y = y_pos;
 	}
 
 	for (var t=0; t < tween_nodes.length;)
 		tween_nodes[t++].play();
+
+	return { min:min_pos, max:max_pos, group:render_group};
 }
 
 
 
 // Line map is given by DOS
-function renderLinesAndNodes(line_map )
+function mapLinesAndNodes(line_map )
 {
 	var slot_array = []; // index --> gfx
-
+	
 	function sortXHaplo(pos_y, id, fid ){
 		var key  = fid+'_'+id;
 
@@ -220,8 +220,8 @@ function renderLinesAndNodes(line_map )
 
 
 
-function renderLines(line_points, haplo_group_lines){
-	// Render Lines
+function mapLines(line_points, haplo_group_lines){
+	// Map Lines to their nodes
 	for (var fid in line_points){
 		for (var from in line_points[fid]){
 			var start_ids = from.split('_')

@@ -38,13 +38,66 @@ function launchHaplomode()
 		return idmap;
 	};
 
-	var lines = findDOSinSelection( selection_map() );
-	var res = renderLinesAndNodes( lines );
+	var line_data = findDOSinSelection( selection_map() );
 
-	render( res.lp, res.sa );
+	makeHaploTypeWindow( line_data );
+}
 
-	haplo_layer.add(butt);
-	haplo_layer.draw();;
+
+// Just the top box
+function makeHaploTypeWindow( lines_nodes_to_render )
+{
+	var line_points = lines_nodes_to_render.lp,
+		slot_array = lines_nodes_to_render.sa;
+
+	var res = mapLinesAndNodes( line_points, slot_array );
+	console.log("AFTER SLOT=", slot_array);
+	var box_lims_and_group = render( res );
+
+	var render_group = box_lims_and_group.group,
+		min_pos = box_lims_and_group.min,
+		max_pos = box_lims_and_group.max;
+
+
+	var haplo_window = new Kinetic.Group();
+
+	// Background
+	haplo_window.add( new Kinetic.Rect({
+		width: window.innerWidth,
+		height: window.innerHeight,
+		fill: 'black',
+		opacity: 0.5
+	}));
+
+	// White Rect
+	var white_rect = new Kinetic.Group();
+
+	white_rect.add( new Kinetic.Rect({
+		x: min_pos.x,
+		y: max_pos.y,
+		width: max_pos.x - min_pos.x,
+		height: max_pos.y - min_pos.y,
+		fill: 'white'
+	}));
+
+	// Button
+	white_rect.add(
+		addButton("align", 0, 100, function(){
+			alignSelection( haplo_group_nodes, haplo_group_lines);
+		})
+	);
+
+	// Add rendered lines
+	white_rect.add(	render_group );
+
+	haplo_window.add(white_rect);
+
+	console.log(haplo_window);
+
+	haplo_layer.add(haplo_window);
+
+	main_layer.draw();
+	haplo_layer.draw()
 }
 
 
