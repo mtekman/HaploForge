@@ -1,5 +1,6 @@
 // Haplomode is launched from here
-
+var haplo_window = new Kinetic.Group();
+var white_rect = new Kinetic.Group(); //global
 
 
 function stopHaplomode(){
@@ -47,19 +48,12 @@ function launchHaplomode()
 // Just the top box
 function makeHaploTypeWindow( lines_nodes_to_render )
 {
-	var line_points = lines_nodes_to_render.lp,
-		slot_array = lines_nodes_to_render.sa;
+	var res = mapLinesAndNodes( lines_nodes_to_render );
 
-	var res = mapLinesAndNodes( line_points, slot_array );
-	console.log("AFTER SLOT=", slot_array);
-	var box_lims_and_group = render( res );
+	var line_points = res.lp,
+		slot_array = res.sa;
 
-	var render_group = box_lims_and_group.group,
-		min_pos = box_lims_and_group.min,
-		max_pos = box_lims_and_group.max;
-
-
-	var haplo_window = new Kinetic.Group();
+	haplo_layer.add( haplo_window );
 
 	// Background
 	haplo_window.add( new Kinetic.Rect({
@@ -69,35 +63,51 @@ function makeHaploTypeWindow( lines_nodes_to_render )
 		opacity: 0.5
 	}));
 
-	// White Rect
-	var white_rect = new Kinetic.Group();
 
-	white_rect.add( new Kinetic.Rect({
-		x: min_pos.x,
-		y: max_pos.y,
-		width: max_pos.x - min_pos.x,
-		height: max_pos.y - min_pos.y,
-		fill: 'white'
-	}));
+	var min_pos, max_pos;
 
-	// Button
-	white_rect.add(
-		addButton("align", 0, 100, function(){
-			alignSelection( haplo_group_nodes, haplo_group_lines);
-		})
-	);
+	var box_lims_and_group = render( line_points, slot_array, function( render_group ){
+		render_group.remove();
 
-	// Add rendered lines
-	white_rect.add(	render_group );
+		min_pos = box_lims_and_group.min,
+		max_pos = box_lims_and_group.max;
 
-	haplo_window.add(white_rect);
+		console.log( "box_lims", box_lims_and_group);
 
-	console.log(haplo_window);
+		// White Rect
+		// white_rect.setX( min_pos.x ); white_rect.setY( min_pos.y );
 
-	haplo_layer.add(haplo_window);
+		var margin = 20;
 
-	main_layer.draw();
-	haplo_layer.draw()
+		white_rect.add( new Kinetic.Rect({
+			x: min_pos.x - margin,
+			y: min_pos.y - margin,
+			width: (max_pos.x - min_pos.x) + margin,
+			height: (max_pos.y - min_pos.y) + 3*margin,
+			fill: 'white'
+		}));
+
+		// Button
+		haplo_window.add(
+			addButton("align", 0, 0, function(){
+				alignSelection( haplo_group_nodes, haplo_group_lines);
+			})
+		);
+
+		// Add rendered lines
+		white_rect.add(	render_group );
+		haplo_window.add(white_rect);
+
+		(new Kinetic.Tween({
+			node: white_rect,
+			x: 50,
+			y: -50,
+			duration:1
+		})).play();
+
+		main_layer.draw();
+		haplo_layer.draw();
+	});
 }
 
 

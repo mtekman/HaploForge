@@ -1,5 +1,8 @@
+var haplo_group_nodes = new Kinetic.Group();
+var haplo_group_lines = new Kinetic.Group();
 
-function render(line_points, slot_array){
+
+function render(line_points, slot_array, finishfunc){
 	//
 	// Render
 	//
@@ -7,12 +10,14 @@ function render(line_points, slot_array){
 
 	var render_group = new Kinetic.Group();
 
-	var haplo_group_nodes = new Kinetic.Group();
 	var tween_nodes = [];
-	var haplo_group_lines = new Kinetic.Group();
 
 	render_group.add(haplo_group_lines);
 	render_group.add(haplo_group_nodes);
+
+	// Add directly to layer for now, but after animation over
+	// move to white_box group
+	haplo_layer.add( render_group );
 
 	// Render Nodes
 	var start_x = 20;
@@ -48,7 +53,8 @@ function render(line_points, slot_array){
 			duration:0.8,
 			onFinish: function(){
 				if (render_counter-- === 0){
-					mapLines(line_points, haplo_group_lines)
+					mapLines(line_points, haplo_group_lines);
+					finishfunc( render_group );
 				}
 			},
 			easing: Kinetic.Easings.EaseIn
@@ -110,7 +116,7 @@ function mapLinesAndNodes(line_map )
 	}
 
 	for (var fid in line_map){
-		var start_y = 400;
+		var start_y = 0;
 		var drop_amount = 50;
 
 		line_points[fid] = {};
@@ -212,7 +218,7 @@ function mapLinesAndNodes(line_map )
 		} // end gen
 	} // end fam
 
-	console.log("line_map", line_points)
+	console.log("line_map", line_points, "slot_array", slot_array)
 	return {lp: line_points, sa: slot_array};
 }
 

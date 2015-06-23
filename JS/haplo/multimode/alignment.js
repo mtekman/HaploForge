@@ -9,7 +9,8 @@ function alignSelection( group_nodes, group_lines)
 	if (haplomode_alignment_toggle){
 		group_lines.hide();
 
-		var y_line = 400; // Set in globals
+		var y_line = haplo_window.getAbsolutePosition().y + white_rect.getAbsolutePosition().y; // Set in globals
+		console.log( y_line );
 
 		for (var g=0; g < group_nodes.children.length; g++){
 			var nd = group_nodes.children[g];
