@@ -24,8 +24,6 @@ function render(line_points, slot_array, finishfunc){
 
 	min_pos.x = start_x;
 
-	console.log("AT FUNCTION SLOT=", slot_array);
-
 	var render_counter = slot_array.length - 1;
 
 	for (var fd=0; fd < slot_array.length; fd++){
