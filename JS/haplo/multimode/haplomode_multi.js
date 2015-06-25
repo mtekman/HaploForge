@@ -1,6 +1,7 @@
 // Haplomode is launched from here
 var haplo_window = new Kinetic.Group();
-var white_rect = new Kinetic.Group({draggable:true}); //global
+haplo_window.top = new Kinetic.Group(),
+haplo_window.bottom = new Kinetic.Group();
 
 var min_node_placement_y = 0;
 var left_margin_x = 100;
@@ -69,9 +70,11 @@ function makeHaploTypeWindow( lines_nodes_to_render )
 	var min_pos, max_pos;
 
 	var box_lims_and_group = render( line_points, slot_array,
-		function(render_group){
+		function(render_group)
+		{
 			makeTopBox_haplomode( box_lims_and_group, render_group,
-			 slot_array //unused, but passed onto makeBottomBox)
+			 slot_array //unused, but passed onto makeBottomBox
+			);
 		}
 	);
 }
@@ -85,16 +88,16 @@ function makeTopBox_haplomode( box_lims_and_group, render_group, slot_array ){
 	min_node_placement_y = min_pos.y;
 
 	// White Rect
-	white_rect.setPosition(
+	haplo_window.top.setPosition(
 		{x:min_pos.x - white_margin, y: min_pos.y - white_margin} );
 
-	white_rect.box = new Kinetic.Rect({
+	haplo_window.top.box = new Kinetic.Rect({
 		width: (max_pos.x - min_pos.x),
 		height: (max_pos.y - min_pos.y) + 3*white_margin,
 		fill: 'white'
 	});
 
-	white_rect.add( white_rect.box );
+	haplo_window.top.add( haplo_window.top.box );
 
 	// Align Button
 	haplo_window.add(
@@ -106,13 +109,12 @@ function makeTopBox_haplomode( box_lims_and_group, render_group, slot_array ){
 	var haplotypes_toggled = true;
 
 	haplo_window.add(
-		addButton("haplotypes", 0, butt_h, function()
+		addButton("haplos", 0, butt_h, function()
 		{
 			haplotypes_toggled = !haplotypes_toggled;
 
 			toggleBottomBox(
 				haplotypes_toggled, 
-				white_rect.box, // for aligning with lower box
 				slot_array
 			);
 		})
@@ -121,13 +123,13 @@ function makeTopBox_haplomode( box_lims_and_group, render_group, slot_array ){
 
 	// Add rendered lines
 	render_group.remove();
-	white_rect.add(	render_group );
-	render_group.setY(-white_rect.getY());
+	haplo_window.top.add(	render_group );
+	render_group.setY(-haplo_window.top.getY());
 
-	haplo_window.add(white_rect);
+	haplo_window.add(haplo_window.top);
 
 	(new Kinetic.Tween({
-		node: white_rect,
+		node: haplo_window.top,
 		x: left_margin_x,
 		y: white_margin,
 		duration:0.2
@@ -139,13 +141,24 @@ function makeTopBox_haplomode( box_lims_and_group, render_group, slot_array ){
 
 
 
-function toggleBottomBox( show, top_box, haplotype_ids){
-
+function toggleBottomBox( show, haplotype_ids)
+{
 	if (show){
+		var bottom_window = new Kinetic.Group({
+			x:top_box.getX(),
+			y:top_box.getHeight()
+		});
+
+		bottom_window.box = new Kinetic.Rect({
+			height: 100,
+			width: top_box.getWidth()
+		});
+
+		bottom_window.add(box);
 
 	}
 
 }
 
 
-function makeBottomBox_haplomode( )
+function makeBottomBox_haplomode( ){}
