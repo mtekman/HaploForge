@@ -19,16 +19,8 @@ var mscale_layer = new Kinetic.Layer({
 	height: slider_height + 20
 });
 
+
 // ------------ Kinetic Tools --------------
-
-function kineticTween(props){
-// Kinetic.prototype.Tween = function(props){
-	props.easing = Kinetic.Easings.EaseIn;
-	props.duration = 0.8
-	return new Kinetic.Tween(props);
-}
-
-
 function addSquare(color)
 {
 	return new Kinetic.Rect({

@@ -123,13 +123,13 @@ function mapLinesAndNodes(line_map )
 
 		for (var g=0; g < line_map[fid].length; g++){
 
-			console.log("gen=", g, line_map[fid][g])
+//			console.log("gen=", g, line_map[fid][g])
 
 
 			// ConnectEEs and connectERs...  FUCK THIS
 			for (var sgroup in line_map[fid][g])
 			{
-				console.log("SIB GROUP", sgroup)
+//				console.log("SIB GROUP", sgroup)
 				// start_y += drop_amount;
 
 				var directline = line_map[fid][g][sgroup].directlines,
@@ -216,7 +216,7 @@ function mapLinesAndNodes(line_map )
 		} // end gen
 	} // end fam
 
-	console.log("line_map", line_points, "slot_array", slot_array)
+//	console.log("line_map", line_points, "slot_array", slot_array)
 	return {lp: line_points, sa: slot_array};
 }
 

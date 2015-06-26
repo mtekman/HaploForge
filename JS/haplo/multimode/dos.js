@@ -46,7 +46,7 @@ function findDOSinSelection(selection_map){
 				sib_groups[fm_key].push(perc);
 			}
 
-			console.log("sib_groups", sib_groups);
+//			console.log("sib_groups", sib_groups);
 
 
 			// if (g === 0) continue;
@@ -99,7 +99,7 @@ function findDOSinSelection(selection_map){
 
 						if (are_mates) {
 							// Push as a single connection
-							console.log("adding mateline for", root.id)
+//							console.log("adding mateline for", root.id)
 							matelines[fath_rez.id+"_"+moth_rez.id] = moth_rez.dos;
 						} else {
 
@@ -139,7 +139,7 @@ function findDOSinSelection(selection_map){
 
 				search( root, 0 );
 
-				console.log("sib_groups[sgr]", sib_groups[sgr]);
+//				console.log("sib_groups[sgr]", sib_groups[sgr]);
 
 				if (!(g in sib_map)){
 					sib_map[g] = {};
@@ -181,7 +181,7 @@ function findDOSinSelection(selection_map){
 			fam_lines[fam] = sib_map2;
 		}
 	}
-	console.log("fam_lines", fam_lines)
+//	console.log("fam_lines", fam_lines)
 
 
 	// If an indiv exists 

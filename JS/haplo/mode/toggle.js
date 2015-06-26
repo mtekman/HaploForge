@@ -85,18 +85,14 @@ function toggle_haplomode(haplofam_map)
 
 
 		
-		grp.remove(); 										  // remove from parent but do not destroy;
-		haplo_layer.add(grp); 								  // add to haplo
+	// 	grp.remove(); 										  // remove from parent but do not destroy;
+	// 	haplo_layer.add(grp); 								  // add to haplo
 
 	
 
-		grp.add(n_caa.haplo_panel);
+	// 	grp.add(n_caa.haplo_panel);
 
-	}
-	else {
-
-
-	}
+	// }
 }
 
 

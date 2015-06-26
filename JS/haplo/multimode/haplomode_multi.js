@@ -1,7 +1,8 @@
 // Haplomode is launched from here
+var selected_ids_map = {};
 var haplo_window = new Kinetic.Group();
 haplo_window.top = new Kinetic.Group(),
-haplo_window.bottom = new Kinetic.Group();
+haplo_window.bottom;
 
 var min_node_placement_y = 0;
 var left_margin_x = 100;
@@ -41,8 +42,9 @@ function launchHaplomode()
 
 		return idmap;
 	};
+	selected_ids_map = selection_map();
 
-	var line_data = findDOSinSelection( selection_map() );
+	var line_data = findDOSinSelection( selected_ids_map );
 
 	makeHaploTypeWindow( line_data );
 }
@@ -72,15 +74,13 @@ function makeHaploTypeWindow( lines_nodes_to_render )
 	var box_lims_and_group = render( line_points, slot_array,
 		function(render_group)
 		{
-			makeTopBox_haplomode( box_lims_and_group, render_group,
-			 slot_array //unused, but passed onto makeBottomBox
-			);
+			makeTopBox_haplomode( box_lims_and_group, render_group );
 		}
 	);
 }
 
 
-function makeTopBox_haplomode( box_lims_and_group, render_group, slot_array ){
+function makeTopBox_haplomode( box_lims_and_group, render_group){
 	min_pos = box_lims_and_group.min,
 	max_pos = box_lims_and_group.max;
 
@@ -91,13 +91,12 @@ function makeTopBox_haplomode( box_lims_and_group, render_group, slot_array ){
 	haplo_window.top.setPosition(
 		{x:min_pos.x - white_margin, y: min_pos.y - white_margin} );
 
-	haplo_window.top.box = new Kinetic.Rect({
+	haplo_window.top.rect = addWhiteRect({
 		width: (max_pos.x - min_pos.x),
-		height: (max_pos.y - min_pos.y) + 3*white_margin,
-		fill: 'white'
+		height: (max_pos.y - min_pos.y) + 3*white_margin
 	});
 
-	haplo_window.top.add( haplo_window.top.box );
+	haplo_window.top.add( haplo_window.top.rect );
 
 	// Align Button
 	haplo_window.add(
@@ -106,17 +105,14 @@ function makeTopBox_haplomode( box_lims_and_group, render_group, slot_array ){
 		})
 	);
 	// JS detaches toggler from function inherently
-	var haplotypes_toggled = true;
+	var haplotypes_toggled = false;
 
 	haplo_window.add(
 		addButton("haplos", 0, butt_h, function()
 		{
 			haplotypes_toggled = !haplotypes_toggled;
 
-			toggleBottomBox(
-				haplotypes_toggled, 
-				slot_array
-			);
+			toggleBottomBox(haplotypes_toggled);
 		})
 	);
 
@@ -141,24 +137,104 @@ function makeTopBox_haplomode( box_lims_and_group, render_group, slot_array ){
 
 
 
-function toggleBottomBox( show, haplotype_ids)
+function toggleBottomBox( show )
 {
-	if (show){
-		var bottom_window = new Kinetic.Group({
-			x:top_box.getX(),
-			y:top_box.getHeight()
+	var y_margin = 30;
+	console.log("sel_ids=", selected_ids_map)
+
+	if (show)
+	{
+		delete haplo_window.bottom;
+
+		//Scroll window
+		haplo_window.bottom = new Kinetic.Group({
+			x:haplo_window.top.getX(),
+			y:haplo_window.top.rect.getHeight() + y_margin,
+			id:"scroll_panel",
 		});
 
-		bottom_window.box = new Kinetic.Rect({
-			height: 100,
-			width: top_box.getWidth()
+		haplo_window.bottom.rect = addWhiteRect({
+			height: 0,
+			width: haplo_window.top.rect.getWidth()
 		});
 
-		bottom_window.add(box);
+
+		
+		// Expand Top box
+		haplo_window.bottom.add( haplo_window.bottom.rect );
+		haplo_window.add( haplo_window.bottom );
+
+		kineticTween({
+			node: haplo_window.bottom.rect,
+			height: 500
+		}).play();
+
+		// Add haplotypes
+		var haplo_group = addHaploScreen(
+			haplo_window.top.rect.getWidth(),
+			500,
+			selected_ids_map
+		);
+
+
+		/* 
+		Here I'm essentially pointing at haplomode_frontend.js
+		
+		I dont need to do much - haploblock_frontend scripts
+		only require:
+			* unique_graph_objs.haplo_scroll
+			* unique_graph_objs.haplo_area
+
+		haplo_scroll is the .main_box (scroll_window):
+		 	group, scroll window that stays stationary
+
+		haplo_area is .scrollable (scroll_area__):
+			group (child of haplo_scroll), draggable haplotypes
+
+		It is also worth noting that the main white rect is a child of
+		haplo_scroll (stack the existing).
+		*/
+
+		// Space for haplotypes to be rendered
+		//
+
+		// Where HTs are grouped
+		var scroll_area__ = new Kinetic.Group({
+			draggable:true,
+			dragBoundFunc: function(pos){
+				var group_loc = this.parent.getAbsolutePosition();
+
+				return {
+					x: group_loc.x,
+					y: group_loc.y + (Math.floor((pos.y - group_loc.y)/ HAP_VERT_SPA) * HAP_VERT_SPA)
+				};
+			}
+		});
+		
+		scroll_area__.on('mouseup', function(){
+			redrawHaplos(); // starting=300
+			updateInputsByIndex( sta_index, end_index );
+			updateSlide();
+			mscale_layer.draw();
+		});
+
+		unique_graph_objs.haplo_scroll = haplo_window.bottom;
+		unique_graph_objs.haplo_area = scroll_area__;
+
+		haplo_window.bottom.add( scroll_area__ );
+	}
+	else {
+		kineticTween({
+			node: haplo_window.bottom.rect,
+			height:0,
+			onFinish: function(){
+				haplo_window.bottom.destroyChildren();
+				haplo_window.bottom.destroy();
+			}
+		}).play();
 
 	}
 
+	haplo_layer.draw();
+
 }
-
-
-function makeBottomBox_haplomode( ){}

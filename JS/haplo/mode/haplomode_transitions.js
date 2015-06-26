@@ -29,7 +29,7 @@ function transitionToggle(haplofam_map, toggler, lineswitch, use_y, groupmove, o
 				haplo_layer.add(n_caa.group)
 			}
 			else {
-				var new_haplogroup = new Kinetic.Group({name:fam_id;});
+				var new_haplogroup = new Kinetic.Group({name:fam_id});
 
 				// Move partial shapes, but not the lines
 				for (var id in fam_o_interest)
@@ -159,7 +159,7 @@ function transitionToggle(haplofam_map, toggler, lineswitch, use_y, groupmove, o
 	// 			})).play();
 	// 		}
 	// 	}
-	}
+	// }
 
 	return {x:start_x, y:start_y};
 }
