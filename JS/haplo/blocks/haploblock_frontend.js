@@ -66,16 +66,16 @@ function redrawHaplos(resizeToo){
 	var diff_y = scroll_rect.getAbsolutePosition().y - scroll_area.getAbsolutePosition().y,
 		index_start_delta = Math.floor( diff_y / HAP_VERT_SPA );
 
-//	console.log("diffy="+diff_y, "ind_start_d="+index_start_delta);
+	// console.log("diffy="+diff_y, "ind_start_d="+index_start_delta);
 	sta_index += index_start_delta;
 	end_index += index_start_delta;
-//	console.log("shifting by "+index_start_delta);
+	// console.log("shifting by "+index_start_delta);
 
 	// Delete after grabbing position
 	scroll_area.destroyChildren();
 	scroll_area.setY(0);
 
-// 	console.log("indexes = ", sta_index, end_index);
+	// console.log("indexes = ", sta_index, end_index);
 
 	if (sta_index < 0){
 		sta_index = 0;

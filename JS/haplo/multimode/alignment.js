@@ -27,12 +27,21 @@ function alignTopSelection( group_nodes, group_lines)
 		}
 
 		// Shrink!
-		white_rect.box.old_height = white_rect.box.getHeight();
+		haplo_window.top.rect.old_height = haplo_window.top.rect.getHeight();
+		haplo_window.bottom.old_ypos = haplo_window.bottom.getY();
 
 		tween_array.push(
 			kineticTween({
-				node: white_rect.box,
+				node: haplo_window.top.rect,
 				height: white_margin * 3,
+			})
+		);
+
+		// Move bottom box too
+		tween_array.push(
+			kineticTween({
+				node: haplo_window.bottom,
+				y: (white_margin * 3) + haplo_window.y_margin
 			})
 		);
 	}
@@ -60,10 +69,19 @@ function alignTopSelection( group_nodes, group_lines)
 		// Unshrink
 		tween_array.push(
 			kineticTween({
-				node: white_rect.box,
-				height: white_rect.box.old_height,
+				node: haplo_window.top.rect,
+				height: haplo_window.top.rect.old_height,
 			})
 		);
+
+		// Move bottom box back
+		tween_array.push(
+			kineticTween({
+				node: haplo_window.bottom,
+				y: haplo_window.bottom.old_ypos
+			})
+		);
+
 	}
 
 	// Smoother to build tweens first, then execute them

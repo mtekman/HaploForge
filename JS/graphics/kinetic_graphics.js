@@ -50,33 +50,6 @@ function addDiamond(color){
 }
 
 
-
-function addButton(message, xp, yp, callback){
-	var group = new Kinetic.Group({x: xp, y: yp});
-
-	var rec = new Kinetic.Rect({
-		x: -5, y: -5,
-		width: butt_w,
-		height: butt_h,
-		fill: 'grey',
-		stroke: 'black',
-		strokeWidth: 2
-	});
-
-	var tex = new Kinetic.Text({
-		text: message,
-		fontSize: 12,
-		fill: 'white'
-	});
-
-	group.add(rec);
-	group.add(tex);
-	group.on('click', callback);
-
-	return group;
-}
-
-
 function changeRLine(line, start, end, offset_y)
 {
 	offset_y = offset_y || 0;
@@ -192,7 +165,7 @@ function addFamily(fam_id, sx, sy){
 
 function addHaploBlocksAll()
 {
-	var grp = new Kinetic.Group({ x:0, y:((2*nodeSize)+10)});
+	var grp = new Kinetic.Group({ x:-50, y:((2*nodeSize)+10)});
 
 	var haplo = new Kinetic.Group({});
 

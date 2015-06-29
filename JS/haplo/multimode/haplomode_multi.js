@@ -1,5 +1,7 @@
 // Haplomode is launched from here
-var selected_ids_map = {};
+var selected_ids_map = {}, // Generational map
+	selected_ids = {};	   // Just a map of ids
+
 var haplo_window = new Kinetic.Group();
 haplo_window.top = new Kinetic.Group(),
 haplo_window.bottom;
@@ -15,8 +17,9 @@ function stopHaplomode(){
 
 function launchHaplomode()
 {
-	var selection_map = function grabSelecteds(){
+	function grabSelecteds(){
 		var idmap = {}
+		var pure_ids = {}
 
 		for (var fam_pid in selection_items){
 		  	var item = selection_items[fam_pid];
@@ -28,7 +31,10 @@ function launchHaplomode()
 
 		 	if (!(fam in idmap)){
 		 		idmap[fam] = {}; // generations, key first - array later
+		 		
+		 		pure_ids[fam] = {};
 		 	}
+		 	pure_ids[fam][pid] = 1;
 
 		 	//Hopefully these are at the same level with few discrepencies
 		 	var generation = item.graphics.getY()
@@ -40,9 +46,13 @@ function launchHaplomode()
 		for (var fam in idmap)
 			idmap[fam] = map2orderedArray( idmap[fam] )
 
-		return idmap;
+		return {id_map_generational: idmap, id_map:pure_ids};
 	};
-	selected_ids_map = selection_map();
+
+	var selecteds = grabSelecteds();
+
+	selected_ids_map = selecteds.id_map_generational;
+	selected_ids = selecteds.id_map
 
 	var line_data = findDOSinSelection( selected_ids_map );
 
@@ -139,7 +149,8 @@ function makeTopBox_haplomode( box_lims_and_group, render_group){
 
 function toggleBottomBox( show )
 {
-	var y_margin = 30;
+	haplo_window.y_margin = 30;
+
 	console.log("sel_ids=", selected_ids_map)
 
 	if (show)
@@ -149,7 +160,7 @@ function toggleBottomBox( show )
 		//Scroll window
 		haplo_window.bottom = new Kinetic.Group({
 			x:haplo_window.top.getX(),
-			y:haplo_window.top.rect.getHeight() + y_margin,
+			y:haplo_window.top.rect.getHeight() + haplo_window.y_margin,
 			id:"scroll_panel",
 		});
 
@@ -164,17 +175,12 @@ function toggleBottomBox( show )
 		haplo_window.bottom.add( haplo_window.bottom.rect );
 		haplo_window.add( haplo_window.bottom );
 
-		kineticTween({
-			node: haplo_window.bottom.rect,
-			height: 500
-		}).play();
-
 		// Add haplotypes
-		var haplo_group = addHaploScreen(
-			haplo_window.top.rect.getWidth(),
-			500,
-			selected_ids_map
-		);
+		// var haplo_group = addHaploScreen(
+		// 	haplo_window.top.rect.getWidth(),
+		// 	500,
+		// 	selected_ids_map
+		// );
 
 
 		/* 
@@ -199,40 +205,53 @@ function toggleBottomBox( show )
 		//
 
 		// Where HTs are grouped
-		var scroll_area__ = new Kinetic.Group({
-			draggable:true,
-			dragBoundFunc: function(pos){
-				var group_loc = this.parent.getAbsolutePosition();
 
-				return {
-					x: group_loc.x,
-					y: group_loc.y + (Math.floor((pos.y - group_loc.y)/ HAP_VERT_SPA) * HAP_VERT_SPA)
-				};
-			}
-		});
+		kineticTween({
+			node: haplo_window.bottom.rect,
+			height: (3+HAP_DRAW_LIM) * HAP_VERT_SPA,
+			onFinish: function(){
 		
-		scroll_area__.on('mouseup', function(){
-			redrawHaplos(); // starting=300
-			updateInputsByIndex( sta_index, end_index );
-			updateSlide();
-			mscale_layer.draw();
-		});
+				var scroll_area__ = new Kinetic.Group({
+					draggable:true,
+					dragBoundFunc: function(pos){
+						var group_loc = this.parent.getAbsolutePosition();
 
-		unique_graph_objs.haplo_scroll = haplo_window.bottom;
-		unique_graph_objs.haplo_area = scroll_area__;
+						return {
+							x: group_loc.x,
+							y: group_loc.y + (Math.floor((pos.y - group_loc.y)/ HAP_VERT_SPA) * HAP_VERT_SPA)
+						};
+					}
+				});
+			
+				scroll_area__.on('mouseup', function(){
+					redrawHaplos(false); // starting=300
+					updateInputsByIndex( sta_index, end_index );
+					updateSlide();
+					mscale_layer.draw();
+				});
 
-		haplo_window.bottom.add( scroll_area__ );
+				unique_graph_objs.haplo_scroll = haplo_window.bottom;
+				unique_graph_objs.haplo_area = scroll_area__;
+
+				haplo_window.bottom.add( scroll_area__ );
+
+				addHaplosAnyone( selected_ids )
+;				unique_graph_objs.parent.show();
+			}
+		}).play();
+
 	}
 	else {
+		unique_graph_objs.haplo_area.hide();
+
 		kineticTween({
 			node: haplo_window.bottom.rect,
 			height:0,
 			onFinish: function(){
-				haplo_window.bottom.destroyChildren();
+				haplo_window.bottom.destroyChildren();	//Bit of genocide
 				haplo_window.bottom.destroy();
 			}
 		}).play();
-
 	}
 
 	haplo_layer.draw();
