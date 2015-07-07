@@ -12,11 +12,32 @@ var left_margin_x = 100;
 var white_margin = 20;
 
 function stopHaplomode(){
-	
+
+	for (var fid in selected_ids){
+		for (var id in selected_ids[fid]){
+			
+			var perc_gfx =  unique_graph_objs[fid].nodes[id].graphics;
+			var old_pos = perc_gfx.main_layer_pos;
+			
+			perc_gfx.remove();
+			main_layer.add(perc_gfx);
+
+			(kineticTween({
+				node: perc_gfx,
+				x: old_pos.x,
+				y: old_pos.y
+			})).play();
+		}
+	}
+
+	haplo_layer.destroyChildren();
+	haplo_layer.draw();
 }
 
 function launchHaplomode()
 {
+
+
 	function grabSelecteds(){
 		var idmap = {}
 		var pure_ids = {}
@@ -48,6 +69,9 @@ function launchHaplomode()
 
 		return {id_map_generational: idmap, id_map:pure_ids};
 	};
+
+
+
 
 	var selecteds = grabSelecteds();
 
@@ -108,6 +132,12 @@ function makeTopBox_haplomode( box_lims_and_group, render_group){
 
 	haplo_window.top.add( haplo_window.top.rect );
 
+	haplo_window.top.add( addExitButton(
+		{x: max_pos.x - white_margin,
+		 y: 0},
+		 stopHaplomode)
+	);
+
 	// Align Button
 	haplo_window.add(
 		addButton("align", 0, 0, function(){
@@ -153,9 +183,37 @@ function toggleBottomBox( show )
 
 	console.log("sel_ids=", selected_ids_map)
 
+	var toggle_zoommarkers = false;
+
 	if (show)
 	{
 		delete haplo_window.bottom;
+		
+		//Add Zoom button
+		haplo_window.zoom_button = addButton("zoom", 0, 2*butt_h,
+				function(){
+					toggle_zoommarkers = !toggle_zoommarkers;
+					//Within Haplomode
+
+					var marker_slid = getSlider(window.innerWidth - 100, 60);
+
+					if (toggle_zoommarkers){
+						mscale_layer.add(marker_slid);
+						stage.add(mscale_layer);
+
+						updateInputsByIndex(0, HAP_DRAW_LIM);
+						updateSlide();
+					}
+					else {
+						mscale_layer.destroyChildren();
+						stage.remove(mscale_layer);
+					}
+					mscale_layer.draw();
+				}
+		);
+
+		haplo_window.add( haplo_window.zoom_button );;
+
 
 		//Scroll window
 		haplo_window.bottom = new Kinetic.Group({
@@ -174,37 +232,6 @@ function toggleBottomBox( show )
 		// Expand Top box
 		haplo_window.bottom.add( haplo_window.bottom.rect );
 		haplo_window.add( haplo_window.bottom );
-
-		// Add haplotypes
-		// var haplo_group = addHaploScreen(
-		// 	haplo_window.top.rect.getWidth(),
-		// 	500,
-		// 	selected_ids_map
-		// );
-
-
-		/* 
-		Here I'm essentially pointing at haplomode_frontend.js
-		
-		I dont need to do much - haploblock_frontend scripts
-		only require:
-			* unique_graph_objs.haplo_scroll
-			* unique_graph_objs.haplo_area
-
-		haplo_scroll is the .main_box (scroll_window):
-		 	group, scroll window that stays stationary
-
-		haplo_area is .scrollable (scroll_area__):
-			group (child of haplo_scroll), draggable haplotypes
-
-		It is also worth noting that the main white rect is a child of
-		haplo_scroll (stack the existing).
-		*/
-
-		// Space for haplotypes to be rendered
-		//
-
-		// Where HTs are grouped
 
 		kineticTween({
 			node: haplo_window.bottom.rect,
@@ -235,13 +262,16 @@ function toggleBottomBox( show )
 
 				haplo_window.bottom.add( scroll_area__ );
 
-				addHaplosAnyone( selected_ids )
-;				unique_graph_objs.parent.show();
+				addHaplosAnyone( selected_ids );
+				unique_graph_objs.parent.show();
 			}
 		}).play();
 
 	}
 	else {
+		haplo_window.zoom_button.destroy();
+		delete haplo_window.zoom_button;
+
 		unique_graph_objs.haplo_area.hide();
 
 		kineticTween({
@@ -252,7 +282,9 @@ function toggleBottomBox( show )
 				haplo_window.bottom.destroy();
 			}
 		}).play();
+
 	}
+
 
 	haplo_layer.draw();
 

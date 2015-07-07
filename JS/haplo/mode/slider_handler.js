@@ -146,10 +146,8 @@ function updateHaploPositions(resizecanvastoo){
 	end_index = last_input2_ind;
 	HAP_DRAW_LIM = end_index - sta_index;
 
-	unique_graph_objs
-		.haplo_panel
-		.main_box
-		.background
+	haplo_window.bottom
+		.rect
 		.setHeight( (HAP_DRAW_LIM+3) * HAP_VERT_SPA);
 
 	redrawHaplos(resizecanvastoo);

@@ -87,7 +87,7 @@ var min_haplo_x = horiz_space,
 var slideinp_w = 20,
 	slideinp_h = 5,
 	slider_height = innerHeight * 0.5,
-	I_slider_extension = 15,
+	I_slider_extension = 35,
 	I_slider_offset = (slideinp_w/3);
 
 
