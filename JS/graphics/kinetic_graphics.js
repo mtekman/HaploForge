@@ -134,7 +134,7 @@ function addRLine(fam_group, start, end, consang)
 function finishDraw(){
 	stage.add(main_layer);
 	stage.add(haplo_layer);
-	// stage.add(mscale_layer)
+	stage.add(mscale_layer)
 }
 
 

@@ -1,7 +1,13 @@
 
 // To be shared by haplomode_multi.js too
 var selection_items = {}, // fid_id: {box:Object, selected:toggled, affected:bool}
-	toggle_selection_affecteds = false;
+	toggle_selection_affecteds = false,
+	select_group,
+	select_button = addButton("Select", 0, 0, function(){
+		startSelectionMode();
+	});
+
+main_layer.add(select_button);
 
 
 function selectFam(fam_id){
@@ -11,16 +17,53 @@ function selectFam(fam_id){
 	}
 }
 
+function stopSelectionMode(){
+	select_group.destroyChildren();
+	select_group.destroy();
+
+	// Reset all
+	toggle_selection_affecteds = false;
+	selection_items = {}
+	// From haplomode_multi
+	selected_ids_map = {}
+	selected_ids = {};
+
+	//Add selectionButton again
+	select_button = addButton("Selection", 0, 0, function(){
+			startSelectionMode();
+		});
+	main_layer.add(select_button);
+
+	//Delete zoom
+	markerInstance.remove();
+	mscale_layer.draw();
+
+}
+
 
 
 function startSelectionMode()
 {
+	select_button.destroy();
+
+
+
 	// Main selection layer
-	var select_group = new Kinetic.Group({
+	select_group = new Kinetic.Group({
 		x:0, y:0,
 		width: stage.getWidth(),
 		height: stage.getHeight()
 	});
+
+	var rect_buff = 10;
+	var new_rect = new Kinetic.Rect({
+			x:rect_buff, y:rect_buff,
+			width: stage.getWidth() - 2*rect_buff,
+			height: stage.getHeight() - 2*rect_buff,
+			stroke: 'red',
+			strokeWidth: 0.5,
+	});
+	select_group.add(new_rect);
 
 	select_group.add(
 		addButton("Submit", 0, 0, launchHaplomode)

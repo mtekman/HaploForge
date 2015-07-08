@@ -40,6 +40,7 @@ function render(line_points, slot_array, finishfunc){
 
 		// Store old position before moving
 		gfx.main_layer_pos = gfx.getPosition();
+		gfx.main_layer_group = unique_graph_objs[fid].group;
 		gfx.remove()
 		
 		haplo_group_nodes.add(gfx);

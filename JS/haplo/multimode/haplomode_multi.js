@@ -13,14 +13,18 @@ var white_margin = 20;
 
 function stopHaplomode(){
 
+	console.log("clicked");
+	console.log(unique_graph_objs);
+
 	for (var fid in selected_ids){
 		for (var id in selected_ids[fid]){
 			
 			var perc_gfx =  unique_graph_objs[fid].nodes[id].graphics;
 			var old_pos = perc_gfx.main_layer_pos;
+			var old_group = perc_gfx.main_layer_group;
 			
 			perc_gfx.remove();
-			main_layer.add(perc_gfx);
+			old_group.add(perc_gfx);
 
 			(kineticTween({
 				node: perc_gfx,
@@ -32,6 +36,9 @@ function stopHaplomode(){
 
 	haplo_layer.destroyChildren();
 	haplo_layer.draw();
+
+	stopSelectionMode();
+	main_layer.draw();
 }
 
 function launchHaplomode()
@@ -69,8 +76,6 @@ function launchHaplomode()
 
 		return {id_map_generational: idmap, id_map:pure_ids};
 	};
-
-
 
 
 	var selecteds = grabSelecteds();
@@ -132,6 +137,7 @@ function makeTopBox_haplomode( box_lims_and_group, render_group){
 
 	haplo_window.top.add( haplo_window.top.rect );
 
+	// Exit button
 	haplo_window.top.add( addExitButton(
 		{x: max_pos.x - white_margin,
 		 y: 0},
@@ -192,21 +198,25 @@ function toggleBottomBox( show )
 		//Add Zoom button
 		haplo_window.zoom_button = addButton("zoom", 0, 2*butt_h,
 				function(){
+
 					toggle_zoommarkers = !toggle_zoommarkers;
+					console.log("zooming", toggle_zoommarkers);
 					//Within Haplomode
 
 					var marker_slid = getSlider(window.innerWidth - 100, 60);
 
 					if (toggle_zoommarkers){
 						mscale_layer.add(marker_slid);
-						stage.add(mscale_layer);
+						// mscale_layer.setZIndex()
+						// stage.add(mscale_layer);
 
 						updateInputsByIndex(0, HAP_DRAW_LIM);
 						updateSlide();
 					}
 					else {
-						mscale_layer.destroyChildren();
-						stage.remove(mscale_layer);
+						// mscale_layer.destroyChildren();
+						// stage.remove(mscale_layer);
+						marker_slid.remove();
 					}
 					mscale_layer.draw();
 				}
