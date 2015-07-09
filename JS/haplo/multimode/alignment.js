@@ -9,8 +9,7 @@ function alignTopSelection( group_nodes, group_lines)
 	if (haplomode_alignment_toggle){
 		group_lines.hide();
 
-		var y_line = min_node_placement_y;
-		console.log( y_line );
+		var y_line = min_node_placement_y + initial_group_node_offset.y;
 
 		for (var g=0; g < group_nodes.children.length; g++){
 			var nd = group_nodes.children[g];
@@ -28,7 +27,6 @@ function alignTopSelection( group_nodes, group_lines)
 
 		// Shrink!
 		haplo_window.top.rect.old_height = haplo_window.top.rect.getHeight();
-		haplo_window.bottom.old_ypos = haplo_window.bottom.getY();
 
 		tween_array.push(
 			kineticTween({
@@ -37,13 +35,18 @@ function alignTopSelection( group_nodes, group_lines)
 			})
 		);
 
-		// Move bottom box too
-		tween_array.push(
-			kineticTween({
-				node: haplo_window.bottom,
-				y: (white_margin * 3) + haplo_window.y_margin
-			})
-		);
+
+		// Move bottom box too (if defined)
+		if (haplo_window.bottom !== undefined){
+			haplo_window.bottom.old_ypos = haplo_window.bottom.getY();
+
+			tween_array.push(
+				kineticTween({
+					node: haplo_window.bottom,
+					y: (white_margin * 3) + haplo_window.y_margin
+				})
+			);
+		}
 	}
 	else {
 		var render_counter = group_nodes.children.length - 1;
@@ -75,12 +78,14 @@ function alignTopSelection( group_nodes, group_lines)
 		);
 
 		// Move bottom box back
-		tween_array.push(
-			kineticTween({
-				node: haplo_window.bottom,
-				y: haplo_window.bottom.old_ypos
-			})
-		);
+		if (haplo_window.bottom !== undefined){
+			tween_array.push(
+				kineticTween({
+					node: haplo_window.bottom,
+					y: haplo_window.bottom.old_ypos
+				})
+			);
+		}
 
 	}
 

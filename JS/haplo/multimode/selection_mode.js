@@ -3,7 +3,7 @@
 var selection_items = {}, // fid_id: {box:Object, selected:toggled, affected:bool}
 	toggle_selection_affecteds = false,
 	select_group,
-	select_button = addButton("Select", 0, 0, function(){
+	select_button = addButton("Select Mode", 0, 0, function(){
 		startSelectionMode();
 	});
 
@@ -35,9 +35,12 @@ function stopSelectionMode(){
 	main_layer.add(select_button);
 
 	//Delete zoom
-	markerInstance.remove();
-	mscale_layer.draw();
-
+	if (markerInstance !== null){
+		markerInstance.remove();
+		mscale_layer.draw();
+	}
+	haplo_layer.draw();
+	main_layer.draw();
 }
 
 
@@ -55,22 +58,17 @@ function startSelectionMode()
 		height: stage.getHeight()
 	});
 
-	var rect_buff = 10;
-	var new_rect = new Kinetic.Rect({
-			x:rect_buff, y:rect_buff,
-			width: stage.getWidth() - 2*rect_buff,
-			height: stage.getHeight() - 2*rect_buff,
-			stroke: 'red',
-			strokeWidth: 0.5,
-	});
-	select_group.add(new_rect);
+	select_group.add(new Kinetic.Rect({
+			x:0, y:0,
+			width: stage.getWidth(),
+			height: stage.getHeight(),
+			fill: 'black',
+			strokeWidth: 0,
+			opacity: 0.1
+	}));
 
 	select_group.add(
-		addButton("Submit", 0, 0, launchHaplomode)
-	);
-
-	select_group.add(
-		addButton("Select Affecteds", 0, butt_h, function(){
+		addButton("Select Affecteds", 0, 0, function(){
 
 			toggle_selection_affecteds = !toggle_selection_affecteds;
 
@@ -86,8 +84,13 @@ function startSelectionMode()
 			}
 
 			console.log("affecteds:", Object.keys(selection_items).filter( function (n){ return selection_items[n].affected === true;}));
-		})
+		}, false)
 	);
+
+	select_group.add(
+		addButton("Submit / Close", 0, butt_h, launchHaplomode)
+	);
+
 
 	// var background = new Kinetic.Rect({
 	// 		x:0, y:0,

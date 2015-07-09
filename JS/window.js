@@ -10,8 +10,8 @@ function resizeCanvas(){
 
 	stage.setHeight(new_height);
 
-	backg.setWidth(window.innerWidth);
-	backg.setHeight(new_height);
+	haplo_window.background.setWidth(window.innerWidth);
+	haplo_window.background.setHeight(new_height);
 
 	haplo_layer.draw();
 }

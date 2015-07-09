@@ -76,7 +76,7 @@ var maxlen_marker = 0; // set by filehandler, read by addHaploBlocks
 
 
 // Button
-var butt_w = 50,
+var butt_w = 90,
 	butt_h = 20;
 
 // Haplo

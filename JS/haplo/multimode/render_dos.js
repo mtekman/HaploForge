@@ -1,3 +1,5 @@
+var initial_group_node_offset = {x:100, y:40};
+
 var haplo_group_nodes = new Kinetic.Group();
 var haplo_group_lines = new Kinetic.Group();
 
@@ -44,19 +46,21 @@ function render(line_points, slot_array, finishfunc){
 		gfx.remove()
 		
 		haplo_group_nodes.add(gfx);
+		gfx.setPosition(
+			{x: gfx.main_layer_group.getX() + gfx.main_layer_pos.x,
+			 y: gfx.main_layer_group.getY() + gfx.main_layer_pos.y}
+		);
 
-		var tween = new Kinetic.Tween({
+		var tween = kineticTween({
 			node: gfx,
-			x: start_x,
-			y: y_pos,
-			duration:0.8,
+			x: start_x + initial_group_node_offset.x,
+			y: y_pos + initial_group_node_offset.y,
 			onFinish: function(){
 				if (render_counter-- === 0){
 					mapLines(line_points, haplo_group_lines);
 					finishfunc( render_group );
 				}
-			},
-			easing: Kinetic.Easings.EaseIn
+			}
 		});
 		tween_nodes.push(tween);
 
@@ -67,6 +71,9 @@ function render(line_points, slot_array, finishfunc){
 		if (start_x > max_pos.x) max_pos.x = start_x;
 		if (y_pos > max_pos.y) max_pos.y = y_pos;
 	}
+
+	// Show that nodes have been popped off
+	main_layer.draw();
 
 	for (var t=0; t < tween_nodes.length;)
 		tween_nodes[t++].play();
