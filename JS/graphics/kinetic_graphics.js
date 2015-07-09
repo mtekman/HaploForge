@@ -145,6 +145,7 @@ function addFamily(fam_id, sx, sy){
 		draggable: true,
 		id: fam_id
 	});
+
 	var t = new Kinetic.Text({
 		x: 50,
 		text: fam_id,
@@ -158,6 +159,23 @@ function addFamily(fam_id, sx, sy){
 		selectFam(fam_id);
 		g.moveToTop();
 	});
+
+	t.on('mouseover', function(){
+		t.setFill('red');
+		main_layer.draw();
+	});
+
+
+	t.on('mousedown', function(){
+		g.setScale({x:0.95, y:0.95});
+	})
+
+	t.on('mouseout mouseup', function(){
+		g.setScale({x:1, y:1});
+		t.setFill('black');
+		main_layer.draw()
+	})
+
 
 	main_layer.add(g);
 	return g;
