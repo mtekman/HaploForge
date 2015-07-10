@@ -1,5 +1,4 @@
 #!/bin/bash
-
 root_dir=`readlink -f ../`
 
 index_file=$root_dir/index.html
@@ -17,30 +16,20 @@ for js_file in $js_files; do
 	cat $root_dir/$js_file  >> $all_js
 done;
 
+#exit
+
 # obfuscate javascript here
-tmp_js="tmp_all.js"
-echo -n "Obfuscating..."
-yuicompressor -v --nomunge --preserve-semi --disable-optimizations $all_js > $tmp_js 2> obfusc.log
-mv $tmp_js $all_js
-echo "X"
-cat obfusc.log | grep "used"
+echo -n "Picturifying...""`./to_image.py $all_js 3`";echo "X"	# creates my_code.png
 
 
 # Place all non-js into a new index file
 new_index="index.html"
 echo "$(grep -v script $index_file | grep -v link )" > $new_index
 
-#exit
-
-# Replace with css and  javascript
+# Replace with css and javascript
 style_data="<style>
 `cat $css_file`
 </style>"
-
-script_data="<script>
-`cat $all_js`
-</script>"
-
 
 tmp_index="tmp_index.html"
 echo "" > $tmp_index
@@ -53,17 +42,47 @@ while read line; do
 
 	elif [[ "$line" =~ "<!-- CODE GOES HERE" ]]; then
 		echo "$kinetic_insert" >> $tmp_index
-		echo "$script_data" >> $tmp_index
-#	else
+		echo "
+<script id='garble'></script>
+<div id='delete'>
+	<img id='cc' src='my_code.png'></img>
+	<canvas id='img_canv'></canvas>
+
+<script>
+window.onload = function(){
+
+var i = document.getElementById('cc'),
+    i_w = i.width,
+    i_h = i.height,
+    canvas = document.getElementById('img_canv'),
+    ctx = canvas.getContext('2d');
+
+canvas.width = i_w;
+canvas.height = i_h;
+
+ctx.drawImage(i,0,0);
+
+var imageData = ctx.getImageData(0,0,i_w,i_h),
+    data = imageData.data
+    dlen = data.length,
+    codes = [];
+
+for (var j=0; j < dlen; j += 4){
+        codes.push(data[j]);
+        codes.push(data[j+1]);
+        codes.push(data[j+2]);
+}
+
+var new_script = String.fromCharCode.apply(String,codes);
+
+document.getElementById('garble').innerHTML = new_script;
+document.getElementById('delete').innerHTML = ' ';
+}
+</script>
+</div>" >>  $tmp_index
+
 	fi
 done<$new_index
 
 # Update
 mv $tmp_index $new_index
-
-
-#sed -i "s/<h1>.*<\/h1>/$header_data/" $new_index
-
-#less -S $new_index
-
-
