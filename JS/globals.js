@@ -102,9 +102,9 @@ var slider_style = {
 	I_fontColor: 'black'};
 
 
-var in2Space = function(int){
+var in2Space = function(integ){
 	var tx="";
-	while (int --> 0){tx += " "};
+	while (integ --> 0){tx += " "};
 	return tx;
 }
 
