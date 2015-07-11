@@ -67,7 +67,7 @@ x = np.array(data)
 x.shape = (dim,dim, dimensions)
 
 img = misc.toimage(x, high=np.max(x), low=np.min(x))
-img.save("my_code.png")
+img.save("logo.png")
 
 # DEBUG
 #rd = misc.imread("my_code.png")

