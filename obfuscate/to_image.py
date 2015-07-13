@@ -24,6 +24,57 @@ else:
 	exit(-1)
 
 
+def encodeAll(image_data, operations, debug=False):
+
+	# flip vertical/horizontal/diagonal
+	# shift +/-n
+	# add +/-g 
+	for o in operations:
+		if o.startswith("flip"):
+			orientation = o.split()[1].strip();
+
+			if orientation == "vertical":
+				image_data = np.flipud(image_data)
+			
+			elif orientation == "diagonal":
+
+				for row in xrange(len(image_data)):
+					for col in xrange(row,len(image_data[0])):
+						temp = image_data[row][col]
+						image_data[row][col] = image_data[col][row]
+						image_data[col][row] = temp
+
+
+			else:			# horizontal
+				image_data = np.fliplr(image_data)
+
+
+		elif o.startswith("shift"):
+			offset = int(o.split()[1].strip())
+			image_data = np.roll(image_data, offset)
+
+		elif o.startswith("add"):
+			value = int(o.split()[1].strip())
+			image_data += value
+#			image_data %= 255
+
+		if debug:
+			print "\n\t", o
+			print image_data
+	return image_data
+
+
+#x = np.arange(27)
+#x *= (255/27)
+#x.shape = (3,3,3)
+
+#print x
+#x = encodeAll(x, ["flip diagonal", "add -77", "shift 2", "flip vertical"])
+#print "\n\nAND reverse"
+#x = encodeAll(x, ["flip vertical", "shift -2", "add 77", "flip diagonal"])
+#exit(-1)
+
+
 data=[]
 
 running_index=0
@@ -65,6 +116,10 @@ for d in xrange(diff):
 
 x = np.array(data)
 x.shape = (dim,dim, dimensions)
+
+#ops = ["flip diagonal", "add -77", "shift 2", "flip vertical"]
+ops = ["flip horizontal"]
+x = encodeAll(x, ops)
 
 img = misc.toimage(x, high=np.max(x), low=np.min(x))
 img.save("logo.png")
