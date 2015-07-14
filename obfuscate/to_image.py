@@ -15,6 +15,48 @@ script_file=sys.argv[1]
 dimensions=4
 
 
+def basic_encoder(value):
+	if value >= 83 and value <=209:
+		return int( ((value*2)-420) % 255 )
+
+	if value >= 210:
+		return value ^ 161
+#
+#		return int(  ((value - 105)*2 )%255  )
+
+	return 0
+
+
+
+def basic_decoder(value):
+
+	if value >=64  and value <= 127:
+		return value ^ 161
+
+	return int( (((value + 255)+420)/2) % 255 )
+
+
+
+for start_val in xrange(255):
+	end_val = basic_encoder(start_val)
+	pre_val = basic_decoder(end_val)
+
+	print "%d --> %d --> %d == %s" % (
+start_val, end_val, pre_val, 
+"X" if (start_val==pre_val) else "")
+
+exit(-1)
+
+
+def encodeAll(image_data):
+	# 
+	# 
+	for row in xrange(len(image_data)):
+		for pix in xrange(4):
+			x[row][row][pix] *= 2 
+			x[row][row][pix] -= 255
+
+
 def encodeAll(image_data, operations, debug=False):
 
 	# flip vertical/horizontal/diagonal
@@ -100,10 +142,12 @@ with open(script_file,'r') as f:
 		pixel[rgb] = cv	# Script data is in rgb only
 
 		if rgb == 2:
-			# Okay, so ideally alpha should be random and that should be that. But webkit browsers have this
-			# weird issue where the rgb values are changed whenever the alpha is changed too -- resulting
-			# in unpredictable behaviour.... more here:
-			#  http://stackoverflow.com/questions/22384423/canvas-corrupts-rgb-when-alpha-0
+
+# Okay, so ideally alpha should be random and that should be that. But webkit 
+# browsers have this weird issue where the rgb values are changed whenever the alpha 
+# is changed too -- resulting in unpredictable behaviour.... more here:
+#   http://stackoverflow.com/questions/22384423/canvas-corrupts-rgb-when-alpha-0
+
 			pixel[3] = 255 #randint(0,255)
 
 			data.append(pixel)
@@ -142,6 +186,6 @@ rd = misc.imread("logo.png")
 
 print "Comparing x -> rd:"
 for j in xrange(20):
-	print x[0][j],'\t', rd[0][j]
+	print x[0][j], rd[0][j]
 
 #import code; code.interact(local=locals())
