@@ -23,7 +23,7 @@ done;
 
 # obfuscate javascript here
 echo -n "Picturifying..."
-./to_image.py $all_js 3
+./to_image.py $all_js
 echo "X"	# creates my_code.png
 
 
@@ -65,4 +65,4 @@ done<$new_index
 # Update
 mv $tmp_index $new_index
 
-#rm -rf $tmp
+rm -rf $tmp

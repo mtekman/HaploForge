@@ -1,3 +1,5 @@
+
+
 var globalEval = function globalEval(src) {
 	if (window.execScript) {
 		window.execScript(src);
@@ -26,48 +28,144 @@ window.onload = function(){
 		data = imageData.data,
 		dlen = data.length
 
-	// To image matrix
-	var image_matrix = [],
-		pixel_size = 4,
-		pixels_per_row = i_w * pixel_size,
-		pixel = new Uint8Array(pixel_size);
-		temp_row = []
-
-	var max_column = 0
+	var	pixel_size = 4,
+		pixels_per_row = i_w * pixel_size;
 
 
-	for (var d=0; d < dlen; d++)
+
+	var toImageMatrix = function(data)
 	{
-		var rgba_index = d % pixel_size;
-		pixel[rgba_index] = data[d];
-
-		if (rgba_index === pixel_size - 1){
-			temp_row.push(pixel);
+		// To image matrix
+		var image_matrix = [],
 			pixel = new Uint8Array(pixel_size);
+			temp_row = []
 
-			var row = parseInt(d / pixels_per_row),
-				column = parseInt((d - ( row * pixels_per_row )) / pixel_size)
+		var max_column = 0
 
-			if ( column === (i_w - 1) ){
-				image_matrix.push(temp_row);
-				temp_row = []
+		// Make Image Matrix
+		for (var d=0; d < dlen; d++)
+		{
+			var rgba_index = d % pixel_size;
+			pixel[rgba_index] = data[d];
+
+			if (rgba_index === pixel_size - 1){
+				temp_row.push(pixel);
+				pixel = new Uint8Array(pixel_size);
+
+				var row = parseInt(d / pixels_per_row),
+					column = parseInt((d - ( row * pixels_per_row )) / pixel_size)
+
+				if ( column === (i_w - 1) ){
+					image_matrix.push(temp_row);
+					temp_row = []
+				}
+			}
+		}
+		return image_matrix
+	}
+
+
+
+
+	var flipHorizontal = function(image_matrix)
+	{
+		var middle = parseInt(i_w/2)
+		for (var r = 0; r < i_h; r++){
+			for (var c = 0; c < middle; c++){
+				var temp = image_matrix[r][c]
+				image_matrix[r][c] = image_matrix[r][i_w-(c+1)]
+				image_matrix[r][i_w-(c+1)] = temp
 			}
 		}
 	}
 
-	// Flip horizontal
-	var middle = parseInt(i_w/2)
-	for (var r = 0; r < i_h; r++){
-		for (var c = 0; c < middle; c++){
-			image_matrix[r][c] = image_matrix[r][i_w-(c+1)]
+
+	var flipDiagonal = function(image_matrix)
+	{
+		for (var r = 0; r < i_h; r++){
+			for (var c = r; c < i_w; c++)
+			{
+				var temp = image_matrix[r][c];
+				image_matrix[r][c] = image_matrix[c][r];
+				image_matrix[c][r] = temp;
+			}
 		}
 	}
 
-	console.log( image_matrix);
+
+	var flipVertical = function(image_matrix)
+	{
+		for (var r=0; r < i_h/2; r++){
+			var temp = image_matrix[r]
+			image_matrix[r] = image_matrix[i_h-(r+1)]
+			image_matrix[i_h-(r+1)] = temp
+		}
+	}
 
 
-	// Decode (this is correct)
-	var code = []
+
+	var imageToData = function(image_matrix)
+	{
+		var code = new Uint8Array(dlen);
+
+		for (var r=0; r < i_h; r++){
+			for (var c=0; c < i_w; c++){
+				for (var j=0; j < pixel_size; j++){
+					code[(r*i_w*pixel_size)+(c*pixel_size)+j] = image_matrix[r][c][j]
+				}
+			}
+		}
+		return code
+	}
+	
+	
+	var shiftBackward = function(image_matrix,n)
+	{
+		var code = imageToData(image_matrix)
+
+		var store = new Uint8Array(n)
+		for (var j=0; j <n; j++){
+			store[j] = code[j]
+		}
+		for (var j=n; j < code.length - n; j++){
+			code[j-n] = code[j]
+		}
+		for (var j=0; j <n; j++){
+			code[dlen+j-n] = store[j]
+		}
+		return toImageMatrix(code)
+	}
+
+
+	var shiftForward = function(image_matrix,n) // NEEDS WORK
+	{
+		var code = imageToData(image_matrix)
+
+		var store = new Uint8Array(n)
+		for (var j=dlen-(n+1); j < dlen; j++){
+			store[(dlen-(n+1))+j] = code[j]
+		}
+		for (var j=code.length-(1+n); j >= n; j--){
+			code[j] = code[j+n]
+		}
+		for (var j=0; j <n; j++){
+			code[j] = store[j]
+		}
+		return toImageMatrix(code)
+	}
+
+
+
+	var image_matrix = toImageMatrix(data)
+	flipVertical(image_matrix)
+	flipDiagonal(image_matrix)
+	flipHorizontal(image_matrix)
+
+//	console.log( image_matrix);
+
+
+	// Decode (this works)
+	var code = [];
 	for (var r = 0; r < i_h; r++){
 		for (var c = 0; c < i_w; c++){
 			code.push(image_matrix[r][c][0])

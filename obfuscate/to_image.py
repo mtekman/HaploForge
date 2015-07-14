@@ -4,9 +4,9 @@ import sys, math
 from scipy import misc,ndimage
 import numpy as np
 
-if len(sys.argv) != 3:
-	print >> sys.stderr, '''Produces an 8-bit bgr(a) image out of text
-	%s <textfile> <dimensions>
+if len(sys.argv) != 2:
+	print >> sys.stderr, '''Produces an 8-bit rgb png out of text (alpha is garbled)
+	%s <textfile>
 ''' % sys.argv[0].split('/')[-1]
 	exit(-1)
 
@@ -15,13 +15,7 @@ min=9999
 max=0
 
 script_file=sys.argv[1]
-dimensions=int(sys.argv[2])
-
-if dimensions == 3:print "Making BGR"
-elif dimensions == 4:print "Making BGRA"
-else:
-	print "Either specify 3 or 4 dimensions"
-	exit(-1)
+dimensions=3
 
 
 def encodeAll(image_data, operations, debug=False):
@@ -38,12 +32,14 @@ def encodeAll(image_data, operations, debug=False):
 			
 			elif orientation == "diagonal":
 
-				for row in xrange(len(image_data)):
-					for col in xrange(row,len(image_data[0])):
-						temp = image_data[row][col]
-						image_data[row][col] = image_data[col][row]
-						image_data[col][row] = temp
+				x = np.empty(( len(image_data[0]), len(image_data), dimensions) )
 
+				for row in xrange(len(image_data)):
+				    for col in xrange(row,len(image_data[0])):
+				        x[col][row] = image_data[row][col]
+    				    x[row][col] = image_data[col][row]
+	
+				image_data = x
 
 			else:			# horizontal
 				image_data = np.fliplr(image_data)
@@ -86,17 +82,15 @@ for line in open(script_file,'r'):
 
 	for c in line:
 		cv = ord(c)
-		
+
 		if cv>max:max=cv
 		if cv<min:min=cv
 
 		pixel[running_index%dimensions]=cv
-		
 
 		if running_index%dimensions==(dimensions-1):
 			data.append(pixel)
 			pixel = [ nl_ch for x in xrange(dimensions)]
-			
 
 		running_index += 1
 
@@ -117,8 +111,8 @@ for d in xrange(diff):
 x = np.array(data)
 x.shape = (dim,dim, dimensions)
 
-#ops = ["flip diagonal", "add -77", "shift 2", "flip vertical"]
-ops = ["flip horizontal"]
+#ops = ["flip diagonal", "add -77", "shift 2", "flip vertical", "shift -10", "flip diagonal"]
+ops = ["flip horizontal", "flip diagonal", "flip vertical"]
 x = encodeAll(x, ops)
 
 img = misc.toimage(x, high=np.max(x), low=np.min(x))
