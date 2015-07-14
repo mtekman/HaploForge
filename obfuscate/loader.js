@@ -123,16 +123,17 @@ window.onload = function(){
 	{
 		var code = imageToData(image_matrix)
 
-		var store = new Uint8Array(n)
+		var store = new Uint8Array(n)		// Store the first n
 		for (var j=0; j <n; j++){
 			store[j] = code[j]
 		}
-		for (var j=n; j < code.length - n; j++){
+		for (var j=n; j < code.length; j++){ // Iterate over the remaning
 			code[j-n] = code[j]
 		}
-		for (var j=0; j <n; j++){
+		for (var j=0; j <n; j++){		// Replace last n with the first
 			code[dlen+j-n] = store[j]
 		}
+
 		return toImageMatrix(code)
 	}
 
@@ -141,14 +142,14 @@ window.onload = function(){
 	{
 		var code = imageToData(image_matrix)
 
-		var store = new Uint8Array(n)
-		for (var j=dlen-(n+1); j < dlen; j++){
-			store[(dlen-(n+1))+j] = code[j]
+		var store = new Uint8Array(n);			// Store the last n
+		for (var j=dlen-n; j < dlen; j++){
+			store[j-(dlen-n)] = code[j]
 		}
-		for (var j=code.length-(1+n); j >= n; j--){
-			code[j] = code[j+n]
+		for (var j=dlen-(n+1); j >= 0 ;j--){ // Iterate over the previous
+			code[j+n] = code[j]
 		}
-		for (var j=0; j <n; j++){
+		for (var j=0; j <n; j++){ // Replace first n with last
 			code[j] = store[j]
 		}
 		return toImageMatrix(code)
@@ -157,11 +158,9 @@ window.onload = function(){
 
 
 	var image_matrix = toImageMatrix(data)
-	flipVertical(image_matrix)
-	flipDiagonal(image_matrix)
-	flipHorizontal(image_matrix)
-
-//	console.log( image_matrix);
+	flipVertical(image_matrix) // works
+//	flipHorizontal(image_matrix)
+//	flipDiagonal(image_matrix)
 
 
 	// Decode (this works)

@@ -1,6 +1,7 @@
 #!/usr/bin/env python2
 
 import sys, math
+from random import randint
 from scipy import misc,ndimage
 import numpy as np
 
@@ -10,12 +11,8 @@ if len(sys.argv) != 2:
 ''' % sys.argv[0].split('/')[-1]
 	exit(-1)
 
-
-min=9999
-max=0
-
 script_file=sys.argv[1]
-dimensions=3
+dimensions=4
 
 
 def encodeAll(image_data, operations, debug=False):
@@ -49,10 +46,15 @@ def encodeAll(image_data, operations, debug=False):
 			offset = int(o.split()[1].strip())
 			image_data = np.roll(image_data, offset)
 
-		elif o.startswith("add"):
-			value = int(o.split()[1].strip())
-			image_data += value
-#			image_data %= 255
+# Read/Write values differ
+#		elif o.startswith("add"):
+#			value = int(o.split()[1].strip())
+#
+#			for row in xrange(len(image_data)):
+#			    for col in xrange(len(image_data[0])):
+#			    	for pix in xrange(dimensions-1 ): # do not alter alpha
+#  					    image_data[row][col][pix] += value
+# 					    image_data[row][col][pix] = image_data[row][col][pix]%255
 
 		if debug:
 			print "\n\t", o
@@ -71,24 +73,39 @@ def encodeAll(image_data, operations, debug=False):
 #exit(-1)
 
 
-data=[]
-
-running_index=0
 nl_ch = 10;			# newline_char
+
+# Initial buffer needed to set the colorspace between [0,255]
+data=[
+[47,42,255,255],
+[0,42,47,255],
+[nl_ch,nl_ch,nl_ch,255]] # /*\0*/
+
+
 
 pixel = [ nl_ch for x in xrange(dimensions)]
 
-for line in open(script_file,'r'):
+with open(script_file,'r') as f:
+	running_index=0
 
-	for c in line:
+	while True:
+
+		c = f.read(1);
+		if not c:
+			break # EOF
+
 		cv = ord(c)
+		rgb = running_index%(dimensions-1);
 
-		if cv>max:max=cv
-		if cv<min:min=cv
+		pixel[rgb] = cv	# Script data is in rgb only
 
-		pixel[running_index%dimensions]=cv
+		if rgb == 2:
+			# Okay, so ideally alpha should be random and that should be that. But webkit browsers have this
+			# weird issue where the rgb values are changed whenever the alpha is changed too -- resulting
+			# in unpredictable behaviour.... more here:
+			#  http://stackoverflow.com/questions/22384423/canvas-corrupts-rgb-when-alpha-0
+			pixel[3] = 255 #randint(0,255)
 
-		if running_index%dimensions==(dimensions-1):
 			data.append(pixel)
 			pixel = [ nl_ch for x in xrange(dimensions)]
 
@@ -101,8 +118,9 @@ diff = (dim*dim) - len(data)
 
 print "\tTotal char:", len(data)
 print "\tRough dims:", dim,'x',dim, '=', dim*dim
-print "\tMin,Max Px:", min, max
+print "\tMin,Max Px:", np.min(data), np.max(data)
 
+# Reshape to square
 pixel = [ nl_ch for x in xrange(dimensions)]
 for d in xrange(diff):
 	data.append(pixel)
@@ -110,14 +128,20 @@ for d in xrange(diff):
 
 x = np.array(data)
 x.shape = (dim,dim, dimensions)
+#x.dtype='uint8'
 
-#ops = ["flip diagonal", "add -77", "shift 2", "flip vertical", "shift -10", "flip diagonal"]
-ops = ["flip horizontal", "flip diagonal", "flip vertical"]
+ops = ["flip vertical"]
+
 x = encodeAll(x, ops)
 
-img = misc.toimage(x, high=np.max(x), low=np.min(x))
+img = misc.toimage(x, high=255, low=0)
 img.save("logo.png")
 
 # DEBUG
-#rd = misc.imread("my_code.png")
+rd = misc.imread("logo.png")
+
+print "Comparing x -> rd:"
+for j in xrange(20):
+	print x[0][j],'\t', rd[0][j]
+
 #import code; code.interact(local=locals())

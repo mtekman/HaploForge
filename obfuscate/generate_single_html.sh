@@ -65,4 +65,4 @@ done<$new_index
 # Update
 mv $tmp_index $new_index
 
-rm -rf $tmp
+#rm -rf $tmp
