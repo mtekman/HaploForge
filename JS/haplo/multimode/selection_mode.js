@@ -98,7 +98,7 @@ function startSelectionMode()
 
 			var gfx = unique_graph_objs[fid].nodes[node].graphics,
 				pos = gfx.getAbsolutePosition(),
-				bounder = addBounder(pos, key);
+				bounder = addBounder(pos, key, true);
 
 			// By default not enabled
 			selection_items[key] = {
@@ -118,7 +118,7 @@ function startSelectionMode()
 
 // Shared with homology_selection.js
 // Replicate existing objects with bounding square
-function addBounder(pos, key){
+function addBounder(pos, key, main_layer_yes){
 	var border_offs = 3;
 
 	var rect = new Kinetic.Rect({
@@ -137,7 +137,9 @@ function addBounder(pos, key){
 		this.setStrokeEnabled(!selection_items[key].selected);
 
 		selection_items[key].selected = !selection_items[key].selected
-		main_layer.draw();
+		if (main_layer_yes) main_layer.draw();
+		else haplo_layer.draw();
 	});
+
 	return rect;
 }

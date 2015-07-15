@@ -324,7 +324,7 @@ function toggleBottomBox( show, finishfunc )
 				haplo_window.bottom.add( scroll_area__ );
 
 				addHaplosAnyone( selected_ids );
-				unique_graph_objs.parent.show();
+				//unique_graph_objs.parent.show();
 
 				if (finishfunc!==0) finishfunc();
 			}
