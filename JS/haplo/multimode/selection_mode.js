@@ -49,8 +49,6 @@ function startSelectionMode()
 {
 	select_button.destroy();
 
-
-
 	// Main selection layer
 	select_group = new Kinetic.Group({
 		x:0, y:0,
@@ -91,44 +89,6 @@ function startSelectionMode()
 		addButton("Submit / Close", 0, butt_h, launchHaplomode)
 	);
 
-
-	// var background = new Kinetic.Rect({
-	// 		x:0, y:0,
-	// 		width: window.innerWidth,
-	// 		height: window.innerHeight,
-	// 		fill: 'black',
-	// 		opacity: 0.1
-	// 	});
-
-	// select_group.add(background);
-	// background.moveToBottom();
-
-	// Replicate existing objects with bounding square
-	function addBounder(pos, key){
-		var border_offs = 3;
-
-		var rect = new Kinetic.Rect({
-			x: pos.x - nodeSize - border_offs,
-			y: pos.y - nodeSize - border_offs,
-			width: (nodeSize *2) + 2*border_offs,
-			height: (nodeSize * 2) + 2*border_offs,
-			strokeAlpha: 0.5,
-			strokeWidth: 3,
-			strokeEnabled: false,
-			stroke: 'orange',
-		});
-
-		rect.on('click', function(){
-			//Toggle selection
-
-			this.setStrokeEnabled(!selection_items[key].selected);
-
-			selection_items[key].selected = !selection_items[key].selected
-			main_layer.draw();
-		});
-		return rect;
-	}
-
 	for (var fid in unique_graph_objs){
 		for (var node in unique_graph_objs[fid].nodes)
 		{
@@ -153,4 +113,31 @@ function startSelectionMode()
 	select_group.setZIndex(20);
 
 	main_layer.draw();
+}
+
+
+// Shared with homology_selection.js
+// Replicate existing objects with bounding square
+function addBounder(pos, key){
+	var border_offs = 3;
+
+	var rect = new Kinetic.Rect({
+		x: pos.x - nodeSize - border_offs,
+		y: pos.y - nodeSize - border_offs,
+		width: (nodeSize *2) + 2*border_offs,
+		height: (nodeSize * 2) + 2*border_offs,
+		strokeAlpha: 0.5,
+		strokeWidth: 3,
+		strokeEnabled: false,
+		stroke: 'orange',
+	});
+
+	rect.on('click', function(){
+		//Toggle selection
+		this.setStrokeEnabled(!selection_items[key].selected);
+
+		selection_items[key].selected = !selection_items[key].selected
+		main_layer.draw();
+	});
+	return rect;
 }

@@ -179,6 +179,18 @@ function makeTopBox_haplomode( box_lims_and_group, render_group){
 		})
 	);
 
+	// Secondary selection mode for looking for regions of homology over het alleles (hom later)
+	
+	// Check for homology
+	haplo_window.add(
+		addButton("Find Homology", 0, 2*butt_h, function(){
+			// Function exits selection mode auto
+			homology_selection_mode();
+			//
+			//returns marker pair list
+		})
+	);
+
 
 	// // JS detaches toggler from function inherently
 	// var haplotypes_toggled = false;
