@@ -122,15 +122,16 @@ function updateInputsByIndex(ind1, ind2)
 	var top = (last_input1_ind / marker_array.length) * slider_height,
 		bot = (last_input2_ind / marker_array.length) * slider_height;
 
-	sl_input1.setY(top);
-	sl_input2.setY(bot);
+	if (sl_input1 !== undefined){
+		sl_input1.setY(top);
+		sl_input2.setY(bot);
 
-	sl_input1.message.setText( marker_array[last_input1_ind] );
-	sl_input2.message.setText( marker_array[last_input2_ind] );
+		sl_input1.message.setText( marker_array[last_input1_ind] );
+		sl_input2.message.setText( marker_array[last_input2_ind] );
 
-
-	last_input1_posy = top + rangeline_pos.y;
-	last_input2_posy = bot + rangeline_pos.y;
+		last_input1_posy = top + rangeline_pos.y;
+		last_input2_posy = bot + rangeline_pos.y;
+	}
 }
 
 

@@ -89,7 +89,13 @@ function startSelectionMode()
 		addButton("Submit / Close", 0, butt_h, launchHaplomode)
 	);
 
-	for (var fid in unique_graph_objs){
+	for (var fid in unique_graph_objs)
+	{
+		var text_butt = unique_graph_objs[fid].group.fam_title_text;
+		var text_bounder = addInvisibleBounder( text_butt.getAbsolutePosition(), fid, true);
+
+		select_group.add(text_bounder)
+
 		for (var node in unique_graph_objs[fid].nodes)
 		{
 			if (node == 0) continue;
@@ -119,24 +125,28 @@ function startSelectionMode()
 // Shared with homology_selection.js
 // Replicate existing objects with bounding square
 function addBounder(pos, key, main_layer_yes){
-	var border_offs = 3;
 
-	var rect = new Kinetic.Rect({
-		x: pos.x - nodeSize - border_offs,
-		y: pos.y - nodeSize - border_offs,
-		width: (nodeSize *2) + 2*border_offs,
-		height: (nodeSize * 2) + 2*border_offs,
-		strokeAlpha: 0.5,
-		strokeWidth: 3,
-		strokeEnabled: false,
-		stroke: 'orange',
-	});
+	var rect = addInvisibleOrangeBox(pos);
 
 	rect.on('click', function(){
 		//Toggle selection
 		this.setStrokeEnabled(!selection_items[key].selected);
 
 		selection_items[key].selected = !selection_items[key].selected
+		if (main_layer_yes) main_layer.draw();
+		else haplo_layer.draw();
+	});
+
+	return rect;
+}
+
+function addInvisibleBounder(pos, fam_id, main_layer_yes){
+	var rect = addInvisibleOrangeBox(pos, 20);
+
+	rect.on('click', function(){
+		// Select fam
+		selectFam(fam_id);
+
 		if (main_layer_yes) main_layer.draw();
 		else haplo_layer.draw();
 	});

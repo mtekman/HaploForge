@@ -95,8 +95,6 @@ function launchHaplomode()
 	selected_ids_map = selecteds.id_map_generational;
 	selected_ids = selecteds.id_map
 
-	console.log(selected_ids, selected_ids )
-
 	if (isEmpty(selected_ids)){
 		return stopSelectionMode();
 		// haplo_layer.draw();
@@ -233,11 +231,7 @@ function toggleBottomBox( show, finishfunc )
 
 	finishfunc = finishfunc || 0;
 
-	console.log(finishfunc);
-
 	haplo_window.y_margin = 30;
-
-	console.log("sel_ids=", selected_ids_map)
 
 	var toggle_zoommarkers = false;
 
@@ -248,27 +242,11 @@ function toggleBottomBox( show, finishfunc )
 		//Add Zoom button
 		haplo_window.zoom_button = addButton("Range Slider", 0, butt_h,
 				function(){
-
 					toggle_zoommarkers = !toggle_zoommarkers;
 					console.log("zooming", toggle_zoommarkers);
 					//Within Haplomode
 
-					var marker_slid = getSlider(window.innerWidth - 100, 60);
-
-					if (toggle_zoommarkers){
-						mscale_layer.add(marker_slid);
-						// mscale_layer.setZIndex()
-						// stage.add(mscale_layer);
-
-						updateInputsByIndex(0, HAP_DRAW_LIM);
-						updateSlide();
-					}
-					else {
-						// mscale_layer.destroyChildren();
-						// stage.remove(mscale_layer);
-						marker_slid.remove();
-					}
-					mscale_layer.draw();
+					showSlider(toggle_zoommarkers)
 				}
 		);
 

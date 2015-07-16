@@ -146,6 +146,7 @@ function addFamily(fam_id, sx, sy){
 		id: fam_id
 	});
 
+
 	var t = new Kinetic.Text({
 		x: 50,
 		text: fam_id,
@@ -153,12 +154,8 @@ function addFamily(fam_id, sx, sy){
 		fontSize: 18,
 		fill: 'black'
 	})
+	g.fam_title_text = t;
 	g.add(t);
-
-	g.on('dblclick', function(){
-		selectFam(fam_id);
-		g.moveToTop();
-	});
 
 	t.on('mouseover', function(){
 		t.setFill('red');

@@ -12,6 +12,28 @@ var slwin_group,
 	sl_input2;
 
 
+/** General wrapper for slider
+	Use this if in doubt**/
+function showSlider(visible)
+{
+	var marker_slid = getSlider(window.innerWidth - 100, 60);
+
+	if (visible){
+		mscale_layer.add(marker_slid);
+		// mscale_layer.setZIndex()
+		// stage.add(mscale_layer);
+
+		updateInputsByIndex(0, HAP_DRAW_LIM);
+		updateSlide();
+	}
+	else {
+		// mscale_layer.destroyChildren();
+		// stage.remove(mscale_layer);
+		marker_slid.remove();
+	}
+	mscale_layer.draw();
+}
+
 
 function getSlider(xer, yer)
 {

@@ -20,6 +20,25 @@ function kineticTween(props){
 }
 
 
+
+function addInvisibleOrangeBox(pos, radius)
+{
+	var border_offs = 3,
+		radius = radius || nodeSize;
+
+	return new Kinetic.Rect({
+		x: pos.x - radius - border_offs,
+		y: pos.y - radius - border_offs,
+		width: (radius *2) + 2*border_offs,
+		height: (radius * 2) + 2*border_offs,
+		strokeAlpha: 0.5,
+		strokeWidth: 3,
+		strokeEnabled: false,
+		stroke: 'orange',
+	});
+}
+
+
 function addButton(message, xp, yp, callback, show_state)
 {
 	var group = new Kinetic.Group({x: xp, y: yp});
