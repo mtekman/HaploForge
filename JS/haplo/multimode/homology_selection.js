@@ -17,13 +17,14 @@
 
 				// Current allele for indiv1, iterating over all indiv2
 				//
-				var hom_regions_for_1_to_many = []
+				var hom_regions_for_i1a_to_i2all = {}; // Score --> [allele, hom_regions]
 
 				for (var i2a=0; i2a < indiv2_alleles.length; i2a++)
 				{
 					var current_indiv2_allele = indiv2_alleles[i2a]
 
-					var hom_regions = [];
+					var hom_regions = [],
+						homology_score = 0;
 
 					var homology_started = false,
 						temp_hom_region = new Array(2);
@@ -45,16 +46,26 @@
 								temp_hom_region[1] = m-1;
 
 								hom_regions.push( temp_hom_region );
+								homology_score += temp_hom_region[1] - tmp_hom_region[0];
+
 								temp_hom_region = new Array(2);
 							}
 						}
 					}
 
 					// Hom_regions_populated
-					hom_regions_for_1_to_many.push( hom_regions );
+					if (!(homology_score in hom_regions_for_i1a_to_i2all)){
+						hom_regions_for_i1a_to_i2all[homology_score] = [];
+					}
+
+					hom_regions_for_i1a_to_i2all[homology_score].push({
+						regions:hom_regions,
+						allele: i2a,
+						affected_indiv: j
+					});
 				}
 
-				// Total hom regions for 
+				// Here we've compared indiv1's single allele to all of indiv2's
 			}
 
 
