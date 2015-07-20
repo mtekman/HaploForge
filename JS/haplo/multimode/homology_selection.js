@@ -3,15 +3,76 @@
 
  */
 
- 	for (var i=0; i < affecteds.length; i++){
+ /* It would then be a matter of plotting affecteds and unaffected scores on seperate side of the marker
+ 	Hmm, no - hom and compound het can be performed in the same pass for any number of alleled individuals
+ 	Problem is resolving single het for multiple alleles, which is doable, but:
+
+ 	  -- Would need to track working indexes for all alleles, and perform an A* search either
+ 	  	 for every ambiguous index (precise, kludge), or for the entire damn search (easier, not optimal).
+ 	  
+ 	  -- Aim would be to minimize the number of allele transitions (no, not crossovers...) across an entire
+ 	     chromosome, splitting appropriately for each pre-established founder allele group (block proc
+ 	     until init).
+
+ 	It would then be a matter of plotting affecteds and unaffected scores on seperate side of the marker
+ 	scale axis, and adding a toggle to change between modes. Some issues though:
+
+ 	  -- Initial processing would take some time on low gfx setups (Kinetic vs WebCL )
+	  -- Small or single marker stretches of homology would be under-represented on the marker scale
+	     -- Propose (yet another) zoom tool to highlight such regions? Or a text widget to iterate and
+	        focus on each block...? Fuck knows, jump that bridge later.
+*/
+var singleHetHomolgy = function(){
+	var allele_ids_ordered = [], // Lookup array - affecteds + unaffecteds
+		affected_alleles = [],
+		unaffected_alleles = [];
+
+
+	var previous_indexes = {}; // Checked/updated for every ambiguous haplotype
+
+	for (var m=0; m++ < num_markers;){
+
+		var active_indexes = [],
+			global_ht = -1
+
+		for (var a_a = 0; a_a++ < affected_alleles.length;){
+
+			var ht = affected_alleles[a_a][m];
+
+			if (global_ht=== -1) global_ht = ht;
+
+			if (global_ht === ht) active_indexes.push(a_a);
+		}
+
+		// indexes populated, check overlap
+
+		for(var ol=0; ol++ < previous_indexes.length){
+			if (previous_indexes[ol] !== active_indexes[ol])
+			{
+
+			}
+		}
+		
+	}
+
+}
+
+
+
+
+
+
+
+ 	for (var i=0; i++ < affecteds.length;){
  		var indiv1 = affecteds[i],
 			indiv1_alleles = affected_alleles[indiv1];
 
-		for (var i1a =0; i1a < indiv1_alleles.length; i1a++)
+		for (var i1a =0; i1a++ < indiv1_alleles.length;)
 		{
 			var current_indiv1_allele = indiv1_alleles[i1a]
 	
-			for (var j=i+1; j < affecteds.length; j++):
+			for (var j=i+1; j++ < affecteds.length)
+			{
 				var indiv2 = affecteds[j],
 					indiv2_alleles = affected_alleles[indiv2];
 
@@ -19,7 +80,7 @@
 				//
 				var hom_regions_for_i1a_to_i2all = {}; // Score --> [allele, hom_regions]
 
-				for (var i2a=0; i2a < indiv2_alleles.length; i2a++)
+				for (var i2a=0; i2a++ < indiv2_alleles.length;)
 				{
 					var current_indiv2_allele = indiv2_alleles[i2a]
 
@@ -30,7 +91,7 @@
 						temp_hom_region = new Array(2);
 
 					// Begin checking allele vs allele
-					for (var m=0; m < num_markers; m++)
+					for (var m=0; m++ < num_markers;)
 					{
 						var ht1 = current_indiv1_allele[m],
 							ht2 = current_indiv2_allele[m];
@@ -117,45 +178,105 @@ function scan_alleles_for_homology( ids_to_scan ){
 		tmp_hom_region = new Uint8Array(2);
 
 	// First just pass over affecteds ands find regions of het and hom
-	var hom_regions = [],
-		het_regions = [];
+	var hom_region_scores  = new Uint8Array(num_markers),
+		het_region_scores  = new Uint8Array(num_markers),
+		chet_region_scores = new Uint8Array(num_markers);
 
 	for (var m=0; m < num_markers; m++)
 	{
-		var hom_allele_global = -1,
-			all_are_hom_at_marker = true;
+		// These need to be state maps...
+		var hom_allele_global = -1,					// 11 11
+			hom_at_marker_score = 0;
 
-		var het_alleles_global = [],
-			all_are_het_at_marker = true;
+		var het_at_marker_score = 0;
 
-		for (var afs = 0; afs < affected_alleles.length; afs++)
+		var het_allele_global_h1 = -1,
+			het_allele_global_h2 = -1,				// 12 12 
+			chet_at_marker_score = 0;
+
+		for (var afs = 0; afs < affected_alleles.length; afs++) 		// Iterate over group
 		{
-			var hom_allele_local = -1,
-				perc_is_hom_at_marker = true;
+			// Fuckit just assume two alleles per patient
+			var ht1 = affected_alleles[afs][0][m],
+				ht2 = affected_alleles[afs][1][m];
 
-			var het_alleles_local = new Uint8Array(affected_alleles[afs].length)
+			var perc_is_hom_at_marker = (ht1 === ht2);
 
-			for (var all=0; all < affected_alleles[afs].length; all++)
+			if (perc_is_hom_at_marker)
+			{				
+				if (hom_allele_global === -1)
+					hom_allele_global = ht1;
+				
+				else if (hom_allele_global === ht1){
+					hom_at_marker_score += 1
+				}
+			}
+
+			else {
+				// Chet 
+				if (chet_allele_global_h1 === -1){
+					chet_allele_global_h1 = ht1;
+					chet_allele_global_h2 = ht2;
+				}
+
+				else if (
+					   ((chet_allele_global_h1 === ht1) && (chet_allele_global_h2 === ht2))
+					|| ((chet_allele_global_h2 === ht1) && (chet_allele_global_h1 === ht2))
+				){
+					chet_at_marker_score += 1
+				}
+
+				else if {
+					()
+				}
+
+
+			}
+
+
+			if (!(perc_is_hom_at_marker)){
+				// Chet allele
+
+			}
+
+
+
+			for (var all=0; all < affected_alleles[afs].length; all++)	// Iterate over individual alleles
 			{
 				var ht = affected_alleles[afs][all][m];
 
 				// Hom check at allele level
 				if (hom_allele_local === -1) hom_allele_local = ht;
 				else if (hom_allele_local !== ht){
+					// Chet allele
 					perc_is_hom_at_marker = false;
+					het_alleles_local[ht] = 1;
 				}
-
-				// Het storage at allele level -- requires outside processing
-				het_alleles_local[all] = ht;
 			}
 
 			// Hom check at individual level
 			if (perc_is_hom_at_marker)
 			{
-				if (hom_allele_global === -1) hom_allele_global = hom_allele_local;
+				if (hom_allele_global === -1)
+					hom_allele_global = hom_allele_local;
 				else if (hom_allele_local !== hom_allele_global){
 					all_are_hom_at_marker = false;
+
+					// Het checking goes here, because it should not overlap with purely hom regions
+					for (het in het_alleles_local)
+					{
+						if (!(het in chet_allele_global)){
+							chet_allele_global[het] = 0;
+						}
+						chet_allele_global[het] += 1; // add 
+					}
+
+
 				}
+
+
+
+
 			}
 			// else {
 				// all_are_hom_at_marker = false;
