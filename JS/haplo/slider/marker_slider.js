@@ -32,6 +32,7 @@ function showSlider(visible)
 		marker_slid.remove();
 	}
 	mscale_layer.draw();
+	return marker_slid;
 }
 
 
@@ -152,6 +153,8 @@ function getSlider(xer, yer)
 	marker_slider.add( sl_input1   );
 	marker_slider.add( sl_input2   );
 	marker_slider.add( slwin_group );
+
+	marker_slider.rangeline = rangeline;
 
 	return marker_slider;
 }
