@@ -12,7 +12,7 @@ all_js="$tmp/all_scripts.js"
 echo "" > $all_js
 
 js_files=$(grep "script" $index_file | awk -F '"' '{print $2}' | grep -v framework) 
-kinetic_insert=$(grep "framework" $index_file | sed "s/JS/..\/JS/" )
+kinetic_insert=$(grep "framework" $index_file | sed 's|JS/.*/k|k|' )
 
 for js_file in $js_files; do
 	echo $js_file

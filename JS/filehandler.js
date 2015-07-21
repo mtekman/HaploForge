@@ -123,6 +123,7 @@ function processFile() {
     var lr = new FileReader();
 
     lr.onloadend = function(e){
+		document.getElementById("buttons").style.display = 'none'
         processInput(e.target.result, type);
         connectAllIndividuals();
         populateGrids_and_UniqueObjs();
@@ -134,9 +135,20 @@ function processFile() {
 		washMarkerMap();
 
 		// toggle_haplomode(20);
-		// startSelectionMode();
+		startSelectionMode();
+		for (var key in selection_items){
 
-		document.getElementById("buttons").style.display = 'none'
+			var fid_id = key.split('_'),
+				fid = fid_id[0],
+				id = fid_id[1];
+
+			var item = selection_items[key];
+
+			if (id >= 6 && id <=10){
+				item.box.fire('click')
+			}
+		}
+		launchHaplomode();
     };
     lr.readAsText(file);
 }

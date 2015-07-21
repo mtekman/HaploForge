@@ -65,8 +65,7 @@ function startSelectionMode()
 			opacity: 0.1
 	}));
 
-	select_group.add(
-		addButton("Select Affecteds", 0, 0, function(){
+	select_group.add(addButton("Select Affecteds", 0, 0, function(){
 
 			toggle_selection_affecteds = !toggle_selection_affecteds;
 
@@ -82,8 +81,7 @@ function startSelectionMode()
 			}
 
 			console.log("affecteds:", Object.keys(selection_items).filter( function (n){ return selection_items[n].affected === true;}));
-		}, false)
-	);
+	}, false));
 
 	select_group.add(
 		addButton("Submit / Close", 0, butt_h, launchHaplomode)

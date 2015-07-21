@@ -181,13 +181,12 @@ function makeTopBox_haplomode( box_lims_and_group, render_group){
 	
 	// Check for homology
 	haplo_window.add(
-		addButton("Find Homology", 0, 2*butt_h, function(){
+		addButton("Find Homology", 0, butt_h, function(){
 			// Function exits selection mode auto
 			homology_selection_mode();
 			//
 			//returns marker pair list
-		})
-	);
+	}));
 
 
 	// // JS detaches toggler from function inherently
@@ -240,7 +239,7 @@ function toggleBottomBox( show, finishfunc )
 		delete haplo_window.bottom;
 		
 		//Add Zoom button
-		haplo_window.zoom_button = addButton("Range Slider", 0, butt_h,
+		haplo_window.zoom_button = addButton("Range Slider", 0, 2*butt_h,
 				function(){
 					toggle_zoommarkers = !toggle_zoommarkers;
 					console.log("zooming", toggle_zoommarkers);
