@@ -198,7 +198,7 @@ function child2parent_link(pers, moth, fath, fam) // fam only needed for consang
 // 		console.log("\n=====================");
 // 		console.log("F:", fath.id, debugHaploData(fath_hp));
 // 		console.log("M:", moth.id, debugHaploData(moth_hp));
-	console.log("Ci", pers.id, debugHaploData(pers_hp));
+	//console.log("Ci", pers.id, debugHaploData(pers_hp));
 
 	// Remove Ambigious regions. Must be done here so that next-gen
 	// deals only with clean data and not a hodge-podge of possible
@@ -294,7 +294,7 @@ function child2parent_link(pers, moth, fath, fam) // fam only needed for consang
 		pers_hp[1].pter_array[curr_index].color_group = [ res1[curr_index] ];
 	}
 
-	console.log("Cf", pers.id, debugHaploData(pers_hp));
+	//console.log("Cf", pers.id, debugHaploData(pers_hp));
 }
 
 

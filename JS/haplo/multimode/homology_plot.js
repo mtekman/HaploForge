@@ -8,24 +8,26 @@ function debugUpdatePlots(spec_plot, stretch, score)
 
 // For debugging
 //printToFile( ["107_6","107_7","107_8","107_9","107_10"], plots.hom)
-function printToFile( ht_ids, spec_plot)
+function printToFile( ht_ids )
 {
 //	var lines = plotAxis3( spec_plot, stretch, score);
 
-	var text = "";
+	var text = "          ";
 
 	var num_markers = marker_array.length;
 
 	// Headers
-	for (var i=0; i < ht_ids; i++)
+	for (var i=0; i < ht_ids.length; i++)
 	{
 		var f_id = ht_ids[i].split('_'),
 			fid = f_id[0],
 			id = f_id[1];
 
-		text += "\t"+id.toString()
+		var aff = (family_map[fid][id].affected == 2)?'a':'u';
+
+		text += "\t"+id.toString()+'_'+aff
 	}
-	text += "\tHomology\n"
+	text += "\tHom  \tHet\t  Chet\n"
 
 	// Data
 	for (var l=0; l < num_markers; l++)
@@ -34,7 +36,7 @@ function printToFile( ht_ids, spec_plot)
 
 		text += marker
 
-		for (var i=0; i < ht_ids; i++)
+		for (var i=0; i < ht_ids.length; i++)
 		{
 			var f_id = ht_ids[i].split('_'),
 				fid = f_id[0],
@@ -44,24 +46,29 @@ function printToFile( ht_ids, spec_plot)
 				a1 = alleles[0].data_array[l],
 				a2 = alleles[1].data_array[l];
 
-			text += '\t' + a1.toString() + '-' + a2.toString()
+			text += '\t' + a1.toString() + "" + a2.toString()
 		}
-		var in_val = spec_plot[l];	// before processing
-		text += '\t' + in_val.toString() + '\n';
+
+		var hom_v = plots.hom[l],
+			het_v = plots.het[l],
+			chet_v = plots.chet[l];
+
+		text += '\t' + hom_v.toString() + '\t' + het_v.toString() + '\t' + chet_v.toString() + '\n';
 	}
 
 	// Write
 	var textFile = null,
-		makeTextFile = function(text)
+		makeTextFile = function(tex)
 		{
-			var data = new Blob([text],{type:'text/plain'});
+			var data = new Blob([tex],{type:'text/plain'});
 
 			if (textFile !== null) window.URL.revokeObjectURL(textFile);
 
 			textFile = window.URL.createObjectURL(data);
 			return textFile;
 		};
-	console.log(textFile);
+
+	window.open(makeTextFile(text));
 }
 
 
