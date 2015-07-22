@@ -45,6 +45,11 @@ tmp_index="tmp_index.html"
 echo "" > $tmp_index
 
 while read line; do
+	if [[ "$line" =~ "[LOCAL]" ]]; then
+		echo "$line" | sed 's|\[LOCAL\]||' >> $tmp_index
+		continue;
+	fi
+
 	echo "$line" >> $tmp_index
 
 	if [[ "$line" =~ "<h1>" ]]; then

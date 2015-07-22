@@ -16,7 +16,9 @@ var slwin_group,
 	Use this if in doubt**/
 function showSlider(visible)
 {
-	var marker_slid = getSlider(window.innerWidth - 100, 60);
+	var marker_slid = getSlider(
+		 haplo_window.top.getX()
+		+haplo_window.top.rect.getWidth() + 20, 60);
 
 	if (visible){
 		mscale_layer.add(marker_slid);

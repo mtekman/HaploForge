@@ -172,7 +172,7 @@ var homology_selection_mode = function()
 			plots = scan_alleles_for_homology( selected_for_homology );
 
 //			plotScoresOnMarkerScale( plots );
-			plotScoresOnMarkerScale();
+			plotScoresOnMarkerScale( plots.hom, 10, 2);
 
 			return 0;
 		}
