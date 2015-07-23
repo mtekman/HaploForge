@@ -126,6 +126,10 @@ function makeHaploTypeWindow( lines_nodes_to_render )
 		opacity: 0.5
 	});
 
+	// haplo_window.background_markers = new Kinetic.Rect({
+	// 	width: 100,
+	// })
+
 	haplo_window.add( haplo_window.background )
 
 

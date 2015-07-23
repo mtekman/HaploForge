@@ -7,11 +7,9 @@ function debugUpdatePlots(spec_plot, stretch, score)
 
 
 // For debugging
-//printToFile( ["107_6","107_7","107_8","107_9","107_10"], plots.hom)
+//printToFile( ["107_6","107_7","107_8","107_9","107_10"])
 function printToFile( ht_ids )
 {
-//	var lines = plotAxis3( spec_plot, stretch, score);
-
 	var text = "          ";
 
 	var num_markers = marker_array.length;
@@ -27,7 +25,7 @@ function printToFile( ht_ids )
 
 		text += "\t"+id.toString()+'_'+aff
 	}
-	text += "\tHom  \tHet\t  Chet\n"
+	text += "\tHom  \tHet  \tChet\n"
 
 	// Data
 	for (var l=0; l < num_markers; l++)

@@ -6,7 +6,6 @@ function inputDragFunc( abspos){
 
 	var perc, rsindex;
 
-
 	if (this.isTop){
 		var atstart = false;
 
@@ -84,10 +83,10 @@ function updateSlide()
 	slwin_group.setY(i_slider_top_y);
 
 	slwin_group.line.setPoints([
-		top_slider[0] + offs*2, top_slider[1],
-		top_slider[0], top_slider[1],
-		bot_slider[0], bot_slider[1],
-		bot_slider[0] + offs*2, bot_slider[1]
+		-slider_style.bevel+ top_slider[0] + offs*2, top_slider[1] + slider_style.bevel,
+		top_slider[0], top_slider[1] + slider_style.bevel,
+		bot_slider[0], bot_slider[1] + slider_style.bevel,
+		-slider_style.bevel + bot_slider[0] + offs*2, bot_slider[1] + slider_style.bevel
 	]);
 
 	slwin_group.message.setText( last_input2_ind - last_input1_ind );

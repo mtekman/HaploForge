@@ -53,9 +53,9 @@ function scan_alleles_for_homology( ids_to_scan ){
 	var num_markers = marker_array.length;
 
 	// First just pass over affecteds ands find regions of het and hom
-	var hom_region_scores  = new Uint8Array(num_markers),
-		het_region_scores  = new Uint8Array(num_markers),
-		chet_region_scores = new Uint8Array(num_markers);
+	var hom_region_scores  = new Int8Array(num_markers),
+		het_region_scores  = new Int8Array(num_markers),
+		chet_region_scores = new Int8Array(num_markers);
 
 	for (var m=0; m < num_markers; m++)
 	{
@@ -73,6 +73,10 @@ function scan_alleles_for_homology( ids_to_scan ){
 		{
 			var affected_indiv = alleles[afs].aff,
 				mult = affected_indiv?1:-1;
+				// mult = 1;
+
+			// if ((!affected_indiv)) continue;
+
 
 			// Fuckit just assume two alleles per patient
 			var ht1 = alleles[afs].data[0][m],
@@ -86,8 +90,10 @@ function scan_alleles_for_homology( ids_to_scan ){
 					hom_allele_global = ht1;
 				
 				else if (hom_allele_global === ht1){
-					hom_at_marker_score += 2*mult
+					hom_at_marker_score += (2*mult)
+					// console.log(ids_to_scan[afs], hom_at_marker_score, marker_array[m])
 				}
+				continue;
 			}
 
 			else {
@@ -103,7 +109,7 @@ function scan_alleles_for_homology( ids_to_scan ){
 
 						if (het_allele_global_h2 === ht2){
 							het_at_marker_score += mult
-							chet_at_marker_score += 2*mult
+							chet_at_marker_score += (2*mult)
 						}
 					}
 					else if (het_allele_global_h1 === ht2){
@@ -111,7 +117,7 @@ function scan_alleles_for_homology( ids_to_scan ){
 
 						if (het_allele_global_h2 === ht1){
 							het_at_marker_score += mult
-							chet_at_marker_score += 2*mult
+							chet_at_marker_score += (2*mult)
 						}
 					}
 				}
@@ -173,6 +179,8 @@ var homology_selection_mode = function()
 
 //			plotScoresOnMarkerScale( plots );
 			plotScoresOnMarkerScale( plots.hom, 10, 2);
+
+			printToFile(selected_for_homology);
 
 			return 0;
 		}

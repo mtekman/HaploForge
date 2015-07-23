@@ -85,8 +85,8 @@ var min_haplo_x = horiz_space,
 
 // Marker Slider
 var slideinp_w = 20,
-	slideinp_h = 5,
-	slider_height = innerHeight * 0.5,
+	slideinp_h = 20,
+	slider_height = innerHeight * 0.75,
 	I_slider_extension = 35,
 	I_slider_offset = (slideinp_w/3);
 
@@ -95,11 +95,13 @@ var slider_style = {
 	R_stroke:'red',
 	R_strokeWidth: 5,
 	R_cap:'round',
-	I_stroke:'black',
+	I_stroke:'white',
 	I_strokeWidth:2,
 	I_fontFamily: "monospace",
 	I_fontSize: 10,
-	I_fontColor: 'black'};
+	I_fontColor: 'red',
+	S_fontColor: 'white',
+	bevel: 10};
 
 
 var in2Space = function(integ){

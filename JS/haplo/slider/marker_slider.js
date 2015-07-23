@@ -53,17 +53,20 @@ function getSlider(xer, yer)
 			dragBoundFunc: inputDragFunc
 		})
 		var mark_label = new Kinetic.Text({
-			x: I_slider_offset*2, y: (top?-I_slider_extension:I_slider_extension) - HAP_VERT_SPA/2,
+			x: slider_style.bevel + 3 + I_slider_offset*2,
+			y: (top?-I_slider_extension:I_slider_extension) - HAP_VERT_SPA/2,
 			text: "",
 			fontFamily: "Arial",
 			fontSize: 10,
-			fill: 'black'
+			fill: slider_style.S_fontColor
 		});
+
 		var line_out = new Kinetic.Line({
 			points: [
-				I_slider_offset,0,
-				I_slider_offset,top?-I_slider_extension:I_slider_extension,
-				I_slider_offset*2,top?-I_slider_extension:I_slider_extension
+				0, slider_style.bevel,
+				I_slider_offset + slider_style.bevel,0,
+				I_slider_offset + slider_style.bevel ,top?-I_slider_extension:I_slider_extension,
+				slider_style.bevel + I_slider_offset*2,top?-I_slider_extension:I_slider_extension
 					],
 			stroke: slider_style.I_stroke,
 			strokeWidth:slider_style.I_strokeWidth
@@ -80,13 +83,12 @@ function getSlider(xer, yer)
 	}
 
 
-
 	var marker_slider = new Kinetic.Group({x:xer,y:yer,draggable:true});
 	markerInstance = marker_slider;
 
 	//Range line
 	var rangeline = new Kinetic.Line({
-		x:0,y:0,
+		x:0,y: slider_style.bevel,
 		stroke: slider_style.R_stroke,
 		strokeWidth: slider_style.R_strokeWidth,
 		lineCap: slider_style.R_cap,
@@ -107,12 +109,15 @@ function getSlider(xer, yer)
 	});
 
 
-	slwin_group.on('mousedown', function(){haplo_layer.disableHitGraph()});
+	slwin_group.on('mousedown', function(){
+		haplo_layer.disableHitGraph()
+	});
+	
 	slwin_group.on('dragmove', function(){
 		if (HAP_DRAW_LIM < HAP_MIN_DRAW)
 			updateHaploPositions();
-
 	});
+	
 	slwin_group.on('mouseup', function(){
 		haplo_layer.enableHitGraph();
 		updateHaploPositions();
@@ -125,8 +130,10 @@ function getSlider(xer, yer)
 			strokeWidth: slider_style.I_strokeWidth,
 			points:[0,0,0,slider_height]
 		}),
+
 		slwin_tex = new Kinetic.Text({
-			x: slideinp_w/2, y: slider_height/2,
+			x: slider_style.bevel + slideinp_w/2,
+			y: slider_height/2,
 			text: "win",
 			fontFamily: slider_style.I_fontFamily,
 			fontSize: slider_style.I_fontSize,
