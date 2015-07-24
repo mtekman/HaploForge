@@ -8,11 +8,13 @@ function debugUpdatePlots(spec_plot, stretch, score)
 
 // For debugging
 //printToFile( ["107_6","107_7","107_8","107_9","107_10"])
-function printToFile( ht_ids )
+function printToFile( ht_ids, start_index, stop_index )
 {
+	start_index = start_index || 0;
+	stop_index = stop_index || (marker_array.length -1);
+
 	var text = "          ";
 
-	var num_markers = marker_array.length;
 
 	// Headers
 	for (var i=0; i < ht_ids.length; i++)
@@ -28,7 +30,7 @@ function printToFile( ht_ids )
 	text += "\tHom  \tHet  \tChet\n"
 
 	// Data
-	for (var l=0; l < num_markers; l++)
+	for (var l=start_index; l <= stop_index; l++)
 	{
 		var marker = marker_array[l];
 
@@ -70,12 +72,14 @@ function printToFile( ht_ids )
 }
 
 
-function plotScoresOnMarkerScale (specific_plot, stretch, score){
+
+function plotScoresOnMarkerScale (specific_plot, stretch, score)
+{
 	/* Grab rangeline and hang graphics from it.
 
 	 Shape likely to be > 1000 px tall, and rangeline only 300 px,
 	 which is a scale down of 3x that most pc's can handle
-	  -- hopefully Kinetic/canvas handles mipmaps efficiently
+	 ~~~ hopefully Kinetic/canvas handles mipmaps efficiently
 	     so I don't have to ~~~
 	*/
 	var marker_scale = showSlider(true),
@@ -96,7 +100,8 @@ function plotScoresOnMarkerScale (specific_plot, stretch, score){
 		inform_points = lines[1];
 
 	var avline = new Kinetic.Line({
-		x: rangeline.getX(),	y: rangeline.getY(),
+		x: rangeline.getX(),
+		y: rangeline.getY(),
 		points: average_points,
 		stroke: 'green',	strokeWidth: 0.3,
 		closed: true,	fill: 'green',	alpha: 0.3

@@ -101,7 +101,7 @@ var slider_style = {
 	I_fontSize: 10,
 	I_fontColor: 'red',
 	S_fontColor: 'white',
-	bevel: 10};
+	bevel: 0};
 
 
 var in2Space = function(integ){

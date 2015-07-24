@@ -236,8 +236,6 @@ function toggleBottomBox( show, finishfunc )
 
 	haplo_window.y_margin = 30;
 
-	var toggle_zoommarkers = false;
-
 	if (show)
 	{
 		delete haplo_window.bottom;
@@ -245,11 +243,7 @@ function toggleBottomBox( show, finishfunc )
 		//Add Zoom button
 		haplo_window.zoom_button = addButton("Range Slider", 0, 2*butt_h,
 				function(){
-					toggle_zoommarkers = !toggle_zoommarkers;
-					console.log("zooming", toggle_zoommarkers);
-					//Within Haplomode
-
-					showSlider(toggle_zoommarkers)
+					showSlider(!markerscale_visible)
 				}
 		);
 

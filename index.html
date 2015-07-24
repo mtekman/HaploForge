@@ -12,7 +12,20 @@
             <!-- <input type="checkbox" id="rlines" onchange="toggleRAng()"  checked=true > Rlines</input><br />
             <input type="button" id="play" onclick="cutting()" > Play</input><br />
             <input type="checkbox" id="map" onchange="toggleMarkerScale()" > MarkerMap</input> -->
+        </div>
 
+        <div id="homology_buttons" >
+            <input type=button id='print_current' value="Print Current"/>
+            <input type=button id='print_all' value="Print All" />
+            <select id='plot_type'>
+                <option selected > Homozygous</option>
+                <option> Heterozygous</option>
+                <option> Compound Het</option>
+            </select>
+            <br/>
+            Min Stretch:<input type=number id='zygous_min_stretch' value="0" />
+            Min Score:<input type=number id='zygous_min_score' value="0" />
+            <input type=button id='hom_exit' value="X" /> 
         </div>
 
         <div id='container' ><!-- KineticJS creates a canvas for each layer, so no need --></div>

@@ -1,4 +1,5 @@
 var markerInstance = null;
+var markerscale_visible = false;
 
 // Updated by functions, instead of continuously checking
 var last_input1_posy, last_input1_ind,
@@ -16,6 +17,8 @@ var slwin_group,
 	Use this if in doubt**/
 function showSlider(visible)
 {
+	markerscale_visible = visible;
+
 	var marker_slid = getSlider(
 		 haplo_window.top.getX()
 		+haplo_window.top.rect.getWidth() + 20, 60);

@@ -1,8 +1,11 @@
 // Global graphic styles
 
 
-function addWhiteRect(props){
-	props.fill = 'white';
+function addWhiteRect(props, color_override)
+ {
+	color_override = color_override || 'white'
+
+	props.fill = color_override;
 	props.stroke = 'black';
 	props.strokeWidth = 2;
 	props.cornerRadius = 10;
@@ -90,10 +93,10 @@ function addButton(message, xp, yp, callback, show_state)
 	return group;
 }
 
-function addExitButton(center, callback)
+function addExitButton(center, callback, cross_diam)
 {
-	var cross_diam = 20,
-		cross_rad = cross_diam/2;
+	cross_diam = cross_diam || 20;
+	var cross_rad = cross_diam/2;
 
 	var rect = new Kinetic.Rect({
 		x: -cross_rad,

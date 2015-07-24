@@ -73,10 +73,6 @@ function scan_alleles_for_homology( ids_to_scan ){
 		{
 			var affected_indiv = alleles[afs].aff,
 				mult = affected_indiv?1:-1;
-				// mult = 1;
-
-			// if ((!affected_indiv)) continue;
-
 
 			// Fuckit just assume two alleles per patient
 			var ht1 = alleles[afs].data[0][m],
@@ -86,39 +82,40 @@ function scan_alleles_for_homology( ids_to_scan ){
 
 			if (perc_is_hom_at_marker)
 			{
-				if (hom_allele_global === -1)
+				if (hom_allele_global === -1){
 					hom_allele_global = ht1;
-				
+					hom_at_marker_score += (2*mult);
+				}
 				else if (hom_allele_global === ht1){
-					hom_at_marker_score += (2*mult)
-					// console.log(ids_to_scan[afs], hom_at_marker_score, marker_array[m])
+					hom_at_marker_score += (2*mult);
 				}
 				continue;
 			}
 
+			// Chet + Het
+			if (het_allele_global_h1 === -1){
+				het_allele_global_h1 = ht1;
+				het_allele_global_h2 = ht2;
+				het_at_marker_score += (2*mult)
+				
+				chet_at_marker_score += (2*mult)
+			}
+
 			else {
-				// Chet + Het
-				if (het_allele_global_h1 === -1){
-					het_allele_global_h1 = ht1;
-					het_allele_global_h2 = ht2;
-				}
+				if (het_allele_global_h1 === ht1){
+					het_at_marker_score += mult
 
-				else {
-					if (het_allele_global_h1 === ht1){
+					if (het_allele_global_h2 === ht2){
 						het_at_marker_score += mult
-
-						if (het_allele_global_h2 === ht2){
-							het_at_marker_score += mult
-							chet_at_marker_score += (2*mult)
-						}
+						chet_at_marker_score += (2*mult)
 					}
-					else if (het_allele_global_h1 === ht2){
-						het_at_marker_score += mult
+				}
+				else if (het_allele_global_h1 === ht2){
+					het_at_marker_score += mult
 
-						if (het_allele_global_h2 === ht1){
-							het_at_marker_score += mult
-							chet_at_marker_score += (2*mult)
-						}
+					if (het_allele_global_h2 === ht1){
+						het_at_marker_score += mult
+						chet_at_marker_score += (2*mult)
 					}
 				}
 			}
@@ -128,6 +125,8 @@ function scan_alleles_for_homology( ids_to_scan ){
 		het_region_scores[m] = het_at_marker_score;
 		chet_region_scores[m] = chet_at_marker_score;
 	}
+
+
 
 	return {
 		hom: hom_region_scores,
@@ -180,7 +179,43 @@ var homology_selection_mode = function()
 //			plotScoresOnMarkerScale( plots );
 			plotScoresOnMarkerScale( plots.hom, 10, 2);
 
-			printToFile(selected_for_homology);
+
+			var button_group = new Kinetic.Group({
+				x: - (butt_w + 20),
+				y: slider_height
+			});
+
+			button_group.add(
+				addWhiteRect({
+					x:-10,
+					y:-10,
+					height: (butt_h * 2) + 20,
+					width: butt_w + 20,
+					opacity: 0.2
+				}, '#dddddd')
+			);
+
+			button_group.add(
+				addButton("Print Current", 0, 0, function(){
+					printToFile(selected_for_homology, sta_index, end_index);
+				})
+			);
+
+			button_group.add(
+				addButton("Print All", 0, butt_h, function(){
+					printToFile(selected_for_homology);
+				})
+			);
+			button_group.add(
+				addExitButton({x: butt_w + 10, y: -10}, function(){
+					button_group.destroy()
+					mscale_layer.draw();
+				}, 10)
+			)
+
+			markerInstance.add( button_group );
+			mscale_layer.draw();
+			// haplo_layer.draw();
 
 			return 0;
 		}

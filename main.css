@@ -14,6 +14,22 @@
 	z-index:10;
 }
 
+#homology_buttons {
+	position:absolute;
+	left:0px;
+	bottom:0px;
+	z-index:10;
+	font-size: 10px;
+	font-family: 'Arial';
+	color: black;
+	padding: 3px;
+	background-color: white;
+	border-radius: 0px 8px 0px 0px;
+	border: 2px solid gray;
+	width: 50%;
+	min-width: 245px;
+}
+
 h1 { color: #111; font-family: 'Helvetica Neue', sans-serif; font-size: 275px; 
 font-weight: bold; letter-spacing: -1px; line-height: 1; text-align: center; }
 
@@ -22,3 +38,22 @@ h2 { color: #111; font-family: 'Open Sans', sans-serif; font-size: 30px; font-we
 
 p { color: #685206; font-family: 'Helvetica Neue', sans-serif; font-size: 14px; 
 line-height: 24px; margin: 0 0 24px; text-align: justify; text-justify: inter-word; }
+
+
+input,select {
+	background-color: gray;
+	color: white;
+	border-radius: 8px;
+	border-color: black;
+	font-size: 10px;
+	font-family: 'Arial';
+}
+
+input[type=number]{
+	width:10%;
+	min-width: 20px;
+	text-align: center
+	text-justify: center;
+}
+
+
