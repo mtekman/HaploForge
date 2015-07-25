@@ -14,20 +14,41 @@
             <input type="checkbox" id="map" onchange="toggleMarkerScale()" > MarkerMap</input> -->
         </div>
 
-        <div id="homology_buttons" >
-            <input type=button id='print_current' value="Print Current"/>
-            <input type=button id='print_all' value="Print All" />
-            <select id='plot_type'>
-                <option selected > Homozygous</option>
-                <option> Heterozygous</option>
-                <option> Compound Het</option>
-            </select>
-            <br/>
-            Min Stretch:<input type=number id='zygous_min_stretch' value="0" />
-            Min Score:<input type=number id='zygous_min_score' value="0" />
+        <div id="homology_buttons">
             <input type=button id='hom_exit' value="X" /> 
-        </div>
 
+            <table>
+                <tr>
+                    <td>
+                        <select id='plot_type'>
+                            <option selected >HOM</option>
+                            <option>HET</option>
+                            <option>CHET</option>
+                        </select>
+                        <input type=button id='plot_redraw' value="Redraw" />
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                    <span class="numbers">
+                        <label for='zygous_min_stretch'>Min Exten:</label>
+                        <input type=number id='zygous_min_stretch' value="0" min=0 />
+                        <label for='zygous_min_score'  >Min Score:</label>
+                        <input type=number id='zygous_min_score' value="0" min=0 />
+                    </span>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type=button id='print_all' value="Print All" />
+                        <input type=button id='print_current' value="Print Current"/>
+                    </td>
+                </tr>
+            </table>
+        </div>
+ 
         <div id='container' ><!-- KineticJS creates a canvas for each layer, so no need --></div>
 
 		<!-- CODE GOES HERE -->
@@ -53,6 +74,8 @@
         <script src="JS/haplo/multimode/alignment.js" ></script>
         <script src="JS/haplo/multimode/selection_mode.js" ></script>
         <script src="JS/haplo/multimode/haplomode_multi.js" ></script>
+
+        <script src="JS/haplo/multimode/homology_buttons.js" ></script>
         <script src="JS/haplo/multimode/homology_plot.js" ></script>
         <script src="JS/haplo/multimode/homology_selection.js" ></script>
 

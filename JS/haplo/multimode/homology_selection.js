@@ -89,7 +89,10 @@ function scan_alleles_for_homology( ids_to_scan ){
 				else if (hom_allele_global === ht1){
 					hom_at_marker_score += (2*mult);
 				}
-				continue;
+
+				// Unaffecteds may be homozygous but may still contribute
+				// towards het scores
+				if (affected_indiv) continue;
 			}
 
 			// Chet + Het
@@ -129,9 +132,9 @@ function scan_alleles_for_homology( ids_to_scan ){
 
 
 	return {
-		hom: hom_region_scores,
-		het: het_region_scores,
-		chet: chet_region_scores,
+		HOM: hom_region_scores,
+		HET: het_region_scores,
+		CHET: chet_region_scores,
 		num_comparisons: ids_to_scan.length
 	};
 }
@@ -158,7 +161,8 @@ var homology_selection_mode = function()
 	sub_select_group.add(addButton("Submit Selection", 0, 0,
 		function()
 		{
-			var selected_for_homology = [];
+			// var selected_for_homology = []; // Now global in homology_buttons.js
+			selected_for_homology = [];
 		
 			for (var s in selection_items){
 				if (selection_items[s].selected){
@@ -176,46 +180,8 @@ var homology_selection_mode = function()
 
 			plots = scan_alleles_for_homology( selected_for_homology );
 
-//			plotScoresOnMarkerScale( plots );
-			plotScoresOnMarkerScale( plots.hom, 10, 2);
-
-
-			var button_group = new Kinetic.Group({
-				x: - (butt_w + 20),
-				y: slider_height
-			});
-
-			button_group.add(
-				addWhiteRect({
-					x:-10,
-					y:-10,
-					height: (butt_h * 2) + 20,
-					width: butt_w + 20,
-					opacity: 0.2
-				}, '#dddddd')
-			);
-
-			button_group.add(
-				addButton("Print Current", 0, 0, function(){
-					printToFile(selected_for_homology, sta_index, end_index);
-				})
-			);
-
-			button_group.add(
-				addButton("Print All", 0, butt_h, function(){
-					printToFile(selected_for_homology);
-				})
-			);
-			button_group.add(
-				addExitButton({x: butt_w + 10, y: -10}, function(){
-					button_group.destroy()
-					mscale_layer.draw();
-				}, 10)
-			)
-
-			markerInstance.add( button_group );
-			mscale_layer.draw();
-			// haplo_layer.draw();
+			homology_buttons_show();
+			homology_buttons_redraw();
 
 			return 0;
 		}

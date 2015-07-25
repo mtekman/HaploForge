@@ -24,10 +24,59 @@
 	color: black;
 	padding: 3px;
 	background-color: white;
-	border-radius: 0px 8px 0px 0px;
+	border-radius: 8px;
 	border: 2px solid gray;
-	width: 50%;
-	min-width: 245px;
+	display: none;
+
+}
+#homology_buttons input,select {
+	background-color: gray;
+	color: white;
+	border-radius: 8px;
+	border-color: black;
+	font-size: 10px;
+	font-family: 'Arial';
+	text-align: left;
+}
+
+
+#hom_exit{
+	position:absolute;
+	right:-10px;
+	top:-10px;
+	background-color: black;
+	color: white;
+	border: 1px solid gray;
+}
+
+#plot_type{
+	width:72px;
+}
+
+
+.numbers{
+	background-color: white;
+	color: black;
+	border: 2px solid black;
+	border-radius: 8px;
+	font-size: 10px;
+	font-family: 'Arial';
+	text-align: right;
+	padding: 3px;
+	width: 120px;
+	display: inline-block;
+}
+
+.numbers input[type="number"]{
+	border: 1px solid black;
+	width: 40px;
+	text-align: center;
+}
+
+.numbers label{
+	vertical-align: middle;
+	width:80px;
+	padding-right: 20px;
 }
 
 h1 { color: #111; font-family: 'Helvetica Neue', sans-serif; font-size: 275px; 
@@ -38,22 +87,4 @@ h2 { color: #111; font-family: 'Open Sans', sans-serif; font-size: 30px; font-we
 
 p { color: #685206; font-family: 'Helvetica Neue', sans-serif; font-size: 14px; 
 line-height: 24px; margin: 0 0 24px; text-align: justify; text-justify: inter-word; }
-
-
-input,select {
-	background-color: gray;
-	color: white;
-	border-radius: 8px;
-	border-color: black;
-	font-size: 10px;
-	font-family: 'Arial';
-}
-
-input[type=number]{
-	width:10%;
-	min-width: 20px;
-	text-align: center
-	text-justify: center;
-}
-
 

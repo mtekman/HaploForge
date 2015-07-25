@@ -1,5 +1,13 @@
 TODO:
 ======
+
+- Fix reselecting individuals after coming out of select mode
+- Select mode should place nodes ontop of darkened rect, and then return them back
+- Fix block size plotting to be more relevant.
+
+
+DONE:
+======
 EDIT Haplomode to incorporate non-related individuals:
    * Press a button to initiate a selection mode in the main pedview
    * Tick all the members that you want (quick button to toggle all affecteds)
@@ -12,9 +20,6 @@ EDIT Haplomode to incorporate non-related individuals:
    	         * for single/double alleles across selected individuals
    	         * for single/double alleles across selected indivs, barring other indivs
 
-
-DONE:
-======
 
 Window needs an adjuster to be dynamically set to show N markers
  - Adjuster could be a slider that represents all M markers with start and stop bars

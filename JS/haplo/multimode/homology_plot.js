@@ -1,4 +1,3 @@
-var plots;
 
 function debugUpdatePlots(spec_plot, stretch, score)
 {
@@ -49,11 +48,14 @@ function printToFile( ht_ids, start_index, stop_index )
 			text += '\t' + a1.toString() + "" + a2.toString()
 		}
 
-		var hom_v = plots.hom[l],
-			het_v = plots.het[l],
-			chet_v = plots.chet[l];
+		var hom_v = plots.HOM[l],
+			het_v = plots.HET[l],
+			chet_v = plots.CHET[l];
 
-		text += '\t' + hom_v.toString() + '\t' + het_v.toString() + '\t' + chet_v.toString() + '\n';
+		var score_columns = '\t ' + hom_v.toString() + '\t ' + het_v.toString() + '\t ' + chet_v.toString();
+		score_columns = score_columns.replace(/ -/g, "-");
+
+		text += score_columns + '\n';
 	}
 
 	// Write
@@ -71,6 +73,16 @@ function printToFile( ht_ids, start_index, stop_index )
 	window.open(makeTextFile(text));
 }
 
+
+function removeScores(){
+
+	if (markerInstance.line1 !== undefined){
+		markerInstance.line1.destroy();
+		markerInstance.line2.destroy();
+	
+		mscale_layer.draw();
+	}
+}
 
 
 function plotScoresOnMarkerScale (specific_plot, stretch, score)
