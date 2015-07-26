@@ -23,7 +23,7 @@
 	        focus on each block...? Fuck knows, jump that bridge later.
 */
 
-
+// SHIFT THIS TO ITS OWN FILE, AND MAKE HOMOLOGY ITS OWN FOLDER/CLASS/MODULE
 function scan_alleles_for_homology( ids_to_scan ){
 
 	var alleles = [];
@@ -170,6 +170,11 @@ var homology_selection_mode = function()
 				}
 			}
 
+			// Shift top panel to front layer
+			haplo_window.top.moveTo(haplo_window)
+			haplo_window.top.exit.show();
+
+
 			sub_select_group.destroyChildren();
 			sub_select_group.destroy();
 
@@ -188,14 +193,21 @@ var homology_selection_mode = function()
 	));
 
 	
-	for (var fid in unique_graph_objs){
-		for (var node in unique_graph_objs[fid].nodes)
-		{
+	// Shift top panel to front layer
+	haplo_window.top.moveTo(sub_select_group)
+	haplo_window.top.exit.hide();
+
+	for (var c=0; c < haplo_group_nodes.children.length; c++){
+	// for (var fid in unique_graph_objs){
+	// 	for (var node in unique_graph_objs[fid].nodes)
+	// 	{
+			var node = haplo_group_nodes.children[c];
+
 			if (node == 0) continue;
 
-			var key = fid+"_"+node
+			var key = node.attrs.id;
 
-			var gfx = unique_graph_objs[fid].nodes[node].graphics,
+			var gfx = node,
 				pos = gfx.getAbsolutePosition(),
 				bounder = addBounder(pos, key, false);
 
@@ -206,8 +218,9 @@ var homology_selection_mode = function()
 				graphics: gfx
 			};
 			sub_select_group.add(bounder);
-		}
+		// }
 	}
+
 
 	haplo_layer.add(sub_select_group);
 	sub_select_group.setZIndex(20);

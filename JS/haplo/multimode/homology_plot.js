@@ -32,7 +32,6 @@ function printToFile( ht_ids, start_index, stop_index )
 	for (var l=start_index; l <= stop_index; l++)
 	{
 		var marker = marker_array[l];
-
 		text += marker
 
 		for (var i=0; i < ht_ids.length; i++)

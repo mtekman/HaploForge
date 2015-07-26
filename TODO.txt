@@ -2,12 +2,13 @@ TODO:
 ======
 
 - Fix reselecting individuals after coming out of select mode
-- Select mode should place nodes ontop of darkened rect, and then return them back
 - Fix block size plotting to be more relevant.
 
 
 DONE:
 ======
+- Select mode should place nodes ontop of darkened rect, and then return them back
+
 EDIT Haplomode to incorporate non-related individuals:
    * Press a button to initiate a selection mode in the main pedview
    * Tick all the members that you want (quick button to toggle all affecteds)

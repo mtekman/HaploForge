@@ -325,7 +325,8 @@ function addPerson(person, fam_group,  t_x, t_y)  //positions relative to family
 	//Each person is their own group of inter-related ojects
 	var group = new Kinetic.Group({
 		x: t_x, y: t_y,
-		draggable: true
+		draggable: true,
+		id: fam_group.attrs.id+"_"+person.id
 	});
 	group.add(makeshape()).add(label);
 

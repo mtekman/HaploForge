@@ -18,12 +18,15 @@ function selectFam(fam_id){
 }
 
 function stopSelectionMode(){
+	homology_buttons_exit();
+
 	select_group.destroyChildren();
 	select_group.destroy();
 
 	// Reset all
 	toggle_selection_affecteds = false;
 	selection_items = {}
+
 	// From haplomode_multi
 	selected_ids_map = {}
 	selected_ids = {};
@@ -103,6 +106,8 @@ function startSelectionMode()
 			var gfx = unique_graph_objs[fid].nodes[node].graphics,
 				pos = gfx.getAbsolutePosition(),
 				bounder = addBounder(pos, key, true);
+
+			gfx.attrs.draggable = false;
 
 			// By default not enabled
 			selection_items[key] = {

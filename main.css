@@ -15,8 +15,8 @@
 }
 
 #homology_buttons {
-	position:absolute;
-	left:0px;
+	position:fixed;
+	right:0px;
 	bottom:0px;
 	z-index:10;
 	font-size: 10px;
@@ -42,7 +42,7 @@
 
 #hom_exit{
 	position:absolute;
-	right:-10px;
+	left:-10px;
 	top:-10px;
 	background-color: black;
 	color: white;

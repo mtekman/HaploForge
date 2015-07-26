@@ -24,6 +24,8 @@ function stopHaplomode(){
 				
 				// alert("here1");
 				perc_gfx.remove();
+				perc_gfx.listening( true );
+
 				old_group.add(perc_gfx);
 
 				// haplo_layer.draw();
@@ -168,11 +170,12 @@ function makeTopBox_haplomode( box_lims_and_group, render_group){
 	haplo_window.top.add( haplo_window.top.rect );
 
 	// Exit button
-	haplo_window.top.add( addExitButton(
+	haplo_window.top.exit = addExitButton(
 		{x: max_pos.x - white_margin,
 		 y: 0},
-		 stopHaplomode)
-	);
+		 stopHaplomode);
+
+	haplo_window.top.add( haplo_window.top.exit);
 
 	// Align Button
 	haplo_window.add(

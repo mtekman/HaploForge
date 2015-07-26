@@ -44,6 +44,7 @@ function render(line_points, slot_array, finishfunc){
 		gfx.main_layer_pos = gfx.getPosition();
 		gfx.main_layer_group = unique_graph_objs[fid].group;
 		gfx.remove()
+		gfx.listening( false );
 		
 		haplo_group_nodes.add(gfx);
 		gfx.setPosition(
