@@ -73,16 +73,19 @@ function printToFile( ht_ids, start_index, stop_index )
 }
 
 
-function removeScores(){
+function removeScores(redrawtoo){
 
-	if (markerInstance.line1 !== undefined){
-		markerInstance.line1.destroy();
-		markerInstance.line2.destroy();
+	redrawtoo = redrawtoo || true;
+
+	if (markerInstance.plotline !== undefined){
+		markerInstance.plotline.destroy();
 	
-		mscale_layer.draw();
+		if (redrawtoo) mscale_layer.draw();
 	}
 }
 
+
+var infline;
 
 function plotScoresOnMarkerScale (specific_plot, stretch, score)
 {
@@ -95,108 +98,82 @@ function plotScoresOnMarkerScale (specific_plot, stretch, score)
 	*/
 	var marker_scale = showSlider(true),
 		rangeline = marker_scale.rangeline,
-		r_height = slider_height,
+		r_points = rangeline.getPoints(),
+		r_height = r_points[3] - r_points[1],
 		plen = specific_plot.length;
 
+	removeScores(false);
 
-	if (marker_scale.line1 !== undefined){
-		marker_scale.line1.destroy();
-		marker_scale.line2.destroy();
-	}
-
-	var block_size = 10,
-		lines = plotAxis3( specific_plot, stretch, score, block_size );
+	var inform_points = plotAxis4( specific_plot, stretch, score);
 	
-	var average_points = lines[0],
-		inform_points = lines[1];
-
-	var avline = new Kinetic.Line({
-		x: rangeline.getX(),
-		y: rangeline.getY(),
-		points: average_points,
-		stroke: 'green',	strokeWidth: 0.3,
-		closed: true,	fill: 'green',	alpha: 0.3
-	});
-
-	avline.scaleY( block_size * r_height/plen );
-	avline.scaleX(0.5)
-
-	var infline = new Kinetic.Line({
+	infline = new Kinetic.Line({
 		x: rangeline.getX(),	y: rangeline.getY(),
 		points: inform_points,
 		stroke: 'blue',		strokeWidth: 0.3,
 		closed: true,	fill: 'blue',	alpha: 0.3
 	});
 
-	infline.scaleY( block_size * r_height/plen );
+	infline.scaleY( r_height/plen );
 	infline.scaleX( 15 );
 
-	marker_scale.line1 = avline;
-	marker_scale.line2 = infline;
+	marker_scale.plotline = infline;
 
-	marker_scale.add( marker_scale.line1 );
-	marker_scale.add( marker_scale.line2 );
-
-	marker_scale.line2.setZIndex(-99);
-	marker_scale.line1.setZIndex(-99);
+	marker_scale.add( marker_scale.plotline );
+	marker_scale.plotline.setZIndex(-99);
 
 	mscale_layer.draw();
 }
 
-
-// given_plot is one of plots.het, plots.hom, plots.chet
-// stretch min -- must have >0 for stretch min else 0
-// score_min -- must have score > score_min else 0
-function plotAxis3( given_plot, stretch_min, score_min, block_size )
+/* path finding over the entire plot, instead of slwindow*/
+function plotAxis4( given_plot, stretch_min, score_min)
 {
-	var plen = given_plot.length;
 
-	var p=0,
-		q=0,
-		average_points = [0,-1],
-		inform_points = [0,-1];
+//	var new_plot = new Int8Array(given_plot.length);
+	var new_plot = [];
 
-	var current_stretch_len = 0,
-		in_hom_region_stretch = false;
-	
-	while (p < plen)
+	var current_stretch = 0;
+
+	var plen = given_plot.length,
+		p=0;		// lookahead_base
+		// q=0; 	// lookahead_iterator
+	while (p++ < plen)
 	{
-		var average_x = 0,
-			inform_x = 0; // <-- inform. within block, cannot overlap
+		if (given_plot[p] <= score_min){
+			// new_plot[p] = 0; // <-- already true
 
-		for (var b=0; b++ < block_size;)
-		{
-			var val = given_plot[p++];
+			// End search
+			if (current_stretch >= stretch_min){
 
-			// Handle stretches
-			if (val >= score_min){
-				if (!(in_hom_region_stretch)){
-					in_hom_region_stretch = true;
-				}
-				current_stretch_len ++
-			}
-			else{
-				if (in_hom_region_stretch){
-					in_hom_region_stretch = false;
-
-					if (current_stretch_len >= stretch_min){
-						inform_x += 1;
-					}
+				// qualifies, copy over results
+				for (var q=p-current_stretch; q++ < p;){
+					new_plot[q] = given_plot[q]
 				}
 			}
-
-			average_x += val;
+			// Regardless, reset counter
+			current_stretch = 0;
 		}
-		average_x /= block_size;
-
-		average_points.push(average_x, q)
-		inform_points.push( inform_x, q);
-
-		q++;
+		else {
+			// Copy over NOTHING HERE -- happens retrospectively
+			current_stretch ++;
+		}
 	}
-	average_points.push(0,q+1);
-	inform_points.push(0,q+1);
 
+	// Check if still qualifies at end
+	if (current_stretch >= stretch_min){
+		for (var q=p-current_stretch; q++ < p;){
+			new_plot[q] = given_plot[q]
+		}
+	}
 
-	return [average_points, inform_points];
+	// Fill in blanks
+	var return_xy = [];
+	for (var p=0; p++ < plen;){
+		new_plot[p] = new_plot[p] || 0;
+		if (new_plot[p] <0) new_plot[p] = 0;
+
+		return_xy.push( new_plot[p], p);
+	}
+
+	console.log( return_xy )
+	return return_xy;
 }
