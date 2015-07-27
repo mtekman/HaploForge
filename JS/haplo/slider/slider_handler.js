@@ -72,6 +72,8 @@ function sliderDragFunc( p )
 
 function updateSlide()
 {
+	if (rangeline_pos === undefined) return -1;
+
 	var offs = I_slider_offset;
 
 	i_slider_top_y = last_input1_posy - rangeline_pos.y;

@@ -96,7 +96,7 @@ var slider_style = {
 	R_strokeWidth: 5,
 	R_cap:'round',
 	I_stroke:'white',
-	I_strokeWidth:2,
+	I_strokeWidth:1.3,
 	I_fontFamily: "monospace",
 	I_fontSize: 10,
 	I_fontColor: 'red',

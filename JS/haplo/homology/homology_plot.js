@@ -85,8 +85,6 @@ function removeScores(redrawtoo){
 }
 
 
-var infline;
-
 function plotScoresOnMarkerScale (specific_plot, stretch, score)
 {
 	/* Grab rangeline and hang graphics from it.
@@ -105,8 +103,9 @@ function plotScoresOnMarkerScale (specific_plot, stretch, score)
 	removeScores(false);
 
 	var inform_points = plotAxis4( specific_plot, stretch, score);
+	rendered_filtered_plot = inform_points;
 	
-	infline = new Kinetic.Line({
+	var infline = new Kinetic.Line({
 		x: rangeline.getX(),	y: rangeline.getY(),
 		points: inform_points,
 		stroke: 'blue',		strokeWidth: 0.3,
@@ -145,7 +144,7 @@ function plotAxis4( given_plot, stretch_min, score_min)
 			if (current_stretch >= stretch_min){
 
 				// qualifies, copy over results
-				for (var q=p-current_stretch; q++ < p;){
+				for (var q=p-(current_stretch+1); q++ < p;){
 					new_plot[q] = given_plot[q]
 				}
 			}
@@ -160,7 +159,7 @@ function plotAxis4( given_plot, stretch_min, score_min)
 
 	// Check if still qualifies at end
 	if (current_stretch >= stretch_min){
-		for (var q=p-current_stretch; q++ < p;){
+		for (var q=p-(current_stretch+1); q++ < p;){
 			new_plot[q] = given_plot[q]
 		}
 	}

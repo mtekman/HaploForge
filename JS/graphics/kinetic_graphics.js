@@ -179,6 +179,57 @@ function addFamily(fam_id, sx, sy){
 }
 
 
+
+// Over(under?)lays the haploblocks rendered if the
+// homology mode is active/present.
+function addHomologyPlotOverlay()
+{
+	// Note: Due to [x,y,x,y] specs, this is DOUBLE the marker length
+	var current_specific_plot = rendered_filtered_plot;
+	var npoints = [0,HAP_VERT_SPA];
+
+	var count = 0;
+
+	for (var i=sta_index; i <= end_index; i++){
+
+		count ++;
+
+		var x_coord = current_specific_plot[i*2],
+			y_coord = current_specific_plot[(i*2)+1];
+
+		var score_coord = (x_coord < 0)?0:x_coord*haploinfos.length*10;
+
+		var y_initial = count * HAP_VERT_SPA,
+			y_next = (count +1) * HAP_VERT_SPA;
+
+		npoints.push( score_coord, y_initial)
+		npoints.push( score_coord, y_next)
+
+		// It may seem like regions overlap over subsequent iterations,
+		// but bear in mind that they do so at different score positions.
+	}
+	npoints.push( 0, (count + 1) * HAP_VERT_SPA)
+
+
+
+	return line = new Kinetic.Line({
+		x: -haploblock_spacers.marker_offset_px - 20,
+		y: 0,
+		stroke: 'red',
+		strokeWidth: 1,
+		closed: true,
+		fill: 'red',
+		opacity: 0.3,
+		points: npoints
+	});
+}
+
+
+
+
+
+
+
 function addHaploBlocksAll()
 {
 	var grp = new Kinetic.Group({ x:-50, y:((2*nodeSize)+10)});

@@ -1,12 +1,16 @@
 TODO:
 ======
+- min exten and min score do not work properly -- check out rs2817738, which
+needs to extend by at least one more, as well as rs9461082 which only highlights a single region, though the min_extension should be two
+ --- this is just now an offset of -1 problem in the kinetic_graphics.js function
 
-- Fix reselecting individuals after coming out of select mode
-- Fix block size plotting to be more relevant.
-
+- implement a JUMP TO marker input box,
+- also reDRAW resets the slider positions, which it should'nt do.
 
 DONE:
 ======
+- Fix reselecting individuals after coming out of select mode
+- Fix block size plotting to be more relevant.
 - Select mode should place nodes ontop of darkened rect, and then return them back
 
 EDIT Haplomode to incorporate non-related individuals:

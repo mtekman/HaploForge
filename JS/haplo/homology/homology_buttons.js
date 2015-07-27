@@ -1,5 +1,12 @@
 var selected_for_homology; // populated by homology_selection.js
-var plots;	// ditto
+
+var plots,	// ditto
+	rendered_filtered_plot;
+
+
+
+var homology_mode_active = false;
+
 
 var homology_button_group = document.getElementById('homology_buttons'),
 	
@@ -49,6 +56,7 @@ function homology_buttons_printCurrent()
 
 function homology_buttons_exit()
 {
+	homology_mode_active = false;
 	homology_button_group.style.display = "none";
 	removeScores();
 }
@@ -56,6 +64,7 @@ function homology_buttons_exit()
 
 function homology_buttons_show()
 {
+	homology_mode_active = true;
 	homology_button_group.style.display = "block";
 }
 

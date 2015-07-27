@@ -33,25 +33,25 @@ function addHaplosAnyone(haplofam_map, parent_node)
 }
 
 
-
+// DEPRECIATED
 /* Called once - displays all individuals in a given family */
-function addHaplosFamily(fam, parent_node){ //called by toggle_haplotypes in haplo/toggle.js
+// function addHaplosFamily(fam, parent_node){ //called by toggle_haplotypes in haplo/toggle.js
 
-	haploinfos = []; //clean
+// 	haploinfos = []; //clean
 
-	for (var g = 0; g < generation_grid_ids[fam].length; g++)
-	{
-		for (var p =0; p < generation_grid_ids[fam][g].length; p++)
-		{
-			var pers_id = generation_grid_ids[fam][g][p],
-				pers_hp = family_map[fam][pers_id].haplo_data;
+// 	for (var g = 0; g < generation_grid_ids[fam].length; g++)
+// 	{
+// 		for (var p =0; p < generation_grid_ids[fam][g].length; p++)
+// 		{
+// 			var pers_id = generation_grid_ids[fam][g][p],
+// 				pers_hp = family_map[fam][pers_id].haplo_data;
 
-			haploinfos.push( pers_hp );
-		}
-	}
-// 		console.log("calling", haploinfos);
-	redrawHaplos(true);
-}
+// 			haploinfos.push( pers_hp );
+// 		}
+// 	}
+// // 		console.log("calling", haploinfos);
+// 	redrawHaplos(true);
+// }
 
 
 
@@ -87,8 +87,14 @@ function redrawHaplos(resizeToo){
 	}
 
 	var new_haplos = addHaploBlocksAll();
-
 	scroll_area.add( new_haplos );
+
+	if (homology_mode_active)
+	{
+		var homology_overlays = addHomologyPlotOverlay();
+		scroll_area.add( homology_overlays );
+	}
+
 	scroll_area.parent.show();
 	haplo_layer.draw();
 
