@@ -1,24 +1,23 @@
-
+var sub_select_group; //destroyed by homology_buttons exit function
 
 var homology_selection_mode = function()
 {
 	// Main selection layer
-	var sub_select_group = new Kinetic.Group({
+	sub_select_group = new Kinetic.Group({
 		x:0, y:0,
 		width: stage.getWidth(),
 		height: stage.getHeight()
 	});
 
-	sub_select_group.add(new Kinetic.Rect({
+	sub_select_group.rect = new Kinetic.Rect({
 			x:0, y:0,
 			width: stage.getWidth(),
 			height: stage.getHeight(),
 			fill: 'black',
 			strokeWidth: 0,
 			opacity: 0.2
-	}));
-
-	sub_select_group.add(addButton("Submit Selection", 0, 0,
+	});
+	sub_select_group.submit_button = addButton("Submit Selection", 0, 0,
 		function()
 		{
 			// var selected_for_homology = []; // Now global in homology_buttons.js
@@ -26,8 +25,12 @@ var homology_selection_mode = function()
 		
 			for (var s in selection_items){
 				if (selection_items[s].selected){
+
+					selection_items[s].box.stroke('green')
+
 					selected_for_homology.push(s);
 				}
+				selection_items[s].box.off('click');
 			}
 
 			// Shift top panel to front layer
@@ -35,8 +38,8 @@ var homology_selection_mode = function()
 			haplo_window.top.exit.show();
 
 
-			sub_select_group.destroyChildren();
-			sub_select_group.destroy();
+			sub_select_group.rect.destroy();
+			sub_select_group.submit_button.destroy();
 
 			haplo_layer.draw();
 
@@ -50,9 +53,12 @@ var homology_selection_mode = function()
 
 			return 0;
 		}
-	));
+	);
 
-	
+	sub_select_group.add( sub_select_group.rect );
+	sub_select_group.add( sub_select_group.submit_button )
+
+
 	// Shift top panel to front layer
 	haplo_window.top.moveTo(sub_select_group)
 	haplo_window.top.exit.hide();
