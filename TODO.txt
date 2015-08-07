@@ -1,5 +1,9 @@
 TODO:
 ======
+- Problem with a haplotype being rendered improperly for haplotypes 
+selection mode. The family_map check of the problematic markers seem to
+contain the correct data, it's just the renderer
+
 - min exten and min score do not work properly -- check out rs2817738, which
 needs to extend by at least one more, as well as rs9461082 which only highlights a single region, though the min_extension should be two
  --- this is just now an offset of -1 problem in the kinetic_graphics.js function

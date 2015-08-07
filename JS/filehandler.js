@@ -124,18 +124,18 @@ function processFile() {
 
     lr.onloadend = function(e){
 		document.getElementById("buttons").style.display = 'none'
-        processInput(e.target.result, type);
-        connectAllIndividuals();
-        populateGrids_and_UniqueObjs();
-        
-        determinePedigreeType();
-        graphInitPos(nodeSize + 10, grid_rezY);
+		processInput(e.target.result, type);
+		connectAllIndividuals();
+		populateGrids_and_UniqueObjs();
+
+		determinePedigreeType();
+		graphInitPos(nodeSize + 10, grid_rezY);
 
 		assignHGroups();
 		washMarkerMap();
 
 		// toggle_haplomode(20);
-		startSelectionMode();
+/*		startSelectionMode();
 		for (var key in selection_items){
 
 			var fid_id = key.split('_'),
@@ -148,7 +148,7 @@ function processFile() {
 				item.box.fire('click')
 			}
 		}
-		launchHaplomode();
+		launchHaplomode();*/
     };
     lr.readAsText(file);
 }
