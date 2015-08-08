@@ -14,10 +14,9 @@
 	z-index:10;
 }
 
-#homology_buttons {
+#homology_buttons,#index_class {
 	position:fixed;
 	right:0px;
-	bottom:0px;
 	z-index:10;
 	font-size: 10px;
 	font-family: 'Arial';
@@ -25,28 +24,38 @@
 	padding: 3px;
 	background-color: white;
 	border-radius: 8px;
-	border: 2px solid gray;
+	border: 2px solid black;
 	display: none;
-
 }
-#homology_buttons input,select {
+
+#homology_buttons{
+	bottom:0px;
+}
+
+#index_class {
+	top:0px;
+}
+
+
+#homology_buttons.#index_class input,select {
 	background-color: gray;
 	color: white;
 	border-radius: 8px;
-	border-color: black;
+	border-color: red;
 	font-size: 10px;
 	font-family: 'Arial';
 	text-align: left;
 }
 
 
-#hom_exit{
+#hom_exit,#index_exit{
 	position:absolute;
 	left:-10px;
 	top:-10px;
-	background-color: black;
+	background-color: gray;
 	color: white;
-	border: 1px solid gray;
+	border: 2px solid black;
+	border-radius: 6px;
 }
 
 #plot_type{
@@ -54,10 +63,10 @@
 }
 
 
-.numbers{
+.numbers,.not-numbers{
 	background-color: white;
 	color: black;
-	border: 2px solid black;
+	border: 2px solid gray;
 	border-radius: 8px;
 	font-size: 10px;
 	font-family: 'Arial';
@@ -67,17 +76,27 @@
 	display: inline-block;
 }
 
+/* Can't style dropdown datalist...:
+	http://stackoverflow.com/questions/10062414/is-it-possible-to-style-the-drop-down-suggestions-when-using-html5-datalist;
+*/
+
+
 .numbers input[type="number"]{
 	border: 1px solid black;
 	width: 40px;
 	text-align: center;
 }
 
-.numbers label{
+.numbers,.not-numbers label{
 	vertical-align: middle;
 	width:80px;
 	padding-right: 20px;
 }
+
+.not-numbers input[list]{
+	width:115px;
+}
+
 
 h1 { color: #111; font-family: 'Helvetica Neue', sans-serif; font-size: 275px; 
 font-weight: bold; letter-spacing: -1px; line-height: 1; text-align: center; }

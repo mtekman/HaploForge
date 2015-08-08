@@ -134,6 +134,8 @@ function processFile() {
 		assignHGroups();
 		washMarkerMap();
 
+		populateIndexDataList();
+
 		// toggle_haplomode(20);
 /*		startSelectionMode();
 		for (var key in selection_items){

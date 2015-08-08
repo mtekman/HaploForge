@@ -48,6 +48,19 @@
                 </tr>
             </table>
         </div>
+
+
+        <div id="index_class" >
+           <span class="not-numbers">
+                <label for='marker_min'>From:</label>
+                <input id='marker_min' list="marker_list_min" />
+                <label for='marker_max'>To:</label>
+                <input id='marker_max' list="marker_list_max" />
+                <datalist id="marker_list_min" ></datalist>
+                <datalist id="marker_list_max" ></datalist>
+                <input type=button value="Go" id="index_submit" />
+            </span>
+        </div>
  
         <div id='container' ><!-- KineticJS creates a canvas for each layer, so no need --></div>
 
@@ -74,6 +87,7 @@
         <script src="JS/haplo/multimode/alignment.js" ></script>
         <script src="JS/haplo/multimode/selection_mode.js" ></script>
         <script src="JS/haplo/multimode/haplomode_multi.js" ></script>
+        <script src="JS/haplo/multimode/indexmode.js" ></script>
 
         <script src="JS/haplo/homology/homology_buttons.js" ></script>
         <script src="JS/haplo/homology/homology_plot.js" ></script>

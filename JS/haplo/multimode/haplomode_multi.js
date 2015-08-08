@@ -250,7 +250,13 @@ function toggleBottomBox( show, finishfunc )
 				}
 		);
 
-		haplo_window.add( haplo_window.zoom_button );;
+		//Add Index button
+		haplo_window.index_button = addButton("Marker Search", 0, 3*butt_h, 
+			showIndexCSS
+		);
+
+		haplo_window.add( haplo_window.zoom_button  );
+		haplo_window.add( haplo_window.index_button );
 
 
 		//Scroll window
