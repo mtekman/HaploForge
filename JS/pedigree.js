@@ -97,7 +97,13 @@ function connectAllIndividuals()
 				else pers_mother.mates.push(0);
 		}
 	}
-//    console.log(family_map);
+	
+	// Make a total
+	for (var famid in family_map){
+		var num_peeps = 0;
+		for (var id in family_map[famid]){ num_peeps ++;}
+		family_map[famid].family_size = num_peeps;
+	}
 }
 
 //var groupNodes = function(){

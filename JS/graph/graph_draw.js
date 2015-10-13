@@ -147,10 +147,15 @@ function touchlines(grid_use){
 	for(var one in family_map){
 		for(var two in family_map[one])
 		{	//simulate drag event
-			var e = new CustomEvent("dragmove", {target: {attrs: {x:10, y:10}}}),
-				o = unique_graph_objs[one].nodes[two].graphics;
+			try {
+				var e = new CustomEvent("dragmove", {target: {attrs: {x:10, y:10}}}),
+					o = unique_graph_objs[one].nodes[two].graphics;
 
-			o.dispatchEvent(e);
+				o.dispatchEvent(e);
+
+			} catch (err) {
+				console.log(err);
+			}
 		}
 	}
 	use_grid = true;

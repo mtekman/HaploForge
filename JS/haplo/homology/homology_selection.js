@@ -92,3 +92,4 @@ var homology_selection_mode = function()
 	sub_select_group.setZIndex(20);
 	haplo_layer.draw();
 }
+

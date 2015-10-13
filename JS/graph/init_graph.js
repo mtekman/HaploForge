@@ -158,6 +158,8 @@ function populateGrids_and_UniqueObjs()
 	for (var one in family_map){
 		for (var two in family_map[one]){
 			var root = family_map[one][two];
+			
+			console.log("ROOT=", root.id);
 
 			//Populate gridmap and uniq map
 			var arr_obj = addFamMap(root);
@@ -173,6 +175,14 @@ function populateGrids_and_UniqueObjs()
 				for (var i=0; i < generation_array[g]; i++){
 
 				}
+			}
+
+			// Check if root tree contains ALL individuals
+			var num_nodes = 0;
+			for (var node in uniq_objs.nodes) {num_nodes ++};
+			
+			if (num_nodes !== family_map[one].family_size){
+				console.log("Warning! Family "+one+" has only mapped "+num_nodes+" individuals out of "+family_map[one].family_size);
 			}
 
 			break; //Once per fam
@@ -371,3 +381,4 @@ function checkConsanginuity(fam_id, pers1_id, pers2_id)
 
     return false;
 }
+

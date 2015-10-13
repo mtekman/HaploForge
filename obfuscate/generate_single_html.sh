@@ -15,9 +15,10 @@ js_files=$(grep "script" $index_file | awk -F '"' '{print $2}' | grep -v framewo
 kinetic_insert=$(grep "framework" $index_file | sed 's|JS/.*/k|k|' )
 
 for js_file in $js_files; do
-	echo $js_file
+	echo -e "\r$js_file                      "
 	cat $root_dir/$js_file  >> $all_js
 done;
+echo ""
 # Add terminal character sequence (javascript splits off this later)
 echo "//////" >> $all_js
 
@@ -52,7 +53,7 @@ while read line; do
 
 	echo "$line" >> $tmp_index
 
-	if [[ "$line" =~ "<h1>" ]]; then
+	if [[ "$line" =~ "<!-- STYLE" ]]; then
 		echo "$style_data" >> $tmp_index
 
 	elif [[ "$line" =~ "<!-- CODE GOES HERE" ]]; then

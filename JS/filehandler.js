@@ -31,15 +31,68 @@ function washMarkerMap(){
 //"Reads the haplofile, maps the markers to array indices, and populates pedigree array with persons"
 function processInput(text_unformatted, type)
 {
-    var text = text_unformatted.split('\n');
+	var text = text_unformatted.split('\n');
 
-    var num_alleles_markers = -1;   // number of alleles and markers should match
+	var num_alleles_markers = -1;   // number of alleles and markers should match
+	var header_lines = [];
+	var start_extract = -1;
 
-    if (type === "allegro")
-    {
-        var header_lines = [],
-            start_extract = -1
+	
+	function splitHeaderFromData(){
 
+		// Handle haplo data
+		for (var l=0; l< text.length; l++){
+			var line = text[l];
+	
+			if (line.length < 5 ){continue};
+	
+			if (line.substr(0,1) === " ") {                             //Temp store header data
+				start_extract = line.lastIndexOf("    ") +4;            //
+				header_lines.push(line);                                //
+			}
+	
+			else{														//Populate family map
+																		//
+				var people_info = line.substring(0,start_extract-1).trim().split(/\s+/).map(toInt),
+					haplo_daaaa = line.substring(start_extract).trim().split(/\s+/).map(toInt);
+					
+				if (start_extract === -1){ // Never found end of headers
+					people_info = haplo_daaaa;
+				}
+				
+				var haplo_info = new Allele(haplo_daaaa);
+					
+				if (num_alleles_markers === -1){
+					num_alleles_markers = haplo_info.data_array.length;
+				}
+				else{
+					assert(num_alleles_markers == haplo_info.data_array.length,
+						"Number of alleles do not match previous records: Line "+ l+ "!");
+				}
+
+				var fam = people_info[0], id  = people_info[1],
+					pat = people_info[2], mat = people_info[3],
+					sex = people_info[4], aff = people_info[5];
+	
+				if (!(fam in family_map)) family_map[fam] = {};			//sanity check...
+	
+				if (!(id in family_map[fam])) {
+					var pers = new Person(id, sex, aff, mat, pat);
+					family_map[fam][id] = pers;
+				}
+	
+				family_map[fam][id].haplo_data.push( haplo_info );		//retrieves twice if needed, neater
+			}
+		}
+	}
+	
+	if (type === "pedfile"){
+		
+		splitHeaderFromData();
+		
+	}
+
+	else if (type === "allegro"){
 
 		function handleHeaders(){
 			var count_markers = 0;                              //Process header lines --> Transpose matrix
@@ -47,8 +100,9 @@ function processInput(text_unformatted, type)
 			for (var col=start_extract; col < header_lines[0].length; col++){
 				var col_string = "";
 
-				for (var row=header_lines.length; row > 0 ;)
+				for (var row=header_lines.length; row > 0 ;){
 					col_string += header_lines[--row][col];
+				}
 
 				col_string = col_string.trim();
 
@@ -62,54 +116,14 @@ function processInput(text_unformatted, type)
 // 				   "Marker map length does not match with haplo data: "
 // 				   + Object.keys(marker_map).length +" and " + num_alleles_markers);
 		};
-
-
-		// Handle haplo data
-		for (var l=0; l< text.length; l++){
-            var line = text[l];
-
-            if (line.length < 5 ) continue;
-
-            if (line.substr(0,1) === " ") {                             //Temp store header data
-                start_extract = line.lastIndexOf("    ") +4;            //
-                header_lines.push(line);                                //
-            }
-
-			else{                                                        //Populate family map
-            	                                                         //
-                var people_info = line.substring(0,start_extract-1).trim().split(/\s+/).map(toInt),
-                    haplo_daaaa = line.substring(start_extract).trim().split(/\s+/).map(toInt),
-					haplo_info = new Allele(haplo_daaaa);
-
-
-
-                var fam = people_info[0], id  = people_info[1],
-                    pat = people_info[2], mat = people_info[3],
-                    sex = people_info[4], aff = people_info[5];
-
-                if (!(fam in family_map)) family_map[fam] = {};         //sanity check...
-
-                if (!(id in family_map[fam])) {
-                    var pers = new Person(id, sex, aff, mat, pat);
-                    family_map[fam][id] = pers;
-                }
-
-                family_map[fam][id].haplo_data.push( haplo_info );      //retrieves twice if needed, neater
-
-                if (num_alleles_markers === -1)
-                    num_alleles_markers = haplo_info.data_array.length;
-                else
-                    assert(num_alleles_markers == haplo_info.data_array.length,
-                           "Number of alleles do not match previous records: Line "+ l+ "!");
-            }
-        }
-
+		
+		splitHeaderFromData();
 		handleHeaders();
 
 		// Set HAP_DRAW_LIM to length of markers if dealing with a small set
-		if (marker_array.length-1 < HAP_DRAW_LIM)
+		if (marker_array.length-1 < HAP_DRAW_LIM){
 			HAP_DRAW_LIM = marker_array.length - 1;
-
+		}
     }
 
     else if (type === "Other"){}
@@ -118,7 +132,7 @@ function processInput(text_unformatted, type)
 
 function processFile() {
     var file = document.getElementById("file_upload").files[0],
-        type = "allegro";
+        type = "pedfile";
 
     var lr = new FileReader();
 
