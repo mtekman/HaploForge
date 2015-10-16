@@ -250,7 +250,7 @@ function addHaploBlocksAll()
 					color_group = one_hgroup[iter];
 
 				while (  one_hgroup[++iter] === color_group
-					   && iter <= end_index);
+					   && iter <= end_index){}
 
 
 

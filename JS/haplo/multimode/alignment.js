@@ -20,7 +20,7 @@ function alignTopSelection( group_nodes, group_lines)
 				kineticTween({
 					node: nd,
 					x: nd.getX(),
-					y: y_line,
+					y: y_line
 				})
 			);
 		}
@@ -31,7 +31,7 @@ function alignTopSelection( group_nodes, group_lines)
 		tween_array.push(
 			kineticTween({
 				node: haplo_window.top.rect,
-				height: white_margin * 3,
+				height: white_margin * 3
 			})
 		);
 
@@ -73,7 +73,7 @@ function alignTopSelection( group_nodes, group_lines)
 		tween_array.push(
 			kineticTween({
 				node: haplo_window.top.rect,
-				height: haplo_window.top.rect.old_height,
+				height: haplo_window.top.rect.old_height
 			})
 		);
 

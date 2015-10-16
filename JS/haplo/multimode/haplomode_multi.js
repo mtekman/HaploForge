@@ -263,7 +263,7 @@ function toggleBottomBox( show, finishfunc )
 		haplo_window.bottom = new Kinetic.Group({
 			x:haplo_window.top.getX() ,
 			y:haplo_window.top.rect.getHeight() + haplo_window.y_margin,
-			id:"scroll_panel",
+			id:"scroll_panel"
 		});
 
 		haplo_window.bottom.rect = addWhiteRect({

@@ -37,7 +37,7 @@ function addInvisibleOrangeBox(pos, radius)
 		strokeAlpha: 0.5,
 		strokeWidth: 3,
 		strokeEnabled: false,
-		stroke: 'orange',
+		stroke: 'orange'
 	});
 }
 
@@ -129,7 +129,7 @@ function addExitButton(center, callback, cross_diam)
 
 	var group = new Kinetic.Group({
 		x: center.x,
-		y: center.y,
+		y: center.y
 		// hitFunc: function(context){
 		// 	var points = [{x:-cross_diam, y:-cross_diam},
 		// 				  {x: cross_diam, y: cross_diam}];
