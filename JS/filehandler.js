@@ -126,19 +126,51 @@ function processInput(text_unformatted, type)
 		}
     }
 
-    else if (type === "Other"){}
+    else if (type === "other"){}
 }
 
 
+function determineFileType(text_unformatted)
+{
+	var text = text_unformatted.split('\n');
+	
+	for (var l=0; l < 10; l++){ // Just read first 10 lines
+		var tokes = text[l].split(/\s+/)
+		
+		if (tokes.length === 6){
+			return "pedfile";
+		}
+	}
+	
+	
+	var num_tokes = {}
+	for (var l=text.length-1; l >= text.length - 5; l--){
+		if (text[l].length < 1){continue;}
+		var tokes = text[l].split(/\s+/)
+		
+		var nums = tokes.length
+		num_tokes[nums] = 0;
+	}
+	if (Object.keys(num_tokes).length === 1){
+		return "allegro";
+	}
+	
+	return "other";
+}
+
 function processFile() {
-    var file = document.getElementById("file_upload").files[0],
-        type = "pedfile";
+    var file = document.getElementById("file_upload").files[0];
 
     var lr = new FileReader();
 
     lr.onloadend = function(e){
 		document.getElementById("buttons").style.display = 'none'
+		
+		var type = determineFileType(e.target.result)
+		console.log(type);
+
 		processInput(e.target.result, type);
+		
 		connectAllIndividuals();
 		populateGrids_and_UniqueObjs();
 

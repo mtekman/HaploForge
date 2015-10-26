@@ -178,7 +178,7 @@ function populateGrids_and_UniqueObjs()
 			}
 
 			// Check if root tree contains ALL individuals
-			var num_nodes = 0;
+			var num_nodes = -1; // start at -1 to skip fake indidivual '0'
 			for (var node in uniq_objs.nodes) {num_nodes ++};
 			
 			if (num_nodes !== family_map[one].family_size){
