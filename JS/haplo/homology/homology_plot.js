@@ -80,7 +80,7 @@ function removeScores(redrawtoo){
 	if (markerInstance.plotline !== undefined){
 		markerInstance.plotline.destroy();
 	
-		if (redrawtoo) mscale_layer.draw();
+		if (redrawtoo) haplo_layer.draw();
 	}
 }
 
@@ -120,7 +120,7 @@ function plotScoresOnMarkerScale (specific_plot, stretch, score)
 	marker_scale.add( marker_scale.plotline );
 	marker_scale.plotline.setZIndex(-99);
 
-	mscale_layer.draw();
+	haplo_layer.draw();
 }
 
 /* path finding over the entire plot, instead of slwindow*/

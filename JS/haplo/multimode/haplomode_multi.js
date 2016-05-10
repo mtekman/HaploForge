@@ -299,7 +299,7 @@ function toggleBottomBox( show, finishfunc )
 					redrawHaplos(false); // starting=300
 					updateInputsByIndex( sta_index, end_index );
 					updateSlide();
-					mscale_layer.draw();
+					haplo_layer.draw();
 				});
 
 				unique_graph_objs.haplo_scroll = haplo_window.bottom;

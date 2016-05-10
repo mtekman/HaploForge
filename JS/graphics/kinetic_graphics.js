@@ -12,12 +12,12 @@ var main_layer = new Kinetic.Layer({id:"main"}),
 	haplo_layer = new Kinetic.Layer({id:"haplo"});
 
 // Seperate mini-layer for marker slider
-var mscale_layer = new Kinetic.Layer({
+/*var mscale_layer = new Kinetic.Layer({
 	id:"marker_scale",
 	x:0, y:0,
 	width:100,
 	height: slider_height + 20
-});
+});*/
 
 
 // ------------ Kinetic Tools --------------
@@ -134,7 +134,7 @@ function addRLine(fam_group, start, end, consang)
 function finishDraw(){
 	stage.add(main_layer);
 	stage.add(haplo_layer);
-	stage.add(mscale_layer)
+//	stage.add(mscale_layer)
 }
 
 

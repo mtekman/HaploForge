@@ -40,7 +40,7 @@ function stopSelectionMode(){
 	//Delete zoom
 	if (markerInstance !== null){
 		markerInstance.remove();
-		mscale_layer.draw();
+		haplo_layer.draw();
 	}
 	haplo_layer.draw();
 	main_layer.draw();

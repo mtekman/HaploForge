@@ -141,7 +141,7 @@ function updateInputsByIndex(ind1, ind2)
 
 function updateHaploPositions(resizecanvastoo){
 
-	if (!toggle_haplotypes) return;
+//	if (!toggle_haplotypes) return;
 
 
 	sta_index = last_input1_ind;

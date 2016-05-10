@@ -24,7 +24,8 @@ function showSlider(visible)
 		+haplo_window.top.rect.getWidth() + 20, 60);
 
 	if (visible){
-		mscale_layer.add(marker_slid);
+//		mscale_layer.add(marker_slid);
+		haplo_layer.add(marker_slid)
 		// mscale_layer.setZIndex()
 		// stage.add(mscale_layer);
 
@@ -36,7 +37,7 @@ function showSlider(visible)
 		// stage.remove(mscale_layer);
 		marker_slid.remove();
 	}
-	mscale_layer.draw();
+	haplo_layer.draw();
 	return marker_slid;
 }
 
@@ -98,6 +99,21 @@ function getSlider(xer, yer)
 		points: [0,0,0,slider_height]
 	});
 
+	//Highlight
+	marker_slider.on("mouseover", function(){
+		rangeline.setStroke('blue');
+		haplo_layer.draw();
+	});
+
+	//Highlight
+	marker_slider.on("mouseout", function(){
+		rangeline.setStroke('red');
+		haplo_layer.draw();
+	});
+
+
+
+
 	// Update all input positions
 	rangeline.on('mouseup', function (e){
 		rangeline_pos = this.getAbsolutePosition();
@@ -112,9 +128,9 @@ function getSlider(xer, yer)
 	});
 
 
-	slwin_group.on('mousedown', function(){
+/*	slwin_group.on('mousedown', function(){
 		haplo_layer.disableHitGraph()
-	});
+	});*/
 	
 	slwin_group.on('dragmove', function(){
 		if (HAP_DRAW_LIM < HAP_MIN_DRAW)
@@ -122,7 +138,7 @@ function getSlider(xer, yer)
 	});
 	
 	slwin_group.on('mouseup', function(){
-		haplo_layer.enableHitGraph();
+		//haplo_layer.enableHitGraph();
 		updateHaploPositions();
 	});
 

@@ -1,4 +1,4 @@
-var sub_select_group; //destroyed by homology_buttons exit function
+var sub_select_group = null; //destroyed by homology_buttons exit function
 
 var homology_selection_mode = function()
 {

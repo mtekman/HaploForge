@@ -56,8 +56,10 @@ function homology_buttons_printCurrent()
 
 function homology_buttons_exit()
 {
-	sub_select_group.destroyChildren();
-	sub_select_group.destroy();
+	if (sub_select_group != null){
+		sub_select_group.destroyChildren();
+		sub_select_group.destroy();
+	}
 
 	homology_mode_active = false;
 	homology_button_group.style.display = "none";
