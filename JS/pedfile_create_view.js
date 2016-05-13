@@ -7,27 +7,6 @@ function initiatePedigreeDraw(){
 }
 
 
-var utility = {
-
-	prompt: function(query){
-		// Own method drop in?
-		return prompt(query);
-	},
-
-
-
-	message: function(){
-		/* Change to a notification system for users*/
-		console.log(arguments)
-	},
-
-	getMouseXY: function(){
-		return stage.getPointerPosition();
-	},
-
-
-}
-
 
 var familyDraw = {
 
