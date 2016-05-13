@@ -8,17 +8,91 @@
 	<!-- STYLE -->
     </head>
     <body onresize="resizeCanvas()" >
+        
         <div id="buttons" >
             <input type="file" id="file_upload" onchange="processFile();" />&#8672; Upload ihaplo file<br />
 
 		or 
 
-	    <input type='button' id='createPedfile' onchange="createNewPedigree();" />
+	    <input type='button' id='createPedfile' onchange="createNewPedigree();" value="Create New Pedigree" />
 
             <!-- <input type="checkbox" id="rlines" onchange="toggleRAng()"  checked=true > Rlines</input><br />
             <input type="button" id="play" onclick="cutting()" > Play</input><br />
             <input type="checkbox" id="map" onchange="toggleMarkerScale()" > MarkerMap</input> -->
         </div>
+
+
+        <!-- Family Props -->
+        <div id='family_props' class="input_props" >
+            <table>
+                <tr>
+                  <td>Family ID: </td>
+                  <td><input id='family_id' type='number' /></td>
+              </tr>
+
+              <tr>
+                  <td>Surname:</td>
+                  <td>
+                      <input id='family_name' type='text' />
+                  </td>
+              </tr>
+
+              <tr>
+                <td></td>
+                <td>
+                 <input id='family_submit' type='button' value='update' />
+                 </td>
+              </tr>
+            </table>
+        </div>
+
+
+        <!-- Person Props -->
+        <div id='person_props' class="input_props" >
+            <table>
+                <tr>
+                    <td>ID: </td>
+                    <td><input id='pers_id' type='number' /></td>
+                  </tr>
+
+                <tr>
+                    <td>Name:</td>
+                    <td>
+                        <input id='pers_name' type='text' />
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Gender: </td>
+                    <td>
+                        <select id='pers_gender'>
+                            <option value="1" >male</option>
+                            <option value="2" >female</option>
+                            <option value="0" >unknown</option>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Affectation:</td>
+                    <td>
+                        <select id='pers_affect'>
+                            <option value="1" >unaffected</option>
+                            <option value="2" >affected</option>
+                            <option value="0" >unknown</option>
+                        </select>  
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td></td>
+                    <td>
+                        <input id='pers_submit' type='button' value='update' />
+                    </td>
+                </tr>
+            </table>
+        </div>
+
 
         <div id="homology_buttons">
             <input type=button id='hom_exit' value="X" /> 
@@ -67,10 +141,23 @@
                 <input type=button value="Go" id="index_submit" />
             </span>
         </div>
- 
+
+        <!-- Message Box -->
+        <div id='message_box' ></div>
+
+
+        <!-- Pedigree View -->
+        <div id="pedcreate_views" style='position:absolute;z-index: 99;' >
+            <input id='pedcreate_addnode' type='button' value="Add Indiv." onclick="personDraw.addNode()" />
+            <input id='pedcreate_addfam'  type='button' value="Add Family" onclick="familyDraw.addFam()" />
+            <input id='pedcreate_addrel'  type='button' value="Add Relationship" onclick="pedDraw.addRelationship()" />
+        </div>
+
+
         <div id='container' ><!-- KineticJS creates a canvas for each layer, so no need --></div>
 
 		<!-- CODE GOES HERE -->
+        <script src="JS/message_box.js" ></script>
 
         <script src="JS/frameworks/kinetic-v5.1.0.min.js" ></script>
 
@@ -110,7 +197,11 @@
 
         <script src="JS/haplo/slider/slider_handler.js" ></script>
         <script src="JS/haplo/slider/marker_slider.js" ></script>
+
+        <script src="JS/pedfile_create_view.js" ></script>
+
         <script src="JS/window.js" ></script>
+        <script src="JS/init.js" ></script>
         <script src="JS/test.js" ></script>
     </body>
 </html>
