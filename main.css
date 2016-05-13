@@ -28,7 +28,7 @@
 	display: none;
 }
 
-#homology_buttons{
+#homology_buttons {
 	bottom:0px;
 }
 
@@ -37,7 +37,7 @@
 }
 
 
-#homology_buttons.#index_class input,select {
+#homology_buttons,#index_class input,select {
 	background-color: gray;
 	color: white;
 	border-radius: 8px;
@@ -48,7 +48,7 @@
 }
 
 
-#hom_exit,#index_exit{
+#hom_exit,#index_exit {
 	position:absolute;
 	left:-10px;
 	top:-10px;
@@ -58,12 +58,12 @@
 	border-radius: 6px;
 }
 
-#plot_type{
+#plot_type {
 	width:72px;
 }
 
 
-.numbers,.not-numbers{
+.numbers,.not-numbers {
 	background-color: white;
 	color: black;
 	border: 2px solid gray;
@@ -81,21 +81,104 @@
 */
 
 
-.numbers input[type="number"]{
+.numbers input[number] {
 	border: 1px solid black;
 	width: 40px;
 	text-align: center;
 }
 
-.numbers,.not-numbers label{
+.numbers,.not-numbers label {
 	vertical-align: middle;
 	width:80px;
 	padding-right: 20px;
 }
 
-.not-numbers input[list]{
+.not-numbers input[list] {
 	width:115px;
 }
+
+
+/* Modal Dialogs */
+
+#modal_bg {
+	position: absolute;
+	width:100%;
+	height:100%;
+	opacity:0.8;
+	background:#ccc;
+	z-index:98;
+	display: none;
+}
+
+.input_props {
+  max-width:250px;
+  min-height:58px;
+  min-width:150px;
+  background:#c0ccc0;
+  border:4px solid black;
+  border-radius:15px;
+  margin:10px;
+  z-index: 99;
+  position: absolute;
+  left:40%;
+  top:40%;
+}
+
+.input_props .messages {
+  border:4px solid black;
+  border-radius:15px 15px 0px 0px;
+  background:black;
+  height:20px;
+  text-align:left;
+  margin-top:-5px;
+  color:white;
+  position:relative;
+}
+
+.input_props .messages h3 {
+  margin-top:-1px;
+  margin-left:5px;
+}
+
+.input_props .messages p {
+  margin-top:-10px;
+  color:black;
+  text-align: center;
+}
+
+/* Button top right */
+.input_props .messages input {
+  position:absolute;
+  right:0px;
+  top:5px;
+  border-width:1px;
+  background:#dd5500;
+  border-radius:10px;
+  border-color: black;
+}
+
+.input_props table td {
+  width:50%;
+}
+
+.input_props select {
+  width:100%;
+}
+
+.input_props table td:first-child {
+  text-align:right;
+}
+
+.input_props table td:last-child {
+  text-align:left;
+  color:black;
+}
+
+.input_props input {
+  max-width:100px;
+}
+
+
 
 
 h1 { color: #111; font-family: 'Helvetica Neue', sans-serif; font-size: 275px; 
@@ -105,35 +188,4 @@ h2 { color: #111; font-family: 'Open Sans', sans-serif; font-size: 30px; font-we
 300; line-height: 32px; margin: 0 0 72px; text-align: center; }
 
 p { color: #685206; font-family: 'Helvetica Neue', sans-serif; font-size: 14px; 
-line-height: 24px; margin: 0 0 24px; text-align: justify; text-justify: inter-word; }
-
-
-.input_props {
-	position: absolute;
-	z-index: 99;
-}
-
-
-.input_props table {
-    background:#c0ccc0;
-    border:4px solid black;
-    border-radius:15px;
-}
-
-.input_props table td:first-child {
-  text-align:right;
-}
-
-.input_props table td:last-child {
-  text-align:left;
-  color:red;
-}
-
-.input_props input {
-  max-width:100px;
-}
-
-.input_props input[type=button] {
-  background:#dd5500;
-  border-radius:10px;
-}
+line-height: 24px; margin: 0 0 24px; }
