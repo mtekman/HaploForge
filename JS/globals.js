@@ -1,3 +1,10 @@
+//Local storage keys
+var localStor = {
+	data_save : 'ped_data',
+	data_type : 'ped_type'
+}
+
+
 //General storage, global scope
 var family_map = {},            // fam_id ---> pedigree map --> person
 	marker_map = {},          	// rs_id --> array index
