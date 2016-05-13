@@ -193,6 +193,7 @@ function populateGrids_and_UniqueObjs()
 
 // After populating, add graphics
 function graphInitPos(start_x, start_y){
+
 	var x_shift_fam = 0;
 
 	for (var fam in generation_grid_ids){
@@ -230,7 +231,6 @@ function graphInitPos(start_x, start_y){
 				var perp_id = gen_grid[gen][index],
 					perp = family_map[fam][perp_id],
 					n_perp = nodes[perp_id]
-
 
 				n_perp.graphics = addPerson(perp, fam_group, posx, y_pos);
 
@@ -326,6 +326,7 @@ function graphInitPos(start_x, start_y){
 		}
 		x_shift_fam += max_x + 20;
 	}
+
 
 	//Go over everyone and touch their lines
 	finishDraw();
