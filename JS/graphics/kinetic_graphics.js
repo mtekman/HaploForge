@@ -46,7 +46,11 @@ function addCircle(color)
 
 
 function addDiamond(color){
-	alert("fix lucy");
+
+	var rect = addSquare(color);
+	rect.setRotation(45);
+
+	return rect;
 }
 
 
@@ -156,6 +160,7 @@ function addFamily(fam_id, sx, sy){
 	})
 	g.fam_title_text = t;
 	g.add(t);
+	g.id = fam_id;
 
 	t.on('mouseover', function(){
 		t.setFill('red');
@@ -338,14 +343,10 @@ function addPerson(person, fam_group,  t_x, t_y)  //positions relative to family
 	var makeshape = function pedigreeShape(){
 		var shape = 0;
 
-		function addMale  () {  shape = addSquare (col_affs[aff])   }
-		function addFemale() {  shape = addCircle (col_affs[aff])   }
-		function addAmbig () {  shape = addDiamond(col_affs[aff])   }
-
 		switch(gender){
-			case 0: addAmbig() ; break;
-			case 1: addMale()  ; break;
-			case 2: addFemale(); break;
+			case 0: (function addAmbig() { shape = addDiamond(col_affs[aff]) })(); break;
+			case 1: (function addMale()  { shape = addSquare (col_affs[aff]) })(); break;
+			case 2: (function addFemale(){ shape = addCircle (col_affs[aff]) })(); break;
 			default:
 				assert(false, "No gender for index "+gender);
 		}
@@ -366,20 +367,22 @@ function addPerson(person, fam_group,  t_x, t_y)  //positions relative to family
 		height: 8
 	}));
 
-	label.add(new Kinetic.Text({
+	var texts = new Kinetic.Text({
 		text: id,
 		fontSize: 'Calibri', //change to global setting
 		fill: default_stroke_color
-	}));
+	});
+	label.add(texts);
 
 	//Each person is their own group of inter-related ojects
 	var group = new Kinetic.Group({
 		x: t_x, y: t_y,
 		draggable: true,
-		id: fam_group.attrs.id+"_"+person.id
+		id: fam_group.attrs.id+"_"+id
 	});
 	group.add(makeshape()).add(label);
 
+	group.id = id;
 
 	//On drag do
 	group.on('dragmove', function(e){
@@ -390,7 +393,9 @@ function addPerson(person, fam_group,  t_x, t_y)  //positions relative to family
 			group.setX( (Math.floor(x/grid_rezX)*grid_rezX) );
 			group.setY( (Math.floor(y/grid_rezY)*grid_rezY) );
 		}
-		redrawNodes(id, fam_group.attrs.id, true);
+		if (fam_group.id in family_map){
+			redrawNodes(id, fam_group.attrs.id, true);
+		}
 	});
 
 	//Assume addFamily has already been called
