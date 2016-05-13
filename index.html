@@ -1,9 +1,10 @@
 <!DOCTYPE html PUBLIC"-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
 <html id='content'>
     <head>
         <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
         <meta content="utf-8" http-equiv="encoding">
-        <title>[LOCAL] Haplotype Reconstruction</title>
+        <title>Haplotype Reconstruction</title>
         <link rel="stylesheet" type="text/css" href="main.css" >
 	<!-- STYLE -->
     </head>
@@ -22,76 +23,83 @@
         </div>
 
 
+        <!-- Background -->
+        <div id='modal_bg' ></div>
+
+
+        <!-- Message Props -->
+        <div id='message_props' class="input_props" >
+          <div class='bg' ></div>
+          <div class='messages'>
+             <h3 id='message_head' >Header</h3>
+             <input class='messages' id='message_submit' type='button' value='X' />
+             <p id='message_text' >Stuff we can talk about</p>
+           </div>
+        </div>
+
+
         <!-- Family Props -->
         <div id='family_props' class="input_props" >
-            <table>
-                <tr>
-                  <td>Family ID: </td>
-                  <td><input id='family_id' type='number' /></td>
-              </tr>
+          <div class='messages'>
+             <h3 id='message_head' >Family</h3>
+             <input class='messages' id='family_submit' type='button' value='✓' />
+          </div>
 
-              <tr>
-                  <td>Surname:</td>
-                  <td>
-                      <input id='family_name' type='text' />
-                  </td>
-              </tr>
-
-              <tr>
-                <td></td>
-                <td>
-                 <input id='family_submit' type='button' value='update' />
-                 </td>
-              </tr>
-            </table>
+          <table>
+             <tr>
+               <td>Fam ID: </td>
+               <td><input id='family_id' type='number' /></td>
+             </tr>
+             <tr>
+               <td>Surname:</td>
+               <td><input id='family_name' type='text' /></td>
+             </tr>
+           </table>
         </div>
 
 
         <!-- Person Props -->
         <div id='person_props' class="input_props" >
-            <table>
-                <tr>
-                    <td>ID: </td>
-                    <td><input id='pers_id' type='number' /></td>
-                  </tr>
+          <div class='messages'>
+             <h3 id='message_head' >Person</h3>
+             <input class='messages' id='pers_submit' type='button' value='✓' />    
+          </div>
 
-                <tr>
-                    <td>Name:</td>
-                    <td>
-                        <input id='pers_name' type='text' />
-                    </td>
-                </tr>
+           <table>
+           <tr>
+             <td>ID: </td>
+             <td><input id='pers_id' type='number' /></td>
+           </tr>
 
-                <tr>
-                    <td>Gender: </td>
-                    <td>
-                        <select id='pers_gender'>
-                            <option value="1" >male</option>
-                            <option value="2" >female</option>
-                            <option value="0" >unknown</option>
-                        </select>
-                    </td>
-                </tr>
+           <tr>
+             <td>Name:</td>
+             <td> <input id='pers_name' type='text' /> </td>
+           </tr>
 
-                <tr>
-                    <td>Affectation:</td>
-                    <td>
-                        <select id='pers_affect'>
-                            <option value="1" >unaffected</option>
-                            <option value="2" >affected</option>
-                            <option value="0" >unknown</option>
-                        </select>  
-                    </td>
-                </tr>
-                
-                <tr>
-                    <td></td>
-                    <td>
-                        <input id='pers_submit' type='button' value='update' />
-                    </td>
-                </tr>
-            </table>
+           <tr>
+              <td>Gender: </td>
+              <td>
+                 <select id='pers_gender'>
+                    <option value="1" >male</option>
+                    <option value="2" >female</option>
+                    <option value="0" >unknown</option>
+                 </select>
+              </td>
+           </tr>
+
+           <tr>
+              <td>Affectation:</td>
+              <td>
+                 <select id='pers_affect'>
+                    <option value="1" >unaffected</option>
+                    <option value="2" >affected</option>
+                    <option value="0" >unknown</option>
+                 </select>  
+               </td>
+           </tr>
+           </table>
         </div>
+
 
 
         <div id="homology_buttons">
@@ -142,12 +150,9 @@
             </span>
         </div>
 
-        <!-- Message Box -->
-        <div id='message_box' ></div>
-
 
         <!-- Pedigree View -->
-        <div id="pedcreate_views" style='position:absolute;z-index: 99;' >
+        <div id="pedcreate_views" >
             <input id='pedcreate_addnode' type='button' value="Add Indiv." onclick="personDraw.addNode()" />
             <input id='pedcreate_addfam'  type='button' value="Add Family" onclick="familyDraw.addFam()" />
             <input id='pedcreate_addrel'  type='button' value="Add Relationship" onclick="pedDraw.addRelationship()" />
