@@ -7,7 +7,7 @@ var selection_items = {}, // fid_id: {box:Object, selected:toggled, affected:boo
 		startSelectionMode();
 	});
 
-main_layer.add(select_button);
+//main_layer.add(select_button);
 
 
 function selectFam(fam_id){
