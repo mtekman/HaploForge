@@ -107,3 +107,33 @@ h2 { color: #111; font-family: 'Open Sans', sans-serif; font-size: 30px; font-we
 p { color: #685206; font-family: 'Helvetica Neue', sans-serif; font-size: 14px; 
 line-height: 24px; margin: 0 0 24px; text-align: justify; text-justify: inter-word; }
 
+
+.input_props {
+	position: absolute;
+	z-index: 99;
+}
+
+
+.input_props table {
+    background:#c0ccc0;
+    border:4px solid black;
+    border-radius:15px;
+}
+
+.input_props table td:first-child {
+  text-align:right;
+}
+
+.input_props table td:last-child {
+  text-align:left;
+  color:red;
+}
+
+.input_props input {
+  max-width:100px;
+}
+
+.input_props input[type=button] {
+  background:#dd5500;
+  border-radius:10px;
+}
