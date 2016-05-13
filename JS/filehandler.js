@@ -169,34 +169,13 @@ function processFile() {
 		var type = determineFileType(e.target.result)
 		console.log(type);
 
+		//Save to local storage
+		localStorage.setItem(localStor.data_save, e.target.result)
+		localStorage.setItem(localStor.data_type, type)
+
 		processInput(e.target.result, type);
-		
-		connectAllIndividuals();
-		populateGrids_and_UniqueObjs();
+		init();
 
-		determinePedigreeType();
-		graphInitPos(nodeSize + 10, grid_rezY);
-
-		assignHGroups();
-		washMarkerMap();
-
-		populateIndexDataList();
-
-		// toggle_haplomode(20);
-/*		startSelectionMode();
-		for (var key in selection_items){
-
-			var fid_id = key.split('_'),
-				fid = fid_id[0],
-				id = fid_id[1];
-
-			var item = selection_items[key];
-
-			if (id >= 6 && id <=10){
-				item.box.fire('click')
-			}
-		}
-		launchHaplomode();*/
     };
     lr.readAsText(file);
 }
