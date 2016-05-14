@@ -23,8 +23,8 @@ var utility = {
 	hideBG: function(){
 		this._bg.style.display = "none";
 	}
-
 }
+
 
 var famProps = {
 	_box : document.getElementById('family_props'),
@@ -142,5 +142,9 @@ messProps.hide();
 
 
 document.getElementById('homology_buttons').style.display = 'none'
-document.getElementById('pedcreate_views').style.display = 'none'
-document.getElementById('buttons').style.display = 'none'
+var d = document.getElementById('pedcreate_views');
+d.style.position = "absolute";
+d.style.zIndex = 122;
+d.style.display = "";
+
+document.getElementById('buttons').style.display = "none";

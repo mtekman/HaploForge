@@ -8,6 +8,150 @@ function initiatePedigreeDraw(){
 
 
 
+var relationshipDraw = {
+
+	_hitRect: null, /* Layer */
+	_tmpRect: null, /* Rectangle for mousemove */
+	_tmpLine: null,
+	_circleDetected: false, /*Mutex for beginLineDraw and mouseover Circle*/
+	_startPoint: {x:-1,y:-1},
+
+	_delHitRect: function(){
+		this._hitRect.destroy();
+	},
+
+	_addHitRect: function()
+	{		
+		this._hitRect = (new Kinetic.Layer({
+			width: stage.getWidth(),
+			height:stage.getHeight(),
+			x:0, y:0
+		}));
+
+		this._tmpRect = (new Kinetic.Rect({
+			width: stage.getWidth(),
+			height:stage.getHeight(),
+			x:0, y:0,
+		}))
+
+		stage.add( this._hitRect );
+		this._hitRect.add(this._tmpRect);
+
+		for (var perc_id in personDraw.used_ids)
+		{
+			var gfx = personDraw.used_ids[perc_id].gfx;
+
+			var apos = gfx.getAbsolutePosition(),
+				rad = 15 ;
+
+			var circle = new Kinetic.Circle({
+				x: apos.x - rad/2 , 
+				y: apos.y - rad/2 ,
+				radius: rad*2,
+				stroke:"red",
+				strokeWidth:3
+			});
+
+
+			circle.on("mouseover", function(event){
+				
+				if (relationshipDraw._startPoint.x === -1){
+					relationshipDraw.changeToArrowCursor();
+				}
+				else { //Start point set
+					relationshipDraw._circleDetected = true;
+
+					changeRLine(
+						relationshipDraw._tmpLine,
+						relationshipDraw._startPoint,
+						this.getAbsolutePosition()
+					);
+
+					relationshipDraw._hitRect.draw();
+				}
+			});
+
+			circle.on("mouseout", function(){
+				if (relationshipDraw._startPoint.x === -1){
+					relationshipDraw.restoreCursor();
+				}
+				else{
+					relationshipDraw._circleDetected = false;
+				}
+			});
+
+
+			circle.on("mousedown", function(event)
+			{
+				if (relationshipDraw._startPoint.x === -1){
+					var cX = circle.getX(),
+						cY = circle.getY();
+
+					relationshipDraw._startPoint = {x:cX, y:cY};
+					relationshipDraw.beginLineDraw();
+				}
+				else { //Set end point
+					
+					//Add line to unique_graph_obs so that dragevents would update it
+					//But ONLY after the relationship has been set
+
+
+					relationshipDraw._delHitRect();
+					relationshipDraw.restoreCursor();			
+				}
+
+			});
+			this._hitRect.add(circle);
+		}
+		this._hitRect.draw();
+	},
+
+	beginLineDraw: function(){
+	
+		this._tmpLine = new Kinetic.Line({
+			stroke: 'black',
+			strokeWidth: 2,
+		});
+
+		this._hitRect.add(this._tmpLine);
+	
+		this._tmpRect.on("mousemove", function(event)
+		{
+			if(relationshipDraw._circleDetected === false){
+
+				var mouseX = Math.floor(event.evt.clientX/grid_rezX)*grid_rezX,
+					mouseY = Math.floor(event.evt.clientY/grid_rezY)*grid_rezY;
+
+
+				changeRLine(
+					relationshipDraw._tmpLine,
+					relationshipDraw._startPoint,
+					{x:mouseX,y:mouseY}
+				);
+	
+				relationshipDraw._hitRect.draw();
+			}
+		});
+	},
+
+	changeToArrowCursor: function(){
+		document.body.style.cursor = "url('assets/Precision.cur'),auto";
+	},
+
+	restoreCursor: function(){
+		document.body.style.cursor = "";
+	},
+
+	firstPoint: function()
+	{
+		this._addHitRect();
+	}
+
+}
+
+
+
+
 var familyDraw = {
 
 	active_fam_group : null,
@@ -43,7 +187,7 @@ var familyDraw = {
 
 		this.family_map[fam.id] = fam;
 
-		fam.on( "click" , function(){
+		fam.on( "click dragstart" , function(){
 			familyDraw.selectFam(fam.id);
 		});
 
@@ -118,9 +262,6 @@ var personDraw = {
 			person = this.makeTempPerson();
 		}
 
-		// Add to used IDs
-		this.used_ids[person.id] = true;
-
 		var perc = addPerson( person, fam_group,  
 				grid_rezX ,
 				10 + Math.random()*grid_rezY*2
@@ -138,11 +279,14 @@ var personDraw = {
 			personDraw.showNodeMenu(perc);
 		})
 
+		// Add to used IDs
+		this.used_ids[person.id] = perc;
+
 		main_layer.draw();
 		return perc;
 	}
 }
-/*
+
 initiatePedigreeDraw();
 familyDraw.addFam(1001)
 personDraw.addNode();
@@ -151,4 +295,3 @@ personDraw.addNode();
 familyDraw.addFam(1002);
 personDraw.addNode();
 personDraw.addNode();
-*/

@@ -359,13 +359,16 @@ function addPerson(person, fam_group,  t_x, t_y)  //positions relative to family
 		y: nodeSize + 10
 	});
 
-	label.add(new Kinetic.Rect({
+	var gfx = new Kinetic.Rect({
 		fill: 'white',
 		opacity: 0.8,
 		y: - nodeSize/2,
 		width: (""+id+"").length*6,
 		height: 8
-	}));
+	});
+
+	label.add(gfx);
+
 
 	var texts = new Kinetic.Text({
 		text: id,
@@ -383,6 +386,7 @@ function addPerson(person, fam_group,  t_x, t_y)  //positions relative to family
 	group.add(makeshape()).add(label);
 
 	group.id = id;
+	group.gfx = gfx;
 
 	//On drag do
 	group.on('dragmove', function(e){

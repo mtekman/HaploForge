@@ -13,13 +13,21 @@
         <div id="buttons" >
             <input type="file" id="file_upload" onchange="processFile();" />&#8672; Upload ihaplo file<br />
 
-		or 
+		      or 
 
-	    <input type='button' id='createPedfile' onchange="createNewPedigree();" value="Create New Pedigree" />
+	        <input type='button' id='createPedfile' onchange="createNewPedigree();" value="Create New Pedigree" />
 
             <!-- <input type="checkbox" id="rlines" onchange="toggleRAng()"  checked=true > Rlines</input><br />
             <input type="button" id="play" onclick="cutting()" > Play</input><br />
             <input type="checkbox" id="map" onchange="toggleMarkerScale()" > MarkerMap</input> -->
+        </div>
+
+        
+        <!-- Pedigree View -->
+        <div id="pedcreate_views" >
+            <input id='pedcreate_addnode' type='button' value="Add Indiv." onclick="personDraw.addNode()" />
+            <input id='pedcreate_addfam'  type='button' value="Add Family" onclick="familyDraw.addFam()" />
+            <input id='pedcreate_addrel'  type='button' value="Add Relationship" onclick="pedDraw.addRelationship()" />
         </div>
 
 
@@ -148,14 +156,6 @@
                 <datalist id="marker_list_max" ></datalist>
                 <input type=button value="Go" id="index_submit" />
             </span>
-        </div>
-
-
-        <!-- Pedigree View -->
-        <div id="pedcreate_views" >
-            <input id='pedcreate_addnode' type='button' value="Add Indiv." onclick="personDraw.addNode()" />
-            <input id='pedcreate_addfam'  type='button' value="Add Family" onclick="familyDraw.addFam()" />
-            <input id='pedcreate_addrel'  type='button' value="Add Relationship" onclick="pedDraw.addRelationship()" />
         </div>
 
 
