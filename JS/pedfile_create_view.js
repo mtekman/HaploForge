@@ -7,6 +7,39 @@ function initiatePedigreeDraw(){
 }
 
 
+var familyMapOps = {
+
+	insert: function(person, family_id){
+		
+		if (!(family_id in family_map)){
+			family_map[family_id] = {}
+			console.log("adding new family", family_id)
+		}
+
+		if (!(person.id in family_map[family_id])){
+			family_map[family_id][person.id] = person;
+			return 0;
+		}
+		console.log(person_id,"already in", family_id)
+		return -1;
+	},
+
+	remove: function(person_id, family_id)
+	{
+		if (family_id in family_map){
+			if (person_id in family_map[family_id]){
+				delete family_map[family_id][person_id];
+				return 0;
+			}
+			console.log(person_id,"not in", family_id)
+			return -1;
+		}
+		console.log(family_id, "not in map");
+		return -1;
+	}
+}
+
+
 
 var relationshipDraw = {
 
@@ -15,6 +48,10 @@ var relationshipDraw = {
 	_tmpLine: null,
 	_circleDetected: false, /*Mutex for beginLineDraw and mouseover Circle*/
 	_startPoint: {x:-1,y:-1},
+	_drawModeActive: false,
+	
+	startNodeID: null,
+	endNodeID: null,
 
 	_delHitRect: function(){
 		this._hitRect.destroy();
@@ -39,7 +76,8 @@ var relationshipDraw = {
 
 		for (var perc_id in personDraw.used_ids)
 		{
-			var gfx = personDraw.used_ids[perc_id].gfx;
+			var personIn = personDraw.used_ids[perc_id]
+			var gfx = personIn.gfx;
 
 			var apos = gfx.getAbsolutePosition(),
 				rad = 15 ;
@@ -51,7 +89,7 @@ var relationshipDraw = {
 				stroke:"red",
 				strokeWidth:2.5
 			});
-
+			circle.id = perc_id;
 
 			circle.on("mouseover", function(event){
 				
@@ -61,7 +99,7 @@ var relationshipDraw = {
 				else { //Start point set
 					relationshipDraw._circleDetected = true;
 
-					changeRLine(
+					changeRLineHoriz(
 						relationshipDraw._tmpLine,
 						relationshipDraw._startPoint,
 						this.getAbsolutePosition()
@@ -81,13 +119,15 @@ var relationshipDraw = {
 			});
 
 
-			circle.on("mousedown click", function(event)
+			circle.on("mousedown", function(event)
 			{
 				if (relationshipDraw._startPoint.x === -1){
 					var cX = this.getX(),
 						cY = this.getY();
 
 					relationshipDraw._startPoint = {x:cX, y:cY};
+					relationshipDraw.startNodeID = this.id
+
 					relationshipDraw.beginLineDraw();
 				}
 				else { //Set end point
@@ -95,6 +135,65 @@ var relationshipDraw = {
 					//Add line to unique_graph_obs so that dragevents would update it
 					//But ONLY after the relationship has been set
 
+					// Rules:
+					//   1. Two types of lines
+					//      a. Mateline
+					//      b. Parentline
+					//   
+					//   2. Parentline hangs from center of Mateline
+					//      there requires a Mateline to be present before creation
+					//
+					//   3. There needs to be a temp node hanging in the center of mateline to
+					//      join offspring to.
+
+					// Mates aren't connected in family map, only in unique_graph_lines
+
+					var endId = this.id;
+
+					var person1 = personDraw.used_ids[Number(relationshipDraw.startNodeID)],
+						person2 = personDraw.used_ids[Number(endId)];
+
+					if (person1.id === 0 || person2.id === 0){
+						console.log("Not possible");
+						return;
+					}
+
+					if (person1.family !== person2.family){
+						console.log("Family's do not match");
+						return;
+					}
+
+					var mother = (person1.gender===2)?person1:person2,
+						father = (person1.gender===1)?person1:person2,
+						family_id = person1.family;
+
+
+					// Convert to Person objects (DO EARLIER!)
+					var moth = new Person(mother.id, mother.gender, mother.affected, 0, 0);
+					console.log(mother, moth);
+					var fath = new Person(father.id, father.gender, father.affected, 0, 0);
+
+					moth.mates.push(fath);
+					fath.mates.push(moth);
+
+					//Insert into family map
+					if (!(family_id in family_map)){
+						family_map[family_id] = {}
+					}
+
+					if (!(moth.id in family_map[family_id])){
+						family_map[family_id][moth.id] = moth;
+					}
+
+					if (!(fath.id in family_map[family_id])){
+						family_map[family_id][fath.id] = fath;
+					}
+
+					var u_matesline = UUID('m', fath.id, moth.id);
+
+					incrementEdges(u_matesline, fath.id, moth.id, 0);
+					incrementNodes(moth.id);
+					incrementNodes(fath.id);
 
 					//reset
 					relationshipDraw.endLineDraw();
@@ -108,15 +207,20 @@ var relationshipDraw = {
 
 	endLineDraw:function(){
 		this._delHitRect();	
-		this._tmpLine.destroy();
+		
+		if (this._tmpLine!==null){
+			this._tmpLine.destroy();
+		}
+		
 		this.restoreCursor();
 
 		//reset
+		this._drawModeActive = false;
 		this._startPoint = {x:-1,y:-1};
 	},
 
 	beginLineDraw: function(){
-	
+
 		this._tmpLine = new Kinetic.Line({
 			stroke: 'black',
 			strokeWidth: 2,
@@ -131,7 +235,7 @@ var relationshipDraw = {
 				var mouseX = Math.floor(event.evt.clientX/grid_rezX)*grid_rezX,
 					mouseY = Math.floor(event.evt.clientY/grid_rezY)*grid_rezY;
 
-				changeRLine(
+				changeRLineHoriz(
 					relationshipDraw._tmpLine,
 					relationshipDraw._startPoint,
 					{x:mouseX,y:mouseY}
@@ -140,6 +244,17 @@ var relationshipDraw = {
 				relationshipDraw._hitRect.draw();
 			}
 		});
+
+		this._tmpRect.on("mouseup", function(event){
+
+//			if (relationshipDraw._startPoint.x !== -1 
+//				&& !(relationshipDraw._circleDetected)){
+
+				// Usually means it didn't find a circle to end it
+				relationshipDraw.endLineDraw();
+//			}
+		})
+
 	},
 
 	changeToArrowCursor: function(){
@@ -152,6 +267,12 @@ var relationshipDraw = {
 
 	firstPoint: function()
 	{
+
+		if (this._drawModeActive){
+			this.endLineDraw();
+		}
+
+		this._drawModeActive = true;
 		this._addHitRect();
 	}
 }
@@ -225,7 +346,7 @@ var personDraw = {
 		var id_counter = 0;
 		while (++id_counter in this.used_ids){}
 
-		return {gender:0, affected:0, id:id_counter};
+		return new Person(id_count, 0, 0);
 	},
 
 
@@ -233,10 +354,11 @@ var personDraw = {
 	{
 		var oldX = node.getX(),
 			oldY = node.getY(),
-			oldID= node.id;
+			oldID= node.id,
+			oldFam = node.family;
 
 		
-		var new_person = {gender:2, affected:2, id: 11};
+		var new_person = new Person(11, 2, 2);
 
 		if (new_person.id in this.used_ids){
 			utility.message("Id already in use");
@@ -248,11 +370,11 @@ var personDraw = {
 		// Update ids list
 		delete this.used_ids[oldID]
 
-		var new_node = this.addNode(new_person);
-		
-		new_node.setX(oldX);
-		new_node.setY(oldY);
+		//Update family map
+		familyMapOps.remove(oldID, oldFam);
+		familyMapOps.insert(new_person, oldFam);
 
+		var new_node = this.addNode(new_person, {x:oldX, y:oldY});
 		main_layer.draw();
 	},
 
@@ -262,7 +384,7 @@ var personDraw = {
 		this.changeNodeProps(node);
 	},
 
-	addNode: function(person = null){
+	addNode: function(person = null, position= null){
 
 		if (familyDraw.active_fam_group === null){
 			familyDraw.addFam();
@@ -294,17 +416,44 @@ var personDraw = {
 		// Add to used IDs
 		this.used_ids[person.id] = perc;
 
+		familyMapOps.insert(person, perc.family);
+
+		if (position !== null){
+			perc.setX(position.x);
+			perc.setY(position.y);
+		}
+
 		main_layer.draw();
 		return perc;
 	}
 }
 
 initiatePedigreeDraw();
-familyDraw.addFam(1001)
-personDraw.addNode();
-personDraw.addNode({id:90,gender:1,affected:1});
+//familyDraw.addFam(1001)
+//personDraw.addNode();
+//personDraw.addNode({id:90,gender:1,affected:1});
 
 familyDraw.addFam(1002, {x:500, y:100});
-personDraw.addNode({id:18,gender:2,affected:2});
+
+var newp1 = new Person(12,2,2),
+	newp2 = new Person(11,1,1),
+	newp3 = new Person(13,1,2);
+
+personDraw.addNode(
+	newp1,
+	{x:0, y:50}
+);
+
+personDraw.addNode(
+	newp2,
+	{x:180, y:50}
+);
+
+personDraw.addNode(
+	newp3,
+	{x:90, y:200}
+);
+
+
 
 relationshipDraw.firstPoint();

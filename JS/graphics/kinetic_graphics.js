@@ -70,6 +70,20 @@ function changeRLine(line, start, end, offset_y)
 	}
 }
 
+function changeRLineHoriz(line, start, end, midpointClickCallback = null)
+{
+	var mid_x = Math.floor((start.x + end.x)/2),
+		m1    = {	y: start.y,		x: mid_x	},
+		m2    = {	y: end.y,   	x: mid_x	};
+
+	line.setPoints([start.x, start.y, m1.x, m1.y, m2.x, m2.y, end.x, end.y]);
+
+//	return {mid1:m1,mid2:m2} /* Useful for spawning of Siblines */
+}
+
+
+
+
 
 var overlapping_lines = {}; // ypos 
 
