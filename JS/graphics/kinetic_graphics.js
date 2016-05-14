@@ -24,13 +24,15 @@ var main_layer = new Kinetic.Layer({id:"main"}),
 function addSquare(color)
 {
 	return new Kinetic.Rect({
-		x: - nodeSize,
-		y: - nodeSize,
+		x: 0,
+		y: 0,
 		width: nodeSize *2,
 		height: nodeSize * 2,
 		fill: color,
 		strokeWidth: 2,
-		stroke: default_stroke_color
+		stroke: default_stroke_color,
+		offsetX: nodeSize,
+		offsetY: nodeSize
 	});
 }
 
@@ -44,11 +46,11 @@ function addCircle(color)
 	})
 }
 
-
 function addDiamond(color){
 
 	var rect = addSquare(color);
-	rect.setRotation(45);
+	rect.setRotation(45)
+	rect.setScale({x:0.8,y:0.8});
 
 	return rect;
 }
@@ -359,16 +361,13 @@ function addPerson(person, fam_group,  t_x, t_y)  //positions relative to family
 		y: nodeSize + 10
 	});
 
-	var gfx = new Kinetic.Rect({
+	label.add(new Kinetic.Rect({
 		fill: 'white',
 		opacity: 0.8,
 		y: - nodeSize/2,
 		width: (""+id+"").length*6,
 		height: 8
-	});
-
-	label.add(gfx);
-
+	}));
 
 	var texts = new Kinetic.Text({
 		text: id,
@@ -383,7 +382,10 @@ function addPerson(person, fam_group,  t_x, t_y)  //positions relative to family
 		draggable: true,
 		id: fam_group.attrs.id+"_"+id
 	});
-	group.add(makeshape()).add(label);
+
+	var gfx = makeshape();
+
+	group.add(gfx).add(label);
 
 	group.id = id;
 	group.gfx = gfx;
@@ -394,8 +396,8 @@ function addPerson(person, fam_group,  t_x, t_y)  //positions relative to family
 		if (use_grid){
 			var x = e.target.attrs.x;
 			var	y = e.target.attrs.y;
-			group.setX( (Math.floor(x/grid_rezX)*grid_rezX) );
-			group.setY( (Math.floor(y/grid_rezY)*grid_rezY) );
+			this.setX( (Math.floor(x/grid_rezX)*grid_rezX) );
+			this.setY( (Math.floor(y/grid_rezY)*grid_rezY) );
 		}
 		if (fam_group.id in family_map){
 			redrawNodes(id, fam_group.attrs.id, true);

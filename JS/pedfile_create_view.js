@@ -45,11 +45,11 @@ var relationshipDraw = {
 				rad = 15 ;
 
 			var circle = new Kinetic.Circle({
-				x: apos.x - rad/2 , 
-				y: apos.y - rad/2 ,
+				x: apos.x, 
+				y: apos.y,
 				radius: rad*2,
 				stroke:"red",
-				strokeWidth:3
+				strokeWidth:2.5
 			});
 
 
@@ -81,11 +81,11 @@ var relationshipDraw = {
 			});
 
 
-			circle.on("mousedown", function(event)
+			circle.on("mousedown click", function(event)
 			{
 				if (relationshipDraw._startPoint.x === -1){
-					var cX = circle.getX(),
-						cY = circle.getY();
+					var cX = this.getX(),
+						cY = this.getY();
 
 					relationshipDraw._startPoint = {x:cX, y:cY};
 					relationshipDraw.beginLineDraw();
@@ -96,14 +96,23 @@ var relationshipDraw = {
 					//But ONLY after the relationship has been set
 
 
-					relationshipDraw._delHitRect();
-					relationshipDraw.restoreCursor();			
+					//reset
+					relationshipDraw.endLineDraw();
 				}
 
 			});
 			this._hitRect.add(circle);
 		}
 		this._hitRect.draw();
+	},
+
+	endLineDraw:function(){
+		this._delHitRect();	
+		this._tmpLine.destroy();
+		this.restoreCursor();
+
+		//reset
+		this._startPoint = {x:-1,y:-1};
 	},
 
 	beginLineDraw: function(){
@@ -121,7 +130,6 @@ var relationshipDraw = {
 
 				var mouseX = Math.floor(event.evt.clientX/grid_rezX)*grid_rezX,
 					mouseY = Math.floor(event.evt.clientY/grid_rezY)*grid_rezY;
-
 
 				changeRLine(
 					relationshipDraw._tmpLine,
@@ -146,7 +154,6 @@ var relationshipDraw = {
 	{
 		this._addHitRect();
 	}
-
 }
 
 
@@ -172,7 +179,7 @@ var familyDraw = {
 		this.active_fam_group = fam;
 	},
 
-	addFam: function(fam_id = null){	
+	addFam: function(fam_id = null, position = null){	
 
 		if (fam_id === null){
 			fam_id = utility.prompt("Family ID?");
@@ -184,7 +191,6 @@ var familyDraw = {
 		}
 
 		var fam = addFamily( fam_id, 50, 50 );
-
 		this.family_map[fam.id] = fam;
 
 		fam.on( "click dragstart" , function(){
@@ -193,15 +199,21 @@ var familyDraw = {
 
 		fam.fam_title_text.setFontStyle("bold");
 		this.active_fam_group = fam;
+
+
+		if (position !== null){
+			fam.setX(position.x);
+			fam.setY(position.y);
+		}
+
 		
 		main_layer.draw()
 	},	
 }
 
 
+
 var personDraw = {
-
-
 	//Ids MUST be unique, even if user doesn't have a specific ID in mind
 	// -- Required for makeTempPerson() to have unique hooks in family and graph data
 	// -- The user can then change it later
@@ -264,7 +276,7 @@ var personDraw = {
 
 		var perc = addPerson( person, fam_group,  
 				grid_rezX ,
-				10 + Math.random()*grid_rezY*2
+				50 // + Math.random()*grid_rezY*2
 		);
 
 		perc.family = fam_group.id;
@@ -290,8 +302,9 @@ var personDraw = {
 initiatePedigreeDraw();
 familyDraw.addFam(1001)
 personDraw.addNode();
-personDraw.addNode();
+personDraw.addNode({id:90,gender:1,affected:1});
 
-familyDraw.addFam(1002);
-personDraw.addNode();
-personDraw.addNode();
+familyDraw.addFam(1002, {x:500, y:100});
+personDraw.addNode({id:18,gender:2,affected:2});
+
+relationshipDraw.firstPoint();
