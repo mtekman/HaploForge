@@ -1,4 +1,3 @@
-
 // TODO: Update node_map to point at unique_graph_obs.nodes, and retrieve family name
 
 function redrawNodes(pers_id, fam_id, drawLinesToo)
@@ -93,32 +92,43 @@ function redrawNodes(pers_id, fam_id, drawLinesToo)
 	}
 
 	//If last generation, move all sibs
-	var last_gen = generation_grid_ids[fam_id][generation_grid_ids[fam_id].length - 1];
+	if (typeof generation_grid_ids[fam_id] !== "undefined"){
 
-	if (last_gen.indexOf(pers_id)!== -1){
+		var last_gen = generation_grid_ids[fam_id][generation_grid_ids[fam_id].length - 1];
 
-		for (var c=0; c < last_gen.length; c++){
-			var sib_id = last_gen[c],
-				n_sib = unique_graph_objs[fam_id].nodes[sib_id].graphics;
+		if (last_gen.indexOf(pers_id)!== -1){
 
-			n_sib.setY(npers_pos.y);
+			for (var c=0; c < last_gen.length; c++){
+				var sib_id = last_gen[c],
+					n_sib = unique_graph_objs[fam_id].nodes[sib_id].graphics;
+
+				n_sib.setY(npers_pos.y);
 
 
-			if (drawLinesToo){ //Update childlines
-				var sib_pers = family_map[fam_id][sib_id],
-					sib_moth = sib_pers.mother.id,
-					sib_fath = sib_pers.father.id;  // safe to assume last gen has parents
+				if (drawLinesToo){ //Update childlines
+					var sib_pers = family_map[fam_id][sib_id],
+						sib_moth = sib_pers.mother.id,
+						sib_fath = sib_pers.father.id;  // safe to assume last gen has parents
 
-				var m_id = UUID('m', sib_fath, sib_moth),
-					m_points = edge_map[m_id].graphics.getPoints();
-				var c_id = UUID('c', m_id, sib_id);
+					var m_id = UUID('m', sib_fath, sib_moth);
 
-				var sm_x = Math.floor((m_points[0]+m_points[m_points.length -2] )/2),
-					sm_y = m_points[m_points.length -1];
+					if (m_id in edge_map){
 
-				changeRLine(edge_map[c_id].graphics, {x:sm_x,y:sm_y}, n_sib.getPosition());
+
+						var m_points = edge_map[m_id].graphics.getPoints();
+						var c_id = UUID('c', m_id, sib_id);
+
+						var sm_x = Math.floor((m_points[0]+m_points[m_points.length -2] )/2),
+							sm_y = m_points[m_points.length -1];
+
+						changeRLine(edge_map[c_id].graphics, {x:sm_x,y:sm_y}, n_sib.getPosition());
+					}
+					else {
+						console.log("No sibline for mateline", m_id)
+					}
+				}
+
 			}
-
 		}
 	}
 

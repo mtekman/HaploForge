@@ -133,18 +133,36 @@ var relationshipDraw = {
 					fath.mates.push(moth);
 
 					//TEST
-					populateGrids_and_UniqueObjs();
+								
 
-					//Insert into family map
-/*					var u_matesline = UUID('m', fath.id, moth.id);
+					populateGrids_and_UniqueObjs( {nodes:personDraw.used_ids });
+					
+					// Need to manually insert the line
+					var u_matesline = UUID('m', fath.id, moth.id);
 
-					// This needs to be family specific...
-					addFamMap.incrementEdges(u_matesline, fath.id, moth.id, 0);
-					addFamMap.incrementNodes(moth.id);
-					addFamMap.incrementNodes(fath.id);
-*/
+					var line_pos = relationshipDraw._tmpLine.getAbsolutePosition(),
+						group_pos = familyDraw.active_fam_group.getAbsolutePosition(),
+						new_line = relationshipDraw._tmpLine.clone();
+
+					familyDraw.active_fam_group.add(new_line)
+
+					new_line.setX(line_pos.x - group_pos.x);
+					new_line.setY(line_pos.y - group_pos.y);
+
+					addFamMap.incrementEdges(
+						u_matesline, fath.id, moth.id, 0,
+						unique_graph_objs[fid].edges,
+						new_line
+					)
+					new_line.setZIndex(1);
+
+
 					//reset
 					relationshipDraw.endLineDraw();
+					main_layer.draw();
+
+					new_line.setX(0);
+					new_line.setY(0);			
 				}
 
 			});

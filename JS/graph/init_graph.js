@@ -44,7 +44,14 @@ var addFamMap = {
 	unique_edges_fam: {},
 	unique_nodes_fam: {0:{graphics:null}},   // Add the zero id
 
-	init: function(root){
+	_existing_graphics:null,
+
+	init: function(root, graphicsMap = null){
+
+		if (graphicsMap !== null){
+			this._existing_graphics = graphicsMap;
+		}
+
 		this.addNodeArray(root, 0);
 
 		//Convert gridmap into gridarray
@@ -55,28 +62,53 @@ var addFamMap = {
 	},
 
 
-	setRoot:function(root){this._root = root;},
-	
 	// Hopefully this can be used to find inbreeding loops
-	incrementNodes: function(id){
+	incrementNodes: function(id)
+	{
+
 		if (!(id in this.unique_nodes_fam))
-			this.unique_nodes_fam[id] = {graphics:null,		//set later by graph_draw
-								 	count:0};
+		{
+			var graphicsObj = null;
+			
+			if (this._existing_graphics !== null ){
+				graphicsObj = this._existing_graphics.nodes[id];
+			}
+
+			this.unique_nodes_fam[id] = {
+				graphics:graphicsObj,		// if being read from pedfile, set later by placePerp
+			 	count:0
+			 };
+		}
+		else{
+			// Id exists, but perhaps not graphics?
+			if (this._existing_graphics !== null ){
+				console.log("ASDAasd")
+
+				var graphicsObj = this._existing_graphics.nodes[id];
+				this.unique_nodes_fam[id].graphics = graphicsObj;
+			}
+		}
+
 		this.unique_nodes_fam[id].count += 1;
 	},
 
-	incrementEdges: function(id, start_join, end_join, typer){
-		if (!(id in this.unique_edges_fam))
-			this.unique_edges_fam[id] = {
-				graphics:null,		//set later by graph_draw
+	incrementEdges: function(id, start_join, end_join, typer, 
+		mapper = this.unique_edges_fam,
+		graphicsObj = null)
+	{
+		if (!(id in mapper))
+		{
+			mapper[id] = {
+				graphics:graphicsObj,		//set later by placePerp
 				count:0,
-				type: typer,
+				type:typer,
 				start_join_id: start_join,          //Note: IDs, not positions
 				end_join_id: end_join,
-				double_line: false
-			};        		// Consangineous
-
-		this.unique_edges_fam[id].count += 1;
+				double_line: false 					// Consangineous
+			};
+		//	console.log(mapper);
+		}
+		mapper[id].count += 1;
 	},
 
 	addTrioEdges: function(moth, fath, child){
@@ -158,7 +190,7 @@ var addFamMap = {
 
 
 
-function populateGrids_and_UniqueObjs()
+function populateGrids_and_UniqueObjs( graphicsMap=null )
 {
 
 	//First root indiv for each family
@@ -169,15 +201,18 @@ function populateGrids_and_UniqueObjs()
 			console.log("ROOT=", root.id);
 
 			//Populate gridmap and uniq map
-			var arr_obj = addFamMap.init(root);
+			var arr_obj = addFamMap.init(root, graphicsMap);
 			var generation_array = arr_obj[0],
 				uniq_objs = arr_obj[1];
+
+//			console.log( generation_array, uniq_objs);
 
 			//Insert into global maps
 			unique_graph_objs[one] = uniq_objs;
 			
 			generation_grid_ids[one] = generation_array;
 
+			// XXX -  What does this do?
 			for (var g=0; g < generation_array; g++){
 				for (var i=0; i < generation_array[g]; i++){
 

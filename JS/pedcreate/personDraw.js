@@ -38,6 +38,10 @@ var personDraw = {
 		familyMapOps.remove(oldID, oldFam);
 		familyMapOps.insert(new_person, oldFam);
 
+		//Update graphics
+		uniqueGraphOps.deleteNode(oldID, oldFam);
+		uniqueGraphOps.insertNode(new_person, oldFam, perc);
+
 		var new_node = this.addNode(new_person, {x:oldX, y:oldY});
 		main_layer.draw();
 	},
@@ -80,9 +84,12 @@ var personDraw = {
 		// Add to used IDs
 		this.used_ids[person.id] = perc;
 
+
+
 		//family map stores the person data
 		// used_ids stores the graphics
 		familyMapOps.insert(person, perc.family);
+		uniqueGraphOps.insertNode(person.id, perc.family, perc);
 
 		if (position !== null){
 			perc.setX(position.x);
