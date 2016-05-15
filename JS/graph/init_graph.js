@@ -37,122 +37,129 @@ function UUID(type, from_id, to_id){
 
 
 
-function populateGrids_and_UniqueObjs()
-{
 
-	function addFamMap(root)
-	{
+var addFamMap = {
 
-		var generation_gridmap_ids = {}, // Essentially an array, but indices are given
-			unique_nodes_fam = {0:{graphics:null}},   // Add the zero id
-			unique_edges_fam = {};
+	generation_gridmap_ids:{},				// Essentially an array, but indices are given
+	unique_edges_fam: {},
+	unique_nodes_fam: {0:{graphics:null}},   // Add the zero id
 
+	init: function(root){
+		this.addNodeArray(root, 0);
 
-		// Hopefully this can be used to find inbreeding loops
-		function incrementNodes(id){
-			if (!(id in unique_nodes_fam))
-				unique_nodes_fam[id] = {graphics:null,		//set later by graph_draw
-									 	count:0};
-			unique_nodes_fam[id].count += 1;
-		}
+		//Convert gridmap into gridarray
+		var generation_grid_ids_fam = map2orderedArray(this.generation_gridmap_ids);
+		var uniq_map = {nodes: this.unique_nodes_fam, edges: this.unique_edges_fam};
 
-		function incrementEdges(id, start_join, end_join, typer){
-			if (!(id in unique_edges_fam))
-				unique_edges_fam[id] = {
-					graphics:null,		//set later by graph_draw
-					count:0,
-					type: typer,
-					start_join_id: start_join,          //Note: IDs, not positions
-					end_join_id: end_join,
-					double_line: false};        		// Consangineous
-
-			unique_edges_fam[id].count += 1;
-		}
+		return [generation_grid_ids_fam, uniq_map];
+	},
 
 
-		function addTrioEdges(moth, fath, child) {
-			//= Assume all indivs are != 0
-			var u_matesline = UUID('m', fath.id, moth.id),
-				u_childline = UUID('c', u_matesline, child.id);
+	setRoot:function(root){this._root = root;},
+	
+	// Hopefully this can be used to find inbreeding loops
+	incrementNodes: function(id){
+		if (!(id in this.unique_nodes_fam))
+			this.unique_nodes_fam[id] = {graphics:null,		//set later by graph_draw
+								 	count:0};
+		this.unique_nodes_fam[id].count += 1;
+	},
 
-			//= Edges
-			incrementEdges(u_matesline, fath.id, moth.id, 0);
-			incrementEdges(u_childline, u_matesline, child.id, 2);
+	incrementEdges: function(id, start_join, end_join, typer){
+		if (!(id in this.unique_edges_fam))
+			this.unique_edges_fam[id] = {
+				graphics:null,		//set later by graph_draw
+				count:0,
+				type: typer,
+				start_join_id: start_join,          //Note: IDs, not positions
+				end_join_id: end_join,
+				double_line: false
+			};        		// Consangineous
 
-			//= Nodes
-			incrementNodes(moth.id);
-			incrementNodes(fath.id);
-			incrementNodes(child.id); //Already in
-		}
+		this.unique_edges_fam[id].count += 1;
+	},
 
+	addTrioEdges: function(moth, fath, child){
+		//= Assume all indivs are != 0
+		var u_matesline = UUID('m', fath.id, moth.id),
+			u_childline = UUID('c', u_matesline, child.id);
 
-		function intersect_safe(a, b)
+		//= Edges
+		this.incrementEdges(u_matesline, fath.id, moth.id, 0);
+		this.incrementEdges(u_childline, u_matesline, child.id, 2);
+
+		//= Nodes
+		this.incrementNodes(moth.id);
+		this.incrementNodes(fath.id);
+		this.incrementNodes(child.id); //Already in
+	},
+
+	intersect_safe: function(a, b){
+		var ai=0, bi=0;
+		var result = new Array();
+
+		while( ai < a.length && bi < b.length )
 		{
-			var ai=0, bi=0;
-			var result = new Array();
-
-			while( ai < a.length && bi < b.length )
+			if      (a[ai].id < b[bi].id ){ ai++; }
+			else if (a[ai].id > b[bi].id ){ bi++; }
+			else /* they're equal */
 			{
-				if      (a[ai].id < b[bi].id ){ ai++; }
-				else if (a[ai].id > b[bi].id ){ bi++; }
-				else /* they're equal */
-				{
-					result.push(a[ai]);
-					ai++;
-					bi++;
-				}
+				result.push(a[ai]);
+				ai++;
+				bi++;
 			}
-			return result;
 		}
+		return result;
+	},
 
-
-		//Recurse...
-		function addNodeArray(obj_pers, level)
-		{
-			if (obj_pers.id in unique_nodes_fam) return;
-
-			// Add current
-			incrementNodes(obj_pers.id); //needed?
-
-			if (!(level in generation_gridmap_ids))
-				generation_gridmap_ids[level] = [];
-
-			generation_gridmap_ids[level].push(obj_pers.id);
-
-			for (var m=0; m < obj_pers.mates.length; m++){                   	//Mates
-				addNodeArray(obj_pers.mates[m], level);
-
-				//Child from mate?
-				var shared_childs = intersect_safe(obj_pers.children, obj_pers.mates[m].children);
-// 				console.log(obj_pers.id, obj_pers.mates[m].id, shared_childs);
-
-				for (var c=0; c < shared_childs.length; c++)                	//Childs
-					addNodeArray(shared_childs[c], level +1);
-
-			}
-
-			//Parents
-			if (obj_pers.mother != 0) addNodeArray(obj_pers.mother, level - 1);
-			if (obj_pers.father != 0) addNodeArray(obj_pers.father, level - 1);
-
-			if (obj_pers.mother != 0 && obj_pers.father != 0)
-				addTrioEdges(obj_pers.mother, obj_pers.father, obj_pers);     	//Add relevant edges
-
-
-
+	//Recurse...
+	addNodeArray: function(obj_pers, level)
+	{
+		if (typeof obj_pers == "undefined"){
+			console.log("ASDA");
 			return;
 		}
 
-		addNodeArray(root, 0);
+		if (obj_pers.id in this.unique_nodes_fam) return;
 
-		//Convert gridmap into gridarray
-		var generation_grid_ids_fam = map2orderedArray(generation_gridmap_ids);
-		var uniq_map = {nodes: unique_nodes_fam, edges: unique_edges_fam};
+		// Add current
+		this.incrementNodes(obj_pers.id); //needed?
 
-		return [generation_grid_ids_fam, uniq_map];
+		if (!(level in this.generation_gridmap_ids))
+			this.generation_gridmap_ids[level] = [];
+
+		this.generation_gridmap_ids[level].push(obj_pers.id);
+
+		for (var m=0; m < obj_pers.mates.length; m++){                   	//Mates
+			this.addNodeArray(obj_pers.mates[m], level);
+
+			//Child from mate?
+			var shared_childs = this.intersect_safe(obj_pers.children, obj_pers.mates[m].children);
+// 				console.log(obj_pers.id, obj_pers.mates[m].id, shared_childs);
+
+			for (var c=0; c < shared_childs.length; c++)                	//Childs
+				this.addNodeArray(shared_childs[c], level +1);
+
+		}
+
+		//Parents
+		if (obj_pers.mother != 0) this.addNodeArray(obj_pers.mother, level - 1);
+		if (obj_pers.father != 0) this.addNodeArray(obj_pers.father, level - 1);
+
+		if (obj_pers.mother != 0 && obj_pers.father != 0)
+			this.addTrioEdges(obj_pers.mother, obj_pers.father, obj_pers);     	//Add relevant edges
+
+		return;
 	}
+}
 
 
+
+
+
+
+function populateGrids_and_UniqueObjs()
+{
 
 	//First root indiv for each family
 	for (var one in family_map){
@@ -162,7 +169,7 @@ function populateGrids_and_UniqueObjs()
 			console.log("ROOT=", root.id);
 
 			//Populate gridmap and uniq map
-			var arr_obj = addFamMap(root);
+			var arr_obj = addFamMap.init(root);
 			var generation_array = arr_obj[0],
 				uniq_objs = arr_obj[1];
 
