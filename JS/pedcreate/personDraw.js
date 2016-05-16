@@ -59,6 +59,7 @@ var personDraw = {
 		}
 
 		var fam_group = familyDraw.active_fam_group;
+		uniqueGraphOps.insertFam(fam_group.id, fam_group);
 
 		if (person === null ){ 
 			person = this.makeTempPerson();

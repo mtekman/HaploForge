@@ -132,11 +132,6 @@ var relationshipDraw = {
 					moth.mates.push(fath);
 					fath.mates.push(moth);
 
-					//TEST
-								
-
-					populateGrids_and_UniqueObjs( {nodes:personDraw.used_ids });
-					
 					// Need to manually insert the line
 					var u_matesline = UUID('m', fath.id, moth.id);
 
@@ -144,10 +139,12 @@ var relationshipDraw = {
 						group_pos = familyDraw.active_fam_group.getAbsolutePosition(),
 						new_line = relationshipDraw._tmpLine.clone();
 
-					familyDraw.active_fam_group.add(new_line)
+					familyDraw.active_fam_group.add(new_line);
 
 					new_line.setX(line_pos.x - group_pos.x);
 					new_line.setY(line_pos.y - group_pos.y);
+
+					console.log("before", unique_graph_objs[fid].nodes[13])
 
 					addFamMap.incrementEdges(
 						u_matesline, fath.id, moth.id, 0,
@@ -156,6 +153,7 @@ var relationshipDraw = {
 					)
 					new_line.setZIndex(1);
 
+					console.log("after", unique_graph_objs[fid].nodes[13])
 
 					//reset
 					relationshipDraw.endLineDraw();

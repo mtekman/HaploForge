@@ -1,8 +1,16 @@
 var uniqueGraphOps = {
 
-	insertFam: function(family_id){
-		if (!(family_id in unique_graph_objs)){
-			unique_graph_objs[family_id] = {nodes:{}, edges:{}};
+	insertFam: function(family_id, fam_group){
+
+		if (!(family_id in unique_graph_objs))
+		{
+			unique_graph_objs[family_id] = {
+				nodes:{},
+				edges:{},
+				group: fam_group
+			};
+
+			console.log("UGO: created new fam", family_id)
 			return 0;
 		}
 		return -1;
@@ -22,6 +30,7 @@ var uniqueGraphOps = {
 
 		if (!(id in unique_graph_objs[family_id].nodes)){
 			unique_graph_objs[family_id].nodes[id] = {graphics:graphics};
+			console.log("UGO: created new node", id, "in", family_id);
 			return 0;
 		}
 		return -1;
