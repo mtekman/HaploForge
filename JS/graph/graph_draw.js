@@ -11,12 +11,17 @@ function redrawNodes(pers_id, fam_id, drawLinesToo)
 
 
 	// Move mates vertically
+
+	// Stagger mate's vertically to please the world
+	var staggerY_amount = grid_rezY/2,
+		use_stagger = pers.mates.length > 1;
+
 	for (var m=0; m < pers.mates.length; m++){
 		var mate = pers.mates[m],
 			nmate = node_map[mate.id].graphics,
 			nmate_pos = nmate.getPosition();
 
-		nmate.setY(npers_pos.y); // bind y only
+		nmate.setY(npers_pos.y + (staggerY_amount)); // bind y only
 
 		var ch_x = npers_pos.x + (nodeSize*2); 		// Offset stops shapes from intersecting
 
@@ -54,7 +59,7 @@ function redrawNodes(pers_id, fam_id, drawLinesToo)
 			var s1_x = npers_pos.x, s1_y = npers_pos.y,
 				e1_x = nmate_pos.x, e1_y = nmate_pos.y;
 
-			changeRLine(mateline, npers_pos, nmate_pos);
+			changeRLineHoriz(mateline, npers_pos, nmate_pos);
 
 			//  -- update childlines attached to it
 			var childkey_starting = "c:"+mateline_id;   //Look for all childnodes starting with
@@ -87,7 +92,25 @@ function redrawNodes(pers_id, fam_id, drawLinesToo)
 			}
 
 			// -- mate's mate's mateline
+			for (var mm=0 ; mm < mate.mates.length; mm++){
+				var matemate_id = mate.mates[mm].id,
+					matemate_gfx = node_map[matemate_id].graphics;
 
+				var male_id   = (mate.gender===1)?mate.id:matemate_id,
+					female_id = (mate.gender===2)?mate.id:matemate_id;
+
+				if (matemate_id != pers_id){
+
+					var mateline_id = UUID('m', male_id, female_id),
+						mateline = edge_map[mateline_id].graphics;
+
+//					var s1_x = mate.getX(), 	s1_y = mate.getY(),
+//						e1_x = matemate.getX(), e1_y = matemate.getY();
+
+					changeRLineHoriz(mateline, nmate.getPosition(), matemate_gfx.getPosition());
+					
+				}
+			}
 		}
 	}
 
