@@ -34,6 +34,11 @@ var relationshipDraw = {
 		for (var perc_id in personDraw.used_ids)
 		{
 			var personIn = personDraw.used_ids[perc_id]
+
+			if (personIn.family !== familyDraw.active_fam_group.id){
+				continue;
+			}
+
 			var gfx = personIn.gfx;
 
 			var apos = gfx.getAbsolutePosition(),
@@ -160,8 +165,8 @@ var relationshipDraw = {
 					relationshipDraw.endLineDraw();
 					main_layer.draw();
 
-					new_line.setX(0);
-					new_line.setY(0);			
+					//new_line.setX(0);
+					//new_line.setY(0);			
 				}
 
 			});

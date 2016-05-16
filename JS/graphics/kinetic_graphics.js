@@ -60,6 +60,9 @@ function changeRLine(line, start, end, offset_y)
 {
 	offset_y = offset_y || 0;
 
+	line.setX(0);
+	line.setY(0);
+
 	if (!use_right_angles) line.setPoints([start.x, start.y, end.x, end.y]);
 	else {
 		var mid_y = Math.floor((start.y + end.y)/2),
@@ -72,6 +75,9 @@ function changeRLine(line, start, end, offset_y)
 
 function changeRLineHoriz(line, start, end, midpointClickCallback = null)
 {
+	line.setX(0);
+	line.setY(0);
+	
 	var mid_x = Math.floor((start.x + end.x)/2),
 		m1    = {	y: start.y,		x: mid_x	},
 		m2    = {	y: end.y,   	x: mid_x	};
