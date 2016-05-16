@@ -54,6 +54,7 @@ var uniqueGraphOps = {
 
 		if (!(id in unique_graph_objs[family_id].edges)){
 			unique_graph_objs[family_id].edges[id] = {graphics:graphics};
+			console.log("UGO: created new edge", id, "in", family_id);
 			return 0;
 		}
 		return -1;

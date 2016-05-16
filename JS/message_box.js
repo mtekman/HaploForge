@@ -1,3 +1,24 @@
+var statusProps = {
+	_box: document.getElementById('status_props'),
+	_header: document.getElementById('status_head'),
+	_message: document.getElementById('status_text'),
+
+	hide: function(){ this._box.style.display = "none";},
+	show: function(){ this._box.style.display = "";},
+
+	display: function(header,details, seconds=1){
+		// Don't change to "this", because utility.notify defers what 'this' is
+		statusProps.show();
+
+		statusProps._header.innerHTML = header;
+		statusProps._message.innerHTML = details;
+
+		setTimeout( function(){
+			statusProps.hide();
+		}, seconds*1000);
+	}
+}
+
 
 var utility = {
 	_bg: document.getElementById('modal_bg'),
@@ -6,6 +27,8 @@ var utility = {
 		// Own method drop in?
 		return prompt(query);
 	},
+
+	notify: statusProps.display,
 
 	message: function(){
 		/* Change to a notification system for users*/
@@ -24,6 +47,7 @@ var utility = {
 		this._bg.style.display = "none";
 	}
 }
+
 
 
 var famProps = {
@@ -138,6 +162,7 @@ var messProps = {
 famProps.hide();
 persProps.hide();
 messProps.hide();
+statusProps.hide();
 
 
 

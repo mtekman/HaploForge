@@ -178,6 +178,38 @@
   max-width:100px;
 }
 
+.status {
+  font-size: 10pt;
+  background: #c0ccc0;
+  background: black;
+  border: 1px solid black;
+  border-radius: 0px 0px 11px 11px;
+  padding: 0px;
+  z-index: 99;
+  position: absolute;
+  top: -2px;
+  right:0%;
+}
+
+.status div {
+  display: inline-block;
+  color: #c0ccc0;
+  margin-top: 0px;
+}
+
+.status .reflect {
+  background: #c0ccc0;
+  color: black;
+  border-radius: 0px 0px 0px 10px;
+  margin-top: -5px;
+  margin-left: 0px;
+  padding-right: 2px;
+  padding-left: 2px;
+  padding-top: 0px;
+}
+
+
+
 
 
 

@@ -125,6 +125,11 @@ var relationshipDraw = {
 					person1	= family_map[fid][person1.id];
 					person2	= family_map[fid][person2.id];
 
+					if (person1.gender === person2.gender){
+						utility.notify("Cannot join two " + ((person1.gender===1)?"males":"females"),"Science is not there yet...");
+						return;
+					}
+
 
 					var moth = (person1.gender===2)?person1:person2,
 						fath = (person1.gender===1)?person1:person2;
@@ -144,16 +149,12 @@ var relationshipDraw = {
 					new_line.setX(line_pos.x - group_pos.x);
 					new_line.setY(line_pos.y - group_pos.y);
 
-					console.log("before", unique_graph_objs[fid].nodes[13])
-
 					addFamMap.incrementEdges(
 						u_matesline, fath.id, moth.id, 0,
 						unique_graph_objs[fid].edges,
 						new_line
 					)
 					new_line.setZIndex(1);
-
-					console.log("after", unique_graph_objs[fid].nodes[13])
 
 					//reset
 					relationshipDraw.endLineDraw();
