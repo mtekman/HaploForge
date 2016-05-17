@@ -21,7 +21,12 @@ function redrawNodes(pers_id, fam_id, drawLinesToo)
 			nmate = node_map[mate.id].graphics,
 			nmate_pos = nmate.getPosition();
 
-		nmate.setY(npers_pos.y + (staggerY_amount)); // bind y only
+		if (use_stagger){
+			nmate.setY(npers_pos.y + (staggerY_amount)); // bind y only
+		}
+		else {
+			nmate.setY(npers_pos.y);
+		}
 
 		var ch_x = npers_pos.x + (nodeSize*2); 		// Offset stops shapes from intersecting
 

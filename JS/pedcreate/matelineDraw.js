@@ -1,22 +1,21 @@
-var relationshipDraw = {
+var matelineDraw = {
 
-	_hitRect: null, /* Layer */
+	_layer: null, /* Layer */
 	_tmpRect: null, /* Rectangle for mousemove */
 	_tmpLine: null,
 	_circleDetected: false, /*Mutex for beginLineDraw and mouseover Circle*/
 	_startPoint: {x:-1,y:-1},
-	_drawModeActive: false,
-	
+		
 	startNodeID: null,
 	endNodeID: null,
 
 	_delHitRect: function(){
-		this._hitRect.destroy();
+		this._layer.destroy();
 	},
 
 	_addHitRect: function()
 	{		
-		this._hitRect = (new Kinetic.Layer({
+		this._layer = (new Kinetic.Layer({
 			width: stage.getWidth(),
 			height:stage.getHeight(),
 			x:0, y:0
@@ -28,8 +27,8 @@ var relationshipDraw = {
 			x:0, y:0,
 		}))
 
-		stage.add( this._hitRect );
-		this._hitRect.add(this._tmpRect);
+		stage.add( this._layer );
+		this._layer.add(this._tmpRect);
 
 		for (var perc_id in personDraw.used_ids)
 		{
@@ -55,42 +54,42 @@ var relationshipDraw = {
 
 			circle.on("mouseover", function(event){
 				
-				if (relationshipDraw._startPoint.x === -1){
-					relationshipDraw.changeToArrowCursor();
+				if (matelineDraw._startPoint.x === -1){
+					matelineDraw.changeToArrowCursor();
 				}
 				else { //Start point set
-					relationshipDraw._circleDetected = true;
+					matelineDraw._circleDetected = true;
 
 					changeRLineHoriz(
-						relationshipDraw._tmpLine,
-						relationshipDraw._startPoint,
+						matelineDraw._tmpLine,
+						matelineDraw._startPoint,
 						this.getAbsolutePosition()
 					);
 
-					relationshipDraw._hitRect.draw();
+					matelineDraw._layer.draw();
 				}
 			});
 
 			circle.on("mouseout", function(){
-				if (relationshipDraw._startPoint.x === -1){
-					relationshipDraw.restoreCursor();
+				if (matelineDraw._startPoint.x === -1){
+					matelineDraw.restoreCursor();
 				}
 				else{
-					relationshipDraw._circleDetected = false;
+					matelineDraw._circleDetected = false;
 				}
 			});
 
 
 			circle.on("mousedown", function(event)
 			{
-				if (relationshipDraw._startPoint.x === -1){
+				if (matelineDraw._startPoint.x === -1){
 					var cX = this.getX(),
 						cY = this.getY();
 
-					relationshipDraw._startPoint = {x:cX, y:cY};
-					relationshipDraw.startNodeID = this.id
+					matelineDraw._startPoint = {x:cX, y:cY};
+					matelineDraw.startNodeID = this.id
 
-					relationshipDraw.beginLineDraw();
+					matelineDraw.beginLineDraw();
 				}
 				else { //Set end point
 					
@@ -112,7 +111,7 @@ var relationshipDraw = {
 
 					var endId = this.id;
 
-					var person1 = personDraw.used_ids[Number(relationshipDraw.startNodeID)],
+					var person1 = personDraw.used_ids[Number(matelineDraw.startNodeID)],
 						person2 = personDraw.used_ids[Number(endId)];
 
 					if (person1.id === 0 || person2.id === 0){
@@ -131,7 +130,11 @@ var relationshipDraw = {
 					person2	= family_map[fid][person2.id];
 
 					if (person1.gender === person2.gender){
-						utility.notify("Cannot join two " + ((person1.gender===1)?"males":"females"),"Science is not there yet...");
+						var type = {0: 'unknowns',
+									1: 'males, not yet applicable',
+									2: 'females, not yet applicable'};
+
+						utility.notify("Error:", "Cannot join two " + type[person1.gender]);
 						return;
 					}
 
@@ -145,9 +148,9 @@ var relationshipDraw = {
 					// Need to manually insert the line
 					var u_matesline = UUID('m', fath.id, moth.id);
 
-					var line_pos = relationshipDraw._tmpLine.getAbsolutePosition(),
+					var line_pos = matelineDraw._tmpLine.getAbsolutePosition(),
 						group_pos = familyDraw.active_fam_group.getAbsolutePosition(),
-						new_line = relationshipDraw._tmpLine.clone();
+						new_line = matelineDraw._tmpLine.clone();
 
 					familyDraw.active_fam_group.add(new_line);
 
@@ -162,7 +165,7 @@ var relationshipDraw = {
 					new_line.setZIndex(1);
 
 					//reset
-					relationshipDraw.endLineDraw();
+					matelineDraw.endLineDraw();
 					main_layer.draw();
 
 					//new_line.setX(0);
@@ -170,9 +173,9 @@ var relationshipDraw = {
 				}
 
 			});
-			this._hitRect.add(circle);
+			this._layer.add(circle);
 		}
-		this._hitRect.draw();
+		this._layer.draw();
 	},
 
 	endLineDraw:function(){
@@ -185,7 +188,6 @@ var relationshipDraw = {
 		this.restoreCursor();
 
 		//reset
-		this._drawModeActive = false;
 		this._startPoint = {x:-1,y:-1};
 	},
 
@@ -196,32 +198,32 @@ var relationshipDraw = {
 			strokeWidth: 2,
 		});
 
-		this._hitRect.add(this._tmpLine);
+		this._layer.add(this._tmpLine);
 	
 		this._tmpRect.on("mousemove", function(event)
 		{
-			if(relationshipDraw._circleDetected === false){
+			if(matelineDraw._circleDetected === false){
 
 				var mouseX = Math.floor(event.evt.clientX/grid_rezX)*grid_rezX,
 					mouseY = Math.floor(event.evt.clientY/grid_rezY)*grid_rezY;
 
 				changeRLineHoriz(
-					relationshipDraw._tmpLine,
-					relationshipDraw._startPoint,
+					matelineDraw._tmpLine,
+					matelineDraw._startPoint,
 					{x:mouseX,y:mouseY}
 				);
 	
-				relationshipDraw._hitRect.draw();
+				matelineDraw._layer.draw();
 			}
 		});
 
 		this._tmpRect.on("mouseup", function(event){
 
-//			if (relationshipDraw._startPoint.x !== -1 
-//				&& !(relationshipDraw._circleDetected)){
+//			if (matelineDraw._startPoint.x !== -1 
+//				&& !(matelineDraw._circleDetected)){
 
 				// Usually means it didn't find a circle to end it
-				relationshipDraw.endLineDraw();
+				matelineDraw.endLineDraw();
 //			}
 		})
 
@@ -235,14 +237,13 @@ var relationshipDraw = {
 		document.body.style.cursor = "";
 	},
 
-	firstPoint: function()
+	init: function()
 	{
 
-		if (this._drawModeActive){
+		if (this._tmpLine !== null){
 			this.endLineDraw();
 		}
 
-		this._drawModeActive = true;
 		this._addHitRect();
 	}
 }

@@ -14,7 +14,7 @@ initiatePedigreeDraw();
 //personDraw.addNode();
 //personDraw.addNode({id:90,gender:1,affected:1});
 
-familyDraw.addFam(1002, {x:500, y:100});
+familyDraw.addFam(1002, {x:200, y:100});
 
 var newp1 = new Person(12,2,2,0,0),
 	newp2 = new Person(11,1,1,0,0),

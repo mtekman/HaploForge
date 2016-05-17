@@ -4,9 +4,22 @@ var statusProps = {
 	_message: document.getElementById('status_text'),
 
 	hide: function(){ this._box.style.display = "none";},
-	show: function(){ this._box.style.display = "";},
+	show: function(){ this._box.style.display = ""; this._box.style.opacity = 1},
 
-	display: function(header,details, seconds=1){
+	_fade: function(step=30){
+		var op = 1;
+		var timer = setInterval(function(){
+			if (op < 0.1){
+				clearInterval(timer);
+				statusProps.hide();
+			}
+			statusProps._box.style.opacity = op;
+			op -= 0.1;
+		}, step)
+	},
+
+
+	display: function(header,details, timeUntilFade=1.5, fadeStep=50){
 		// Don't change to "this", because utility.notify defers what 'this' is
 		statusProps.show();
 
@@ -14,8 +27,8 @@ var statusProps = {
 		statusProps._message.innerHTML = details;
 
 		setTimeout( function(){
-			statusProps.hide();
-		}, seconds*1000);
+			statusProps._fade(fadeStep);
+		}, timeUntilFade * 1000);
 	}
 }
 

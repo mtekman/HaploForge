@@ -37,10 +37,10 @@ function addSquare(color)
 }
 
 
-function addCircle(color)
+function addCircle(color, rad=nodeSize)
 {
 	return new Kinetic.Circle({
-		x: 0, y: 0, radius: nodeSize,
+		x: 0, y: 0, radius: rad,
 		fill: color, strokeWidth: 2,
 		stroke: default_stroke_color
 	})
@@ -73,6 +73,7 @@ function changeRLine(line, start, end, offset_y)
 	}
 }
 
+/* Used in matelines. Optionally supports a mid-point node -- for a siblines to latch onto */
 function changeRLineHoriz(line, start, end, midpointClickCallback = null)
 {
 	line.setX(0);
@@ -83,6 +84,15 @@ function changeRLineHoriz(line, start, end, midpointClickCallback = null)
 		m2    = {	y: end.y,   	x: mid_x	};
 
 	line.setPoints([start.x, start.y, m1.x, m1.y, m2.x, m2.y, end.x, end.y]);
+
+	// SibLine node anchor (where applicable)
+	if (typeof line.sib_anchor !== "undefined"){
+		var mid_midx = (m1.x + m2.x) / 2,
+			mid_midy = (m1.y + m2.y) / 2;
+
+		line.sib_anchor.setX(mid_midx);
+		line.sib_anchor.setY(mid_midy);
+	}
 
 //	return {mid1:m1,mid2:m2} /* Useful for spawning of Siblines */
 }

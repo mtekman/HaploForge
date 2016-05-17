@@ -27,7 +27,8 @@
         <div id="pedcreate_views" >
             <input id='pedcreate_addnode' type='button' value="Add Indiv." onclick="personDraw.addNode()" />
             <input id='pedcreate_addfam'  type='button' value="Add Family" onclick="familyDraw.addFam()" />
-            <input id='pedcreate_addrel'  type='button' value="Join Partners" onclick="relationshipDraw.firstPoint()" />
+            <input id='pedcreate_addrel'  type='button' value="Join Partners" onclick="matelineDraw.init()" />
+          <!--  <input id='pedcreate_addrel'  type='button' value="Add Offspring" onclick="matelineDraw.firstPoint()" /> -->
         </div>
 
 
@@ -212,7 +213,9 @@
 
         <script src="JS/pedcreate/familyDraw.js" ></script>
         <script src="JS/pedcreate/personDraw.js" ></script>
-        <script src="JS/pedcreate/relationshipDraw.js" ></script>
+        <script src="JS/pedcreate/linedrawOps.js" ></script>
+        <script src="JS/pedcreate/matelineDraw.js" ></script>
+        <script src="JS/pedcreate/offspringDraw.js" ></script>
 
         <script src="JS/familymapOps.js" ></script>
         <script src="JS/uniqueGraphOps.js" ></script>
