@@ -1,69 +1,77 @@
 
+class offspringDraw extends LineDrawOps {
 
-/*
-var offspringDraw = {
+	constructor(familyID){
 
-	// "Inherited"
-	_layer: lineDrawOps._layer,
-	_tmpRect: lineDrawOps._tmpRect,
-	_tmpLine : lineDrawOps._tmpLine,
-	_startPoint : lineDrawOps._startPoint,
-	_delHitRect: lineDrawOps._delHitRect,
-	_addHitRect: lineDrawOps._addHitRect,
-
-	beginLineDraw: lineDrawOps.beginLineDraw,
-	init: lineDrawOps.init,
-
-	_endPoint : {x:-1,y:-1},
-	
-	matelineNodeID: null,
-	childNodeID: null,
-
-
-	endLineDraw: function( matelineID ){
-		lineDrawOps.endLineDraw(function(){
-			offspringDraw.matelineNodeID = matelineID;
-			console.log("stored mateline_ID")
-		});
-	},
+		super(familyID);
 		
-	drawNodes: function(familyID){
+		if (offspringDraw.numMateLines(familyID) > 0){
 
-		var fam_group = unique_graph_objs[familyID].group,
-			edge_map  = unique_graph_objs[familyID].edges;
+			this._endPoint = {x:-1,y:-1};
 
-		var _this = this;
+			this._matelineNodeID = null;
+			this.childNodeID = null;
 
-		for (var key in edge_map){
-			if (key[0]==='m'){
-				var mateline_graphics = edge_map[key].graphics;
+			this._onendlinedraw = function ( matelineID ){
+				offspringDraw.matelineNodeID = matelineID;
+				console.log("stored mateline_ID")
+			};
 
-				// Sib_Anchor node is TEMPORARY. It is deleted upon ~offspringDraw()
-				var node = addCircle("white", nodeSize/2);
+			this._oncirclemousedown = function(circle){
+				this.childNodeID = circle.id;			
+			};
 
-				node.matelineID = key;
+			this._onaddhit = function(){
+				var _this = this;
 
-				// Lock offspring line to node if nearby
-				node.on("mouseover", function(){
-					if (lineDrawOps._tmpLine !== null)
+				var familyID = _this._family;
+
+				var fam_group = unique_graph_objs[familyID].group,
+					edge_map  = unique_graph_objs[familyID].edges;
+
+
+				for (var key in edge_map){
+					if (key[0]==='m')
 					{
-						_this._endPoint = this.getPosition();
-					}
-				});
+						console.log(key);
+						var mateline_graphics = edge_map[key].graphics;
 
-				// Mouse up -- it's been selected
-				node.on("mouseup", function(){
-					if (lineDrawOps._tmpLine !== null)
-					{
-						_this._endPoint = this.getPosition();
-						_this.endLineDraw( this.matelineID );
-					}
-				});
+						// Sib_Anchor node is TEMPORARY. It is deleted upon ~offspringDraw()
+						var node = addCircle("white", nodeSize/2);
 
-				mateline_graphics.sib_anchor = node;
-				
-				fam_group.add( mateline_graphics.sib_anchor );
+						node.matelineID = key;
+
+						// Lock offspring line to node if nearby
+						node.on("mouseover", function(){
+							if (_this._tmpLine !== null)
+							{
+								_this._endPoint = this.getPosition();
+							}
+						});
+
+						// Mouse up -- it's been selected
+						node.on("mouseup", function(){
+							if (_this._tmpLine !== null)
+							{
+								_this._endPoint = this.getPosition();
+								_this.endLineDraw( this.matelineID );
+							}
+						});
+
+						mateline_graphics.sib_anchor = node;
+						
+						fam_group.add( mateline_graphics.sib_anchor );
+
+						changeRLineHoriz(mateline_graphics)
+					}
+				}
+				main_layer.draw()
 			}
 		}
 	}
-};*/
+
+
+	static numMateLines(famID){
+		return Object.keys(unique_graph_objs[famID].edges).filter(v => v[0] === 'm').length;
+	}
+};

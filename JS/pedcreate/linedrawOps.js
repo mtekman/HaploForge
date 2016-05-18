@@ -3,7 +3,10 @@
 
 class LineDrawOps {
 
-	constructor() {
+	constructor(familyID) {
+
+		this._family = familyID
+
 		this._layer = null; /*Layer*/
 		this._tmpRect = null; /* Rectangle to detect mousemove */
 		this._tmpLine = null;
@@ -48,7 +51,7 @@ class LineDrawOps {
 		stage.add( this._layer );
 		this._layer.add(this._tmpRect);
 
-		this.drawCirclesAroundActiveFam();
+		this.drawCircles();
 
 		if (this._onaddhit !== null){
 			this._onaddhit();
@@ -126,7 +129,7 @@ class LineDrawOps {
 
 	}
 
-	drawCirclesAroundActiveFam(){
+	drawCircles(){
 
 		var _this = this;
 
@@ -134,7 +137,7 @@ class LineDrawOps {
 		{
 			var personIn = personDraw.used_ids[perc_id]
 
-			if (personIn.family !== familyDraw.active_fam_group.id){
+			if (personIn.family !== _this._family){
 				continue;
 			}
 

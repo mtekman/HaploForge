@@ -74,10 +74,18 @@ function changeRLine(line, start, end, offset_y)
 }
 
 /* Used in matelines. Optionally supports a mid-point node -- for a siblines to latch onto */
-function changeRLineHoriz(line, start, end, midpointClickCallback = null)
+function changeRLineHoriz(line, start = null, end = null)
 {
-	line.setX(0);
-	line.setY(0);
+	if (start === null){
+		var points = line.getPoints();
+
+		start = {x:points[0],y:points[1]};
+		end = {x:points[6],y:points[7]};
+	}
+	else {
+		line.setX(0);
+		line.setY(0);
+	}
 	
 	var mid_x = Math.floor((start.x + end.x)/2),
 		m1    = {	y: start.y,		x: mid_x	},
