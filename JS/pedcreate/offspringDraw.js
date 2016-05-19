@@ -46,13 +46,21 @@ class OffspringDraw extends LineDrawOps {
 						var mateline_graphics = edge_map[key].graphics;
 
 						// Sib_Anchor node is TEMPORARY. It is deleted upon ~offspringDraw()
-						var node = addCircle("white", nodeSize*2);
+						var node = addCircle("white", nodeSize/2);
+
+						node.hitFunc(function(context){
+							var center = node.getPosition();
+							context.beginPath();
+							context.arc(0, 0, 40, 2 * Math.PI, true);
+							context.closePath();
+							context.fillStrokeShape(node);
+						});
 
 						node.matelineID = key;
 
 						// Lock offspring line to node if nearby
 						node.on("mouseover", function(){
-							console.log("locked to node")
+							console.log("locked to node", node)
 							_this.lockToNode(node);
 						});
 

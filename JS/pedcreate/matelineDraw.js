@@ -157,9 +157,6 @@ var matelineDraw = {
 					new_line.setX(line_pos.x - group_pos.x);
 					new_line.setY(line_pos.y - group_pos.y);
 
-					//new_line.setX(line_pos.x);
-					//new_line.setY(line_pos.y);
-
 					addFamMap.incrementEdges(
 						u_matesline, fath.id, moth.id, 0,
 						unique_graph_objs[fid].edges,
@@ -171,8 +168,6 @@ var matelineDraw = {
 					matelineDraw.endLineDraw();
 					main_layer.draw();
 
-					//new_line.setX(0);
-					//new_line.setY(0);			
 				}
 
 			});
