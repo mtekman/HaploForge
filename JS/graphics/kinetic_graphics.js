@@ -56,48 +56,30 @@ function addDiamond(color){
 }
 
 
-function changeRLine(line, start = null, end = null, offset_y = 0)
+function changeRLine(line, start = null, end = null, offset_y = 0, offset_pos = null)
 {
-	if (start === null){
-		var points = line.getPoints();
-
-		start = {x:points[0],y:points[1]};
-		end = {x:points[6],y:points[7]};
-	}
-	else {
-		line.setX(0);
-		line.setY(0);
+	if (offset_pos !== null)
+	{
+		start.x += offset_pos.x;
+		start.y += offset_pos.y;
+		console.log("adding offset", offset_pos)
 	}
 
-	if (!use_right_angles) line.setPoints([start.x, start.y, end.x, end.y]);
-	else {
-		var mid_y = Math.floor((start.y + end.y)/2),
-			m1    = {	x: start.x,		y: (mid_y + offset_y)	},
-			m2    = {	x: end.x,   	y: (mid_y + offset_y)	};
 
-		line.setPoints([start.x, start.y, m1.x, m1.y, m2.x, m2.y, end.x, end.y]);
-	}
-}
+	line.setX(start.x);
+	line.setY(start.y);
 
-/* Used in matelines. Optionally supports a mid-point node -- for a siblines to latch onto */
-function changeRLineHoriz(line, start = null, end = null)
-{
-	if (start === null){
-		var points = line.getPoints();
+	var diff_x = end.x - start.x,
+		diff_y = end.y - start.y;
 
-		start = {x:points[0],y:points[1]};
-		end = {x:points[6],y:points[7]};
-	}
-	else {
-		line.setX(0);
-		line.setY(0);
-	}
-	
-	var mid_x = Math.floor((start.x + end.x)/2),
-		m1    = {	y: start.y,		x: mid_x	},
-		m2    = {	y: end.y,   	x: mid_x	};
+	var mid_x = diff_x/2,
+		mid_y = diff_y/2;
 
-	line.setPoints([start.x, start.y, m1.x, m1.y, m2.x, m2.y, end.x, end.y]);
+
+	var	m1    = {	x: 0,			y: (mid_y + offset_y)	},
+		m2    = {	x: diff_x,   	y: (mid_y + offset_y)	};
+
+	line.setPoints([0, 0, m1.x, m1.y, m2.x, m2.y, diff_x, diff_y]);
 
 	// SibLine node anchor (where applicable)
 	if (typeof line.sib_anchor !== "undefined"){
@@ -106,6 +88,40 @@ function changeRLineHoriz(line, start = null, end = null)
 
 		line.sib_anchor.setX(mid_midx);
 		line.sib_anchor.setY(mid_midy);
+	}
+}
+
+
+/* Used in matelines. Optionally supports a mid-point node -- for a siblines to latch onto */
+function changeRLineHoriz(line, start, end, offset_pos = null)
+{
+	if (offset_pos !== null)
+	{
+		start.x += offset_pos.x;
+		start.y += offset_pos.y;
+	}
+
+	line.setX(start.x);
+	line.setY(start.y);
+
+	var diff_x = end.x - start.x,
+		diff_y = end.y - start.y;
+
+	var mid_x = diff_x/2,
+		mid_y = diff_y/2;
+	
+	var	m1    = {	y: 0,	   x: mid_x	},
+		m2    = {	y: diff_y, x: mid_x	};
+
+	line.setPoints([0, 0, m1.x, m1.y, m2.x, m2.y, diff_x, diff_y]);
+
+	// SibLine node anchor (where applicable)
+	if (typeof line.sib_anchor !== "undefined"){
+		var mid_midx = (m1.x + m2.x) / 2,
+			mid_midy = (m1.y + m2.y) / 2;
+
+		line.sib_anchor.setX(start.x + mid_midx);
+		line.sib_anchor.setY(start.y + mid_midy);
 	}
 
 //	return {mid1:m1,mid2:m2} /* Useful for spawning of Siblines */

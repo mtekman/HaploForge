@@ -33,7 +33,10 @@ class OffspringDraw extends LineDrawOps {
 				var familyID = _this._family;
 
 				var fam_group = unique_graph_objs[familyID].group,
-					edge_map  = unique_graph_objs[familyID].edges;
+					edge_map  = unique_graph_objs[familyID].edges,
+					node_map  = unique_graph_objs[familyID].nodes;
+
+				var nodeGroup = new Kinetic.Group({});
 
 
 				for (var key in edge_map){
@@ -43,7 +46,7 @@ class OffspringDraw extends LineDrawOps {
 						var mateline_graphics = edge_map[key].graphics;
 
 						// Sib_Anchor node is TEMPORARY. It is deleted upon ~offspringDraw()
-						var node = addCircle("white", nodeSize/2);
+						var node = addCircle("white", nodeSize*2);
 
 						node.matelineID = key;
 
@@ -58,7 +61,7 @@ class OffspringDraw extends LineDrawOps {
 							console.log("selected node")
 							_this.lockToNode(node);
 
-							this.destroy();
+							nodeGroup.destroy();
 							delete unique_graph_objs[familyID].edges[this.matelineID].sib_anchor
 
 							_this.endLineDraw();
@@ -67,11 +70,22 @@ class OffspringDraw extends LineDrawOps {
 						});
 						mateline_graphics.sib_anchor = node; // changeRline can now update
 						
-						fam_group.add( node );
-						_this._RLineMethod(mateline_graphics, null, null);
+						nodeGroup.add( node );
+
+						var startID = edge_map[key].start_join_id,
+							endID = edge_map[key].end_join_id;
+
+						var startGraphics = node_map[startID].graphics,
+							endGraphics   = node_map[endID].graphics;
+
+						changeRLineHoriz(mateline_graphics,    // NOT this._RLineMethod
+							startGraphics.getAbsolutePosition(),
+							endGraphics.getAbsolutePosition());
 					}
 				}
-				_this._layer.draw()
+				_this._layer.add(nodeGroup);
+				_this._layer.draw();
+				//main_layer.draw();
 			}
 		}
 	}

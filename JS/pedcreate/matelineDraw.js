@@ -148,7 +148,7 @@ var matelineDraw = {
 					// Need to manually insert the line
 					var u_matesline = UUID('m', fath.id, moth.id);
 
-					var line_pos = matelineDraw._tmpLine.getAbsolutePosition(),
+					var line_pos = matelineDraw._tmpLine.getPosition(),
 						group_pos = familyDraw.active_fam_group.getAbsolutePosition(),
 						new_line = matelineDraw._tmpLine.clone();
 
@@ -156,6 +156,9 @@ var matelineDraw = {
 
 					new_line.setX(line_pos.x - group_pos.x);
 					new_line.setY(line_pos.y - group_pos.y);
+
+					//new_line.setX(line_pos.x);
+					//new_line.setY(line_pos.y);
 
 					addFamMap.incrementEdges(
 						u_matesline, fath.id, moth.id, 0,
