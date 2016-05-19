@@ -9,8 +9,12 @@ class LineDrawOps {
 
 		this._layer = null; /*Layer*/
 		this._tmpRect = null; /* Rectangle to detect mousemove */
+
 		this._tmpLine = null;
 		this._startPoint = {x:-1,y:-1};
+		this._endPoint = {x:-1,y:-1};
+
+		this._RLineMethod = changeRLineHoriz;
 
 		// Callbacks
 		// Set before _init
@@ -21,6 +25,7 @@ class LineDrawOps {
 		this._onbeginlinedraw_mousemove = null;
 		this._onbeginlinedraw_mouseup = null;
 		this._onendlinedraw = null;
+
 	}
 
 
@@ -30,8 +35,10 @@ class LineDrawOps {
 			this._ondelhit();
 		}
 
-		this._layer.destroy();
-		this._layer = null;
+		if (this._layer !== null){
+			this._layer.destroy();
+			this._layer = null;
+		}
 	}
 
 	_addHitRect() {
@@ -70,6 +77,15 @@ class LineDrawOps {
 	}
 
 
+	updateLine() {
+		this._RLineMethod(
+			this._tmpLine,
+			this._startPoint,
+			this._endPoint
+		);
+	}
+
+
 	beginLineDraw() {
 		var _this = this;
 
@@ -86,11 +102,9 @@ class LineDrawOps {
 				var mouseX = Math.floor(event.evt.clientX/grid_rezX)*grid_rezX,
 					mouseY = Math.floor(event.evt.clientY/grid_rezY)*grid_rezY;
 
-				changeRLineHoriz(
-					_this._tmpLine,
-					_this._startPoint,
-					{x:mouseX,y:mouseY}
-				);
+				_this._endPoint = {x: mouseX, y: mouseY};
+
+				_this.updateLine();
 
 				if (_this._onbeginlinedraw_mousemove !== null){
 					_this._onbeginlinedraw_mousemove(); // pass this?
@@ -133,6 +147,8 @@ class LineDrawOps {
 
 		var _this = this;
 
+		var circleGroup = new Kinetic.Group({});
+
 		for (var perc_id in personDraw.used_ids)
 		{
 			var personIn = personDraw.used_ids[perc_id]
@@ -162,12 +178,9 @@ class LineDrawOps {
 				}
 				else { //Start point set
 
-					changeRLineHoriz(
-						_this._tmpLine,
-						_this._startPoint,
-						this.getAbsolutePosition()
-					);
+					_this._endPoint = this.getAbsolutePosition();
 
+					_this.updateLine();
 					_this._layer.draw();
 				}
 			});
@@ -188,15 +201,15 @@ class LineDrawOps {
 					_this._startPoint = {x:cX, y:cY};
 
 					if (_this._oncirclemousedown !== null){
-						_this._oncirclemousedown(this); // Pass circle object on
+						_this._oncirclemousedown(this, circleGroup); // Pass circle object on
 						//  _this.childNodeID = this.id
 					}
 					_this.beginLineDraw();
 				}
 			});
-			
-			_this._layer.add(circle);
+			circleGroup.add(circle);
 		}
+		_this._layer.add(circleGroup);
 	}
 
 

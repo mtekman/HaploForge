@@ -56,12 +56,18 @@ function addDiamond(color){
 }
 
 
-function changeRLine(line, start, end, offset_y)
+function changeRLine(line, start = null, end = null, offset_y = 0)
 {
-	offset_y = offset_y || 0;
+	if (start === null){
+		var points = line.getPoints();
 
-	line.setX(0);
-	line.setY(0);
+		start = {x:points[0],y:points[1]};
+		end = {x:points[6],y:points[7]};
+	}
+	else {
+		line.setX(0);
+		line.setY(0);
+	}
 
 	if (!use_right_angles) line.setPoints([start.x, start.y, end.x, end.y]);
 	else {

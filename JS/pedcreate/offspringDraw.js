@@ -1,11 +1,18 @@
 
-class offspringDraw extends LineDrawOps {
+class OffspringDraw extends LineDrawOps {
 
 	constructor(familyID){
 
 		super(familyID);
-		
-		if (offspringDraw.numMateLines(familyID) > 0){
+
+		if (OffspringDraw.numMateLines(familyID) < 1){
+			console.log("No matelines detected");
+
+			this.init = null;
+		}
+		else {
+
+			this._RLineMethod = changeRLine
 
 			this._endPoint = {x:-1,y:-1};
 
@@ -13,15 +20,14 @@ class offspringDraw extends LineDrawOps {
 			this.childNodeID = null;
 
 			this._onendlinedraw = function ( matelineID ){
-				offspringDraw.matelineNodeID = matelineID;
-				console.log("stored mateline_ID")
+				//this.matelineNodeID = matelineID;
+				console.log("stored mateline_ID", this.matelineNodeID)
 			};
 
-			this._oncirclemousedown = function(circle){
-				this.childNodeID = circle.id;			
-			};
+			this._oncirclemousedown = function(circle, circlegroup){
+				this.childNodeID = circle.id;
+				circlegroup.destroy(); // For offspring, hide circles as soon as one is picked as a start point
 
-			this._onaddhit = function(){
 				var _this = this;
 
 				var familyID = _this._family;
@@ -43,30 +49,39 @@ class offspringDraw extends LineDrawOps {
 
 						// Lock offspring line to node if nearby
 						node.on("mouseover", function(){
-							if (_this._tmpLine !== null)
-							{
-								_this._endPoint = this.getPosition();
-							}
+							console.log("locked to node")
+							_this.lockToNode(node);
 						});
 
 						// Mouse up -- it's been selected
 						node.on("mouseup", function(){
-							if (_this._tmpLine !== null)
-							{
-								_this._endPoint = this.getPosition();
-								_this.endLineDraw( this.matelineID );
-							}
+							console.log("selected node")
+							_this.lockToNode(node);
+
+							this.destroy();
+							delete unique_graph_objs[familyID].edges[this.matelineID].sib_anchor
+
+							_this.endLineDraw();
+
+
 						});
-
-						mateline_graphics.sib_anchor = node;
+						mateline_graphics.sib_anchor = node; // changeRline can now update
 						
-						fam_group.add( mateline_graphics.sib_anchor );
-
-						changeRLineHoriz(mateline_graphics)
+						fam_group.add( node );
+						_this._RLineMethod(mateline_graphics, null, null);
 					}
 				}
-				main_layer.draw()
+				_this._layer.draw()
 			}
+		}
+	}
+
+	lockToNode(node) {
+		if (this._tmpLine !== null)
+		{
+			this._endPoint = node.getPosition();
+			this.updateLine();
+			this._layer.draw();
 		}
 	}
 
