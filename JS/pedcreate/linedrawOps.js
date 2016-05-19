@@ -19,6 +19,7 @@ class LineDrawOps {
 		// Callbacks
 		// Set before _init
 		this._oncirclemousedown = null;
+		this._oncirclemousedown_final = null;
 		this._onaddhit = null;
 		this._ondelhit = null;		
 		this._onbeginlinedraw = null;
@@ -192,7 +193,7 @@ class LineDrawOps {
 			});
 
 
-			circle.on("mousedown", function(event, callback)
+			circle.on("mousedown mouseup", function(event, callback)
 			{
 				if (_this._startPoint.x === -1){
 					var cX = this.getX(),
@@ -206,6 +207,17 @@ class LineDrawOps {
 					}
 					_this.beginLineDraw();
 				}
+				else {
+					
+					// Execute callback on second selection/completion
+					if (_this._oncirclemousedown_final !== null){
+						_this._oncirclemousedown_final(this);
+					}
+					
+					_this.endLineDraw();
+				}
+
+
 			});
 			circleGroup.add(circle);
 		}

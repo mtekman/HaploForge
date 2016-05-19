@@ -27,7 +27,7 @@
         <div id="pedcreate_views" >
             <input id='pedcreate_addnode' type='button' value="Add Indiv." onclick="personDraw.addNode()" />
             <input id='pedcreate_addfam'  type='button' value="Add Family" onclick="familyDraw.addFam()" />
-            <input id='pedcreate_addrel'  type='button' value="Join Partners" onclick="matelineDraw.init()" />
+            <input id='pedcreate_addrel'  type='button' value="Join Partners" onclick="(new MatelineDraw(familyDraw.active_fam_group.id)).init()" />
           <!--  <input id='pedcreate_addrel'  type='button' value="Add Offspring" onclick="matelineDraw.firstPoint()" /> -->
         </div>
 
