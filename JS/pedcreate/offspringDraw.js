@@ -51,7 +51,7 @@ class OffspringDraw extends LineDrawOps {
 						node.hitFunc(function(context){
 							var center = node.getPosition();
 							context.beginPath();
-							context.arc(0, 0, 40, 2 * Math.PI, true);
+							context.arc(0, 0, 40, 0, 2 * Math.PI, true);
 							context.closePath();
 							context.fillStrokeShape(node);
 						});

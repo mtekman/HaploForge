@@ -1,3 +1,8 @@
+
+
+
+
+
 var matelineDraw = {
 
 	_layer: null, /* Layer */
@@ -80,7 +85,7 @@ var matelineDraw = {
 			});
 
 
-			circle.on("mousedown", function(event)
+			circle.on("mousedown mouseup", function(event)
 			{
 				if (matelineDraw._startPoint.x === -1){
 					var cX = this.getX(),
