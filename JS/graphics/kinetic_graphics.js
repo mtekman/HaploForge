@@ -56,7 +56,7 @@ function addDiamond(color){
 }
 
 
-function changeRLine(line, start = null, end = null, offset_y = 0, offset_pos = null)
+function changeRLine(line, start, end, offset_y = 0, offset_pos = null)
 {
 	if (offset_pos !== null)
 	{

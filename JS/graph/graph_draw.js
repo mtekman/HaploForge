@@ -79,7 +79,7 @@ function redrawNodes(pers_id, fam_id, drawLinesToo)
 					var s3_x = Math.floor((s1_x + e1_x)/2),
 						s3_y = s1_y;
 
-					changeRLine(edge_map[key].graphics, {x:s3_x, y: s3_y}, nchild);
+					changeRLine(edge_map[key].graphics, {x:s3_x, y: s3_y}, nchild); // fine
 				}
 			}
 
@@ -167,13 +167,13 @@ function redrawNodes(pers_id, fam_id, drawLinesToo)
 	if (drawLinesToo && (pers.father != 0 && pers.mother !=0))
 	{
 		var childline_id = UUID('c', UUID('m', pers.father.id, pers.mother.id), pers_id),
-			childline = edge_map[childline_id],
-			childline_ps = childline.graphics.getPoints();
+			childline    = edge_map[childline_id].graphics,
+			childline_ps = childline.getPoints();
 
-		var s4_x = childline_ps[0],
-			s4_y = childline_ps[1];
+		var s4_x = childline_ps[0] + childline.getX(),
+			s4_y = childline_ps[1] + childline.getY();
 
-		changeRLine(childline.graphics, {x:s4_x,y:s4_y}, npers_pos);
+		changeRLine(childline, {x:s4_x,y:s4_y}, npers_pos);
 	}
 }
 

@@ -78,10 +78,10 @@ class MatelineDraw extends LineDrawOps {
 				console.log("invert!");
 				//invert line -- only four points do it manually
 				var inverted = [
-					-points[6], points[7],
-					-points[4], points[5],
-					-points[2], points[3],
-					-points[0], points[1]
+					-points[6], -points[7],
+					-points[4], -points[5],
+					-points[2], -points[3],
+					-points[0], -points[1]
 				];
 
 				new_line.setPoints(inverted)
