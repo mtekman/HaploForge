@@ -71,10 +71,30 @@ class MatelineDraw extends LineDrawOps {
 				group_pos = fam_group.getAbsolutePosition(),
 				new_line = this._tmpLine.clone();
 
+			var points = new_line.getPoints();
+			//console.log(points)
+
+			if (points[0] > points[6]){
+				console.log("invert!");
+				//invert line -- only four points do it manually
+				var inverted = [
+					-points[6], points[7],
+					-points[4], points[5],
+					-points[2], points[3],
+					-points[0], points[1]
+				];
+
+				new_line.setPoints(inverted)
+			}
+			//console.log(new_line.getPoints())
+
 			fam_group.add(new_line);
 
-			new_line.setX(line_pos.x - group_pos.x);
-			new_line.setY(line_pos.y - group_pos.y);
+			var fath_gfx = unique_graph_objs[this._family].nodes[moth.id].graphics.getPosition();
+
+			new_line.setX( fath_gfx.x );
+			new_line.setY( fath_gfx.y );
+
 
 			addFamMap.incrementEdges(
 				u_matesline, fath.id, moth.id, 0,
