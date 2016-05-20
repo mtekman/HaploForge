@@ -11,7 +11,7 @@ var familyMapOps = {
 			family_map[family_id][person.id] = person;
 			return 0;
 		}
-		console.log(person_id,"already in", family_id)
+		console.log(person.id,"already in", family_id)
 		return -1;
 	},
 
@@ -27,7 +27,7 @@ var familyMapOps = {
 		}
 		console.log(family_id, "not in map");
 		return -1;
-	}
+	},
 
 	getPerc: function(person_id, family_id)
 	{

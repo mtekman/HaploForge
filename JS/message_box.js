@@ -118,7 +118,7 @@ var persProps = {
 		this.show();
 
 		this._id.value     = person.id;
-		this._name.value   = person.name;
+		//this._name.value   = person.name;
 		this._gender.value = person.gender;
 		this._affect.value = person.affected;
 	},
@@ -134,7 +134,7 @@ var persProps = {
 		this.hide();
 		utility.hideBG();
 
-		return person;
+		return new Person(person.id, person.gender, person.affected, 0, 0);
 	},
 
 	display: function(person, callback){

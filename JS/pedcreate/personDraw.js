@@ -21,29 +21,41 @@ var personDraw = {
 			oldID= node.id,
 			oldFam = node.family;
 
+
+		var old_person = familyMapOps.getPerc(oldID,oldFam);
+		var new_person = null
+
+		var that = this;
+
+		persProps.display(old_person, function(newPerc){
+			new_person = newPerc;
+
+
+			if (oldID !== new_person.id){
+
+				if (new_person.id in that.used_ids){
+					utility.notify("Error", "Id already in use");
+					return -1;
+				}
+			}
 		
-		var new_person = new Person(11, 2, 2);
+			node.destroy();
 
-		if (new_person.id in this.used_ids){
-			utility.message("Id already in use");
-			new_person.id = 15;
-		}
-		
-		node.destroy();
+			// Update ids list
+			delete that.used_ids[oldID]
 
-		// Update ids list
-		delete this.used_ids[oldID]
+			//Update family map
+			familyMapOps.remove(oldID, oldFam);
+			familyMapOps.insert(new_person, oldFam);
 
-		//Update family map
-		familyMapOps.remove(oldID, oldFam);
-		familyMapOps.insert(new_person, oldFam);
+			var new_node = that.addNode(new_person, {x:oldX, y:oldY});
 
-		//Update graphics
-		uniqueGraphOps.deleteNode(oldID, oldFam);
-		uniqueGraphOps.insertNode(new_person, oldFam, perc);
+			//Update graphics
+			uniqueGraphOps.deleteNode(oldID, oldFam);
+			uniqueGraphOps.insertNode(new_person, oldFam, new_node); // Problem here
 
-		var new_node = this.addNode(new_person, {x:oldX, y:oldY});
-		main_layer.draw();
+			main_layer.draw();
+		});
 	},
 
 	showNodeMenu: function(node){
