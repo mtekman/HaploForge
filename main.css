@@ -99,83 +99,84 @@
 
 
 /* Modal Dialogs */
-
 #modal_bg {
-	position: absolute;
-	width:100%;
-	height:100%;
-	opacity:0.8;
-	background:#ccc;
-	z-index:98;
-	display: none;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0.8;
+  background: #ccc;
+  z-index: 98;
+  display: none;
 }
 
 .input_props {
-  max-width:250px;
-  min-height:58px;
-  min-width:150px;
-  background:#c0ccc0;
-  border:4px solid black;
-  border-radius:15px;
-  margin:10px;
+  max-width: 350px;
+  min-height: 58px;
+  min-width: 150px;
+  background: #c0ccc0;
+  border: 4px solid black;
+  border-radius: 15px;
+  margin: 10px;
   z-index: 99;
   position: absolute;
-  left:40%;
-  top:40%;
+  left: 40%;
+  top: 40%;
 }
 
 .input_props .messages {
-  border:4px solid black;
-  border-radius:15px 15px 0px 0px;
-  background:black;
-  height:20px;
-  text-align:left;
-  margin-top:-5px;
-  color:white;
-  position:relative;
+  border: 4px solid black;
+  border-radius: 15px 15px 0px 0px;
+  background: black;
+  height: 20px;
+  text-align: left;
+  margin-top: -5px;
+  color: white;
+  position: relative;
 }
 
 .input_props .messages h3 {
-  margin-top:-1px;
-  margin-left:5px;
+  margin-top: -1px;
+  margin-left: 5px;
 }
 
 .input_props .messages p {
-  margin-top:-10px;
-  color:black;
+  margin-top: -10px;
+  color: black;
   text-align: center;
 }
 
+
 /* Button top right */
+
 .input_props .messages input {
-  position:absolute;
-  right:0px;
-  top:5px;
-  border-width:1px;
-  background:#dd5500;
-  border-radius:10px;
+  position: absolute;
+  right: 0px;
+  top: 5px;
+  border-width: 1px;
+  background: #dd5500;
+  border-radius: 10px;
   border-color: black;
 }
 
 .input_props table td {
-  width:50%;
+  width: 50%;
 }
 
 .input_props select {
-  width:100%;
+  width: 100%;
 }
 
 .input_props table td:first-child {
-  text-align:right;
+  text-align: right;
 }
 
 .input_props table td:last-child {
-  text-align:left;
-  color:black;
+  text-align: left;
+  color: black;
 }
 
 .input_props input {
-  max-width:100px;
+  max-width: 150px;
 }
 
 .status {
@@ -186,13 +187,13 @@
   padding: 0px;
   position: absolute;
   top: -2px;
-  right:0%;
+  right: 0%;
   z-index: 99;
 }
 
 .status div {
   display: inline-block;
-  color:white;
+  color: white;
   margin-top: 0px;
 }
 
@@ -207,9 +208,84 @@
   padding-top: 0px;
 }
 
-.status :not(.reflect){
-	padding-right: 10px;
+.status:not(.reflect) {
+  padding-right: 10px;
 }
+
+
+
+input.deselector {
+  position: relative;
+  float: left;
+  margin-left: 20px;
+  margin-top: 10px;
+  margin-right: 20px;
+}
+
+input.deselector:checked ~ div {
+  pointer-events: none;
+  opacity:0.5;
+}
+
+input.deselector ~ div {
+  opacity:1; 
+}
+
+input.switch:empty {
+  margin-left: -999px;
+}
+
+input.switch:empty ~ label {
+  position: relative;
+  float: left;
+  line-height: 1.6em;
+  text-indent: 4em;
+  margin: 0.2em 0;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+input.switch:empty ~ label:before,
+input.switch:empty ~ label:after {
+  position: absolute;
+  display: block;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  content: ' ';
+  width: 3.6em;
+  background-color: #66f;
+  border-radius: 0.3em;
+  box-shadow: inset 0 0.2em 0 rgba(0, 0, 0, 0.3);
+  -webkit-transition: all 100ms ease-in;
+  transition: all 100ms ease-in;
+}
+
+input.switch:empty ~ label:after {
+  width: 1.4em;
+  top: 0.1em;
+  bottom: 0.1em;
+  margin-left: 0.1em;
+  background-color: #fff;
+  border-radius: 0.15em;
+  box-shadow: inset 0 -0.2em 0 rgba(0, 0, 0, 0.2);
+}
+
+input.switch:checked ~ label:before {
+  background-color: #f66;
+}
+
+input.switch:checked ~ label:after {
+  margin-left: 2em;
+}
+
+input.switch:checked ~ label span.first {display: none;}
+input.switch:checked ~ label span.second {display: inline;}
+input.switch ~ label span.first {display: inline;}
+input.switch ~ label span.second {display: none;}
 
 
 

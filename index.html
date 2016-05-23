@@ -74,46 +74,56 @@
         </div>
 
 
-        <!-- Person Props -->
-        <div id='person_props' class="input_props" >
+        <!-- Person Props http://jsfiddle.net/cysCx/258/ -->
+        <div id='person_props' class="input_props">
           <div class='messages'>
-             <h3 id='message_head' >Person</h3>
-             <input class='messages' id='pers_submit' type='button' value='✓' />    
+            <h3 id='message_head'>Person</h3>
+            <input class='messages' id='pers_submit' type='button' value='✓' />
           </div>
 
-           <table>
-           <tr>
-             <td>ID: </td>
-             <td><input id='pers_id' type='number' /></td>
-           </tr>
-
-           <tr>
-             <td>Name:</td>
-             <td> <input id='pers_name' type='text' /> </td>
-           </tr>
-
-           <tr>
-              <td>Gender: </td>
+          <table>
+            <tr>
+              <td>ID: </td>
               <td>
-                 <select id='pers_gender'>
-                    <option value="1" >male</option>
-                    <option value="2" >female</option>
-                    <option value="0" >unknown</option>
-                 </select>
+                <input id='pers_id' type='number' />
               </td>
-           </tr>
+            </tr>
 
-           <tr>
-              <td>Affectation:</td>
+            <tr>
+              <td>Name:</td>
               <td>
-                 <select id='pers_affect'>
-                    <option value="1" >unaffected</option>
-                    <option value="2" >affected</option>
-                    <option value="0" >unknown</option>
-                 </select>  
-               </td>
-           </tr>
-           </table>
+                <input id='pers_name' type='text' /> </td>
+            </tr>
+
+            <tr>
+              <td colspan='2'>
+                <input type='checkbox' id='unknown1' class='deselector' />
+                <div>
+               
+                <div style="display:inline">
+                  <input type="checkbox" id="switch1" name="switch1" class="switch" />
+                  <label for="switch1">
+                    <span class="first">Male</span>
+                    <span class="second">Female</span>
+                  </label>
+                </div>
+                </div>
+              </td>
+            </tr>
+
+            <tr>
+              <td colspan=2>
+                <input type='checkbox' id='unknown2' class='deselector' />
+                <div class='desel_target' style="display:inline;">
+                  <input type="checkbox" id="switch2" name="switch2" class="switch" />
+                  <label for="switch2">
+                    <span class="first">Unaffected</span>
+                    <span class="second">Affected</span>
+                  </label>
+                </div>
+              </td>
+            </tr>
+          </table>
         </div>
 
 
