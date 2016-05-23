@@ -229,6 +229,7 @@ input.deselector ~ div {
 
 input.deselector:checked ~ div {
   opacity:1; 
+  pointer-events: auto;
 }
 
 input.switch:empty {
