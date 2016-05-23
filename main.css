@@ -222,12 +222,12 @@ input.deselector {
   margin-right: 20px;
 }
 
-input.deselector:checked ~ div {
+input.deselector ~ div {
   pointer-events: none;
   opacity:0.5;
 }
 
-input.deselector ~ div {
+input.deselector:checked ~ div {
   opacity:1; 
 }
 
