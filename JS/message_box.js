@@ -226,7 +226,7 @@ messProps.hide();
 statusProps.hide();
 
 
-
+/*
 document.getElementById('homology_buttons').style.display = 'none'
 var d = document.getElementById('pedcreate_views');
 d.style.position = "absolute";
@@ -234,3 +234,4 @@ d.style.zIndex = 122;
 d.style.display = "";
 
 document.getElementById('buttons').style.display = "none";
+*/
