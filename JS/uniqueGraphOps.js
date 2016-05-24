@@ -47,6 +47,15 @@ var uniqueGraphOps = {
 		return -1;
 	},
 
+	getNode: function(id, family_id){
+		if (family_id in unique_graph_objs){
+			if (id in unique_graph_objs[family_id].nodes){
+				return unique_graph_objs[family_id].nodes[id];
+			}
+		}
+		return -1;
+	},
+
 
 	insertEdge: function(id, family_id, graphics)
 	{
