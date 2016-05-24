@@ -441,12 +441,27 @@ function addPerson(person, fam_group,  t_x, t_y)  //positions relative to family
 	// Name
 	if (name !== null)
 	{
+		var namlen = name.length,
+			offY = (nodeSize*4) - 2,
+			offX = ((namlen/2) - (namlen%2)) * 4;
+
+		label.add(new Kinetic.Rect({
+			fill: 'white',
+			opacity: 0.8,
+			y: - nodeSize/2,
+			width: name.length*6,
+			height: 8,
+			offsetY: offY,
+			offsetX: offX // Center, then 3px for each letter
+
+		}));
+
 		label.add(new Kinetic.Text({
 			text: name,
 			fontSize: 'Calibri',
 			fill: default_stroke_color,
-			offsetY: (nodeSize * 4)-2,
-			offsetX: (name.length/2)*4 // Center, then 3px for each letter
+			offsetY: offY,
+			offsetX: offX // Center, then 3px for each letter
 		}));
 	}
 
