@@ -9,6 +9,8 @@ class MatelineDraw extends LineDrawOps {
 		this.startNodeID = startID;
 		this.endNodeID = endID;
 
+		this.matelineID = null;
+
 		// First click
 		this._oncirclemousedown = function(circle, group){
 			this.startNodeID = circle.id;
@@ -77,6 +79,7 @@ class MatelineDraw extends LineDrawOps {
 
 		// Need to manually insert the line
 		var u_matesline = UUID('m', fath.id, moth.id);
+		this.matelineID = u_matesline;  // Not used internally
 
 		// If line does not exist -- (because ids are declared and user-set) -- create one
 		if (this._tmpLine === null){
