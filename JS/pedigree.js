@@ -34,7 +34,7 @@ Allele.prototype.debug = function(){
 
 // This should not be optimized for graphics, this is for data processing only(!!)
 //
-var Person = function(id, gender, affected, mother, father){
+var Person = function(id, gender, affected, mother = 0, father = 0, name = null){
 	this.id = id;
 	this.gender = gender;	         // 1 - male, 2-female, 0-unknown
 	this.affected = affected ; 	     // 0,1,2
@@ -46,7 +46,7 @@ var Person = function(id, gender, affected, mother, father){
 	this.children = [] 				// added by connect method later
 
 	//Optional
-	this.name = null;
+	this.name = name;
 };
 
 Person.prototype.isMate = function(pers2){
