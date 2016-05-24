@@ -16,25 +16,23 @@ initiatePedigreeDraw();
 
 familyDraw.addFam(1002, {x:200, y:100});
 
-var newp1 = new Person(12,2,2,0,0),
-	newp2 = new Person(11,1,1,0,0),
-	newp3 = new Person(13,1,2,0,0);
-
 personDraw.addNode(
-	newp1,
+	new Person(12,2,2,0,0),
 	{x:0, y:50}
 );
 
 personDraw.addNode(
-	newp2,
+	new Person(11,1,1,0,0),
 	{x:180, y:50}
 );
 
 personDraw.addNode(
-	newp3,
+	new Person(13,1,2,0,0),
 	{x:90, y:200}
 );
 
+
+var mat = new MatelineDraw(1002,12,11);
 
 
 //relationshipDraw.firstPoint();
