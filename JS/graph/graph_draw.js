@@ -32,8 +32,12 @@ function redrawNodes(pers_id, fam_id, drawLinesToo)
 
 		//Mate is on left
 		if (ch_x > nmate_pos.x){
-			if ((ch_x - nmate_pos.x) < horiz_space )
+			if ((ch_x - nmate_pos.x) < horiz_space ){
 				nmate.setX(ch_x - horiz_space);
+			}
+
+		nmate_pos = nmate.getPosition() // update pos after change
+
 
 			// -- Keep this out, otherwise you can never swap around parents
 			//		else
@@ -49,6 +53,7 @@ function redrawNodes(pers_id, fam_id, drawLinesToo)
 					nmatemate_pos = nmatemate.getPosition();
 
 				nmatemate.setY(npers_pos.y);
+				nmatemate_pos = nmatemate.getPosition(); // update
 			}
 		}
 
