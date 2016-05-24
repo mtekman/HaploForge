@@ -53,8 +53,17 @@ function processInput(text_unformatted, type)
 	
 			else{														//Populate family map
 																		//
-				var people_info = line.substring(0,start_extract-1).trim().split(/\s+/).map(toInt),
-					haplo_daaaa = line.substring(start_extract).trim().split(/\s+/).map(toInt);
+				var data_and_meta = line.split('//');
+
+				var data_part = data_and_meta[0],
+					meta;
+
+				if (data_and_meta.length === 2){
+					meta = data_and_meta[1]
+				}
+
+				var people_info = data_part.substring(0,start_extract-1).trim().split(/\s+/).map(toInt),
+					haplo_daaaa = data_part.substring(start_extract).trim().split(/\s+/).map(toInt);
 					
 				if (start_extract === -1){ // Never found end of headers
 					people_info = haplo_daaaa;
@@ -74,14 +83,13 @@ function processInput(text_unformatted, type)
 					pat = people_info[2], mat = people_info[3],
 					sex = people_info[4], aff = people_info[5];
 	
-				if (!(fam in family_map)) family_map[fam] = {};			//sanity check...
-	
-				if (!(id in family_map[fam])) {
-					var pers = new Person(id, sex, aff, mat, pat);
-					family_map[fam][id] = pers;
-				}
+				var pers = new Person(id, sex, aff, mat, pat);
+				familyMapOps.insert(pers, fam);
 	
 				family_map[fam][id].haplo_data.push( haplo_info );		//retrieves twice if needed, neater
+
+				family_map[fam][id].stored_meta = meta;					// Holds graphics, name, other meta
+
 			}
 		}
 	}
@@ -132,10 +140,16 @@ function processInput(text_unformatted, type)
 
 function determineFileType(text_unformatted)
 {
-	var text = text_unformatted.split('\n');
+	var text = text_unformatted.split('\n'),
+		texlen = text.length;
+
+	if (texlen > 10){ texlen = 10; }
 	
-	for (var l=0; l < 10; l++){ // Just read first 10 lines
-		var tokes = text[l].split(/\s+/)
+	for (var l=0; l < texlen; l++){ // Just read first 10 lines
+
+		var pedpart = text[l].split('//')[0].trim()
+
+		var tokes = pedpart.split(/\s+/)
 		
 		if (tokes.length === 6){
 			return "pedfile";
