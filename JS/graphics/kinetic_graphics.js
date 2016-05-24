@@ -467,12 +467,12 @@ function addPerson(person, fam_group,  t_x, t_y)  //positions relative to family
 	//On drag do
 	group.on('dragmove', function(e){
 		//Snap-to-grid  -- relative to parent (fam_group)
-		if (use_grid){
-			var x = e.target.attrs.x;
-			var	y = e.target.attrs.y;
-			this.setX( (Math.floor(x/grid_rezX)*grid_rezX) );
-			this.setY( (Math.floor(y/grid_rezY)*grid_rezY) );
-		}
+		var x = e.target.attrs.x;
+		var	y = e.target.attrs.y;
+		this.setX( (Math.floor(x/grid_rezX)*grid_rezX) );
+		this.setY( (Math.floor(y/grid_rezY)*grid_rezY) );
+
+
 		if (fam_group.id in family_map){
 			redrawNodes(id, fam_group.attrs.id, true);
 		}

@@ -79,7 +79,7 @@ var personDraw = {
 
 		var perc = addPerson( person, fam_group,  
 				grid_rezX ,
-				50 // + Math.random()*grid_rezY*2
+				-nodeSize // + Math.random()*grid_rezY*2
 		);
 
 		perc.family = fam_group.id;

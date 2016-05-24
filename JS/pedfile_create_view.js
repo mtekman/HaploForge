@@ -28,11 +28,20 @@ personDraw.addNode(
 
 personDraw.addNode(
 	new Person(13,1,2,0,0),
-	{x:90, y:200}
+	{x:0, y:200}
+);
+
+personDraw.addNode(
+	new Person(14,2,1,0,0),
+	{x:180, y:200}
 );
 
 
 var mat = new MatelineDraw(1002,12,11);
+
+var c = new OffspringDraw(1002,mat.matelineID,14);
+delete c;
+c = new OffspringDraw(1002,mat.matelineID,13);
 
 
 //relationshipDraw.firstPoint();
