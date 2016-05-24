@@ -398,7 +398,8 @@ function addPerson(person, fam_group,  t_x, t_y)  //positions relative to family
 {
 	var gender = person.gender,
 		id = person.id,
-		aff = person.affected;
+		aff = person.affected,
+		name = person.name || null;
 
 
 	//Add Shape and text Text
@@ -435,6 +436,19 @@ function addPerson(person, fam_group,  t_x, t_y)  //positions relative to family
 		fill: default_stroke_color
 	});
 	label.add(texts);
+
+
+	// Name
+	if (name !== null)
+	{
+		label.add(new Kinetic.Text({
+			text: name,
+			fontSize: 'Calibri',
+			fill: default_stroke_color,
+			offsetY: (nodeSize * 4)-2,
+			offsetX: (name.length/2)*4 // Center, then 3px for each letter
+		}));
+	}
 
 	//Each person is their own group of inter-related ojects
 	var group = new Kinetic.Group({

@@ -44,6 +44,9 @@ var Person = function(id, gender, affected, mother, father){
 
 	this.mates = [];
 	this.children = [] 				// added by connect method later
+
+	//Optional
+	this.name = null;
 };
 
 Person.prototype.isMate = function(pers2){

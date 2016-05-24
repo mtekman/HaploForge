@@ -162,9 +162,9 @@ var persProps = {
 		this.show();
 
 		this.id.value     = person.id;
-		//this.name.value   = person.name;
-//		this._setGender(person.gender);
-//		this._setAffect(person.affected);
+		this.name.value   = person.name || "";
+		this._setGender(person.gender);
+		this._setAffect(person.affected);
 	},
 
 	getProps: function(){
@@ -178,7 +178,11 @@ var persProps = {
 		this.hide();
 		utility.hideBG();
 
-		return new Person(person.id, person.gender, person.affected, 0, 0);
+		var perc = new Person(person.id, person.gender, person.affected, 0, 0);
+		if (person.name.trim().length > 0){
+			perc.name = person.name.trim();
+		}
+		return perc;
 	},
 
 	display: function(person, callback){
