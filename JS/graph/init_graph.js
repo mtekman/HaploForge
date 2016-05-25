@@ -274,6 +274,18 @@ function graphInitPos(start_x, start_y){
 					perp = family_map[fam][perp_id],
 					n_perp = nodes[perp_id]
 
+				// Restore meta
+				if (typeof perp.stored_meta !== "undefined"){
+					console.log("using stored meta", perp_id, perp.stored_meta);
+					var meta = JSON.parse(perp.stored_meta);
+
+					posx = meta.x;
+					y_pos = meta.y;
+					perp.name = meta.name;
+
+					delete perp.stored_meta;
+				}
+
 				n_perp.graphics = addPerson(perp, fam_group, posx, y_pos);
 
 // 				posx  = Math.floor(posx/grid_rezX)*grid_rezX;
