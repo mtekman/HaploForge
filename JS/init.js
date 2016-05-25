@@ -11,8 +11,9 @@ function loadPedFromStorage(){
 
 	//console.log( ped_data, ped_type);
 
-	processInput(ped_data, ped_type);
+	var pi = new ProcessInput(ped_data, ped_type);
 	init();
+	delete pi;
 
 }
 
@@ -26,10 +27,11 @@ function init(){
 	determinePedigreeType();
 	graphInitPos(nodeSize + 10, grid_rezY);
 
-	assignHGroups();
-	washMarkerMap();
+	if (fileType === "alllegro"){
+		assignHGroups();
+		washMarkerMap();
 
-	populateIndexDataList();
+		populateIndexDataList();
 
 	// toggle_haplomode(20);
 /*		startSelectionMode();
@@ -46,9 +48,10 @@ function init(){
 			}
 		}
 		launchHaplomode();*/
+	}
 
 
 }
 
 
-//loadPedFromStorage();
+loadPedFromStorage();

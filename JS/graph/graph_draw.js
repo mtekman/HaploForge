@@ -178,7 +178,9 @@ function redrawNodes(pers_id, fam_id, drawLinesToo)
 		var s4_x = childline_ps[0] + childline.getX(),
 			s4_y = childline_ps[1] + childline.getY();
 
-		changeRLine(childline, {x:s4_x,y:s4_y}, npers_pos);
+//		console.log("hitting", childline_id, childline, s4_x, s4_y)
+
+//		changeRLine(childline, {x:s4_x,y:s4_y}, npers_pos);
 	}
 }
 
