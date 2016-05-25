@@ -9,8 +9,6 @@ function loadPedFromStorage(){
 		ped_type = localStorage.getItem( localStor.data_type );
 
 
-	//console.log( ped_data, ped_type);
-
 	var pi = new ProcessInput(ped_data, ped_type);
 	init();
 	delete pi;
