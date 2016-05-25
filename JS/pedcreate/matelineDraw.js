@@ -74,8 +74,8 @@ class MatelineDraw extends LineDrawOps {
 		var moth = (person1.gender===2)?person1:person2,
 			fath = (person1.gender===1)?person1:person2;
 
-		moth.mates.push(fath);
-		fath.mates.push(moth);
+		moth.addMate(fath);
+		fath.addMate(moth);
 
 		// Need to manually insert the line
 		var u_matesline = UUID('m', fath.id, moth.id);

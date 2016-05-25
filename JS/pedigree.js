@@ -50,8 +50,13 @@ var Person = function(id, gender, affected, mother = 0, father = 0, name = null)
 };
 
 Person.prototype.isMate = function(pers2){
+	var compare = pers2;
+	if (pers2 === 0){
+		compare = {id:0}
+	}
+
 	for (var m=0; m < this.mates.length; m++)
-		if (pers2.id == this.mates[m].id) return true;
+		if (compare.id == this.mates[m].id) return true;
 	return false;
 }
 
@@ -63,6 +68,14 @@ Person.prototype.isChild = function(pers2){
 
 Person.prototype.isFounder = function(){
 	return (this.mother === 0 && this.father === 0);
+}
+
+Person.prototype.addMate = function(mate){
+	// Already exists
+	if (this.isMate(mate)){
+		return -1;
+	}
+	this.mates.push(mate);
 }
 
 
@@ -92,12 +105,12 @@ function connectAllIndividuals()
 			}
 
 			if (pers_father != 0 )                     //Add parents as mates to each other
-				if(pers_mother != 0) pers_father.mates.push(pers_mother);
-				else pers_father.mates.push(0);
+				if(pers_mother != 0) pers_father.addMate(pers_mother);
+				else pers_father.addMate(0);
 
 			if (pers_mother !=0 )
-				if(pers_father != 0) pers_mother.mates.push(pers_father);
-				else pers_mother.mates.push(0);
+				if(pers_father != 0) pers_mother.addMate(pers_father);
+				else pers_mother.addMate(0);
 		}
 	}
 	
