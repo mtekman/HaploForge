@@ -125,7 +125,7 @@ class OffspringDraw extends LineDrawOps {
 
 	joinIDs(){
 
-		var u_childline = UUID('c', this.matelineID, this.childNodeID);
+		var u_childline = edgeAccessor.childlineID(this.matelineID, this.childNodeID);
 
 		var father_mother_ids = this.matelineID.split(':')[1].split('-'),
 			father = family_map[this._family][Number(father_mother_ids[0])],

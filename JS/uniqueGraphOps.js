@@ -78,5 +78,15 @@ var uniqueGraphOps = {
 			}
 		}
 		return -1;
+	},
+
+	getEdge: function(id, family_id)
+	{
+		if (family_id in unique_graph_objs){
+			if (id in unique_graph_objs[family_id].edges){
+				return unique_graph_objs[family_id].edges[id];
+			}
+		}
+		return -1;
 	}
 }

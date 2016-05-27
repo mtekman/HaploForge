@@ -24,19 +24,6 @@ Notes:
 */
 
 
-// Methods
-function UUID(type, from_id, to_id){
-	// m Father_id Mother_id   // MAYBE UNITE m and p?
-	// p Father_id Mother_id
-	// c parentline child_id
-
-	// straightforward to find childline from two parents
-	// (e.g any keys starting with "c m F_id M_id"
-	return type+":"+from_id+"-"+to_id;
-}
-
-
-
 
 var addFamMap = {
 
@@ -113,8 +100,8 @@ var addFamMap = {
 
 	addTrioEdges: function(moth, fath, child){
 		//= Assume all indivs are != 0
-		var u_matesline = UUID('m', fath.id, moth.id),
-			u_childline = UUID('c', u_matesline, child.id);
+		var u_matesline = edgeAccessor.matelineID(fath.id, moth.id),
+			u_childline = edgeAccessor.childlineID(u_matesline, child.id);
 
 		//= Edges
 		this.incrementEdges(u_matesline, fath.id, moth.id, 0);

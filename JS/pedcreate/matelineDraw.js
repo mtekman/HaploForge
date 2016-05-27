@@ -78,7 +78,7 @@ class MatelineDraw extends LineDrawOps {
 		fath.addMate(moth);
 
 		// Need to manually insert the line
-		var u_matesline = UUID('m', fath.id, moth.id);
+		var u_matesline = edgeAccessor.matelineID(fath.id, moth.id);
 		this.matelineID = u_matesline;  // Not used internally
 
 		// If line does not exist -- (because ids are declared and user-set) -- create one

@@ -1,5 +1,64 @@
 // TODO: Update node_map to point at unique_graph_obs.nodes, and retrieve family name
 
+var edgeAccessor = {
+
+	_UUID: function (type, from_id, to_id){
+		// m Father_id Mother_id   // MAYBE UNITE m and p?
+		// p Father_id Mother_id
+		// c parentline child_id
+
+		// straightforward to find childline from two parents
+		// (e.g any keys starting with "c m F_id M_id"
+		return type+":"+from_id+"-"+to_id;
+	},
+
+	childlineID: function(mateline_id, child_id){
+		return this._UUID('c', mateline_id, child_id)
+	},
+
+	matelineID: function(father_id , mother_id){
+		return this._UUID('m', father_id, mother_id)
+	}
+}
+
+
+
+var updateGraph = {
+
+
+	childline: function(family_id, person_id, parents_mateline_id = -1)
+	{
+		if (parents_mateline_id === -1){
+			var person_node = familyMapOps.getPerc(person_id, family_id);
+
+			if (person_node.father === 0){
+//				console.log("No parents for ", person_node.id)
+				return -1
+			}
+			parents_mateline_id = edgeAccessor.matelineID(person_node.father.id, person_node.mother.id);
+		}
+
+		var childline_id = edgeAccessor.childlineID(parents_mateline_id, person_id),
+			childline    = uniqueGraphOps.getEdge(childline_id, family_id).graphics,
+			mateline     = uniqueGraphOps.getEdge(parents_mateline_id, family_id).graphics,
+			mateline_ps  = mateline.getPoints();
+
+//			childline_ps = childline.getPoints();
+
+		//var mid_xx = childline_ps[0] + childline.getX(),
+		//  	mid_yy = childline_ps[1] + childline.getY();
+
+		var mid_xx = (mateline_ps[2] + mateline_ps[4])/2 + mateline.getX(),
+			mid_yy = (mateline_ps[3] + mateline_ps[5])/2 + mateline.getY();
+
+		var person_graphics = uniqueGraphOps.getNode(person_id, family_id).graphics;
+
+		changeRLine( childline, {x:mid_xx, y:mid_yy}, person_graphics.getPosition());
+	}
+}
+
+
+
 function redrawNodes(pers_id, fam_id, drawLinesToo)
 {
 	var pers      = family_map[fam_id][pers_id],
@@ -14,7 +73,7 @@ function redrawNodes(pers_id, fam_id, drawLinesToo)
 
 	// Stagger mate's vertically to please the world
 	var staggerY_amount = grid_rezY/2,
-		use_stagger = pers.mates.length > 1;
+		use_stagger = false; //pers.mates.length > 1;
 
 	for (var m=0; m < pers.mates.length; m++){
 		var mate = pers.mates[m],
@@ -63,7 +122,7 @@ function redrawNodes(pers_id, fam_id, drawLinesToo)
 				female_id = (per_isMale)?mate.id:pers.id;
 
 			// -- mateline, and update it's pos
-			var mateline_id = UUID('m', male_id, female_id),
+			var mateline_id = edgeAccessor.matelineID(male_id, female_id),
 				mateline = edge_map[mateline_id].graphics;
 
 			var s1_x = npers_pos.x, s1_y = npers_pos.y,
@@ -78,28 +137,15 @@ function redrawNodes(pers_id, fam_id, drawLinesToo)
 				if (key.lastIndexOf(childkey_starting,0) === 0) //startsWith implementation
 				{
 					var find_child_id = key.split('-'),
-						child_id = toInt(find_child_id[find_child_id.length - 1].trim()),
-						nchild = node_map[child_id].graphics.getPosition();
+						child_id = toInt(find_child_id[find_child_id.length - 1].trim());
 
-					var s3_x = Math.floor((s1_x + e1_x)/2),
-						s3_y = s1_y;
-
-					changeRLine(edge_map[key].graphics, {x:s3_x, y: s3_y}, nchild); // fine
+					updateGraph.childline(fam_id, child_id);
 				}
 			}
 
 			// -- mate's childline
-			if (mate.father !=0 /*&& mate.mother != 0*/)
-			{
-				var mates_mateline_id = UUID('m', mate.father.id, mate.mother.id),  //get
-					mates_childline_id = UUID('c', mates_mateline_id, mate.id),    //set
-					m_po = edge_map[mates_mateline_id].graphics.getPoints();
+			updateGraph.childline(fam_id, mate.id);	
 
-				var sm_x = Math.floor((m_po[0]+m_po[m_po.length -2] )/2),
-					sm_y = m_po[m_po.length -1];
-
-				changeRLine(edge_map[mates_childline_id].graphics, {x:sm_x,y:sm_y}, nmate_pos);
-			}
 
 			// -- mate's mate's mateline
 			for (var mm=0 ; mm < mate.mates.length; mm++){
@@ -111,7 +157,7 @@ function redrawNodes(pers_id, fam_id, drawLinesToo)
 
 				if (matemate_id != pers_id){
 
-					var mateline_id = UUID('m', male_id, female_id),
+					var mateline_id = edgeAccessor.matelineID(male_id, female_id),
 						mateline = edge_map[mateline_id].graphics;
 
 //					var s1_x = mate.getX(), 	s1_y = mate.getY(),
@@ -138,29 +184,9 @@ function redrawNodes(pers_id, fam_id, drawLinesToo)
 				n_sib.setY(npers_pos.y);
 
 
-				if (drawLinesToo){ //Update childlines
-					var sib_pers = family_map[fam_id][sib_id],
-						sib_moth = sib_pers.mother.id,
-						sib_fath = sib_pers.father.id;  // safe to assume last gen has parents
-
-					var m_id = UUID('m', sib_fath, sib_moth);
-
-					if (m_id in edge_map){
-
-
-						var m_points = edge_map[m_id].graphics.getPoints();
-						var c_id = UUID('c', m_id, sib_id);
-
-						var sm_x = Math.floor((m_points[0]+m_points[m_points.length -2] )/2),
-							sm_y = m_points[m_points.length -1];
-
-						changeRLine(edge_map[c_id].graphics, {x:sm_x,y:sm_y}, n_sib.getPosition());
-					}
-					else {
-						console.log("No sibline for mateline", m_id)
-					}
+				if (drawLinesToo){ //Update childlines			
+					updateGraph.childline(fam_id, sib_id);	
 				}
-
 			}
 		}
 	}
@@ -171,16 +197,7 @@ function redrawNodes(pers_id, fam_id, drawLinesToo)
 	//Update own childnode.
 	if (drawLinesToo && (pers.father != 0 && pers.mother !=0))
 	{
-		var childline_id = UUID('c', UUID('m', pers.father.id, pers.mother.id), pers_id),
-			childline    = edge_map[childline_id].graphics,
-			childline_ps = childline.getPoints();
-
-		var s4_x = childline_ps[0] + childline.getX(),
-			s4_y = childline_ps[1] + childline.getY();
-
-//		console.log("hitting", childline_id, childline, s4_x, s4_y)
-
-//		changeRLine(childline, {x:s4_x,y:s4_y}, npers_pos);
+		updateGraph.childline(fam_id, pers.id);	
 	}
 }
 
