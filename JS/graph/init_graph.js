@@ -259,7 +259,8 @@ function graphInitPos(start_x, start_y){
 			function placePerp(index, posx){
 				var perp_id = gen_grid[gen][index],
 					perp = family_map[fam][perp_id],
-					n_perp = nodes[perp_id]
+					n_perp = nodes[perp_id];
+
 
 				// Restore meta
 				if (typeof perp.stored_meta !== "undefined"){
@@ -272,6 +273,20 @@ function graphInitPos(start_x, start_y){
 
 					delete perp.stored_meta;
 				}
+
+
+				// Center on parent's positions
+				var moth = perp.mother,
+					fath = perp.father;
+
+				// Parent's exist and offsrping is only child
+				if (moth !== 0 && moth.children.length === 1){
+					var moth_gfx = nodes[moth.id].graphics.getX(),
+						fath_gfx = nodes[fath.id].graphics.getX();
+
+					posx = (moth_gfx + fath_gfx) / 2 ;
+				}
+
 
 				n_perp.graphics = addPerson(perp, fam_group, posx, y_pos);
 

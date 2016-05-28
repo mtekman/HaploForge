@@ -185,7 +185,7 @@ function redrawNodes(pers_id, fam_id, drawLinesToo)
 
 
 				if (drawLinesToo){ //Update childlines			
-					updateGraph.childline(fam_id, sib_id);	
+					updateGraph.childline(fam_id, sib_id);
 				}
 			}
 		}
