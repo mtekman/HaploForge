@@ -24,6 +24,13 @@ var uniqueGraphOps = {
 		return -1;
 	},
 
+	getFam: function(family_id){
+		if (family_id in unique_graph_objs){
+			return unique_graph_objs[family_id];
+		}
+		return -1;
+	},
+
 	insertNode: function(id, family_id, graphics)
 	{
 		this.insertFam(family_id);

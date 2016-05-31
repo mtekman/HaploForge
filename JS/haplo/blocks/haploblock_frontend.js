@@ -22,13 +22,39 @@ function addHaplosAnyone(haplofam_map, parent_node)
 {
 	haploinfos = []; //clean
 
-	for (var fid in haplofam_map){
+	var position_by_xpos = {};
+
+	for (var fid in haplofam_map)
+	{
+		var fam_x = uniqueGraphOps.getFam(fid).group.getX();
+
 		for (var pid in haplofam_map[fid])
 		{
-			var pers_hp = family_map[fid][pid].haplo_data;
-			haploinfos.push(pers_hp);
+			var pers_x = uniqueGraphOps.getNode(pid,fid).graphics.getX() + fam_x,
+				pers_hp = family_map[fid][pid].haplo_data;
+
+			//haploinfos.push(pers_hp);
+			if (pers_x in position_by_xpos){
+				console.log("ERROR, duplicate position!");
+				continue;
+			}
+			position_by_xpos[pers_x] = {fam:fid, per:pid, data:pers_hp};
 		}
 	}
+
+
+	var sorted_positions = Object.keys(position_by_xpos);
+	sorted_positions.sort(function(a,b){ return Number(a)-Number(b);});
+
+	console.log(position_by_xpos);
+	console.log(sorted_positions);
+
+	for (var p=0; p < sorted_positions.length; p++){
+		var key = sorted_positions[p];
+
+		haploinfos.push( position_by_xpos[key].data );
+	}
+
 	redrawHaplos(true);
 }
 

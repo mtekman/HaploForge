@@ -25,7 +25,7 @@ function init(){
 	determinePedigreeType();
 	graphInitPos(nodeSize + 10, grid_rezY);
 
-	if (fileType === "alllegro"){
+	if (fileType === "allegro"){
 		assignHGroups();
 		washMarkerMap();
 
@@ -50,4 +50,4 @@ function init(){
 }
 
 
-loadPedFromStorage();
+//loadPedFromStorage();
