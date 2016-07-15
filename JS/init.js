@@ -32,8 +32,8 @@ function init(){
 		populateIndexDataList();
 
 	// toggle_haplomode(20);
-/*		startSelectionMode();
-		for (var key in selection_items){
+		startSelectionMode();
+/*		for (var key in selection_items){
 
 			var fid_id = key.split('_'),
 				fid = fid_id[0],

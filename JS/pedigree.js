@@ -78,6 +78,14 @@ Person.prototype.addMate = function(mate){
 	this.mates.push(mate);
 }
 
+Person.prototype.addChild = function(child){
+	// Already exists
+	if (this.isChild(child)){
+		return -1;
+	}
+	this.children.push(child);
+}
+
 
 
 // Conjoined map, needed for pedigree but would recurse infinitely for graphics
@@ -94,14 +102,14 @@ function connectAllIndividuals()
 				pers_father = family_map[famid][new_root.father];
 
 				new_root.father = pers_father;         // Add father to child
-				pers_father.children.push(new_root);   // And child to father
+				pers_father.addChild(new_root);   // And child to father
 			}
 
 			if (new_root.mother != 0){
 				pers_mother = family_map[famid][new_root.mother];
 
 				new_root.mother = pers_mother;         // Add mother to child
-				pers_mother.children.push(new_root);   // And child to mother
+				pers_mother.addChild(new_root);   // And child to mother
 			}
 
 			if (pers_father != 0 )                     //Add parents as mates to each other

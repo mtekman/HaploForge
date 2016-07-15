@@ -15,6 +15,7 @@ function initiatePedigreeDraw(){
 
 
 /*
+
 initiatePedigreeDraw();
 //familyDraw.addFam(1001)
 //personDraw.addNode();
@@ -33,43 +34,50 @@ personDraw.addNode(
 );
 
 personDraw.addNode(
-	new Person(13,1,2),
+	new Person(23,1,2),
 	{x:0, y:200}
 );
 
-personDraw.addNode(
-	new Person(14,2,1),
-	{x:180, y:200}
+/*personDraw.addNode(
+	new Person(21,1,2),
+	{x:100, y:200}
 );
 
 personDraw.addNode(
-	new Person(3,1,1),
-	{x:90, y:200}
+	new Person(22,2,2),
+	{x:150, y:200}
 );
 
+
+
 personDraw.addNode(
-	new Person(18,2,1,0,0, "Ton"),
+	new Person(24,2,1,0,0),
 	{x:120, y:200}
 );
 
 personDraw.addNode(
-	new Person(20,2,1,0,0, "Jenn"),
+	new Person(32,2,2,0,0),
+	{x:105, y:250}
+);
+
+personDraw.addNode(
+	new Person(31,1,2,0,0),
 	{x:105, y:250}
 );
 
 
 
 var mat1 = new MatelineDraw(1002,12,11),
-	mat2 = new MatelineDraw(1002,18,3);
+	mat2 = new MatelineDraw(1002,24,23),
+	mat3 = new MatelineDraw(1002,22,21);
 
 var c;
-c = new OffspringDraw(1002,mat1.matelineID,14); delete c;
-c = new OffspringDraw(1002,mat1.matelineID,13); delete c;
-c = new OffspringDraw(1002,mat1.matelineID,3 ); delete c;
-c = new OffspringDraw(1002,mat2.matelineID,20); delete c;
-
+c = new OffspringDraw(1002,mat1.matelineID,23); delete c;
+c = new OffspringDraw(1002,mat1.matelineID,21); delete c;
+c = new OffspringDraw(1002,mat2.matelineID,32); delete c;
+c = new OffspringDraw(1002,mat3.matelineID,31); delete c;
 delete mat1;
 delete mat2;
-
+delete mat3;
 
 */
