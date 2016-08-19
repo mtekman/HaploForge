@@ -2,6 +2,8 @@
 
 function initiatePedigreeDraw(){
 
+	console.log("ckced");
+
 	document.getElementById("buttons").style.display = 'none'
 
 	var d = document.getElementById('pedcreate_views');

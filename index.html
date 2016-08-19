@@ -5,11 +5,47 @@
         <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
         <meta content="utf-8" http-equiv="encoding">
         <title>Haplotype Reconstruction</title>
+        <link rel="stylesheet" type="text/css" href="assets/mainpage.css" >
         <link rel="stylesheet" type="text/css" href="main.css" >
 	<!-- STYLE -->
     </head>
     <body onresize="resizeCanvas()" >
-        
+
+
+        <div id="maincircle">
+
+           <video poster="http://i.imgur.com/qiOZUij.webm" id="bgvid" loop autoplay>
+              <source src="http://i.imgur.com/qiOZUij.webm">
+           </video>
+
+          <input id="haploupload" type="file" />
+          <input id="haploresume" type="button" />
+          <input id="pedmodebutton" type='button' />      
+          <input id="pedresume" type="button" />
+
+          <ul class="nodots">
+            <li class="smallspace">
+              <h1>HaploHTML5</h1>
+              <h2 class="smallspace">Extensive Haplotype Resolution and Pedigree Creation Tool</h2>
+             </li>
+             <li>
+              <label for="haploupload">Visualize New Haplotypes</label>    
+              <label for="haploresume">Resume Previous Analysis</label>    
+            </li>
+            <li>
+              <hr class="style15">
+            </li>
+            <li>
+               <label for="pedmodebutton">Create New Pedigree</label>   
+               <label for="pedresume">Resume Pedigree</label>     
+            </li>
+          </ul>
+        </div>
+
+
+
+
+
         <div id="buttons" >
             <input type="file" id="file_upload" onchange="processFile();" />&#8672; Upload ihaplo file<br />
 
@@ -20,7 +56,7 @@
             <!-- <input type="checkbox" id="rlines" onchange="toggleRAng()"  checked=true > Rlines</input><br />
             <input type="button" id="play" onclick="cutting()" > Play</input><br />
             <input type="checkbox" id="map" onchange="toggleMarkerScale()" > MarkerMap</input> -->
-        </div>
+         </div>
 
         
         <!-- Pedigree View -->

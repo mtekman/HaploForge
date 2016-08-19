@@ -15,6 +15,30 @@ function loadPedFromStorage(){
 
 }
 
+/* Hides various HTML divs */
+function divControls(){
+
+	function getDiv(key){
+		return document.getElementById(key);
+	}
+
+	function showDiv(key, bool){
+		div_groups[key].style.display = bool?"":"none";
+	}
+
+	var div_groups = {
+		"main"  			: getDiv('maincircle'),
+		"buttons" 			: getDiv('buttons'),
+		"pedcreate"		 	: getDiv('pedcreate_views'),
+		"container"			: getDiv('container')
+	}
+
+	showDiv("main", true);
+	showDiv("buttons", false);
+	showDiv("pedcreate", false);
+	showDiv("container", false);
+}
+
 
 
 function init(){
@@ -51,3 +75,4 @@ function init(){
 
 
 //loadPedFromStorage();
+divControls();
