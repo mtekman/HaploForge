@@ -1,7 +1,9 @@
 //Local storage keys
 var localStor = {
-	data_save : 'ped_data',
-	data_type : 'ped_type'
+	ped_save : 'ped_data',
+	ped_type : 'ped_type',
+	hap_save : 'hap_data',
+	hap_type : 'hap_type'
 }
 
 
