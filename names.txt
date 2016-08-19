@@ -1,0 +1,29 @@
+#(haplotype / phase)  + (determination / resolution / inferrence)
+#(pedigree) + (invention / development / generation / creation)
+#(tool / device / suite / utility)
+
+ 	EuCHARIS 	  pEdigree Creation HAplotype ResolutIon Suite 
+	HARRIET 	  HAplotype Resolution pedigRee InvEntion Tool
+ 	HATPINS 	  HAplotype resoluTion Pedigree INvention Suite 
+ 	HOPITaL 	  Haplotype resOlution Pedigree Invention TooL 
+ 	HOPlITIS 	  Haplotype resOlution Pedigree InvenTIon Suite 
+ 	HOSPITaL 	  HaplOtype reSolution Pedigree Invention TooL 
+ 	inTREPID 	  haploType REsolution Pedigree Invention Device
+ 	LIPaRIS 	  hapLotype Inferrence PedigRee Invention Suite
+	mEGOPIS 	  pEdigree GeneratiOn Phase Inferrence Suite
+ 	PADARITO 	  PhAse DeterminAtion pedigRee Invention TOol
+ 	PaINTERS 	  Pedigree INvenTion phasE Resolution Suite 
+ 	PaINTPOT 	  Pedigree INvenTion Phase resOlution Tool 
+	PAnDEmIS 	  PhAse Determination pEdigree Invention Suite
+ 	PANoPSIS 	  Pedigree creAtioN PhaSe Inferrence Suite 
+ 	PEDRITO 	  PhasE Determination pedigRee Invention TOol
+ 	PICARD  	  PedIgree Creation phAse Resolution Device 
+ 	PIkEHEAD 	  Pedigree InvEntion HaplotypE determinAtion Device
+	PINGDU  	  Phase INferrence pediGree Development Utility
+	PINkHEAD 	  Pedigree INvention HaplotypE determinAtion Device 
+ 	PROsPECT 	  Phase ResOlution PEdigree Creation Tool 
+	REDHORSE 	  pedigREe Development HaplOtype Resolution SuitE
+ 	REINHART 	  pedigREe INvention HAplotype Resolution Tool
+ 	sHARPEND 	  HAplotype Resolution PEdigree creatioN Device 
+ 	sPECTRUm 	  PEdigree Creation haploType Resolution Utility
+ 	TaRPIT  	  haploType Resolution Pedigree Invention Tool 
