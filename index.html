@@ -14,14 +14,21 @@
 
         <div id="maincircle">
 
-           <video poster="http://i.imgur.com/qiOZUij.webm" id="bgvid" loop autoplay>
+<!--           <video poster="http://i.imgur.com/qiOZUij.webm" id="bgvid" loop autoplay>
               <source src="http://i.imgur.com/qiOZUij.webm">
-           </video>
+           </video> -->
 
-          <input id="haploupload" type="file" />
-          <input id="haploresume" type="button" />
-          <input id="pedmodebutton" type='button' />      
-          <input id="pedresume" type="button" />
+          <input id="haploupload" type="file" 
+                 onchange="MainButtonActions.processHaploFile()" />
+
+          <input id="haploresume" type="button"
+                 onclick="MainButtonActions.loadHaploFromStorage()"  />
+          
+          <input id="pedmodebutton" type='button'
+                 onclick="MainButtonActions.createNewPed()" />      
+
+          <input id="pedresume" type="button" 
+                 onclick="MainButtonActions.loadPedFromStorage()" />
 
           <ul class="nodots">
             <li class="smallspace">
@@ -30,14 +37,14 @@
              </li>
              <li>
               <label for="haploupload">Visualize New Haplotypes</label>    
-              <label for="haploresume">Resume Previous Analysis</label>    
+              <label id="haploresume_label" for="haploresume">Resume Previous Analysis</label>    
             </li>
             <li>
               <hr class="style15">
             </li>
             <li>
                <label for="pedmodebutton">Create New Pedigree</label>   
-               <label for="pedresume">Resume Pedigree</label>     
+               <label id="pedresume_label" for="pedresume">Resume Pedigree</label>     
             </li>
           </ul>
         </div>
@@ -253,7 +260,11 @@
         <script src="JS/haplo/blocks/haploblock_backend.js" ></script>
         <script src="JS/haplo/blocks/haploblock_frontend.js" ></script>
         <script src="JS/button_actions.js" ></script>
+
+        <script src="JS/mainpage/mainpagehandler.js" ></script>
+        <script src="JS/mainpage/mainbuttonactions.js" ></script>
         <script src="JS/filehandler.js" ></script>
+
 
         <script src="JS/haplo/slider/slider_handler.js" ></script>
         <script src="JS/haplo/slider/marker_slider.js" ></script>
