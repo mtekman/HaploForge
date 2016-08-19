@@ -193,26 +193,3 @@ class ProcessInput {
 	}
 }
 
-
-var fileType = null;
-
-function processFile() {
-    var file = document.getElementById("file_upload").files[0];
-
-    var lr = new FileReader();
-
-    lr.onloadend = function(e){
-		document.getElementById("buttons").style.display = 'none'
-		
-		var np = new ProcessInput(e.target.result);
-		fileType = np.type;
-		init();
-		delete np;
-
-		//Save to local storage
-		localStorage.setItem(localStor.data_save, e.target.result)
-		localStorage.setItem(localStor.data_type, fileType)
-    };
-
-    lr.readAsText(file);
-}

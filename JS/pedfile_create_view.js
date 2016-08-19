@@ -1,21 +1,5 @@
 
 
-function initiatePedigreeDraw(){
-
-	console.log("ckced");
-
-	document.getElementById("buttons").style.display = 'none'
-
-	var d = document.getElementById('pedcreate_views');
-	d.style.position = "absolute";
-	d.style.zIndex = 122;
-	d.style.display = "";
-	
-	finishDraw(); // Initialize stage
-}
-
-
-
 /*
 
 initiatePedigreeDraw();
