@@ -19,7 +19,7 @@
   font-family: "Ubuntu", sans-serif;
   font-size: 1.2em;
   color: #333;
-  background-color: #fee;
+  background-color: #fff;
   padding: 3% 3% 3% 3%;
   width:40%;
   height:10%;
@@ -41,11 +41,11 @@
   display: inline-block;
   position: fixed;
   bottom: 5px;
-  right: 1em;
-  padding: 0 0 0 2px;
+  right: 2px;
+  padding: 0px 2px 0px 2px;
   background: #f0f0f0;
   color: #8c8b8b;
-  font-size: 0.7em;
+  font-size: 0.6em;
   border-radius: 10px;
 } 
 
@@ -63,10 +63,16 @@
   margin: -2% 0px 8% 0px;
 }
 
+#maincircle h2 {
+  font-family: 'Ubuntu Mono', monospace;
+  font-style: italic;
+  font-size: 0.8em;
+}
 
 #maincircle h2.smallspace {
-  margin: -35px 0px -10px 0px;
-  padding: 2px;
+  margin: -33px 0px 0px 0px;
+  /*padding: -20px;*/
+  /*border: -20px;*/
   background-color: black;
   color:white;
 }
@@ -85,13 +91,6 @@
     2px 2px #fff,
     -2px 2px #fff,
 }
-
-#maincircle h2 {
-  font-family: 'Ubuntu Mono', monospace;
-  font-style: italic;
-  font-size: 0.8em;
-}
-
 
 #maincircle hr.style15 {
   width:95%;
