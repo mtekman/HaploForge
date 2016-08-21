@@ -154,15 +154,14 @@
 }
 
 .input_props .messages p {
-  margin-top: -10px;
+  margin-top: 10px;
   color: black;
   text-align: center;
 }
 
 
 /* Button top right */
-
-.input_props .messages input {
+.input_props #message_exit {
   position: absolute;
   right: 0px;
   top: 5px;
@@ -170,6 +169,21 @@
   background: #dd5500;
   border-radius: 10px;
   border-color: black;
+}
+
+/* Except custom submit, which is below */
+.input_props #message_buttonsrow {
+  position: relative;
+  bottom: 100%;
+  left: 10%;
+}
+
+.input_props #message_buttonsrow input {
+  border-width: 1px;
+  background: #dd5500;
+  border-radius: 10px;
+  border-color: black;
+  box-shadow: 3px 3px 3px #888;
 }
 
 
@@ -222,12 +236,13 @@
   font-size: 10pt;
   background: #333;
   border: 1px solid black;
-  border-radius: 0px 0px 11px 11px;
+  border-radius: 1px 1px 11px 11px;
   padding: 0px;
   position: absolute;
   top: -2px;
   right: 0%;
   z-index: 99;
+  box-shadow: 5px 5px 5px #888;
 }
 
 .status div {

@@ -48,10 +48,28 @@ class MainButtonActions {
 
 		localStorage.setItem( localStor.ped_save, ped_to_string );
 		localStorage.setItem( localStor.ped_type, "pedfile");
+
+		utility.notify("Pedigree Saved","...");
 	}
 
 	static exitToMenu(){
-		MainPageHandler.defaultload();
+		var changeDetected = true;
+
+		if (changeDetected){
+			utility.prompt("Save", "Save changes before exit?",
+				"Yes", function(){
+			 		MainButtonActions.savePedToStorage();
+			 		MainPageHandler.defaultload();
+			 	},
+			 	"No", function(){
+			 		MainPageHandler.defaultload();	
+			 	}
+			 );
+		}
+		else{
+			MainPageHandler.defaultload();
+		}
+
 	}
 
 

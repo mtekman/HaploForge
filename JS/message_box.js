@@ -36,9 +36,9 @@ var statusProps = {
 var utility = {
 	_bg: document.getElementById('modal_bg'),
 
-	prompt: function(query){
+	prompt: function(title, message, yes, onYes, no, onNo){
 		// Own method drop in?
-		return prompt(query);
+		messProps.prompt(title, message, yes, onYes, no, onNo);
 	},
 
 	notify: statusProps.display,
@@ -54,10 +54,12 @@ var utility = {
 
 	showBG: function(){
 		this._bg.style.display = "block";
+		this._bg.style.zIndex = 500;
 	},
 
 	hideBG: function(){
 		this._bg.style.display = "none";
+		this._bg.style.zIndex = -99;
 	}
 }
 
@@ -196,27 +198,85 @@ var persProps = {
 
 
 var messProps = {
-	_box : document.getElementById('message_props'),
 	_header : document.getElementById('message_head'),
 	_text   : document.getElementById('message_text'),
-	_submit: document.getElementById('message_submit'),
+	_exit : document.getElementById('message_exit'),
+	_box : document.getElementById('message_props'),
+	_buttonrow : document.getElementById('message_buttonsrow'),
+	_yes : document.getElementById('message_yes'),
+	_no : document.getElementById('message_no'),
 
-	hide: function(){ this._box.style.display = "none";},
-	show: function(){ this._box.style.display = "";},
+	_aftercallbacks: function(){
+		this.hide();
+		utility.hideBG();
+	},
 
-	display: function(header,text, callback){
+	hide: function(){ 
+		this._box.style.display = "none";
+		this._box.style.zIndex = -99;
+	},
+	show: function(){ 
+		this._box.style.display = "";
+		this._box.style.zIndex = 502;
+	},
+
+
+	display: function(header,text, exit_callback = null, yes_no_object = null){
 		utility.showBG();
 		this.show();
 
 		this._header.innerHTML = header;
 		this._text.innerHTML   = text;
 
-		this._submit.onclick = function(){
-			messProps.hide();
-			utility.hideBG();
-			callback();
+		/* On Exit */
+		this._exit.onclick = function(){
+			if (exit_callback !== null){exit_callback()};
+			messProps._aftercallbacks();
 		};
+
+		/* Yes No*/
+		if (yes_no_object === null){
+			this._buttonrow.style.display= "none";
+			this._no.value   = this._yes.value   = "";
+			this._no.onclick = this._yes.onclick = null;
+		}
+		else
+		{
+			this._buttonrow.style.display= "";
+
+			if (yes_no_object.yes !== null)
+			{
+				this._yes.value = yes_no_object.yes;
+				this._yes.onclick = function()
+				{
+					yes_no_object.yescallback();
+					messProps._aftercallbacks();
+				};
+			};
+
+			if (yes_no_object.no !== null)
+			{
+				this._no.value = yes_no_object.no;
+				this._no.onclick = function()
+				{
+					yes_no_object.nocallback();
+					messProps._aftercallbacks();
+				}
+			};
+
+		}
+	},
+
+	prompt: function(header, text, yes, onYes, no, onNo)
+	{
+		var promptcallback = { 
+			yes: yes, yescallback: onYes,
+			no : no ,  nocallback: onNo
+		}
+
+		this.display(header,text, null, promptcallback);
 	}
+
 }
 
 
