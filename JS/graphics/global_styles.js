@@ -42,6 +42,7 @@ function addInvisibleOrangeBox(pos, radius)
 }
 
 
+
 function addButton(message, xp, yp, callback, show_state)
 {
 	var group = new Kinetic.Group({x: xp, y: yp});

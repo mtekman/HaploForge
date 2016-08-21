@@ -50,28 +50,15 @@
         </div>
 
 
-       
-        <!-- Pedigree View -->
-        <div id="pedcreate_views" class="input_props" >
-          <h3> Ped Tools </h3>
-          <table>
-            <tr><td>
-              <input id='pedcreate_addnode' type='button' value="Add Individual" onclick="personDraw.addNode()" />
-            </td></tr>
-
-            <tr><td>
-                <input id='pedcreate_addfam' type='button' value="Add Family" onclick="familyDraw.addFam()" />
-            </td></tr>
-
-            <tr><td>
-              <input id='pedcreate_addrel'  type='button' value="Mate-Mate" onclick="(new MatelineDraw(familyDraw.active_fam_group.id)).init()" />
-            </td></tr>
-
-            <tr><td>
-              <input id='pedcreate_addoff'  type='button' value="Parent-Offspring" onclick="(new OffspringDraw(familyDraw.active_fam_group.id)).init()" />
-            </td></tr>
+       <!-- Pedcreate / Selection -->
+        <div id="selection_tools" class="input_props" >
+          <h3 id="selection_title" ></h3>
+          <table id="selection_table" >
           </table>
         </div>
+
+
+
 
         <!-- Save Dialogs -->
         <div id="save_and_close" class="input_props" >
@@ -243,7 +230,7 @@
         <script src="JS/frameworks/kinetic-v5.1.0.min.js" ></script>
 
         <script src="JS/globals.js" ></script>
-
+        <script src="JS/toolmodecss.js" ></script>
         <script src="JS/pedigree.js" ></script>
 
         <script src="JS/graphics/kinetic_graphics.js" ></script>

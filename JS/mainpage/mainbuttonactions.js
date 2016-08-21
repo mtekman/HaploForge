@@ -58,10 +58,10 @@ class MainButtonActions {
 	static createNewPed() {
 		MainPageHandler.createpedmode();
 
-		var d = document.getElementById('pedcreate_views');
+/*		var d = document.getElementById('pedcreate_views');
 		d.style.position = "absolute";
 		d.style.zIndex = 122;
-		d.style.display = "";
+		d.style.display = "";*/
 	
 		finishDraw(); // Initialize stage
 	}

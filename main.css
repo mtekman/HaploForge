@@ -124,7 +124,7 @@
   box-shadow: 5px 5px 5px #888;
 }
 
-#pedcreate_views {
+#selection_tools {
   position: absolute;
   top: 10px;
   left: 10px;
@@ -186,14 +186,14 @@
 }
 
 
-.input_props table input[type=button] {
+.input_props table input[type=button],button {
   border-radius: 5px;
   border: 2px solid #222;
   width:100%;
   min-width: 70px;
 }
 
-.input_props table input[type=button]:hover {
+.input_props table input[type=button]:hover,button:hover {
   background-color: #333;
   color:#eee;
 }
