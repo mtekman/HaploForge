@@ -7,6 +7,7 @@ var localStor = {
 }
 
 
+
 //General storage, global scope
 var family_map = {},            // fam_id ---> pedigree map --> person
 	marker_map = {},          	// rs_id --> array index

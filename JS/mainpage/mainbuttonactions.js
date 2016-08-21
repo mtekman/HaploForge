@@ -39,9 +39,20 @@ class MainButtonActions {
 		var ped_data = localStorage.getItem( localStor.ped_save ),
 			ped_type = localStorage.getItem( localStor.ped_type );
 
-		MainButtonActions.processinput(hap_data, hap_type);
+		MainButtonActions.processinput(ped_data, ped_type);
 	}
 
+	static savePedToStorage() {
+
+		var ped_to_string = PersistData.toPedfileString(true); /*store graphics*/
+
+		localStorage.setItem( localStor.ped_save, ped_to_string );
+		localStorage.setItem( localStor.ped_type, "pedfile");
+	}
+
+	static exitToMenu(){
+		MainPageHandler.defaultload();
+	}
 
 
 	static createNewPed() {

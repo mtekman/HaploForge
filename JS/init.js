@@ -34,5 +34,9 @@ function init(){
 }
 
 
-//loadPedFromStorage();
-MainPageHandler.defaultload();
+//MainPageHandler.defaultload();
+/*setTimeout(function(){
+
+},3000);*/
+
+MainButtonActions.createNewPed()	

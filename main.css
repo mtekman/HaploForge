@@ -121,7 +121,21 @@
   position: absolute;
   left: 40%;
   top: 40%;
+  box-shadow: 5px 5px 5px #888;
 }
+
+#pedcreate_views {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
+
+#save_and_close {
+  position:absolute;
+  left: 10px;
+  top:85%;
+}
+
 
 .input_props .messages {
   border: 4px solid black;
@@ -158,6 +172,7 @@
   border-color: black;
 }
 
+
 .input_props table td {
   width: 50%;
 }
@@ -170,10 +185,34 @@
   text-align: right;
 }
 
+
+.input_props table input[type=button] {
+  border-radius: 5px;
+  border: 2px solid #222;
+  width:100%;
+  min-width: 70px;
+}
+
+.input_props table input[type=button]:hover {
+  background-color: #333;
+  color:#eee;
+}
+
+.input_props h3 {
+  font-family: "Ubuntu Mono", monospace;
+  font-style: italic;
+  font-size: 0.8em;
+  padding-left: 10px;
+  margin-bottom: 5px;
+  margin-top: -18px;
+}
+
+
 .input_props table td:last-child {
   text-align: left;
   color: black;
 }
+
 
 .input_props input {
   max-width: 150px;

@@ -50,28 +50,42 @@
         </div>
 
 
-
-
-
-        <div id="buttons" >
-            <input type="file" id="file_upload" onchange="processFile();" />&#8672; Upload ihaplo file<br />
-
-		      or 
-
-	        <input type='button' id='createPedfile' onchange="initiatePedigreeDraw();" value="Create New Pedigree" />
-
-            <!-- <input type="checkbox" id="rlines" onchange="toggleRAng()"  checked=true > Rlines</input><br />
-            <input type="button" id="play" onclick="cutting()" > Play</input><br />
-            <input type="checkbox" id="map" onchange="toggleMarkerScale()" > MarkerMap</input> -->
-         </div>
-
-        
+       
         <!-- Pedigree View -->
-        <div id="pedcreate_views" >
-            <input id='pedcreate_addnode' type='button' value="Add Indiv." onclick="personDraw.addNode()" />
-            <input id='pedcreate_addfam'  type='button' value="Add Family" onclick="familyDraw.addFam()" />
-            <input id='pedcreate_addrel'  type='button' value="Join Partners" onclick="(new MatelineDraw(familyDraw.active_fam_group.id)).init()" />
-            <input id='pedcreate_addoff'  type='button' value="Add Offspring" onclick="(new OffspringDraw(familyDraw.active_fam_group.id)).init()" />
+        <div id="pedcreate_views" class="input_props" >
+          <h3> Ped Tools </h3>
+          <table>
+            <tr><td>
+              <input id='pedcreate_addnode' type='button' value="Add Individual" onclick="personDraw.addNode()" />
+            </td></tr>
+
+            <tr><td>
+                <input id='pedcreate_addfam' type='button' value="Add Family" onclick="familyDraw.addFam()" />
+            </td></tr>
+
+            <tr><td>
+              <input id='pedcreate_addrel'  type='button' value="Mate-Mate" onclick="(new MatelineDraw(familyDraw.active_fam_group.id)).init()" />
+            </td></tr>
+
+            <tr><td>
+              <input id='pedcreate_addoff'  type='button' value="Parent-Offspring" onclick="(new OffspringDraw(familyDraw.active_fam_group.id)).init()" />
+            </td></tr>
+          </table>
+        </div>
+
+        <!-- Save Dialogs -->
+        <div id="save_and_close" class="input_props" >
+          <h3> General Opts. </h3>
+          <table>
+          <tr>
+            <td>
+              <input type="button" value="Save" onclick="MainButtonActions.savePedToStorage()" />
+            </td></tr>
+            <tr><td>
+              <input type="button" value="Exit" onclick="MainButtonActions.exitToMenu()" />
+            </td>
+          </tr>
+          </table>
         </div>
 
 
