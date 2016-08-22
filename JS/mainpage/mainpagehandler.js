@@ -4,7 +4,7 @@
 
 const __mainpage_divgroups = {
 	"main"  	: document.getElementById('maincircle'),
-	"pedcreate"	: document.getElementById('pedcreate_views'),
+	"toolset"	: document.getElementById('selection_tools'),
 	"saveclose" : document.getElementById('save_and_close'),
 	"container"	: document.getElementById('container'),
 	"pedexist"  : document.getElementById('pedresume_label'),
@@ -34,9 +34,9 @@ class MainPageHandler {
 	static defaultload(){
 		/** Show main page, hide rest **/
 		MainPageHandler.showDiv("main", true);
-		MainPageHandler.showDiv("pedcreate", false);
 		MainPageHandler.showDiv("container", false);
 		MainPageHandler.showDiv("saveclose", false);
+		MainPageHandler.showDiv("toolset", false);
 
 		MainPageHandler.setPrevExistingButtons();
 	}
@@ -46,18 +46,19 @@ class MainPageHandler {
 		MainPageHandler.showDiv("container", true);
 
 		MainPageHandler.showDiv("main", false);
-		MainPageHandler.showDiv("pedcreate", false);
+		MainPageHandler.showDiv("toolset", false);
 		MainPageHandler.showDiv("saveclose", false);
 	}
 
 	static createpedmode(){
 		/** Show haplotypes, after file (up)load **/
-		MainPageHandler.showDiv("container", true);
-		MainPageHandler.showDiv("pedcreate", true);
-		MainPageHandler.showDiv("saveclose", true);
-
 		MainPageHandler.showDiv("main", false);
 
+		MainPageHandler.showDiv("container", true);
+		MainPageHandler.showDiv("saveclose", true);
+
+		ToolSetModes.setToPedCreate();
+		MainPageHandler.showDiv("toolset", true);
 	}
 }
 
