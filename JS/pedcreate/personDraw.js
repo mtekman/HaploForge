@@ -66,9 +66,22 @@ var personDraw = {
 
 	addNode: function(person = null, position= null){
 
-		if (familyDraw.active_fam_group === null){
-			familyDraw.addFam();
+		if (familyDraw.active_fam_group === null)
+		{
+			console.log("not active");
+			familyDraw.addFam(null, null, 
+				function(){
+					console.log("Here?");
+					personDraw._addNodeToActiveFam(person, position)
+				}
+			);
+		} else{
+			personDraw._addNodeToActiveFam(person, position);
 		}
+	},
+
+
+	_addNodeToActiveFam: function(person = null, position = null){
 
 		var fam_group = familyDraw.active_fam_group;
 		uniqueGraphOps.insertFam(fam_group.id, fam_group);

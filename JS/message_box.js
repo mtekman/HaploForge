@@ -18,7 +18,6 @@ var statusProps = {
 		}, step)
 	},
 
-
 	display: function(header,details, timeUntilFade=1.5, fadeStep=50){
 		// Don't change to "this", because utility.notify defers what 'this' is
 		statusProps.show();
@@ -36,9 +35,13 @@ var statusProps = {
 var utility = {
 	_bg: document.getElementById('modal_bg'),
 
-	prompt: function(title, message, yes, onYes, no, onNo){
+	yesnoprompt: function(title, message, yes, onYes, no, onNo){
 		// Own method drop in?
 		messProps.prompt(title, message, yes, onYes, no, onNo);
+	},
+
+	inputprompt: function(title, callback){
+		messProps.input(title, callback);
 	},
 
 	notify: statusProps.display,
@@ -156,8 +159,14 @@ var persProps = {
 	},
 
 
-	hide: function(){ this._box.style.display = "none";},
-	show: function(){ this._box.style.display = "";},
+	hide: function(){ 
+		this._box.style.display = "none";
+		this._box.style.zIndex = -99;
+	},
+	show: function(){
+		this._box.style.display = "";
+		this._box.style.zIndex = 501;
+	},
 
 	showProps: function(person){
 		utility.showBG();
@@ -205,10 +214,15 @@ var messProps = {
 	_buttonrow : document.getElementById('message_buttonsrow'),
 	_yes : document.getElementById('message_yes'),
 	_no : document.getElementById('message_no'),
+	_inputrow : document.getElementById("message_inputrow"),
+	_input : document.getElementById("message_input"),
+	_submit : document.getElementById("message_submit"),
 
 	_aftercallbacks: function(){
 		this.hide();
 		utility.hideBG();
+		this._inputrow.style.display = "";
+		this._text.style.display = "";
 	},
 
 	hide: function(){ 
@@ -221,7 +235,7 @@ var messProps = {
 	},
 
 
-	display: function(header,text, exit_callback = null, yes_no_object = null){
+	display: function(header,text, exit_callback = null, yes_no_object = null, submit=false){
 		utility.showBG();
 		this.show();
 
@@ -234,6 +248,16 @@ var messProps = {
 			messProps._aftercallbacks();
 		};
 
+		/*Submit */
+		if (submit){
+			this._buttonrow.style.display = "none";
+			this._inputrow.style.display = "";
+			
+			this._submit.value = "Candy";
+			this._submit.onclick = submit;
+		}
+
+
 		/* Yes No*/
 		if (yes_no_object === null){
 			this._buttonrow.style.display= "none";
@@ -242,7 +266,8 @@ var messProps = {
 		}
 		else
 		{
-			this._buttonrow.style.display= "";
+			this._buttonrow.style.display = "";
+			this._inputrow.style.display = "none";
 
 			if (yes_no_object.yes !== null)
 			{
@@ -274,7 +299,18 @@ var messProps = {
 			no : no ,  nocallback: onNo
 		}
 
-		this.display(header,text, null, promptcallback);
+		this._inputrow.style.display = "none";
+		this.display(header,text, null, promptcallback, false);
+	},
+
+	input: function(header, callback){
+		this._text.style.display = "none";
+		this._text.value = "";
+
+		this.display(header, "", null, null, function(){
+			messProps._aftercallbacks();
+			callback();
+		});
 	}
 
 }

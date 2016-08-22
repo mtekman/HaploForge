@@ -18,10 +18,14 @@ var familyDraw = {
 		this.active_fam_group = fam;
 	},
 
-	addFam: function(fam_id = null, position = null){	
+	addFam: function(fam_id = null, position = null, callback = null){	
 
 		if (fam_id === null){
-			fam_id = utility.prompt("Family ID?");
+			utility.inputprompt("Family ID?", function(){
+				fam_id = messProps._input.value;
+				familyDraw.addFam(fam_id,position,callback);
+			});
+			return;
 		}
 
 		if (fam_id in this.family_map){
@@ -43,6 +47,10 @@ var familyDraw = {
 		if (position !== null){
 			fam.setX(position.x);
 			fam.setY(position.y);
+		}
+
+		if (callback !== null){
+			callback();		
 		}
 
 		

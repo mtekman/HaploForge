@@ -43,11 +43,13 @@ class MainPageHandler {
 
 	static haplomodeload(){
 		/** Show haplotypes, after file (up)load **/
-		MainPageHandler.showDiv("container", true);
-
 		MainPageHandler.showDiv("main", false);
-		MainPageHandler.showDiv("toolset", false);
-		MainPageHandler.showDiv("saveclose", false);
+
+		MainPageHandler.showDiv("container", true);
+		MainPageHandler.showDiv("saveclose", true);
+
+		ToolSetModes.setToSelectionPreMode();
+		MainPageHandler.showDiv("toolset", true);		
 	}
 
 	static createpedmode(){

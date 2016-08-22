@@ -1,4 +1,4 @@
-
+/* Class that rewrites the selection_tools div to swap in tools for each mode */
 var toolset = {
 
 	table_keys : {}, 
@@ -82,7 +82,18 @@ var ToolSetModes = {
 		});
 	},
 
-	setToSelection: function()
+	setToSelectionPreMode: function()
+	{
+		ToolSetModes.preamble();
+
+		toolset.setTitle("Pedigree Arrange");
+		toolset.addToolsButton("Start Analysis", function(){
+			startSelectionMode();
+			ToolSetModes.setToSelectionMode();
+		});
+	},
+
+	setToSelectionMode: function()
 	{
 		ToolSetModes.preamble();
 

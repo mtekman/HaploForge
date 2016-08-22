@@ -206,6 +206,8 @@ function finishDraw(){
 
 // ------- Family Functions --------------
 function addFamily(fam_id, sx, sy){
+	console.log("adding fam", fam_id, sx, sy)
+
 	var g = new Kinetic.Group({
 		x: sx, y:sy,
 		draggable: true,
@@ -215,7 +217,7 @@ function addFamily(fam_id, sx, sy){
 
 	var t = new Kinetic.Text({
 		x: 50,
-		text: fam_id,
+		text: ""+fam_id+"",
 		fontFamily: "Arial",
 		fontSize: 18,
 		fill: 'black'
@@ -232,6 +234,7 @@ function addFamily(fam_id, sx, sy){
 
 	t.on('mousedown', function(){
 		g.setScale({x:0.95, y:0.95});
+		familyDraw.active_fam_group = g;
 	})
 
 	t.on('mouseout mouseup', function(){
@@ -481,6 +484,9 @@ function addPerson(person, fam_group,  t_x, t_y)  //positions relative to family
 
 	//On drag do
 	group.on('dragmove', function(e){
+		// Update last touched group
+		familyDraw.active_fam_group = fam_group;
+		
 		//Snap-to-grid  -- relative to parent (fam_group)
 		var x = e.target.attrs.x;
 		var	y = e.target.attrs.y;

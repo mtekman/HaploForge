@@ -119,20 +119,24 @@
   margin: 10px;
   z-index: 99;
   position: absolute;
-  left: 40%;
+  /*left: 40%;*/
   top: 40%;
   box-shadow: 5px 5px 5px #888;
 }
 
 #selection_tools {
-  position: absolute;
+  position: fixed;
   top: 10px;
-  left: 10px;
+  right: 10px;
+}
+
+#message_props {
+  left:40%;
 }
 
 #save_and_close {
-  position:absolute;
-  left: 10px;
+  position:fixed;
+  right: 10px;
   top:85%;
 }
 
@@ -159,9 +163,20 @@
   text-align: center;
 }
 
+.input_props .messages #message_inputrow {
+  margin-top: 16px;
+}
+
+.input_props .messages #message_input {
+  background: white;
+  border-radius: 5px 5px 5px 10px;
+  color: black;
+}
+
+
 
 /* Button top right */
-.input_props #message_exit {
+.input_props #message_exit,#pers_submit {
   position: absolute;
   right: 0px;
   top: 5px;
@@ -169,6 +184,10 @@
   background: #dd5500;
   border-radius: 10px;
   border-color: black;
+}
+
+#person_props.input_props  {
+  left:40%;
 }
 
 /* Except custom submit, which is below */
@@ -179,6 +198,14 @@
 }
 
 .input_props #message_buttonsrow input {
+  border-width: 1px;
+  background: #dd5500;
+  border-radius: 10px;
+  border-color: black;
+  box-shadow: 3px 3px 3px #888;
+}
+
+.input_props #message_submit {
   border-width: 1px;
   background: #dd5500;
   border-radius: 10px;

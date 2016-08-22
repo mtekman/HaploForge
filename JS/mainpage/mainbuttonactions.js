@@ -56,7 +56,7 @@ class MainButtonActions {
 		var changeDetected = true;
 
 		if (changeDetected){
-			utility.prompt("Save", "Save changes before exit?",
+			utility.yesnoprompt("Save", "Save changes before exit?",
 				"Yes", function(){
 			 		MainButtonActions.savePedToStorage();
 			 		MainPageHandler.defaultload();
