@@ -120,7 +120,7 @@
   z-index: 99;
   position: absolute;
   /*left: 40%;*/
-  top: 40%;
+  /*top: 40%;*/
   box-shadow: 5px 5px 5px #888;
 }
 
@@ -132,12 +132,13 @@
 
 #message_props {
   left:40%;
+  top: 40%;
 }
 
 #save_and_close {
   position:fixed;
   right: 10px;
-  top:85%;
+  bottom: 10px;
 }
 
 

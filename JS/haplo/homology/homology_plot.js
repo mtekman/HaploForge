@@ -58,18 +58,7 @@ function printToFile( ht_ids, start_index, stop_index )
 	}
 
 	// Write
-	var textFile = null,
-		makeTextFile = function(tex)
-		{
-			var data = new Blob([tex],{type:'text/plain'});
-
-			if (textFile !== null) window.URL.revokeObjectURL(textFile);
-
-			textFile = window.URL.createObjectURL(data);
-			return textFile;
-		};
-
-	window.open(makeTextFile(text));
+	window.open(PersistData.makeTextFile(text));
 }
 
 

@@ -67,6 +67,7 @@ var ToolSetModes = {
 		toolset.div.style.display = "block";
 	},
 
+	/* Pedigree Creation View */
 	setToPedCreate: function()
 	{
 		ToolSetModes.preamble();
@@ -82,6 +83,7 @@ var ToolSetModes = {
 		});
 	},
 
+	/* Selection View */
 	setToSelectionPreMode: function()
 	{
 		ToolSetModes.preamble();
@@ -93,6 +95,7 @@ var ToolSetModes = {
 		});
 	},
 
+	/* Selection Editting View */
 	setToSelectionMode: function()
 	{
 		ToolSetModes.preamble();
@@ -157,6 +160,7 @@ var ToolSetModes = {
 
 			return 0;
 		});
-	}
+	},
+
 }
 

@@ -1,4 +1,10 @@
 
+Current:
+========
+- Need to reset graphics and containers when using the container from something else, going back to main menu, and then resuming.
+
+- 
+
 
 General:
 ========

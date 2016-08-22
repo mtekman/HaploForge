@@ -53,7 +53,7 @@ class MainButtonActions {
 	}
 
 	static exitToMenu(){
-		var changeDetected = true;
+		var changeDetected = PersistData.pedigreeChanged();
 
 		if (changeDetected){
 			utility.yesnoprompt("Save", "Save changes before exit?",
