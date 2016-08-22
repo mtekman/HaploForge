@@ -47,7 +47,7 @@ var toolset = {
 		row.deleteCell(0);
 		toolset.table.deleteRow(rowInd);
 
-		delete toolset.table_keys[message];
+		delete toolset.table_keys[key];
 	}
 }
 
@@ -63,7 +63,8 @@ var ToolSetModes = {
 	},
 
 	preamble: function(){
-		toolset.div.style.display = "";	
+		ToolSetModes.clearMode();
+		toolset.div.style.display = "block";
 	},
 
 	setToPedCreate: function()
@@ -79,7 +80,72 @@ var ToolSetModes = {
 		toolset.addToolsButton("Parent-Offspring", function(){
 			(new OffspringDraw(familyDraw.active_fam_group.id)).init();
 		});
-	}
+	},
 
+	setToSelection: function()
+	{
+		ToolSetModes.preamble();
+
+		toolset.setTitle("Selection Tools");
+		toolset.addToolsButton("Select All", function(){
+			console.log("implement");
+		});
+
+		toolset.addToolsButton("Select Affecteds", function()
+		{
+			toggle_selection_affecteds = !toggle_selection_affecteds;
+
+			for (var key in selection_items){
+
+				var item = selection_items[key];
+				var affected = (item.graphics.children[0].attrs.fill === col_affs[2])
+
+				if (affected){
+					if( (toggle_selection_affecteds && !item.selected)
+					 || (!toggle_selection_affecteds && item.selected) ){
+						item.box.fire('click');
+					}
+				}
+			}
+			console.log("affecteds:", 
+				Object.keys(selection_items).filter( function (n){ return selection_items[n].affected === true;})
+			);
+		});
+
+		toolset.addToolsButton("Submit Selection", function(){
+			// var selected_for_homology = []; // Now global in homology_buttons.js
+			selected_for_homology = [];
+		
+			for (var s in selection_items){
+				if (selection_items[s].selected){
+
+					selection_items[s].box.stroke('green')
+
+					selected_for_homology.push(s);
+				}
+				selection_items[s].box.off('click');
+			}
+
+			// Shift top panel to front layer
+			haplo_window.top.moveTo(haplo_window)
+			haplo_window.top.exit.show();
+
+
+			sub_select_group.rect.destroy();
+			ToolSetModes.clearMode();
+
+			haplo_layer.draw();
+
+			if (selected_for_homology.length === 0)
+				return -1;
+
+			plots = scan_alleles_for_homology( selected_for_homology );
+
+			homology_buttons_show();
+			homology_buttons_redraw();
+
+			return 0;
+		});
+	}
 }
 
