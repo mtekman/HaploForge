@@ -55,20 +55,20 @@ function startSelectionMode()
 	}));
 
 
-	for (var fid in unique_graph_objs)
+	for (var fid in uniqueGraphOps._map)
 	{
-		var text_butt = unique_graph_objs[fid].group.fam_title_text;
+		var text_butt = uniqueGraphOps.getFam(fid).group.fam_title_text;
 		var text_bounder = addInvisibleBounder( text_butt.getAbsolutePosition(), fid, true);
 
 		select_group.add(text_bounder)
 
-		for (var node in unique_graph_objs[fid].nodes)
+		for (var node in uniqueGraphOps.getFam(fid).nodes)
 		{
 			if (node == 0) continue;
 
 			var key = fid+"_"+node
 
-			var gfx = unique_graph_objs[fid].nodes[node].graphics,
+			var gfx = uniqueGraphOps.getFam(fid).nodes[node].graphics,
 				pos = gfx.getAbsolutePosition(),
 				bounder = addBounder(pos, key, true);
 

@@ -18,7 +18,7 @@ function stopHaplomode(){
 		for (var fid in selected_ids){
 			for (var id in selected_ids[fid]){
 				
-				var perc_gfx =  unique_graph_objs[fid].nodes[id].graphics;
+				var perc_gfx =  uniqueGraphOps.getFam(fid).nodes[id].graphics;
 				var old_pos = perc_gfx.main_layer_pos;
 				var old_group = perc_gfx.main_layer_group;
 				
@@ -269,13 +269,12 @@ function toggleBottomBox( show, finishfunc )
 					haplo_layer.draw();
 				});
 
-				unique_graph_objs.haplo_scroll = haplo_window.bottom;
-				unique_graph_objs.haplo_area = scroll_area__;
+				uniqueGraphOps.haplo_scroll = haplo_window.bottom;
+				uniqueGraphOps.haplo_area = scroll_area__;
 
 				haplo_window.bottom.add( scroll_area__ );
 
 				addHaplosAnyone( selected_ids );
-				//unique_graph_objs.parent.show();
 
 				if (finishfunc!==0) finishfunc();
 			}
@@ -284,7 +283,7 @@ function toggleBottomBox( show, finishfunc )
 	}
 	else {
 
-		unique_graph_objs.haplo_area.hide();
+		uniqueGraphOps.haplo_area.hide();
 
 		kineticTween({
 			node: haplo_window.bottom.rect,

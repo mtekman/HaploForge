@@ -190,12 +190,14 @@ function populateGrids_and_UniqueObjs( graphicsMap=null )
 			//Populate gridmap and uniq map
 			var arr_obj = addFamMap.init(root, graphicsMap);
 			var generation_array = arr_obj[0],
-				uniq_objs = arr_obj[1];
+				nodes_edges = arr_obj[1];
 
 //			console.log( generation_array, uniq_objs);
 
 			//Insert into global maps
-			unique_graph_objs[one] = uniq_objs;
+			uniqueGraphOps.insertFam(one, null);
+			uniqueGraphOps.getFam(one).nodes = nodes_edges.nodes;
+			uniqueGraphOps.getFam(one).edges = nodes_edges.edges;
 			
 			generation_grid_ids[one] = generation_array;
 
@@ -208,7 +210,7 @@ function populateGrids_and_UniqueObjs( graphicsMap=null )
 
 			// Check if root tree contains ALL individuals
 			var num_nodes = -1; // start at -1 to skip fake indidivual '0'
-			for (var node in uniq_objs.nodes) {num_nodes ++};
+			for (var node in nodes_edges.nodes) {num_nodes ++};
 			
 			if (num_nodes !== family_map[one].family_size){
 				console.log("Warning! Family "+one+" has only mapped "+num_nodes+" individuals out of "+family_map[one].family_size);
@@ -230,14 +232,18 @@ function graphInitPos(start_x, start_y){
 		var fam_group = addFamily(fam, x_shift_fam, 10);
 		var max_x = 0;
 
+		var fam_gfx = uniqueGraphOps.getFam(fam);
+		fam_gfx.group = fam_group
+
 		// Descending down the generations.
 		// Main founders are at top
 		var y_pos = start_y,
 			gen_grid = generation_grid_ids[fam],
-			nodes = unique_graph_objs[fam].nodes,
-			edges = unique_graph_objs[fam].edges;
+			nodes = fam_gfx.nodes,
+			edges = fam_gfx.edges;
 
-		unique_graph_objs[fam].group = fam_group;
+		console.log(nodes);
+
 
 		// Init Nodes, ordered by generation_grid_ids
 		for (var gen=0; gen < gen_grid.length; gen++){

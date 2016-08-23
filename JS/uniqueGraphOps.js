@@ -1,10 +1,18 @@
 var uniqueGraphOps = {
 
+	_map : {}, // fam_id --> Holds node and edge data, including pointers to graphics
+	haplo_scroll : null,
+	haplo_area : null,
+
+	clear: function(){
+		uniqueGraphOps._map = {};
+	},
+
 	insertFam: function(family_id, fam_group){
 
-		if (!(family_id in unique_graph_objs))
+		if (!(family_id in uniqueGraphOps._map))
 		{
-			unique_graph_objs[family_id] = {
+			uniqueGraphOps._map[family_id] = {
 				nodes:{},
 				edges:{},
 				group: fam_group
@@ -17,26 +25,30 @@ var uniqueGraphOps = {
 	},
 
 	deleteFam: function(family_id){
-		if (family_id in unique_graph_objs){
-			delete unique_graph_objs[family_id];
+		if (family_id in uniqueGraphOps._map){
+			delete uniqueGraphOps._map[family_id];
 			return 0;
 		}
 		return -1;
 	},
 
 	getFam: function(family_id){
-		if (family_id in unique_graph_objs){
-			return unique_graph_objs[family_id];
+		if (family_id in uniqueGraphOps._map){
+			return uniqueGraphOps._map[family_id];
 		}
 		return -1;
+	},
+
+	famExists: function(family_id){
+		return (family_id in uniqueGraphOps._map);
 	},
 
 	insertNode: function(id, family_id, graphics)
 	{
 		this.insertFam(family_id);
 
-		if (!(id in unique_graph_objs[family_id].nodes)){
-			unique_graph_objs[family_id].nodes[id] = {graphics:graphics};
+		if (!(id in uniqueGraphOps._map[family_id].nodes)){
+			uniqueGraphOps._map[family_id].nodes[id] = {graphics:graphics};
 			console.log("UGO: created new node", id, "in", family_id);
 			return 0;
 		}
@@ -45,9 +57,9 @@ var uniqueGraphOps = {
 
 	deleteNode: function(id, family_id)
 	{
-		if (family_id in unique_graph_objs){
-			if (id in unique_graph_objs[family_id].nodes){
-				delete unique_graph_objs[family_id].nodes[id];
+		if (family_id in uniqueGraphOps._map){
+			if (id in uniqueGraphOps._map[family_id].nodes){
+				delete uniqueGraphOps._map[family_id].nodes[id];
 				return 0;
 			}
 		}
@@ -55,9 +67,9 @@ var uniqueGraphOps = {
 	},
 
 	getNode: function(id, family_id){
-		if (family_id in unique_graph_objs){
-			if (id in unique_graph_objs[family_id].nodes){
-				return unique_graph_objs[family_id].nodes[id];
+		if (family_id in uniqueGraphOps._map){
+			if (id in uniqueGraphOps._map[family_id].nodes){
+				return uniqueGraphOps._map[family_id].nodes[id];
 			}
 		}
 		return -1;
@@ -68,8 +80,8 @@ var uniqueGraphOps = {
 	{
 		insertFam(family_id);
 
-		if (!(id in unique_graph_objs[family_id].edges)){
-			unique_graph_objs[family_id].edges[id] = {graphics:graphics};
+		if (!(id in uniqueGraphOps._map[family_id].edges)){
+			uniqueGraphOps._map[family_id].edges[id] = {graphics:graphics};
 			console.log("UGO: created new edge", id, "in", family_id);
 			return 0;
 		}
@@ -78,9 +90,9 @@ var uniqueGraphOps = {
 
 	deleteEdge: function(id, family_id)
 	{
-		if (family_id in unique_graph_objs){
-			if (id in unique_graph_objs[family_id].edges){
-				delete unique_graph_objs[family_id].edges[id];
+		if (family_id in uniqueGraphOps._map){
+			if (id in uniqueGraphOps._map[family_id].edges){
+				delete uniqueGraphOps._map[family_id].edges[id];
 				return 0;
 			}
 		}
@@ -89,9 +101,9 @@ var uniqueGraphOps = {
 
 	getEdge: function(id, family_id)
 	{
-		if (family_id in unique_graph_objs){
-			if (id in unique_graph_objs[family_id].edges){
-				return unique_graph_objs[family_id].edges[id];
+		if (family_id in uniqueGraphOps._map){
+			if (id in uniqueGraphOps._map[family_id].edges){
+				return uniqueGraphOps._map[family_id].edges[id];
 			}
 		}
 		return -1;

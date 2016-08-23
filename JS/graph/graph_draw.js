@@ -62,8 +62,9 @@ var updateGraph = {
 function redrawNodes(pers_id, fam_id, drawLinesToo)
 {
 	var pers      = family_map[fam_id][pers_id],
-		node_map  = unique_graph_objs[fam_id].nodes,
-		edge_map  = unique_graph_objs[fam_id].edges,
+		fam_gfx   = uniqueGraphOps.getFam(fam_id),
+		node_map  = fam_gfx.nodes,
+		edge_map  = fam_gfx.edges,
 		npers     = node_map[pers_id],
 		npers_pos = npers.graphics.getPosition(),
 		per_isMale= (pers.gender == 1);
@@ -133,7 +134,7 @@ function redrawNodes(pers_id, fam_id, drawLinesToo)
 			//  -- update childlines attached to it
 			var childkey_starting = "c:"+mateline_id;   //Look for all childnodes starting with
 
-			for (var key in unique_graph_objs[fam_id].edges){
+			for (var key in edge_map){
 				if (key.lastIndexOf(childkey_starting,0) === 0) //startsWith implementation
 				{
 					var find_child_id = key.split('-'),
@@ -179,7 +180,7 @@ function redrawNodes(pers_id, fam_id, drawLinesToo)
 
 			for (var c=0; c < last_gen.length; c++){
 				var sib_id = last_gen[c],
-					n_sib = unique_graph_objs[fam_id].nodes[sib_id].graphics;
+					n_sib = node_map[sib_id].graphics;
 
 				n_sib.setY(npers_pos.y);
 
@@ -213,7 +214,7 @@ function touchlines(grid_use){
 			if (two !== "family_size")
 			{
 				var e = new CustomEvent("dragmove", {target: {attrs: {x:10, y:10}}}),
-					o = unique_graph_objs[one].nodes[two].graphics;
+					o = uniqueGraphOps.getFam(one).nodes[two].graphics;
 
 				o.dispatchEvent(e);
 			}
@@ -234,7 +235,7 @@ function spaceFamGroups()
 	//First pass get leftover space
 	for (var fid in family_map){ //should be in this order
 		num_fams ++;
-		var nodes = unique_graph_objs[fid].nodes;
+		var nodes = uniqueGraphOps.getFam(fid).nodes;
 
 		var min_x = 9999999, max_x = 0;
 
@@ -267,7 +268,7 @@ function spaceFamGroups()
 		var step = buffer_x;
 
 		for (var fid in family_map){
-			var group = unique_graph_objs[fid].group;
+			var group = uniqueGraphOps.getFam(fid).group;
 			group.setX(group.getX() + step);
 
 			step += gap_between;
@@ -278,7 +279,7 @@ function spaceFamGroups()
 
 function linesShow(fid, show){
 	//Hide lines
-	var edges = unique_graph_objs[fid].edges;
+	var edges = uniqueGraphOps.getFam(fid).edges;
 	for (var eid in edges)
 		if (show){
 			edges[eid].graphics.show();

@@ -1,5 +1,7 @@
 var familyMapOps = {
 
+	_family_map : {},
+
 	insert: function(person, family_id){
 		
 		if (!(family_id in family_map)){

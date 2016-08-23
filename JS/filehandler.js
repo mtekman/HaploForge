@@ -50,6 +50,10 @@ class ProcessInput {
 
 	_init()
 	{
+		// Flush all maps
+		family_map = {}
+		uniqueGraphOps.clear();
+
 	
 		if (this.type === "pedfile"){
 			this.splitHeaderFromData();		
@@ -104,6 +108,7 @@ class ProcessInput {
 				pat = people_info[2], mat = people_info[3],
 				sex = people_info[4], aff = people_info[5];
 
+			console.log("creating new pers", id, sex, aff, mat, pat)
 			var pers = new Person(id, sex, aff, mat, pat);
 			familyMapOps.insert(pers, fam);
 

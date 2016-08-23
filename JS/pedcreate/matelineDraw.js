@@ -109,13 +109,14 @@ class MatelineDraw extends LineDrawOps {
 			}
 		}
 
-		var fam_group = unique_graph_objs[this._family].group,
+		var fam_gfx = uniqueGraphOps.getFam(this._family),
+			fam_group = fam_gfx.group,
 			group_pos = fam_group.getAbsolutePosition(),
 			new_line = this._tmpLine.clone();
 
 		fam_group.add(new_line);
 
-		var fath_gfx = unique_graph_objs[this._family].nodes[moth.id].graphics.getPosition();
+		var fath_gfx = fam_gfx.nodes[moth.id].graphics.getPosition();
 
 		new_line.setX( fath_gfx.x );
 		new_line.setY( fath_gfx.y );
@@ -123,7 +124,7 @@ class MatelineDraw extends LineDrawOps {
 
 		addFamMap.incrementEdges(
 			u_matesline, fath.id, moth.id, 0,
-			unique_graph_objs[this._family].edges,
+			fam_gfx.edges,
 			new_line
 		)
 		new_line.setZIndex(1);

@@ -79,8 +79,8 @@ function isEmpty(map){
 
 
 // Graph obj globals
-var generation_grid_ids = {}, //fam_id --> [generation array]
-	unique_graph_objs = {}; // fam_id --> Holds node and edge data, including pointers to graphics
+var generation_grid_ids = {}; //fam_id --> [generation array]
+
 
 var maxlen_marker = 0; // set by filehandler, read by addHaploBlocks
 

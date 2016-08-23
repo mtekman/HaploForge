@@ -49,9 +49,10 @@ class OffspringDraw extends LineDrawOps {
 
 		var familyID = _this._family;
 
-		var fam_group = unique_graph_objs[familyID].group,
-			edge_map  = unique_graph_objs[familyID].edges,
-			node_map  = unique_graph_objs[familyID].nodes;
+		var fam_gfx   = uniqueGraphOps.getFam(familyID),
+			fam_group = fam_gfx.group,
+			edge_map  = fam_gfx.edges,
+			node_map  = fam_gfx.nodes;
 
 		var nodeGroup = new Kinetic.Group({});
 
@@ -95,7 +96,7 @@ class OffspringDraw extends LineDrawOps {
 					_this.joinIDs();
 
 					nodeGroup.destroy();
-					delete unique_graph_objs[familyID].edges[this.matelineID].sib_anchor
+					delete uniqueGraphOps.getFam(familyID).edges[this.matelineID].sib_anchor
 
 					_this.endLineDraw();
 
@@ -150,11 +151,11 @@ class OffspringDraw extends LineDrawOps {
 			});
 		}
 
-		unique_graph_objs[this._family].group.add(new_line);
+		uniqueGraphOps.getFam(this._family).group.add(new_line);
 
 		addFamMap.incrementEdges(
 			u_childline, this.matelineID, child.id, 2,
-			unique_graph_objs[this._family].edges,
+			uniqueGraphOps.getFam(this._family).edges,
 			new_line
 		);
 
@@ -175,6 +176,6 @@ class OffspringDraw extends LineDrawOps {
 
 
 	static numMateLines(famID){
-		return Object.keys(unique_graph_objs[famID].edges).filter(v => v[0] === 'm').length;
+		return Object.keys(uniqueGraphOps.getFam(famID).edges).filter(v => v[0] === 'm').length;
 	}
 };

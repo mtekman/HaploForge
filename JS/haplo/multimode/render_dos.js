@@ -38,11 +38,11 @@ function render(line_points, slot_array, finishfunc){
 		var fid = fid_id[0], 
 			id = fid_id[1];
 
-		var gfx = unique_graph_objs[fid].nodes[id].graphics;
+		var gfx = uniqueGraphOps.getFam(fid).nodes[id].graphics;
 
 		// Store old position before moving
 		gfx.main_layer_pos = gfx.getPosition();
-		gfx.main_layer_group = unique_graph_objs[fid].group;
+		gfx.main_layer_group = uniqueGraphOps.getFam(fid).group;
 		gfx.remove()
 		gfx.listening( false );
 		
@@ -155,7 +155,7 @@ function mapLinesAndNodes(line_map )
 					sortXHaplo( start_y, moth_id, fid );
 
 					// Add mate line
-					var consang = unique_graph_objs[fid].edges['m:'+fath_id+'-'+moth_id].consangineous;
+					var consang = uniqueGraphOps.getFam(fid).edges['m:'+fath_id+'-'+moth_id].consangineous;
 
 					addLinePoint(
 						fid, fath_id,
@@ -246,12 +246,12 @@ function mapLines(line_points, haplo_group_lines){
 			// Mateline or DOSline
 			if (start_ids.length === 1){
 
-				var from_gfx_pos = unique_graph_objs[fid].nodes[from].graphics.getPosition();
+				var from_gfx_pos = uniqueGraphOps.getFam(fid).nodes[from].graphics.getPosition();
 
 				if (info.drop === null){ 	// Mateline
 
 					var to_id = info.to,
-						to_gfx_pos = unique_graph_objs[fid].nodes[to_id].graphics.getPosition();
+						to_gfx_pos = uniqueGraphOps.getFam(fid).nodes[to_id].graphics.getPosition();
 
 					haplo_group_lines.add( addRLine_simple(from_gfx_pos, to_gfx_pos, info.consang ) );
 				}
@@ -265,8 +265,8 @@ function mapLines(line_points, haplo_group_lines){
 				var parent1_id = start_ids[0],
 					parent2_id = start_ids[1];
 
-				var parent1_gfx = unique_graph_objs[fid].nodes[parent1_id].graphics.getPosition(),
-					parent2_gfx = unique_graph_objs[fid].nodes[parent2_id].graphics.getPosition();
+				var parent1_gfx = uniqueGraphOps.getFam(fid).nodes[parent1_id].graphics.getPosition(),
+					parent2_gfx = uniqueGraphOps.getFam(fid).nodes[parent2_id].graphics.getPosition();
 
 				var mid_point_pos = {x: (parent1_gfx.x + parent2_gfx.x)/2, y: parent1_gfx.y};
 				sib_anchor_pos = {x:mid_point_pos.x, y:mid_point_pos.y + info.drop/3};
@@ -283,7 +283,7 @@ function mapLines(line_points, haplo_group_lines){
 
 		 		for (var s=0; s < sib_ids.length; s++){
 		 			var sib_id = sib_ids[s],
-		 				sib_gfx_pos = unique_graph_objs[fid].nodes[sib_id].graphics.getPosition();
+		 				sib_gfx_pos = uniqueGraphOps.getFam(fid).nodes[sib_id].graphics.getPosition();
 
 		 			var sibline = null;
 		 			if (!info.lastgen)

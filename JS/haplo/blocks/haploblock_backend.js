@@ -223,7 +223,7 @@ function child2parent_link(pers, moth, fath, fam) // fam only needed for consang
 
 	// Check for consanginuity
 	var key = "m:"+fath.id+"-"+moth.id;
-	var consang_check = unique_graph_objs[fam].edges[key].consangineous;
+	var consang_check = uniqueGraphOps.getFam(fam).edges[key].consangineous;
 
 	if (consang_check){
 		// Kick out groups that overlap in both sets

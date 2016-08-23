@@ -63,10 +63,8 @@ var homology_selection_mode = function()
 	haplo_window.top.moveTo(sub_select_group)
 	haplo_window.top.exit.hide();
 
-	for (var c=0; c < haplo_group_nodes.children.length; c++){
-	// for (var fid in unique_graph_objs){
-	// 	for (var node in unique_graph_objs[fid].nodes)
-	// 	{
+	for (var c=0; c < haplo_group_nodes.children.length; c++)
+	{
 			var node = haplo_group_nodes.children[c];
 
 			if (node == 0) continue;

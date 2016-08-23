@@ -2,7 +2,7 @@
 var stage;
 
 /* All nodes (even across seperate families) share the same node layer,
-   but are bound by family_group stored in unique_graph_objs[fam_id].group; */
+   but are bound by family_group stored in uniqueGraphOps.getFam(fam_id).group; */
 
 var main_layer, haplo_layer;
 

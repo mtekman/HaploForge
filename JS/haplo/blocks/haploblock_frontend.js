@@ -86,8 +86,8 @@ function addHaplosAnyone(haplofam_map, parent_node)
 
 */
 function redrawHaplos(resizeToo){
-	var scroll_rect = unique_graph_objs.haplo_scroll,
-		scroll_area = unique_graph_objs.haplo_area;
+	var scroll_rect = uniqueGraphOps.haplo_scroll,
+		scroll_area = uniqueGraphOps.haplo_area;
 
 	var diff_y = scroll_rect.getAbsolutePosition().y - scroll_area.getAbsolutePosition().y,
 		index_start_delta = Math.floor( diff_y / HAP_VERT_SPA );
