@@ -247,6 +247,11 @@
   padding-left: 10px;
   margin-bottom: 5px;
   margin-top: -18px;
+  text-shadow: 
+    -1px  1px white,
+    -1px -1px white,
+     1px -1px white,
+     1px  1px white;
 }
 
 

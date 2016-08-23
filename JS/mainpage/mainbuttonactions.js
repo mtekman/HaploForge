@@ -1,30 +1,34 @@
-var fileType = null;
-
 
 class MainButtonActions {
+
+	static preamble(){
+		makeStage();
+	}
 
 	static processHaploFile() {
 	    var file = document.getElementById("haploupload").files[0];
 	    var lr = new FileReader();
 
 	    lr.onloadend = function(e){
+	    	MainButtonActions.preamble();
 			MainPageHandler.haplomodeload();
 
 			MainButtonActions.processinput(e.target.result) /* type unknown at this point */
 			var np = new ProcessInput(e.target.result);
-			fileType = np.type;
+			MainButtonActions.fileType = np.type;
 			init();
 			np = null; //delete is depreciated to object PROPS only
 
 			//Save to local storage
 			localStorage.setItem(localStor.hap_save, e.target.result)
-			localStorage.setItem(localStor.hap_type, fileType)
+			localStorage.setItem(localStor.hap_type, MainButtonActions.fileType)
 	    };
 
 	    lr.readAsText(file);
 	}
 
 	static loadHaploFromStorage() {
+		MainButtonActions.preamble();
 		MainPageHandler.haplomodeload();
 
 		var hap_data = localStorage.getItem( localStor.hap_save ),
@@ -34,6 +38,7 @@ class MainButtonActions {
 	}
 
 	static loadPedFromStorage() {
+		MainButtonActions.preamble();
 		MainPageHandler.createpedmode();
 		
 		var ped_data = localStorage.getItem( localStor.ped_save ),
@@ -74,6 +79,7 @@ class MainButtonActions {
 
 
 	static createNewPed() {
+		MainButtonActions.preamble();
 		MainPageHandler.createpedmode();
 
 /*		var d = document.getElementById('pedcreate_views');
@@ -86,7 +92,7 @@ class MainButtonActions {
 
 	static processinput(data, type = null){
 		var pi = new ProcessInput(data, type);
-		fileType = (type === null)?pi.type:type;
+		MainButtonActions.fileType = (type === null)?pi.type:type;
 		init();
 		pi = null; /* Force early GC */
 	}

@@ -101,22 +101,30 @@ var ToolSetModes = {
 		ToolSetModes.preamble();
 
 		toolset.setTitle("Selection Tools");
-		toolset.addToolsButton("Select All", function(){
-			console.log("implement");
+		toolset.addToolsButton("Select All", function()
+		{
+			ToolSetModes.toggle_selection_all = !ToolSetModes.toggle_selection_all || false;
+
+			for (var key in selection_items){
+				var item = selection_items[key];
+				if(  (ToolSetModes.toggle_selection_all && !item.selected)
+				  || (!ToolSetModes.toggle_selection_all && item.selected) ){
+					item.box.fire('click')
+				}
+			}
 		});
 
 		toolset.addToolsButton("Select Affecteds", function()
 		{
-			toggle_selection_affecteds = !toggle_selection_affecteds;
+			ToolSetModes.toggle_selection_affecteds = !ToolSetModes.toggle_selection_affecteds || false;
 
 			for (var key in selection_items){
-
 				var item = selection_items[key];
 				var affected = (item.graphics.children[0].attrs.fill === col_affs[2])
 
 				if (affected){
-					if( (toggle_selection_affecteds && !item.selected)
-					 || (!toggle_selection_affecteds && item.selected) ){
+					if( (ToolSetModes.toggle_selection_affecteds && !item.selected)
+					 || (!ToolSetModes.toggle_selection_affecteds && item.selected) ){
 						item.box.fire('click');
 					}
 				}
@@ -126,40 +134,29 @@ var ToolSetModes = {
 			);
 		});
 
-		toolset.addToolsButton("Submit Selection", function(){
-			// var selected_for_homology = []; // Now global in homology_buttons.js
-			selected_for_homology = [];
-		
-			for (var s in selection_items){
-				if (selection_items[s].selected){
-
-					selection_items[s].box.stroke('green')
-
-					selected_for_homology.push(s);
-				}
-				selection_items[s].box.off('click');
-			}
-
-			// Shift top panel to front layer
-			haplo_window.top.moveTo(haplo_window)
-			haplo_window.top.exit.show();
+		toolset.addToolsButton("Submit Selection", launchHaplomode);
+	},
 
 
-			sub_select_group.rect.destroy();
-			ToolSetModes.clearMode();
+	/* Align, Find Hom, Range, Marker */
+	setToHaploMode: function()
+	{
+		ToolSetModes.preamble();
 
-			haplo_layer.draw();
+		toolset.setTitle("Haplo Tools");
 
-			if (selected_for_homology.length === 0)
-				return -1;
-
-			plots = scan_alleles_for_homology( selected_for_homology );
-
-			homology_buttons_show();
-			homology_buttons_redraw();
-
-			return 0;
+		toolset.addToolsButton("Align Pedigree", function(){
+			alignTopSelection( haplo_group_nodes, haplo_group_lines);
 		});
+		toolset.addToolsButton("Find Homology", function(){
+			// Function exits selection mode auto
+			homology_selection_mode();
+			//returns marker pair list
+		});
+		toolset.addToolsButton("Range Slider", function(){
+			showSlider(!markerscale_visible)
+		});
+		toolset.addToolsButton("Marker Search", showIndexCSS);
 	},
 
 }

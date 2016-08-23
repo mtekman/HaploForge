@@ -177,24 +177,6 @@ function makeTopBox_haplomode( box_lims_and_group, render_group){
 
 	haplo_window.top.add( haplo_window.top.exit);
 
-	// Align Button
-	haplo_window.add(
-		addButton("Align Pedigree", 0, 0, function(){
-			alignTopSelection( haplo_group_nodes, haplo_group_lines);
-		})
-	);
-
-	// Secondary selection mode for looking for regions of homology over het alleles (hom later)
-	
-	// Check for homology
-	haplo_window.add(
-		addButton("Find Homology", 0, butt_h, function(){
-			// Function exits selection mode auto
-			homology_selection_mode();
-			//
-			//returns marker pair list
-	}));
-
 
 	// // JS detaches toggler from function inherently
 	// var haplotypes_toggled = false;
@@ -222,8 +204,9 @@ function makeTopBox_haplomode( box_lims_and_group, render_group){
 		y: white_margin,
 		duration:0.2,
 		onFinish: function(){
-			toggleBottomBox(true);
+			toggleBottomBox(true, ToolSetModes.setToHaploMode);
 		}
+	
 	})).play();
 
 	main_layer.draw();
@@ -243,22 +226,6 @@ function toggleBottomBox( show, finishfunc )
 	{
 		delete haplo_window.bottom;
 		
-		//Add Zoom button
-		haplo_window.zoom_button = addButton("Range Slider", 0, 2*butt_h,
-				function(){
-					showSlider(!markerscale_visible)
-				}
-		);
-
-		//Add Index button
-		haplo_window.index_button = addButton("Marker Search", 0, 3*butt_h, 
-			showIndexCSS
-		);
-
-		haplo_window.add( haplo_window.zoom_button  );
-		haplo_window.add( haplo_window.index_button );
-
-
 		//Scroll window
 		haplo_window.bottom = new Kinetic.Group({
 			x:haplo_window.top.getX() ,
@@ -316,8 +283,6 @@ function toggleBottomBox( show, finishfunc )
 
 	}
 	else {
-		haplo_window.zoom_button.destroy();
-		delete haplo_window.zoom_button;
 
 		unique_graph_objs.haplo_area.hide();
 

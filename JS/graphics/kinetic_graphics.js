@@ -1,23 +1,29 @@
 // ------------ Kinetic globals ------------
-var stage = new Kinetic.Stage({
-	container:'container',
-	width: window.innerWidth,
-	height: window.innerHeight
-});
+var stage;
 
 /* All nodes (even across seperate families) share the same node layer,
    but are bound by family_group stored in unique_graph_objs[fam_id].group; */
 
-var main_layer = new Kinetic.Layer({id:"main"}),
-	haplo_layer = new Kinetic.Layer({id:"haplo"});
+var main_layer, haplo_layer;
 
-// Seperate mini-layer for marker slider
-/*var mscale_layer = new Kinetic.Layer({
-	id:"marker_scale",
-	x:0, y:0,
-	width:100,
-	height: slider_height + 20
-});*/
+// --- Init Kinetic --//
+function makeStage(){
+
+	if (stage !== undefined){
+		stage = null;
+		main_layer = null;
+		haplo_layer = null;
+	}
+
+	stage = new Kinetic.Stage({
+		container:'container',
+		width: window.innerWidth,
+		height: window.innerHeight
+	});
+
+	main_layer = new Kinetic.Layer({id:"main"});
+	haplo_layer = new Kinetic.Layer({id:"haplo"});
+}
 
 
 // ------------ Kinetic Tools --------------

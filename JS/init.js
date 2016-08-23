@@ -9,7 +9,7 @@ function init(){
 	determinePedigreeType();
 	graphInitPos(nodeSize + 10, grid_rezY);
 
-	if (fileType === "allegro"){
+	if (MainButtonActions.fileType === "allegro"){
 		assignHGroups();
 		washMarkerMap();
 
@@ -34,9 +34,9 @@ function init(){
 }
 
 
-//MainPageHandler.defaultload();
+MainPageHandler.defaultload();
 /*setTimeout(function(){
 
 },3000);*/
 
-MainButtonActions.createNewPed()	
+//MainButtonActions.createNewPed()	

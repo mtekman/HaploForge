@@ -1,13 +1,8 @@
 
 // To be shared by haplomode_multi.js too
 var selection_items = {}, // fid_id: {box:Object, selected:toggled, affected:bool}
-	toggle_selection_affecteds = false,
-	select_group,
-	select_button = addButton("Select Mode", 0, 0, function(){
-		startSelectionMode();
-	});
+	select_group;
 
-//main_layer.add(select_button);
 
 
 function selectFam(fam_id){
@@ -24,18 +19,11 @@ function stopSelectionMode(){
 	select_group.destroy();
 
 	// Reset all
-	toggle_selection_affecteds = false;
 	selection_items = {}
 
 	// From haplomode_multi
 	selected_ids_map = {}
 	selected_ids = {};
-
-	//Add selectionButton again
-	select_button = addButton("Selection", 0, 0, function(){
-			startSelectionMode();
-		});
-	main_layer.add(select_button);
 
 	//Delete zoom
 	if (markerInstance !== null){
@@ -50,8 +38,6 @@ function stopSelectionMode(){
 
 function startSelectionMode()
 {
-	select_button.destroy();
-
 	// Main selection layer
 	select_group = new Kinetic.Group({
 		x:0, y:0,
@@ -68,27 +54,6 @@ function startSelectionMode()
 			opacity: 0.1
 	}));
 
-	select_group.add(addButton("Select Affecteds", 0, 0, function(){
-
-			toggle_selection_affecteds = !toggle_selection_affecteds;
-
-			for (var key in selection_items){
-
-				var item = selection_items[key];
-				var affected = (item.graphics.children[0].attrs.fill === col_affs[2])
-
-				if (affected)
-					if( (toggle_selection_affecteds && !item.selected)
-					 || (!toggle_selection_affecteds && item.selected) )
-						item.box.fire('click');
-			}
-
-			console.log("affecteds:", Object.keys(selection_items).filter( function (n){ return selection_items[n].affected === true;}));
-	}, false));
-
-	select_group.add(
-		addButton("Submit / Close", 0, butt_h, launchHaplomode)
-	);
 
 	for (var fid in unique_graph_objs)
 	{

@@ -49,12 +49,16 @@ class PersistData {
 		var text = "";
 
 		for (var fid in family_map){
+			console.log(fid)
 
 			for (var pid in family_map[fid]){
 
+				console.log("  ",pid)
+
 				var perc =  familyMapOps.getPerc(pid, fid);
 				var array = [
-					fid, perc.id, 
+					fid, 
+					perc.id, 
 					perc.father.id || 0, 
 					perc.mother.id || 0, 
 					perc.gender, perc.affected
