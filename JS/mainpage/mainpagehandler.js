@@ -23,12 +23,13 @@ class MainPageHandler {
 	}
 
 	static setPrevExistingButtons(){
-		if (localStorage.getItem(localStor.ped_save) === null){
-			MainPageHandler.showDiv("pedexist", false);
-		}
-		if (localStorage.getItem(localStor.hap_save) === null){
-			MainPageHandler.showDiv("hapexist", false);
-		}
+		MainPageHandler.showDiv("pedexist",
+			(localStorage.getItem(localStor.ped_save) !== null)
+		);
+		
+		MainPageHandler.showDiv("hapexist", 
+			(localStorage.getItem(localStor.hap_save) !== null)
+		);
 	}
 
 	static defaultload(){

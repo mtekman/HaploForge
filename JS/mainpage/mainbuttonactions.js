@@ -14,14 +14,11 @@ class MainButtonActions {
 			MainPageHandler.haplomodeload();
 
 			MainButtonActions.processinput(e.target.result) /* type unknown at this point */
-			var np = new ProcessInput(e.target.result);
-			MainButtonActions.fileType = np.type;
-			init();
-			np = null; //delete is depreciated to object PROPS only
 
 			//Save to local storage
 			localStorage.setItem(localStor.hap_save, e.target.result)
 			localStorage.setItem(localStor.hap_type, MainButtonActions.fileType)
+			console.log("SAVED HAPLO")
 	    };
 
 	    lr.readAsText(file);
@@ -47,6 +44,7 @@ class MainButtonActions {
 		MainButtonActions.processinput(ped_data, ped_type);
 	}
 
+
 	static savePedToStorage() {
 
 		var ped_to_string = PersistData.toPedfileString(true); /*store graphics*/
@@ -58,23 +56,29 @@ class MainButtonActions {
 	}
 
 	static exitToMenu(){
-		var changeDetected = PersistData.pedigreeChanged();
 
-		if (changeDetected){
-			utility.yesnoprompt("Save", "Save changes before exit?",
-				"Yes", function(){
-			 		MainButtonActions.savePedToStorage();
-			 		MainPageHandler.defaultload();
-			 	},
-			 	"No", function(){
-			 		MainPageHandler.defaultload();	
-			 	}
-			 );
+		if (MainButtonActions.fileType === "Pedigree"){
+			var changeDetected = PersistData.pedigreeChanged();
+
+			if (changeDetected){
+				utility.yesnoprompt("Pedigree Modified", "Save changes before exit?",
+					"Yes", function(){
+			 			MainButtonActions.savePedToStorage();
+			 			MainPageHandler.defaultload();
+			 		},
+			 		"No", function(){
+			 			MainPageHandler.defaultload();	
+				 	}
+				 );
+			}
+			else{
+				MainPageHandler.defaultload();
+			}
 		}
+		// Haplo Types are automatically saved and loaded
 		else{
 			MainPageHandler.defaultload();
 		}
-
 	}
 
 
