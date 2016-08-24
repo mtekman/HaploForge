@@ -243,7 +243,7 @@ function toggleBottomBox( show, finishfunc )
 		// Expand Top box
 		haplo_window.bottom.add( haplo_window.bottom.rect );
 		haplo_window.add( haplo_window.bottom );
-		haplo_window.bottom.setZIndex(-2);
+		haplo_window.bottom.setZIndex(503);
 
 		kineticTween({
 			node: haplo_window.bottom.rect,
