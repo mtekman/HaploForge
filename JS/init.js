@@ -35,8 +35,4 @@ function init(){
 
 
 MainPageHandler.defaultload();
-/*setTimeout(function(){
-
-},3000);*/
-
 //MainButtonActions.createNewPed()	
