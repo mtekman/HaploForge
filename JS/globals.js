@@ -1,3 +1,10 @@
+// User configurable:
+var userOpts = {
+	allowTransitions: true
+};
+
+
+
 //Local storage keys
 var localStor = {
 	ped_save : 'ped_data',
