@@ -1,10 +1,11 @@
 // ------------ Kinetic globals ------------
-var stage;
+var stage = null;
 
 /* All nodes (even across seperate families) share the same node layer,
    but are bound by family_group stored in uniqueGraphOps.getFam(fam_id).group; */
 
-var main_layer, haplo_layer;
+var main_layer = null, 
+	haplo_layer = null;
 
 // --- Init Kinetic --//
 function makeStage(){
@@ -500,7 +501,7 @@ function addPerson(person, fam_group,  t_x, t_y)  //positions relative to family
 		this.setY( (Math.floor(y/grid_rezY)*grid_rezY) );
 
 
-		if (fam_group.id in family_map){
+		if (familyMapOps.famExists(fam_group.id)){
 			redrawNodes(id, fam_group.attrs.id, true);
 		}
 	});

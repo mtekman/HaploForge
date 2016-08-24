@@ -22,7 +22,7 @@ function printToFile( ht_ids, start_index, stop_index )
 			fid = f_id[0],
 			id = f_id[1];
 
-		var aff = (family_map[fid][id].affected == 2)?'a':'u';
+		var aff = (familyMapOps.getPerc(id,fid).affected == 2)?'a':'u';
 
 		text += "\t"+id.toString()+'_'+aff
 	}
@@ -40,7 +40,7 @@ function printToFile( ht_ids, start_index, stop_index )
 				fid = f_id[0],
 				id = f_id[1];
 
-			var alleles = family_map[fid][id].haplo_data,
+			var alleles = familyMapOps.getPerc(id,fid).haplo_data,
 				a1 = alleles[0].data_array[l],
 				a2 = alleles[1].data_array[l];
 

@@ -58,8 +58,8 @@ class MatelineDraw extends LineDrawOps {
 			return;
 		}
 
-		person1	= family_map[this._family][person1.id];
-		person2	= family_map[this._family][person2.id];
+		person1	= familyMapOps.getPerc(person1.id, this._family);
+		person2	= familyMapOps.getPerc(person2.id, this._family);
 
 		if (person1.gender === person2.gender){
 			var type = {0: 'unknowns',

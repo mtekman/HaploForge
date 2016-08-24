@@ -129,9 +129,9 @@ class OffspringDraw extends LineDrawOps {
 		var u_childline = edgeAccessor.childlineID(this.matelineID, this.childNodeID);
 
 		var father_mother_ids = this.matelineID.split(':')[1].split('-'),
-			father = family_map[this._family][Number(father_mother_ids[0])],
-			mother = family_map[this._family][Number(father_mother_ids[1])],
-			child = family_map[this._family][this.childNodeID];
+			father = familyMapOps.getPerc(Number(father_mother_ids[0]), this._family),
+			mother = familyMapOps.getPerc(Number(father_mother_ids[1]), this._family),
+			child = familyMapOps.getPerc(this.childNodeID, this._family);
 
 		father.children.push(child); 
 		mother.children.push(child);

@@ -181,44 +181,44 @@ function populateGrids_and_UniqueObjs( graphicsMap=null )
 {
 
 	//First root indiv for each family
-	for (var one in family_map){
-		for (var two in family_map[one]){
-			var root = family_map[one][two];
-			
-			console.log("ROOT=", root.id);
+	familyMapOps.foreachfam(function(fam_id){
+		var root = familyMapOps.getFirst(fam_id);
+		
+		console.log("ROOT=", root.id);
 
-			//Populate gridmap and uniq map
-			var arr_obj = addFamMap.init(root, graphicsMap);
-			var generation_array = arr_obj[0],
-				nodes_edges = arr_obj[1];
+		//Populate gridmap and uniq map
+		var arr_obj = addFamMap.init(root, graphicsMap);
+		var generation_array = arr_obj[0],
+			nodes_edges = arr_obj[1];
 
 //			console.log( generation_array, uniq_objs);
 
-			//Insert into global maps
-			uniqueGraphOps.insertFam(one, null);
-			uniqueGraphOps.getFam(one).nodes = nodes_edges.nodes;
-			uniqueGraphOps.getFam(one).edges = nodes_edges.edges;
-			
-			generation_grid_ids[one] = generation_array;
+		//Insert into global maps
+		uniqueGraphOps.insertFam(fam_id, null);
+		uniqueGraphOps.getFam(fam_id).nodes = nodes_edges.nodes;
+		uniqueGraphOps.getFam(fam_id).edges = nodes_edges.edges;
+		
+		generation_grid_ids[fam_id] = generation_array;
 
-			// XXX -  What does this do?
-			for (var g=0; g < generation_array; g++){
-				for (var i=0; i < generation_array[g]; i++){
+		// XXX -  What does this do?
+		for (var g=0; g < generation_array; g++){
+			for (var i=0; i < generation_array[g]; i++){
 
-				}
 			}
-
-			// Check if root tree contains ALL individuals
-			var num_nodes = -1; // start at -1 to skip fake indidivual '0'
-			for (var node in nodes_edges.nodes) {num_nodes ++};
-			
-			if (num_nodes !== family_map[one].family_size){
-				console.log("Warning! Family "+one+" has only mapped "+num_nodes+" individuals out of "+family_map[one].family_size);
-			}
-
-			break; //Once per fam
 		}
-	}
+
+		// Check if root tree contains ALL individuals
+		var num_nodes = -1; // start at -1 to skip fake indidivual '0'
+		for (var node in nodes_edges.nodes) {num_nodes ++};
+		
+		if (num_nodes !== familyMapOps.getFam(fam_id).family_size){
+			console.log("Warning! Family "+fam_id
+				+" has only mapped "+num_nodes
+				+" individuals out of "
+				+familyMapOps.getFam(fam_id).family_size
+			);
+		}
+	});
 }
 
 
@@ -264,7 +264,7 @@ function graphInitPos(start_x, start_y){
 			//Can't be helped, JS doesn't support macros...
 			function placePerp(index, posx){
 				var perp_id = gen_grid[gen][index],
-					perp = family_map[fam][perp_id],
+					perp = familyMapOps.getPerc(perp_id, fam),
 					n_perp = nodes[perp_id];
 
 
@@ -402,10 +402,7 @@ function graphInitPos(start_x, start_y){
 // Find highest founder - A* best-first search
 function checkConsanginuity(fam_id, pers1_id, pers2_id)
 {
-	// console.log(family_map, fam_id);
-	// throw new Error("STAHP");
-
-    var fam_map = family_map[fam_id],
+    var fam_map = familyMapOps.getFam(fam_id),
         pers1 = fam_map[pers1_id],
         pers2 = fam_map[pers2_id];
 

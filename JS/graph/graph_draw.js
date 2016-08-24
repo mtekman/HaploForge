@@ -61,7 +61,7 @@ var updateGraph = {
 
 function redrawNodes(pers_id, fam_id, drawLinesToo)
 {
-	var pers      = family_map[fam_id][pers_id],
+	var pers      = familyMapOps.getPerc(pers_id, fam_id),
 		fam_gfx   = uniqueGraphOps.getFam(fam_id),
 		node_map  = fam_gfx.nodes,
 		edge_map  = fam_gfx.edges,
@@ -207,19 +207,15 @@ function redrawNodes(pers_id, fam_id, drawLinesToo)
 function touchlines(grid_use){
 	use_grid = grid_use;
 
-	for(var one in family_map){
-		for(var two in family_map[one])
-		{	//simulate drag event
+	familyMapOps.foreachperc(function( perid, famid){
+		if (perid !== "family_size")
+		{
+			var e = new CustomEvent("dragmove", {target: {attrs: {x:10, y:10}}}),
+				o = uniqueGraphOps.getFam(famid).nodes[perid].graphics;
 
-			if (two !== "family_size")
-			{
-				var e = new CustomEvent("dragmove", {target: {attrs: {x:10, y:10}}}),
-					o = uniqueGraphOps.getFam(one).nodes[two].graphics;
-
-				o.dispatchEvent(e);
-			}
+			o.dispatchEvent(e);
 		}
-	}
+	});
 	use_grid = true;
 }
 
@@ -233,7 +229,7 @@ function spaceFamGroups()
 	var global_minx = 9999999;
 
 	//First pass get leftover space
-	for (var fid in family_map){ //should be in this order
+	familyMapOps.foreachfam(function(fid){  //should be in this order
 		num_fams ++;
 		var nodes = uniqueGraphOps.getFam(fid).nodes;
 
@@ -251,7 +247,7 @@ function spaceFamGroups()
 		if (global_minx > min_x) global_minx = min_x;
 
 		leftover_gap -= max_x - min_x;
-	}
+	});
 
 	//Move groups
 
@@ -267,12 +263,11 @@ function spaceFamGroups()
 	if (gap_between > 0){
 		var step = buffer_x;
 
-		for (var fid in family_map){
+		familyMapOps.foreachfam(function(fid){
 			var group = uniqueGraphOps.getFam(fid).group;
 			group.setX(group.getX() + step);
-
 			step += gap_between;
-		}
+		});
 	}
 }
 

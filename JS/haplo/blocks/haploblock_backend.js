@@ -17,7 +17,7 @@ var uniqueset = function(set){
 
 function initFounderAlleles( fid, id )
 {
-	var perc_hdata = family_map[fid][id].haplo_data;
+	var perc_hdata = familyMapOps.getPerc(id,fid).haplo_data;
 
 	for (var a = 0; a < perc_hdata.length; a++) 	// current allele
 	{
@@ -356,7 +356,7 @@ function assignHGroups()
 			for (var p =0; p < generation_grid_ids[fam][g].length; p++)
 			{
 				var pers_id = generation_grid_ids[fam][g][p],
-					pers    = family_map[fam][pers_id];
+					pers    = familyMapOps.getPerc(pers_id, fam);
 
 				var moth_id = pers.mother.id,
 					fath_id = pers.father.id;
@@ -367,8 +367,8 @@ function assignHGroups()
 					continue;
 				}
 
-				var moth = family_map[fam][moth_id],
-					fath = family_map[fam][fath_id];
+				var moth = familyMapOps.getPerc(moth_id, fam),
+					fath = familyMapOps.getPerc(fath_id, fam);
 
 				child2parent_link(pers, moth, fath, fam);
 			}

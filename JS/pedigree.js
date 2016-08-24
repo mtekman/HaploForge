@@ -92,42 +92,42 @@ Person.prototype.addChild = function(child){
 //
 function connectAllIndividuals()
 {
-	for(var famid in family_map){
-		for(var id in family_map[famid])
-		{
-			var new_root = family_map[famid][id];      //Assign father and mother to actual people
-			var pers_father = 0, pers_mother = 0;
+	familyMapOps.foreachperc(function(id,famid)
+	{
+		var new_root = familyMapOps.getPerc(id, famid);      //Assign father and mother to actual people
+		var pers_father = 0, pers_mother = 0;
 
-			if (new_root.father != 0) {
-				pers_father = family_map[famid][new_root.father];
+		if (new_root.father != 0) {
+			pers_father = familyMapOps.getPerc(new_root.father, famid);
 
-				new_root.father = pers_father;         // Add father to child
-				pers_father.addChild(new_root);   // And child to father
-			}
-
-			if (new_root.mother != 0){
-				pers_mother = family_map[famid][new_root.mother];
-
-				new_root.mother = pers_mother;         // Add mother to child
-				pers_mother.addChild(new_root);   // And child to mother
-			}
-
-			if (pers_father != 0 )                     //Add parents as mates to each other
-				if(pers_mother != 0) pers_father.addMate(pers_mother);
-				else pers_father.addMate(0);
-
-			if (pers_mother !=0 )
-				if(pers_father != 0) pers_mother.addMate(pers_father);
-				else pers_mother.addMate(0);
+			new_root.father = pers_father;         // Add father to child
+			pers_father.addChild(new_root);   // And child to father
 		}
-	}
+
+		if (new_root.mother != 0){
+			pers_mother = familyMapOps.getPerc(new_root.mother,famid);
+
+			new_root.mother = pers_mother;         // Add mother to child
+			pers_mother.addChild(new_root);   // And child to mother
+		}
+
+		if (pers_father != 0 )                     //Add parents as mates to each other
+			if(pers_mother != 0) pers_father.addMate(pers_mother);
+			else pers_father.addMate(0);
+
+		if (pers_mother !=0 )
+			if(pers_father != 0) pers_mother.addMate(pers_father);
+			else pers_mother.addMate(0);
+	});
 	
 	// Make a total
-	for (var famid in family_map){
+	familyMapOps.foreachfam(function(famid){
 		var num_peeps = 0;
-		for (var id in family_map[famid]){ num_peeps ++;}
-		family_map[famid].family_size = num_peeps;
-	}
+		familyMapOps.foreachperc(function(){
+			num_peeps ++;
+		}, famid);
+		familyMapOps.getFam(famid).family_size = num_peeps;
+	});
 }
 
 //var groupNodes = function(){
@@ -175,7 +175,7 @@ function determinePedigreeType()
 			for (var p=0; p < generation_grid_ids[ped_id][g].length; p++)
 			{
 				var perc_id = generation_grid_ids[ped_id][g][p],
-					perc = family_map[ped_id][perc_id];
+					perc = familyMapOps.getPerc(perc_id,ped_id);
 
 				//Determine if Y allele is zero for ALL males (not just one)
 				if ( perc.gender == MALE ){
@@ -225,7 +225,7 @@ function determinePedigreeType()
 			for (var p=0; p < generation_grid_ids[ped_id][g].length; p++)
 			{
 				var perc_id = generation_grid_ids[ped_id][g][p],
-					perc = family_map[ped_id][perc_id];
+					perc = familyMapOps.getPerc(perc_id,ped_id);
 
 				if (perc.affected === AFFECTED)
 					affecteds_in_gen ++;
@@ -249,7 +249,7 @@ function determinePedigreeType()
 					for (var mem = 0; mem < generation_grid_ids[fid][gen].length; mem ++)
 					{
 						var perc_id = generation_grid_ids[fid][gen][mem],
-						perc = family_map[fid][perc_id];
+							perc = familyMapOps.getPerc(perc_id,fid);
 
 						if (perc.gender === MALE && perc.haplo_data.length === 1)
 						{

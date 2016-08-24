@@ -31,7 +31,7 @@ function findDOSinSelection(selection_map){
 
 			for (var i1 = 0; i1 < current_gen.length; i1 ++){
 				var id = current_gen[i1],
-				perc = family_map[fam][id];
+				perc = familyMapOps.getPerc(id,fam);
 
 				// Only Non-founders can be sibs
 				var fm_key;
@@ -87,7 +87,7 @@ function findDOSinSelection(selection_map){
 
 						//If the connected at the same level, then check if they're mates.
 						if (moth_rez.dos === fath_rez.dos){
-							var moth_perc = family_map[fam][moth_rez.id];
+							var moth_perc = familyMapOps.getPerc(moth_rez.id, fam);
 
 							for (var m=0; m < moth_perc.mates.length; m++){
 								if (fath_rez.id === moth_perc.mates[m].id){

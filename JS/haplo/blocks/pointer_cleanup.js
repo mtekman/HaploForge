@@ -16,7 +16,7 @@ function removeAmbiguousPointers(fam)
 		for (var p =0; p < generation_grid_ids[fam][g].length; p++)
 		{
 			var id = generation_grid_ids[fam][g][p];
-			var both_alleles = family_map[fam][id].haplo_data;
+			var both_alleles = familyMapOps.getPerc(id,fam).haplo_data;
 
 			for (var a = 0; a < both_alleles.length; a++)
 			{

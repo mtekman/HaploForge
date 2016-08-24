@@ -43,7 +43,7 @@ class ProcessInput {
 		if (type === null){
 			this.type = this._determineFileType();			
 		}
-		console.log(this.type)
+		console.log("File Type = ", this.type)
 		
 		this._init();
 	}
@@ -51,7 +51,7 @@ class ProcessInput {
 	_init()
 	{
 		// Flush all maps
-		family_map = {}
+		familyMapOps.clear();
 		uniqueGraphOps.clear();
 
 	
@@ -108,7 +108,6 @@ class ProcessInput {
 				pat = people_info[2], mat = people_info[3],
 				sex = people_info[4], aff = people_info[5];
 
-			console.log("creating new pers", id, sex, aff, mat, pat)
 			var pers = new Person(id, sex, aff, mat, pat);
 			familyMapOps.insert(pers, fam);
 
@@ -126,13 +125,13 @@ class ProcessInput {
 						"Number of alleles do not match previous records: Line "+ l+ "!");
 				}
 	
-				family_map[fam][id].haplo_data.push( haplo_info );		//retrieves twice if needed, neater
+				familyMapOps.getPerc(id,fam).haplo_data.push( haplo_info );		//retrieves twice if needed, neater
 			}
 
 			// Handle Meta
 			if (data_and_meta.length === 2){
 				var meta = data_and_meta[1]
-				family_map[fam][id].stored_meta = meta;					// Holds graphics, person's name, other meta
+				familyMapOps.getPerc(id,fam).stored_meta = meta;					// Holds graphics, person's name, other meta
 			}
 		}
 	}

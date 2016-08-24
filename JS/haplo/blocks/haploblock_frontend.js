@@ -31,7 +31,7 @@ function addHaplosAnyone(haplofam_map, parent_node)
 		for (var pid in haplofam_map[fid])
 		{
 			var pers_x = uniqueGraphOps.getNode(pid,fid).graphics.getX() + fam_x,
-				pers_hp = family_map[fid][pid].haplo_data;
+				pers_hp = familyMapOps.getPerc(pid,fid).haplo_data;
 
 			//haploinfos.push(pers_hp);
 			if (pers_x in position_by_xpos){
@@ -57,29 +57,6 @@ function addHaplosAnyone(haplofam_map, parent_node)
 
 	redrawHaplos(true);
 }
-
-
-// DEPRECIATED
-/* Called once - displays all individuals in a given family */
-// function addHaplosFamily(fam, parent_node){ //called by toggle_haplotypes in haplo/toggle.js
-
-// 	haploinfos = []; //clean
-
-// 	for (var g = 0; g < generation_grid_ids[fam].length; g++)
-// 	{
-// 		for (var p =0; p < generation_grid_ids[fam][g].length; p++)
-// 		{
-// 			var pers_id = generation_grid_ids[fam][g][p],
-// 				pers_hp = family_map[fam][pers_id].haplo_data;
-
-// 			haploinfos.push( pers_hp );
-// 		}
-// 	}
-// // 		console.log("calling", haploinfos);
-// 	redrawHaplos(true);
-// }
-
-
 
 
 /* Redraws the current haplodata_arr group, regardless of who they are
