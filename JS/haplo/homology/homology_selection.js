@@ -23,14 +23,14 @@ var homology_selection_mode = function()
 			// var selected_for_homology = []; // Now global in homology_buttons.js
 			selected_for_homology = [];
 		
-			for (var s in selection_items){
-				if (selection_items[s].selected){
+			for (var s in SelectionMode._items){
+				if (SelectionMode._items[s].selected){
 
-					selection_items[s].box.stroke('green')
+					SelectionMode._items[s].box.stroke('green')
 
 					selected_for_homology.push(s);
 				}
-				selection_items[s].box.off('click');
+				SelectionMode._items[s].box.off('click');
 			}
 
 			// Shift top panel to front layer
@@ -76,7 +76,7 @@ var homology_selection_mode = function()
 				bounder = addBounder(pos, key, false);
 
 			// By default not enabled
-			selection_items[key] = {
+			SelectionMode._items[key] = {
 				box:bounder,
 				selected:false,
 				graphics: gfx

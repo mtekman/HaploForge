@@ -1,93 +1,137 @@
 
-// To be shared by haplomode_multi.js too
-var selection_items = {}, // fid_id: {box:Object, selected:toggled, affected:bool}
-	select_group;
+var SelectionMode = {
 
+	_ids_map : {}, // Generational map
+	_ids 	 : {}, // Just a map of ids
+	_items   : {},
 
+	_select_group : null,
 
-function selectFam(fam_id){
-	for (var key in selection_items){
-		if (key.split("_")[0] == fam_id)
-			selection_items[key].box.fire('click');
-	}
-}
+	destroy: function stopSelectionMode()
+	{
+		homology_buttons_exit();
 
-function stopSelectionMode(){
-	homology_buttons_exit();
+		SelectionMode._select_group.destroyChildren();
+		SelectionMode._select_group.destroy();
 
-	select_group.destroyChildren();
-	select_group.destroy();
+		// Reset all
+		SelectionMode._ids_map = {}
+		SelectionMode._ids = {};
+		SelectionMode._items = {}
 
-	// Reset all
-	selection_items = {}
-
-	// From haplomode_multi
-	selected_ids_map = {}
-	selected_ids = {};
-
-	//Delete zoom
-	if (markerInstance !== null){
-		markerInstance.remove();
+		//Delete zoom
+		if (markerInstance !== null){
+			markerInstance.remove();
+		}
 		haplo_layer.draw();
-	}
-	haplo_layer.draw();
-	main_layer.draw();
-}
+		main_layer.draw();
+	},
 
+	init: function startSelectionMode()
+	{
+		// Main selection layer
+		SelectionMode._select_group = new Kinetic.Group({
+			x:0, y:0,
+			width: stage.getWidth(),
+			height: stage.getHeight()
+		});
 
-
-function startSelectionMode()
-{
-	// Main selection layer
-	select_group = new Kinetic.Group({
-		x:0, y:0,
-		width: stage.getWidth(),
-		height: stage.getHeight()
-	});
-
-	select_group.add(new Kinetic.Rect({
+		SelectionMode._select_group.add(new Kinetic.Rect({
 			x:0, y:0,
 			width: stage.getWidth(),
 			height: stage.getHeight(),
 			fill: 'black',
 			strokeWidth: 0,
 			opacity: 0.1
-	}));
+		}));
 
 
-	for (var fid in uniqueGraphOps._map)
+		uniqueGraphOps.foreachfam(function(fid){
+			var text_butt = uniqueGraphOps.getFam(fid).group.fam_title_text;
+			var text_bounder = addInvisibleBounder( text_butt.getAbsolutePosition(), fid, true);
+
+			SelectionMode._select_group.add(text_bounder)
+
+			uniqueGraphOps.foreachnode(function(node, fid){
+				if (node != 0)
+				{
+					var key = fid+"_"+node
+
+					var gfx = uniqueGraphOps.getFam(fid).nodes[node].graphics,
+						pos = gfx.getAbsolutePosition(),
+						bounder = addBounder(pos, key, true);
+
+					gfx.attrs.draggable = false;
+
+					// By default not enabled
+					SelectionMode._items[key] = {
+						box:bounder,
+						selected:false,
+						graphics: gfx
+					};
+					SelectionMode._select_group.add(bounder);
+				}
+			});
+		});
+
+		main_layer.add(SelectionMode._select_group);
+		SelectionMode._select_group.setZIndex(20);
+
+		main_layer.draw();
+	},
+
+	markSelecteds: function()
 	{
-		var text_butt = uniqueGraphOps.getFam(fid).group.fam_title_text;
-		var text_bounder = addInvisibleBounder( text_butt.getAbsolutePosition(), fid, true);
+		SelectionMode._ids_map = {}
+		SelectionMode._ids = {}
 
-		select_group.add(text_bounder)
+		for (var fam_pid in SelectionMode._items){
+		  	var item = SelectionMode._items[fam_pid];
 
-		for (var node in uniqueGraphOps.getFam(fid).nodes)
-		{
-			if (node == 0) continue;
+		 	if (!item.selected) continue;
+		 	
+		 	var fam = fam_pid.split("_")[0],
+		 		pid = fam_pid.split("_")[1];
 
-			var key = fid+"_"+node
+		 	if (!(fam in SelectionMode._ids_map)){
+		 		SelectionMode._ids_map[fam] = {}; // generations, key first - array later
+		 		
+		 		SelectionMode._ids[fam] = {};
+		 	}
+		 	SelectionMode._ids[fam][pid] = 1;
 
-			var gfx = uniqueGraphOps.getFam(fid).nodes[node].graphics,
-				pos = gfx.getAbsolutePosition(),
-				bounder = addBounder(pos, key, true);
+		 	//Hopefully these are at the same level with few discrepencies
+		 	var generation = item.graphics.getY()
 
-			gfx.attrs.draggable = false;
-
-			// By default not enabled
-			selection_items[key] = {
-				box:bounder,
-				selected:false,
-				graphics: gfx
-			};
-			select_group.add(bounder);
+		 	SelectionMode._ids_map[fam][generation] = SelectionMode._ids_map[fam][generation] || [];
+		 	SelectionMode._ids_map[fam][generation].push( pid );
 		}
-	}
-	main_layer.add(select_group);
-	select_group.setZIndex(20);
 
-	main_layer.draw();
+		for (var fam in SelectionMode._ids_map){
+			SelectionMode._ids_map[fam] = map2orderedArray( SelectionMode._ids_map[fam] )
+		}
+	},
+
+	grabSelected: function(){
+		SelectionMode._populateSelecteds();
+		return SelectionMode
+	},
+
+
+	selectFam: function(fam_id){
+		for (var key in SelectionMode._items){
+			if (key.split("_")[0] == fam_id){
+				SelectionMode._items[key].box.fire('click');
+			}
+		}
+	},
+
+	noneSelected: function(){
+		return isEmpty(SelectionMode._ids);
+	}
 }
+
+
 
 
 // Shared with homology_selection.js
@@ -98,9 +142,9 @@ function addBounder(pos, key, main_layer_yes){
 
 	rect.on('click', function(){
 		//Toggle selection
-		this.setStrokeEnabled(!selection_items[key].selected);
+		this.setStrokeEnabled(!SelectionMode._items[key].selected);
 
-		selection_items[key].selected = !selection_items[key].selected
+		SelectionMode._items[key].selected = !SelectionMode._items[key].selected
 		if (main_layer_yes) main_layer.draw();
 		else haplo_layer.draw();
 	});
@@ -113,7 +157,7 @@ function addInvisibleBounder(pos, fam_id, main_layer_yes){
 
 	rect.on('click', function(){
 		// Select fam
-		selectFam(fam_id);
+		SelectionMode.selectFam(fam_id);
 
 		if (main_layer_yes) main_layer.draw();
 		else haplo_layer.draw();

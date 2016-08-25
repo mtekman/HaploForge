@@ -8,6 +8,27 @@ var uniqueGraphOps = {
 		uniqueGraphOps._map = {};
 	},
 
+	foreachfam: function(callback){
+		for (var fam in uniqueGraphOps._map){
+			callback(fam);
+		}
+	},
+
+	foreachnode: function(callback, fam_id = null){
+		if (fam_id === null){
+
+			for (var fam in uniqueGraphOps._map){
+				for (var node in uniqueGraphOps.getFam(fam).nodes){
+					callback(node, fam);
+				}
+			}
+		} else {
+			for (var node in uniqueGraphOps.getFam(fam_id).nodes){
+				callback(node);
+			}
+		}
+	},
+
 	insertFam: function(family_id, fam_group){
 
 		if (!(family_id in uniqueGraphOps._map))

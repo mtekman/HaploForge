@@ -1,252 +1,196 @@
-// Haplomode is launched from here
-var selected_ids_map = {}, // Generational map
-	selected_ids = {};	   // Just a map of ids
 
-var haplo_window = new Kinetic.Group();
-	haplo_window.top = new Kinetic.Group(),
-	haplo_window.bottom;
 
-var min_node_placement_y = 0;
-var left_margin_x = 100;
+var HaploWindow = {
 
-var white_margin = 20;
+	_group : new Kinetic.Group(), // haplo_window
+	_top : new Kinetic.Group(),   // haplo_window.top
+	_bottom : null,               // haplo_window.bottom
+	_background : null,			  // haplo_window.background
 
-function stopHaplomode(){
+	_minpos : null,
+	_maxpos : null,
 
-	toggleBottomBox(false, function(){
+	min_node_placement_y : 0,
+	left_margin_x : 0,
+	white_margin : 20,
+	y_margin : 0,
 
-		for (var fid in selected_ids){
-			for (var id in selected_ids[fid]){
-				
-				var perc_gfx =  uniqueGraphOps.getFam(fid).nodes[id].graphics;
-				var old_pos = perc_gfx.main_layer_pos;
-				var old_group = perc_gfx.main_layer_group;
-				
-				// alert("here1");
-				perc_gfx.remove();
-				perc_gfx.listening( true );
+	destroy : function stopHaplomode(){
 
-				old_group.add(perc_gfx);
+		HaploWindow.toggleBottomBox(false, function(){
 
-				// haplo_layer.draw();
-				// main_layer.draw();
-				// alert("here2");
+			for (var fid in SelectionMode._ids){
+				for (var id in SelectionMode._ids[fid]){
+					
+					var perc_gfx =  uniqueGraphOps.getFam(fid).nodes[id].graphics;
+					var old_pos = perc_gfx.main_layer_pos;
+					var old_group = perc_gfx.main_layer_group;
+					
+					// alert("here1");
+					perc_gfx.remove();
+					perc_gfx.listening( true );
 
-				perc_gfx.setPosition({
-					x: perc_gfx.getX() - old_group.getX(),
-					y: perc_gfx.getY() - old_group.getY()
-				});
+					old_group.add(perc_gfx);
 
-				// haplo_layer.draw();
-				// main_layer.draw();
-				// alert("here3");
+					// haplo_layer.draw();
+					// main_layer.draw();
+					// alert("here2");
 
-				(kineticTween({
-					node: perc_gfx,
-					x: old_pos.x,
-					y: old_pos.y
-				})).play();
+					perc_gfx.setPosition({
+						x: perc_gfx.getX() - old_group.getX(),
+						y: perc_gfx.getY() - old_group.getY()
+					});
+
+					// haplo_layer.draw();
+					// main_layer.draw();
+					// alert("here3");
+
+					(kineticTween({
+						node: perc_gfx,
+						x: old_pos.x,
+						y: old_pos.y
+					})).play();
+				}
 			}
-		}
 
-		haplo_layer.destroyChildren();
-		haplo_layer.draw();
+			haplo_layer.destroyChildren();
+			haplo_layer.draw();
 
-		stopSelectionMode();
-	});
-	// main_layer.draw();
-}
+			SelectionMode.destroy();
+		});
+		// main_layer.draw();
+	},
 
-function launchHaplomode()
-{
-	function grabSelecteds(){
-		var idmap = {}
-		var pure_ids = {}
-
-		for (var fam_pid in selection_items){
-		  	var item = selection_items[fam_pid];
-
-		 	if (!item.selected) continue;
-		 	
-		 	var fam = fam_pid.split("_")[0],
-		 		pid = fam_pid.split("_")[1];
-
-		 	if (!(fam in idmap)){
-		 		idmap[fam] = {}; // generations, key first - array later
-		 		
-		 		pure_ids[fam] = {};
-		 	}
-		 	pure_ids[fam][pid] = 1;
-
-		 	//Hopefully these are at the same level with few discrepencies
-		 	var generation = item.graphics.getY()
-
-		 	idmap[fam][generation] = idmap[fam][generation] || [];
-		 	idmap[fam][generation].push( pid );
-		 }
-
-		for (var fam in idmap)
-			idmap[fam] = map2orderedArray( idmap[fam] )
-
-		return {id_map_generational: idmap, id_map:pure_ids};
-	};
-
-
-	var selecteds = grabSelecteds();
-
-	selected_ids_map = selecteds.id_map_generational;
-	selected_ids = selecteds.id_map
-
-	if (isEmpty(selected_ids)){
-		return stopSelectionMode();
-		// haplo_layer.draw();
-		// return main_layer.draw();
-	}
-
-
-	var line_data = findDOSinSelection( selected_ids_map );
-
-	makeHaploTypeWindow( line_data );
-}
-
-
-// Just the top box
-function makeHaploTypeWindow( lines_nodes_to_render )
-{
-	var res = mapLinesAndNodes( lines_nodes_to_render );
-
-	var line_points = res.lp,
-		slot_array = res.sa;
-
-	haplo_layer.add( haplo_window );
-
-	// Background
-	haplo_window.background = new Kinetic.Rect({
-		width: window.innerWidth,
-		height: window.innerHeight,
-		fill: 'black',
-		opacity: 0.5
-	});
-
-	// haplo_window.background_markers = new Kinetic.Rect({
-	// 	width: 100,
-	// })
-
-	haplo_window.add( haplo_window.background )
-
-
-	var min_pos, max_pos;
-
-	var box_lims_and_group = render( line_points, slot_array,
-		function(render_group)
-		{
-			// After nodes have moved, they are then popped
-			// off select_group, and added to haplo_window_top
-			makeTopBox_haplomode( box_lims_and_group, render_group );
-		}
-	);
-}
-
-
-function makeTopBox_haplomode( box_lims_and_group, render_group){
-	min_pos = box_lims_and_group.min,
-	max_pos = box_lims_and_group.max;
-
-	// Share y position with aligment.js
-	min_node_placement_y = min_pos.y;
-
-	// White Rect
-	haplo_window.top.setPosition(
-		// {x:min_pos.x - white_margin, y: min_pos.y - white_margin} 
-		{x: initial_group_node_offset.x + (min_pos.x - white_margin),
-		 y: initial_group_node_offset.y + (min_pos.y - white_margin)}
-	);
-
-	haplo_window.top.rect = addWhiteRect({
-		width: (max_pos.x - min_pos.x),
-		height: (max_pos.y - min_pos.y) + 3*white_margin
-	});
-
-	haplo_window.top.add( haplo_window.top.rect );
-
-	// Exit button
-	haplo_window.top.exit = addExitButton(
-		{x: max_pos.x - white_margin,
-		 y: 0},
-		 stopHaplomode);
-
-	haplo_window.top.add( haplo_window.top.exit);
-
-
-	// // JS detaches toggler from function inherently
-	// var haplotypes_toggled = false;
-
-	// haplo_window.add(
-	// 	addButton("haplos", 0, butt_h, function()
-	// 	{
-	// 		haplotypes_toggled = !haplotypes_toggled;
-
-	// 		toggleBottomBox(haplotypes_toggled);
-	// 	})
-	// );
-
-	// Add rendered lines
-	render_group.remove();
-	haplo_window.top.add(	render_group );
-	render_group.setY(-haplo_window.top.getY());
-	render_group.setX(-haplo_window.top.getX() + 10);
-
-	haplo_window.add(haplo_window.top);
-
-	(new Kinetic.Tween({
-		node: haplo_window.top,
-		x: left_margin_x,
-		y: white_margin,
-		duration:0.2,
-		onFinish: function(){
-			toggleBottomBox(true, ToolSetModes.setToHaploMode);
-		}
 	
-	})).play();
-
-	main_layer.draw();
-	haplo_layer.draw();	
-}
-
-
-
-function toggleBottomBox( show, finishfunc )
-{
-
-	finishfunc = finishfunc || 0;
-
-	haplo_window.y_margin = 30;
-
-	if (show)
+	init: function launchHaplomode()
 	{
-		delete haplo_window.bottom;
+		SelectionMode.markSelecteds();
+
+		if (SelectionMode.noneSelected()){
+			SelectionMode.destroy();
+			return;
+		}
+
+		var line_data = findDOSinSelection( SelectionMode._ids_map );
+
+		HaploWindow._makeMainWindow( line_data );
+	},
+
+
+	_makeMainWindow : function( lines_nodes_to_render )
+	{
+		var res = mapLinesAndNodes( lines_nodes_to_render ); // DOS.js
+
+		var line_points = res.lp,
+			slot_array = res.sa;
+
+		haplo_layer.add( HaploWindow._group );
+
+		// Background
+		HaploWindow._background = new Kinetic.Rect({
+			width: window.innerWidth,
+			height: window.innerHeight,
+			fill: 'black',
+			opacity: 0.5
+		});
+
+		HaploWindow._group.add( HaploWindow._background )
+
+		//DOS.js
+		var box_lims_and_group = render( line_points, slot_array,
+			function(render_group)
+			{
+				// After nodes have moved, they are then popped
+				// off SelectionMode._select_group, and added to haplo_window_top
+				console.log("boxlim=", box_lims_and_group);
+				HaploWindow._makeTop( box_lims_and_group, render_group );
+			}
+		);
+	},
+
+
+	_makeTop( box_lims_and_group, render_group){
+		min_pos = box_lims_and_group.min,
+		max_pos = box_lims_and_group.max;
+
+		// Share y position with aligment.js
+		HaploWindow.min_node_placement_y = min_pos.y;
+
+		// White Rect
+		HaploWindow._top.setPosition(
+			// {x:min_pos.x - HaploWindow.white_margin, y: min_pos.y - HaploWindow.white_margin} 
+			{x: initial_group_node_offset.x + (min_pos.x - HaploWindow.white_margin),
+			 y: initial_group_node_offset.y + (min_pos.y - HaploWindow.white_margin)}
+		);
+
+		HaploWindow._top.rect = addWhiteRect({
+			width: (max_pos.x - min_pos.x),
+			height: (max_pos.y - min_pos.y) + 3*HaploWindow.white_margin
+		});
+
+		HaploWindow._top.add( HaploWindow._top.rect );
+
+		// Exit button
+		HaploWindow._top.exit = addExitButton(
+			{x: max_pos.x - HaploWindow.white_margin,
+			 y: 0},
+			 stopHaplomode);
+
+		HaploWindow._top.add( HaploWindow._top.exit);
+
+
+		// Add rendered lines
+		render_group.remove();
+		HaploWindow._top.add( render_group );
+		render_group.setY(-HaploWindow._top.getY());
+		render_group.setX(-HaploWindow._top.getX() + 10);
+
+		HaploWindow._group.add(HaploWindow._top);
+
+		kineticTween({
+			node: HaploWindow._top,
+			x: HaploWindow.left_margin_x,
+			y: HaploWindow.white_margin,
+			duration:0.2,
+			onFinish: function(){
+				HaploWindow._toggleBottom(true,
+					ToolSetModes.setToHaploMode);
+			}
+		}).play()
+
+		main_layer.draw();
+		haplo_layer.draw();	
+	},
+
+	_toggleBottom: function( show, finishfunc){
+		HaploWindow.y_margin = 30;
+		HaploWindow["__"+(show?"show":"hide")+"Bottom"](finishfunc);
+	},
+
+
+	__showBottom: function(finishfunc = 0){
+		HaploWindow._bottom = null; // delete old
 		
 		//Scroll window
-		haplo_window.bottom = new Kinetic.Group({
-			x:haplo_window.top.getX() ,
-			y:haplo_window.top.rect.getHeight() + haplo_window.y_margin,
+		HaploWindow._bottom = new Kinetic.Group({
+			x:HaploWindow._top.getX() ,
+			y:HaploWindow._top.rect.getHeight() + HaploWindow.y_margin,
 			id:"scroll_panel"
 		});
 
-		haplo_window.bottom.rect = addWhiteRect({
+		HaploWindow._bottom.rect = addWhiteRect({
 			height: 0,
-			width: haplo_window.top.rect.getWidth()
+			width: HaploWindow._top.rect.getWidth()
 		});
-
 
 		
 		// Expand Top box
-		haplo_window.bottom.add( haplo_window.bottom.rect );
-		haplo_window.add( haplo_window.bottom );
-		haplo_window.bottom.setZIndex(503);
+		HaploWindow._bottom.add( HaploWindow._bottom.rect );
+		HaploWindow._group.add( HaploWindow._bottom );
+		HaploWindow._bottom.setZIndex(503);
 
 		kineticTween({
-			node: haplo_window.bottom.rect,
+			node: HaploWindow._bottom.rect,
 			height: (3+HAP_DRAW_LIM) * HAP_VERT_SPA,
 			onFinish: function(){
 		
@@ -269,35 +213,33 @@ function toggleBottomBox( show, finishfunc )
 					haplo_layer.draw();
 				});
 
-				uniqueGraphOps.haplo_scroll = haplo_window.bottom;
+				uniqueGraphOps.haplo_scroll = HaploWindow._bottom;
 				uniqueGraphOps.haplo_area = scroll_area__;
 
-				haplo_window.bottom.add( scroll_area__ );
+				HaploWindow._bottom.add( scroll_area__ );
 
-				addHaplosAnyone( selected_ids );
+				addHaplosAnyone( SelectionMode._ids );
 
-				if (finishfunc!==0) finishfunc();
+				if (finishfunc!==0) {
+					finishfunc();
+				}
 			}
 		}).play();
+	},
 
-	}
-	else {
-
+	_hideBottom: function(finishfunc = 0){
 		uniqueGraphOps.haplo_area.hide();
 
 		kineticTween({
-			node: haplo_window.bottom.rect,
+			node: HaploWindow._bottom.rect,
 			height:0,
 			onFinish: function(){
-				haplo_window.bottom.destroyChildren();	//Bit of genocide
-				haplo_window.bottom.destroy();
-				if (finishfunc!==0) finishfunc();
+				HaploWindow._bottom.destroyChildren();	//Bit of genocide
+				HaploWindow._bottom.destroy();	
+				if (finishfunc!==0){
+					finishfunc();
+				}
 			}
 		}).play();
-
 	}
-
-
-	haplo_layer.draw();
-
 }

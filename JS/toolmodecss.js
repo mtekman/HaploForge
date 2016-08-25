@@ -90,7 +90,7 @@ var ToolSetModes = {
 
 		toolset.setTitle("Pedigree Arrange");
 		toolset.addToolsButton("Start Analysis", function(){
-			startSelectionMode();
+			SelectionMode.init();
 			ToolSetModes.setToSelectionMode();
 		});
 	},
@@ -105,8 +105,8 @@ var ToolSetModes = {
 		{
 			ToolSetModes.toggle_selection_all = !ToolSetModes.toggle_selection_all || false;
 
-			for (var key in selection_items){
-				var item = selection_items[key];
+			for (var key in SelectionMode._items){
+				var item = SelectionMode._items[key];
 				if(  (ToolSetModes.toggle_selection_all && !item.selected)
 				  || (!ToolSetModes.toggle_selection_all && item.selected) ){
 					item.box.fire('click')
@@ -118,8 +118,8 @@ var ToolSetModes = {
 		{
 			ToolSetModes.toggle_selection_affecteds = !ToolSetModes.toggle_selection_affecteds || false;
 
-			for (var key in selection_items){
-				var item = selection_items[key];
+			for (var key in SelectionMode._items){
+				var item = SelectionMode._items[key];
 				var affected = (item.graphics.children[0].attrs.fill === col_affs[2])
 
 				if (affected){
@@ -130,11 +130,11 @@ var ToolSetModes = {
 				}
 			}
 			console.log("affecteds:", 
-				Object.keys(selection_items).filter( function (n){ return selection_items[n].affected === true;})
+				Object.keys(SelectionMode._items).filter( function (n){ return SelectionMode._items[n].affected === true;})
 			);
 		});
 
-		toolset.addToolsButton("Submit Selection", launchHaplomode);
+		toolset.addToolsButton("Submit Selection", HaploWindow.init);
 	},
 
 

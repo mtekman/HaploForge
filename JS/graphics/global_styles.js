@@ -15,26 +15,45 @@ function addWhiteRect(props, color_override)
 
 /** This class exists purely as a class with a play() function that acts
     similar to Kinetic.Tween but acts instantaneously when played (for slow machines) **/
-class CustomTweenClass extends Kinetic.Tween
+
+class CustomTweenClass
 {
-	constructor(props){
-		super(props);
-		this._duration = props.duration;
+	constructor(props)
+	{
+		this.node = props.node;
+		this.finishCallback = props.onFinish;
+
+		for (var pr in props)
+		{
+			if (
+				(pr === "node")
+			 || (pr === "onFinish")
+			 || (pr === "duration")
+			){
+				continue;
+			}
+			this.node.attrs[pr] = props[pr];
+//			console.log(this.node, props[pr])
+		}
 	}
 
 	play(){
-		if (!(userOpts.allowTransitions)){
-			super.seek(this._duration);
-		}
-		super.play();
+		this.finishCallback();
 	}
 }
 
-function kineticTween(props){
+
+function kineticTween(props)
+{
+	userOpts.allowTransitions = false;
+
 	if (userOpts.allowTransitions){
-		props.easing = Kinetic.Easings.EaseIn;
-		props.duration = 0.8
+		props.easing = props.easing || Kinetic.Easings.EaseIn;
+		props.duration = props.easing || 0.8;
+
+		return new Kinetic.Tween(props);
 	}
+
 	return new CustomTweenClass(props);
 }
 

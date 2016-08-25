@@ -16,14 +16,14 @@ function init(){
 		populateIndexDataList();
 
 	// toggle_haplomode(20);
-//		startSelectionMode();
-/*		for (var key in selection_items){
+//		SelectionMode.init();
+/*		for (var key in SelectionMode._items){
 
 			var fid_id = key.split('_'),
 				fid = fid_id[0],
 				id = fid_id[1];
 
-			var item = selection_items[key];
+			var item = SelectionMode._items[key];
 
 			if (id >= 6 && id <=10){
 				item.box.fire('click')
