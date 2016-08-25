@@ -73,7 +73,7 @@ var homology_selection_mode = function()
 
 			var gfx = node,
 				pos = gfx.getAbsolutePosition(),
-				bounder = addBounder(pos, key, false);
+				bounder = SelectionGraphics.addBounder(pos, key, false);
 
 			// By default not enabled
 			SelectionMode._items[key] = {

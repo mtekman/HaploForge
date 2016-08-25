@@ -1,28 +1,27 @@
-// Have to enforce namespaces because Javascript doesn't know
-// how  to attach static variables to classes...
 
 
-const __mainpage_divgroups = {
-	"main"  	: document.getElementById('maincircle'),
-	"toolset"	: document.getElementById('selection_tools'),
-	"saveclose" : document.getElementById('save_and_close'),
-	"container"	: document.getElementById('container'),
-	"pedexist"  : document.getElementById('pedresume_label'),
-	"hapexist"  : document.getElementById('haploresume_label')
-}
+var MainPageHandler = {
 
+	_currentMode : null,
 
-class MainPageHandler {
+	__mainpage_divgroups : {
+		"main"  	: document.getElementById('maincircle'),
+		"toolset"	: document.getElementById('selection_tools'),
+		"saveclose" : document.getElementById('save_and_close'),
+		"container"	: document.getElementById('container'),
+		"pedexist"  : document.getElementById('pedresume_label'),
+		"hapexist"  : document.getElementById('haploresume_label')
+	},
 
-	static div_groups(key){
-		return __mainpage_divgroups[key];
-	}
+	div_groups: function(key){
+		return MainPageHandler.__mainpage_divgroups[key];
+	},
 
-	static showDiv(key, bool){
-		__mainpage_divgroups[key].style.display = bool?"":"none";
-	}
+	showDiv: function(key, bool){
+		MainPageHandler.div_groups(key).style.display = bool?"":"none";
+	},
 
-	static setPrevExistingButtons(){
+	setPrevExistingButtons: function(){
 		MainPageHandler.showDiv("pedexist",
 			(localStorage.getItem(localStor.ped_save) !== null)
 		);
@@ -30,9 +29,9 @@ class MainPageHandler {
 		MainPageHandler.showDiv("hapexist", 
 			(localStorage.getItem(localStor.hap_save) !== null)
 		);
-	}
+	},
 
-	static defaultload(){
+	defaultload: function(){
 		MainPageHandler._currentMode = "Main"
 
 		/** Show main page, hide rest **/
@@ -42,9 +41,9 @@ class MainPageHandler {
 		MainPageHandler.showDiv("toolset", false);
 
 		MainPageHandler.setPrevExistingButtons();
-	}
+	},
 
-	static haplomodeload(){
+	haplomodeload: function(){
 		MainPageHandler._currentMode = "Haplo"
 
 		/** Show haplotypes, after file (up)load **/
@@ -55,9 +54,9 @@ class MainPageHandler {
 
 		ToolSetModes.setToSelectionPreMode();
 		MainPageHandler.showDiv("toolset", true);		
-	}
+	},
 
-	static createpedmode(){
+	createpedmode: function(){
 		MainPageHandler._currentMode = "Pedigree"
 
 		/** Show haplotypes, after file (up)load **/

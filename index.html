@@ -6,7 +6,7 @@
         <meta content="utf-8" http-equiv="encoding">
         <title>Haplotype Reconstruction</title>
         <link rel="stylesheet" type="text/css" href="assets/mainpage.css" >
-        <link rel="stylesheet" type="text/css" href="main.css" >
+        <link rel="stylesheet" type="text/css" href="assets/main.css" >
 	<!-- STYLE -->
     </head>
     <body onresize="resizeCanvas()" >
@@ -235,65 +235,59 @@
 
         <div id='container' ><!-- KineticJS creates a canvas for each layer, so no need --></div>
 
-		<!-- CODE GOES HERE -->
-        <script src="JS/message_box.js" ></script>
+    <!-- CODE GOES HERE -->
+        <script src="JS/cssfuncs/dialog/message_box.js" ></script>
+        <script src="JS/cssfuncs/mainpage/mainpagehandler.js" ></script>
+        <script src="JS/cssfuncs/mainpage/mainbuttonactions.js" ></script>
+        <script src="JS/cssfuncs/rangemarker/indexmode.js" ></script>
+        <script src="JS/cssfuncs/sidebuttons/toolmodecss.js" ></script>
 
         <script src="JS/frameworks/kinetic-v5.1.0.js" ></script>
-
         <script src="JS/globals.js" ></script>
-        <script src="JS/toolmodecss.js" ></script>
-        <script src="JS/pedigree.js" ></script>
 
         <script src="JS/graphics/kinetic_graphics.js" ></script>
         <script src="JS/graphics/global_styles.js" ></script>
 
-        <script src="JS/graph/graph_draw.js" ></script>
-        <script src="JS/graph/init_graph.js" ></script>
+        <script src="JS/mode/graph/graph_draw.js" ></script>
+        <script src="JS/mode/graph/init_graph.js" ></script>
+           
+        <script src="JS/mode/selection/selection_graphics.js" ></script>
+        <script src="JS/mode/selection/selection_mode.js" ></script>
 
-        <script src="JS/haplo/mode/haplomode_frontend.js" ></script>
-        <script src="JS/haplo/mode/haplomode_transitions.js" ></script>
-        <script src="JS/haplo/mode/toggle.js" ></script>
-        
-        <script src="JS/haplo/multimode/dos.js" ></script>
-        <script src="JS/haplo/multimode/render_dos.js" ></script>
-        <script src="JS/haplo/multimode/selection_mode.js" ></script>
-        <script src="JS/haplo/multimode/haplomode_multi.js" ></script>
-        <script src="JS/haplo/multimode/alignment.js" ></script>
-        <script src="JS/haplo/multimode/indexmode.js" ></script>
+        <script src="JS/mode/haplo/haplomode.js" ></script>
+        <script src="JS/mode/haplo/alignment.js" ></script>
 
-        <script src="JS/haplo/homology/homology_selection.js" ></script>
-        <script src="JS/haplo/homology/homology_buttons.js" ></script>
-        <script src="JS/haplo/homology/homology_plot.js" ></script>
-        <script src="JS/haplo/homology/homology_initial_allele_scan.js" ></script>
+        <script src="JS/mode/pedcreate/familyDraw.js" ></script>
+        <script src="JS/mode/pedcreate/personDraw.js" ></script>
+        <script src="JS/mode/pedcreate/linedrawOps.js" ></script>
+        <script src="JS/mode/pedcreate/matelineDraw.js" ></script>
+        <script src="JS/mode/pedcreate/offspringDraw.js" ></script>
 
+        <script src="JS/mode/haplo/blocks/pointer_cleanup.js" ></script>
+        <script src="JS/mode/haplo/blocks/astarpath_resolver.js" ></script>
+        <script src="JS/mode/haplo/blocks/haploblock_backend.js" ></script>
+        <script src="JS/mode/haplo/blocks/haploblock_frontend.js" ></script>
 
-        <script src="JS/haplo/blocks/pointer_cleanup.js" ></script>
-        <script src="JS/haplo/blocks/astarpath_resolver.js" ></script>
-        <script src="JS/haplo/blocks/haploblock_backend.js" ></script>
-        <script src="JS/haplo/blocks/haploblock_frontend.js" ></script>
-        <script src="JS/button_actions.js" ></script>
+        <script src="JS/mode/haplo/dos/dos.js" ></script>
+        <script src="JS/mode/haplo/dos/render_dos.js" ></script>
 
-        <script src="JS/mainpage/mainpagehandler.js" ></script>
-        <script src="JS/mainpage/mainbuttonactions.js" ></script>
-        <script src="JS/filehandler.js" ></script>
+        <script src="JS/mode/haplo/slider/slider_handler.js" ></script>
+        <script src="JS/mode/haplo/slider/marker_slider.js" ></script>
 
+        <script src="JS/mode/homology/homology_selection.js" ></script>
+        <script src="JS/mode/homology/homology_buttons.js" ></script>
+        <script src="JS/mode/homology/homology_plot.js" ></script>
+        <script src="JS/mode/homology/homology_initial_allele_scan.js" ></script>
+      
+        <script src="JS/utility/filehandler.js" ></script>
+        <script src="JS/utility/persistdata.js" ></script>
+        <script src="JS/utility/pedigree.js" ></script>
+        <script src="JS/utility/familymapOps.js" ></script>
+        <script src="JS/utility/uniqueGraphOps.js" ></script>
+        <script src="JS/utility/window.js" ></script>
 
-        <script src="JS/haplo/slider/slider_handler.js" ></script>
-        <script src="JS/haplo/slider/marker_slider.js" ></script>
+        <script src="JS/__test/pedfile_create_view.js" ></script>
 
-        <script src="JS/pedcreate/familyDraw.js" ></script>
-        <script src="JS/pedcreate/personDraw.js" ></script>
-        <script src="JS/pedcreate/linedrawOps.js" ></script>
-        <script src="JS/pedcreate/matelineDraw.js" ></script>
-        <script src="JS/pedcreate/offspringDraw.js" ></script>
-        <script src="JS/pedcreate/persistdata.js" ></script>
-
-        <script src="JS/familymapOps.js" ></script>
-        <script src="JS/uniqueGraphOps.js" ></script>
-        <script src="JS/pedfile_create_view.js" ></script>
-
-        <script src="JS/window.js" ></script>
         <script src="JS/init.js" ></script>
-        <script src="JS/test.js" ></script>
     </body>
 </html>

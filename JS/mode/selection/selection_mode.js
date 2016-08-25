@@ -48,7 +48,9 @@ var SelectionMode = {
 
 		uniqueGraphOps.foreachfam(function(fid){
 			var text_butt = uniqueGraphOps.getFam(fid).group.fam_title_text;
-			var text_bounder = addInvisibleBounder( text_butt.getAbsolutePosition(), fid, true);
+			var text_bounder = SelectionGraphics.addInvisibleBounder(
+				text_butt.getAbsolutePosition(), fid, true
+			);
 
 			SelectionMode._select_group.add(text_bounder)
 
@@ -59,7 +61,7 @@ var SelectionMode = {
 
 					var gfx = uniqueGraphOps.getFam(fid).nodes[node].graphics,
 						pos = gfx.getAbsolutePosition(),
-						bounder = addBounder(pos, key, true);
+						bounder = SelectionGraphics.addBounder(pos, key, true);
 
 					gfx.attrs.draggable = false;
 
@@ -129,39 +131,4 @@ var SelectionMode = {
 	noneSelected: function(){
 		return isEmpty(SelectionMode._ids);
 	}
-}
-
-
-
-
-// Shared with homology_selection.js
-// Replicate existing objects with bounding square
-function addBounder(pos, key, main_layer_yes){
-
-	var rect = addInvisibleOrangeBox(pos);
-
-	rect.on('click', function(){
-		//Toggle selection
-		this.setStrokeEnabled(!SelectionMode._items[key].selected);
-
-		SelectionMode._items[key].selected = !SelectionMode._items[key].selected
-		if (main_layer_yes) main_layer.draw();
-		else haplo_layer.draw();
-	});
-
-	return rect;
-}
-
-function addInvisibleBounder(pos, fam_id, main_layer_yes){
-	var rect = addInvisibleOrangeBox(pos, 20);
-
-	rect.on('click', function(){
-		// Select fam
-		SelectionMode.selectFam(fam_id);
-
-		if (main_layer_yes) main_layer.draw();
-		else haplo_layer.draw();
-	});
-
-	return rect;
 }
