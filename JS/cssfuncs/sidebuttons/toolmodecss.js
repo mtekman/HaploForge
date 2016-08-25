@@ -146,7 +146,7 @@ var ToolSetModes = {
 		toolset.setTitle("Haplo Tools");
 
 		toolset.addToolsButton("Align Pedigree", function(){
-			alignTopSelection( haplo_group_nodes, haplo_group_lines);
+			alignTopSelection( DOS.haplo_group_nodes, DOS.haplo_group_lines);
 		});
 		toolset.addToolsButton("Find Homology", function(){
 			// Function exits selection mode auto

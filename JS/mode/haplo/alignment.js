@@ -9,7 +9,7 @@ function alignTopSelection( group_nodes, group_lines)
 	if (haplomode_alignment_toggle){
 		group_lines.hide();
 
-		var y_line = HaploWindow.min_node_placement_y + initial_group_node_offset.y;
+		var y_line = HaploWindow.min_node_placement_y + DOS.initial_group_node_offset.y;
 
 		for (var g=0; g < group_nodes.children.length; g++){
 			var nd = group_nodes.children[g];

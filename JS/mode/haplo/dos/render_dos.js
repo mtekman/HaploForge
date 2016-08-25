@@ -1,85 +1,98 @@
-var initial_group_node_offset = {x:100, y:40};
 
-var haplo_group_nodes = new Kinetic.Group();
-var haplo_group_lines = new Kinetic.Group();
+var DOS = {
 
+	initial_group_node_offset : {x:100, y:40},
+	haplo_group_nodes : new Kinetic.Group(),
+	haplo_group_lines : new Kinetic.Group(),
 
-function render(line_points, slot_array, finishfunc){
-	//
-	// Render
-	//
-	var min_pos = {x:9999,y:9999}, max_pos = {x:0,y:0};
+	min : null,
+	max : null,
+	group : null,
 
-	var render_group = new Kinetic.Group();
+	render: function (line_points, slot_array, finishfunc = 0){
+		//
+		// Renders to DOS.group
+		//
+		var min_pos = {x:9999,y:9999},
+			max_pos = {x:0,y:0};
 
-	var tween_nodes = [];
+		DOS.group = new Kinetic.Group();
 
-	render_group.add(haplo_group_lines);
-	render_group.add(haplo_group_nodes);
+		var tween_nodes = [];
 
-	// Add directly to layer for now, but after animation over
-	// move to white_box group
-	haplo_layer.add( render_group );
+		DOS.group.add(DOS.haplo_group_lines);
+		DOS.group.add(DOS.haplo_group_nodes);
 
-	// Render Nodes
-	var start_x = 20;
+		// Add directly to layer for now, but after animation over
+		// move to white_box group
+		haplo_layer.add( DOS.group );
 
-	min_pos.x = start_x;
+		// Render Nodes
+		var start_x = 20;
 
-	var render_counter = slot_array.length - 1;
+		min_pos.x = start_x;
 
-	for (var fd=0; fd < slot_array.length; fd++){
+		var render_counter = slot_array.length - 1;
 
-		var fid_id = slot_array[fd][0].split('_'),
-			y_pos = slot_array[fd][1];
-	
-		if (min_pos.y > y_pos) min_pos.y = y_pos;
+		for (var fd=0; fd < slot_array.length; fd++){
 
-		var fid = fid_id[0], 
-			id = fid_id[1];
-
-		var gfx = uniqueGraphOps.getFam(fid).nodes[id].graphics;
-
-		// Store old position before moving
-		gfx.main_layer_pos = gfx.getPosition();
-		gfx.main_layer_group = uniqueGraphOps.getFam(fid).group;
-		gfx.remove()
-		gfx.listening( false );
+			var fid_id = slot_array[fd][0].split('_'),
+				y_pos = slot_array[fd][1];
 		
-		haplo_group_nodes.add(gfx);
-		gfx.setPosition(
-			{x: gfx.main_layer_group.getX() + gfx.main_layer_pos.x,
-			 y: gfx.main_layer_group.getY() + gfx.main_layer_pos.y}
-		);
+			if (min_pos.y > y_pos) min_pos.y = y_pos;
 
-		var tween = kineticTween({
-			node: gfx,
-			x: start_x + initial_group_node_offset.x,
-			y: y_pos + initial_group_node_offset.y,
-			onFinish: function(){
-				if (render_counter-- === 0){
-					mapLines(line_points, haplo_group_lines);
-					finishfunc( render_group );
+			var fid = fid_id[0], 
+				id = fid_id[1];
+
+			var gfx = uniqueGraphOps.getFam(fid).nodes[id].graphics;
+
+			// Store old position before moving
+			gfx.main_layer_pos = gfx.getPosition();
+			gfx.main_layer_group = uniqueGraphOps.getFam(fid).group;
+			gfx.remove()
+			gfx.listening( false );
+			
+			DOS.haplo_group_nodes.add(gfx);
+			gfx.setPosition(
+				{x: gfx.main_layer_group.getX() + gfx.main_layer_pos.x,
+				 y: gfx.main_layer_group.getY() + gfx.main_layer_pos.y}
+			);
+
+			var tween = kineticTween({
+				node: gfx,
+				x: start_x + DOS.initial_group_node_offset.x,
+				y: y_pos + DOS.initial_group_node_offset.y,
+				onFinish: function(){
+					if (render_counter-- === 0){
+
+						mapLines(line_points, DOS.haplo_group_lines);
+						
+						if (finishfunc !== 0){
+							finishfunc();
+						}
+					}
 				}
-			}
-		});
-		tween_nodes.push(tween);
+			});
+			tween_nodes.push(tween);
 
-		// gfx.setPosition( {x:start_x, y:y_pos} );
+			// gfx.setPosition( {x:start_x, y:y_pos} );
 
-		start_x += horiz_space;
+			start_x += horiz_space;
 
-		if (start_x > max_pos.x) max_pos.x = start_x;
-		if (y_pos > max_pos.y) max_pos.y = y_pos;
+			if (start_x > max_pos.x) max_pos.x = start_x;
+			if (y_pos > max_pos.y) max_pos.y = y_pos;
+		}
+
+		// Show that nodes have been popped off
+		main_layer.draw();
+
+		for (var t=0; t < tween_nodes.length;){
+			tween_nodes[t++].play();
+		}
+
+		DOS.min = min_pos;
+		DOS.max = max_pos;
 	}
-
-	// Show that nodes have been popped off
-	main_layer.draw();
-
-	for (var t=0; t < tween_nodes.length;)
-		tween_nodes[t++].play();
-
-	return { min:min_pos, max:max_pos, group:render_group};
 }
 
 

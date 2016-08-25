@@ -9,6 +9,7 @@ var HaploWindow = {
 
 	_minpos : null,
 	_maxpos : null,
+	_boxlimsandgroup: null,
 
 	min_node_placement_y : 0,
 	left_margin_x : 0,
@@ -17,7 +18,7 @@ var HaploWindow = {
 
 	destroy : function stopHaplomode(){
 
-		HaploWindow.toggleBottomBox(false, function(){
+		HaploWindow._toggleBottom(false, function(){
 
 			for (var fid in SelectionMode._ids){
 				for (var id in SelectionMode._ids[fid]){
@@ -58,7 +59,6 @@ var HaploWindow = {
 
 			SelectionMode.destroy();
 		});
-		// main_layer.draw();
 	},
 
 	
@@ -97,30 +97,29 @@ var HaploWindow = {
 		HaploWindow._group.add( HaploWindow._background )
 
 		//DOS.js
-		var box_lims_and_group = render( line_points, slot_array,
-			function(render_group)
-			{
-				// After nodes have moved, they are then popped
-				// off SelectionMode._select_group, and added to haplo_window_top
-				console.log("boxlim=", box_lims_and_group);
-				HaploWindow._makeTop( box_lims_and_group, render_group );
-			}
+		DOS.render( line_points, slot_array, 
+			// After nodes have moved, they are then popped
+			// off SelectionMode._select_group, and added to haplo_window_top
+			HaploWindow._makeTop
 		);
 	},
 
 
-	_makeTop( box_lims_and_group, render_group){
-		min_pos = box_lims_and_group.min,
-		max_pos = box_lims_and_group.max;
+	_makeTop(){
+		var render_group = DOS.group;
+		var min_pos = DOS.min,
+			max_pos = DOS.max;
 
 		// Share y position with aligment.js
 		HaploWindow.min_node_placement_y = min_pos.y;
+		HaploWindow._minpos = min_pos;
+		HaploWindow._maxpos = max_pos;
 
 		// White Rect
 		HaploWindow._top.setPosition(
 			// {x:min_pos.x - HaploWindow.white_margin, y: min_pos.y - HaploWindow.white_margin} 
-			{x: initial_group_node_offset.x + (min_pos.x - HaploWindow.white_margin),
-			 y: initial_group_node_offset.y + (min_pos.y - HaploWindow.white_margin)}
+			{x: DOS.initial_group_node_offset.x + (min_pos.x - HaploWindow.white_margin),
+			 y: DOS.initial_group_node_offset.y + (min_pos.y - HaploWindow.white_margin)}
 		);
 
 		HaploWindow._top.rect = addWhiteRect({
@@ -134,7 +133,7 @@ var HaploWindow = {
 		HaploWindow._top.exit = addExitButton(
 			{x: max_pos.x - HaploWindow.white_margin,
 			 y: 0},
-			 stopHaplomode);
+			 HaploWindow.destroy);
 
 		HaploWindow._top.add( HaploWindow._top.exit);
 
@@ -164,7 +163,11 @@ var HaploWindow = {
 
 	_toggleBottom: function( show, finishfunc){
 		HaploWindow.y_margin = 30;
-		HaploWindow["__"+(show?"show":"hide")+"Bottom"](finishfunc);
+		if (show){
+			HaploWindow.__showBottom(finishfunc);
+		} else {
+			HaploWindow.__hideBottom(finishfunc);
+		}
 	},
 
 
@@ -227,7 +230,7 @@ var HaploWindow = {
 		}).play();
 	},
 
-	_hideBottom: function(finishfunc = 0){
+	__hideBottom: function(finishfunc = 0){
 		uniqueGraphOps.haplo_area.hide();
 
 		kineticTween({

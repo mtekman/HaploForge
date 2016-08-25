@@ -66,7 +66,7 @@ function removeScores(redrawtoo){
 
 	redrawtoo = redrawtoo || true;
 
-	if (markerInstance.plotline !== undefined){
+	if ((markerInstance !== null) && (markerInstance.plotline !== undefined)){
 		markerInstance.plotline.destroy();
 	
 		if (redrawtoo) haplo_layer.draw();

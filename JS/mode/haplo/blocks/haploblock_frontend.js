@@ -46,9 +46,6 @@ function addHaplosAnyone(haplofam_map, parent_node)
 	var sorted_positions = Object.keys(position_by_xpos);
 	sorted_positions.sort(function(a,b){ return Number(a)-Number(b);});
 
-	console.log(position_by_xpos);
-	console.log(sorted_positions);
-
 	for (var p=0; p < sorted_positions.length; p++){
 		var key = sorted_positions[p];
 

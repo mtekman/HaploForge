@@ -34,5 +34,32 @@ function init(){
 }
 
 
-MainPageHandler.defaultload();
-//MainButtonActions.createNewPed()	
+//MainPageHandler.defaultload();
+//MainButtonActions.createNewPed()
+userOpts.allowTransitions = false;
+MainButtonActions.loadHaploFromStorage();
+
+setTimeout(function(){
+	SelectionMode.init();
+
+	setTimeout(function(){
+		ToolSetModes.setToSelectionMode();
+
+		setTimeout(function(){
+			ToolSetModes.toggle_selection_affecteds = !ToolSetModes.toggle_selection_affecteds || false;
+
+			for (var key in SelectionMode._items){
+				var item = SelectionMode._items[key];
+				var affected = (item.graphics.children[0].attrs.fill === col_affs[2])
+
+				if (affected){
+					if( (ToolSetModes.toggle_selection_affecteds && !item.selected)
+			 		|| (!ToolSetModes.toggle_selection_affecteds && item.selected) ){
+						item.box.fire('click');
+					}
+				}
+			}
+			HaploWindow.init();
+		}, 100);
+	}, 100);
+}, 100);

@@ -21,7 +21,7 @@ class CustomTweenClass
 	constructor(props)
 	{
 		this.node = props.node;
-		this.finishCallback = props.onFinish;
+		this.finishCallback = props.onFinish || null;
 
 		for (var pr in props)
 		{
@@ -38,18 +38,18 @@ class CustomTweenClass
 	}
 
 	play(){
-		this.finishCallback();
+		if (this.finishCallback !== null){
+			setTimeout(this.finishCallback, 10);
+		}
 	}
 }
 
 
 function kineticTween(props)
 {
-	userOpts.allowTransitions = false;
-
 	if (userOpts.allowTransitions){
 		props.easing = props.easing || Kinetic.Easings.EaseIn;
-		props.duration = props.easing || 0.8;
+		props.duration = props.duration || 0.8;
 
 		return new Kinetic.Tween(props);
 	}
