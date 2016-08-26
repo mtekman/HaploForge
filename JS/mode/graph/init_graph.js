@@ -242,8 +242,6 @@ function graphInitPos(start_x, start_y){
 			nodes = fam_gfx.nodes,
 			edges = fam_gfx.edges;
 
-		console.log(nodes);
-
 
 		// Init Nodes, ordered by generation_grid_ids
 		for (var gen=0; gen < gen_grid.length; gen++){

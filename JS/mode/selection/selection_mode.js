@@ -6,6 +6,10 @@ var SelectionMode = {
 	_items   : {},
 
 	_select_group : null,
+	_background : null,
+
+	toggle_selection_affecteds : null,
+	toggle_selection_all: null,
 
 	destroy: function stopSelectionMode()
 	{
@@ -13,6 +17,7 @@ var SelectionMode = {
 
 		SelectionMode._select_group.destroyChildren();
 		SelectionMode._select_group.destroy();
+		SelectionMode._background.destroy();
 
 		// Reset all
 		SelectionMode._ids_map = {}
@@ -29,6 +34,9 @@ var SelectionMode = {
 
 	init: function startSelectionMode()
 	{
+		SelectionMode.toggle_selection_affecteds = false;
+		SelectionMode.toggle_selection_all = false;
+
 		// Main selection layer
 		SelectionMode._select_group = new Kinetic.Group({
 			x:0, y:0,
@@ -36,14 +44,18 @@ var SelectionMode = {
 			height: stage.getHeight()
 		});
 
-		SelectionMode._select_group.add(new Kinetic.Rect({
+
+		SelectionMode._background = new Kinetic.Rect({
 			x:0, y:0,
 			width: stage.getWidth(),
 			height: stage.getHeight(),
 			fill: 'black',
 			strokeWidth: 0,
 			opacity: 0.1
-		}));
+		})
+
+
+		SelectionMode._select_group.add( SelectionMode._background );
 
 
 		uniqueGraphOps.foreachfam(function(fid){
@@ -75,6 +87,15 @@ var SelectionMode = {
 				}
 			});
 		});
+
+		// Exit button
+		SelectionMode._exit = addExitButton({x: 20, y: 20}, function(){
+			HaploWindow.destroy();
+			SelectionMode.destroy();
+		});
+
+		SelectionMode._select_group.add( SelectionMode._exit );
+		
 
 		main_layer.add(SelectionMode._select_group);
 		SelectionMode._select_group.setZIndex(20);

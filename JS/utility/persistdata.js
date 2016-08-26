@@ -1,29 +1,31 @@
 
-class PersistData {
+var PersistData = {
 
+	clearMaps: function(){
+		familyMapOps.clear();
+		uniqueGraphOps.clear();
+	},
 
-	static makeTextFile(tex, textFile = null){
+	makeTextFile: function(tex, textFile = null){
 		var data = new Blob([tex],{type:'text/plain'});
 
 		if (textFile !== null) window.URL.revokeObjectURL(textFile);
 
 		textFile = window.URL.createObjectURL(data);
 		return textFile;
-	}
+	},
 
-	static export(){
+	export: function(){
 		if (MainPageHandler._currentMode === "Pedigree" ){
-			console.log("here");
 			window.open(
 				PersistData.makeTextFile(
 					PersistData.toPedfileString(true)
 				)
 			);
 		}
-	}
+	},
 
-
-	static pedigreeChanged(){
+	pedigreeChanged: function(){
 		var current_pedigree = PersistData.toPedfileString(true),
 			stored_pedigree = localStorage.getItem(localStor.ped_save);
 
@@ -42,9 +44,9 @@ class PersistData {
 			return true;
 		}
 		return false;
-	}
+	},
 
-	static toPedfileString(store_graphics=false){
+	toPedfileString: function(store_graphics=false){
 
 		var text = "";
 

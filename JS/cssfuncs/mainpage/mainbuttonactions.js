@@ -1,11 +1,12 @@
 
-class MainButtonActions {
+var MainButtonActions  = {
 
-	static preamble(){
+	preamble: function(){
 		makeStage();
-	}
+		PersistData.clearMaps();
+	},
 
-	static processHaploFile() {
+	processHaploFile: function() {
 	    var file = document.getElementById("haploupload").files[0];
 	    var lr = new FileReader();
 
@@ -22,9 +23,9 @@ class MainButtonActions {
 	    };
 
 	    lr.readAsText(file);
-	}
+	},
 
-	static loadHaploFromStorage() {
+	loadHaploFromStorage: function() {
 		MainButtonActions.preamble();
 		MainPageHandler.haplomodeload();
 
@@ -32,9 +33,9 @@ class MainButtonActions {
 			hap_type = localStorage.getItem( localStor.hap_type );
 
 		MainButtonActions.processinput(hap_data, hap_type);
-	}
+	},
 
-	static loadPedFromStorage() {
+	loadPedFromStorage: function() {
 		MainButtonActions.preamble();
 		MainPageHandler.createpedmode();
 		
@@ -42,10 +43,10 @@ class MainButtonActions {
 			ped_type = localStorage.getItem( localStor.ped_type );
 
 		MainButtonActions.processinput(ped_data, ped_type);
-	}
+	},
 
 
-	static savePedToStorage() {
+	savePedToStorage: function() {
 
 		var ped_to_string = PersistData.toPedfileString(true); /*store graphics*/
 
@@ -53,9 +54,9 @@ class MainButtonActions {
 		localStorage.setItem( localStor.ped_type, "pedfile");
 
 		utility.notify("Pedigree Saved","...");
-	}
+	},
 
-	static exitToMenu(){
+	exitToMenu: function(){
 
 		if (MainButtonActions.fileType === "Pedigree"){
 			var changeDetected = PersistData.pedigreeChanged();
@@ -79,10 +80,10 @@ class MainButtonActions {
 		else{
 			MainPageHandler.defaultload();
 		}
-	}
+	},
 
 
-	static createNewPed() {
+	createNewPed: function() {
 		MainButtonActions.preamble();
 		MainPageHandler.createpedmode();
 
@@ -92,12 +93,17 @@ class MainButtonActions {
 		d.style.display = "";*/
 	
 		finishDraw(); // Initialize stage
-	}
+	},
 
-	static processinput(data, type = null){
+	processinput: function(data, type = null){
 		var pi = new ProcessInput(data, type);
 		MainButtonActions.fileType = (type === null)?pi.type:type;
 		init();
 		pi = null; /* Force early GC */
+	},
+
+
+	toggleTransitions: function(checked){
+		userOpts.allowTransitions = !checked;
 	}
 }

@@ -51,8 +51,7 @@ class ProcessInput {
 	_init()
 	{
 		// Flush all maps
-		familyMapOps.clear();
-		uniqueGraphOps.clear();
+		PersistData.clearMaps();
 
 	
 		if (this.type === "pedfile"){

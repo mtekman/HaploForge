@@ -103,12 +103,12 @@ var ToolSetModes = {
 		toolset.setTitle("Selection Tools");
 		toolset.addToolsButton("Select All", function()
 		{
-			ToolSetModes.toggle_selection_all = !ToolSetModes.toggle_selection_all || false;
+			SelectionMode.toggle_selection_all = !SelectionMode.toggle_selection_all;
 
 			for (var key in SelectionMode._items){
 				var item = SelectionMode._items[key];
-				if(  (ToolSetModes.toggle_selection_all && !item.selected)
-				  || (!ToolSetModes.toggle_selection_all && item.selected) ){
+				if(  (SelectionMode.toggle_selection_all && !item.selected)
+				  || (!SelectionMode.toggle_selection_all && item.selected) ){
 					item.box.fire('click')
 				}
 			}
@@ -116,15 +116,15 @@ var ToolSetModes = {
 
 		toolset.addToolsButton("Select Affecteds", function()
 		{
-			ToolSetModes.toggle_selection_affecteds = !ToolSetModes.toggle_selection_affecteds || false;
+			SelectionMode.toggle_selection_affecteds = !SelectionMode.toggle_selection_affecteds;
 
 			for (var key in SelectionMode._items){
 				var item = SelectionMode._items[key];
 				var affected = (item.graphics.children[0].attrs.fill === col_affs[2])
 
 				if (affected){
-					if( (ToolSetModes.toggle_selection_affecteds && !item.selected)
-					 || (!ToolSetModes.toggle_selection_affecteds && item.selected) ){
+					if( (SelectionMode.toggle_selection_affecteds && !item.selected)
+					 || (!SelectionMode.toggle_selection_affecteds && item.selected) ){
 						item.box.fire('click');
 					}
 				}

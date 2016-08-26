@@ -12,17 +12,19 @@ var HaploWindow = {
 	_boxlimsandgroup: null,
 
 	min_node_placement_y : 0,
-	left_margin_x : 0,
+	left_margin_x : 100,
 	white_margin : 20,
 	y_margin : 0,
 
 	destroy : function stopHaplomode(){
 
+		HaploWindow._removeMouseWheel( HaploWindow._wheelHandler );
+
 		HaploWindow._toggleBottom(false, function(){
 
 			for (var fid in SelectionMode._ids){
 				for (var id in SelectionMode._ids[fid]){
-					
+
 					var perc_gfx =  uniqueGraphOps.getFam(fid).nodes[id].graphics;
 					var old_pos = perc_gfx.main_layer_pos;
 					var old_group = perc_gfx.main_layer_group;
@@ -53,17 +55,19 @@ var HaploWindow = {
 					})).play();
 				}
 			}
-
 			haplo_layer.destroyChildren();
 			haplo_layer.draw();
 
 			SelectionMode.destroy();
+			ToolSetModes.setToSelectionPreMode();
 		});
 	},
 
 	
 	init: function launchHaplomode()
 	{
+		SelectionMode._exit.hide();
+		
 		SelectionMode.markSelecteds();
 
 		if (SelectionMode.noneSelected()){
@@ -130,12 +134,12 @@ var HaploWindow = {
 		HaploWindow._top.add( HaploWindow._top.rect );
 
 		// Exit button
-		HaploWindow._top.exit = addExitButton(
-			{x: max_pos.x - HaploWindow.white_margin,
-			 y: 0},
+		var exit = addExitButton(
+			{x: 20,
+			 y: 20},
 			 HaploWindow.destroy);
 
-		HaploWindow._top.add( HaploWindow._top.exit);
+		HaploWindow._group.add( exit );
 
 
 		// Add rendered lines
@@ -146,14 +150,15 @@ var HaploWindow = {
 
 		HaploWindow._group.add(HaploWindow._top);
 
+		ToolSetModes.setToHaploMode();
+		
 		kineticTween({
 			node: HaploWindow._top,
 			x: HaploWindow.left_margin_x,
 			y: HaploWindow.white_margin,
 			duration:0.2,
 			onFinish: function(){
-				HaploWindow._toggleBottom(true,
-					ToolSetModes.setToHaploMode);
+				HaploWindow._toggleBottom(true);
 			}
 		}).play()
 
@@ -163,10 +168,13 @@ var HaploWindow = {
 
 	_toggleBottom: function( show, finishfunc){
 		HaploWindow.y_margin = 30;
+
 		if (show){
-			HaploWindow.__showBottom(finishfunc);
+			HaploWindow._addMouseWheel( HaploWindow._wheelHandler );
+			HaploWindow.__showBottom( finishfunc );
 		} else {
-			HaploWindow.__hideBottom(finishfunc);
+			HaploWindow._removeMouseWheel( HaploWindow._wheelHandler );
+			HaploWindow.__hideBottom( finishfunc );
 		}
 	},
 
@@ -233,16 +241,44 @@ var HaploWindow = {
 	__hideBottom: function(finishfunc = 0){
 		uniqueGraphOps.haplo_area.hide();
 
+		if (HaploWindow._bottom === null){
+			finishfunc();
+			return;
+		}
+
 		kineticTween({
 			node: HaploWindow._bottom.rect,
 			height:0,
 			onFinish: function(){
 				HaploWindow._bottom.destroyChildren();	//Bit of genocide
-				HaploWindow._bottom.destroy();	
+				HaploWindow._bottom.destroy();
+				HaploWindow._bottom = null;
 				if (finishfunc!==0){
 					finishfunc();
 				}
 			}
 		}).play();
+	},
+
+	_addMouseWheel: function(func){
+		//WebKit
+		document.addEventListener("mousewheel", func, false);
+		document.addEventListener("DOMMouseScroll", func, false);
+	},
+
+	_removeMouseWheel: function(func){
+		document.removeEventListener("mousewheel", func, false);
+		document.removeEventListener("DOMMouseScroll", func, false);
+	},
+
+	_wheelHandler: function(event){
+		sta_index += event.detail;
+		end_index += event.detail;
+
+		updateInputsByIndex( sta_index, end_index );
+		updateSlide();
+		redrawHaplos(false);
+		
+		haplo_layer.draw();
 	}
 }

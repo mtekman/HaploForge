@@ -36,7 +36,8 @@ function init(){
 
 //MainPageHandler.defaultload();
 //MainButtonActions.createNewPed()
-userOpts.allowTransitions = false;
+
+
 MainButtonActions.loadHaploFromStorage();
 
 setTimeout(function(){

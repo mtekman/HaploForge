@@ -1,7 +1,11 @@
 
 var DOS = {
 
-	initial_group_node_offset : {x:100, y:40},
+	initial_group_node_offset : {
+		x:HaploWindow.left_margin_x,
+		y:40 // <-- Hardcoded for now, because I don't actually know how
+		     //     to derive this value
+	},
 	haplo_group_nodes : new Kinetic.Group(),
 	haplo_group_lines : new Kinetic.Group(),
 

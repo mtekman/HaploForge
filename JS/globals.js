@@ -38,8 +38,6 @@ var HAP_DRAW_LIM = 30, // No more than 30 haplotypes on screen
 	HAP_VERT_SPA = 10;
 
 
-var haplomode_panel_xoffs = 100;
-
 var use_right_angles = true,
 	use_grid = true;
 

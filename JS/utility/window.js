@@ -62,21 +62,26 @@ if (!(
 
 function resizeCanvas()
 {
+    var margin = 5;
+
     if (stage !== null){
-    	stage.setWidth(window.innerWidth);
+    	stage.setWidth(window.innerWidth - margin);
 
     	var new_height = ((HAP_DRAW_LIM+5) * HAP_VERT_SPA)+200;
 
     	if (new_height < window.innerHeight)
     		new_height = window.innerHeight;
 
-    	stage.setHeight(new_height);
+    	stage.setHeight(new_height - margin);
 
         if (HaploWindow._background !== undefined){
-        	HaploWindow._background.setWidth(window.innerWidth);
-    	   HaploWindow._background.setHeight(new_height);
+            HaploWindow._background.setWidth(window.innerWidth);
+            HaploWindow._background.setHeight(new_height);
 
-    	   haplo_layer.draw();
+            SelectionMode._background.setWidth(window.innerWidth);
+            SelectionMode._background.setHeight(window.innerHeight);
+
+            haplo_layer.draw();
         }
     }
 }
