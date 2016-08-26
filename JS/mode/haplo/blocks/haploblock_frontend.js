@@ -71,6 +71,10 @@ function redrawHaplos(resizeToo){
 	end_index += index_start_delta;
 	// console.log("shifting by "+index_start_delta);
 
+	// Update marker background height
+	HaploWindow._left.setY( HaploWindow._bottom.rect.getAbsolutePosition().y );
+	HaploWindow._left.setHeight( HaploWindow._bottom.rect.getHeight() );
+
 	// Delete after grabbing position
 	scroll_area.destroyChildren();
 	scroll_area.setY(0);

@@ -1,61 +1,64 @@
-var markerInstance = null;
-var markerscale_visible = false;
 
-// Updated by functions, instead of continuously checking
-var last_input1_posy, last_input1_ind,
-	last_input2_posy, last_input2_ind,
-	rangeline_pos;
+var MarkerSlider = {
+
+	_instance : null, //markerInstance
+	_visible : false, //markerscale_visible
+
+	// Updated by functions, instead of continuously checking
+	_last_input1_posy : null,
+	_last_input2_posy : null,
+
+	_last_input1_ind : null,
+	_last_input2_ind : null,
+	_rangeline_pos : null,
+
+	// I bar group, and inputs
+	_slwin_group : null,
+	_sl_input1 : null,
+	_sl_input2 : null,
+
+	/** General wrapper for slider
+		Use this if in doubt**/
+	showSlider: function(visible)
+	{
+		MarkerSlider._visible = visible;
+
+		var marker_slid = MarkerSlider.getSlider(
+			 HaploWindow._top.getX()
+			+HaploWindow._top.rect.getWidth() + 20, 60);
+
+		if (MarkerSlider._visible)
+		{
+			haplo_layer.add(marker_slid)
+
+			updateInputsByIndex(0, HAP_DRAW_LIM);
+			updateSlide();
+		}
+		else {
+			marker_slid.remove();
+		}
+		haplo_layer.draw();
+		return marker_slid;
+	},
+
+	getSlider: function(xer, yer)
+	{
+		// Already one present?
+		if (MarkerSlider._instance === null){
+			MarkerSlider._instance = MarkerSlider._makeSlider(xer,yer);
+		}
+		return MarkerSlider._instance;
+	},
 
 
-// I bar group, and inputs
-var slwin_group,
-	sl_input1,
-	sl_input2;
-
-
-/** General wrapper for slider
-	Use this if in doubt**/
-function showSlider(visible)
-{
-	markerscale_visible = visible;
-
-	var marker_slid = getSlider(
-		 haplo_window.top.getX()
-		+haplo_window.top.rect.getWidth() + 20, 60);
-
-	if (visible){
-//		mscale_layer.add(marker_slid);
-		haplo_layer.add(marker_slid)
-		// mscale_layer.setZIndex()
-		// stage.add(mscale_layer);
-
-		updateInputsByIndex(0, HAP_DRAW_LIM);
-		updateSlide();
-	}
-	else {
-		// mscale_layer.destroyChildren();
-		// stage.remove(mscale_layer);
-		marker_slid.remove();
-	}
-	haplo_layer.draw();
-	return marker_slid;
-}
-
-
-function getSlider(xer, yer)
-{
-	// Already one present?
-	if (markerInstance !== null)
-		return markerInstance;
-
-
-	function makeInputSlider(top)
+	__makeInputSlider: function(top = false)
 	{
 		var input_group = new Kinetic.Group({
 			x: 0, y: 0,
 			draggable: true,
 			dragBoundFunc: inputDragFunc
-		})
+		});
+
 		var mark_label = new Kinetic.Text({
 			x: slider_style.bevel + 3 + I_slider_offset*2,
 			y: (top?-I_slider_extension:I_slider_extension) - HAP_VERT_SPA/2,
@@ -75,141 +78,107 @@ function getSlider(xer, yer)
 			stroke: slider_style.I_stroke,
 			strokeWidth:slider_style.I_strokeWidth
 		});
-		input_group.on('mouseup', function(){updateHaploPositions(true)});
+
+		input_group.on('mouseup', function(){
+			updateHaploPositions(true);
+		});
 
 		input_group.add(mark_label);
 		input_group.add(line_out);
 
-		input_group.message = mark_label; 		// Accessor
+		input_group.message = mark_label; // Accessor
 		input_group.isTop = top;
 
 		return input_group;
-	}
+	},
 
+	_makeSlider: function(xer,yer){
+		var marker_slider = new Kinetic.Group({x:xer,y:yer,draggable:true});
+		MarkerSlider._instance = marker_slider;
 
-	var marker_slider = new Kinetic.Group({x:xer,y:yer,draggable:true});
-	markerInstance = marker_slider;
-
-	//Range line
-	var rangeline = new Kinetic.Line({
-		x:0,y: slider_style.bevel,
-		stroke: slider_style.R_stroke,
-		strokeWidth: slider_style.R_strokeWidth,
-		lineCap: slider_style.R_cap,
-		points: [0,0,0,slider_height]
-	});
-
-	//Highlight
-	marker_slider.on("mouseover", function(){
-		rangeline.setStroke('blue');
-		haplo_layer.draw();
-	});
-
-	//Highlight
-	marker_slider.on("mouseout", function(){
-		rangeline.setStroke('red');
-		haplo_layer.draw();
-	});
-
-
-
-
-	// Update all input positions
-	rangeline.on('mouseup', function (e){
-		rangeline_pos = this.getAbsolutePosition();
-		last_input1_posy = sl_input1.getAbsolutePosition().y;
-		last_input2_posy = sl_input2.getAbsolutePosition().y;
-	});
-
-	// Sliding Window
-	slwin_group = new Kinetic.Group({
-		draggable:true,
-		dragBoundFunc: sliderDragFunc
-	});
-
-
-/*	slwin_group.on('mousedown', function(){
-		haplo_layer.disableHitGraph()
-	});*/
-	
-	slwin_group.on('dragmove', function(){
-		if (HAP_DRAW_LIM < HAP_MIN_DRAW)
-			updateHaploPositions();
-	});
-	
-	slwin_group.on('mouseup', function(){
-		//haplo_layer.enableHitGraph();
-		updateHaploPositions();
-	});
-
-
-	var	slwin_lin = new Kinetic.Line({
-			x:0, y:0,
-			stroke: slider_style.I_stroke,
-			strokeWidth: slider_style.I_strokeWidth,
-			points:[0,0,0,slider_height]
-		}),
-
-		slwin_tex = new Kinetic.Text({
-			x: slider_style.bevel + slideinp_w/2,
-			y: slider_height/2,
-			text: "win",
-			fontFamily: slider_style.I_fontFamily,
-			fontSize: slider_style.I_fontSize,
-			fill: slider_style.I_fontColor
+		//Range line
+		var rangeline = new Kinetic.Line({
+			x:0,y: slider_style.bevel,
+			stroke: slider_style.R_stroke,
+			strokeWidth: slider_style.R_strokeWidth,
+			lineCap: slider_style.R_cap,
+			points: [0,0,0,slider_height]
 		});
 
-	slwin_group.add( slwin_lin );
-	slwin_group.add( slwin_tex );
+		//Highlight
+		marker_slider.on("mouseover", function(){
+			rangeline.setStroke('blue');
+			haplo_layer.draw();
+		});
 
-	// Easy accessors
-	slwin_group.line = slwin_lin;
-	slwin_group.message = slwin_tex;
+		//Highlight
+		marker_slider.on("mouseout", function(){
+			rangeline.setStroke('red');
+			haplo_layer.draw();
+		});
 
 
-	//Inputs
-	sl_input1 = makeInputSlider(true),
-	sl_input2 = makeInputSlider(false);
+		// Update all input positions
+		rangeline.on('mouseup', function (e){
+			MarkerSlider._rangeline_pos = this.getAbsolutePosition();
+			MarkerSlider._last_input1_posy = MarkerSlider._sl_input1.getAbsolutePosition().y;
+			MarkerSlider._last_input2_posy = MarkerSlider._sl_input2.getAbsolutePosition().y;
+		});
 
-	sl_input2.setY(slider_height);
+		// Sliding Window
+		MarkerSlider._slwin_group = new Kinetic.Group({
+			draggable:true,
+			dragBoundFunc: sliderDragFunc
+		});
 
-	rangeline_pos = {x: xer, y:yer};
-	last_input1_posy = yer;
-	last_input2_posy = yer + slider_height;
+		MarkerSlider._slwin_group.on('dragmove', function(){
+			if (HAP_DRAW_LIM < HAP_MIN_DRAW)
+				updateHaploPositions();
+		});
+		
+		MarkerSlider._slwin_group.on('mouseup', function(){
+			updateHaploPositions();
+		});
 
-	marker_slider.add( rangeline   );
-	marker_slider.add( sl_input1   );
-	marker_slider.add( sl_input2   );
-	marker_slider.add( slwin_group );
+		var	slwin_lin = new Kinetic.Line({
+				x:0, y:0,
+				stroke: slider_style.I_stroke,
+				strokeWidth: slider_style.I_strokeWidth,
+				points:[0,0,0,slider_height]
+			}),
 
-	marker_slider.rangeline = rangeline;
+			slwin_tex = new Kinetic.Text({
+				x: slider_style.bevel + slideinp_w/2,
+				y: slider_height/2,
+				text: "win",
+				fontFamily: slider_style.I_fontFamily,
+				fontSize: slider_style.I_fontSize,
+				fill: slider_style.I_fontColor
+			});
 
-	return marker_slider;
+		MarkerSlider._slwin_group.add( slwin_lin );
+		MarkerSlider._slwin_group.add( slwin_tex );
+
+		// Easy accessors
+		MarkerSlider._slwin_group.line = slwin_lin;
+		MarkerSlider._slwin_group.message = slwin_tex;
+
+		//Inputs
+		MarkerSlider._sl_input1 = MarkerSlider.__makeInputSlider(true),
+		MarkerSlider._sl_input2 = MarkerSlider.__makeInputSlider(false);
+		MarkerSlider._sl_input2.setY(slider_height);
+
+		MarkerSlider._rangeline_pos = {x: xer, y:yer};
+		MarkerSlider._last_input1_posy = yer;
+		MarkerSlider._last_input2_posy = yer + slider_height;
+
+		marker_slider.add( rangeline   );
+		marker_slider.add( MarkerSlider._sl_input1   );
+		marker_slider.add( MarkerSlider._sl_input2   );
+		marker_slider.add( MarkerSlider._slwin_group );
+
+		marker_slider.rangeline = rangeline;
+
+		return marker_slider;
+	}
 }
-
-
-// marker_array = (function(){
-// 	var num = 1000;
-// 	var array = [];
-// 	while (num-- > 0){
-// 		var rand = Math.floor( Math.random() * 1000000 ),
-// 			str = 'rs'+rand;
-
-// 		array.push( str );
-// 	}
-// 	return array;
-// })();
-
-// var mark_group = getSlider(350, 10);
-// var stage = new Kinetic.Stage({
-// 	container:'container',
-// 	width: window.innerWidth,
-// 	height: window.innerHeight
-// });
-// var layer = new Kinetic.Layer({});
-// layer.add(mark_group);
-// stage.add(layer);
-
-// updateInputs(0, slider_height);
-// updateSlide();
-// layer.draw();

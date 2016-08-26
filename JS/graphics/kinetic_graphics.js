@@ -330,8 +330,6 @@ function addHaploBlocksAll()
 					   && iter <= end_index){}
 
 
-
-
 				var rec = new Kinetic.Rect({
 					x: haploblock_spacers.marker_offset_px + (
 						(q * haploblock_spacers.person_offset_px)

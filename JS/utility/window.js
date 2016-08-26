@@ -70,9 +70,9 @@ function resizeCanvas()
     	var new_height = ((HAP_DRAW_LIM+5) * HAP_VERT_SPA)+200;
 
     	if (new_height < window.innerHeight)
-    		new_height = window.innerHeight;
+    		new_height = window.innerHeight - margin;
 
-    	stage.setHeight(new_height - margin);
+    	stage.setHeight(new_height);
 
         if (HaploWindow._background !== undefined){
             HaploWindow._background.setWidth(window.innerWidth);

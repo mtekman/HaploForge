@@ -154,7 +154,7 @@ var ToolSetModes = {
 			//returns marker pair list
 		});
 		toolset.addToolsButton("Range Slider", function(){
-			showSlider(!markerscale_visible)
+			MarkerSlider.showSlider(!MarkerSlider._visible)
 		});
 		toolset.addToolsButton("Marker Search", showIndexCSS);
 	},

@@ -1,6 +1,20 @@
 
+userOpts.allowTransitions = false;
 
 var HaploWindow = {
+
+	_left: new Kinetic.Rect({    //  side bar underlying markers
+		x: 10, 
+		y: 95,
+		height: 100,
+		width: 65,
+		fill: 'white',
+		shadowColor: 'white',
+		shadowBlur: 8,
+		cornerRadius: 10,
+		opacity: 0.3
+	}),
+
 
 	_group : new Kinetic.Group(), // haplo_window
 	_top : new Kinetic.Group(),   // haplo_window.top
@@ -55,6 +69,13 @@ var HaploWindow = {
 					})).play();
 				}
 			}
+			// KILL THEM, MWAAHAHA -- it's 5amm....
+			HaploWindow._group.remove( HaploWindow._background );
+			HaploWindow._group.destroyChildren();
+			HaploWindow._group.destroy();
+			HaploWindow._background = null;
+			HaploWindow._bottom = null;
+
 			haplo_layer.destroyChildren();
 			haplo_layer.draw();
 
@@ -216,7 +237,8 @@ var HaploWindow = {
 						};
 					}
 				});
-			
+
+
 				scroll_area__.on('mouseup', function(){
 					redrawHaplos(false); // starting=300
 					updateInputsByIndex( sta_index, end_index );
@@ -228,6 +250,12 @@ var HaploWindow = {
 				uniqueGraphOps.haplo_area = scroll_area__;
 
 				HaploWindow._bottom.add( scroll_area__ );
+
+
+				HaploWindow._group.add( HaploWindow._left );
+				HaploWindow._left.show();
+				HaploWindow._left.moveToBottom();
+				HaploWindow._left.moveUp();
 
 				addHaplosAnyone( SelectionMode._ids );
 
@@ -246,13 +274,18 @@ var HaploWindow = {
 			return;
 		}
 
+		HaploWindow._left.hide();
+
 		kineticTween({
 			node: HaploWindow._bottom.rect,
 			height:0,
 			onFinish: function(){
+
 				HaploWindow._bottom.destroyChildren();	//Bit of genocide
 				HaploWindow._bottom.destroy();
 				HaploWindow._bottom = null;
+
+				HaploWindow._group.remove( HaploWindow._left );
 				if (finishfunc!==0){
 					finishfunc();
 				}
