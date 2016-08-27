@@ -39,10 +39,18 @@ function alignTopSelection( group_nodes, group_lines)
 		// Move bottom box too (if defined)
 		if (HaploWindow._bottom !== undefined){
 			HaploWindow._bottom.old_ypos = HaploWindow._bottom.getY();
+			HaploWindow._left.old_ypos = HaploWindow._left.getY();
 
 			tween_array.push(
 				kineticTween({
 					node: HaploWindow._bottom,
+					y: (HaploWindow.white_margin * 3) + HaploWindow.y_margin
+				})
+			);
+
+			tween_array.push(
+				kineticTween({
+					node: HaploWindow._left,
 					y: (HaploWindow.white_margin * 3) + HaploWindow.y_margin
 				})
 			);
@@ -77,6 +85,14 @@ function alignTopSelection( group_nodes, group_lines)
 			})
 		);
 
+		tween_array.push(
+			kineticTween({
+				node: HaploWindow._left,
+				y: HaploWindow._left.old_ypos,
+			})
+		);
+
+
 		// Move bottom box back
 		if (HaploWindow._bottom !== undefined){
 			tween_array.push(
@@ -94,4 +110,6 @@ function alignTopSelection( group_nodes, group_lines)
 	{
 		tween_array[t++].play();
 	}
+
+	haplo_layer.draw();
 }

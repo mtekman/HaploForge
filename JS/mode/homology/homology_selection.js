@@ -20,22 +20,21 @@ var homology_selection_mode = function()
 	sub_select_group.submit_button = addButton("Submit Selection", 0, 0,
 		function()
 		{
-			// var selected_for_homology = []; // Now global in homology_buttons.js
-			selected_for_homology = [];
+			HomologyMode.selected_for_homology = [];
 		
 			for (var s in SelectionMode._items){
 				if (SelectionMode._items[s].selected){
 
 					SelectionMode._items[s].box.stroke('green')
 
-					selected_for_homology.push(s);
+					HomologyMode.selected_for_homology.push(s);
 				}
 				SelectionMode._items[s].box.off('click');
 			}
 
 			// Shift top panel to front layer
-			haplo_window.top.moveTo(haplo_window)
-			haplo_window.top.exit.show();
+			HaploWindow._top.moveTo( HaploWindow._group )
+			HaploWindow._exit.show();
 
 
 			sub_select_group.rect.destroy();
@@ -43,13 +42,13 @@ var homology_selection_mode = function()
 
 			haplo_layer.draw();
 
-			if (selected_for_homology.length === 0)
+			if (HomologyMode.selected_for_homology.length === 0)
 				return -1;
 
-			plots = scan_alleles_for_homology( selected_for_homology );
+			plots = scan_alleles_for_homology( HomologyMode.selected_for_homology );
 
-			homology_buttons_show();
-			homology_buttons_redraw();
+			HomologyButtons._show();
+			HomologyButtons._redraw();
 
 			return 0;
 		}
@@ -60,12 +59,12 @@ var homology_selection_mode = function()
 
 
 	// Shift top panel to front layer
-	haplo_window.top.moveTo(sub_select_group)
-	haplo_window.top.exit.hide();
+	HaploWindow._top.moveTo(sub_select_group)
+	HaploWindow._exit.hide();
 
-	for (var c=0; c < haplo_group_nodes.children.length; c++)
+	for (var c=0; c < DOS.haplo_group_nodes.children.length; c++)
 	{
-			var node = haplo_group_nodes.children[c];
+			var node = DOS.haplo_group_nodes.children[c];
 
 			if (node == 0) continue;
 

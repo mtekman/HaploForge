@@ -1,89 +1,68 @@
-var selected_for_homology; // populated by homology_selection.js
 
-var plots,	// ditto
-	rendered_filtered_plot;
+var HomologyButtons = {
 
+	_group : document.getElementById('homology_buttons'),
+	_type_accessor : document.getElementById('plot_type'),
+	_minext_accessor : document.getElementById('zygous_min_stretch'),
+	_minscore_accessor : document.getElementById('zygous_min_score'),
 
+	_printcurrent_accessor : document.getElementById('print_current'),
+	_printall_accessor : document.getElementById('print_all'),
+	_redraw_accessor : document.getElementById('plot_redraw'),
+	_exit_accessor : document.getElementById('hom_exit'),
 
-var homology_mode_active = false;
+	init: function(){
+		// Make onclick events
+		HomologyButtons._exit_accessor.onclick = HomologyButtons._exit;
+		HomologyButtons._redraw_accessor.onclick = HomologyButtons._redraw;
+		HomologyButtons._printall_accessor.onclick = HomologyButtons._printAll;
+		HomologyButtons._printcurrent_accessor.onclick = HomologyButtons._printCurrent;
+	},
 
+	updateHomologyInputs: function(){
+		HomologyMode._type = HomologyButtons._type_accessor.options[
+			HomologyButtons._type_accessor.selectedIndex
+		].value;
 
-var homology_button_group = document.getElementById('homology_buttons'),
-	
-	homology_type_accessor = document.getElementById('plot_type'),
-	homology_minext_accessor = document.getElementById('zygous_min_stretch'),
-	homology_minscore_accessor = document.getElementById('zygous_min_score'),
+		HomologyButtons._minexten = parseInt( HomologyButtons._minext_accessor.value );
+		HomologyButtons._minscore = parseInt( HomologyButtons._minscore_accessor.value );
+	},
 
-	homology_type = "HOM",
-	homology_minexten = 0,
-	homology_minscore = 0,
+	_exit: function()
+	{
+		if (sub_select_group != null){
+			sub_select_group.destroyChildren();
+			sub_select_group.destroy();
+		}
+		HomologyMode._active = false;
+		HomologyButtons._group.style.display = "none";
+		HomologyMode.removeScores();
 
-	homology_redraw_accessor = document.getElementById('plot_redraw'),
-	homology_exit_accessor = document.getElementById('hom_exit'),
-	homology_printcurrent_accessor = document.getElementById('print_current'),
-	homology_printall_accessor = document.getElementById('print_all');
+		haplo_layer.draw();
+	},
 
+	_redraw: function(){
+		HomologyButtons.updateHomologyInputs();
 
-// Make onclick events
-homology_redraw_accessor.onclick = homology_buttons_redraw;
-homology_printall_accessor.onclick = homology_buttons_printAll;
-homology_printcurrent_accessor.onclick = homology_buttons_printCurrent;
-homology_exit_accessor.onclick = homology_buttons_exit;
+		HomologyMode.plotScoresOnMarkerScale
+		(
+			plots[HomologyMode._type],
+			HomologyMode._minexten,
+			HomologyMode._minscore
+		);
+	},
 
+	_printAll: function(){
+		printToFile(selected_for_homology);
+	},
 
-function updateHomologyInputs()
-{
-	homology_type = homology_type_accessor.options[
-						homology_type_accessor.selectedIndex
-					].value;
+	_printCurrent: function(){
+		printToFile(selected_for_homology, sta_index, end_index);
+	},
 
-	homology_minexten = parseInt( homology_minext_accessor.value );
-	homology_minscore = parseInt( homology_minscore_accessor.value );
-}
+	_show: function(){
+		HomologyMode._active = true;
+		HomologyButtons._group.style.display = "block";
+	},
 
-
-function homology_buttons_printAll()
-{
-	printToFile(selected_for_homology);
-}
-
-
-function homology_buttons_printCurrent()
-{
-	printToFile(selected_for_homology, sta_index, end_index);
-}
-
-
-function homology_buttons_exit()
-{
-	if (sub_select_group != null){
-		sub_select_group.destroyChildren();
-		sub_select_group.destroy();
-	}
-
-	homology_mode_active = false;
-	homology_button_group.style.display = "none";
-	removeScores();
-
-	haplo_layer.draw();
-}
-
-
-function homology_buttons_show()
-{
-	homology_mode_active = true;
-	homology_button_group.style.display = "block";
-}
-
-
-function homology_buttons_redraw()
-{
-	updateHomologyInputs();
-
-	plotScoresOnMarkerScale
-	(
-		plots[homology_type],
-		homology_minexten,
-		homology_minscore
-	);
 }

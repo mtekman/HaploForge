@@ -66,10 +66,12 @@ function redrawHaplos(resizeToo){
 	var diff_y = scroll_rect.getAbsolutePosition().y - scroll_area.getAbsolutePosition().y,
 		index_start_delta = Math.floor( diff_y / HAP_VERT_SPA );
 
-	// console.log("diffy="+diff_y, "ind_start_d="+index_start_delta);
+	//console.log("diffy="+diff_y, "ind_start_d="+index_start_delta);
 	sta_index += index_start_delta;
 	end_index += index_start_delta;
-	// console.log("shifting by "+index_start_delta);
+	//console.log("shifting by "+index_start_delta, sta_index, end_index);
+
+
 
 	// Update marker background height
 	HaploWindow._left.setY( HaploWindow._bottom.rect.getAbsolutePosition().y );
@@ -93,7 +95,7 @@ function redrawHaplos(resizeToo){
 	var new_haplos = addHaploBlocksAll();
 	scroll_area.add( new_haplos );
 
-	if (homology_mode_active)
+	if (HomologyMode._active)
 	{
 		var homology_overlays = addHomologyPlotOverlay();
 		scroll_area.add( homology_overlays );

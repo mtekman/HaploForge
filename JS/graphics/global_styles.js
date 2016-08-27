@@ -39,7 +39,7 @@ class CustomTweenClass
 
 	play(){
 		if (this.finishCallback !== null){
-			setTimeout(this.finishCallback, 10);
+			setTimeout(this.finishCallback, 100);
 		}
 	}
 }
@@ -47,10 +47,10 @@ class CustomTweenClass
 
 function kineticTween(props)
 {
-	if (userOpts.allowTransitions){
-		props.easing = props.easing || Kinetic.Easings.EaseIn;
-		props.duration = props.duration || 0.8;
+	props.easing = props.easing || Kinetic.Easings.EaseIn;
+	props.duration = props.duration || 0.8;
 
+	if (userOpts.allowTransitions){
 		return new Kinetic.Tween(props);
 	}
 

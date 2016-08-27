@@ -13,7 +13,7 @@ var SelectionMode = {
 
 	destroy: function stopSelectionMode()
 	{
-		homology_buttons_exit();
+		HomologyButtons._exit();
 
 		SelectionMode._select_group.destroyChildren();
 		SelectionMode._select_group.destroy();
@@ -25,8 +25,8 @@ var SelectionMode = {
 		SelectionMode._items = {}
 
 		//Delete zoom
-		if (markerInstance !== null){
-			markerInstance.remove();
+		if (MarkerSlider._instance !== null){
+			MarkerSlider._instance.remove();
 		}
 		haplo_layer.draw();
 		main_layer.draw();

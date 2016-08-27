@@ -155,12 +155,12 @@ var HaploWindow = {
 		HaploWindow._top.add( HaploWindow._top.rect );
 
 		// Exit button
-		var exit = addExitButton(
+		HaploWindow._exit = addExitButton(
 			{x: 20,
 			 y: 20},
 			 HaploWindow.destroy);
 
-		HaploWindow._group.add( exit );
+		HaploWindow._group.add( HaploWindow._exit );
 
 
 		// Add rendered lines
@@ -284,6 +284,9 @@ var HaploWindow = {
 				HaploWindow._bottom.destroyChildren();	//Bit of genocide
 				HaploWindow._bottom.destroy();
 				HaploWindow._bottom = null;
+
+				HaploWindow._exit.destroy();
+				HaploWindow._exit = null;
 
 				HaploWindow._group.remove( HaploWindow._left );
 				if (finishfunc!==0){
