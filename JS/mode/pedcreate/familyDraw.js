@@ -9,7 +9,7 @@ var familyDraw = {
 		}
 
 		// Select new group
-		var fam = uniqueGraphOps.getFam(fid)
+		var fam = uniqueGraphOps.getFam(fid).group
 		fam.fam_title_text.setFontStyle("bold");
 		main_layer.draw();
 

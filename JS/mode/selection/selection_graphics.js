@@ -32,6 +32,35 @@ var SelectionGraphics = {
 		return rect;
 	},
 
+
+	nextEmptySlot: function(fam_id)
+	{
+		var max_pos = {x:-grid_rezX, y:-grid_rezY};
+
+		familyMapOps.foreachperc(function(perc_id){
+			var node = uniqueGraphOps.getNode(perc_id, fam_id ).graphics,
+				pos = node.getPosition();
+
+			console.log(perc_id, pos);
+
+			var new_pos = {
+				x: Math.floor( pos.x / (2*grid_rezX)) * 2 * grid_rezX,
+				y: Math.floor( pos.y / (2*grid_rezY)) * 2 * grid_rezY
+			};
+
+			if (new_pos.x > max_pos.x){ max_pos.x = new_pos.x;}
+			if (new_pos.y > max_pos.y){ max_pos.y = new_pos.y;}
+
+		}, fam_id);
+
+		// Add one to Y
+		max_pos.y += 2* grid_rezY;
+
+		return max_pos;
+	},
+
+
+
 	_addInvisibleOrangeBox: function(pos, radius){
 		var border_offs = 3,
 			radius = radius || nodeSize;

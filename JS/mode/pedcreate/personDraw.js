@@ -45,8 +45,8 @@ var personDraw = {
 			delete that.used_ids[oldID]
 
 			//Update family map
-			familyMapOps.remove(oldID, oldFam);
-			familyMapOps.insert(new_person, oldFam);
+			familyMapOps.removePerc(oldID, oldFam);
+			familyMapOps.insertPerc(new_person, oldFam);
 
 			var new_node = that.addNode(new_person, {x:oldX, y:oldY});
 
@@ -68,13 +68,20 @@ var personDraw = {
 
 		if (familyDraw.active_fam_group === null)
 		{
-			console.log("not active");
-			familyDraw.addFam(null, null, 
-				function(){
-					console.log("Here?");
-					personDraw._addNodeToActiveFam(person, position)
-				}
-			);
+			var num_fams = familyMapOps.numFams();
+
+			if (num_fams !== 0){
+				utility.notify("Note","Need to select family first");
+			}
+			else {
+				utility.notify("No family selected", "Creating new family");
+
+				familyDraw.addFam(null, null, 
+					function(){
+						personDraw._addNodeToActiveFam(person, position)
+					}
+				);
+			}
 		} else{
 			personDraw._addNodeToActiveFam(person, position);
 		}
@@ -89,6 +96,8 @@ var personDraw = {
 		if (person === null ){ 
 			person = this.makeTempPerson();
 		}
+
+
 
 		var perc = addPerson( person, fam_group,  
 				grid_rezX ,
@@ -114,12 +123,20 @@ var personDraw = {
 
 		//family map stores the person data
 		// used_ids stores the graphics
-		familyMapOps.insert(person, perc.family);
+		familyMapOps.insertPerc(person, perc.family);
 		uniqueGraphOps.insertNode(person.id, perc.family, perc);
 
 		if (position !== null){
 			perc.setX(position.x);
 			perc.setY(position.y);
+		}
+		else {
+			// Find next free space
+			var next_avail_pos = SelectionGraphics.nextEmptySlot(
+				familyDraw.active_fam_group.id
+			);
+			perc.setX(next_avail_pos.x);
+			perc.setY(next_avail_pos.y);
 		}
 
 		main_layer.draw();

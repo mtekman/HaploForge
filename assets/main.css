@@ -104,7 +104,8 @@
   width: 100%;
   height: 100%;
   opacity: 0.8;
-  background: #ccc;
+/*  background: #ccc;*/
+  background-color: white;
   z-index: 98;
   display: none;
 }
@@ -187,6 +188,16 @@
   border-color: black;
 }
 
+#pers_delete {
+  position: absolute;
+  right: 35px;
+  top: 5px;
+  border-width: 1px;
+  background: #dd5500;
+  border-radius: 10px;
+  border-color: black;
+}
+
 #person_props.input_props  {
   left:40%;
 }
@@ -247,11 +258,11 @@
   padding-left: 10px;
   margin-bottom: 5px;
   margin-top: -18px;
-  text-shadow: 
+/*  text-shadow: 
     -1px  1px white,
     -1px -1px white,
      1px -1px white,
-     1px  1px white;
+     1px  1px white;*/
 }
 
 

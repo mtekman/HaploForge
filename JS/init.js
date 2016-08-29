@@ -35,9 +35,10 @@ function init(){
 
 
 //MainPageHandler.defaultload();
-//MainButtonActions.createNewPed()
+MainButtonActions.createNewPed()
 
 
+/*
 MainButtonActions.loadHaploFromStorage();
 
 setTimeout(function(){
@@ -64,3 +65,4 @@ setTimeout(function(){
 		}, 100);
 	}, 100);
 }, 100);
+*/

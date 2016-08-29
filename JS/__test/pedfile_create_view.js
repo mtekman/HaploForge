@@ -1,14 +1,17 @@
 
 
-/*
 
-initiatePedigreeDraw();
+//initiatePedigreeDraw();
+
 //familyDraw.addFam(1001)
-//personDraw.addNode();
-//personDraw.addNode({id:90,gender:1,affected:1});
+//personDraw.addNode(null, null);
 
-familyDraw.addFam(1002, {x:200, y:100});
 
+//familyDraw.addFam(1002, {x:200, y:100});
+
+
+
+/*
 personDraw.addNode(
 	new Person(12,2,2),
 	{x:0, y:50}

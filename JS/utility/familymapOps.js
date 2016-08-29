@@ -31,6 +31,14 @@ var familyMapOps = {
 		}
 	},
 
+	numFams : function(){
+		var count = 0
+		for (var fam in familyMapOps._map){
+			count ++
+		}
+		return count;
+	},
+
 	/* Grab the first individual */
 	getFirst: function( family_id ){
 		for (var fam in familyMapOps._map)
@@ -46,7 +54,7 @@ var familyMapOps = {
 		return familyMapOps._insertionLog[key];
 	},
 
-	insert: function(person, family_id){
+	insertPerc: function(person, family_id){
 		
 		if (!(family_id in familyMapOps._map)){
 			familyMapOps._map[family_id] = {}
@@ -75,7 +83,8 @@ var familyMapOps = {
 
 	removeFam: function(family_id){
 		if (familyMapOps.famExists(family_id)){
-
+			delete familyMapOps._map[family_id];
+			return 0;
 		}
 		return -1;
 	},

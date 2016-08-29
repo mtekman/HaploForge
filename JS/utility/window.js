@@ -74,7 +74,7 @@ function resizeCanvas()
 
     	stage.setHeight(new_height);
 
-        if (HaploWindow._background !== undefined){
+        if (HaploWindow._background !== null){
             HaploWindow._background.setWidth(window.innerWidth);
             HaploWindow._background.setHeight(new_height);
 

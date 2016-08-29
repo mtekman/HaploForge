@@ -4,7 +4,11 @@ var statusProps = {
 	_message: document.getElementById('status_text'),
 
 	hide: function(){ this._box.style.display = "none";},
-	show: function(){ this._box.style.display = ""; this._box.style.opacity = 1},
+	show: function(){ 
+		this._box.style.display = "";
+		this._box.style.opacity = 1;
+		this._box.style.zIndex = 503;
+	},
 
 	_fade: function(step=30){
 		var op = 1;
@@ -34,6 +38,10 @@ var statusProps = {
 
 var utility = {
 	_bg: document.getElementById('modal_bg'),
+
+	focus: function(){
+		this.focus();
+	},
 
 	yesnoprompt: function(title, message, yes, onYes, no, onNo){
 		// Own method drop in?
@@ -75,7 +83,10 @@ var famProps = {
 	_submit: document.getElementById('family_submit'),
 
 	hide: function(){ this._box.style.display = "none";},
-	show: function(){ this._box.style.display = "";},
+	show: function(){ 
+		this._box.style.display = "";
+		this._name.focus();
+	},
 
 	showProps: function(family){
 		utility.showBG();
@@ -114,6 +125,7 @@ var persProps = {
 	_affectInput : document.getElementById('pers_affect'),
 	_affectUnknown : document.getElementById('pers_affect_unknown'),
 	_submit : document.getElementById('pers_submit'),
+	_delete : document.getElementById('pers_delete'),
 
 	id : document.getElementById('pers_id'),
 	name : document.getElementById('pers_name'),
@@ -166,6 +178,7 @@ var persProps = {
 	show: function(){
 		this._box.style.display = "";
 		this._box.style.zIndex = 501;
+		this.name.focus();
 	},
 
 	showProps: function(person){
@@ -201,7 +214,22 @@ var persProps = {
 		this._submit.onclick = function(){
 			var pers = persProps.getProps();
 			callback(pers);
-		}
+		};
+
+		this._delete.onclick = function(){
+			utility.yesnoprompt(
+				"Delete",
+				"Remove individual " + person.id,
+				"Yes", function(){
+					uniqueGraphOps.deleteNode(person.id, familyDraw.active_fam_group.id);
+					familyMapOps.removePerc(person.id, familyDraw.active_fam_group.id);
+				},
+				"No", function(){
+					this.hide();
+					utility.hideBG();
+				}
+			);
+		};
 	}
 }
 
@@ -232,6 +260,7 @@ var messProps = {
 	show: function(){ 
 		this._box.style.display = "";
 		this._box.style.zIndex = 502;
+		this._input.focus();
 	},
 
 
@@ -265,6 +294,7 @@ var messProps = {
 			this._no.onclick = this._yes.onclick = null;
 		}
 		else
+		/* Input box */
 		{
 			this._buttonrow.style.display = "";
 			this._inputrow.style.display = "none";
