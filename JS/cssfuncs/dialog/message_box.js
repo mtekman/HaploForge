@@ -54,11 +54,6 @@ var utility = {
 
 	notify: statusProps.display,
 
-	message: function(){
-		/* Change to a notification system for users*/
-		console.log(arguments)
-	},
-
 	getMouseXY: function(){
 		return stage.getPointerPosition();
 	},
@@ -221,11 +216,21 @@ var persProps = {
 				"Delete",
 				"Remove individual " + person.id,
 				"Yes", function(){
-					uniqueGraphOps.deleteNode(person.id, familyDraw.active_fam_group.id);
-					familyMapOps.removePerc(person.id, familyDraw.active_fam_group.id);
+					var famid = familyDraw.active_fam_group.id;
+
+					uniqueGraphOps.deleteNode(person.id, famid);
+					familyMapOps.removePerc(person.id, famid);
+
+					main_layer.draw();
+					
+					messProps.hide();
+					persProps.hide();
+					utility.hideBG();
+
+					utility.notify("Family" + famid, "deleted individual "+ person.id);
 				},
 				"No", function(){
-					this.hide();
+					messProps.hide();
 					utility.hideBG();
 				}
 			);
