@@ -210,6 +210,9 @@ function touchlines(grid_use){
 	use_grid = grid_use;
 
 	familyMapOps.foreachperc(function( perid, famid){
+
+		console.log("touch", perid, famid);
+
 		var e = new CustomEvent("dragmove", {target: {attrs: {x:10, y:10}}}),
 			o = uniqueGraphOps.getFam(famid).nodes[perid].graphics;
 

@@ -2,6 +2,8 @@
 var PersistData = {
 
 	clearMaps: function(){
+		generation_grid_ids = [];
+		familyDraw.active_fam_group = null;
 		familyMapOps.clear();
 		uniqueGraphOps.clear();
 	},
@@ -51,7 +53,6 @@ var PersistData = {
 		var text = "";
 
 		familyMapOps.foreachperc(function(pid,fid){
-			console.log(fid,pid)
 
 			var perc =  familyMapOps.getPerc(pid, fid);
 			var array = [
