@@ -34,12 +34,28 @@ function init(){
 }
 
 
-//MainPageHandler.defaultload();
+//MainButtonActions.loadHaploFromStorage();
+MainPageHandler.defaultload();
+/*
 MainButtonActions.createNewPed()
 
+familyDraw.addFam(1001)
 
+personDraw.addNode(
+	new Person(12,2,2),
+	{x:0, y:50}
+);
+
+personDraw.addNode(
+	new Person(11,1,1),
+	{x:180, y:50}
+);
+
+personDraw.addNode(
+	new Person(23,1,2),
+	{x:90, y:150}
+);*/
 /*
-MainButtonActions.loadHaploFromStorage();
 
 setTimeout(function(){
 	SelectionMode.init();

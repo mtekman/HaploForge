@@ -213,7 +213,6 @@ function finishDraw(){
 
 // ------- Family Functions --------------
 function addFamily(fam_id, sx, sy){
-	console.log("adding fam", fam_id, sx, sy)
 
 	var g = new Kinetic.Group({
 		x: sx, y:sy,

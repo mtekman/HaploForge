@@ -373,7 +373,6 @@ function assignHGroups()
 				child2parent_link(pers, moth, fath, fam);
 			}
 		}
-		console.log("hgroups fam =" + fam);
 		removeAmbiguousPointers(fam);
 	}
 	makeUniqueColors();

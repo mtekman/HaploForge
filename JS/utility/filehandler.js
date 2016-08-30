@@ -108,7 +108,7 @@ class ProcessInput {
 				sex = people_info[4], aff = people_info[5];
 
 			var pers = new Person(id, sex, aff, mat, pat);
-			familyMapOps.insert(pers, fam);
+			familyMapOps.insertPerc(pers, fam);
 
 
 			// Handle HaploData (where applicable)

@@ -1,3 +1,4 @@
+/* This class also updates the generation_grid_ids for all parent-offspring connections */
 
 class OffspringDraw extends LineDrawOps {
 
@@ -160,6 +161,11 @@ class OffspringDraw extends LineDrawOps {
 		);
 
 		new_line.setZIndex(1);
+
+		//Perform level regeneration
+		var family_grid_map = (new GridMap(child)).getGrid();
+		generation_grid_ids[this._family] = family_grid_map;
+
 		redrawNodes(father.id, this._family, true);
 		main_layer.draw();
 	}

@@ -25,34 +25,30 @@ var personDraw = {
 		var old_person = familyMapOps.getPerc(oldID,oldFam);
 		var new_person = null
 
-		var that = this;
-
 		persProps.display(old_person, function(newPerc){
 			new_person = newPerc;
 
 
 			if (oldID !== new_person.id){
 
-				if (new_person.id in that.used_ids){
+				if (new_person.id in personDraw.used_ids){
 					utility.notify("Error", "Id already in use");
 					return -1;
 				}
 			}
 		
-			node.destroy();
-
 			// Update ids list
-			delete that.used_ids[oldID]
+			delete personDraw.used_ids[oldID]
 
 			//Update family map
 			familyMapOps.removePerc(oldID, oldFam);
 			familyMapOps.insertPerc(new_person, oldFam);
 
-			var new_node = that.addNode(new_person, {x:oldX, y:oldY});
 
 			//Update graphics
 			uniqueGraphOps.deleteNode(oldID, oldFam);
-			uniqueGraphOps.insertNode(new_person, oldFam, new_node); // Problem here
+			var new_node = personDraw.addNode(new_person, {x:oldX, y:oldY});
+			uniqueGraphOps.insertNode(new_person.id, oldFam, new_node);
 
 			main_layer.draw();
 		});

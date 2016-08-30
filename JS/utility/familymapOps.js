@@ -39,6 +39,14 @@ var familyMapOps = {
 		return count;
 	},
 
+	numPercs: function( famid ){
+		var count = 0;
+		for (var perc in familyMapOps._map[famid]){
+			count ++;
+		}
+		return count;
+	},
+
 	/* Grab the first individual */
 	getFirst: function( family_id ){
 		for (var fam in familyMapOps._map)
@@ -54,11 +62,12 @@ var familyMapOps = {
 		return familyMapOps._insertionLog[key];
 	},
 
+
 	insertPerc: function(person, family_id){
 		
 		if (!(family_id in familyMapOps._map)){
 			familyMapOps._map[family_id] = {}
-			console.log("adding new family", family_id)
+			console.log("FMO: added new fam " + family_id);
 		}
 		
 		var num_attempts = familyMapOps._loginsertion(person.id, family_id);		

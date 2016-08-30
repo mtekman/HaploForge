@@ -39,11 +39,25 @@ var addFamMap = {
 			this._existing_graphics = graphicsMap;
 		}
 
-		this.addNodeArray(root, 0);
+		var afm = this;
 
-		//Convert gridmap into gridarray
-		var generation_grid_ids_fam = map2orderedArray(this.generation_gridmap_ids);
-		var uniq_map = {nodes: this.unique_nodes_fam, edges: this.unique_edges_fam};
+		var generation_grid_ids_fam = (new GridMap(root, 			
+			function cb1(perc){
+				afm.incrementNodes(perc.id);
+			},
+		
+			function cb2(perc){
+				if (perc.mother != 0 && perc.father != 0){
+					//Add relevant edges
+					afm.addTrioEdges(perc.mother, perc.father, perc);					
+				}
+			}
+		)).getGrid();
+
+		var uniq_map = {
+			nodes: this.unique_nodes_fam,
+			edges: this.unique_edges_fam
+		};
 
 		return [generation_grid_ids_fam, uniq_map];
 	},
@@ -111,64 +125,6 @@ var addFamMap = {
 		this.incrementNodes(moth.id);
 		this.incrementNodes(fath.id);
 		this.incrementNodes(child.id); //Already in
-	},
-
-	intersect_safe: function(a, b){
-		var ai=0, bi=0;
-		var result = new Array();
-
-		while( ai < a.length && bi < b.length )
-		{
-			if      (a[ai].id < b[bi].id ){ ai++; }
-			else if (a[ai].id > b[bi].id ){ bi++; }
-			else /* they're equal */
-			{
-				result.push(a[ai]);
-				ai++;
-				bi++;
-			}
-		}
-		return result;
-	},
-
-	//Recurse...
-	addNodeArray: function(obj_pers, level)
-	{
-		if (typeof obj_pers == "undefined"){
-			console.log("ASDA");
-			return;
-		}
-
-		if (obj_pers.id in this.unique_nodes_fam) return;
-
-		// Add current
-		this.incrementNodes(obj_pers.id); //needed?
-
-		if (!(level in this.generation_gridmap_ids))
-			this.generation_gridmap_ids[level] = [];
-
-		this.generation_gridmap_ids[level].push(obj_pers.id);
-
-		for (var m=0; m < obj_pers.mates.length; m++){                   	//Mates
-			this.addNodeArray(obj_pers.mates[m], level);
-
-			//Child from mate?
-			var shared_childs = this.intersect_safe(obj_pers.children, obj_pers.mates[m].children);
-// 				console.log(obj_pers.id, obj_pers.mates[m].id, shared_childs);
-
-			for (var c=0; c < shared_childs.length; c++)                	//Childs
-				this.addNodeArray(shared_childs[c], level +1);
-
-		}
-
-		//Parents
-		if (obj_pers.mother != 0) this.addNodeArray(obj_pers.mother, level - 1);
-		if (obj_pers.father != 0) this.addNodeArray(obj_pers.father, level - 1);
-
-		if (obj_pers.mother != 0 && obj_pers.father != 0)
-			this.addTrioEdges(obj_pers.mother, obj_pers.father, obj_pers);     	//Add relevant edges
-
-		return;
 	}
 }
 
@@ -184,7 +140,7 @@ function populateGrids_and_UniqueObjs( graphicsMap=null )
 	familyMapOps.foreachfam(function(fam_id){
 		var root = familyMapOps.getFirst(fam_id);
 		
-		console.log("ROOT=", root.id);
+//		console.log("ROOT=", root.id);
 
 		//Populate gridmap and uniq map
 		var arr_obj = addFamMap.init(root, graphicsMap);
@@ -200,22 +156,18 @@ function populateGrids_and_UniqueObjs( graphicsMap=null )
 		
 		generation_grid_ids[fam_id] = generation_array;
 
-		// XXX -  What does this do?
-		for (var g=0; g < generation_array; g++){
-			for (var i=0; i < generation_array[g]; i++){
-
-			}
-		}
 
 		// Check if root tree contains ALL individuals
 		var num_nodes = -1; // start at -1 to skip fake indidivual '0'
 		for (var node in nodes_edges.nodes) {num_nodes ++};
+
+		var num_peeps = familyMapOps.numPercs(fam_id);
 		
-		if (num_nodes !== familyMapOps.getFam(fam_id).family_size){
+		if (num_nodes !== num_peeps){
 			console.log("Warning! Family "+fam_id
 				+" has only mapped "+num_nodes
 				+" individuals out of "
-				+familyMapOps.getFam(fam_id).family_size
+				+ num_peeps
 			);
 		}
 	});

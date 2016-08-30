@@ -1,89 +1,103 @@
 // Each locus in each person's allele has {data} and a {founder pointer}
-var Allele = function(data){
-	this.data_array = new Int8Array(data);
-	this.pter_array = [];
-	// points to the founder allele group (retrieved from parent, and recursively points to founder allele group)
+class Allele {
 
-	//In order to pass pointers, I need to add properties to color_groups
-	for (var i=0; i < data.length; i++)
-		this.pter_array.push( {color_group: []} ); 	//Array due to phase ambiguity
+	constructor(data){
+		this.data_array = new Int8Array(data);
+		this.pter_array = [];
+		// points to the founder allele group (retrieved from parent, and recursively points to founder allele group)
 
-	this.haplogroup_array;
-	this.unique_groups = [];
-	// ^ Empty until pter_array is completely unambiguous, where pter_array is then deleted (dereferenced, left for GC)
+		//In order to pass pointers, I need to add properties to color_groups
+		for (var i=0; i < data.length; i++)
+			this.pter_array.push( {color_group: []} ); 	//Array due to phase ambiguity
 
+		this.haplogroup_array;
+		this.unique_groups = [];
+		// ^ Empty until pter_array is completely unambiguous, where pter_array is then deleted (dereferenced, left for GC)
+	}
 
-};
+	debug(){
+		return {
+			data: this.data_array,
+			groups: (this.pter_array.map(
+				function (n){
+					return ""+n.color_group+"";
+				}
+			)),
+			unique: this.unique_groups
+	// 				).reduce(
+	// 			function (s,a){
+	// 				return s+"],["+a;
+	// 			})
+		};
+	}
+}
 
-Allele.prototype.debug = function(){
-	return {
-		data: this.data_array,
-		groups: (this.pter_array.map(
-			function (n){
-				return ""+n.color_group+"";
-			}
-		)),
-		unique: this.unique_groups
-// 				).reduce(
-// 			function (s,a){
-// 				return s+"],["+a;
-// 			})
-	};
-};
 
 
 // This should not be optimized for graphics, this is for data processing only(!!)
 //
-var Person = function(id, gender, affected, mother = 0, father = 0, name = null){
-	this.id = id;
-	this.gender = gender;	         // 1 - male, 2-female, 0-unknown
-	this.affected = affected ; 	     // 0,1,2
+class Person {
 
-	this.mother = mother; this.father = father;
-	this.haplo_data = [];  			// marker_index ---> {data:, hgroup:}
+	constructor(id, gender, affected, mother = 0, father = 0, name = null){
+		this.id = id;
+		this.gender = gender;	         // 1 - male, 2-female, 0-unknown
+		this.affected = affected ; 	     // 0,1,2
 
-	this.mates = [];
-	this.children = [] 				// added by connect method later
+		this.mother = mother; this.father = father;
+		this.haplo_data = [];  			// marker_index ---> {data:, hgroup:}
 
-	//Optional
-	this.name = name;
-};
+		this.mates = [];
+		this.children = [] 				// added by connect method later
 
-Person.prototype.isMate = function(pers2){
-	var compare = pers2;
-	if (pers2 === 0){
-		compare = {id:0}
+		//Optional
+		this.name = name;
 	}
 
-	for (var m=0; m < this.mates.length; m++)
-		if (compare.id == this.mates[m].id) return true;
-	return false;
-}
+	isMate(pers2){
+		var compare = pers2;
+		if (pers2 === 0){
+			compare = {id:0}
+		}
 
-Person.prototype.isChild = function(pers2){
-	for (var c=0; c < this.children.length; c++)
-		if (pers2.id == this.children[c].id) return true;
-	return false;
-}
-
-Person.prototype.isFounder = function(){
-	return (this.mother === 0 && this.father === 0);
-}
-
-Person.prototype.addMate = function(mate){
-	// Already exists
-	if (this.isMate(mate)){
-		return -1;
+		for (var m=0; m < this.mates.length; m++){
+			if (compare.id == this.mates[m].id){return true};
+		}
+		return false;
 	}
-	this.mates.push(mate);
-}
 
-Person.prototype.addChild = function(child){
-	// Already exists
-	if (this.isChild(child)){
-		return -1;
+	foreachmate(callback){
+		for (var m=0; m < this.mates.length; m++){
+			var mate = this.mates[m];
+			callback(mate, m);
+		}
 	}
-	this.children.push(child);
+
+	isChild(pers2){
+		for (var c=0; c < this.children.length; c++){
+			if (pers2.id == this.children[c].id){return true};
+		}
+		return false;
+	}
+
+	isFounder(){
+		return (this.mother === 0 && this.father === 0);
+	}
+
+	addMate(mate){
+		// Already exists
+		if (this.isMate(mate)){
+			return -1;
+		}
+		this.mates.push(mate);
+	}
+
+	addChild(child){
+		// Already exists
+		if (this.isChild(child)){
+			return -1;
+		}
+		this.children.push(child);
+	}
 }
 
 
@@ -118,15 +132,6 @@ function connectAllIndividuals()
 		if (pers_mother !=0 )
 			if(pers_father != 0) pers_mother.addMate(pers_father);
 			else pers_mother.addMate(0);
-	});
-	
-	// Make a total
-	familyMapOps.foreachfam(function(famid){
-		var num_peeps = 0;
-		familyMapOps.foreachperc(function(){
-			num_peeps ++;
-		}, famid);
-		familyMapOps.getFam(famid).family_size = num_peeps;
 	});
 }
 
@@ -236,10 +241,6 @@ function determinePedigreeType()
 		return affected_in_each_gen === num_gens;
 	}();
 
-	console.log("sexlinked=", SEXLINKED)
-	console.log("dominant=", DOMINANT)
-
-
 	if (SEXLINKED){
 		(function addZeroAllele_for_sexlinkedMales()
 		{
@@ -266,4 +267,11 @@ function determinePedigreeType()
 			}
 		})();
 	}
+
+
+	console.log("Pedigree = "
+		+ (SEXLINKED?"X-linked":"Autosomal")
+		+ " "
+		+ (DOMINANT?"Dominant":"Recessive")
+	);
 }

@@ -171,6 +171,8 @@ function redrawNodes(pers_id, fam_id, drawLinesToo)
 		}
 	}
 
+	// NEED TO UPDATE GENERATION)GRID_IDS
+
 	//If last generation, move all sibs
 	if (typeof generation_grid_ids[fam_id] !== "undefined"){
 
@@ -208,13 +210,10 @@ function touchlines(grid_use){
 	use_grid = grid_use;
 
 	familyMapOps.foreachperc(function( perid, famid){
-		if (perid !== "family_size")
-		{
-			var e = new CustomEvent("dragmove", {target: {attrs: {x:10, y:10}}}),
-				o = uniqueGraphOps.getFam(famid).nodes[perid].graphics;
+		var e = new CustomEvent("dragmove", {target: {attrs: {x:10, y:10}}}),
+			o = uniqueGraphOps.getFam(famid).nodes[perid].graphics;
 
-			o.dispatchEvent(e);
-		}
+		o.dispatchEvent(e);
 	});
 	use_grid = true;
 }
