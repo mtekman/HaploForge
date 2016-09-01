@@ -41,7 +41,6 @@ class GridMap {
 
 	_recurseLevels(perc, level)
 	{
-
 		if (perc === 0){
 			return;
 		}

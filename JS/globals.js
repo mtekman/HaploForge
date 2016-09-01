@@ -145,12 +145,3 @@ var haploblock_spacers = {
 	block_width_px: HAP_VERT_SPA*1.2,
 	block_offset_px: (HAP_VERT_SPA*1.2) +2
 };
-
-
-var SEXLINKED = false,
-	DOMINANT = true;
-
-var MALE = 1,
-	FEMALE = 2,
-	UNAFFECTED = 1,
-	AFFECTED = 2;

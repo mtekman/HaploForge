@@ -11,7 +11,9 @@ var PersistData = {
 	makeTextFile: function(tex, textFile = null){
 		var data = new Blob([tex],{type:'text/plain'});
 
-		if (textFile !== null) window.URL.revokeObjectURL(textFile);
+		if (textFile !== null){
+			window.URL.revokeObjectURL(textFile);
+		}
 
 		textFile = window.URL.createObjectURL(data);
 		return textFile;

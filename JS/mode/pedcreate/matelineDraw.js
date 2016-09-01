@@ -71,8 +71,8 @@ class MatelineDraw extends LineDrawOps {
 		}
 
 
-		var moth = (person1.gender===2)?person1:person2,
-			fath = (person1.gender===1)?person1:person2;
+		var moth = (person1.gender===PedProps.FEMALE)?person1:person2,
+			fath = (person1.gender===PedProps.MALE)?person1:person2;
 
 		moth.addMate(fath);
 		fath.addMate(moth);

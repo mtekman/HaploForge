@@ -133,46 +133,6 @@ var addFamMap = {
 
 
 
-function populateGrids_and_UniqueObjs( graphicsMap=null )
-{
-
-	//First root indiv for each family
-	familyMapOps.foreachfam(function(fam_id){
-		var root = familyMapOps.getFirst(fam_id);
-		
-//		console.log("ROOT=", root.id);
-
-		//Populate gridmap and uniq map
-		var arr_obj = addFamMap.init(root, graphicsMap);
-		var generation_array = arr_obj[0],
-			nodes_edges = arr_obj[1];
-
-//			console.log( generation_array, uniq_objs);
-
-		//Insert into global maps
-		uniqueGraphOps.insertFam(fam_id, null);
-		uniqueGraphOps.getFam(fam_id).nodes = nodes_edges.nodes;
-		uniqueGraphOps.getFam(fam_id).edges = nodes_edges.edges;
-		
-		generation_grid_ids[fam_id] = generation_array;
-
-
-		// Check if root tree contains ALL individuals
-		var num_nodes = -1; // start at -1 to skip fake indidivual '0'
-		for (var node in nodes_edges.nodes) {num_nodes ++};
-
-		var num_peeps = familyMapOps.numPercs(fam_id);
-		
-		if (num_nodes !== num_peeps){
-			console.log("Warning! Family "+fam_id
-				+" has only mapped "+num_nodes
-				+" individuals out of "
-				+ num_peeps
-			);
-		}
-	});
-}
-
 
 // After populating, add graphics
 function graphInitPos(start_x, start_y){
@@ -217,6 +177,7 @@ function graphInitPos(start_x, start_y){
 					perp = familyMapOps.getPerc(perp_id, fam),
 					n_perp = nodes[perp_id];
 
+				var y_pos = null;
 
 				// Restore meta
 				if (typeof perp.stored_meta !== "undefined"){

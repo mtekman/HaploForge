@@ -67,7 +67,7 @@ function redrawNodes(pers_id, fam_id, drawLinesToo)
 		edge_map  = fam_gfx.edges,
 		npers     = node_map[pers_id],
 		npers_pos = npers.graphics.getPosition(),
-		per_isMale= (pers.gender == 1);
+		per_isMale= (pers.gender == PedProps.MALE);
 
 
 	// Move mates vertically
@@ -153,8 +153,8 @@ function redrawNodes(pers_id, fam_id, drawLinesToo)
 				var matemate_id = mate.mates[mm].id,
 					matemate_gfx = node_map[matemate_id].graphics;
 
-				var male_id   = (mate.gender===1)?mate.id:matemate_id,
-					female_id = (mate.gender===2)?mate.id:matemate_id;
+				var male_id   = (mate.gender===PedProps.MALE)?mate.id:matemate_id,
+					female_id = (mate.gender===PedProps.FEMALE)?mate.id:matemate_id;
 
 				if (matemate_id != pers_id){
 

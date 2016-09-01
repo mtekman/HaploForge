@@ -3,10 +3,7 @@
 
 function init(){
 	
-	connectAllIndividuals();
-	populateGrids_and_UniqueObjs();
-
-	determinePedigreeType();
+	PedProps.init();
 	graphInitPos(nodeSize + 10, grid_rezY);
 
 	if (MainButtonActions.fileType === "allegro"){
@@ -35,7 +32,9 @@ function init(){
 
 
 //MainButtonActions.loadHaploFromStorage();
-MainPageHandler.defaultload();
+//MainPageHandler.defaultload();
+MainButtonActions.loadPedFromStorage();
+
 /*
 MainButtonActions.createNewPed()
 

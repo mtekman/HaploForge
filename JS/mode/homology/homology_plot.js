@@ -29,7 +29,7 @@ var HomologyMode = {
 				fid = f_id[0],
 				id = f_id[1];
 
-			var aff = (familyMapOps.getPerc(id,fid).affected == 2)?'a':'u';
+			var aff = (familyMapOps.getPerc(id,fid).affected == PedProps.AFFECTED)?'a':'u';
 
 			text += "\t"+id.toString()+'_'+aff
 		}

@@ -18,15 +18,15 @@ var familyMapOps = {
 	/* If fam_id given, it just iterates over people in the specified famid */
 	foreachperc: function( callback, fam_id = null ){
 		if (fam_id === null){
-			for (var fam in familyMapOps._map){
-				for (var perc in familyMapOps.getFam(fam)){
-					callback(perc, fam);
+			for (var fid in familyMapOps._map){
+				for (var pid in familyMapOps.getFam(fid)){
+					callback(pid, fid);
 				}
 			}
 		}
 		else{
-			for (var perc in familyMapOps.getFam(fam_id)){
-				callback(perc);
+			for (var pid in familyMapOps.getFam(fam_id)){
+				callback(pid);
 			}
 		}
 	},

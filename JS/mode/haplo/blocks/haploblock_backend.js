@@ -129,7 +129,7 @@ function child2parent_link(pers, moth, fath, fam) // fam only needed for consang
 		  female: 0{2,3} = 02 03
 		    male: 1{2,3} = 12 13
 		 */
-		if (SEXLINKED && gender === 1){ 						 // Sexlinked and male
+		if (PedProps.xlinked && gender === PedProps.MALE){ 						 // Sexlinked and male
 
 			// console.log("Extra work for", pers.id);
 
