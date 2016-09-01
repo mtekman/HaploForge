@@ -79,7 +79,8 @@ var uniqueGraphOps = {
 	deleteNode: function(id, family_id)
 	{
 		if (family_id in uniqueGraphOps._map){
-			if (id in uniqueGraphOps._map[family_id].nodes){
+			if (id in uniqueGraphOps._map[family_id].nodes)
+			{
 				uniqueGraphOps._map[family_id].nodes[id].graphics.destroy();
 				delete uniqueGraphOps._map[family_id].nodes[id];
 				return 0;
@@ -114,6 +115,7 @@ var uniqueGraphOps = {
 	{
 		if (family_id in uniqueGraphOps._map){
 			if (id in uniqueGraphOps._map[family_id].edges){
+				uniqueGraphOps._map[family_id].edges[id].graphics.destroy();
 				delete uniqueGraphOps._map[family_id].edges[id];
 				return 0;
 			}
@@ -129,5 +131,34 @@ var uniqueGraphOps = {
 			}
 		}
 		return -1;
+	},
+
+	getChildEdge: function(family_id, father_id, mather_id, child_id)
+	{
+		if (family_id in uniqueGraphOps._map)
+		{
+			var mate_key = edgeAccessor.matelineId(father_id, mother_id)
+			if (mate_key in uniqueGraphOps._map.edges)
+			{
+				var child_key = edgeAccessor.childlineId(mate_key, child_id)
+				if (child_key in uniqueGraphOps._map.edges){
+					return child_key;
+				}				
+			}
+		}
+		return -1
+	},
+
+	getMateEdge: function(family_id, father_id, mother_id)
+	{
+		if (family_id in uniqueGraphOps._map)
+		{
+			var mate_key = edgeAccessor.matelineId(father_id, mother_id)
+			if (mate_key in uniqueGraphOps._map.edges)
+			{
+				return mate_key;
+			}
+		}
+		return -1
 	}
 }

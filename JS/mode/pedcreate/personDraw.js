@@ -19,10 +19,10 @@ var personDraw = {
 		var oldX = node.getX(),
 			oldY = node.getY(),
 			oldID= node.id,
-			oldFam = node.family;
+			famid = node.family;
 
 
-		var old_person = familyMapOps.getPerc(oldID,oldFam);
+		var old_person = familyMapOps.getPerc(oldID,famid);
 		var new_person = null
 
 		persProps.display(old_person, function(newPerc){
@@ -41,14 +41,52 @@ var personDraw = {
 			delete personDraw.used_ids[oldID]
 
 			//Update family map
-			familyMapOps.removePerc(oldID, oldFam);
-			familyMapOps.insertPerc(new_person, oldFam);
+			familyMapOps.removePerc(oldID, famid);
+			familyMapOps.insertPerc(new_person, famid);
 
 
-			//Update graphics
-			uniqueGraphOps.deleteNode(oldID, oldFam);
+			// Update graphics
+			uniqueGraphOps.deleteNode(oldID, famid);
 			var new_node = personDraw.addNode(new_person, {x:oldX, y:oldY});
-			uniqueGraphOps.insertNode(new_person.id, oldFam, new_node);
+			uniqueGraphOps.insertNode(new_person.id, famid, new_node);
+
+			// -- mate lines to partners 
+			if (old_person.mates.length > 0){
+				old_person.foreachmate(function(mate)
+				{
+					var male = (mate.gender === 1)?mate:old_person;
+					var female = (mate.gender === 2)?mate:old_person;
+
+					var mate_key = uniqueGraphOps.getMateEdge(
+						famid, male.id, female.id);
+
+					uniqueGraphOps.deleteEdge(mate_key, famid);
+
+					if (new_person.gender === old_person.gender)
+					{
+						var male = (mate.gender === 1)?mate:new_person;
+						var female = (mate.gender === 2)?mate:new_person;
+
+						(new MatelineDraw(famid, male.id, female.id)).joinIDs();
+					}
+				})
+			}
+
+			// -- child lines to parents
+			if (old_person.father !== 0){
+
+				var childline = uniqueGraphOps.getChildEdge(
+					famid, 
+					old_person.father.id, old_person.mother.id,
+					old_person.id);
+
+				uniqueGraphOps.deleteEdge(childline, famid);
+
+				var mateline_key = edgeAccessor.matelineID(
+					old_person.father.id, old_person.mother.id);
+
+				(new OffspringDraw(famid, mateline_key, new_person.id)).joinIDs();
+			}
 
 			main_layer.draw();
 		});
