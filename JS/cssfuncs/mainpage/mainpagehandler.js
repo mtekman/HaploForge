@@ -6,8 +6,8 @@ var MainPageHandler = {
 
 	__mainpage_divgroups : {
 		"main"  	: document.getElementById('maincircle'),
-		"toolset"	: document.getElementById('selection_tools'),
-		"saveclose" : document.getElementById('save_and_close'),
+		"ToolModeButtons"	: document.getElementById('selection_tools'),
+		"GeneralModeButtons" : document.getElementById('save_and_close'),
 		"container"	: document.getElementById('container'),
 		"pedexist"  : document.getElementById('pedresume_label'),
 		"hapexist"  : document.getElementById('haploresume_label')
@@ -37,8 +37,9 @@ var MainPageHandler = {
 		/** Show main page, hide rest **/
 		MainPageHandler.showDiv("main", true);
 		MainPageHandler.showDiv("container", false);
-		MainPageHandler.showDiv("saveclose", false);
-		MainPageHandler.showDiv("toolset", false);
+
+		MainPageHandler.showDiv("GeneralModeButtons", false);
+		MainPageHandler.showDiv("ToolModeButtons", false);
 
 		MainPageHandler.setPrevExistingButtons();
 	},
@@ -48,12 +49,12 @@ var MainPageHandler = {
 
 		/** Show haplotypes, after file (up)load **/
 		MainPageHandler.showDiv("main", false);
-
 		MainPageHandler.showDiv("container", true);
-		MainPageHandler.showDiv("saveclose", true);
 
-		ToolSetModes.setToSelectionPreMode();
-		MainPageHandler.showDiv("toolset", true);		
+		MainPageHandler.showDiv("ToolModeButtons", true);
+		MainPageHandler.showDiv("GeneralModeButtons", true);
+		
+		ButtonModes.setToSelectionPreMode();
 	},
 
 	createpedmode: function(){
@@ -61,11 +62,11 @@ var MainPageHandler = {
 
 		/** Show haplotypes, after file (up)load **/
 		MainPageHandler.showDiv("main", false);
-
 		MainPageHandler.showDiv("container", true);
-		MainPageHandler.showDiv("saveclose", true);
 
-		ToolSetModes.setToPedCreate();
-		MainPageHandler.showDiv("toolset", true);
+		MainPageHandler.showDiv("ToolModeButtons", true);
+		MainPageHandler.showDiv("GeneralModeButtons", true);
+		
+		ButtonModes.setToPedCreate();
 	}
 }

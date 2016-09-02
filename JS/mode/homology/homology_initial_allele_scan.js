@@ -13,7 +13,7 @@ function scan_alleles_for_homology( ids_to_scan ){
 			fid = fid_id[0], 
 			id = fid_id[1];
 
-		var perc_affected = (familyMapOps.getPerc(id,fid).affected == PedProps.AFFECTED),
+		var perc_affected = (familyMapOps.getPerc(id,fid).affected == PED.AFFECTED),
 			perc_haplo_data = familyMapOps.getPerc(id,fid).haplo_data;
 
 		var data_only = [

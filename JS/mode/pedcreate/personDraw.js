@@ -98,9 +98,13 @@ var personDraw = {
 		this.changeNodeProps(node);
 	},
 
-	addNode: function(person = null, position= null){
+	addNode: function(person = null, fam_id = null, position= null){
 
-		if (familyDraw.active_fam_group === null)
+		if (fam_id === null){ fam_id = familyDraw.active_fam_group.id;}
+
+		active_fam_group = uniqueGraphOps.getFam(fam_id);
+
+		if (active_fam_group === null)
 		{
 			var num_fams = familyMapOps.numFams();
 
@@ -131,8 +135,6 @@ var personDraw = {
 			person = this.makeTempPerson();
 		}
 
-
-
 		var perc = addPerson( person, fam_group,  
 				grid_rezX ,
 				-nodeSize // + Math.random()*grid_rezY*2
@@ -152,7 +154,6 @@ var personDraw = {
 
 		// Add to used IDs
 		this.used_ids[person.id] = perc;
-
 
 
 		//family map stores the person data

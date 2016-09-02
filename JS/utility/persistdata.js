@@ -20,21 +20,21 @@ var PersistData = {
 	},
 
 	export: function(){
-		if (MainPageHandler._currentMode === "Pedigree" ){
+		if (MainPageHandler._currentMode === FORMAT.PEDFILE ){
 			window.open(
 				PersistData.makeTextFile(
-					PersistData.toPedfileString(true)
+					PersistData.toPedfileString(userOpts.exportPedGraphicLocs)
 				)
 			);
 		}
 	},
 
 	pedigreeChanged: function(){
-		var current_pedigree = PersistData.toPedfileString(true),
+		var current_pedigree = PersistData.toPedfileString(true), /* local saves always store graphics */
 			stored_pedigree = localStorage.getItem(localStor.ped_save);
 
-		console.log("current", current_pedigree);
-		console.log("stored", stored_pedigree);
+//		console.log("current", current_pedigree);
+//		console.log("stored", stored_pedigree);
 
 		if (current_pedigree.trim().length < 1){
 			return false;
@@ -50,7 +50,7 @@ var PersistData = {
 		return false;
 	},
 
-	toPedfileString: function(store_graphics=false){
+	toPedfileString: function(store_graphics){
 
 		var text = "";
 

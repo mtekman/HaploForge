@@ -177,8 +177,6 @@ function graphInitPos(start_x, start_y){
 					perp = familyMapOps.getPerc(perp_id, fam),
 					n_perp = nodes[perp_id];
 
-				var y_pos = null;
-
 				// Restore meta
 				if (typeof perp.stored_meta !== "undefined"){
 					//console.log("using stored meta", perp_id, perp.stored_meta);
@@ -321,6 +319,9 @@ function checkConsanginuity(fam_id, pers1_id, pers2_id)
     var routes2 = [];
     routes2.push( pers1 );
     routes2.push( pers2 );
+
+    //console.log("routes2=", pers1_id, pers2_id);
+
      // = [pers1, pers2];
 
     var complete = [],
@@ -328,8 +329,13 @@ function checkConsanginuity(fam_id, pers1_id, pers2_id)
 
     // console.log(pers1.id+"  and  "+pers2.id);
     while(routes2.length > 0 && loopnum++ < 100){
+
         	var perc = routes2.shift(); // remove from search
 
+/*        	if (perc === undefined){
+        		
+        	}
+*/
         	//Try mother + father
 	        if (perc.mother === 0 && perc.father === 0){
 	        	complete.push(perc.id);

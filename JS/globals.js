@@ -1,6 +1,7 @@
-// User configurable:
+// UI configurable:
 var userOpts = {
-	allowTransitions: true
+	allowTransitions: true,
+	exportPedGraphicLocs: true
 };
 
 
@@ -10,9 +11,27 @@ var localStor = {
 	ped_save : 'ped_data',
 	ped_type : 'ped_type',
 	hap_save : 'hap_data',
-	hap_type : 'hap_type'
+	hap_type : 'hap_type',
+	transfer : 'transferFromHaploToPed' // pedigrees in haplo can be modified
 }
 
+var PED = {
+	MALE : 1,
+	FEMALE : 2,
+	UNAFFECTED : 1,
+	AFFECTED : 2,
+	UNKNOWN : 0,
+}
+
+var FORMAT = {
+	PEDFILE : "pedigree",
+	HAPLO : {
+		ALLEGRO : "allegro",
+		SIMWALK : "simwalk",
+		GHM : "genehunter"
+	},
+	UNKOWN : "other"
+}
 
 
 //General storage, global scope
@@ -145,3 +164,4 @@ var haploblock_spacers = {
 	block_width_px: HAP_VERT_SPA*1.2,
 	block_offset_px: (HAP_VERT_SPA*1.2) +2
 };
+

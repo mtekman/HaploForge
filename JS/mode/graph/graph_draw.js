@@ -67,7 +67,7 @@ function redrawNodes(pers_id, fam_id, drawLinesToo)
 		edge_map  = fam_gfx.edges,
 		npers     = node_map[pers_id],
 		npers_pos = npers.graphics.getPosition(),
-		per_isMale= (pers.gender == PedProps.MALE);
+		per_isMale= (pers.gender == PED.MALE);
 
 
 	// Move mates vertically
@@ -153,8 +153,8 @@ function redrawNodes(pers_id, fam_id, drawLinesToo)
 				var matemate_id = mate.mates[mm].id,
 					matemate_gfx = node_map[matemate_id].graphics;
 
-				var male_id   = (mate.gender===PedProps.MALE)?mate.id:matemate_id,
-					female_id = (mate.gender===PedProps.FEMALE)?mate.id:matemate_id;
+				var male_id   = (mate.gender===PED.MALE)?mate.id:matemate_id,
+					female_id = (mate.gender===PED.FEMALE)?mate.id:matemate_id;
 
 				if (matemate_id != pers_id){
 
@@ -211,7 +211,7 @@ function touchlines(grid_use){
 
 	familyMapOps.foreachperc(function( perid, famid){
 
-		console.log("touch", perid, famid);
+		//console.log("touch", perid, famid);
 
 		var e = new CustomEvent("dragmove", {target: {attrs: {x:10, y:10}}}),
 			o = uniqueGraphOps.getFam(famid).nodes[perid].graphics;

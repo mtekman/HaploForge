@@ -5,8 +5,8 @@
         <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
         <meta content="utf-8" http-equiv="encoding">
         <title>Haplotype Reconstruction</title>
-        <link rel="stylesheet" type="text/css" href="assets/mainpage.css" >
-        <link rel="stylesheet" type="text/css" href="assets/main.css" >
+        <link rel="stylesheet" type="text/css" href="styles/mainpage.css" >
+        <link rel="stylesheet" type="text/css" href="styles/main.css" >
 	<!-- STYLE -->
     </head>
     <body onresize="resizeCanvas()" >
@@ -65,17 +65,8 @@
 
         <!-- Save Dialogs -->
         <div id="save_and_close" class="input_props" >
-          <h3> General Opts. </h3>
-          <table>
-          <tr><td>
-              <input type="button" value="Save" onclick="MainButtonActions.savePedToStorage()" />
-          </td></tr>
-          <tr><td>
-              <input type="button" value="Export" onclick="PersistData.export()" />
-          </td></tr>
-          <tr><td>
-              <input type="button" value="Exit" onclick="MainButtonActions.exitToMenu()" />
-          </td></tr>
+          <h3 id="save_and_close_title"> General Opts. </h3>
+          <table id="save_and_close_table">
           </table>
         </div>
 
@@ -245,6 +236,8 @@
         <script src="JS/cssfuncs/mainpage/mainbuttonactions.js" ></script>
         <script src="JS/cssfuncs/rangemarker/indexmode.js" ></script>
         <script src="JS/cssfuncs/sidebuttons/toolmodecss.js" ></script>
+        <script src="JS/cssfuncs/sidebuttons/generalmodecss.js" ></script>
+        <script src="JS/cssfuncs/sidebuttons/buttonmodecss.js" ></script>
 
         <script src="JS/frameworks/kinetic-v5.1.0.js" ></script>
         <script src="JS/globals.js" ></script>

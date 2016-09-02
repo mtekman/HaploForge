@@ -70,7 +70,7 @@ class LineDrawOps {
 
 
 	static changeToArrowCursor(){
-		document.body.style.cursor = "url('assets/Precision.cur'),auto";
+		document.body.style.cursor = "url('styles/Precision.cur'),auto";
 	}
 
 	static restoreCursor() {

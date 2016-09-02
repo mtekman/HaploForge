@@ -1,39 +1,28 @@
 
 
+var init = {
 
-function init(){
-	
-	PedProps.init();
-	graphInitPos(nodeSize + 10, grid_rezY);
+	haploview : function(){
+		HaploPedProps.init();
+		graphInitPos(nodeSize + 10, grid_rezY);
 
-	if (MainButtonActions.fileType === "allegro"){
-		assignHGroups();
-		washMarkerMap();
+		if (MainButtonActions.fileType === FORMAT.HAPLO.ALLEGRO){
+			assignHGroups();
+			washMarkerMap();
 
-		populateIndexDataList();
-
-	// toggle_haplomode(20);
-//		SelectionMode.init();
-/*		for (var key in SelectionMode._items){
-
-			var fid_id = key.split('_'),
-				fid = fid_id[0],
-				id = fid_id[1];
-
-			var item = SelectionMode._items[key];
-
-			if (id >= 6 && id <=10){
-				item.box.fire('click')
-			}
+			populateIndexDataList();
 		}
-		launchHaplomode();*/
+	},
+
+	pedcreate : function(){
+		console.log("John snow");
 	}
 }
 
 
 //MainButtonActions.loadHaploFromStorage();
-//MainPageHandler.defaultload();
-MainButtonActions.loadPedFromStorage();
+MainPageHandler.defaultload();
+//MainButtonActions.loadPedFromStorage();
 
 /*
 MainButtonActions.createNewPed()
@@ -60,18 +49,18 @@ setTimeout(function(){
 	SelectionMode.init();
 
 	setTimeout(function(){
-		ToolSetModes.setToSelectionMode();
+		ButtonModes.setToSelectionMode();
 
 		setTimeout(function(){
-			ToolSetModes.toggle_selection_affecteds = !ToolSetModes.toggle_selection_affecteds || false;
+			ButtonModes.toggle_selection_affecteds = !ButtonModes.toggle_selection_affecteds || false;
 
 			for (var key in SelectionMode._items){
 				var item = SelectionMode._items[key];
 				var affected = (item.graphics.children[0].attrs.fill === col_affs[2])
 
 				if (affected){
-					if( (ToolSetModes.toggle_selection_affecteds && !item.selected)
-			 		|| (!ToolSetModes.toggle_selection_affecteds && item.selected) ){
+					if( (ButtonModes.toggle_selection_affecteds && !item.selected)
+			 		|| (!ButtonModes.toggle_selection_affecteds && item.selected) ){
 						item.box.fire('click');
 					}
 				}

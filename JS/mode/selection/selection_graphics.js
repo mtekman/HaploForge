@@ -3,17 +3,23 @@ var SelectionGraphics = {
 
 	// Shared with homology_selection.js
 	// Replicate existing objects with bounding square
-	addBounder: function(pos, key, main_layer_yes){
+	addBounder: function(pos, key, main_layer_yes, hasHaplo){
 
 		var rect = SelectionGraphics._addInvisibleOrangeBox(pos);
 
 		rect.on('click', function(){
-			//Toggle selection
-			this.setStrokeEnabled(!SelectionMode._items[key].selected);
 
-			SelectionMode._items[key].selected = !SelectionMode._items[key].selected
-			if (main_layer_yes) main_layer.draw();
-			else haplo_layer.draw();
+			if (!hasHaplo){
+				utility.notify("Error", "No haplotypes for individual "+key.split('_')[1]);
+			}
+			else{
+				//Toggle selection
+				this.setStrokeEnabled(!SelectionMode._items[key].selected);
+
+				SelectionMode._items[key].selected = !SelectionMode._items[key].selected
+				if (main_layer_yes) main_layer.draw();
+				else haplo_layer.draw();
+			}
 		});
 		return rect;
 	},

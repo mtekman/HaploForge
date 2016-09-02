@@ -54,11 +54,11 @@ class ProcessInput {
 		PersistData.clearMaps();
 
 	
-		if (this.type === "pedfile"){
+		if (this.type === FORMAT.PEDFILE){
 			this.splitHeaderFromData();		
 		}
 
-		else if (this.type === "allegro")
+		else if (this.type === FORMAT.HAPLO.ALLEGRO)
 		{
 			this.splitHeaderFromData();
 			this.handleAllegroHeaders();
@@ -68,7 +68,7 @@ class ProcessInput {
 				HAP_DRAW_LIM = marker_array.length - 1;
 			}
     	}
-	    else if (this.type === "other"){}
+	    else {} // other formats TODO
 	}
 
 
@@ -112,7 +112,7 @@ class ProcessInput {
 
 
 			// Handle HaploData (where applicable)
-			if (this.type === "allegro"){
+			if (this.type === FORMAT.HAPLO.ALLEGRO){
 		
 				var haplo_info = new Allele(haplo_daaaa);
 				
@@ -172,7 +172,7 @@ class ProcessInput {
 			var tokes = pedpart.split(/\s+/)
 			
 			if (tokes.length === 6){
-				return "pedfile";
+				return FORMAT.PEDFILE;
 			}
 		}
 		
@@ -190,9 +190,9 @@ class ProcessInput {
 		}
 
 		if (Object.keys(num_tokes).length === 1){
-			return "allegro";
+			return FORMAT.HAPLO.ALLEGRO;
 		}	
-		return "other";
+		return FORMAT.UNKNOWN;
 	}
 }
 

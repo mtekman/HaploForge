@@ -1,16 +1,8 @@
 
-
-var PedProps = {
+var HaploPedProps = {
 
 	xlinked: null,
 	dominant: null,
-
-	// Global
-	MALE : 1,
-	FEMALE : 2,
-	UNAFFECTED : 1,
-	AFFECTED : 2,
-	UNKNOWN : 0,
 
 	// Affecteds in each generation --> dominant
 	// if males have one allele --> sexlinked (easy):
@@ -24,21 +16,21 @@ var PedProps = {
 
 	init: function()
 	{
-		PedProps._connectAll();
-		PedProps._populateGraphics(); /*Maybe doesn't need to be in this class, but MUST be after _connectAll */
+		HaploPedProps._connectAll();
+		HaploPedProps._populateGraphics(); /*Maybe doesn't need to be in this class, but MUST be after _connectAll */
 
-		var fam_id = PedProps._largestPedigree();
+		var fam_id = HaploPedProps._largestPedigree();
 
-		PedProps.dominant = PedProps._determineDominant(fam_id);
-		PedProps.xlinked  = PedProps._determineXlinked(fam_id);
+		HaploPedProps.dominant = HaploPedProps._determineDominant(fam_id);
+		HaploPedProps.xlinked  = HaploPedProps._determineXlinked(fam_id);
 
-		if (PedProps.xlinked){
-			PedProps._correctAllMaleAlleles();
+		if (HaploPedProps.xlinked){
+			HaploPedProps._correctAllMaleAlleles();
 		}
 
 		console.log("Pedigree =", 
-			PedProps.xlinked?"X-Linked":"Autosomal", 
-			PedProps.dominant?"Dominant":"Recessive");
+			HaploPedProps.xlinked?"X-Linked":"Autosomal", 
+			HaploPedProps.dominant?"Dominant":"Recessive");
 
 	},
 
@@ -74,7 +66,7 @@ var PedProps = {
 					perc = familyMapOps.getPerc(perc_id,fam_id);
 
 				//Determine if Y allele is zero for ALL males (not just one)
-				if ( perc.gender == PedProps.MALE ){
+				if ( perc.gender == PED.MALE ){
 					if (perc.haplo_data.length == 1)
 						num_males_with_single_allele ++;
 
@@ -90,11 +82,13 @@ var PedProps = {
 									break;
 								}
 							}
-							if (all_zeroes)
+							if (all_zeroes){
 								num_all_zero_alleles ++;
+							}
 						}
-						if (num_all_zero_alleles === 2)
+						if (num_all_zero_alleles === 2){
 							continue;  // skip this guy, completely uninformative
+						}
 
 						all_zero_Ychroms += num_all_zero_alleles;
 
@@ -124,7 +118,7 @@ var PedProps = {
 				var perc_id = generation_grid_ids[fam_id][g][p],
 					perc = familyMapOps.getPerc(perc_id,fam_id);
 
-				if (perc.affected === PedProps.AFFECTED)
+				if (perc.affected === PED.AFFECTED)
 					affecteds_in_gen ++;
 			}
 			if (affecteds_in_gen > 0) affected_in_each_gen ++;
@@ -138,7 +132,7 @@ var PedProps = {
 	{
 		familyMapOps.foreachperc(function(perc)
 		{
-			if (perc.gender === PedProps.MALE && perc.haplo_data.length === 1)
+			if (perc.gender === PED.MALE && perc.haplo_data.length === 1)
 			{
 				var len_of_allele = perc.haplo_data[0].data_array.length,
 					new_allele = [];
@@ -255,3 +249,7 @@ var PedProps = {
 		});
 	}
 }
+
+
+
+//function readInP

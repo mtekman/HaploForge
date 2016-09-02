@@ -36,6 +36,10 @@ class Person {
 		}
 	}
 
+	hasHaplo(){
+		return this.haplo_data.length > 0;
+	}
+
 	isChild(pers2){
 		for (var c=0; c < this.children.length; c++){
 			if (pers2.id == this.children[c].id){return true};

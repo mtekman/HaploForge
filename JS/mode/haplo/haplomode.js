@@ -80,7 +80,7 @@ var HaploWindow = {
 			haplo_layer.draw();
 
 			SelectionMode.destroy();
-			ToolSetModes.setToSelectionPreMode();
+			ButtonModes.setToSelectionPreMode();
 		});
 	},
 
@@ -171,7 +171,7 @@ var HaploWindow = {
 
 		HaploWindow._group.add(HaploWindow._top);
 
-		ToolSetModes.setToHaploMode();
+		ButtonModes.setToHaploMode();
 		
 		kineticTween({
 			node: HaploWindow._top,
@@ -267,7 +267,9 @@ var HaploWindow = {
 	},
 
 	__hideBottom: function(finishfunc = 0){
-		uniqueGraphOps.haplo_area.hide();
+		if (uniqueGraphOps.haplo_area !== null){
+			uniqueGraphOps.haplo_area.hide();
+		}
 
 		if (HaploWindow._bottom === null){
 			finishfunc();

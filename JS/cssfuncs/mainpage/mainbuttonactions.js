@@ -15,11 +15,6 @@ var MainButtonActions  = {
 			MainPageHandler.haplomodeload();
 
 			MainButtonActions.processinput(e.target.result) /* type unknown at this point */
-
-			//Save to local storage
-			localStorage.setItem(localStor.hap_save, e.target.result)
-			localStorage.setItem(localStor.hap_type, MainButtonActions.fileType)
-			console.log("SAVED HAPLO")
 	    };
 
 	    lr.readAsText(file);
@@ -45,20 +40,28 @@ var MainButtonActions  = {
 		MainButtonActions.processinput(ped_data, ped_type);
 	},
 
-
 	savePedToStorage: function() {
 
-		var ped_to_string = PersistData.toPedfileString(true); /*store graphics*/
+		var ped_to_string = PersistData.toPedfileString(true); 
+		/*always store graphics for local, only export has no graphics option*/
 
 		localStorage.setItem( localStor.ped_save, ped_to_string );
-		localStorage.setItem( localStor.ped_type, "pedfile");
+		localStorage.setItem( localStor.ped_type, FORMAT.PEDFILE);
 
 		utility.notify("Pedigree Saved","...");
 	},
 
+	saveHaploToStorage: function(){
+		//Save to local storage
+		localStorage.setItem(localStor.hap_save, e.target.result)
+		localStorage.setItem(localStor.hap_type, MainButtonActions.fileType)
+
+		utility.notify("Haplo File Saved","...");		
+	},
+
 	exitToMenu: function(){
 
-		if (MainButtonActions.fileType === "Pedigree"){
+		if (MainButtonActions.fileType === FORMAT.PEDFILE){
 			var changeDetected = PersistData.pedigreeChanged();
 
 			if (changeDetected){
@@ -98,7 +101,7 @@ var MainButtonActions  = {
 	processinput: function(data, type = null){
 		var pi = new ProcessInput(data, type);
 		MainButtonActions.fileType = (type === null)?pi.type:type;
-		init();
+		init.haploview();
 		pi = null; /* Force early GC */
 	},
 

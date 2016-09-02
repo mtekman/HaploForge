@@ -66,14 +66,17 @@ var SelectionMode = {
 
 			SelectionMode._select_group.add(text_bounder)
 
-			uniqueGraphOps.foreachnode(function(node, fid){
-				if (node != 0)
-				{
-					var key = fid+"_"+node
+			uniqueGraphOps.foreachnode(function(node_id, fid){
 
-					var gfx = uniqueGraphOps.getFam(fid).nodes[node].graphics,
+				if (node_id != 0)
+				{
+					var key = fid+"_"+node_id
+
+					var hasHaplo = familyMapOps.getPerc(node_id, fid).hasHaplo();
+
+					var gfx = uniqueGraphOps.getFam(fid).nodes[node_id].graphics,
 						pos = gfx.getAbsolutePosition(),
-						bounder = SelectionGraphics.addBounder(pos, key, true);
+						bounder = SelectionGraphics.addBounder(pos, key, true, hasHaplo);
 
 					gfx.attrs.draggable = false;
 
