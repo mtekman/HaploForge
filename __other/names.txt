@@ -1,6 +1,8 @@
-#(haplotype / phase)  + (determination / resolution / inferrence)
-#(pedigree) + (invention / development / generation / creation)
-#(tool / device / suite / utility)
+#    (haplotype / phase)
+#  + (determination / resolution / inferrence)
+#  + (pedigree)
+#  + (invention / development / generation / creation)
+#  + (tool / device / suite / utility)
 
  	EuCHARIS 	  pEdigree Creation HAplotype ResolutIon Suite 
 	HARRIET 	  HAplotype Resolution pedigRee InvEntion Tool

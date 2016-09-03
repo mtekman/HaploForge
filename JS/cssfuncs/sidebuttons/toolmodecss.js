@@ -86,8 +86,8 @@ var ToolModeButtons = {
 			});
 		},
 
-		/* Selection View */
-		setToSelectionPreMode: function()
+		/* Haplo View */
+		setToHaploMode: function()
 		{
 			console.log("tool", "premode")
 
@@ -98,6 +98,9 @@ var ToolModeButtons = {
 				SelectionMode.init();
 				ToolModeButtons.modes.setToSelectionMode();
 			});
+			ToolModeButtons.addToolsButton("Modify Pedigree", function(){
+
+			})
 		},
 
 		/* Selection Editting View */
@@ -144,11 +147,11 @@ var ToolModeButtons = {
 
 		setToHomologyMode: function(){
 			console.log("implement");
-		}
+		},
 
 
 		/* Align, Find Hom, Range, Marker */
-		setToHaploMode: function()
+		setToComparisonMode: function()
 		{
 			ToolModeButtons.modes.preamble();
 
@@ -169,6 +172,3 @@ var ToolModeButtons = {
 		},
 	}
 }
-
-
-

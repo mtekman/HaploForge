@@ -1,6 +1,8 @@
 
 var MainButtonActions  = {
 
+	_temphaploload: null,
+
 	preamble: function(){
 		makeStage();
 		PersistData.clearMaps();
@@ -14,7 +16,11 @@ var MainButtonActions  = {
 	    	MainButtonActions.preamble();
 			MainPageHandler.haplomodeload();
 
-			MainButtonActions.processinput(e.target.result) /* type unknown at this point */
+			MainButtonActions._temphaploload = e.target.result;
+
+			MainButtonActions.processinput(
+				MainButtonActions._temphaploload
+			) /* type unknown at this point */
 	    };
 
 	    lr.readAsText(file);
@@ -53,7 +59,7 @@ var MainButtonActions  = {
 
 	saveHaploToStorage: function(){
 		//Save to local storage
-		localStorage.setItem(localStor.hap_save, e.target.result)
+		localStorage.setItem(localStor.hap_save, MainButtonActions._temphaploload)
 		localStorage.setItem(localStor.hap_type, MainButtonActions.fileType)
 
 		utility.notify("Haplo File Saved","...");		

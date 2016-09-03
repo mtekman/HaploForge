@@ -54,7 +54,7 @@ var MainPageHandler = {
 		MainPageHandler.showDiv("ToolModeButtons", true);
 		MainPageHandler.showDiv("GeneralModeButtons", true);
 		
-		ButtonModes.setToSelectionPreMode();
+		ButtonModes.setToHaploMode();
 	},
 
 	createpedmode: function(){

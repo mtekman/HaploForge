@@ -12,24 +12,15 @@ var ButtonModes = {
 		ToolModeButtons.modes.setToPedCreate();
 	},
 
-
-	/* HaploView */
+	/* Haplo View */
 	setToHaploMode: function()
-	{
-		console.log("hapmode")
+	{		
+		console.log("premode")
 		GeneralButtons.modes.setToHaploMode();
 		ToolModeButtons.modes.setToHaploMode();
 	},
 
 	/* Selection View */
-	setToSelectionPreMode: function()
-	{		
-		console.log("premode")
-		GeneralButtons.modes.setToSelectionPreMode();
-		ToolModeButtons.modes.setToSelectionPreMode();
-	},
-
-	/* Selection Editting View */
 	setToSelectionMode: function()
 	{
 		console.log("selmode")
@@ -43,5 +34,12 @@ var ButtonModes = {
 		console.log("hommode")
 		GeneralButtons.modes.setToHomologyMode();
 		ToolModeButtons.modes.setToHomologyMode();
+	},
+
+	setToComparisonMode: function()
+	{
+		console.log("compare");
+		GeneralButtons.modes.setToComparisonMode();
+		ToolModeButtons.modes.setToComparisonMode();
 	}
 }

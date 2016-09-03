@@ -80,7 +80,7 @@ var HaploWindow = {
 			haplo_layer.draw();
 
 			SelectionMode.destroy();
-			ButtonModes.setToSelectionPreMode();
+			ButtonModes.setToHaploMode();
 		});
 	},
 

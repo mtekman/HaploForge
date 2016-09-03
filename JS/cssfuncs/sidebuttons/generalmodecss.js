@@ -58,8 +58,13 @@ var GeneralButtons = {
 		},
 
 		preamble: function(){
+			console.log("PREAMBLE")
 			GeneralButtons.modes.clearMode();
 			GeneralButtons.div.style.display = "block";
+		},
+
+		setToComparisonMode: function(){
+			GeneralButtons.modes.clearMode();
 		},
 
 		/* Pedigree Creation View */
@@ -93,7 +98,7 @@ var GeneralButtons = {
 		},
 
 		/* Selection View */
-		setToSelectionPreMode: function()
+		setToSelectionMode: function()
 		{
 			console.log("gen", "premode")
 			GeneralButtons.modes.clearMode();
