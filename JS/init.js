@@ -15,6 +15,9 @@ var init = {
 	},
 
 	pedcreate : function(){
+		HaploPedProps.init();
+		graphInitPos(nodeSize + 10, grid_rezY, true);
+
 		console.log("John snow");
 	}
 }

@@ -16,7 +16,7 @@ var HaploPedProps = {
 
 	init: function()
 	{
-		HaploPedProps._connectAll();
+		PedProps.connectAll();
 		HaploPedProps._populateGraphics(); /*Maybe doesn't need to be in this class, but MUST be after _connectAll */
 
 		var fam_id = HaploPedProps._largestPedigree();
@@ -143,12 +143,12 @@ var HaploPedProps = {
 	},
 
 
-	_populateGraphics: function populateGrids_and_UniqueObjs( graphicsMap=null ) {
+	_populateGraphics: function populateGrids_and_UniqueObjs() {
 		//First root indiv for each family -- all members must be connected!
 		familyMapOps.foreachfam(function(fam_id){
 
 			//Populate gridmap and uniq map		
-			var nodes_edges = GraphicsLevelGrid.init(fam_id, graphicsMap);
+			var nodes_edges = GraphicsLevelGrid.init(fam_id, null);
 			var generation_array = GlobalLevelGrid.getGrid(fam_id);
 
 	//		console.log( generation_array, uniq_objs);
@@ -206,9 +206,13 @@ var HaploPedProps = {
 
 			}
 		});
-	},
+	}
+}
 
-	_connectAll: function connectAllIndividuals()
+
+var PedProps = {
+
+	connectAll: function connectAllIndividuals()
 	{
 		familyMapOps.foreachperc(function(id,famid, new_root)
 		{

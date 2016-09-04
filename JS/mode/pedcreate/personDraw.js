@@ -139,22 +139,9 @@ var personDraw = {
 				grid_rezX ,
 				-nodeSize // + Math.random()*grid_rezY*2
 		);
+		perc.family = famgroup.id;
 
-		perc.family = fam_group.id;
-
-
-		perc.on("click", function(){
-			familyDraw.selectFam(this.family);
-		})
-
-
-		perc.on("dblclick", function(){
-			personDraw.showNodeMenu(perc);
-		})
-
-		// Add to used IDs
-		this.used_ids[person.id] = perc;
-
+		personDraw.addClickFunctions(perc);
 
 		//family map stores the person data
 		// used_ids stores the graphics
@@ -176,5 +163,20 @@ var personDraw = {
 
 		main_layer.draw();
 		return perc;
+	},
+
+	addClickFunctions: function(perc){
+
+		perc.on("click", function(){
+			familyDraw.selectFam(this.family);
+		})
+
+		perc.on("dblclick", function(){
+			personDraw.showNodeMenu(this);
+		})
+
+		// Add to used IDs
+		personDraw.used_ids[perc.id] = perc;
+
 	}
 }

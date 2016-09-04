@@ -29,7 +29,7 @@ Notes:
 
 
 // After populating, add graphics
-function graphInitPos(start_x, start_y){
+function graphInitPos(start_x, start_y, enable_ped_edit = false){
 
 	var x_shift_fam = 0;
 
@@ -98,6 +98,13 @@ function graphInitPos(start_x, start_y){
 
 
 				n_perp.graphics = addPerson(perp, fam_group, posx, y_pos);
+
+				if (enable_ped_edit){
+				 	personDraw.addClickFunctions(
+				 		n_perp.graphics, fam_group
+		 			);
+		 		}
+
 
 // 				posx  = Math.floor(posx/grid_rezX)*grid_rezX;
 // 				y_pos = Math.floor(y_pos/grid_rezY)*grid_rezY;
