@@ -122,7 +122,7 @@ class MatelineDraw extends LineDrawOps {
 		new_line.setY( fath_gfx.y );
 
 
-		addFamMap.incrementEdges(
+		GraphicsLevelGrid.incrementEdges(
 			u_matesline, fath.id, moth.id, 0,
 			fam_gfx.edges,
 			new_line

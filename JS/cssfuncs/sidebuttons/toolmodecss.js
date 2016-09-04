@@ -51,9 +51,6 @@ var ToolModeButtons = {
 	},
 
 
-
-
-
 	/* Switching modes */
 	modes: {
 
@@ -98,9 +95,16 @@ var ToolModeButtons = {
 				SelectionMode.init();
 				ToolModeButtons.modes.setToSelectionMode();
 			});
-			ToolModeButtons.addToolsButton("Modify Pedigree", function(){
 
+
+			ToolModeButtons.addToolsButton("Modify Pedigree", function()
+			{
+				localStorage.setItem(localStor.transfer, MainButtonActions._temphaploload);
+				utility.notify("transferring","...");
+
+				MainButtonActions.loadPedFromStorage(true);
 			})
+
 		},
 
 		/* Selection Editting View */

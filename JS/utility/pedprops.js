@@ -28,27 +28,25 @@ var HaploPedProps = {
 			HaploPedProps._correctAllMaleAlleles();
 		}
 
-		console.log("Pedigree =", 
-			HaploPedProps.xlinked?"X-Linked":"Autosomal", 
-			HaploPedProps.dominant?"Dominant":"Recessive");
+		utility.notify("Pedigree", 
+			(HaploPedProps.xlinked?"X-Linked":"Autosomal") 
+			+ " "
+			+(HaploPedProps.dominant?"Dominant":"Recessive")
+		);
 
 	},
 
 	_largestPedigree : function(){
 		var max_memb=0, max_fam=0;
 
-		for (var fid in generation_grid_ids)
-		{
-			var num_memb = 0;
-
-			for (var g = 0; g < generation_grid_ids[fid].length; g++)
-				num_memb += generation_grid_ids[fid][g].length;
+		familyMapOps.foreachfam(function(fid){
+			var num_memb = familyMapOps.numPercs(fid);
 
 			if (num_memb > max_memb){
 				max_memb = num_memb;
 				max_fam = fid;
 			}
-		}
+		});
 		return max_fam;
 	},
 
@@ -58,71 +56,69 @@ var HaploPedProps = {
 
 		var num_males_with_single_allele = 0;
 
-		for (var g =0; g < generation_grid_ids[fam_id].length; g++)
-		{
-			for (var p=0; p < generation_grid_ids[fam_id][g].length; p++)
-			{
-				var perc_id = generation_grid_ids[fam_id][g][p],
-					perc = familyMapOps.getPerc(perc_id,fam_id);
+		familyMapOps.foreachperc(function(perc_id, perc){
+			var skip_uninformative = false;
 
-				//Determine if Y allele is zero for ALL males (not just one)
-				if ( perc.gender == PED.MALE ){
-					if (perc.haplo_data.length == 1)
-						num_males_with_single_allele ++;
+			//Determine if Y allele is zero for ALL males (not just one)
+			if ( perc.gender == PED.MALE ){
+				if (perc.haplo_data.length == 1)
+					num_males_with_single_allele ++;
 
-					else {
-						var num_all_zero_alleles = 0;
+				else {
+					var num_all_zero_alleles = 0;
 
-						for (var a=0; a < perc.haplo_data.length; a++){
-							var all_zeroes = true;
+					for (var a=0; a < perc.haplo_data.length; a++){
+						var all_zeroes = true;
 
-							for (var i=0; i < perc.haplo_data[a].data_array.length; i++ ){
-								if (perc.haplo_data[a].data_array[i] !== 0){
-									all_zeroes = false;
-									break;
-								}
-							}
-							if (all_zeroes){
-								num_all_zero_alleles ++;
+						for (var i=0; i < perc.haplo_data[a].data_array.length; i++ ){
+							if (perc.haplo_data[a].data_array[i] !== 0){
+								all_zeroes = false;
+								break;
 							}
 						}
-						if (num_all_zero_alleles === 2){
-							continue;  // skip this guy, completely uninformative
+						if (all_zeroes){
+							num_all_zero_alleles ++;
 						}
-
-						all_zero_Ychroms += num_all_zero_alleles;
-
 					}
+					if (num_all_zero_alleles === 2){ // skip this guy, completely uninformative
+						skip_uninformative = true;  
+					}
+					else{
+						all_zero_Ychroms += num_all_zero_alleles;					
+					}
+				}
+				if (!skip_uninformative){
 					num_males_checked ++;
 				}
-			}
-		}
-		if (num_males_with_single_allele === num_males_checked) return true;
-		if (all_zero_Ychroms === num_males_checked) return true;
-		if (num_males_with_single_allele + all_zero_Ychroms === num_males_checked) return true;
+			}			
+		}, fam_id);
+
+		if (num_males_with_single_allele === num_males_checked){return true};
+		if (all_zero_Ychroms === num_males_checked){return true};
+		if (num_males_with_single_allele + all_zero_Ychroms === num_males_checked){return true};
 
 		return false;
 	},
 
 
-	_determineDominant: function checkAffectedsInGens(fam_id){
+	_determineDominant: function checkAffectedsInGens(fam_id)
+	{
 		var affected_in_each_gen = 0,
-			num_gens = generation_grid_ids[fam_id].length;
+			num_gens = GlobalLevelGrid.numGens(fam_id);
 
-		for (var g =0; g < generation_grid_ids[fam_id].length; g++)
-		{
-			var affecteds_in_gen = 0
+		GlobalLevelGrid.foreachgeneration(fam_id, function(indivs_in_gen){
+			var affecteds_in_gen = 0;
 
-			for (var p=0; p < generation_grid_ids[fam_id][g].length; p++)
-			{
-				var perc_id = generation_grid_ids[fam_id][g][p],
+			for (var p=0; p < indivs_in_gen.length; p++){
+				var perc_id = indivs_in_gen[p],
 					perc = familyMapOps.getPerc(perc_id,fam_id);
 
-				if (perc.affected === PED.AFFECTED)
+				if (perc.affected === PED.AFFECTED){
 					affecteds_in_gen ++;
+				}
 			}
-			if (affecteds_in_gen > 0) affected_in_each_gen ++;
-		}
+			if (affecteds_in_gen > 0){ affected_in_each_gen ++ };
+		});
 
 		return affected_in_each_gen === num_gens;
 	},
@@ -130,7 +126,7 @@ var HaploPedProps = {
 
 	_correctAllMaleAlleles: function addZeroAllele_for_sexlinkedMales()
 	{
-		familyMapOps.foreachperc(function(perc)
+		familyMapOps.foreachperc(function(pid, fid, perc)
 		{
 			if (perc.gender === PED.MALE && perc.haplo_data.length === 1)
 			{
@@ -150,14 +146,10 @@ var HaploPedProps = {
 	_populateGraphics: function populateGrids_and_UniqueObjs( graphicsMap=null ) {
 		//First root indiv for each family -- all members must be connected!
 		familyMapOps.foreachfam(function(fam_id){
-			var root = familyMapOps.getFirst(fam_id);
-			
-	//		console.log("ROOT=", root.id);
 
-			//Populate gridmap and uniq map
-			var arr_obj = addFamMap.init(root, graphicsMap);
-			var generation_array = arr_obj[0],
-				nodes_edges = arr_obj[1];
+			//Populate gridmap and uniq map		
+			var nodes_edges = GraphicsLevelGrid.init(fam_id, graphicsMap);
+			var generation_array = GlobalLevelGrid.getGrid(fam_id);
 
 	//		console.log( generation_array, uniq_objs);
 
@@ -166,7 +158,7 @@ var HaploPedProps = {
 			uniqueGraphOps.getFam(fam_id).nodes = nodes_edges.nodes;
 			uniqueGraphOps.getFam(fam_id).edges = nodes_edges.edges;
 
-			generation_grid_ids[fam_id] = generation_array;
+			GlobalLevelGrid.updateGrid(fam_id, generation_array);
 
 
 			// Check if root tree contains ALL individuals
@@ -186,11 +178,9 @@ var HaploPedProps = {
 				// This is where we need to manually insert the 
 				//  other non-connected individuals
 
-				familyMapOps.foreachperc(function(perc_id){
+				familyMapOps.foreachperc(function(perc_id, perp){
 					if (!(perc_id in nodes_edges.nodes)){
-
-						var perp = familyMapOps.getPerc(perc_id, fam_id);
-						
+				
 						// Restore meta
 						if (typeof perp.stored_meta !== "undefined"){
 							//console.log("using stored meta", perc_id, perp.stored_meta);
@@ -220,9 +210,9 @@ var HaploPedProps = {
 
 	_connectAll: function connectAllIndividuals()
 	{
-		familyMapOps.foreachperc(function(id,famid)
+		familyMapOps.foreachperc(function(id,famid, new_root)
 		{
-			var new_root = familyMapOps.getPerc(id, famid);      //Assign father and mother to actual people
+			//Assign father and mother to actual people
 			var pers_father = 0, pers_mother = 0;
 
 			if (new_root.father != 0) {

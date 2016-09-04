@@ -53,12 +53,12 @@ var GeneralButtons = {
 			for (var k in GeneralButtons.table_keys){
 				GeneralButtons.removeFromToolsContainer(k);
 			}
-			console.log("CLEAR");
+//			console.log("CLEAR");
 			GeneralButtons.div.style.display = "none";
 		},
 
 		preamble: function(){
-			console.log("PREAMBLE")
+//			console.log("PREAMBLE")
 			GeneralButtons.modes.clearMode();
 			GeneralButtons.div.style.display = "block";
 		},

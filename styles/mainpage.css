@@ -36,7 +36,7 @@
 }
 
 
-#slowcomptick {
+#useropts {
   z-index: 90;
   position: fixed;
   bottom: 5px;
@@ -47,10 +47,10 @@
   vertical-align: middle;
   border-radius: 10px;
   padding: 0px 5px 0px 0px;
-  transform: scale(0.45) translate(-150px,17px);
+  transform: scale(0.45) translate(-95px,30px);
 }
 
-#slowcomptick input[type="checkbox"] {
+#useropts input[type="checkbox"] {
   transform: scale(1.2);
 }
 

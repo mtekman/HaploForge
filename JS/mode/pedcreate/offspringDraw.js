@@ -1,4 +1,4 @@
-/* This class also updates the generation_grid_ids for all parent-offspring connections */
+/* This class also updates the grid for all parent-offspring connections */
 
 class OffspringDraw extends LineDrawOps {
 
@@ -73,25 +73,25 @@ class OffspringDraw extends LineDrawOps {
 				var node = addCircle("white", nodeSize/2);
 
 				node.hitFunc(function(context){
-					var center = node.getPosition();
+					var center = this.getPosition();
 					context.beginPath();
 					context.arc(0, 0, 40, 0, 2 * Math.PI, true);
 					context.closePath();
-					context.fillStrokeShape(node);
+					context.fillStrokeShape(this);
 				});
 
 				node.matelineID = key;
 
 				// Lock offspring line to node if nearby
 				node.on("mouseover", function(){
-					_this.lockToNode(node);
+					_this.lockToNode(this);
 				});
 
 				// Mouse up -- it's been selected
 				node.on("mouseup", function(){
-					_this.lockToNode(node);
+					_this.lockToNode(this);
 
-					_this.matelineID = node.matelineID;
+					_this.matelineID = this.matelineID;
 					console.log("stored mateline_ID", _this.matelineID);
 
 					_this.joinIDs();
@@ -154,7 +154,7 @@ class OffspringDraw extends LineDrawOps {
 
 		uniqueGraphOps.getFam(this._family).group.add(new_line);
 
-		addFamMap.incrementEdges(
+		GraphicsLevelGrid.insertEdges(
 			u_childline, this.matelineID, child.id, 2,
 			uniqueGraphOps.getFam(this._family).edges,
 			new_line
@@ -163,8 +163,8 @@ class OffspringDraw extends LineDrawOps {
 		new_line.setZIndex(1);
 
 		//Perform level regeneration
-		var family_grid_map = (new GridMap(child)).getGrid();
-		generation_grid_ids[this._family] = family_grid_map;
+		GlobalLevelGrid.deleteGrid(this._family);
+		GlobalLevelGrid.insertGrid(this._family); // no grid parameter populates new
 
 		redrawNodes(father.id, this._family, true);
 		main_layer.draw();

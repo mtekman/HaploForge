@@ -40,6 +40,7 @@ class ProcessInput {
 		this._start_extract = -1;
 
 		this.type = type;
+		console.log("given type", type);
 		if (type === null){
 			this.type = this._determineFileType();			
 		}

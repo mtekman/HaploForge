@@ -11,8 +11,10 @@
     </head>
     <body onresize="resizeCanvas()" >
 
-        <div id="slowcomptick">
-          <label><input type="checkbox" onchange="MainButtonActions.toggleTransitions(this.checked)" />Disable Transitions</label>
+        <div id="useropts">
+          <label><input type="checkbox" onchange="userOpts.allowTransitions=this.checked;" />Transitions</label>
+          <br />
+          <label><input type="checkbox" onchange="userOpts.showTooltips=this.checked;" />Tooltips</label>
         </div>
 
 
@@ -250,6 +252,8 @@
 
         <script src="JS/mode/graph/graph_draw.js" ></script>
         <script src="JS/mode/graph/init_graph.js" ></script>
+        <script src="JS/mode/graph/levelgrid.js" ></script>
+        <script src="JS/mode/graph/graphicslevelgrid.js" ></script>
            
         <script src="JS/mode/selection/selection_graphics.js" ></script>
         <script src="JS/mode/selection/selection_mode.js" ></script>
@@ -282,7 +286,6 @@
         <script src="JS/utility/filehandler.js" ></script>
         <script src="JS/utility/persistdata.js" ></script>
         <script src="JS/utility/pedprops.js" ></script>
-        <script src="JS/utility/gridMap.js" ></script>
         <script src="JS/utility/familymapOps.js" ></script>
         <script src="JS/utility/uniqueGraphOps.js" ></script>
         <script src="JS/utility/window.js" ></script>

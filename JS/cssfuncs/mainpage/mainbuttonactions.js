@@ -36,13 +36,24 @@ var MainButtonActions  = {
 		MainButtonActions.processinput(hap_data, hap_type);
 	},
 
-	loadPedFromStorage: function() {
+	// HERERER
+	loadPedFromStorage: function(haplotransfer = false) {
 		MainButtonActions.preamble();
 		MainPageHandler.createpedmode();
 		
-		var ped_data = localStorage.getItem( localStor.ped_save ),
-			ped_type = localStorage.getItem( localStor.ped_type );
+		var ped_data, ped_type;
 
+		if (!haplotransfer){
+			ped_data = localStorage.getItem( localStor.ped_save );
+			ped_type = localStorage.getItem( localStor.ped_type );
+	
+		} else {
+			ped_data = localStorage.getItem( localStor.transfer );
+			ped_type = localStorage.getItem( localStor.hap_type );
+
+			//console.log("transfer data=", ped_data);
+			console.log("type=", ped_type);
+		}
 		MainButtonActions.processinput(ped_data, ped_type);
 	},
 
@@ -107,12 +118,12 @@ var MainButtonActions  = {
 	processinput: function(data, type = null){
 		var pi = new ProcessInput(data, type);
 		MainButtonActions.fileType = (type === null)?pi.type:type;
+
+		if (MainButtonActions.fileType === FORMAT.HAPLO.ALLEGRO){
+			MainButtonActions._temphaploload = data;
+		}
+
 		init.haploview();
 		pi = null; /* Force early GC */
-	},
-
-
-	toggleTransitions: function(checked){
-		userOpts.allowTransitions = !checked;
 	}
 }

@@ -343,19 +343,18 @@ function makeUniqueColors()
 // First pass -- assign groups
 function assignHGroups()
 {
-	for (var fam in generation_grid_ids) {
-
+	GlobalLevelGrid.foreachfam(function(grid, fam){
 		// First generation must be founders
-		var founder_gen = generation_grid_ids[fam][0];
+		var founder_gen = grid[0];
 
-		for (var p = 0; p < founder_gen.length; p++)
+		for (var p = 0; p < founder_gen.length; p++){
 			initFounderAlleles( fam, founder_gen[p] )
+		}
 
-
-		for (var g = 1; g < generation_grid_ids[fam].length; g++){
-			for (var p =0; p < generation_grid_ids[fam][g].length; p++)
+		for (var g = 1; g < grid.length; g++){
+			for (var p =0; p < grid[g].length; p++)
 			{
-				var pers_id = generation_grid_ids[fam][g][p],
+				var pers_id = grid[g][p],
 					pers    = familyMapOps.getPerc(pers_id, fam);
 
 				var moth_id = pers.mother.id,
@@ -374,7 +373,7 @@ function assignHGroups()
 			}
 		}
 		removeAmbiguousPointers(fam);
-	}
+	});
 	makeUniqueColors();
 }
 

@@ -11,7 +11,7 @@ var familyMapOps = {
 
 	foreachfam: function( callback ){
 		for (var fam in familyMapOps._map){
-			callback(fam);
+			callback(fam, familyMapOps.getFam(fam));
 		}
 	},
 
@@ -20,13 +20,17 @@ var familyMapOps = {
 		if (fam_id === null){
 			for (var fid in familyMapOps._map){
 				for (var pid in familyMapOps.getFam(fid)){
-					callback(pid, fid);
+					callback(pid, fid, 
+						familyMapOps.getPerc(pid,fid)
+					);
 				}
 			}
 		}
 		else{
 			for (var pid in familyMapOps.getFam(fam_id)){
-				callback(pid);
+				callback(pid, 
+					familyMapOps.getPerc(pid,fam_id)
+				);
 			}
 		}
 	},
@@ -132,7 +136,7 @@ var familyMapOps = {
 			console.log(person_id,"not in", family_id)
 			return -1;
 		}
-		console.log(family_id, "not in map");
+		throw new Error("not in map:" + person_id + " "+ family_id);
 		return -1;
 	}
 }

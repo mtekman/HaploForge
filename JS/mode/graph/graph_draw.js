@@ -174,18 +174,17 @@ function redrawNodes(pers_id, fam_id, drawLinesToo)
 	// NEED TO UPDATE GENERATION)GRID_IDS
 
 	//If last generation, move all sibs
-	if (typeof generation_grid_ids[fam_id] !== "undefined"){
+	if (GlobalLevelGrid.exists(fam_id))
+	{
+		var last_gen = GlobalLevelGrid.getlastgeneration(fam_id);
 
-		var last_gen = generation_grid_ids[fam_id][generation_grid_ids[fam_id].length - 1];
-
-		if (last_gen.indexOf(pers_id)!== -1){
-
+		if (last_gen.indexOf(pers_id)!== -1)
+		{
 			for (var c=0; c < last_gen.length; c++){
 				var sib_id = last_gen[c],
 					n_sib = node_map[sib_id].graphics;
 
 				n_sib.setY(npers_pos.y);
-
 
 				if (drawLinesToo){ //Update childlines			
 					updateGraph.childline(fam_id, sib_id);
@@ -193,8 +192,6 @@ function redrawNodes(pers_id, fam_id, drawLinesToo)
 			}
 		}
 	}
-
-
 
 
 	//Update own childnode.

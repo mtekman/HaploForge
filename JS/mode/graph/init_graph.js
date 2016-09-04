@@ -25,112 +25,6 @@ Notes:
 
 
 
-var addFamMap = {
-
-	generation_gridmap_ids:{},				// Essentially an array, but indices are given
-	unique_edges_fam: {},
-	unique_nodes_fam: {0:{graphics:null}},   // Add the zero id
-
-	_existing_graphics:null,
-
-	init: function(root, graphicsMap = null){
-
-		if (graphicsMap !== null){
-			this._existing_graphics = graphicsMap;
-		}
-
-		var afm = this;
-
-		var generation_grid_ids_fam = (new GridMap(root, 			
-			function cb1(perc){
-				afm.incrementNodes(perc.id);
-			},
-		
-			function cb2(perc){
-				if (perc.mother != 0 && perc.father != 0){
-					//Add relevant edges
-					afm.addTrioEdges(perc.mother, perc.father, perc);					
-				}
-			}
-		)).getGrid();
-
-		var uniq_map = {
-			nodes: this.unique_nodes_fam,
-			edges: this.unique_edges_fam
-		};
-
-		return [generation_grid_ids_fam, uniq_map];
-	},
-
-
-	// Hopefully this can be used to find inbreeding loops
-	incrementNodes: function(id)
-	{
-
-		if (!(id in this.unique_nodes_fam))
-		{
-			var graphicsObj = null;
-			
-			if (this._existing_graphics !== null ){
-				graphicsObj = this._existing_graphics.nodes[id];
-			}
-
-			this.unique_nodes_fam[id] = {
-				graphics:graphicsObj,		// if being read from pedfile, set later by placePerp
-			 	count:0
-			 };
-		}
-		else{
-			// Id exists, but perhaps not graphics?
-			if (this._existing_graphics !== null ){
-				console.log("ASDAasd")
-
-				var graphicsObj = this._existing_graphics.nodes[id];
-				this.unique_nodes_fam[id].graphics = graphicsObj;
-			}
-		}
-
-		this.unique_nodes_fam[id].count += 1;
-	},
-
-	incrementEdges: function(id, start_join, end_join, typer, 
-		mapper = this.unique_edges_fam,
-		graphicsObj = null)
-	{
-		if (!(id in mapper))
-		{
-			mapper[id] = {
-				graphics:graphicsObj,		//set later by placePerp
-				count:0,
-				type:typer,
-				start_join_id: start_join,          //Note: IDs, not positions
-				end_join_id: end_join,
-				double_line: false 					// Consangineous
-			};
-		//	console.log(mapper);
-		}
-		mapper[id].count += 1;
-	},
-
-	addTrioEdges: function(moth, fath, child){
-		//= Assume all indivs are != 0
-		var u_matesline = edgeAccessor.matelineID(fath.id, moth.id),
-			u_childline = edgeAccessor.childlineID(u_matesline, child.id);
-
-		//= Edges
-		this.incrementEdges(u_matesline, fath.id, moth.id, 0);
-		this.incrementEdges(u_childline, u_matesline, child.id, 2);
-
-		//= Nodes
-		this.incrementNodes(moth.id);
-		this.incrementNodes(fath.id);
-		this.incrementNodes(child.id); //Already in
-	}
-}
-
-
-
-
 
 
 
@@ -139,7 +33,7 @@ function graphInitPos(start_x, start_y){
 
 	var x_shift_fam = 0;
 
-	for (var fam in generation_grid_ids){
+	GlobalLevelGrid.foreachfam(function(grid, fam){
 		// Each fam gets their own group
 		var fam_group = addFamily(fam, x_shift_fam, 10);
 		var max_x = 0;
@@ -150,16 +44,16 @@ function graphInitPos(start_x, start_y){
 		// Descending down the generations.
 		// Main founders are at top
 		var y_pos = start_y,
-			gen_grid = generation_grid_ids[fam],
 			nodes = fam_gfx.nodes,
 			edges = fam_gfx.edges;
 
 
-		// Init Nodes, ordered by generation_grid_ids
-		for (var gen=0; gen < gen_grid.length; gen++){
+		// Init Nodes, ordered by generation
+		GlobalLevelGrid.foreachgeneration(fam, function(indivs_in_gen){
+
 			var x_pos = start_x;
 
-			var num_peeps = gen_grid[gen].length,
+			var num_peeps = indivs_in_gen.length,
 				isOddNum = !((num_peeps%2)==0),
 				center_x = Math.floor(max_fam_width/2);
 
@@ -173,7 +67,7 @@ function graphInitPos(start_x, start_y){
 
 			//Can't be helped, JS doesn't support macros...
 			function placePerp(index, posx){
-				var perp_id = gen_grid[gen][index],
+				var perp_id = indivs_in_gen[index],
 					perp = familyMapOps.getPerc(perp_id, fam),
 					n_perp = nodes[perp_id];
 
@@ -248,7 +142,8 @@ function graphInitPos(start_x, start_y){
 			}
 
 			y_pos += vert_space + 25;
-		}
+
+		});
 
 
 		// Init Edges -- in order of Mateline, and Childline
@@ -296,7 +191,8 @@ function graphInitPos(start_x, start_y){
 			}
 		}
 		x_shift_fam += max_x + 20;
-	}
+	
+	});
 
 
 	//Go over everyone and touch their lines

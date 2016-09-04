@@ -1,7 +1,8 @@
 // UI configurable:
 var userOpts = {
 	allowTransitions: true,
-	exportPedGraphicLocs: true
+	exportPedGraphicLocs: true,
+	showTooltips: true
 };
 
 
@@ -99,10 +100,6 @@ function map2orderedArray(mapper){
 function isEmpty(map){
 	return Object.getOwnPropertyNames(map).length === 0;
 }
-
-
-// Graph obj globals
-var generation_grid_ids = {}; //fam_id --> [generation array]
 
 
 var maxlen_marker = 0; // set by filehandler, read by addHaploBlocks
