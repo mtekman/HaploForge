@@ -36,7 +36,7 @@ var MainButtonActions  = {
 		MainButtonActions.processinput(hap_data, hap_type);
 	},
 
-	// HERERER
+
 	loadPedFromStorage: function(haplotransfer = false) {
 		MainButtonActions.preamble();
 		MainPageHandler.createpedmode();
@@ -50,9 +50,6 @@ var MainButtonActions  = {
 		} else {
 			ped_data = localStorage.getItem( localStor.transfer );
 			ped_type = localStorage.getItem( localStor.hap_type );
-
-			//console.log("transfer data=", ped_data);
-			console.log("type=", ped_type);
 		}
 		MainButtonActions.processinput(ped_data, ped_type);
 	},
@@ -123,7 +120,16 @@ var MainButtonActions  = {
 			MainButtonActions._temphaploload = data;
 		}
 
-		init.haploview();
+		if (MainPageHandler._currentMode === MainPageHandler.modes.haploview ){
+			init.haploview();			
+		}
+		else if (MainPageHandler._currentMode === MainPageHandler.modes.pedcreate ){
+			init.pedcreate();
+		}
+		else {
+			console.log("currentmodeC=", MainPageHandler._currentMode)
+		}
+
 		pi = null; /* Force early GC */
 	}
 }

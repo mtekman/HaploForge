@@ -4,6 +4,14 @@ var MainPageHandler = {
 
 	_currentMode : null,
 
+	// enum..
+	modes : {
+		main : 0,
+		haploview: 1,
+		pedcreate: 2,
+	},
+
+
 	__mainpage_divgroups : {
 		"main"  	: document.getElementById('maincircle'),
 		"ToolModeButtons"	: document.getElementById('selection_tools'),
@@ -32,7 +40,7 @@ var MainPageHandler = {
 	},
 
 	defaultload: function(){
-		MainPageHandler._currentMode = "Main"
+		MainPageHandler._currentMode = MainPageHandler.modes.main
 
 		/** Show main page, hide rest **/
 		MainPageHandler.showDiv("main", true);
@@ -45,7 +53,7 @@ var MainPageHandler = {
 	},
 
 	haplomodeload: function(){
-		MainPageHandler._currentMode = "Haplo"
+		MainPageHandler._currentMode = MainPageHandler.modes.haploview
 
 		/** Show haplotypes, after file (up)load **/
 		MainPageHandler.showDiv("main", false);
@@ -58,7 +66,7 @@ var MainPageHandler = {
 	},
 
 	createpedmode: function(){
-		MainPageHandler._currentMode = "Pedigree"
+		MainPageHandler._currentMode = MainPageHandler.modes.pedcreate
 
 		/** Show haplotypes, after file (up)load **/
 		MainPageHandler.showDiv("main", false);
