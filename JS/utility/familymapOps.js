@@ -67,6 +67,64 @@ var familyMapOps = {
 	},
 
 
+	_insertPercAsChild: function(person, family_id){
+		person.mother.addChild(person);
+		person.father.addChild(person);
+	},
+
+	_removePercAsChild: function(person, family_id){
+		person.mother.removeChild(person);
+		person.father.removeChild(person);
+	},
+
+	_removePercAsMate: function(person, family_id){
+		if (person.mates.length > 0){
+			person.foreachmate(function(mate){
+				mate.removeMate(person);
+			});
+		}
+	},
+
+	_removePercAsParent: function(person, family_id){
+		if (person.children.length > 0){
+			var isMother = person.gender === PED.FEMALE;
+			
+			person.foreachmate(function(mate)
+			{
+				person.foreachchild(mate, function(child){
+					if (isMother){
+						child.mother = 0;
+					} else {
+						child.father = 0;
+					}
+				});
+			});
+		}
+	},
+
+	/* used outside of default insertPerc function*/
+	insertPercAsParent: function(person, family_id, children){
+		var isMother = person.gender === PED.FEMALE;
+
+		for (var c=0; c < children.length; c++){
+			if (isMother){
+				children[c].mother = person;
+			} else {
+				children[c].father = person;
+			}
+		}
+	},
+
+	updatePerc: function(old_id, person, family_id){
+		var oldperson = familyMapOps.getPerc(old_id, family_id)
+
+		oldperson.id = person.id;
+		oldperson.name = person.name;
+		oldperson.gender = person.gender;
+		oldperson.affected = person.affected;
+	},
+
+
 	insertPerc: function(person, family_id){
 		
 		if (!(family_id in familyMapOps._map)){
@@ -78,6 +136,8 @@ var familyMapOps = {
 
 		if (!(person.id in familyMapOps._map[family_id])){
 			familyMapOps._map[family_id][person.id] = person;
+			//familyMapOps._insertPercAsChild(person, family_id);
+
 			return 0;
 		}
 
@@ -116,8 +176,16 @@ var familyMapOps = {
 	removePerc: function(person_id, family_id)
 	{
 		if (family_id in familyMapOps._map){
-			if (person_id in familyMapOps._map[family_id]){
+			if (person_id in familyMapOps._map[family_id])
+			{
+				var person = familyMapOps.getPerc(person_id, family_id);
+
+				familyMapOps._removePercAsChild(person, family_id);
+				familyMapOps._removePercAsMate(person, family_id);
+				familyMapOps._removePercAsParent(person, family_id);
+
 				delete familyMapOps._map[family_id][person_id];
+
 				return 0;
 			}
 			console.log(person_id,"not in", family_id)
@@ -129,14 +197,10 @@ var familyMapOps = {
 
 	getPerc: function(person_id, family_id)
 	{
-		if (family_id in familyMapOps._map){
-			if (person_id in familyMapOps._map[family_id]){
-				return familyMapOps._map[family_id][person_id];
-			}
-			console.log(person_id,"not in", family_id)
-			return -1;
+		if (person_id in familyMapOps._map[family_id]){
+			return familyMapOps._map[family_id][person_id];
 		}
-		throw new Error("not in map:" + person_id + " "+ family_id);
-		return -1;
+		console.log(person_id,"not in", family_id)
+		return false;
 	}
 }

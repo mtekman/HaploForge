@@ -22,21 +22,21 @@ class MatelineDraw extends LineDrawOps {
 			this.endNodeID = circle.id;
 			console.log("endNodeID=", this.endNodeID)
 
-			this.joinIDs()
+			this._joinIDs()
 		}
 
 		// If IDs set in constructor, just perform a join.
 		if (this.endNodeID !== null){
-			this.joinIDs();
+			this._joinIDs();
 		}
 
 
 	}
 
 
-	joinIDs(){
-				//Add line to unique_graph_obs so that dragevents would update it
-		//But ONLY after the relationship has been set
+	_joinIDs(){
+		// Add line to unique_graph_obs so that dragevents would update it
+		// But ONLY after the relationship has been set
 
 		// Rules:
 		//   1. Two types of lines
@@ -109,12 +109,20 @@ class MatelineDraw extends LineDrawOps {
 			}
 		}
 
+
+
 		var fam_gfx = uniqueGraphOps.getFam(this._family),
 			fam_group = fam_gfx.group,
 			group_pos = fam_group.getAbsolutePosition(),
-			new_line = this._tmpLine.clone();
+			
+			points = this._tmpLine.getPoints(),
+			start = {x:points[0], y:points[1]},
+			end = {x:points[6], y:points[7]},
+			
+			consang = checkConsanginuity(fam_group.id, this.startNodeID, this.endNodeID),
+			new_line = addRLine(fam_group, start, end, consang);
 
-		fam_group.add(new_line);
+		this._tmpLine.destroy();
 
 		var fath_gfx = fam_gfx.nodes[moth.id].graphics.getPosition();
 
@@ -122,12 +130,14 @@ class MatelineDraw extends LineDrawOps {
 		new_line.setY( fath_gfx.y );
 
 
-		GraphicsLevelGrid.incrementEdges(
+		GraphicsLevelGrid.insertEdges(
 			u_matesline, fath.id, moth.id, 0,
+			consang,
 			fam_gfx.edges,
 			new_line
 		)
 		new_line.setZIndex(1);
+
 
 		//reset
 		this.endLineDraw();

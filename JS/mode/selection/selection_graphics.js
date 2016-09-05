@@ -47,8 +47,6 @@ var SelectionGraphics = {
 			var node = uniqueGraphOps.getNode(perc_id, fam_id ).graphics,
 				pos = node.getPosition();
 
-			console.log(perc_id, pos);
-
 			var new_pos = {
 				x: Math.floor( pos.x / (2*grid_rezX)) * 2 * grid_rezX,
 				y: Math.floor( pos.y / (2*grid_rezY)) * 2 * grid_rezY

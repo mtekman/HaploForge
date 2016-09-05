@@ -1,8 +1,0 @@
-1472912867232	addons.xpi	WARN	Exception running bootstrap method startup on jid1-cwbvBTE216jjpg@jetpack: SyntaxError: missing ; before statement (resource://ytcenter/modules/storage_file.js:62:19) JS Stack trace: @storage2.js:2:1 < @Sandbox.js:10:1 < startup@resource://gre/modules/addons/XPIProvider.jsm -> jar:file:///home/tetron/.mozilla/firefox/va0crfs9.default/extensions/jid1-cwbvBTE216jjpg@bootstrap.js:37:3 < this.XPIProvider.callBootstrapMethod@XPIProvider.jsm:4775:9 < this.XPIProvider.startup@XPIProvider.jsm:2751:13 < callProvider@AddonManager.jsm:227:12 < _startProvider@AddonManager.jsm:778:5 < AddonManagerInternal.startup@AddonManager.jsm:962:9 < this.AddonManagerPrivate.startup@AddonManager.jsm:2934:5 < amManager.prototype.observe@addonManager.js:71:9
-1472914077286	addons.update-checker	WARN	Update manifest for {972ce4c6-7e08-4474-a285-3208198ce6fd} did not contain an updates property
-1472914077619	addons.update-checker	WARN	Update manifest for e10srollout@mozilla.org did not contain an updates property
-1472914077805	addons.update-checker	WARN	Update manifest for firefox@getpocket.com did not contain an updates property
-
-(process:2644): GLib-CRITICAL **: g_path_get_basename: assertion 'file_name != NULL' failed
-
-(firefox:1529): Gdk-WARNING **: XSetErrorHandler() called with a GDK error trap pushed. Don't do that.

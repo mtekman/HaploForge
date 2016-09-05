@@ -25,52 +25,33 @@ var personDraw = {
 		var old_person = familyMapOps.getPerc(oldID,famid);
 		var new_person = null
 
-		persProps.display(old_person, function(newPerc){
-			new_person = newPerc;
+		persProps.display(old_person, function onSubmit(newPerc){
 
+			new_person = newPerc;
 
 			if (oldID !== new_person.id){
 
 				if (new_person.id in personDraw.used_ids){
-					utility.notify("Error", "Id already in use");
+					utility.notify("Error", "Id "+new_person.id+" already in use");
 					return -1;
 				}
 			}
-		
+
 			// Update ids list
 			delete personDraw.used_ids[oldID]
 
-			//Update family map
-			familyMapOps.removePerc(oldID, famid);
-			familyMapOps.insertPerc(new_person, famid);
-
-
-			// Update graphics
+			
 			uniqueGraphOps.deleteNode(oldID, famid);
-			var new_node = personDraw.addNode(new_person, {x:oldX, y:oldY});
-			uniqueGraphOps.insertNode(new_person.id, famid, new_node);
+			
+			familyMapOps.removePerc(oldID, famid);
+			personDraw.addNode(new_person, famid, {x:oldX, y:oldY})
 
-			// -- mate lines to partners 
-			if (old_person.mates.length > 0){
-				old_person.foreachmate(function(mate)
-				{
-					var male = (mate.gender === 1)?mate:old_person;
-					var female = (mate.gender === 2)?mate:old_person;
 
-					var mate_key = uniqueGraphOps.getMateEdge(
-						famid, male.id, female.id);
 
-					uniqueGraphOps.deleteEdge(mate_key, famid);
-
-					if (new_person.gender === old_person.gender)
-					{
-						var male = (mate.gender === 1)?mate:new_person;
-						var female = (mate.gender === 2)?mate:new_person;
-
-						(new MatelineDraw(famid, male.id, female.id)).joinIDs();
-					}
-				})
-			}
+			// One cannot simply update name/id/gender/affectation, because
+			// mateline and childlines are hardcoded to IDs. Easier to delete and reinsert.	
+			
+			familyMapOps.insertPerc(new_person, famid);
 
 			// -- child lines to parents
 			if (old_person.father !== 0){
@@ -85,8 +66,55 @@ var personDraw = {
 				var mateline_key = edgeAccessor.matelineID(
 					old_person.father.id, old_person.mother.id);
 
-				(new OffspringDraw(famid, mateline_key, new_person.id)).joinIDs();
+				(new OffspringDraw(famid, mateline_key, new_person.id));
 			}
+
+			// -- mate lines to partners 
+			if (old_person.mates.length > 0){
+				old_person.foreachmate(function(mate)
+				{
+					var male = (mate.gender === PED.MALE)?mate:old_person;
+					var female = (mate.gender === PED.FEMALE)?mate:old_person;
+
+					var old_mate_key = uniqueGraphOps.getMateEdge(
+						famid, male.id, female.id);
+
+					uniqueGraphOps.deleteEdge(old_mate_key, famid);
+
+					if (new_person.gender === old_person.gender)
+					{
+						console.log("joining", famid, mate.id, new_person.id);
+						(new MatelineDraw(famid, mate.id, new_person.id));
+
+						old_person.foreachchild(mate, function(child){
+							var old_childline = uniqueGraphOps.makeChildEdge( famid, male.id, female.id, child.id );
+
+							var isMother = new_person.gender === PED.FEMALE,
+								new_childline = null;
+							
+							if (isMother){
+								new_childline = uniqueGraphOps.makeChildEdge(famid, mate.id, new_person.id, child.id)
+								child.mother = new_person;
+							} else {
+								new_childline = uniqueGraphOps.makeChildEdge(famid, new_person.id, mate.id, child.id);
+								child.father = new_person;
+							}
+
+							uniqueGraphOps.transferEdge(famid, old_childline,new_childline);
+							new_person.addChild(child)
+
+						});
+
+					}
+					else {
+						// Mates are incompatible genders, children are now orphaned.
+						console.log("detach this and childs!");
+					}
+				})
+			}			
+
+			// Regenerate the level grid otherwise drag functions cry
+			GlobalLevelGrid.refreshGrid(famid);
 
 			main_layer.draw();
 		});
@@ -120,7 +148,7 @@ var personDraw = {
 					}
 				);
 			}
-		} else{
+		} else {
 			personDraw._addNodeToActiveFam(person, position);
 		}
 	},
@@ -139,7 +167,7 @@ var personDraw = {
 				grid_rezX ,
 				-nodeSize // + Math.random()*grid_rezY*2
 		);
-		perc.family = famgroup.id;
+		perc.family = fam_group.id;
 
 		personDraw.addClickFunctions(perc);
 

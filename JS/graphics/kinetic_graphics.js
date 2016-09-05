@@ -72,9 +72,13 @@ function changeRLine(line, start, end, offset_y = 0, offset_pos = null)
 		console.log("adding offset", offset_pos)
 	}
 
-
-	line.setX(start.x);
-	line.setY(start.y);
+	try {
+		line.setX(start.x);
+		line.setY(start.y);
+	} catch(e){
+		console.log("what is line", line)
+		throw new Error(line)
+	}
 
 	var diff_x = end.x - start.x,
 		diff_y = end.y - start.y;
@@ -160,11 +164,11 @@ function linesConflictY( st, en, ypos)
 
 function addRLine_nonoverlapY(start, end, consang)
 {
-	var offy = 0;
-	while ( linesConflictY( start, end, offy ) ){
-		// Add offset to midpoint
-		offy -= 1;
-	}
+//	var offy = 0;
+//	while ( linesConflictY( start, end, offy ) ){
+//		// Add offset to midpoint
+//		offy -= 1;
+//	}
 
 	return addRLine_simple(start,end, consang, offy);
 }

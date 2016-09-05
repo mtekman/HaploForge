@@ -24,7 +24,7 @@ class OffspringDraw extends LineDrawOps {
 			// If ids set by constructor, just perform a join
 			if (this.childNodeID !== null)
 			{
-				this.joinIDs();		
+				this.__joinIDs();		
 			
 			} else {
 				// First click, and nodes encapsulate second click
@@ -36,7 +36,7 @@ class OffspringDraw extends LineDrawOps {
 
 					circlegroup.destroy(); // For offspring, hide circles as soon as one is picked as a start point
 					
-					this.drawNodes();
+					this.__drawNodes();
 				}
 			}
 
@@ -45,7 +45,7 @@ class OffspringDraw extends LineDrawOps {
 
 
 
-	drawNodes() {
+	__drawNodes() {
 		var _this = this;
 
 		var familyID = _this._family;
@@ -84,17 +84,17 @@ class OffspringDraw extends LineDrawOps {
 
 				// Lock offspring line to node if nearby
 				node.on("mouseover", function(){
-					_this.lockToNode(this);
+					_this.__lockToNode(this);
 				});
 
 				// Mouse up -- it's been selected
 				node.on("mouseup", function(){
-					_this.lockToNode(this);
+					_this.__lockToNode(this);
 
 					_this.matelineID = this.matelineID;
 					console.log("stored mateline_ID", _this.matelineID);
 
-					_this.joinIDs();
+					_this.__joinIDs();
 
 					nodeGroup.destroy();
 					delete uniqueGraphOps.getFam(familyID).edges[this.matelineID].sib_anchor
@@ -125,7 +125,7 @@ class OffspringDraw extends LineDrawOps {
 
 
 
-	joinIDs(){
+	__joinIDs(){
 
 		var u_childline = edgeAccessor.childlineID(this.matelineID, this.childNodeID);
 
@@ -154,24 +154,21 @@ class OffspringDraw extends LineDrawOps {
 
 		uniqueGraphOps.getFam(this._family).group.add(new_line);
 
+
 		GraphicsLevelGrid.insertEdges(
-			u_childline, this.matelineID, child.id, 2,
+			u_childline, this.matelineID, child.id, 2, false,
 			uniqueGraphOps.getFam(this._family).edges,
 			new_line
 		);
-
 		new_line.setZIndex(1);
 
-		//Perform level regeneration
-		GlobalLevelGrid.deleteGrid(this._family);
-		GlobalLevelGrid.insertGrid(this._family); // no grid parameter populates new
 
 		redrawNodes(father.id, this._family, true);
 		main_layer.draw();
 	}
 
 
-	lockToNode(node) {
+	__lockToNode(node) {
 		if (this._tmpLine !== null)
 		{
 			this._endPoint = node.getPosition();

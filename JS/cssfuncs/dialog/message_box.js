@@ -58,9 +58,16 @@ var utility = {
 		return stage.getPointerPosition();
 	},
 
-	showBG: function(){
+	showBG: function(callback = null){
 		this._bg.style.display = "block";
 		this._bg.style.zIndex = 500;
+		if (callback !== null){
+			utility._bg.onclick = function(){
+				callback();
+				utility.hideBG();
+				utility._bg.onclick = null;
+			}
+		}
 	},
 
 	hideBG: function(){
@@ -84,7 +91,9 @@ var famProps = {
 	},
 
 	showProps: function(family){
-		utility.showBG();
+		utility.showBG(function(){
+			famProps.hide();
+		});
 		this.show();
 
 		this._id.value   = family.id;
@@ -177,7 +186,9 @@ var persProps = {
 	},
 
 	showProps: function(person){
-		utility.showBG();
+		utility.showBG(function(){
+			persProps.hide();
+		});
 		this.show();
 
 		this.id.value     = person.id;
@@ -270,7 +281,9 @@ var messProps = {
 
 
 	display: function(header,text, exit_callback = null, yes_no_object = null, submit=false){
-		utility.showBG();
+		utility.showBG(function(){
+			messProps.hide();
+		});
 		this.show();
 
 		this._header.innerHTML = header;

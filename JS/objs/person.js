@@ -17,6 +17,29 @@ class Person {
 		this.name = name;
 	}
 
+	// Identical in relationships
+	isDoppelGanger(pers2){
+		if ((this.mother === pers2.mother) && (this.father && pers2.father)){
+			if (this.mates.length === pers2.mates.length){
+				for (var c=0; c < this.mates.length; c++){
+					if (this.mates[c].id !== pers2.mates[c].id){
+						return false;
+					}
+				}
+
+				if (this.children.length === pers2.children.length){
+					for (var c=0; c < this.children.length; c++){
+						if (this.children[c].id !== pers2.children[c].id){
+							return false
+						}
+					}
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
 	isMate(pers2){
 		var compare = pers2;
 		if (pers2 === 0){
@@ -36,13 +59,23 @@ class Person {
 		}
 	}
 
+	foreachchild(mate, callback){
+
+		var common_children = intersectArrays(this.children, mate.children)
+
+		for (var c=0; c < common_children.length; c++){
+			var child = common_children[c];
+			callback(child, c);
+		}
+	}
+
 	hasHaplo(){
 		return this.haplo_data.length > 0;
 	}
 
-	isChild(pers2){
+	hasChild(child){
 		for (var c=0; c < this.children.length; c++){
-			if (pers2.id == this.children[c].id){return true};
+			if (child.id === this.children[c].id){return true};
 		}
 		return false;
 	}
@@ -59,11 +92,33 @@ class Person {
 		this.mates.push(mate);
 	}
 
+	removeMate(mate){
+		if (this.isMate(mate)){
+			var mate_index = this.mates.map(function(a){return a.id;}).indexOf(mate.id);
+			if (mate_index !== -1){
+				this.mates.splice(mate_index,1);
+				return 0;
+			}
+		}
+		return -1
+	}
+
 	addChild(child){
 		// Already exists
-		if (this.isChild(child)){
+		if (this.hasChild(child)){
 			return -1;
 		}
 		this.children.push(child);
+	}
+
+	removeChild(child){
+		if (this.hasChild(child)){
+			var child_index = this.children.map(function(a){return a.id;}).indexOf(child.id)
+			if (child_index !== -1){
+				this.children.splice(child_index,1);
+				return 0
+			}
+		}
+		return -1
 	}
 }

@@ -69,9 +69,26 @@ var col_affs = [
 
 
 
-function toInt(arg){                                // For some reason parseInt wont work properly
-    return parseInt(arg);                           // as a lambda function arg.... wtf?
+
+
+function intersectArrays(a,b){
+	var ai=0, bi=0;
+	var result = new Array();
+
+	while( ai < a.length && bi < b.length )
+	{
+		if      (a[ai].id < b[bi].id ){ ai++; }
+		else if (a[ai].id > b[bi].id ){ bi++; }
+		else /* they're equal */
+		{
+			result.push(a[ai]);
+			ai++;
+			bi++;
+		}
+	}
+	return result;
 }
+
 
 
 function assert(bool, message){                     //General error handling

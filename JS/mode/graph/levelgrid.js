@@ -1,7 +1,7 @@
 
 var GlobalLevelGrid = {
 
-	_map : {},
+	_map : {}, //fid --> [[gen1], [gen2]]
 
 	clear: function(){
 		GlobalLevelGrid._map = {}
@@ -22,7 +22,17 @@ var GlobalLevelGrid = {
 		return false;
 	},
 
+	refreshGrid: function(fid){
+		console.log("refreshing");
+		if (!(GlobalLevelGrid.insertGrid(fid))){
+			console.log("grid exists");
+			GlobalLevelGrid.updateGrid(fid,
+				GlobalLevelGrid.populate(fid))
+		}
+	},
+
 	updateGrid: function(fid, grid){
+		console.log("updating with grid");
 		GlobalLevelGrid._map[fid] = grid;
 	},
 
@@ -107,24 +117,6 @@ class LevelGrid {
 		return false;
 	}
 
-	_kidIntersection(a,b){
-		var ai=0, bi=0;
-		var result = new Array();
-
-		while( ai < a.length && bi < b.length )
-		{
-			if      (a[ai].id < b[bi].id ){ ai++; }
-			else if (a[ai].id > b[bi].id ){ bi++; }
-			else /* they're equal */
-			{
-				result.push(a[ai]);
-				ai++;
-				bi++;
-			}
-		}
-		return result;
-	}
-
 	_recurseLevels(perc, level)
 	{
 		if (perc === 0){
@@ -151,11 +143,9 @@ class LevelGrid {
 		perc.foreachmate(function(mate){
 			lg._recurseLevels(mate, level);
 
-			var kids = lg._kidIntersection(perc.children, mate.children)
-
-			for (var k=0; k < kids.length; k++){
-				lg._recurseLevels(kids[k], level + 1);
-			}
+			perc.foreachchild(mate, function(child){
+				lg._recurseLevels(child, level + 1);
+			});
 		});
 
 		// Parents

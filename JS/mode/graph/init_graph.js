@@ -100,9 +100,8 @@ function graphInitPos(start_x, start_y, enable_ped_edit = false){
 				n_perp.graphics = addPerson(perp, fam_group, posx, y_pos);
 
 				if (enable_ped_edit){
-				 	personDraw.addClickFunctions(
-				 		n_perp.graphics, fam_group
-		 			);
+					n_perp.graphics.family = fam;
+				 	personDraw.addClickFunctions(n_perp.graphics);
 		 		}
 
 

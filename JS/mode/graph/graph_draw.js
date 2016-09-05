@@ -31,10 +31,11 @@ var updateGraph = {
 		if (parents_mateline_id === -1){
 			var person_node = familyMapOps.getPerc(person_id, family_id);
 
-			if (person_node.father === 0){
-//				console.log("No parents for ", person_node.id)
-				return -1
+			if ((person_node.father === 0) || (person_node.mother === 0)){
+				//No parent mateline, nothing to update
+				return 0;
 			}
+
 			parents_mateline_id = edgeAccessor.matelineID(person_node.father.id, person_node.mother.id);
 		}
 
@@ -44,14 +45,15 @@ var updateGraph = {
 			mateline_ps  = mateline.getPoints();
 
 //			childline_ps = childline.getPoints();
-
-		//var mid_xx = childline_ps[0] + childline.getX(),
-		//  	mid_yy = childline_ps[1] + childline.getY();
+//			var mid_xx = childline_ps[0] + childline.getX(),
+//			  	mid_yy = childline_ps[1] + childline.getY();
 
 		var mid_xx = (mateline_ps[2] + mateline_ps[4])/2 + mateline.getX(),
 			mid_yy = (mateline_ps[3] + mateline_ps[5])/2 + mateline.getY();
 
 		var person_graphics = uniqueGraphOps.getNode(person_id, family_id).graphics;
+
+//		console.log("childline", childline);
 
 		changeRLine( childline, {x:mid_xx, y:mid_yy}, person_graphics.getPosition());
 	}
@@ -77,6 +79,7 @@ function redrawNodes(pers_id, fam_id, drawLinesToo)
 		use_stagger = false; //pers.mates.length > 1;
 
 	for (var m=0; m < pers.mates.length; m++){
+//		console.log(pers_id, "mate=", pers.mates[m].id )
 		var mate = pers.mates[m],
 			nmate = node_map[mate.id].graphics,
 			nmate_pos = nmate.getPosition();
@@ -138,7 +141,7 @@ function redrawNodes(pers_id, fam_id, drawLinesToo)
 				if (key.lastIndexOf(childkey_starting,0) === 0) //startsWith implementation
 				{
 					var find_child_id = key.split('-'),
-						child_id = toInt(find_child_id[find_child_id.length - 1].trim());
+						child_id = parseInt(find_child_id[find_child_id.length - 1].trim());
 
 					updateGraph.childline(fam_id, child_id);
 				}
@@ -165,7 +168,6 @@ function redrawNodes(pers_id, fam_id, drawLinesToo)
 //						e1_x = matemate.getX(), e1_y = matemate.getY();
 
 					changeRLineHoriz(mateline, nmate.getPosition(), matemate_gfx.getPosition());
-					
 				}
 			}
 		}

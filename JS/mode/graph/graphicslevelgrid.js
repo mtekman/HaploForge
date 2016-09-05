@@ -100,10 +100,11 @@ var GraphicsLevelGrid = {
 		}
 	},
 
-	insertEdges(id, start_join, end_join, typer,
+	insertEdges(id, start_join, end_join, typer, 
+		consang = false,
 		mapper = GraphicsLevelGrid._unique_edges_fam,
-		graphicsObj = null)
-	{
+		graphicsObj = null){
+
 		if (!(id in mapper))
 		{
 			mapper[id] = {
@@ -111,7 +112,7 @@ var GraphicsLevelGrid = {
 				type:typer,
 				start_join_id: start_join,      //Note: IDs, not positions
 				end_join_id: end_join,
-				double_line: false 				// Consangineous
+				consangineous: consang 				// Consangineous
 			}
 		}
 	}
