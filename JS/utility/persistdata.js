@@ -20,7 +20,7 @@ var PersistData = {
 	},
 
 	export: function(){
-		if (MainPageHandler._currentMode === FORMAT.PEDFILE ){
+		if (MainPageHandler._currentMode === MainPageHandler.modes.pedcreate ){
 			window.open(
 				PersistData.makeTextFile(
 					PersistData.toPedfileString(userOpts.exportPedGraphicLocs)

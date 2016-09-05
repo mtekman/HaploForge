@@ -68,13 +68,21 @@ var familyMapOps = {
 
 
 	_insertPercAsChild: function(person, family_id){
-		person.mother.addChild(person);
-		person.father.addChild(person);
+		if (person.mother !== 0){
+			person.mother.addChild(person);
+		}
+		if (person.father !== 0){
+			person.father.addChild(person);
+		}
 	},
 
 	_removePercAsChild: function(person, family_id){
-		person.mother.removeChild(person);
-		person.father.removeChild(person);
+		if (person.mother !== 0){
+			person.mother.removeChild(person);
+		}
+		if (person.father !== 0){
+			person.father.removeChild(person);
+		}
 	},
 
 	_removePercAsMate: function(person, family_id){
@@ -200,7 +208,6 @@ var familyMapOps = {
 		if (person_id in familyMapOps._map[family_id]){
 			return familyMapOps._map[family_id][person_id];
 		}
-		console.log(person_id,"not in", family_id)
-		return false;
+		throw new Error(person_id + " not in " + family_id);
 	}
 }

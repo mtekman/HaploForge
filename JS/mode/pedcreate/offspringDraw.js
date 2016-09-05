@@ -163,6 +163,9 @@ class OffspringDraw extends LineDrawOps {
 		new_line.setZIndex(1);
 
 
+		// Regenerate the level grid otherwise drag functions cry
+		GlobalLevelGrid.refreshGrid(this._family);
+
 		redrawNodes(father.id, this._family, true);
 		main_layer.draw();
 	}

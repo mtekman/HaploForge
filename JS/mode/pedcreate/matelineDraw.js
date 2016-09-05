@@ -138,6 +138,7 @@ class MatelineDraw extends LineDrawOps {
 		)
 		new_line.setZIndex(1);
 
+		GlobalLevelGrid.refreshGrid(this._family);
 
 		//reset
 		this.endLineDraw();

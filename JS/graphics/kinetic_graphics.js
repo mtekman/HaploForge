@@ -164,11 +164,11 @@ function linesConflictY( st, en, ypos)
 
 function addRLine_nonoverlapY(start, end, consang)
 {
-//	var offy = 0;
-//	while ( linesConflictY( start, end, offy ) ){
-//		// Add offset to midpoint
-//		offy -= 1;
-//	}
+	var offy = 0;
+	while ( linesConflictY( start, end, offy ) ){
+		// Add offset to midpoint
+		offy -= 1;
+	}
 
 	return addRLine_simple(start,end, consang, offy);
 }

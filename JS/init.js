@@ -21,8 +21,7 @@ var init = {
 }
 
 
-MainButtonActions.loadHaploFromStorage();
-//MainPageHandler.defaultload();
+MainPageHandler.defaultload();
 //MainButtonActions.loadPedFromStorage();
 
 /*
@@ -46,10 +45,12 @@ personDraw.addNode(
 );*/
 /*
 */
+
+/*MainButtonActions.loadHaploFromStorage();
 setTimeout(function()
 {
 	localStorage.setItem(localStor.transfer, MainButtonActions._temphaploload);
 	utility.notify("transferring","...");
 
 	MainButtonActions.loadPedFromStorage(true);
-}, 100);
+}, 100);*/

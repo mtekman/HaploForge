@@ -1,6 +1,4 @@
 
-userOpts.allowTransitions = false;
-
 var HaploWindow = {
 
 	_left: new Kinetic.Rect({    //  side bar underlying markers
@@ -171,7 +169,7 @@ var HaploWindow = {
 
 		HaploWindow._group.add(HaploWindow._top);
 
-		ButtonModes.setToHaploMode();
+		ButtonModes.setToComparisonMode();
 		
 		kineticTween({
 			node: HaploWindow._top,

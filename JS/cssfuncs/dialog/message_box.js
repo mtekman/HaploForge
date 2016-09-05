@@ -300,7 +300,7 @@ var messProps = {
 			this._buttonrow.style.display = "none";
 			this._inputrow.style.display = "";
 			
-			this._submit.value = "Candy";
+			this._submit.value = "Submit";
 			this._submit.onclick = submit;
 		}
 
