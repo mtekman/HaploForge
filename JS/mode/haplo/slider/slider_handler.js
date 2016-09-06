@@ -122,6 +122,16 @@ var SliderHandler = {
 
 	updateInputsByIndex(ind1, ind2)
 	{
+		if (ind2 >= marker_array.length){
+			ind2 = marker_array.length -1
+			ind1 = ind2 - HAP_DRAW_LIM;
+		}
+		else if (ind1 < 0){
+			ind1 = 0
+			ind2 = HAP_DRAW_LIM;
+		}
+
+
 		MarkerSlider._last_input1_ind = ind1;
 		MarkerSlider._last_input2_ind = ind2;
 
