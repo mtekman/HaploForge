@@ -130,11 +130,12 @@ class MatelineDraw extends LineDrawOps {
 		new_line.setY( fath_gfx.y );
 
 
-		GraphicsLevelGrid.insertEdges(
-			u_matesline, fath.id, moth.id, 0,
-			consang,
-			fam_gfx.edges,
-			new_line
+		uniqueGraphOps.insertEdges(
+			u_matesline, fam_group.id, new_line,
+			fath.id, 
+			moth.id, 
+			0,
+			consang
 		)
 		new_line.setZIndex(1);
 

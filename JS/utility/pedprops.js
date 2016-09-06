@@ -148,7 +148,7 @@ var HaploPedProps = {
 		familyMapOps.foreachfam(function(fam_id){
 
 			//Populate gridmap and uniq map		
-			var nodes_edges = GraphicsLevelGrid.init(fam_id, null);
+			var nodes_edges = (new GraphicsLevelGrid(fam_id, null)).getMap();
 			var generation_array = GlobalLevelGrid.getGrid(fam_id);
 
 	//		console.log( generation_array, uniq_objs);

@@ -13,7 +13,7 @@ var GlobalLevelGrid = {
 
 			if (grid === null){
 				console.log("GLG: populating null grid");
-				grid = GlobalLevelGrid.populate(fid);
+				grid = GlobalLevelGrid.__populate(fid);
 			}
 
 			GlobalLevelGrid._map[fid] = grid;
@@ -27,7 +27,7 @@ var GlobalLevelGrid = {
 		if (!(GlobalLevelGrid.insertGrid(fid))){
 			console.log("grid exists");
 			GlobalLevelGrid.updateGrid(fid,
-				GlobalLevelGrid.populate(fid))
+				GlobalLevelGrid.__populate(fid))
 		}
 	},
 
@@ -55,7 +55,7 @@ var GlobalLevelGrid = {
 		return false;
 	},
 
-	populate: function(fid, callback1 = 0, callback2 = 0){
+	__populate: function(fid, callback1 = 0, callback2 = 0){
 		var root = familyMapOps.getFirst(fid);
 
 		var level_grid = new LevelGrid(root, callback1, callback2);
@@ -89,8 +89,6 @@ var GlobalLevelGrid = {
 
 		return grid[last_gen];
 	}
-
-
 }
 
 

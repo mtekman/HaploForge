@@ -53,9 +53,9 @@ var familyMapOps = {
 
 	/* Grab the first individual */
 	getFirst: function( family_id ){
-		for (var fam in familyMapOps._map)
-			for (var ped in familyMapOps.getFam(fam))
-				return familyMapOps.getPerc(ped,fam);
+		for (var ped in familyMapOps.getFam(family_id)){
+			return familyMapOps.getPerc(ped,family_id);
+		}
 
 		return -1
 	},
