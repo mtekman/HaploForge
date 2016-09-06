@@ -34,7 +34,6 @@ var FORMAT = {
 	UNKOWN : "other"
 }
 
-
 //General storage, global scope
 var	marker_map = {},          	// rs_id --> array index
 	marker_array = [];
@@ -130,25 +129,7 @@ var butt_w = 90,
 var min_haplo_x = horiz_space,
 	max_haplo_x = horiz_space + 30;
 
-// Marker Slider
-var slideinp_w = 20,
-	slideinp_h = 20,
-	slider_height = innerHeight * 0.75,
-	I_slider_extension = 35,
-	I_slider_offset = (slideinp_w/3);
 
-
-var slider_style = {
-	R_stroke:'red',
-	R_strokeWidth: 5,
-	R_cap:'round',
-	I_stroke:'white',
-	I_strokeWidth:1.3,
-	I_fontFamily: "monospace",
-	I_fontSize: 10,
-	I_fontColor: 'red',
-	S_fontColor: 'white',
-	bevel: 0};
 
 
 var in2Space = function(integ){

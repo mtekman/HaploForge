@@ -29,8 +29,6 @@ class MatelineDraw extends LineDrawOps {
 		if (this.endNodeID !== null){
 			this._joinIDs();
 		}
-
-
 	}
 
 

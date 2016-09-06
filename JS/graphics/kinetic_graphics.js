@@ -389,7 +389,7 @@ function addHaploBlocksAll()
 		x: -38,
 		y: -nodeSize*2,
 		text: total_text,
-		fontFamily: slider_style.I_fontFamily,
+		fontFamily: MarkerSlider._style.I_fontFamily,
 		fontSize: 10,
 		fill: 'black'
 	});

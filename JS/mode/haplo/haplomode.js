@@ -240,8 +240,8 @@ var HaploWindow = {
 
 				scroll_area__.on('mouseup', function(){
 					redrawHaplos(false); // starting=300
-					updateInputsByIndex( sta_index, end_index );
-					updateSlide();
+					SliderHandler.updateInputsByIndex( sta_index, end_index );
+					SliderHandler.updateSlide();
 					haplo_layer.draw();
 				});
 
@@ -316,19 +316,42 @@ var HaploWindow = {
     	}
 	},
 
+
+	_prevwheelstate : null,
+
 	_wheelHandler: function(event){
-		var delta = event.detail;
-		if (delta === 0){
-			delta = (event.deltaY > 0)?3:-3;
+
+		var wh = window.innerHeight,
+			st = document.body.scrollTop,
+			sh = document.body.scrollHeight;
+
+		// Scroll haplotypes only when scrollbars are
+		// either at top or bottom.
+		if (wh - st === wh || st + wh > sh){
+			var delta = event.detail;
+			if (delta === 0){
+				delta = (event.deltaY > 0)?3:-3;
+			}
+
+			var wheelstatechanged = false;
+
+			if ((delta > 0 && HaploWindow._prevwheelstate < 0)
+			  ||(delta < 0 && HaploWindow._prevwheelstate > 0))
+			{
+				wheelstatechanged = true
+			}
+
+			if (!wheelstatechanged){
+				sta_index += delta;
+				end_index += delta;
+
+				SliderHandler.updateInputsByIndex( sta_index, end_index );
+				SliderHandler.updateSlide();
+				redrawHaplos(false);
+			
+				haplo_layer.draw();
+			}
+			HaploWindow._prevwheelstate = delta;
 		}
-
-		sta_index += delta;
-		end_index += delta;
-
-		updateInputsByIndex( sta_index, end_index );
-		updateSlide();
-		redrawHaplos(false);
-		
-		haplo_layer.draw();
 	}
 }
