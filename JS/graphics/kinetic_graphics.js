@@ -494,10 +494,17 @@ function addPerson(person, fam_group,  t_x, t_y)  //positions relative to family
 	group.on('dragmove', function(e){
 		// Update last touched group
 		familyDraw.active_fam_group = fam_group;
-		
-		//Snap-to-grid  -- relative to parent (fam_group)
+
 		var x = e.target.attrs.x;
 		var	y = e.target.attrs.y;
+
+		if (Keyboard.isShiftDown()){
+			e.target.dragBoundFunc
+			main_layer.draw();
+			return 0;
+		}
+		
+		//Snap-to-grid  -- relative to parent (fam_group)
 		this.setX( (Math.floor(x/grid_rezX)*grid_rezX) );
 		this.setY( (Math.floor(y/grid_rezY)*grid_rezY) );
 

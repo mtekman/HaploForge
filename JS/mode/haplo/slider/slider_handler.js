@@ -106,11 +106,8 @@ var SliderHandler = {
 		MarkerSlider._sl_input1.setY(top);
 	 	MarkerSlider._sl_input2.setY(bot);
 
-	//  	console.log(top, bot);
-
 	 	MarkerSlider._last_input1_ind = (top===0)?0:Math.floor(top * marker_array.length/ MarkerSlider._config.slider_height),
 		MarkerSlider._last_input2_ind = (bot===MarkerSlider._config.slider_height)?marker_array.length-1:Math.floor(bot * marker_array.length/ MarkerSlider._config.slider_height);
-
 
 		MarkerSlider._sl_input1.message.setText( marker_array[MarkerSlider._last_input1_ind] );
 		MarkerSlider._sl_input2.message.setText( marker_array[MarkerSlider._last_input2_ind] );
