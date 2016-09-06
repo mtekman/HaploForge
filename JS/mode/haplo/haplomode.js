@@ -1,3 +1,4 @@
+"use strict";
 
 var HaploWindow = {
 
@@ -297,19 +298,32 @@ var HaploWindow = {
 	},
 
 	_addMouseWheel: function(func){
-		//WebKit
-		document.addEventListener("mousewheel", func, false);
-		document.addEventListener("DOMMouseScroll", func, false);
+		if (document.addEventListener) {
+			console.log()
+        	document.addEventListener("mousewheel", func, false); //IE9, Chrome, Safari, Oper
+        	document.addEventListener("wheel", func, false); //Firefox
+    	} else {
+        	document.attachEvent("onmousewheel", func); //IE 6/7/8
+    	}
 	},
 
 	_removeMouseWheel: function(func){
-		document.removeEventListener("mousewheel", func, false);
-		document.removeEventListener("DOMMouseScroll", func, false);
+		if (document.addEventListener) {
+        	document.removeEventListener("mousewheel", func, false); //IE9, Chrome, Safari, Oper
+        	document.removeEventListener("wheel", func, false); //Firefox
+    	} else {
+        	document.detachEvent("onmousewheel", func); //IE 6/7/8
+    	}
 	},
 
 	_wheelHandler: function(event){
-		sta_index += event.detail;
-		end_index += event.detail;
+		var delta = event.detail;
+		if (delta === 0){
+			delta = (event.deltaY > 0)?3:-3;
+		}
+
+		sta_index += delta;
+		end_index += delta;
 
 		updateInputsByIndex( sta_index, end_index );
 		updateSlide();

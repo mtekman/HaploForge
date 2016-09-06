@@ -154,12 +154,13 @@ class OffspringDraw extends LineDrawOps {
 
 		uniqueGraphOps.getFam(this._family).group.add(new_line);
 
-
-		GraphicsLevelGrid.insertEdges(
-			u_childline, this.matelineID, child.id, 2, false,
-			uniqueGraphOps.getFam(this._family).edges,
-			new_line
-		);
+		uniqueGraphOps.insertEdge(
+			u_childline, this._family, new_line,
+			this.matelineID, 
+			child.id, 
+			2,
+			false
+		)
 		new_line.setZIndex(1);
 
 

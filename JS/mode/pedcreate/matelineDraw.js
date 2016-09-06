@@ -130,7 +130,7 @@ class MatelineDraw extends LineDrawOps {
 		new_line.setY( fath_gfx.y );
 
 
-		uniqueGraphOps.insertEdges(
+		uniqueGraphOps.insertEdge(
 			u_matesline, fam_group.id, new_line,
 			fath.id, 
 			moth.id, 

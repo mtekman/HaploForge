@@ -7,7 +7,7 @@ var ButtonModes = {
 	/* Pedigree Creation View */
 	setToPedCreate: function()
 	{
-		console.log("pedmode")
+//		console.log("pedmode")
 		GeneralButtons.modes.setToPedCreate();
 		ToolModeButtons.modes.setToPedCreate();
 	},
@@ -15,7 +15,7 @@ var ButtonModes = {
 	/* Haplo View */
 	setToHaploMode: function()
 	{		
-		console.log("premode")
+//		console.log("premode")
 		GeneralButtons.modes.setToHaploMode();
 		ToolModeButtons.modes.setToHaploMode();
 	},
@@ -23,7 +23,7 @@ var ButtonModes = {
 	/* Selection View */
 	setToSelectionMode: function()
 	{
-		console.log("selmode")
+//		console.log("selmode")
 		GeneralButtons.modes.setToSelectionMode();
 		ToolModeButtons.modes.setToSelectionMode();
 	},
@@ -31,14 +31,14 @@ var ButtonModes = {
 	/* Align, Find Hom, Range, Marker */
 	setToHomologyMode: function()
 	{
-		console.log("hommode")
+//		console.log("hommode")
 		GeneralButtons.modes.setToHomologyMode();
 		ToolModeButtons.modes.setToHomologyMode();
 	},
 
 	setToComparisonMode: function()
 	{
-		console.log("compare");
+//		console.log("compare");
 		GeneralButtons.modes.setToComparisonMode();
 		ToolModeButtons.modes.setToComparisonMode();
 	}
