@@ -34,6 +34,8 @@ var SelectionMode = {
 
 	init: function startSelectionMode()
 	{
+		ButtonModes.setToSelectionMode()
+
 		SelectionMode.toggle_selection_affecteds = false;
 		SelectionMode.toggle_selection_all = false;
 
@@ -95,6 +97,7 @@ var SelectionMode = {
 		SelectionMode._exit = addExitButton({x: 20, y: 20}, function(){
 			HaploWindow.destroy();
 			SelectionMode.destroy();
+			ButtonModes.setToHaploView()
 		});
 
 		SelectionMode._select_group.add( SelectionMode._exit );

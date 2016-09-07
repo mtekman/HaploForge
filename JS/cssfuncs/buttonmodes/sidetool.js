@@ -93,7 +93,6 @@ var ToolButtons = {
 			ToolButtons.setTitle("Pedigree Arrange");
 			ToolButtons.addToolsButton("Start Analysis", function(){
 				SelectionMode.init();
-				ToolButtons.modes.setToSelectionMode();
 			});
 
 
@@ -110,6 +109,8 @@ var ToolButtons = {
 		/* Selection Editting View */
 		setToSelectionMode: function()
 		{
+			console.log("HERE");
+
 			ToolButtons.modes.preamble();
 
 			ToolButtons.setTitle("Selection Tools");
@@ -179,7 +180,7 @@ var ToolButtons = {
 
 		/* Actual tools used in homology plots */
 		setToHomologyMode: function(){
-			console.log("implement");
+			throw new Error("implement");
 		}
 	}
 }
