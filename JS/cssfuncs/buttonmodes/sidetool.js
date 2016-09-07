@@ -1,5 +1,5 @@
 /* Class that rewrites the selection_tools div to swap in tools for each mode */
-var ToolModeButtons = {
+var ToolButtons = {
 
 	table_keys : {}, 
 	div   : document.getElementById("selection_tools"),
@@ -7,7 +7,7 @@ var ToolModeButtons = {
 	title : document.getElementById("selection_title"),
 
 	setTitle: function(title){
-		ToolModeButtons.title.innerHTML = title;
+		ToolButtons.title.innerHTML = title;
 	},
 
 	addButton: function(message, callback, show_state){
@@ -23,31 +23,31 @@ var ToolModeButtons = {
 
 	addToToolsContainer: function(button)
 	{
-		ToolModeButtons.table_keys[button.innerHTML] = button;
+		ToolButtons.table_keys[button.innerHTML] = button;
 
-		var row = ToolModeButtons.table.insertRow(),
+		var row = ToolButtons.table.insertRow(),
 			cell = row.insertCell();
 
 		cell.appendChild(button);
 	},
 
 	addToolsButton: function(message, callback, show_state){
-		ToolModeButtons.addToToolsContainer(
-			ToolModeButtons.addButton(message, callback, show_state)
+		ToolButtons.addToToolsContainer(
+			ToolButtons.addButton(message, callback, show_state)
 		);
 	},
 
 	removeFromToolsContainer: function(key)
 	{
-		var button = ToolModeButtons.table_keys[key],
+		var button = ToolButtons.table_keys[key],
 			cell = button.parentNode,
 			row  = cell.parentNode,
 			rowInd = row.rowIndex;
 
 		row.deleteCell(0);
-		ToolModeButtons.table.deleteRow(rowInd);
+		ToolButtons.table.deleteRow(rowInd);
 
-		delete ToolModeButtons.table_keys[key];
+		delete ToolButtons.table_keys[key];
 	},
 
 
@@ -55,49 +55,49 @@ var ToolModeButtons = {
 	modes: {
 
 		clearMode: function(){
-			for (var k in ToolModeButtons.table_keys){
-				ToolModeButtons.removeFromToolsContainer(k);
+			for (var k in ToolButtons.table_keys){
+				ToolButtons.removeFromToolsContainer(k);
 			}
-			ToolModeButtons.setTitle("");
-			ToolModeButtons.div.style.display = "none";
+			ToolButtons.setTitle("");
+			ToolButtons.div.style.display = "none";
 		},
 
 		preamble: function(){
-			ToolModeButtons.modes.clearMode();
-			ToolModeButtons.div.style.display = "block";
+			ToolButtons.modes.clearMode();
+			ToolButtons.div.style.display = "block";
 		},
 
 		/* Pedigree Creation View */
 		setToPedCreate: function()
 		{
-			ToolModeButtons.modes.preamble();
+			ToolButtons.modes.preamble();
 
-			ToolModeButtons.setTitle("Ped Tools");
-			ToolModeButtons.addToolsButton("Add Individual", function(){personDraw.addNode();});
-			ToolModeButtons.addToolsButton("Add Family", function(){familyDraw.addFam();});
-			ToolModeButtons.addToolsButton("Mate-Mate", function(){
+			ToolButtons.setTitle("Ped Tools");
+			ToolButtons.addToolsButton("Add Individual", function(){personDraw.addNode();});
+			ToolButtons.addToolsButton("Add Family", function(){familyDraw.addFam();});
+			ToolButtons.addToolsButton("Mate-Mate", function(){
 				(new MatelineDraw(familyDraw.active_fam_group.id)).init();
 			});
-			ToolModeButtons.addToolsButton("Parent-Offspring", function(){
+			ToolButtons.addToolsButton("Parent-Offspring", function(){
 				(new OffspringDraw(familyDraw.active_fam_group.id)).init();
 			});
 		},
 
 		/* Haplo View */
-		setToHaploMode: function()
+		setToHaploView: function()
 		{
 			console.log("tool", "premode")
 
-			ToolModeButtons.modes.preamble();
+			ToolButtons.modes.preamble();
 
-			ToolModeButtons.setTitle("Pedigree Arrange");
-			ToolModeButtons.addToolsButton("Start Analysis", function(){
+			ToolButtons.setTitle("Pedigree Arrange");
+			ToolButtons.addToolsButton("Start Analysis", function(){
 				SelectionMode.init();
-				ToolModeButtons.modes.setToSelectionMode();
+				ToolButtons.modes.setToSelectionMode();
 			});
 
 
-			ToolModeButtons.addToolsButton("Modify Pedigree", function()
+			ToolButtons.addToolsButton("Modify Pedigree", function()
 			{
 				localStorage.setItem(localStor.transfer, MainButtonActions._temphaploload);
 				utility.notify("transferring","...");
@@ -110,10 +110,10 @@ var ToolModeButtons = {
 		/* Selection Editting View */
 		setToSelectionMode: function()
 		{
-			ToolModeButtons.modes.preamble();
+			ToolButtons.modes.preamble();
 
-			ToolModeButtons.setTitle("Selection Tools");
-			ToolModeButtons.addToolsButton("Select All", function()
+			ToolButtons.setTitle("Selection Tools");
+			ToolButtons.addToolsButton("Select All", function()
 			{
 				SelectionMode.toggle_selection_all = !SelectionMode.toggle_selection_all;
 
@@ -126,7 +126,7 @@ var ToolModeButtons = {
 				}
 			});
 
-			ToolModeButtons.addToolsButton("Select Affecteds", function()
+			ToolButtons.addToolsButton("Select Affecteds", function()
 			{
 				SelectionMode.toggle_selection_affecteds = !SelectionMode.toggle_selection_affecteds;
 
@@ -146,33 +146,40 @@ var ToolModeButtons = {
 				);
 			});
 
-			ToolModeButtons.addToolsButton("Submit Selection", HaploWindow.init);
-		},
-
-		setToHomologyMode: function(){
-			console.log("implement");
+			ToolButtons.addToolsButton("Submit Selection", HaploWindow.init);
 		},
 
 
-		/* Align, Find Hom, Range, Marker */
+		/* Aka Side-by-Side Haploblock mode: Align, Find Hom, Range, Marker */
 		setToComparisonMode: function()
 		{
-			ToolModeButtons.modes.preamble();
+			ToolButtons.modes.preamble();
 
-			ToolModeButtons.setTitle("Haplo Tools");
+			ToolButtons.setTitle("Haplo Tools");
 
-			ToolModeButtons.addToolsButton("Align Pedigree", function(){
+			ToolButtons.addToolsButton("Align Pedigree", function(){
 				alignTopSelection( DOS.haplo_group_nodes, DOS.haplo_group_lines);
 			});
-			ToolModeButtons.addToolsButton("Find Homology", function(){
+			ToolButtons.addToolsButton("Find Homology", function(){
 				// Function exits selection mode auto
 				homology_selection_mode();
 				//returns marker pair list
 			});
-			ToolModeButtons.addToolsButton("Range Slider", function(){
+			ToolButtons.addToolsButton("Range Slider", function(){
 				MarkerSlider.showSlider(!MarkerSlider._visible)
 			});
-			ToolModeButtons.addToolsButton("Marker Search", showIndexCSS);
+			ToolButtons.addToolsButton("Marker Search", showIndexCSS);
 		},
+
+		/* From comparison mode, the buttons showed during homology selection */
+		setToHomologySelection: function(){
+			console.log("implement later");
+		},
+
+
+		/* Actual tools used in homology plots */
+		setToHomologyMode: function(){
+			console.log("implement");
+		}
 	}
 }

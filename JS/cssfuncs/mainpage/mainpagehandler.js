@@ -14,8 +14,8 @@ var MainPageHandler = {
 
 	__mainpage_divgroups : {
 		"main"  	: document.getElementById('maincircle'),
-		"ToolModeButtons"	: document.getElementById('selection_tools'),
-		"GeneralModeButtons" : document.getElementById('save_and_close'),
+		"ToolButtons"	: document.getElementById('selection_tools'),
+		"BottomButtons" : document.getElementById('save_and_close'),
 		"container"	: document.getElementById('container'),
 		"pedexist"  : document.getElementById('pedresume_label'),
 		"hapexist"  : document.getElementById('haploresume_label')
@@ -46,8 +46,8 @@ var MainPageHandler = {
 		MainPageHandler.showDiv("main", true);
 		MainPageHandler.showDiv("container", false);
 
-		MainPageHandler.showDiv("GeneralModeButtons", false);
-		MainPageHandler.showDiv("ToolModeButtons", false);
+		MainPageHandler.showDiv("BottomButtons", false);
+		MainPageHandler.showDiv("ToolButtons", false);
 
 		MainPageHandler.setPrevExistingButtons();
 	},
@@ -59,10 +59,10 @@ var MainPageHandler = {
 		MainPageHandler.showDiv("main", false);
 		MainPageHandler.showDiv("container", true);
 
-		MainPageHandler.showDiv("ToolModeButtons", true);
-		MainPageHandler.showDiv("GeneralModeButtons", true);
+		MainPageHandler.showDiv("ToolButtons", true);
+		MainPageHandler.showDiv("BottomButtons", true);
 		
-		ButtonModes.setToHaploMode();
+		ButtonModes.setToHaploView();
 	},
 
 	createpedmode: function(){
@@ -72,8 +72,8 @@ var MainPageHandler = {
 		MainPageHandler.showDiv("main", false);
 		MainPageHandler.showDiv("container", true);
 
-		MainPageHandler.showDiv("ToolModeButtons", true);
-		MainPageHandler.showDiv("GeneralModeButtons", true);
+		MainPageHandler.showDiv("ToolButtons", true);
+		MainPageHandler.showDiv("BottomButtons", true);
 		
 		ButtonModes.setToPedCreate();
 	}
