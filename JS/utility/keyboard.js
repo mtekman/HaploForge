@@ -19,7 +19,6 @@ var Keyboard = {
 	},
 
 	endListen(){
-		console.log("called");
 		if (Keyboard.__listening){
 			document.removeEventListener("keydown", Keyboard.__processKeyDown, false);
 			document.removeEventListener("keyup", Keyboard.__processKeyUp, false);

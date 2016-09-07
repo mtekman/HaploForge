@@ -17,8 +17,6 @@ var ButtonModes = {
 
 	__switchMode: function(funcname){
 
-		funcname = funcname || arguments
-
 		console.log("ButtonMode", funcname)
 
 		ButtonModes.__preamble();
@@ -31,11 +29,7 @@ var ButtonModes = {
 		if (!ButtonModes.__modespopulated){
 			for (var mode in ButtonModes.__validmodes)
 			{
-				ButtonModes[mode] = function(){
-					arguments.callee.name = mode;
-
-					ButtonModes.__switchMode(mode)
-				};
+				ButtonModes[mode] = ButtonModes.__switchMode.bind(this, mode);
 			}
 			ButtonModes.__modespopulated = true
 		}
@@ -43,17 +37,21 @@ var ButtonModes = {
 	},
 
 	/* Switch mode has to be called at least once, keep these functions here */
-	setToPedCreate: function(){
+	setToPedCreate(){
 		ButtonModes.__switchMode(arguments.callee.name)
 		Keyboard.beginListen();
 	},
 
-	setToHaploView: function(){		
+	setToHaploView(){
 		ButtonModes.__switchMode(arguments.callee.name)
 		Keyboard.beginListen();
 	},
 }
 
+
+
+
+/*
 var GeneralWrapper = {
 
 
@@ -77,15 +75,13 @@ var GeneralWrapper = {
 		}
 	},
 
-	/* Attach valid modes to General Wrapper at runtime */
+	// Attach valid modes to General Wrapper at runtime 
 	__preamble: function(){
 		if (!GeneralWrapper.__modespopulated)
 		{
 			for (var mode in GeneralWrapper.__validmodes)
 			{
-				GeneralWrapper[mode] = function(){
-					GeneralWrapper.__switchMode(mode)
-				};
+				GeneralWrapper[mode] = GeneralWrapper.__switchMode.bind(this, mode);
 			}
 
 			GeneralWrapper.__modespopulated = true
@@ -116,7 +112,7 @@ var Library2 = {
 	spoonFunc(){console.log("Lib2","SPOON")},
 	knifeFunc(){console.log("Lib2","KNIFE")}
 }
-
+*/
 
 
 

@@ -109,8 +109,6 @@ var ToolButtons = {
 		/* Selection Editting View */
 		setToSelectionMode: function()
 		{
-			console.log("HERE");
-
 			ToolButtons.modes.preamble();
 
 			ToolButtons.setTitle("Selection Tools");
