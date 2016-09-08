@@ -10,7 +10,7 @@
   box-shadow: 5px 5px 5px #888;
 }
 
-#maincircle input[type="button"],input[type="file"] {
+#maincircle input[type="button"], #maincircle input[type="file"] {
   position: fixed;
   top: -100em;
   display:none;

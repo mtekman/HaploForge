@@ -1,0 +1,66 @@
+#filebox {
+  position:absolute;
+  top: 20%; left:30%;
+  width: 40%;
+  height: 30%;
+
+  border: solid black;
+  border-radius: 20px;
+  background-color: #cdc;
+  box-shadow: 5px 5px 5px #888;
+
+}
+
+#filebox input[type=button]{
+  width:100%;
+}
+
+#filebox input[type=file]{
+  display: "";
+}
+
+.hidden {
+  position: absolute;
+  top: -10000px;
+  display: none;
+}
+
+.upload_box {
+  border-radius: 10px;
+  border: 2px solid;
+}
+
+.upload_box label {
+  border: 40px;
+  margin: 40px;
+}
+
+#fileselector {
+  color:black;
+  margin: 10px;
+  border: 1px solid #111;
+  background: transparent;
+  width: 150px;
+  padding: 5px 5px 5px 5px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  height: 34px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background: url(http://localhost/haplo_html5/favicon.ico) 96% / 15% no-repeat #eee;
+}
+
+#fileselector option[value="allegro"]~#box_allegro {
+  display: none;
+}
+
+
+/*target Internet Explorer 9 and Internet Explorer 10:*/
+
+@media screen and (min-width:0\0) {
+  select {
+    background: none;
+    padding: 5px;
+  }
+}

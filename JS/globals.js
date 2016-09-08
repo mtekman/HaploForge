@@ -7,15 +7,6 @@ var userOpts = {
 
 
 
-//Local storage keys
-var localStor = {
-	ped_save : 'ped_data',
-	ped_type : 'ped_type',
-	hap_save : 'hap_data',
-	hap_type : 'hap_type',
-	transfer : 'transferFromHaploToPed' // pedigrees in haplo can be modified
-}
-
 var PED = {
 	MALE : 1,
 	FEMALE : 2,
@@ -24,15 +15,7 @@ var PED = {
 	UNKNOWN : 0,
 }
 
-var FORMAT = {
-	PEDFILE : "pedigree",
-	HAPLO : {
-		ALLEGRO : "allegro",
-		SIMWALK : "simwalk",
-		GHM : "genehunter"
-	},
-	UNKOWN : "other"
-}
+
 
 //General storage, global scope
 var	marker_map = {},          	// rs_id --> array index

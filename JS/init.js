@@ -24,6 +24,24 @@ var init = {
 MainPageHandler.defaultload();
 //MainButtonActions.loadPedFromStorage();
 
+
+// Genehunter test
+function test(){
+
+	MainButtonActions.preamble();
+
+	setTimeout(function(){
+		MainPageHandler.haplomodeload();
+
+		setTimeout(function(){
+
+			(new Genehunter(HaploPedProps.init));
+
+		}, 1000);
+	}, 1000);
+}
+
+
 /*
 MainButtonActions.createNewPed()
 
