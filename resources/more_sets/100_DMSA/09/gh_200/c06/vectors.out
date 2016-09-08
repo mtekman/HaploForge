@@ -1,0 +1,4004 @@
+haplo_ratio = 1.0000
+at marker 1
+p[0011] = 0.912048278431584
+num_max_pvectors = 1, amounting to 0.912048 of total prob
+CHOICE = 0011
+
+at marker 2
+p[0011] = 0.914216984216906
+num_max_pvectors = 1, amounting to 0.914217 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 3
+p[0011] = 0.915108157722396
+num_max_pvectors = 1, amounting to 0.915108 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 4
+p[0011] = 0.916317930118784
+num_max_pvectors = 1, amounting to 0.916318 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 5
+p[0011] = 0.917489348422144
+num_max_pvectors = 1, amounting to 0.917489 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 6
+p[0011] = 0.919000578348299
+num_max_pvectors = 1, amounting to 0.919001 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 7
+p[0011] = 0.919855070701735
+num_max_pvectors = 1, amounting to 0.919855 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 8
+p[0011] = 0.920882026282602
+num_max_pvectors = 1, amounting to 0.920882 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 9
+p[0011] = 0.921978757718012
+num_max_pvectors = 1, amounting to 0.921979 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 10
+p[0011] = 0.922987562127405
+num_max_pvectors = 1, amounting to 0.922988 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 11
+p[0011] = 0.924039096043589
+num_max_pvectors = 1, amounting to 0.924039 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 12
+p[0011] = 0.926670666323553
+num_max_pvectors = 1, amounting to 0.926671 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 13
+p[0011] = 0.927536754293002
+num_max_pvectors = 1, amounting to 0.927537 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 14
+p[0011] = 0.928417127162083
+num_max_pvectors = 1, amounting to 0.928417 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 15
+p[0011] = 0.930294045065317
+num_max_pvectors = 1, amounting to 0.930294 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 16
+p[0011] = 0.931261811973192
+num_max_pvectors = 1, amounting to 0.931262 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 17
+p[0011] = 0.932131041172629
+num_max_pvectors = 1, amounting to 0.932131 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 18
+p[0011] = 0.933523912771283
+num_max_pvectors = 1, amounting to 0.933524 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 19
+p[0011] = 0.934397480876918
+num_max_pvectors = 1, amounting to 0.934397 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 20
+p[0011] = 0.936133305360607
+num_max_pvectors = 1, amounting to 0.936133 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 21
+p[0011] = 0.937021685727296
+num_max_pvectors = 1, amounting to 0.937022 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 22
+p[0011] = 0.938261463125072
+num_max_pvectors = 1, amounting to 0.938261 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 23
+p[0011] = 0.939494390092079
+num_max_pvectors = 1, amounting to 0.939494 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 24
+p[0011] = 0.940558468840234
+num_max_pvectors = 1, amounting to 0.940558 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 25
+p[0011] = 0.941668674989733
+num_max_pvectors = 1, amounting to 0.941669 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 26
+p[0011] = 0.943389711856668
+num_max_pvectors = 1, amounting to 0.943390 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 27
+p[0011] = 0.944356581859432
+num_max_pvectors = 1, amounting to 0.944357 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 28
+p[0011] = 0.945688021298805
+num_max_pvectors = 1, amounting to 0.945688 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 29
+p[0011] = 0.946680887251481
+num_max_pvectors = 1, amounting to 0.946681 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 30
+p[0011] = 0.947805129396768
+num_max_pvectors = 1, amounting to 0.947805 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 31
+p[0011] = 0.949108330538105
+num_max_pvectors = 1, amounting to 0.949108 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 32
+p[0011] = 0.950828113115456
+num_max_pvectors = 1, amounting to 0.950828 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 33
+p[0011] = 0.953890146676127
+num_max_pvectors = 1, amounting to 0.953890 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 34
+p[0011] = 0.956660313239204
+num_max_pvectors = 1, amounting to 0.956660 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 35
+p[0011] = 0.958609016616323
+num_max_pvectors = 1, amounting to 0.958609 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 36
+p[0011] = 0.960010945900647
+num_max_pvectors = 1, amounting to 0.960011 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 37
+p[0011] = 0.960993539438559
+num_max_pvectors = 1, amounting to 0.960994 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 38
+p[0011] = 0.961941180610331
+num_max_pvectors = 1, amounting to 0.961941 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 39
+p[0011] = 0.963584665137100
+num_max_pvectors = 1, amounting to 0.963585 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 40
+p[0011] = 0.964573945536216
+num_max_pvectors = 1, amounting to 0.964574 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 41
+p[0011] = 0.966433413746243
+num_max_pvectors = 1, amounting to 0.966433 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 42
+p[0011] = 0.967540480859296
+num_max_pvectors = 1, amounting to 0.967540 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 43
+p[0011] = 0.968546997942310
+num_max_pvectors = 1, amounting to 0.968547 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 44
+p[0011] = 0.969495350268398
+num_max_pvectors = 1, amounting to 0.969495 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 45
+p[0011] = 0.970865058717262
+num_max_pvectors = 1, amounting to 0.970865 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 46
+p[0011] = 0.971815759894200
+num_max_pvectors = 1, amounting to 0.971816 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 47
+p[0011] = 0.972995814550221
+num_max_pvectors = 1, amounting to 0.972996 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 48
+p[0011] = 0.974542259404953
+num_max_pvectors = 1, amounting to 0.974542 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 49
+p[0011] = 0.975517053442224
+num_max_pvectors = 1, amounting to 0.975517 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 50
+p[0011] = 0.976673905745697
+num_max_pvectors = 1, amounting to 0.976674 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 51
+p[0011] = 0.977719100542927
+num_max_pvectors = 1, amounting to 0.977719 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 52
+p[0011] = 0.978749591228210
+num_max_pvectors = 1, amounting to 0.978750 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 53
+p[0011] = 0.979954126021377
+num_max_pvectors = 1, amounting to 0.979954 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 54
+p[0011] = 0.981157110263156
+num_max_pvectors = 1, amounting to 0.981157 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 55
+p[0011] = 0.982153184273806
+num_max_pvectors = 1, amounting to 0.982153 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 56
+p[0011] = 0.983231167893033
+num_max_pvectors = 1, amounting to 0.983231 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 57
+p[0011] = 0.984208775678531
+num_max_pvectors = 1, amounting to 0.984209 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 58
+p[0011] = 0.985579506981195
+num_max_pvectors = 1, amounting to 0.985580 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 59
+p[0011] = 0.987121254090181
+num_max_pvectors = 1, amounting to 0.987121 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 60
+p[0011] = 0.989674415392590
+num_max_pvectors = 1, amounting to 0.989674 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 61
+p[0011] = 0.993749418651542
+num_max_pvectors = 1, amounting to 0.993749 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 62
+p[0011] = 0.994788141123120
+num_max_pvectors = 1, amounting to 0.994788 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 63
+p[0011] = 0.998890599029520
+num_max_pvectors = 1, amounting to 0.998891 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 64
+p[0011] = 0.999970358125994
+num_max_pvectors = 1, amounting to 0.999970 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 65
+p[0011] = 1.000000000000000
+num_max_pvectors = 1, amounting to 1.000000 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 66
+p[0011] = 0.999982429081483
+num_max_pvectors = 1, amounting to 0.999982 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 67
+p[0011] = 0.999952798248253
+num_max_pvectors = 1, amounting to 0.999953 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 68
+p[0011] = 0.999911696353548
+num_max_pvectors = 1, amounting to 0.999912 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 69
+p[0011] = 0.999888366123257
+num_max_pvectors = 1, amounting to 0.999888 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 70
+p[0011] = 0.999874570996876
+num_max_pvectors = 1, amounting to 0.999875 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 71
+p[0011] = 0.999870242929037
+num_max_pvectors = 1, amounting to 0.999870 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 72
+p[0011] = 0.999857711816382
+num_max_pvectors = 1, amounting to 0.999858 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 73
+p[0011] = 0.999854087496558
+num_max_pvectors = 1, amounting to 0.999854 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 74
+p[0011] = 0.999847161522124
+num_max_pvectors = 1, amounting to 0.999847 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 75
+p[0011] = 0.999853437689693
+num_max_pvectors = 1, amounting to 0.999853 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 76
+p[0011] = 0.999869186837349
+num_max_pvectors = 1, amounting to 0.999869 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 77
+p[0011] = 0.999878332291606
+num_max_pvectors = 1, amounting to 0.999878 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 78
+p[0011] = 0.999891080890036
+num_max_pvectors = 1, amounting to 0.999891 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 79
+p[0011] = 0.999906613082855
+num_max_pvectors = 1, amounting to 0.999907 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 80
+p[0011] = 0.999956108461130
+num_max_pvectors = 1, amounting to 0.999956 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 81
+p[0011] = 0.999984040089103
+num_max_pvectors = 1, amounting to 0.999984 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 82
+p[0011] = 0.999963197895464
+num_max_pvectors = 1, amounting to 0.999963 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 83
+p[0011] = 0.999938620400664
+num_max_pvectors = 1, amounting to 0.999939 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 84
+p[0011] = 0.999923395343337
+num_max_pvectors = 1, amounting to 0.999923 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 85
+p[0011] = 0.999910587401002
+num_max_pvectors = 1, amounting to 0.999911 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 86
+p[0011] = 0.999885494588534
+num_max_pvectors = 1, amounting to 0.999885 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 87
+p[0011] = 0.999862200058704
+num_max_pvectors = 1, amounting to 0.999862 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 88
+p[0011] = 0.999850655817330
+num_max_pvectors = 1, amounting to 0.999851 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 89
+p[0011] = 0.999884606945242
+num_max_pvectors = 1, amounting to 0.999885 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 90
+p[0011] = 0.999966938487027
+num_max_pvectors = 1, amounting to 0.999967 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 91
+p[0011] = 1.000000000000000
+num_max_pvectors = 1, amounting to 1.000000 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 92
+p[0011] = 0.999998984979676
+num_max_pvectors = 1, amounting to 0.999999 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 93
+p[0011] = 0.999991182389860
+num_max_pvectors = 1, amounting to 0.999991 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 94
+p[0011] = 0.999974901836328
+num_max_pvectors = 1, amounting to 0.999975 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 95
+p[0011] = 0.999981644552305
+num_max_pvectors = 1, amounting to 0.999982 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 96
+p[0011] = 0.999999999638535
+num_max_pvectors = 1, amounting to 1.000000 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 97
+p[0011] = 0.999998369725289
+num_max_pvectors = 1, amounting to 0.999998 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 98
+p[0011] = 0.999997541766489
+num_max_pvectors = 1, amounting to 0.999998 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 99
+p[0011] = 0.999997089185204
+num_max_pvectors = 1, amounting to 0.999997 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 100
+p[0011] = 0.999995106622250
+num_max_pvectors = 1, amounting to 0.999995 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 101
+p[0011] = 0.999992575023762
+num_max_pvectors = 1, amounting to 0.999993 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 102
+p[0011] = 0.999988011556336
+num_max_pvectors = 1, amounting to 0.999988 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 103
+p[0011] = 0.999972492238355
+num_max_pvectors = 1, amounting to 0.999972 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 104
+p[0011] = 0.999999999391383
+num_max_pvectors = 1, amounting to 1.000000 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 105
+p[0011] = 0.999996103426067
+num_max_pvectors = 1, amounting to 0.999996 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 106
+p[0011] = 0.999999999519175
+num_max_pvectors = 1, amounting to 1.000000 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 107
+p[0011] = 0.999977849046381
+num_max_pvectors = 1, amounting to 0.999978 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 108
+p[0011] = 0.999941073185492
+num_max_pvectors = 1, amounting to 0.999941 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 109
+p[0011] = 0.999933228974750
+num_max_pvectors = 1, amounting to 0.999933 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 110
+p[0011] = 0.999922269714391
+num_max_pvectors = 1, amounting to 0.999922 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 111
+p[0011] = 0.790510100182925
+num_max_pvectors = 1, amounting to 0.790510 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 112
+p[0011] = 0.595860768581757
+num_max_pvectors = 1, amounting to 0.595861 of total prob
+CHOICE = 0011  (implying 0 recs)
+
+at marker 113
+p[0010] = 0.671258256187961
+num_max_pvectors = 1, amounting to 0.671258 of total prob
+CHOICE = 0010  (implying 1 recs)
+
+at marker 114
+p[0010] = 0.835441775148361
+num_max_pvectors = 1, amounting to 0.835442 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 115
+p[0010] = 0.999953488373856
+num_max_pvectors = 1, amounting to 0.999953 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 116
+p[0010] = 0.999947576620397
+num_max_pvectors = 1, amounting to 0.999948 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 117
+p[0010] = 0.999950482716339
+num_max_pvectors = 1, amounting to 0.999950 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 118
+p[0010] = 0.999947593547847
+num_max_pvectors = 1, amounting to 0.999948 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 119
+p[0010] = 0.999949087347105
+num_max_pvectors = 1, amounting to 0.999949 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 120
+p[0010] = 0.999955200096639
+num_max_pvectors = 1, amounting to 0.999955 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 121
+p[0010] = 0.999967800340084
+num_max_pvectors = 1, amounting to 0.999968 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 122
+p[0010] = 0.999984399331918
+num_max_pvectors = 1, amounting to 0.999984 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 123
+p[0010] = 0.999983003504024
+num_max_pvectors = 1, amounting to 0.999983 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 124
+p[0010] = 0.999990149111556
+num_max_pvectors = 1, amounting to 0.999990 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 125
+p[0010] = 0.999990531585479
+num_max_pvectors = 1, amounting to 0.999991 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 126
+p[0010] = 0.999987146646815
+num_max_pvectors = 1, amounting to 0.999987 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 127
+p[0010] = 0.999988460160102
+num_max_pvectors = 1, amounting to 0.999988 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 128
+p[0010] = 0.999997850483303
+num_max_pvectors = 1, amounting to 0.999998 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 129
+p[0010] = 0.999998948910335
+num_max_pvectors = 1, amounting to 0.999999 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 130
+p[0010] = 0.999999999972190
+num_max_pvectors = 1, amounting to 1.000000 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 131
+p[0010] = 0.999990352250686
+num_max_pvectors = 1, amounting to 0.999990 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 132
+p[0010] = 0.999988356153466
+num_max_pvectors = 1, amounting to 0.999988 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 133
+p[0010] = 0.999988942209122
+num_max_pvectors = 1, amounting to 0.999989 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 134
+p[0010] = 0.999965540980539
+num_max_pvectors = 1, amounting to 0.999966 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 135
+p[0010] = 0.999953631820024
+num_max_pvectors = 1, amounting to 0.999954 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 136
+p[0010] = 0.999944410275207
+num_max_pvectors = 1, amounting to 0.999944 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 137
+p[0010] = 0.999938103610098
+num_max_pvectors = 1, amounting to 0.999938 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 138
+p[0010] = 0.999937171485480
+num_max_pvectors = 1, amounting to 0.999937 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 139
+p[0010] = 0.999925813179935
+num_max_pvectors = 1, amounting to 0.999926 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 140
+p[0010] = 0.999929405472790
+num_max_pvectors = 1, amounting to 0.999929 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 141
+p[0010] = 0.999939095458109
+num_max_pvectors = 1, amounting to 0.999939 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 142
+p[0010] = 0.999977128139829
+num_max_pvectors = 1, amounting to 0.999977 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 143
+p[0010] = 0.999999999161383
+num_max_pvectors = 1, amounting to 1.000000 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 144
+p[0010] = 0.999994898570303
+num_max_pvectors = 1, amounting to 0.999995 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 145
+p[0010] = 0.999991899363443
+num_max_pvectors = 1, amounting to 0.999992 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 146
+p[0010] = 0.999994906625165
+num_max_pvectors = 1, amounting to 0.999995 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 147
+p[0010] = 0.999999999978234
+num_max_pvectors = 1, amounting to 1.000000 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 148
+p[0010] = 0.999997666848032
+num_max_pvectors = 1, amounting to 0.999998 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 149
+p[0010] = 0.999995324239658
+num_max_pvectors = 1, amounting to 0.999995 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 150
+p[0010] = 0.999997623712487
+num_max_pvectors = 1, amounting to 0.999998 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 151
+p[0010] = 0.999995372953229
+num_max_pvectors = 1, amounting to 0.999995 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 152
+p[0010] = 0.999988730563391
+num_max_pvectors = 1, amounting to 0.999989 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 153
+p[0010] = 0.999999999925363
+num_max_pvectors = 1, amounting to 1.000000 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 154
+p[0010] = 0.999998583948160
+num_max_pvectors = 1, amounting to 0.999999 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 155
+p[0010] = 0.999999999918572
+num_max_pvectors = 1, amounting to 1.000000 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 156
+p[0010] = 0.999989460808550
+num_max_pvectors = 1, amounting to 0.999989 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 157
+p[0010] = 0.999994306953475
+num_max_pvectors = 1, amounting to 0.999994 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 158
+p[0010] = 0.999994696195916
+num_max_pvectors = 1, amounting to 0.999995 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 159
+p[0010] = 0.999991101560114
+num_max_pvectors = 1, amounting to 0.999991 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 160
+p[0010] = 0.999987016994254
+num_max_pvectors = 1, amounting to 0.999987 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 161
+p[0010] = 0.999992287253051
+num_max_pvectors = 1, amounting to 0.999992 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 162
+p[0010] = 0.999995208493798
+num_max_pvectors = 1, amounting to 0.999995 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 163
+p[0010] = 0.999996620034663
+num_max_pvectors = 1, amounting to 0.999997 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 164
+p[0010] = 0.999981552578903
+num_max_pvectors = 1, amounting to 0.999982 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 165
+p[0010] = 0.999969231743363
+num_max_pvectors = 1, amounting to 0.999969 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 166
+p[0010] = 0.999961965893672
+num_max_pvectors = 1, amounting to 0.999962 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 167
+p[0010] = 0.999969937003285
+num_max_pvectors = 1, amounting to 0.999970 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 168
+p[0010] = 0.999983839023621
+num_max_pvectors = 1, amounting to 0.999984 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 169
+p[0010] = 0.999999994974482
+num_max_pvectors = 1, amounting to 1.000000 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 170
+p[0010] = 0.999999994938121
+num_max_pvectors = 1, amounting to 1.000000 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 171
+p[0010] = 0.999964404170175
+num_max_pvectors = 1, amounting to 0.999964 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 172
+p[0010] = 0.999951558292439
+num_max_pvectors = 1, amounting to 0.999952 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 173
+p[0010] = 0.999957230129822
+num_max_pvectors = 1, amounting to 0.999957 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 174
+p[0010] = 0.999958818695165
+num_max_pvectors = 1, amounting to 0.999959 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 175
+p[0010] = 0.999970617245254
+num_max_pvectors = 1, amounting to 0.999971 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 176
+p[0010] = 0.999983118960639
+num_max_pvectors = 1, amounting to 0.999983 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 177
+p[0010] = 0.999999999051062
+num_max_pvectors = 1, amounting to 1.000000 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 178
+p[0010] = 0.999987977741147
+num_max_pvectors = 1, amounting to 0.999988 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 179
+p[0010] = 0.999977616248369
+num_max_pvectors = 1, amounting to 0.999978 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 180
+p[0010] = 0.999972741105512
+num_max_pvectors = 1, amounting to 0.999973 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 181
+p[0010] = 0.999975713854235
+num_max_pvectors = 1, amounting to 0.999976 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 182
+p[0010] = 0.999967446984134
+num_max_pvectors = 1, amounting to 0.999967 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 183
+p[0010] = 0.999968310651460
+num_max_pvectors = 1, amounting to 0.999968 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 184
+p[0010] = 0.999957900153142
+num_max_pvectors = 1, amounting to 0.999958 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 185
+p[0010] = 0.999961681432906
+num_max_pvectors = 1, amounting to 0.999962 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 186
+p[0010] = 0.999969901364778
+num_max_pvectors = 1, amounting to 0.999970 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 187
+p[0010] = 0.999986349250352
+num_max_pvectors = 1, amounting to 0.999986 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 188
+p[0010] = 0.999994125229047
+num_max_pvectors = 1, amounting to 0.999994 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 189
+p[0010] = 0.999981448660667
+num_max_pvectors = 1, amounting to 0.999981 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 190
+p[0010] = 0.999990093358361
+num_max_pvectors = 1, amounting to 0.999990 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 191
+p[0010] = 0.999989488883605
+num_max_pvectors = 1, amounting to 0.999989 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 192
+p[0010] = 0.999986944444184
+num_max_pvectors = 1, amounting to 0.999987 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 193
+p[0010] = 0.999965189546892
+num_max_pvectors = 1, amounting to 0.999965 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 194
+p[0010] = 0.999961596812264
+num_max_pvectors = 1, amounting to 0.999962 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 195
+p[0010] = 0.999952334671899
+num_max_pvectors = 1, amounting to 0.999952 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 196
+p[0010] = 0.999954526506081
+num_max_pvectors = 1, amounting to 0.999955 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 197
+p[0010] = 0.999959383714951
+num_max_pvectors = 1, amounting to 0.999959 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 198
+p[0010] = 0.999999873478490
+num_max_pvectors = 1, amounting to 1.000000 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 199
+p[0010] = 0.998173544732629
+num_max_pvectors = 1, amounting to 0.998174 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 200
+p[0010] = 0.997163761003958
+num_max_pvectors = 1, amounting to 0.997164 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+haplo_ratio = 1.0000
+at marker 1
+p[001101] = 0.994664690069597
+num_max_pvectors = 1, amounting to 0.994665 of total prob
+CHOICE = 001101
+
+at marker 2
+p[001101] = 0.998389862540799
+num_max_pvectors = 1, amounting to 0.998390 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 3
+p[001101] = 0.999999997428278
+num_max_pvectors = 1, amounting to 1.000000 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 4
+p[001101] = 0.999999998281443
+num_max_pvectors = 1, amounting to 1.000000 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 5
+p[001101] = 0.999996133155906
+num_max_pvectors = 1, amounting to 0.999996 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 6
+p[001101] = 0.999999999690299
+num_max_pvectors = 1, amounting to 1.000000 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 7
+p[001101] = 0.999999064436193
+num_max_pvectors = 1, amounting to 0.999999 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 8
+p[001101] = 0.999999999994763
+num_max_pvectors = 1, amounting to 1.000000 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 9
+p[001101] = 0.999993629046338
+num_max_pvectors = 1, amounting to 0.999994 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 10
+p[001101] = 0.999986156027408
+num_max_pvectors = 1, amounting to 0.999986 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 11
+p[001101] = 0.999982883389191
+num_max_pvectors = 1, amounting to 0.999983 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 12
+p[001101] = 0.999994817839902
+num_max_pvectors = 1, amounting to 0.999995 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 13
+p[001101] = 0.999999999998355
+num_max_pvectors = 1, amounting to 1.000000 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 14
+p[001101] = 0.999998309167664
+num_max_pvectors = 1, amounting to 0.999998 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 15
+p[001101] = 0.999998157671919
+num_max_pvectors = 1, amounting to 0.999998 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 16
+p[001101] = 0.999999999987847
+num_max_pvectors = 1, amounting to 1.000000 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 17
+p[001101] = 0.999994511433047
+num_max_pvectors = 1, amounting to 0.999995 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 18
+p[001101] = 0.999992085248545
+num_max_pvectors = 1, amounting to 0.999992 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 19
+p[001101] = 0.999987365455425
+num_max_pvectors = 1, amounting to 0.999987 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 20
+p[001101] = 0.999987019612928
+num_max_pvectors = 1, amounting to 0.999987 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 21
+p[001101] = 0.999991472640615
+num_max_pvectors = 1, amounting to 0.999991 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 22
+p[001101] = 0.999990144494068
+num_max_pvectors = 1, amounting to 0.999990 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 23
+p[001101] = 0.999994771163246
+num_max_pvectors = 1, amounting to 0.999995 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 24
+p[001101] = 0.999996192542961
+num_max_pvectors = 1, amounting to 0.999996 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 25
+p[001101] = 0.999994663369784
+num_max_pvectors = 1, amounting to 0.999995 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 26
+p[001101] = 0.999991089328900
+num_max_pvectors = 1, amounting to 0.999991 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 27
+p[001101] = 0.999990364331854
+num_max_pvectors = 1, amounting to 0.999990 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 28
+p[001101] = 0.999995154814144
+num_max_pvectors = 1, amounting to 0.999995 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 29
+p[001101] = 0.999999999972602
+num_max_pvectors = 1, amounting to 1.000000 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 30
+p[001101] = 0.999993624165403
+num_max_pvectors = 1, amounting to 0.999994 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 31
+p[001101] = 0.999992186379113
+num_max_pvectors = 1, amounting to 0.999992 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 32
+p[001101] = 0.999999999935410
+num_max_pvectors = 1, amounting to 1.000000 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 33
+p[001101] = 0.999999999939204
+num_max_pvectors = 1, amounting to 1.000000 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 34
+p[001101] = 0.999989141626881
+num_max_pvectors = 1, amounting to 0.999989 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 35
+p[001101] = 0.999989909841967
+num_max_pvectors = 1, amounting to 0.999990 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 36
+p[001101] = 0.999994640330917
+num_max_pvectors = 1, amounting to 0.999995 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 37
+p[001101] = 0.999997765242455
+num_max_pvectors = 1, amounting to 0.999998 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 38
+p[001101] = 0.999995844427160
+num_max_pvectors = 1, amounting to 0.999996 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 39
+p[001101] = 0.999999999994903
+num_max_pvectors = 1, amounting to 1.000000 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 40
+p[001101] = 0.999999999994318
+num_max_pvectors = 1, amounting to 1.000000 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 41
+p[001101] = 0.999998229698620
+num_max_pvectors = 1, amounting to 0.999998 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 42
+p[001101] = 0.999999052693143
+num_max_pvectors = 1, amounting to 0.999999 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 43
+p[001101] = 0.999992184342917
+num_max_pvectors = 1, amounting to 0.999992 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 44
+p[001101] = 0.999986367567942
+num_max_pvectors = 1, amounting to 0.999986 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 45
+p[001101] = 0.999980715734888
+num_max_pvectors = 1, amounting to 0.999981 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 46
+p[001101] = 0.999978671809682
+num_max_pvectors = 1, amounting to 0.999979 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 47
+p[001101] = 0.999975755586292
+num_max_pvectors = 1, amounting to 0.999976 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 48
+p[001101] = 0.999979090262361
+num_max_pvectors = 1, amounting to 0.999979 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 49
+p[001101] = 0.999985297705736
+num_max_pvectors = 1, amounting to 0.999985 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 50
+p[001101] = 0.999991048279569
+num_max_pvectors = 1, amounting to 0.999991 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 51
+p[001101] = 0.999999999993999
+num_max_pvectors = 1, amounting to 1.000000 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 52
+p[001101] = 0.999997978155976
+num_max_pvectors = 1, amounting to 0.999998 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 53
+p[001101] = 0.999995640742362
+num_max_pvectors = 1, amounting to 0.999996 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 54
+p[001101] = 0.999998050037843
+num_max_pvectors = 1, amounting to 0.999998 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 55
+p[001101] = 0.999998353254872
+num_max_pvectors = 1, amounting to 0.999998 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 56
+p[001101] = 0.999998371657520
+num_max_pvectors = 1, amounting to 0.999998 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 57
+p[001101] = 0.999999999990704
+num_max_pvectors = 1, amounting to 1.000000 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 58
+p[001101] = 0.999989907108354
+num_max_pvectors = 1, amounting to 0.999990 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 59
+p[001101] = 0.999982259789996
+num_max_pvectors = 1, amounting to 0.999982 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 60
+p[001101] = 0.999978027587025
+num_max_pvectors = 1, amounting to 0.999978 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 61
+p[001101] = 0.999972811148461
+num_max_pvectors = 1, amounting to 0.999973 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 62
+p[001101] = 0.999979599253767
+num_max_pvectors = 1, amounting to 0.999980 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 63
+p[001101] = 0.999964312024683
+num_max_pvectors = 1, amounting to 0.999964 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 64
+p[001101] = 0.999968887976992
+num_max_pvectors = 1, amounting to 0.999969 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 65
+p[001101] = 0.999953364478769
+num_max_pvectors = 1, amounting to 0.999953 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 66
+p[001101] = 0.999973528390749
+num_max_pvectors = 1, amounting to 0.999974 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 67
+p[001101] = 0.999974399010195
+num_max_pvectors = 1, amounting to 0.999974 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 68
+p[001101] = 0.999984157074198
+num_max_pvectors = 1, amounting to 0.999984 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 69
+p[001101] = 0.999999999908600
+num_max_pvectors = 1, amounting to 1.000000 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 70
+p[001101] = 0.999999999913040
+num_max_pvectors = 1, amounting to 1.000000 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 71
+p[001101] = 0.999994132185326
+num_max_pvectors = 1, amounting to 0.999994 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 72
+p[001101] = 0.999999999961315
+num_max_pvectors = 1, amounting to 1.000000 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 73
+p[001101] = 0.999999999966144
+num_max_pvectors = 1, amounting to 1.000000 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 74
+p[001101] = 0.999997530870283
+num_max_pvectors = 1, amounting to 0.999998 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 75
+p[001101] = 0.999998083188696
+num_max_pvectors = 1, amounting to 0.999998 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 76
+p[001101] = 0.999998704230335
+num_max_pvectors = 1, amounting to 0.999999 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 77
+p[001101] = 0.999999142755413
+num_max_pvectors = 1, amounting to 0.999999 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 78
+p[001101] = 0.999999118146709
+num_max_pvectors = 1, amounting to 0.999999 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 79
+p[001101] = 0.999996890851721
+num_max_pvectors = 1, amounting to 0.999997 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 80
+p[001101] = 0.999999999982521
+num_max_pvectors = 1, amounting to 1.000000 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 81
+p[001101] = 0.999997007118892
+num_max_pvectors = 1, amounting to 0.999997 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 82
+p[001101] = 0.999996160864997
+num_max_pvectors = 1, amounting to 0.999996 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 83
+p[001101] = 0.999998233310107
+num_max_pvectors = 1, amounting to 0.999998 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 84
+p[001101] = 0.999996358490220
+num_max_pvectors = 1, amounting to 0.999996 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 85
+p[001101] = 0.999981201220717
+num_max_pvectors = 1, amounting to 0.999981 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 86
+p[001101] = 0.999956423850166
+num_max_pvectors = 1, amounting to 0.999956 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 87
+p[001101] = 0.999934388189933
+num_max_pvectors = 1, amounting to 0.999934 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 88
+p[001101] = 0.999917447644499
+num_max_pvectors = 1, amounting to 0.999917 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 89
+p[001101] = 0.999934183080672
+num_max_pvectors = 1, amounting to 0.999934 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 90
+p[001101] = 0.999987472782916
+num_max_pvectors = 1, amounting to 0.999987 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 91
+p[001101] = 0.999999999978666
+num_max_pvectors = 1, amounting to 1.000000 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 92
+p[001101] = 0.999997604660568
+num_max_pvectors = 1, amounting to 0.999998 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 93
+p[001101] = 0.999998246162009
+num_max_pvectors = 1, amounting to 0.999998 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 94
+p[001101] = 0.999968155965082
+num_max_pvectors = 1, amounting to 0.999968 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 95
+p[001101] = 0.999829318066172
+num_max_pvectors = 1, amounting to 0.999829 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 96
+p[001101] = 0.999809754619879
+num_max_pvectors = 1, amounting to 0.999810 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 97
+p[001101] = 0.999788591866641
+num_max_pvectors = 1, amounting to 0.999789 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 98
+p[001101] = 0.999776750865754
+num_max_pvectors = 1, amounting to 0.999777 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 99
+p[001101] = 0.999754159889886
+num_max_pvectors = 1, amounting to 0.999754 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 100
+p[001101] = 0.999738020132641
+num_max_pvectors = 1, amounting to 0.999738 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 101
+p[001101] = 0.999715064557155
+num_max_pvectors = 1, amounting to 0.999715 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 102
+p[001101] = 0.999721245069637
+num_max_pvectors = 1, amounting to 0.999721 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 103
+p[001101] = 0.999763737448375
+num_max_pvectors = 1, amounting to 0.999764 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 104
+p[001101] = 0.999798358027765
+num_max_pvectors = 1, amounting to 0.999798 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 105
+p[001101] = 0.999817829226607
+num_max_pvectors = 1, amounting to 0.999818 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 106
+p[001101] = 0.999838118214368
+num_max_pvectors = 1, amounting to 0.999838 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 107
+p[001101] = 0.999857708193486
+num_max_pvectors = 1, amounting to 0.999858 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 108
+p[001101] = 0.999939270088925
+num_max_pvectors = 1, amounting to 0.999939 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 109
+p[001101] = 0.999970657494528
+num_max_pvectors = 1, amounting to 0.999971 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 110
+p[001101] = 0.999987833683263
+num_max_pvectors = 1, amounting to 0.999988 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 111
+p[001101] = 0.999997169202757
+num_max_pvectors = 1, amounting to 0.999997 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 112
+p[001101] = 0.999996840048916
+num_max_pvectors = 1, amounting to 0.999997 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 113
+p[001101] = 0.999998717065964
+num_max_pvectors = 1, amounting to 0.999999 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 114
+p[001101] = 0.999995960280808
+num_max_pvectors = 1, amounting to 0.999996 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 115
+p[001101] = 0.999984984691522
+num_max_pvectors = 1, amounting to 0.999985 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 116
+p[001101] = 0.999972522212940
+num_max_pvectors = 1, amounting to 0.999973 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 117
+p[001101] = 0.999973206620392
+num_max_pvectors = 1, amounting to 0.999973 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 118
+p[001101] = 0.999971145973429
+num_max_pvectors = 1, amounting to 0.999971 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 119
+p[001101] = 0.999972377362942
+num_max_pvectors = 1, amounting to 0.999972 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 120
+p[001101] = 0.999977094410219
+num_max_pvectors = 1, amounting to 0.999977 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 121
+p[001101] = 0.999975809196454
+num_max_pvectors = 1, amounting to 0.999976 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 122
+p[001101] = 0.999978559519551
+num_max_pvectors = 1, amounting to 0.999979 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 123
+p[001101] = 0.999986301368436
+num_max_pvectors = 1, amounting to 0.999986 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 124
+p[001101] = 0.999978640629314
+num_max_pvectors = 1, amounting to 0.999979 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 125
+p[001101] = 0.999977598623996
+num_max_pvectors = 1, amounting to 0.999978 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 126
+p[001101] = 0.999987938922125
+num_max_pvectors = 1, amounting to 0.999988 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 127
+p[001101] = 0.999973677845763
+num_max_pvectors = 1, amounting to 0.999974 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 128
+p[001101] = 0.999961671334573
+num_max_pvectors = 1, amounting to 0.999962 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 129
+p[001101] = 0.999960408507425
+num_max_pvectors = 1, amounting to 0.999960 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 130
+p[001101] = 0.999962297851824
+num_max_pvectors = 1, amounting to 0.999962 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 131
+p[001101] = 0.999964221510881
+num_max_pvectors = 1, amounting to 0.999964 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 132
+p[001101] = 0.999970481281123
+num_max_pvectors = 1, amounting to 0.999970 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 133
+p[001101] = 0.999973989358306
+num_max_pvectors = 1, amounting to 0.999974 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 134
+p[001101] = 0.999996426099752
+num_max_pvectors = 1, amounting to 0.999996 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 135
+p[001101] = 0.999999999995396
+num_max_pvectors = 1, amounting to 1.000000 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 136
+p[001101] = 0.999999999992787
+num_max_pvectors = 1, amounting to 1.000000 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 137
+p[001101] = 0.999996220477771
+num_max_pvectors = 1, amounting to 0.999996 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 138
+p[001101] = 0.999996346029778
+num_max_pvectors = 1, amounting to 0.999996 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 139
+p[001101] = 0.999989573957638
+num_max_pvectors = 1, amounting to 0.999990 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 140
+p[001101] = 0.999982333412109
+num_max_pvectors = 1, amounting to 0.999982 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 141
+p[001101] = 0.999981674915274
+num_max_pvectors = 1, amounting to 0.999982 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 142
+p[001101] = 0.999994243939518
+num_max_pvectors = 1, amounting to 0.999994 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 143
+p[001101] = 0.999992960719841
+num_max_pvectors = 1, amounting to 0.999993 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 144
+p[001101] = 0.999985272766554
+num_max_pvectors = 1, amounting to 0.999985 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 145
+p[001101] = 0.999980732126541
+num_max_pvectors = 1, amounting to 0.999981 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 146
+p[001101] = 0.999981079227574
+num_max_pvectors = 1, amounting to 0.999981 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 147
+p[001101] = 0.999983155807893
+num_max_pvectors = 1, amounting to 0.999983 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 148
+p[001101] = 0.999978048758121
+num_max_pvectors = 1, amounting to 0.999978 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 149
+p[001101] = 0.999976482840835
+num_max_pvectors = 1, amounting to 0.999976 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 150
+p[001101] = 0.999978406484399
+num_max_pvectors = 1, amounting to 0.999978 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 151
+p[001101] = 0.999971184374767
+num_max_pvectors = 1, amounting to 0.999971 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 152
+p[001101] = 0.999967263920929
+num_max_pvectors = 1, amounting to 0.999967 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 153
+p[001101] = 0.999977197520045
+num_max_pvectors = 1, amounting to 0.999977 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 154
+p[001101] = 0.999965038363331
+num_max_pvectors = 1, amounting to 0.999965 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 155
+p[001101] = 0.999959867812563
+num_max_pvectors = 1, amounting to 0.999960 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 156
+p[001101] = 0.999957786584836
+num_max_pvectors = 1, amounting to 0.999958 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 157
+p[001101] = 0.999932560779487
+num_max_pvectors = 1, amounting to 0.999933 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 158
+p[001101] = 0.999930190512683
+num_max_pvectors = 1, amounting to 0.999930 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 159
+p[001101] = 0.999928679501317
+num_max_pvectors = 1, amounting to 0.999929 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 160
+p[001101] = 0.999932411765143
+num_max_pvectors = 1, amounting to 0.999932 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 161
+p[001101] = 0.999932881853444
+num_max_pvectors = 1, amounting to 0.999933 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 162
+p[001101] = 0.999940466298768
+num_max_pvectors = 1, amounting to 0.999940 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 163
+p[001101] = 0.999950100574694
+num_max_pvectors = 1, amounting to 0.999950 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 164
+p[001101] = 0.999999999657281
+num_max_pvectors = 1, amounting to 1.000000 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 165
+p[001101] = 0.999995362923523
+num_max_pvectors = 1, amounting to 0.999995 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 166
+p[001101] = 0.999994226440095
+num_max_pvectors = 1, amounting to 0.999994 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 167
+p[001101] = 0.999988827468402
+num_max_pvectors = 1, amounting to 0.999989 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 168
+p[001101] = 0.999985723765015
+num_max_pvectors = 1, amounting to 0.999986 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 169
+p[001101] = 0.999986208696402
+num_max_pvectors = 1, amounting to 0.999986 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 170
+p[001101] = 0.999988598400889
+num_max_pvectors = 1, amounting to 0.999989 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 171
+p[001101] = 0.999995482904181
+num_max_pvectors = 1, amounting to 0.999995 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 172
+p[001101] = 0.999986455970867
+num_max_pvectors = 1, amounting to 0.999986 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 173
+p[001101] = 0.999977065869237
+num_max_pvectors = 1, amounting to 0.999977 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 174
+p[001101] = 0.999975684134720
+num_max_pvectors = 1, amounting to 0.999976 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 175
+p[001101] = 0.999993311951003
+num_max_pvectors = 1, amounting to 0.999993 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 176
+p[001101] = 0.999996882791447
+num_max_pvectors = 1, amounting to 0.999997 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 177
+p[001101] = 0.999994328942954
+num_max_pvectors = 1, amounting to 0.999994 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 178
+p[001101] = 0.999995729474003
+num_max_pvectors = 1, amounting to 0.999996 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 179
+p[001101] = 0.999993332193618
+num_max_pvectors = 1, amounting to 0.999993 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 180
+p[001101] = 0.999978652629265
+num_max_pvectors = 1, amounting to 0.999979 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 181
+p[001101] = 0.999979253344866
+num_max_pvectors = 1, amounting to 0.999979 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 182
+p[001101] = 0.999984836438327
+num_max_pvectors = 1, amounting to 0.999985 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 183
+p[001101] = 0.999990913675914
+num_max_pvectors = 1, amounting to 0.999991 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 184
+p[001101] = 0.999992316633013
+num_max_pvectors = 1, amounting to 0.999992 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 185
+p[001101] = 0.999988139231151
+num_max_pvectors = 1, amounting to 0.999988 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 186
+p[001101] = 0.999981408688627
+num_max_pvectors = 1, amounting to 0.999981 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 187
+p[001101] = 0.999986063975873
+num_max_pvectors = 1, amounting to 0.999986 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 188
+p[001101] = 0.999986429860236
+num_max_pvectors = 1, amounting to 0.999986 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 189
+p[001101] = 0.999996320745251
+num_max_pvectors = 1, amounting to 0.999996 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 190
+p[001101] = 0.999999999994963
+num_max_pvectors = 1, amounting to 1.000000 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 191
+p[001101] = 0.999994247572755
+num_max_pvectors = 1, amounting to 0.999994 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 192
+p[001101] = 0.999994010705346
+num_max_pvectors = 1, amounting to 0.999994 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 193
+p[001101] = 0.999997631239888
+num_max_pvectors = 1, amounting to 0.999998 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 194
+p[001101] = 0.999999994321471
+num_max_pvectors = 1, amounting to 1.000000 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 195
+p[001101] = 0.999999990710556
+num_max_pvectors = 1, amounting to 1.000000 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 196
+p[001101] = 0.994216034080082
+num_max_pvectors = 1, amounting to 0.994216 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 197
+p[001101] = 0.991727301412856
+num_max_pvectors = 1, amounting to 0.991727 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 198
+p[001101] = 0.987009862266271
+num_max_pvectors = 1, amounting to 0.987010 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 199
+p[001101] = 0.984317816990189
+num_max_pvectors = 1, amounting to 0.984318 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+at marker 200
+p[001101] = 0.981335249905794
+num_max_pvectors = 1, amounting to 0.981335 of total prob
+CHOICE = 001101  (implying 0 recs)
+
+haplo_ratio = 1.0000
+at marker 1
+p[0010] = 0.977283254657776
+num_max_pvectors = 1, amounting to 0.977283 of total prob
+CHOICE = 0010
+
+at marker 2
+p[0010] = 0.980837989071496
+num_max_pvectors = 1, amounting to 0.980838 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 3
+p[0010] = 0.981870732358954
+num_max_pvectors = 1, amounting to 0.981871 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 4
+p[0010] = 0.983276842718497
+num_max_pvectors = 1, amounting to 0.983277 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 5
+p[0010] = 0.984635912547439
+num_max_pvectors = 1, amounting to 0.984636 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 6
+p[0010] = 0.986397489934916
+num_max_pvectors = 1, amounting to 0.986397 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 7
+p[0010] = 0.987396183436935
+num_max_pvectors = 1, amounting to 0.987396 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 8
+p[0010] = 0.988596744082754
+num_max_pvectors = 1, amounting to 0.988597 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 9
+p[0010] = 0.989862968255172
+num_max_pvectors = 1, amounting to 0.989863 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 10
+p[0010] = 0.991029684801279
+num_max_pvectors = 1, amounting to 0.991030 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 11
+p[0010] = 0.992239850122912
+num_max_pvectors = 1, amounting to 0.992240 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 12
+p[0010] = 0.995298037910288
+num_max_pvectors = 1, amounting to 0.995298 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 13
+p[0010] = 0.996300057751257
+num_max_pvectors = 1, amounting to 0.996300 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 14
+p[0010] = 0.997113982526502
+num_max_pvectors = 1, amounting to 0.997114 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 15
+p[0010] = 0.999992784397854
+num_max_pvectors = 1, amounting to 0.999993 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 16
+p[0010] = 0.999942134771619
+num_max_pvectors = 1, amounting to 0.999942 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 17
+p[0010] = 0.999929039843098
+num_max_pvectors = 1, amounting to 0.999929 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 18
+p[0010] = 0.999919360548361
+num_max_pvectors = 1, amounting to 0.999919 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 19
+p[0010] = 0.999940021679297
+num_max_pvectors = 1, amounting to 0.999940 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 20
+p[0010] = 0.999997028841696
+num_max_pvectors = 1, amounting to 0.999997 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 21
+p[0010] = 0.999997449150495
+num_max_pvectors = 1, amounting to 0.999997 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 22
+p[0010] = 0.999987245761309
+num_max_pvectors = 1, amounting to 0.999987 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 23
+p[0010] = 0.999963604100926
+num_max_pvectors = 1, amounting to 0.999964 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 24
+p[0010] = 0.999953343311789
+num_max_pvectors = 1, amounting to 0.999953 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 25
+p[0010] = 0.999972872238972
+num_max_pvectors = 1, amounting to 0.999973 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 26
+p[0010] = 0.999885973102166
+num_max_pvectors = 1, amounting to 0.999886 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 27
+p[0010] = 0.999847134949566
+num_max_pvectors = 1, amounting to 0.999847 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 28
+p[0010] = 0.999967589677313
+num_max_pvectors = 1, amounting to 0.999968 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 29
+p[0010] = 0.999975652701246
+num_max_pvectors = 1, amounting to 0.999976 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 30
+p[0010] = 0.999994038280558
+num_max_pvectors = 1, amounting to 0.999994 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 31
+p[0010] = 0.999916609254199
+num_max_pvectors = 1, amounting to 0.999917 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 32
+p[0010] = 0.999812852535878
+num_max_pvectors = 1, amounting to 0.999813 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 33
+p[0010] = 0.999647995267706
+num_max_pvectors = 1, amounting to 0.999648 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 34
+p[0010] = 0.999694079012046
+num_max_pvectors = 1, amounting to 0.999694 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 35
+p[0010] = 0.999774903938527
+num_max_pvectors = 1, amounting to 0.999775 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 36
+p[0010] = 0.999845449557474
+num_max_pvectors = 1, amounting to 0.999845 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 37
+p[0010] = 0.999883744245748
+num_max_pvectors = 1, amounting to 0.999884 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 38
+p[0010] = 0.999924881331883
+num_max_pvectors = 1, amounting to 0.999925 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 39
+p[0010] = 0.999926910589606
+num_max_pvectors = 1, amounting to 0.999927 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 40
+p[0010] = 0.999907865535073
+num_max_pvectors = 1, amounting to 0.999908 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 41
+p[0010] = 0.999887525858889
+num_max_pvectors = 1, amounting to 0.999888 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 42
+p[0010] = 0.999951667698729
+num_max_pvectors = 1, amounting to 0.999952 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 43
+p[0010] = 0.553962723081547
+num_max_pvectors = 1, amounting to 0.553963 of total prob
+CHOICE = 0010  (implying 0 recs)
+
+at marker 44
+p[0000] = 0.670243138172909
+num_max_pvectors = 1, amounting to 0.670243 of total prob
+CHOICE = 0000  (implying 1 recs)
+
+at marker 45
+p[0000] = 0.951936126686861
+num_max_pvectors = 1, amounting to 0.951936 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 46
+p[0000] = 0.990320063923494
+num_max_pvectors = 1, amounting to 0.990320 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 47
+p[0000] = 0.993810540826133
+num_max_pvectors = 1, amounting to 0.993811 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 48
+p[0000] = 0.996754578974930
+num_max_pvectors = 1, amounting to 0.996755 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 49
+p[0000] = 0.997834680406837
+num_max_pvectors = 1, amounting to 0.997835 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 50
+p[0000] = 0.998497414196432
+num_max_pvectors = 1, amounting to 0.998497 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 51
+p[0000] = 0.999039997948353
+num_max_pvectors = 1, amounting to 0.999040 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 52
+p[0000] = 0.999393924238406
+num_max_pvectors = 1, amounting to 0.999394 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 53
+p[0000] = 0.999629281274456
+num_max_pvectors = 1, amounting to 0.999629 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 54
+p[0000] = 0.999845108442938
+num_max_pvectors = 1, amounting to 0.999845 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 55
+p[0000] = 0.999899797127126
+num_max_pvectors = 1, amounting to 0.999900 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 56
+p[0000] = 0.999927582665087
+num_max_pvectors = 1, amounting to 0.999928 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 57
+p[0000] = 0.999942119614215
+num_max_pvectors = 1, amounting to 0.999942 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 58
+p[0000] = 0.999953294855891
+num_max_pvectors = 1, amounting to 0.999953 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 59
+p[0000] = 0.999951662819059
+num_max_pvectors = 1, amounting to 0.999952 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 60
+p[0000] = 0.999951408449330
+num_max_pvectors = 1, amounting to 0.999951 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 61
+p[0000] = 0.999943202143970
+num_max_pvectors = 1, amounting to 0.999943 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 62
+p[0000] = 0.999942840946145
+num_max_pvectors = 1, amounting to 0.999943 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 63
+p[0000] = 0.999933538851063
+num_max_pvectors = 1, amounting to 0.999934 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 64
+p[0000] = 0.999938020237777
+num_max_pvectors = 1, amounting to 0.999938 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 65
+p[0000] = 0.999991880830621
+num_max_pvectors = 1, amounting to 0.999992 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 66
+p[0000] = 0.999976268433451
+num_max_pvectors = 1, amounting to 0.999976 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 67
+p[0000] = 0.999972887975769
+num_max_pvectors = 1, amounting to 0.999973 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 68
+p[0000] = 0.999976916035544
+num_max_pvectors = 1, amounting to 0.999977 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 69
+p[0000] = 0.999989465188813
+num_max_pvectors = 1, amounting to 0.999989 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 70
+p[0000] = 0.999985449073201
+num_max_pvectors = 1, amounting to 0.999985 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 71
+p[0000] = 0.999988668125043
+num_max_pvectors = 1, amounting to 0.999989 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 72
+p[0000] = 0.999993928768361
+num_max_pvectors = 1, amounting to 0.999994 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 73
+p[0000] = 0.999992688829950
+num_max_pvectors = 1, amounting to 0.999993 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 74
+p[0000] = 0.999985845373889
+num_max_pvectors = 1, amounting to 0.999986 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 75
+p[0000] = 0.999991293917201
+num_max_pvectors = 1, amounting to 0.999991 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 76
+p[0000] = 0.999996297730630
+num_max_pvectors = 1, amounting to 0.999996 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 77
+p[0000] = 0.999988820695765
+num_max_pvectors = 1, amounting to 0.999989 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 78
+p[0000] = 0.999985582875647
+num_max_pvectors = 1, amounting to 0.999986 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 79
+p[0000] = 0.999986498627163
+num_max_pvectors = 1, amounting to 0.999986 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 80
+p[0000] = 0.999991529245077
+num_max_pvectors = 1, amounting to 0.999992 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 81
+p[0000] = 0.999981667062758
+num_max_pvectors = 1, amounting to 0.999982 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 82
+p[0000] = 0.999972720609437
+num_max_pvectors = 1, amounting to 0.999973 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 83
+p[0000] = 0.999965277705553
+num_max_pvectors = 1, amounting to 0.999965 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 84
+p[0000] = 0.999957214231493
+num_max_pvectors = 1, amounting to 0.999957 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 85
+p[0000] = 0.999953586440850
+num_max_pvectors = 1, amounting to 0.999954 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 86
+p[0000] = 0.999971991042896
+num_max_pvectors = 1, amounting to 0.999972 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 87
+p[0000] = 0.999993328209648
+num_max_pvectors = 1, amounting to 0.999993 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 88
+p[0000] = 0.999977026891278
+num_max_pvectors = 1, amounting to 0.999977 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 89
+p[0000] = 0.999952277696476
+num_max_pvectors = 1, amounting to 0.999952 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 90
+p[0000] = 0.999955503633272
+num_max_pvectors = 1, amounting to 0.999956 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 91
+p[0000] = 0.999953275413881
+num_max_pvectors = 1, amounting to 0.999953 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 92
+p[0000] = 0.999941460422582
+num_max_pvectors = 1, amounting to 0.999941 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 93
+p[0000] = 0.999932043066489
+num_max_pvectors = 1, amounting to 0.999932 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 94
+p[0000] = 0.999923591836216
+num_max_pvectors = 1, amounting to 0.999924 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 95
+p[0000] = 0.999964768819439
+num_max_pvectors = 1, amounting to 0.999965 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 96
+p[0000] = 0.999982714663208
+num_max_pvectors = 1, amounting to 0.999983 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 97
+p[0000] = 0.999985152526612
+num_max_pvectors = 1, amounting to 0.999985 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 98
+p[0000] = 0.999982531243425
+num_max_pvectors = 1, amounting to 0.999983 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 99
+p[0000] = 0.999965691325069
+num_max_pvectors = 1, amounting to 0.999966 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 100
+p[0000] = 0.999962918522655
+num_max_pvectors = 1, amounting to 0.999963 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 101
+p[0000] = 0.999981953288627
+num_max_pvectors = 1, amounting to 0.999982 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 102
+p[0000] = 0.999989235802709
+num_max_pvectors = 1, amounting to 0.999989 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 103
+p[0000] = 0.999979870177990
+num_max_pvectors = 1, amounting to 0.999980 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 104
+p[0000] = 0.999979605147246
+num_max_pvectors = 1, amounting to 0.999980 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 105
+p[0000] = 0.999983009398667
+num_max_pvectors = 1, amounting to 0.999983 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 106
+p[0000] = 0.999982839132319
+num_max_pvectors = 1, amounting to 0.999983 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 107
+p[0000] = 0.999987911081623
+num_max_pvectors = 1, amounting to 0.999988 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 108
+p[0000] = 0.999994366852667
+num_max_pvectors = 1, amounting to 0.999994 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 109
+p[0000] = 0.999999912226718
+num_max_pvectors = 1, amounting to 1.000000 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 110
+p[0000] = 0.999993932457647
+num_max_pvectors = 1, amounting to 0.999994 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 111
+p[0000] = 0.999992572235567
+num_max_pvectors = 1, amounting to 0.999993 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 112
+p[0000] = 0.999989791452985
+num_max_pvectors = 1, amounting to 0.999990 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 113
+p[0000] = 0.999994507468639
+num_max_pvectors = 1, amounting to 0.999995 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 114
+p[0000] = 0.999993866980493
+num_max_pvectors = 1, amounting to 0.999994 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 115
+p[0000] = 0.999991376383430
+num_max_pvectors = 1, amounting to 0.999991 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 116
+p[0000] = 0.999993286874994
+num_max_pvectors = 1, amounting to 0.999993 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 117
+p[0000] = 0.999992367542308
+num_max_pvectors = 1, amounting to 0.999992 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 118
+p[0000] = 0.999995144559869
+num_max_pvectors = 1, amounting to 0.999995 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 119
+p[0000] = 0.999993520727119
+num_max_pvectors = 1, amounting to 0.999994 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 120
+p[0000] = 0.999995386399623
+num_max_pvectors = 1, amounting to 0.999995 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 121
+p[0000] = 0.999994589139915
+num_max_pvectors = 1, amounting to 0.999995 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 122
+p[0000] = 0.999997094573321
+num_max_pvectors = 1, amounting to 0.999997 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 123
+p[0000] = 0.999992705152488
+num_max_pvectors = 1, amounting to 0.999993 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 124
+p[0000] = 0.999995935554510
+num_max_pvectors = 1, amounting to 0.999996 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 125
+p[0000] = 0.999998166174882
+num_max_pvectors = 1, amounting to 0.999998 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 126
+p[0000] = 0.999982646789742
+num_max_pvectors = 1, amounting to 0.999983 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 127
+p[0000] = 0.999987703917142
+num_max_pvectors = 1, amounting to 0.999988 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 128
+p[0000] = 0.999997140676909
+num_max_pvectors = 1, amounting to 0.999997 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 129
+p[0000] = 0.999995428383864
+num_max_pvectors = 1, amounting to 0.999995 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 130
+p[0000] = 0.999996134156949
+num_max_pvectors = 1, amounting to 0.999996 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 131
+p[0000] = 0.999991277807298
+num_max_pvectors = 1, amounting to 0.999991 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 132
+p[0000] = 0.999993481980545
+num_max_pvectors = 1, amounting to 0.999993 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 133
+p[0000] = 0.999996242196924
+num_max_pvectors = 1, amounting to 0.999996 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 134
+p[0000] = 0.999997650356508
+num_max_pvectors = 1, amounting to 0.999998 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 135
+p[0000] = 0.999997927067098
+num_max_pvectors = 1, amounting to 0.999998 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 136
+p[0000] = 0.999998089371344
+num_max_pvectors = 1, amounting to 0.999998 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 137
+p[0000] = 0.999996420177053
+num_max_pvectors = 1, amounting to 0.999996 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 138
+p[0000] = 0.999995507590539
+num_max_pvectors = 1, amounting to 0.999996 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 139
+p[0000] = 0.999990589342500
+num_max_pvectors = 1, amounting to 0.999991 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 140
+p[0000] = 0.999996329280034
+num_max_pvectors = 1, amounting to 0.999996 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 141
+p[0000] = 0.999993900873127
+num_max_pvectors = 1, amounting to 0.999994 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 142
+p[0000] = 0.999988514411507
+num_max_pvectors = 1, amounting to 0.999989 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 143
+p[0000] = 0.999984655456249
+num_max_pvectors = 1, amounting to 0.999985 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 144
+p[0000] = 0.999984745175154
+num_max_pvectors = 1, amounting to 0.999985 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 145
+p[0000] = 0.999996050186916
+num_max_pvectors = 1, amounting to 0.999996 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 146
+p[0000] = 0.999997750710880
+num_max_pvectors = 1, amounting to 0.999998 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 147
+p[0000] = 0.999996738337833
+num_max_pvectors = 1, amounting to 0.999997 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 148
+p[0000] = 0.999995988746351
+num_max_pvectors = 1, amounting to 0.999996 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 149
+p[0000] = 0.999995436108594
+num_max_pvectors = 1, amounting to 0.999995 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 150
+p[0000] = 0.999995460133416
+num_max_pvectors = 1, amounting to 0.999995 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 151
+p[0000] = 0.999994642569397
+num_max_pvectors = 1, amounting to 0.999995 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 152
+p[0000] = 0.999993664953348
+num_max_pvectors = 1, amounting to 0.999994 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 153
+p[0000] = 0.999994786739144
+num_max_pvectors = 1, amounting to 0.999995 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 154
+p[0000] = 0.999997152245018
+num_max_pvectors = 1, amounting to 0.999997 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 155
+p[0000] = 0.999991802037794
+num_max_pvectors = 1, amounting to 0.999992 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 156
+p[0000] = 0.999987014252137
+num_max_pvectors = 1, amounting to 0.999987 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 157
+p[0000] = 0.999988794949849
+num_max_pvectors = 1, amounting to 0.999989 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 158
+p[0000] = 0.999988686201431
+num_max_pvectors = 1, amounting to 0.999989 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 159
+p[0000] = 0.999982182608793
+num_max_pvectors = 1, amounting to 0.999982 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 160
+p[0000] = 0.999980658812139
+num_max_pvectors = 1, amounting to 0.999981 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 161
+p[0000] = 0.999983947522228
+num_max_pvectors = 1, amounting to 0.999984 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 162
+p[0000] = 0.999993140844842
+num_max_pvectors = 1, amounting to 0.999993 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 163
+p[0000] = 0.999987169496492
+num_max_pvectors = 1, amounting to 0.999987 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 164
+p[0000] = 0.999972291676193
+num_max_pvectors = 1, amounting to 0.999972 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 165
+p[0000] = 0.999972740881463
+num_max_pvectors = 1, amounting to 0.999973 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 166
+p[0000] = 0.999972333895470
+num_max_pvectors = 1, amounting to 0.999972 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 167
+p[0000] = 0.999986909332288
+num_max_pvectors = 1, amounting to 0.999987 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 168
+p[0000] = 0.999982949097485
+num_max_pvectors = 1, amounting to 0.999983 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 169
+p[0000] = 0.999991554845358
+num_max_pvectors = 1, amounting to 0.999992 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 170
+p[0000] = 0.999985772030094
+num_max_pvectors = 1, amounting to 0.999986 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 171
+p[0000] = 0.999989344827219
+num_max_pvectors = 1, amounting to 0.999989 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 172
+p[0000] = 0.999990672744771
+num_max_pvectors = 1, amounting to 0.999991 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 173
+p[0000] = 0.999982943808210
+num_max_pvectors = 1, amounting to 0.999983 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 174
+p[0000] = 0.999978766022664
+num_max_pvectors = 1, amounting to 0.999979 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 175
+p[0000] = 0.999979694156609
+num_max_pvectors = 1, amounting to 0.999980 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 176
+p[0000] = 0.999987932270374
+num_max_pvectors = 1, amounting to 0.999988 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 177
+p[0000] = 0.999985814818475
+num_max_pvectors = 1, amounting to 0.999986 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 178
+p[0000] = 0.999983529742184
+num_max_pvectors = 1, amounting to 0.999984 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 179
+p[0000] = 0.999980721647602
+num_max_pvectors = 1, amounting to 0.999981 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 180
+p[0000] = 0.999973120035163
+num_max_pvectors = 1, amounting to 0.999973 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 181
+p[0000] = 0.999980125509367
+num_max_pvectors = 1, amounting to 0.999980 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 182
+p[0000] = 0.999977520773647
+num_max_pvectors = 1, amounting to 0.999978 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 183
+p[0000] = 0.999986901492961
+num_max_pvectors = 1, amounting to 0.999987 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 184
+p[0000] = 0.999986833551993
+num_max_pvectors = 1, amounting to 0.999987 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 185
+p[0000] = 0.999988981147364
+num_max_pvectors = 1, amounting to 0.999989 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 186
+p[0000] = 0.999954849603938
+num_max_pvectors = 1, amounting to 0.999955 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 187
+p[0000] = 0.999943068337716
+num_max_pvectors = 1, amounting to 0.999943 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 188
+p[0000] = 0.999934280873736
+num_max_pvectors = 1, amounting to 0.999934 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 189
+p[0000] = 0.999921559441998
+num_max_pvectors = 1, amounting to 0.999922 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 190
+p[0000] = 0.999924550871476
+num_max_pvectors = 1, amounting to 0.999925 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 191
+p[0000] = 0.999932835683316
+num_max_pvectors = 1, amounting to 0.999933 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 192
+p[0000] = 0.999948993958288
+num_max_pvectors = 1, amounting to 0.999949 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 193
+p[0000] = 0.999969916746805
+num_max_pvectors = 1, amounting to 0.999970 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 194
+p[0000] = 0.999992973984068
+num_max_pvectors = 1, amounting to 0.999993 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 195
+p[0000] = 0.999990828971590
+num_max_pvectors = 1, amounting to 0.999991 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 196
+p[0000] = 0.999947499760051
+num_max_pvectors = 1, amounting to 0.999947 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 197
+p[0000] = 0.999915670089140
+num_max_pvectors = 1, amounting to 0.999916 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 198
+p[0000] = 0.999847861772812
+num_max_pvectors = 1, amounting to 0.999848 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 199
+p[0000] = 0.999784985076527
+num_max_pvectors = 1, amounting to 0.999785 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+at marker 200
+p[0000] = 0.998368232898285
+num_max_pvectors = 1, amounting to 0.998368 of total prob
+CHOICE = 0000  (implying 0 recs)
+
+haplo_ratio = 1.0000
+at marker 1
+p[000000000111001110] = 0.996908391822974
+num_max_pvectors = 1, amounting to 0.996908 of total prob
+CHOICE = 000000000111001110
+
+at marker 2
+p[000000000111001110] = 0.998093309150692
+num_max_pvectors = 1, amounting to 0.998093 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 3
+p[000000000111001110] = 0.998753359054888
+num_max_pvectors = 1, amounting to 0.998753 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 4
+p[000000000111001110] = 0.999540053132168
+num_max_pvectors = 1, amounting to 0.999540 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 5
+p[000000000111001110] = 0.999643817998606
+num_max_pvectors = 1, amounting to 0.999644 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 6
+p[000000000111001110] = 0.999719920512130
+num_max_pvectors = 1, amounting to 0.999720 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 7
+p[000000000111001110] = 0.999754102291969
+num_max_pvectors = 1, amounting to 0.999754 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 8
+p[000000000111001110] = 0.999803013692812
+num_max_pvectors = 1, amounting to 0.999803 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 9
+p[000000000111001110] = 0.999863006349553
+num_max_pvectors = 1, amounting to 0.999863 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 10
+p[000000000111001110] = 0.999873057860701
+num_max_pvectors = 1, amounting to 0.999873 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 11
+p[000000000111001110] = 0.999889373586929
+num_max_pvectors = 1, amounting to 0.999889 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 12
+p[000000000111001110] = 0.999972546779165
+num_max_pvectors = 1, amounting to 0.999973 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 13
+p[000000000111001110] = 0.999991252045841
+num_max_pvectors = 1, amounting to 0.999991 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 14
+p[000000000111001110] = 0.999991258627008
+num_max_pvectors = 1, amounting to 0.999991 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 15
+p[000000000111001110] = 0.999988786001158
+num_max_pvectors = 1, amounting to 0.999989 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 16
+p[000000000111001110] = 0.999993390738123
+num_max_pvectors = 1, amounting to 0.999993 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 17
+p[000000000111001110] = 0.999990340873753
+num_max_pvectors = 1, amounting to 0.999990 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 18
+p[000000000111001110] = 0.999983174760109
+num_max_pvectors = 1, amounting to 0.999983 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 19
+p[000000000111001110] = 0.999975301905842
+num_max_pvectors = 1, amounting to 0.999975 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 20
+p[000000000111001110] = 0.999981601376182
+num_max_pvectors = 1, amounting to 0.999982 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 21
+p[000000000111001110] = 0.999975594606011
+num_max_pvectors = 1, amounting to 0.999976 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 22
+p[000000000111001110] = 0.999975400093528
+num_max_pvectors = 1, amounting to 0.999975 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 23
+p[000000000111001110] = 0.999989924484878
+num_max_pvectors = 1, amounting to 0.999990 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 24
+p[000000000111001110] = 0.999980157326414
+num_max_pvectors = 1, amounting to 0.999980 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 25
+p[000000000111001110] = 0.999980508171065
+num_max_pvectors = 1, amounting to 0.999981 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 26
+p[000000000111001110] = 0.999963240365250
+num_max_pvectors = 1, amounting to 0.999963 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 27
+p[000000000111001110] = 0.999961532018124
+num_max_pvectors = 1, amounting to 0.999962 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 28
+p[000000000111001110] = 0.999963608905324
+num_max_pvectors = 1, amounting to 0.999964 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 29
+p[000000000111001110] = 0.999974669307409
+num_max_pvectors = 1, amounting to 0.999975 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 30
+p[000000000111001110] = 0.999978398094846
+num_max_pvectors = 1, amounting to 0.999978 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 31
+p[000000000111001110] = 0.999995636309426
+num_max_pvectors = 1, amounting to 0.999996 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 32
+p[000000000111001110] = 0.999941129916090
+num_max_pvectors = 1, amounting to 0.999941 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 33
+p[000000000111001110] = 0.999872724205264
+num_max_pvectors = 1, amounting to 0.999873 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 34
+p[000000000111001110] = 0.999882605198813
+num_max_pvectors = 1, amounting to 0.999883 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 35
+p[000000000111001110] = 0.999908731124717
+num_max_pvectors = 1, amounting to 0.999909 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 36
+p[000000000111001110] = 0.999947989356796
+num_max_pvectors = 1, amounting to 0.999948 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 37
+p[000000000111001110] = 0.999965186104474
+num_max_pvectors = 1, amounting to 0.999965 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 38
+p[000000000111001110] = 0.999989509840191
+num_max_pvectors = 1, amounting to 0.999990 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 39
+p[000000000111001110] = 0.999993341225561
+num_max_pvectors = 1, amounting to 0.999993 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 40
+p[000000000111001110] = 0.999999276140923
+num_max_pvectors = 1, amounting to 0.999999 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 41
+p[000000000111001110] = 0.999987289972820
+num_max_pvectors = 1, amounting to 0.999987 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 42
+p[000000000111001110] = 0.999981939480424
+num_max_pvectors = 1, amounting to 0.999982 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 43
+p[000000000111001110] = 0.999982021778698
+num_max_pvectors = 1, amounting to 0.999982 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 44
+p[000000000111001110] = 0.999983614513002
+num_max_pvectors = 1, amounting to 0.999984 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 45
+p[000000000111001110] = 0.999995124247329
+num_max_pvectors = 1, amounting to 0.999995 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 46
+p[000000000111001110] = 0.999997265367771
+num_max_pvectors = 1, amounting to 0.999997 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 47
+p[000000000111001110] = 0.999992158569620
+num_max_pvectors = 1, amounting to 0.999992 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 48
+p[000000000111001110] = 0.999990896010852
+num_max_pvectors = 1, amounting to 0.999991 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 49
+p[000000000111001110] = 0.999995063560269
+num_max_pvectors = 1, amounting to 0.999995 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 50
+p[000000000111001110] = 0.999992021029260
+num_max_pvectors = 1, amounting to 0.999992 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 51
+p[000000000111001110] = 0.999995599726404
+num_max_pvectors = 1, amounting to 0.999996 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 52
+p[000000000111001110] = 0.999982328951691
+num_max_pvectors = 1, amounting to 0.999982 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 53
+p[000000000111001110] = 0.999974232345075
+num_max_pvectors = 1, amounting to 0.999974 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 54
+p[000000000111001110] = 0.999977956542258
+num_max_pvectors = 1, amounting to 0.999978 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 55
+p[000000000111001110] = 0.999984295162451
+num_max_pvectors = 1, amounting to 0.999984 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 56
+p[000000000111001110] = 0.999988149175156
+num_max_pvectors = 1, amounting to 0.999988 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 57
+p[000000000111001110] = 0.999992665883386
+num_max_pvectors = 1, amounting to 0.999993 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 58
+p[000000000111001110] = 0.999970753629748
+num_max_pvectors = 1, amounting to 0.999971 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 59
+p[000000000111001110] = 0.999954352787810
+num_max_pvectors = 1, amounting to 0.999954 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 60
+p[000000000111001110] = 0.999923357480374
+num_max_pvectors = 1, amounting to 0.999923 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 61
+p[000000000111001110] = 0.999968380377497
+num_max_pvectors = 1, amounting to 0.999968 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 62
+p[000000000111001110] = 0.999958991621302
+num_max_pvectors = 1, amounting to 0.999959 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 63
+p[000000000111001110] = 0.999938585859092
+num_max_pvectors = 1, amounting to 0.999939 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 64
+p[000000000111001110] = 0.999950542116707
+num_max_pvectors = 1, amounting to 0.999951 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 65
+p[000000000111001110] = 0.999907785719650
+num_max_pvectors = 1, amounting to 0.999908 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 66
+p[000000000111001110] = 0.999932836534815
+num_max_pvectors = 1, amounting to 0.999933 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 67
+p[000000000111001110] = 0.999940836884204
+num_max_pvectors = 1, amounting to 0.999941 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 68
+p[000000000111001110] = 0.999949371028248
+num_max_pvectors = 1, amounting to 0.999949 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 69
+p[000000000111001110] = 0.999968104984777
+num_max_pvectors = 1, amounting to 0.999968 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 70
+p[000000000111001110] = 0.999976364850098
+num_max_pvectors = 1, amounting to 0.999976 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 71
+p[000000000111001110] = 0.999978056832302
+num_max_pvectors = 1, amounting to 0.999978 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 72
+p[000000000111001110] = 0.999990660140059
+num_max_pvectors = 1, amounting to 0.999991 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 73
+p[000000000111001110] = 0.999996998480887
+num_max_pvectors = 1, amounting to 0.999997 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 74
+p[000000000111001110] = 0.999984409033977
+num_max_pvectors = 1, amounting to 0.999984 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 75
+p[000000000111001110] = 0.999996976457097
+num_max_pvectors = 1, amounting to 0.999997 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 76
+p[000000000111001110] = 0.999994348488468
+num_max_pvectors = 1, amounting to 0.999994 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 77
+p[000000000111001110] = 0.999989000440083
+num_max_pvectors = 1, amounting to 0.999989 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 78
+p[000000000111001110] = 0.999987332833299
+num_max_pvectors = 1, amounting to 0.999987 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 79
+p[000000000111001110] = 0.999986695346657
+num_max_pvectors = 1, amounting to 0.999987 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 80
+p[000000000111001110] = 0.999970072334547
+num_max_pvectors = 1, amounting to 0.999970 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 81
+p[000000000111001110] = 0.999973502219720
+num_max_pvectors = 1, amounting to 0.999974 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 82
+p[000000000111001110] = 0.999970162961223
+num_max_pvectors = 1, amounting to 0.999970 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 83
+p[000000000111001110] = 0.999938636120625
+num_max_pvectors = 1, amounting to 0.999939 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 84
+p[000000000111001110] = 0.999923710887971
+num_max_pvectors = 1, amounting to 0.999924 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 85
+p[000000000111001110] = 0.999917530180366
+num_max_pvectors = 1, amounting to 0.999918 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 86
+p[000000000111001110] = 0.999957533312764
+num_max_pvectors = 1, amounting to 0.999958 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 87
+p[000000000111001110] = 0.999949567635840
+num_max_pvectors = 1, amounting to 0.999950 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 88
+p[000000000111001110] = 0.999922064035440
+num_max_pvectors = 1, amounting to 0.999922 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 89
+p[000000000111001110] = 0.999966490602099
+num_max_pvectors = 1, amounting to 0.999966 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 90
+p[000000000111001110] = 0.999989331787839
+num_max_pvectors = 1, amounting to 0.999989 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 91
+p[000000000111001110] = 0.999993053861892
+num_max_pvectors = 1, amounting to 0.999993 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 92
+p[000000000111001110] = 0.999991789246700
+num_max_pvectors = 1, amounting to 0.999992 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 93
+p[000000000111001110] = 0.999993976870037
+num_max_pvectors = 1, amounting to 0.999994 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 94
+p[000000000111001110] = 0.999998131349411
+num_max_pvectors = 1, amounting to 0.999998 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 95
+p[000000000111001110] = 0.999954472458235
+num_max_pvectors = 1, amounting to 0.999954 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 96
+p[000000000111001110] = 0.999964658658712
+num_max_pvectors = 1, amounting to 0.999965 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 97
+p[000000000111001110] = 0.999964614927929
+num_max_pvectors = 1, amounting to 0.999965 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 98
+p[000000000111001110] = 0.999972562387692
+num_max_pvectors = 1, amounting to 0.999973 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 99
+p[000000000111001110] = 0.999960133447956
+num_max_pvectors = 1, amounting to 0.999960 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 100
+p[000000000111001110] = 0.999930177833520
+num_max_pvectors = 1, amounting to 0.999930 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 101
+p[000000000111001110] = 0.999896784542918
+num_max_pvectors = 1, amounting to 0.999897 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 102
+p[000000000111001110] = 0.999867049478448
+num_max_pvectors = 1, amounting to 0.999867 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 103
+p[000000000111001110] = 0.999842457162008
+num_max_pvectors = 1, amounting to 0.999842 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 104
+p[000000000111001110] = 0.999853974103569
+num_max_pvectors = 1, amounting to 0.999854 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 105
+p[000000000111001110] = 0.999920726318337
+num_max_pvectors = 1, amounting to 0.999921 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 106
+p[000000000111001110] = 0.999972695248925
+num_max_pvectors = 1, amounting to 0.999973 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 107
+p[000000000111001110] = 0.999958757992571
+num_max_pvectors = 1, amounting to 0.999959 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 108
+p[000000000111001110] = 0.999935664879928
+num_max_pvectors = 1, amounting to 0.999936 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 109
+p[000000000111001110] = 0.999922692245478
+num_max_pvectors = 1, amounting to 0.999923 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 110
+p[000000000111001110] = 0.999928632488817
+num_max_pvectors = 1, amounting to 0.999929 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 111
+p[000000000111001110] = 0.999944018054840
+num_max_pvectors = 1, amounting to 0.999944 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 112
+p[000000000111001110] = 0.999968038750346
+num_max_pvectors = 1, amounting to 0.999968 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 113
+p[000000000111001110] = 0.999970659229832
+num_max_pvectors = 1, amounting to 0.999971 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 114
+p[000000000111001110] = 0.999982210453532
+num_max_pvectors = 1, amounting to 0.999982 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 115
+p[000000000111001110] = 0.999995018638566
+num_max_pvectors = 1, amounting to 0.999995 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 116
+p[000000000111001110] = 0.999973694438201
+num_max_pvectors = 1, amounting to 0.999974 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 117
+p[000000000111001110] = 0.999983032179686
+num_max_pvectors = 1, amounting to 0.999983 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 118
+p[000000000111001110] = 0.999988035067164
+num_max_pvectors = 1, amounting to 0.999988 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 119
+p[000000000111001110] = 0.999997992240735
+num_max_pvectors = 1, amounting to 0.999998 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 120
+p[000000000111001110] = 0.999992381296650
+num_max_pvectors = 1, amounting to 0.999992 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 121
+p[000000000111001110] = 0.999988505039054
+num_max_pvectors = 1, amounting to 0.999989 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 122
+p[000000000111001110] = 0.999977411151678
+num_max_pvectors = 1, amounting to 0.999977 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 123
+p[000000000111001110] = 0.999972354053573
+num_max_pvectors = 1, amounting to 0.999972 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 124
+p[000000000111001110] = 0.999954169775746
+num_max_pvectors = 1, amounting to 0.999954 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 125
+p[000000000111001110] = 0.999950745423157
+num_max_pvectors = 1, amounting to 0.999951 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 126
+p[000000000111001110] = 0.999972009182505
+num_max_pvectors = 1, amounting to 0.999972 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 127
+p[000000000111001110] = 0.999973144421457
+num_max_pvectors = 1, amounting to 0.999973 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 128
+p[000000000111001110] = 0.999978176631339
+num_max_pvectors = 1, amounting to 0.999978 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 129
+p[000000000111001110] = 0.999964492579354
+num_max_pvectors = 1, amounting to 0.999964 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 130
+p[000000000111001110] = 0.999952563994693
+num_max_pvectors = 1, amounting to 0.999953 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 131
+p[000000000111001110] = 0.999944254734239
+num_max_pvectors = 1, amounting to 0.999944 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 132
+p[000000000111001110] = 0.999940246641683
+num_max_pvectors = 1, amounting to 0.999940 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 133
+p[000000000111001110] = 0.999931887133683
+num_max_pvectors = 1, amounting to 0.999932 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 134
+p[000000000111001110] = 0.999942831708733
+num_max_pvectors = 1, amounting to 0.999943 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 135
+p[000000000111001110] = 0.999951718882902
+num_max_pvectors = 1, amounting to 0.999952 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 136
+p[000000000111001110] = 0.999967824502737
+num_max_pvectors = 1, amounting to 0.999968 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 137
+p[000000000111001110] = 0.999979184622925
+num_max_pvectors = 1, amounting to 0.999979 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 138
+p[000000000111001110] = 0.999994688820184
+num_max_pvectors = 1, amounting to 0.999995 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 139
+p[000000000111001110] = 0.999984661889891
+num_max_pvectors = 1, amounting to 0.999985 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 140
+p[000000000111001110] = 0.999983091374766
+num_max_pvectors = 1, amounting to 0.999983 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 141
+p[000000000111001110] = 0.999985552338792
+num_max_pvectors = 1, amounting to 0.999986 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 142
+p[000000000111001110] = 0.999991222856720
+num_max_pvectors = 1, amounting to 0.999991 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 143
+p[000000000111001110] = 0.999990208967277
+num_max_pvectors = 1, amounting to 0.999990 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 144
+p[000000000111001110] = 0.999973039066701
+num_max_pvectors = 1, amounting to 0.999973 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 145
+p[000000000111001110] = 0.999962252323489
+num_max_pvectors = 1, amounting to 0.999962 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 146
+p[000000000111001110] = 0.999969437373818
+num_max_pvectors = 1, amounting to 0.999969 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 147
+p[000000000111001110] = 0.999979650825226
+num_max_pvectors = 1, amounting to 0.999980 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 148
+p[000000000111001110] = 0.999997915900849
+num_max_pvectors = 1, amounting to 0.999998 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 149
+p[000000000111001110] = 0.999993148035330
+num_max_pvectors = 1, amounting to 0.999993 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 150
+p[000000000111001110] = 0.999989369154481
+num_max_pvectors = 1, amounting to 0.999989 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 151
+p[000000000111001110] = 0.999978456124565
+num_max_pvectors = 1, amounting to 0.999978 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 152
+p[000000000111001110] = 0.999977596379130
+num_max_pvectors = 1, amounting to 0.999978 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 153
+p[000000000111001110] = 0.999980533388203
+num_max_pvectors = 1, amounting to 0.999981 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 154
+p[000000000111001110] = 0.999988081082681
+num_max_pvectors = 1, amounting to 0.999988 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 155
+p[000000000111001110] = 0.999984600572194
+num_max_pvectors = 1, amounting to 0.999985 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 156
+p[000000000111001110] = 0.999960321059666
+num_max_pvectors = 1, amounting to 0.999960 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 157
+p[000000000111001110] = 0.999921480219438
+num_max_pvectors = 1, amounting to 0.999921 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 158
+p[000000000111001110] = 0.999927919426648
+num_max_pvectors = 1, amounting to 0.999928 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 159
+p[000000000111001110] = 0.999952879945997
+num_max_pvectors = 1, amounting to 0.999953 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 160
+p[000000000111001110] = 0.999950954924319
+num_max_pvectors = 1, amounting to 0.999951 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 161
+p[000000000111001110] = 0.999962807817010
+num_max_pvectors = 1, amounting to 0.999963 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 162
+p[000000000111001110] = 0.999963978407736
+num_max_pvectors = 1, amounting to 0.999964 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 163
+p[000000000111001110] = 0.999966339079918
+num_max_pvectors = 1, amounting to 0.999966 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 164
+p[000000000111001110] = 0.999985982991324
+num_max_pvectors = 1, amounting to 0.999986 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 165
+p[000000000111001110] = 0.999982527462988
+num_max_pvectors = 1, amounting to 0.999983 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 166
+p[000000000111001110] = 0.999985379524956
+num_max_pvectors = 1, amounting to 0.999985 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 167
+p[000000000111001110] = 0.999959482324614
+num_max_pvectors = 1, amounting to 0.999959 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 168
+p[000000000111001110] = 0.999981187118901
+num_max_pvectors = 1, amounting to 0.999981 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 169
+p[000000000111001110] = 0.999995331183919
+num_max_pvectors = 1, amounting to 0.999995 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 170
+p[000000000111001110] = 0.999999233657506
+num_max_pvectors = 1, amounting to 0.999999 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 171
+p[000000000111001110] = 0.999934798649644
+num_max_pvectors = 1, amounting to 0.999935 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 172
+p[000000000111001110] = 0.999897688998993
+num_max_pvectors = 1, amounting to 0.999898 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 173
+p[000000000111001110] = 0.999886294387103
+num_max_pvectors = 1, amounting to 0.999886 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 174
+p[000000000111001110] = 0.999886467872273
+num_max_pvectors = 1, amounting to 0.999886 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 175
+p[000000000111001110] = 0.999923446883484
+num_max_pvectors = 1, amounting to 0.999923 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 176
+p[000000000111001110] = 0.999951707953519
+num_max_pvectors = 1, amounting to 0.999952 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 177
+p[000000000111001110] = 0.999953248515030
+num_max_pvectors = 1, amounting to 0.999953 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 178
+p[000000000111001110] = 0.999958309416566
+num_max_pvectors = 1, amounting to 0.999958 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 179
+p[000000000111001110] = 0.999925098581841
+num_max_pvectors = 1, amounting to 0.999925 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 180
+p[000000000111001110] = 0.999911787361008
+num_max_pvectors = 1, amounting to 0.999912 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 181
+p[000000000111001110] = 0.999908297677082
+num_max_pvectors = 1, amounting to 0.999908 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 182
+p[000000000111001110] = 0.999908942603987
+num_max_pvectors = 1, amounting to 0.999909 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 183
+p[000000000111001110] = 0.999939233992439
+num_max_pvectors = 1, amounting to 0.999939 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 184
+p[000000000111001110] = 0.999948952716175
+num_max_pvectors = 1, amounting to 0.999949 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 185
+p[000000000111001110] = 0.999975852972059
+num_max_pvectors = 1, amounting to 0.999976 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 186
+p[000000000111001110] = 0.999961497648275
+num_max_pvectors = 1, amounting to 0.999961 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 187
+p[000000000111001110] = 0.999970319140556
+num_max_pvectors = 1, amounting to 0.999970 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 188
+p[000000000111001110] = 0.999975645208287
+num_max_pvectors = 1, amounting to 0.999976 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 189
+p[000000000111001110] = 0.999986482380131
+num_max_pvectors = 1, amounting to 0.999986 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 190
+p[000000000111001110] = 0.999990082850670
+num_max_pvectors = 1, amounting to 0.999990 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 191
+p[000000000111001110] = 0.999991666203279
+num_max_pvectors = 1, amounting to 0.999992 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 192
+p[000000000111001110] = 0.999991673275311
+num_max_pvectors = 1, amounting to 0.999992 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 193
+p[000000000111001110] = 0.999993572930058
+num_max_pvectors = 1, amounting to 0.999994 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 194
+p[000000000111001110] = 0.999990951876321
+num_max_pvectors = 1, amounting to 0.999991 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 195
+p[000000000111001110] = 0.999932842948606
+num_max_pvectors = 1, amounting to 0.999933 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 196
+p[000000000111001110] = 0.999772664160982
+num_max_pvectors = 1, amounting to 0.999773 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 197
+p[000000000111001110] = 0.999666203079034
+num_max_pvectors = 1, amounting to 0.999666 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 198
+p[000000000111001110] = 0.999492096434376
+num_max_pvectors = 1, amounting to 0.999492 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 199
+p[000000000111001110] = 0.999306223159690
+num_max_pvectors = 1, amounting to 0.999306 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
+at marker 200
+p[000000000111001110] = 0.998106162061040
+num_max_pvectors = 1, amounting to 0.998106 of total prob
+CHOICE = 000000000111001110  (implying 0 recs)
+
