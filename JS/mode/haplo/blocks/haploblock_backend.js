@@ -1,15 +1,9 @@
-// Founder color groups are unique, even across families
-
-var hgroup_colors = [], // [founder_id], where array index = color/group
-	unique_colors = []; // [color --> hex]
-
-var zero_color_grp = -1;
 
 
 //Get unique color groups in an allele
 var uniqueset = function(set){
 	return set.filter(function(item,i,ar){
-		return (item !== zero_color_grp  && ar.indexOf(item) === i);
+		return (item !== FounderColor.zero_color_grp  && ar.indexOf(item) === i);
 	});
 };
 
@@ -21,8 +15,8 @@ function initFounderAlleles( fid, id )
 
 	for (var a = 0; a < perc_hdata.length; a++) 	// current allele
 	{
-		var color_group = hgroup_colors.length;
-		hgroup_colors.push( id );					// Push the same guy twice for both alleles
+		var color_group = FounderColor.hgroup.length;
+		FounderColor.hgroup.push( id );					// Push the same guy twice for both alleles
 													// Different colors (indices) will refer to the same (duplicated) id
 		/*
 		This is the color group. If it just pointed to it's data, then only a 0 1 or 2 would propogate down through
@@ -100,10 +94,10 @@ function child2parent_link(pers, moth, fath, fam) // fam only needed for consang
 // 		if (f0_pr === undefined || f1_pr === undefined
 // 			|| m0_pr === undefined || m1_pr === undefined)
 
-		if (f0_ht === 0) f0_pr.color_group = [zero_color_grp];
-		if (f1_ht === 0) f1_pr.color_group = [zero_color_grp];
-		if (m0_ht === 0) m0_pr.color_group = [zero_color_grp];
-		if (m1_ht === 0) m1_pr.color_group = [zero_color_grp];
+		if (f0_ht === 0) f0_pr.color_group = [FounderColor.zero_color_grp];
+		if (f1_ht === 0) f1_pr.color_group = [FounderColor.zero_color_grp];
+		if (m0_ht === 0) m0_pr.color_group = [FounderColor.zero_color_grp];
+		if (m1_ht === 0) m1_pr.color_group = [FounderColor.zero_color_grp];
 
 // 		if (f0_ht === f1_ht  && f1_ht === m0_ht	&& m0_ht === m1_ht  && m1_ht === 0) continue;
 
@@ -279,10 +273,10 @@ function child2parent_link(pers, moth, fath, fam) // fam only needed for consang
 
 
 	var unique0 = res0.filter(function(item,i,ar){
-		return (item !== zero_color_grp  && ar.indexOf(item) === i);
+		return (item !== FounderColor.zero_color_grp  && ar.indexOf(item) === i);
 	});
 	var unique1 = res1.filter(function(item,i,ar){
-		return (item !== zero_color_grp  && ar.indexOf(item) === i);
+		return (item !== FounderColor.zero_color_grp  && ar.indexOf(item) === i);
 	});
 
 	pers_hp[0].unique_groups = unique0;
@@ -300,44 +294,6 @@ function child2parent_link(pers, moth, fath, fam) // fam only needed for consang
 
 
 
-var hsv2rgb = function(h,s,v) {
-	var rgb, i, data = [];
-	if (s === 0) {
-		rgb = [v,v,v];
-	} else {
-		h = h / 60;
-		i = Math.floor(h);
-		data = [v*(1-s), v*(1-s*(h-i)), v*(1-s*(1-(h-i)))];
-		switch(i) {
-			case 0:	rgb = [v, data[2], data[0]];break;
-			case 1:	rgb = [data[1], v, data[0]];break;
-			case 2:	rgb = [data[0], v, data[2]];break;
-			case 3:	rgb = [data[0], data[1], v];break;
-			case 4:	rgb = [data[2], data[0], v];break;
-			default:rgb = [v, data[0], data[1]];break;
-		}
-	}
-	return '#' + rgb.map(function(x){
-		return ("0" + Math.round(x*255).toString(16)).slice(-2);
-	}).join('');
-};
-
-
-
-function makeUniqueColors()
-{
-	var num_colors = hgroup_colors.length,
-		step_color = (Math.floor(360 / (num_colors)));
-
-	var sat = 33,
-		val = 51,
-		hue = 0;
-
-	for (var c=0; c < num_colors; c++){
-		unique_colors[c] = hsv2rgb(hue, sat, val);
-		hue += step_color;
-	}
-}
 
 
 
@@ -375,7 +331,7 @@ function assignHGroups()
 		}
 		removeAmbiguousPointers(fam);
 	});
-	makeUniqueColors();
+	FounderColor.makeUniqueColors();
 }
 
 

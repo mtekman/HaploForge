@@ -342,7 +342,7 @@ function addHaploBlocksAll()
 					width: haploblock_spacers.block_width_px,
 					height: (iter-ind) * HAP_VERT_SPA,
 
-					fill: unique_colors[color_group],
+					fill: FounderColor.unique[color_group],
 
 					strokeWidth: 1,
 					stroke: 'white'
@@ -375,7 +375,7 @@ function addHaploBlocksAll()
 	var total_text="";
 	for (var m=sta_index; m <= end_index; m++)
 	{
-		total_text += marker_array[m] + haploblock_buffers.marker_offset;
+		total_text += MarkerData.rs_array[m] + haploblock_buffers.marker_offset;
 
 		for (var i=0; i < haploinfos.length; i++)
 			total_text +=  (haploblock_buffers.ht_offset

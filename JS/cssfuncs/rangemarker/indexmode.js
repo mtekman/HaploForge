@@ -13,8 +13,8 @@ function populateIndexDataList()
 {
 	var inner_options = "";
 	
-	for (var m=0; m < marker_array.length; m++){
-		inner_options += '<option value="' + marker_array[m] + '" />';
+	for (var m=0; m < MarkerData.rs_array.length; m++){
+		inner_options += '<option value="' + MarkerData.rs_array[m] + '" />';
 	}
 
 	index_min.innerHTML = inner_options;
@@ -23,12 +23,12 @@ function populateIndexDataList()
 // Repeated
 function updateMaxIndexDataList()
 {
-	var min_index = marker_array.indexOf( index_min_input.value );
+	var min_index = MarkerData.rs_array.indexOf( index_min_input.value );
 
 	var inner_options = "";
 
-	for (var m=min_index; m < marker_array.length; m++){
-		inner_options += '<option value="' + marker_array[m] + '" />';
+	for (var m=min_index; m < MarkerData.rs_array.length; m++){
+		inner_options += '<option value="' + MarkerData.rs_array[m] + '" />';
 	}
 	index_max.innerHTML = inner_options;
 }
@@ -47,8 +47,8 @@ function submitIndexRange(){
 	var min_range_value = index_min_input.value,
 		max_range_value = index_max_input.value;
 
-	var min_range = marker_array.indexOf( min_range_value ),
-		max_range = marker_array.indexOf( max_range_value );
+	var min_range = MarkerData.rs_array.indexOf( min_range_value ),
+		max_range = MarkerData.rs_array.indexOf( max_range_value );
 
 	if ((min_range === -1) || (max_range === -1) ){
 		console.log("invalid range");

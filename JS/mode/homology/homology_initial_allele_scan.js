@@ -26,7 +26,7 @@ function scan_alleles_for_homology( ids_to_scan ){
 	}
 
 	// Begin processing
-	var num_markers = marker_array.length;
+	var num_markers = MarkerData.rs_array.length;
 
 	// First just pass over affecteds ands find regions of het and hom
 	var hom_region_scores  = new Int8Array(num_markers),

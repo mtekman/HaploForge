@@ -1,8 +1,8 @@
 // "Pads rs identifiers into fixed width string based on max length
 function washMarkerMap(){
 	var maxlen = 0;
-	for (var i= 0; i < marker_array.length; i++){
-		var len = marker_array[i].length;
+	for (var i= 0; i < MarkerData.rs_array.length; i++){
+		var len = MarkerData.rs_array[i].length;
 		if (len > maxlen)
 			maxlen = len;
 	}
@@ -20,8 +20,8 @@ function washMarkerMap(){
 	maxlen = 10;
 	maxlen_marker = maxlen;
 
-	for (var i=0; i < marker_array.length; i++)
-		marker_array[i] = (marker_array[i] + format).slice(0,maxlen);
+	for (var i=0; i < MarkerData.rs_array.length; i++)
+		MarkerData.rs_array[i] = (MarkerData.rs_array[i] + format).slice(0,maxlen);
 
 }
 
@@ -65,8 +65,8 @@ class ProcessInput {
 			this.handleAllegroHeaders();
 
 			// Set HAP_DRAW_LIM to length of markers if dealing with a small set
-			if (marker_array.length-1 < HAP_DRAW_LIM){
-				HAP_DRAW_LIM = marker_array.length - 1;
+			if (MarkerData.rs_array.length-1 < HAP_DRAW_LIM){
+				HAP_DRAW_LIM = MarkerData.rs_array.length - 1;
 			}
     	}
 	    else {} // other formats TODO
@@ -150,7 +150,7 @@ class ProcessInput {
 
 			if (col_string!=="") {
 // 					marker_map[col_string] = count_markers++;
-				marker_array.push( col_string );
+				MarkerData.rs_array.push( col_string );
 			}
 
 		}

@@ -18,8 +18,10 @@ var PED = {
 
 
 //General storage, global scope
-var	marker_map = {},          	// rs_id --> array index
-	marker_array = [];
+var MarkerData = {
+	rs_array: [], // rsid
+	gp_array: [], // genpos
+}
 
 
 // Draw globals

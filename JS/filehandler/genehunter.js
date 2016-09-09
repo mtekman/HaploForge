@@ -53,17 +53,23 @@ class Genehunter {
 				Genehunter.populateFamilyMap(haplo_text);
 
 
-				if (mapfile !== null){
+/*				if (mapfile !== null){
 					Genehunter.readFile(mapfile, function(map_text){
+
+						localStorage.setItem("maptest", map_text);*/
+						var map_text = localStorage.getItem("maptest");
 						Genehunter.populateMarkerMap(map_text);
-					});
+/*					});
 				}
 				else {
-					for (var m=0; m < 200; m++){
-						marker_array.push(String("          " + m).slice(-10));
+					var randomperc = familyMapOps.getRandomPerc(),
+						allele_length = randomperc.haplo_data.data_array.length;
+
+					for (var m=0; m < allele_length; m++){
+						MarkerData.rs_array.push(String("          " + m).slice(-10));
 					}
 				}
-
+*/
 
 				if (mode_init !== null){
 					mode_init();
@@ -84,7 +90,33 @@ class Genehunter {
 	}
 
 	static populateMarkerMap(text_unformatted){
-		console.log("POPULALTE MARKER MAP");
+		var lines = text_unformatted.split('\n'),
+			current_chrom = null;
+
+		// Skip header
+
+		for (var l=1; l < lines.length; l++){
+			var line = lines[l].trim(),
+				tokens = line.split(/\s+/);
+
+			if (line === ""){
+				continue;
+			}
+
+			if (current_chrom === null){
+				current_chrom = tokens[0]
+			}
+			else if (current_chrom !== tokens[0]){
+				throw new Error("Chrom changed from "+ current_chrom + " to " + tokens[0])
+			}
+
+			var genpos = Number(tokens[1]),
+				marker = tokens[2].trim();
+
+
+			MarkerData.rs_array.push(marker);
+			MarkerData.gp_array.push(genpos);
+		}
 	}
 
 

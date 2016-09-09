@@ -43,7 +43,7 @@ function test(){
 			graphInitPos(nodeSize + 10, grid_rezY);
 			assignHGroups();
 
-//			washMarkerMap();
+			washMarkerMap();
 
 			populateIndexDataList();
 
@@ -56,7 +56,8 @@ function test(){
 	}, 500);
 }
 
-test();
+FounderColor.__testColors(48)
+//test();
 
 
 /*

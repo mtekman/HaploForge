@@ -18,7 +18,7 @@ var HomologyMode = {
 
 	printToFile: function( ht_ids, 
 		start_index = 0, 
-		stop_index = (marker_array.length - 1))
+		stop_index = (MarkerData.rs_array.length - 1))
 	{
 		var text = "          ";
 
@@ -38,7 +38,7 @@ var HomologyMode = {
 		// Data
 		for (var l=start_index; l <= stop_index; l++)
 		{
-			var marker = marker_array[l];
+			var marker = MarkerData.rs_array[l];
 			text += marker
 
 			for (var i=0; i < ht_ids.length; i++)

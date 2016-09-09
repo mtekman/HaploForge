@@ -77,7 +77,7 @@ var a_star_bestfirst__DEBUG = function(array, exclude_list)
 
 					// Only break on another non-zero group color
 					if (new_colors.indexOf(current_color) === -1){
-						if (new_colors.length === 1 && new_colors[0] === zero_color_grp){
+						if (new_colors.length === 1 && new_colors[0] === FounderColor.zero_color_grp){
 							zero_indexes[stretch] = 0;
 						}
 						else { //not a zero group
@@ -124,7 +124,7 @@ var a_star_bestfirst__DEBUG = function(array, exclude_list)
 				//Add the zeros
  				for (var z_index in zero_indexes){
 					if (new_r.length > z_index)
- 						new_r[ z_index ] = zero_color_grp;
+ 						new_r[ z_index ] = FounderColor.zero_color_grp;
  				}
 
 				var new_pack = {array: new_r, numsets:current_nsets+1};

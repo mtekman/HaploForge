@@ -10,7 +10,7 @@ var haploinfos; // what addHaploBlocksAll uses (needs to be generated once per f
 
 // 	for (var d=sta_index; d <= end_index; d++){
 // 		dd[0].push( "" );
-// 		dd[1].push( marker_array[d] );
+// 		dd[1].push( MarkerData.rs_array[d] );
 // 	}
 // 	// 		console.log(dd);
 // 	return dd;
@@ -87,8 +87,8 @@ function redrawHaplos(resizeToo){
 		sta_index = 0;
 		end_index = HAP_DRAW_LIM;
 	}
-	if (end_index > marker_array.length -1){
-		end_index = marker_array.length -1
+	if (end_index > MarkerData.rs_array.length -1){
+		end_index = MarkerData.rs_array.length -1
 		sta_index = end_index - HAP_DRAW_LIM;
 	}
 

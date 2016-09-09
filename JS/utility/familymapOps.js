@@ -51,6 +51,14 @@ var familyMapOps = {
 		return count;
 	},
 
+
+	getRandomPerc: function(){
+		for (var fam in familyMapOps._map){
+			return familyMapOps.getFirst(fam);
+		}
+		throw new Error("No families");
+	},
+
 	/* Grab the first individual */
 	getFirst: function( family_id ){
 		for (var ped in familyMapOps.getFam(family_id)){

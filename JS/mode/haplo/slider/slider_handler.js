@@ -24,7 +24,7 @@ var SliderHandler = {
 
 			perc =  (abspos.y - MarkerSlider._rangeline_pos.y) / MarkerSlider._config.slider_height;
 
-			MarkerSlider._last_input1_ind = rsindex = (atstart?0:Math.floor(perc * marker_array.length));
+			MarkerSlider._last_input1_ind = rsindex = (atstart?0:Math.floor(perc * MarkerData.rs_array.length));
 		}
 		else {
 			var atend = false;
@@ -39,9 +39,9 @@ var SliderHandler = {
 
 			perc =  (abspos.y - MarkerSlider._rangeline_pos.y) / MarkerSlider._config.slider_height;
 
-			MarkerSlider._last_input2_ind = rsindex = (atend?marker_array.length-1:Math.floor(perc * marker_array.length));
+			MarkerSlider._last_input2_ind = rsindex = (atend?MarkerData.rs_array.length-1:Math.floor(perc * MarkerData.rs_array.length));
 		}
-		this.message.setText(marker_array[rsindex]);
+		this.message.setText(MarkerData.rs_array[rsindex]);
 
 		SliderHandler.updateSlide();
 
@@ -106,11 +106,11 @@ var SliderHandler = {
 		MarkerSlider._sl_input1.setY(top);
 	 	MarkerSlider._sl_input2.setY(bot);
 
-	 	MarkerSlider._last_input1_ind = (top===0)?0:Math.floor(top * marker_array.length/ MarkerSlider._config.slider_height),
-		MarkerSlider._last_input2_ind = (bot===MarkerSlider._config.slider_height)?marker_array.length-1:Math.floor(bot * marker_array.length/ MarkerSlider._config.slider_height);
+	 	MarkerSlider._last_input1_ind = (top===0)?0:Math.floor(top * MarkerData.rs_array.length/ MarkerSlider._config.slider_height),
+		MarkerSlider._last_input2_ind = (bot===MarkerSlider._config.slider_height)?MarkerData.rs_array.length-1:Math.floor(bot * MarkerData.rs_array.length/ MarkerSlider._config.slider_height);
 
-		MarkerSlider._sl_input1.message.setText( marker_array[MarkerSlider._last_input1_ind] );
-		MarkerSlider._sl_input2.message.setText( marker_array[MarkerSlider._last_input2_ind] );
+		MarkerSlider._sl_input1.message.setText( MarkerData.rs_array[MarkerSlider._last_input1_ind] );
+		MarkerSlider._sl_input2.message.setText( MarkerData.rs_array[MarkerSlider._last_input2_ind] );
 
 		MarkerSlider._last_input1_posy = top + MarkerSlider._rangeline_pos.y;
 		MarkerSlider._last_input2_posy = bot + MarkerSlider._rangeline_pos.y;
@@ -119,8 +119,8 @@ var SliderHandler = {
 
 	updateInputsByIndex(ind1, ind2)
 	{
-		if (ind2 >= marker_array.length){
-			ind2 = marker_array.length -1
+		if (ind2 >= MarkerData.rs_array.length){
+			ind2 = MarkerData.rs_array.length -1
 			ind1 = ind2 - HAP_DRAW_LIM;
 		}
 		else if (ind1 < 0){
@@ -132,15 +132,15 @@ var SliderHandler = {
 		MarkerSlider._last_input1_ind = ind1;
 		MarkerSlider._last_input2_ind = ind2;
 
-		var top = (MarkerSlider._last_input1_ind / marker_array.length) * MarkerSlider._config.slider_height,
-			bot = (MarkerSlider._last_input2_ind / marker_array.length) * MarkerSlider._config.slider_height;
+		var top = (MarkerSlider._last_input1_ind / MarkerData.rs_array.length) * MarkerSlider._config.slider_height,
+			bot = (MarkerSlider._last_input2_ind / MarkerData.rs_array.length) * MarkerSlider._config.slider_height;
 
 		if (MarkerSlider._sl_input1 !== null){
 			MarkerSlider._sl_input1.setY(top);
 			MarkerSlider._sl_input2.setY(bot);
 
-			MarkerSlider._sl_input1.message.setText( marker_array[MarkerSlider._last_input1_ind] );
-			MarkerSlider._sl_input2.message.setText( marker_array[MarkerSlider._last_input2_ind] );
+			MarkerSlider._sl_input1.message.setText( MarkerData.rs_array[MarkerSlider._last_input1_ind] );
+			MarkerSlider._sl_input2.message.setText( MarkerData.rs_array[MarkerSlider._last_input2_ind] );
 
 			MarkerSlider._last_input1_posy = top + MarkerSlider._rangeline_pos.y;
 			MarkerSlider._last_input2_posy = bot + MarkerSlider._rangeline_pos.y;
