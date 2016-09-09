@@ -8,13 +8,32 @@ class Person {
 		this.affected = affected ; 	     // 0,1,2
 
 		this.mother = mother; this.father = father;
-		this.haplo_data = [];  			// marker_index ---> {data:, hgroup:}
+		this.haplo_data = [];  			// [Allele1, Allele2]
 
 		this.mates = [];
 		this.children = [] 				// added by connect method later
 
 		//Optional
 		this.name = name;
+	}
+
+	insertHaploData(normal_array){
+		var num_alleles = this.haplo_data.length;
+
+		if (num_alleles === 0){
+			this.haplo_data.push( new Allele(normal_array) );
+			return 0;
+		}
+		if (num_alleles === 1){
+			var chromlen = this.haplo_data[0].getLength();
+			if (chromlen === normal_array.length){
+				this.haplo_data.push( new Allele(normal_array) );
+				return 0;
+			}
+			console.log(this);
+			throw new Error(this.id+" Allele sizes not consistent! "+chromlen+" vs "+normal_array.length);
+		}
+		throw new Error(this.id+" already has populated Alleles");
 	}
 
 	// Identical in relationships

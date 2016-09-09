@@ -14,9 +14,15 @@ var HaploPedProps = {
 
 	// We assume that all pedigrees are on the same chromosome -- pick the largest to examine.
 
-	init: function()
+	init: function(hookfunc = null)
 	{
 		PedProps.connectAll();
+
+		// Genehunter can infer genders at this stage
+		if(hookfunc !== null){
+			hookfunc();
+		}
+
 		HaploPedProps._populateGraphics(); /*Maybe doesn't need to be in this class, but MUST be after _connectAll */
 
 		var fam_id = HaploPedProps._largestPedigree();

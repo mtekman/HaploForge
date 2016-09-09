@@ -209,5 +209,34 @@ var familyMapOps = {
 			return familyMapOps._map[family_id][person_id];
 		}
 		throw new Error(person_id + " not in " + family_id);
+	},
+
+	inferGenders : function(family_id = null){
+
+		familyMapOps.foreachperc(function(pid,fid,perc){
+
+			if (perc.gender === PED.UNKNOWN){
+				console.log("unknown", perc.id, perc.children);
+
+				if (perc.children.length > 0){
+					var firstChild = perc.children[0];
+
+					var mother_id = firstChild.mother.id,
+						father_id = firstChild.father.id;
+
+					console.log("unknown has kids", perc.id, mother_id, father_id);
+
+					if (mother_id === perc.id){
+						perc.gender = PED.FEMALE;
+					}
+					else if (father_id === perc.id){
+						perc.gender = PED.MALE
+					}
+					else {
+						throw new Error(perc, firstChild);
+					}
+				}
+			}
+		}, family_id);
 	}
 }

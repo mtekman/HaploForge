@@ -35,11 +35,28 @@ function test(){
 
 		setTimeout(function(){
 
-			(new Genehunter(HaploPedProps.init));
+			(new Genehunter(function(){
+				HaploPedProps.init(function(){
+					familyMapOps.inferGenders();
+				})
+			}));
+			graphInitPos(nodeSize + 10, grid_rezY);
+			assignHGroups();
 
-		}, 1000);
-	}, 1000);
+//			washMarkerMap();
+
+			populateIndexDataList();
+
+			setTimeout(function(){
+				SelectionMode.init();
+				SelectionAction.selectAffecteds();
+				HaploWindow.init();
+			},500)
+		}, 500);
+	}, 500);
 }
+
+test();
 
 
 /*

@@ -15,6 +15,10 @@ class Allele {
 		// ^ Empty until pter_array is completely unambiguous, where pter_array is then deleted (dereferenced, left for GC)
 	}
 
+	getLength(){
+		return this.data_array.length
+	}
+
 	debug(){
 		return {
 			data: this.data_array,

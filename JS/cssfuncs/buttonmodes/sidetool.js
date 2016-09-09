@@ -91,10 +91,7 @@ var ToolButtons = {
 			ToolButtons.modes.preamble();
 
 			ToolButtons.setTitle("Pedigree Arrange");
-			ToolButtons.addToolsButton("Start Analysis", function(){
-				SelectionMode.init();
-			});
-
+			ToolButtons.addToolsButton("Start Analysis", SelectionMode.init);
 
 			ToolButtons.addToolsButton("Modify Pedigree", function()
 			{
@@ -112,39 +109,8 @@ var ToolButtons = {
 			ToolButtons.modes.preamble();
 
 			ToolButtons.setTitle("Selection Tools");
-			ToolButtons.addToolsButton("Select All", function()
-			{
-				SelectionMode.toggle_selection_all = !SelectionMode.toggle_selection_all;
-
-				for (var key in SelectionMode._items){
-					var item = SelectionMode._items[key];
-					if(  (SelectionMode.toggle_selection_all && !item.selected)
-					  || (!SelectionMode.toggle_selection_all && item.selected) ){
-						item.box.fire('click')
-					}
-				}
-			});
-
-			ToolButtons.addToolsButton("Select Affecteds", function()
-			{
-				SelectionMode.toggle_selection_affecteds = !SelectionMode.toggle_selection_affecteds;
-
-				for (var key in SelectionMode._items){
-					var item = SelectionMode._items[key];
-					var affected = (item.graphics.children[0].attrs.fill === col_affs[2])
-
-					if (affected){
-						if( (SelectionMode.toggle_selection_affecteds && !item.selected)
-						 || (!SelectionMode.toggle_selection_affecteds && item.selected) ){
-							item.box.fire('click');
-						}
-					}
-				}
-				console.log("affecteds:", 
-					Object.keys(SelectionMode._items).filter( function (n){ return SelectionMode._items[n].affected === true;})
-				);
-			});
-
+			ToolButtons.addToolsButton("Select All", SelectionAction.selectAll);
+			ToolButtons.addToolsButton("Select Affecteds", SelectionAction.selectAffecteds);
 			ToolButtons.addToolsButton("Submit Selection", HaploWindow.init);
 		},
 

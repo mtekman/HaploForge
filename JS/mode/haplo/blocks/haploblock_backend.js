@@ -32,8 +32,9 @@ function initFounderAlleles( fid, id )
 		*/
 		var	allele_ptrs = perc_hdata[a].pter_array; 		// [array of m pointers (for m markers)]
 
-		for (var i=0; i < allele_ptrs.length; i++)
+		for (var i=0; i < allele_ptrs.length; i++){
 			allele_ptrs[i].color_group = [color_group];
+		}
 
 
 		allele_ptrs.unique_groups = [color_group];
