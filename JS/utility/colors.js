@@ -76,11 +76,11 @@ var FounderColor = {
 
 		for (var tier=0; tier < num_tiers; tier ++)
 		{
-			var sat = 100 - (tier * (80/num_tiers)),
+			var sat = 50 + (tier * (50/num_tiers)),
 				val = 90 - (tier * (80/num_tiers)),
 				hue = 0;
 
-			var hues = FounderColor.getColorRange(colours_per_tier)
+			var hues = FounderColor.__getColorRange(colours_per_tier)
 
 			for (var c = 0; c < colours_per_tier; c++)
 			{
@@ -134,9 +134,9 @@ var FounderColor = {
 
 	// Purely testing:
 	__testcontainer : null,
-	testColors: function(n, step = true){
+	testColors: function(n=36, step = true){
 
-		var hsv_and_rgb = FounderColor.generateArrays(n),
+		var hsv_and_rgb = FounderColor.__generateArrays(n),
 			hsv_array = hsv_and_rgb.hsv,
 			rgb_array = hsv_and_rgb.rgb;
 
@@ -164,7 +164,7 @@ var FounderColor = {
 			var col = document.createElement("div");
 
 			function sets(g){
-				console.log(rgb_array[g], hsv_array[g])
+				console.log(rgb_array[g]+" --> "+hsv_array[g])
 			};
 
 			col.style.background = rgb_array[a];
@@ -187,55 +187,15 @@ var FounderColor = {
 
 
 
-// 	// Different methods for generating color ranges.
-// 	__slopes : {
-
-// 		__mapped_used : {}, //needs to be cleared after final mapped() call
-// 		__good_hues : [
-// 			  0,  30,  36,  41,  48,  54,
-// 			 60,  72, 120, 180, 186, 192,
-// 		    204, 240, 262, 276, 288, 300
-// 		],
 
 
-// 		// Last ditch inelegant method of getting distinct colours -- pull at random from good hues
-// 		randomMapped : function(discard){  // Default
-
-// 			var good_hues = FounderColor.__slopes.__good_hues,
-// 				used_map = FounderColor.__slopes.__mapped_used;
-
-// 			var hue = good_hues[0],
-// 				iter = 0;
-// 			while (hue in used_map && iter++ < 100){
-// 				var index = parseInt(Math.random()*(good_hues.length));
-// 				hue = good_hues[index];
-// 			}
-// 			used_map[hue] = 1;
-
-// 			return hue;
-// 		},
 
 
-// 		mapped : function(discard){
 
-// 			var good_hues = FounderColor.__slopes.__good_hues,
-// 				used_map = FounderColor.__slopes.__mapped_used;
 
-// 			var hue = good_hues[0],
-// 				iter = 0;
 
-// 			while (hue in used_map && iter++ < 100){
-// 				var highest_hue = Number(Object.keys(used_map).sort(function(a,b){
-// 					return Number(b) - Number(a);
-// 				})[0])
 
-// 				var index = good_hues.indexOf(highest_hue) + 1
-// 				hue = good_hues[index];
-// 			}
-// 			used_map[hue] = 1;
 
-// 			return hue;
-// 		},
 
 
 // 		// This accentuates more easily distinguishable colours using a stepped hue gradient
@@ -256,14 +216,14 @@ var FounderColor = {
 // 			}
 
 // 			var x = fract * 16,
-// 				hue = (c[0]*Math.pow(x,7)
-// 					+c[1]*Math.pow(x,6)
-// 					+c[2]*Math.pow(x,5)
-// 					+c[3]*Math.pow(x,4)
-// 					+c[4]*Math.pow(x,3)
-// 					+c[5]*Math.pow(x,2)
-// 					+c[6]*x
-// 					+c[7])
+// 				hue = (  c[0]*Math.pow(x,7)
+//  					+c[1]*Math.pow(x,6)
+// 	    				+c[2]*Math.pow(x,5)
+// 		    			+c[3]*Math.pow(x,4)
+// 			    		+c[4]*Math.pow(x,3)
+// 				    	+c[5]*Math.pow(x,2)
+// 					    +c[6]*x
+// 		    			+c[7] );
 
 // 			if (hue < 0){ hue = 0;}
 
