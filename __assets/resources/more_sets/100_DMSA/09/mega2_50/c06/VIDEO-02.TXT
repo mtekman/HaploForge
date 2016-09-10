@@ -1,0 +1,61 @@
+                                                                               
+                                                                               
+       SimWalk2 version 2.91                                                   
+                                                                               
+                                                                               
+       Type of data analysis:         Haplotyping                              
+                                                                               
+       Locus data INPUT file:         RERUN-01.LOC                             
+       Pedigree data INPUT file:      RERUN-01.PED                             
+       Map data INPUT file:           MAP.DAT                                  
+                                                                               
+                                                                               
+       Individual OUTPUT files:       HAPLO-02.mmm                             
+       Overall OUTPUT file:           QUICK-02.ALL                             
+       Summary OUTPUT file:           TABLE-02.ALL                             
+       Copy of all screen output:     VIDEO-02.TXT                             
+                                                                               
+       Here 'mmm' is from the order within the input pedigree file,            
+       e.g., '001' for the first pedigree, etc.                                
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+  Working on data initialization ...                                           
+   Map data file 'MAP.DAT' completed initialization;                           
+   Locus data file 'RERUN-01.LOC' completed initialization;                    
+   Pedigree #001 completed initialization;                                     
+   Pedigree #002 completed initialization;                                     
+   Pedigree #003 completed initialization;                                     
+   Pedigree #004 completed initialization;                                     
+  All data completed initialization.                                           
+                                                                               
+                                                                               
+  Working on pedigree analysis ...                                             
+                                                                               
+   Pedigree #004 ('1004') working on haplotyping ...                           
+      (Found an initial consistent state.)                                     
+          25% done ...                                                         
+          50% done ...                                                         
+          75% done ...                                                         
+   Pedigree #004 ('1004') completed haplotyping.                               
+                                                                               
+  All individual pedigrees completed analysis.                                 
+                                                                               
+  Now combining individual results into overall results...                     
+  Overall results completed.                                                   
+                                                                               
+  Please see the following output files.                                       
+                                                                               
+       Individual OUTPUT files:       HAPLO-02.mmm                             
+       Overall OUTPUT file:           QUICK-02.ALL                             
+       Summary OUTPUT file:           TABLE-02.ALL                             
+       Copy of all screen output:     VIDEO-02.TXT                             
+                                                                               
+       Here 'mmm' is from the order within the input pedigree file,            
+       e.g., '001' for the first pedigree, etc.                                
+                                                                               
+                                                                               
+  Program run completed!                                                       
+                                                                               
+                                                                               

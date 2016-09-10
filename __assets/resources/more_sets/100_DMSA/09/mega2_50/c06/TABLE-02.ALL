@@ -1,0 +1,368 @@
+ 
+                      Chr  6; Infiles: Sat Sep 10 16:07;RUN 02
+ 
+       Summary Table for the Haplotype Analysis from SimWalk2 2.91
+ 
+ 
+RUN  PED    PED    STEPS   LOG-10     RECOMBINATIONS   HAPLOTYPES WITH r RECOMB:
+NUM  NUM    NAME   TAKEN  LIKELIHOOD  EXPECTED  SEEN   r=0  r=1  r=2  r=3  r>3
+ 
+01   001   1001     43%    -83.32701     0.2      0     8    0    0    0    0   
+01   002   1002     44%    -85.21521     0.3      0    10    0    0    0    0   
+01   003   1003     47%    -76.86296     0.2      1     7    1    0    0    0   
+02   004   1004     95%   -136.58505     0.9      2    26    2    0    0    0 *!
+                                             =================================
+                                     Totals:      3    51    3    0    0    0
+ 
+ * indicates that the pedigree has been included in the file RERUN-02.PED   
+   due to the large number of recombinations in this haplotype  [batch item #44]
+ 
+ ! indicates that the pedigree has been included in the file RERUN-02.PED   
+   due to the high step count at which it was first encountered [batch item #45]
+ 
+ As seen above, some of the haplotypes found by SimWalk2 are candidates for
+ re-analysis using a more in-depth search. (Batch items #44 and #45 are used to
+ set the criteria for selecting the haplotypes that may need further analysis.)
+ The parameters to use for the suggested further analysis have been written to
+ the file RERUN-02.BCH . Only the questionable haplotypes will be rerun.
+ Performing this recommended 'rerun' of SimWalk2 is accomplished by simply
+ renaming the file RERUN-02.BCH to BATCH2.DAT and then issuing the command
+ to start a new run of SimWalk2. The resultant files, e.g., TABLE-03.ALL,
+ will list the best haplotypes found so far for all the pedigrees,
+ not just for those being rerun.
+ 
+________________________________________________________________________________
+ 
+                      Chr  6; Infiles: Sat Sep 10 16:07;RUN 02
+ 
+                      Recombination Statistics from SimWalk2 2.91
+ 
+ 
+ Here, for each marker interval, is the number of recombinations observed
+ and the number expected, given the total number of meioses & the interval size.
+ 
+ 
+ The total number of pedigrees actually analyzed here:              4
+ The total number of meioses contained in these pedigrees:         32
+ 
+ Since the user-specified recombination distances are sex-independent,
+ we report the combined female and male recombination statistics.
+ 
+ 
+ 
+                     OVERALL RECOMBINATION STATISTICS
+ 
+ 
+ POSITION   MARKER     RECOMB.   RECOMBINATION EVENTS                   INTERVAL
+Haldane cM   NAME     FRACTION    OBSERVED & EXPECTED                    NUMBER 
+ 
+    0.000   s4959265
+                       0.00214          0       0.068                       1
+    0.214   s9405214
+                       0.00066          0       0.021                       2
+    0.281   s6938648
+                       0.00052          0       0.017                       3
+    0.333   rs626080
+                       0.00060          0       0.019                       4
+    0.393   13206717
+                       0.00058          0       0.019                       5
+    0.451   s9378848
+                       0.00061          0       0.020                       6
+    0.512   s1999022
+                       0.00202          0       0.065                       7
+    0.714   s9392582
+                       0.00086          0       0.028                       8
+    0.800   rs339294
+                       0.00052          0       0.017                       9
+    0.852   s7762514
+                       0.00052          0       0.017                      10
+    0.904   s1265242
+                       0.00091          0       0.029                      11
+    0.995   s6926616
+                       0.00056          0       0.018                      12
+    1.051   s4960005
+                       0.00232          0       0.074                      13
+    1.284   rs234427
+                       0.00152          0       0.049                      14
+    1.436   s9378408
+                       0.00074          0       0.024                      15
+    1.510   s4959312
+                       0.00157          0       0.050                      16
+    1.667   s1849564
+                       0.00146          0       0.047                      17
+    1.814   s3812183
+                       0.00358          0       0.115                      18
+    2.173   s4502986
+                       0.00059          0       0.019                      19
+    2.232   s6918380
+                       0.00073          0       0.023                      20
+    2.305   s1417657
+                       0.00076          0       0.024                      21
+    2.381   s3804547
+                       0.00082          0       0.026                      22
+    2.463   rs431060
+                       0.00211          1       0.068                      23
+    2.675   s1246996
+                       0.00075          0       0.024                      24
+    2.750   rs421473
+                       0.00080          0       0.026                      25
+    2.830   11242995
+                       0.00071          0       0.023                      26
+    2.901   s9392671
+                       0.00092          1       0.029                      27
+    2.993   s6932040
+                       0.00060          0       0.019                      28
+    3.053   rs414830
+                       0.00133          0       0.043                      29
+    3.186   rs191833
+                       0.00050          0       0.016                      30
+    3.236   s7774359
+                       0.00162          0       0.052                      31
+    3.398   s9405272
+                       0.00134          0       0.043                      32
+    3.532   s6937827
+                       0.00062          0       0.020                      33
+    3.594   s9504439
+                       0.00055          0       0.018                      34
+    3.650   11962015
+                       0.00066          0       0.021                      35
+    3.716   s4959341
+                       0.00163          0       0.052                      36
+    3.879   10484314
+                       0.00081          0       0.026                      37
+    3.960   12190311
+                       0.00082          0       0.026                      38
+    4.042   13210778
+                       0.00059          0       0.019                      39
+    4.101   s6926774
+                       0.00091          0       0.029                      40
+    4.192   s6911736
+                       0.00234          0       0.075                      41
+    4.427   s9502340
+                       0.00106          0       0.034                      42
+    4.533   s9504549
+                       0.00056          0       0.018                      43
+    4.589   s6914546
+                       0.00290          1       0.093                      44
+    4.880   s9504579
+                       0.00059          0       0.019                      45
+    4.939   s9405884
+                       0.00074          0       0.024                      46
+    5.013   s7745233
+                       0.00055          0       0.018                      47
+    5.068   rs582186
+                       0.00051          0       0.016                      48
+    5.119   rs667875
+                       0.00068          0       0.022                      49
+    5.187   s2170618
+ 
+ 
+________________________________________________________________________________
+ 
+                      Chr  6; Infiles: Sat Sep 10 16:07;RUN 02
+ 
+                      Batch Instruction Parameters
+ 
+ 
+ Below are listed the SimWalk2 2.91 instruction parameters used in this run.
+ Also, where appropriate, the default values of the batch items are listed.
+ 
+ (Please see the documentation for a more complete description
+  of the meaning of these parameters.)
+ 
+ 
+Batch                                                                 Actual    
+Item              GENERAL PARAMETERS                                  Value     
+ 
+# 1    Type of analysis:                                           HAPLOTYPING 
+# 2    Integer label attached to the output files:                      02     
+# 3    Title for this run is the above title:                      (see above) 
+# 4    Continuation of previous run?                                   YES     
+       Number of pedigrees analyzed in this entire run:                  4     
+ 
+ 
+Batch                                                                 Actual    
+Item              INPUT-FILE PARAMETERS                               Value     
+ 
+#09    Map data filename:                                              MAP.DAT 
+#10    Locus data filename:                                       RERUN-01.LOC 
+#11    Pedigree data filename:                                    RERUN-01.PED 
+#12.1  Symbol for females (case insensitive):                            F     
+#12.2  Symbol for   males (case insensitive):                            M     
+#13.1  Trait locus included in analyzed data?                          YES     
+#16    Affection status is indicated by the label:                       2     
+#17    Affection status is indicated at the:                       TRAIT LOCUS 
+#18    Number of quantitative variables:                                 1     
+#19    No trait penetrances file:                                              
+ 
+Marker Map:
+ 
+POSITION (Haldane cM)    MARKER        RECOMBINATION RATES     INTERVAL 
+   FEMALE  &   MALE       ORDER         FEMALE  &   MALE        NUMBER  
+    0.000      0.000    s4959265
+                                       0.00214    0.00214          1
+    0.214      0.214    s9405214
+                                       0.00066    0.00066          2
+    0.281      0.281    s6938648
+                                       0.00052    0.00052          3
+    0.333      0.333    rs626080
+                                       0.00060    0.00060          4
+    0.393      0.393    13206717
+                                       0.00058    0.00058          5
+    0.451      0.451    s9378848
+                                       0.00061    0.00061          6
+    0.512      0.512    s1999022
+                                       0.00202    0.00202          7
+    0.714      0.714    s9392582
+                                       0.00086    0.00086          8
+    0.800      0.800    rs339294
+                                       0.00052    0.00052          9
+    0.852      0.852    s7762514
+                                       0.00052    0.00052         10
+    0.904      0.904    s1265242
+                                       0.00091    0.00091         11
+    0.995      0.995    s6926616
+                                       0.00056    0.00056         12
+    1.051      1.051    s4960005
+                                       0.00232    0.00232         13
+    1.284      1.284    rs234427
+                                       0.00152    0.00152         14
+    1.436      1.436    s9378408
+                                       0.00074    0.00074         15
+    1.510      1.510    s4959312
+                                       0.00157    0.00157         16
+    1.667      1.667    s1849564
+                                       0.00146    0.00146         17
+    1.814      1.814    s3812183
+                                       0.00358    0.00358         18
+    2.173      2.173    s4502986
+                                       0.00059    0.00059         19
+    2.232      2.232    s6918380
+                                       0.00073    0.00073         20
+    2.305      2.305    s1417657
+                                       0.00076    0.00076         21
+    2.381      2.381    s3804547
+                                       0.00082    0.00082         22
+    2.463      2.463    rs431060
+                                       0.00211    0.00211         23
+    2.675      2.675    s1246996
+                                       0.00075    0.00075         24
+    2.750      2.750    rs421473
+                                       0.00080    0.00080         25
+    2.830      2.830    11242995
+                                       0.00071    0.00071         26
+    2.901      2.901    s9392671
+                                       0.00092    0.00092         27
+    2.993      2.993    s6932040
+                                       0.00060    0.00060         28
+    3.053      3.053    rs414830
+                                       0.00133    0.00133         29
+    3.186      3.186    rs191833
+                                       0.00050    0.00050         30
+    3.236      3.236    s7774359
+                                       0.00162    0.00162         31
+    3.398      3.398    s9405272
+                                       0.00134    0.00134         32
+    3.532      3.532    s6937827
+                                       0.00062    0.00062         33
+    3.594      3.594    s9504439
+                                       0.00055    0.00055         34
+    3.650      3.650    11962015
+                                       0.00066    0.00066         35
+    3.716      3.716    s4959341
+                                       0.00163    0.00163         36
+    3.879      3.879    10484314
+                                       0.00081    0.00081         37
+    3.960      3.960    12190311
+                                       0.00082    0.00082         38
+    4.042      4.042    13210778
+                                       0.00059    0.00059         39
+    4.101      4.101    s6926774
+                                       0.00091    0.00091         40
+    4.192      4.192    s6911736
+                                       0.00234    0.00234         41
+    4.427      4.427    s9502340
+                                       0.00106    0.00106         42
+    4.533      4.533    s9504549
+                                       0.00056    0.00056         43
+    4.589      4.589    s6914546
+                                       0.00290    0.00290         44
+    4.880      4.880    s9504579
+                                       0.00059    0.00059         45
+    4.939      4.939    s9405884
+                                       0.00074    0.00074         46
+    5.013      5.013    s7745233
+                                       0.00055    0.00055         47
+    5.068      5.068    rs582186
+                                       0.00051    0.00051         48
+    5.119      5.119    rs667875
+                                       0.00068    0.00068         49
+    5.187      5.187    s2170618
+ 
+ 
+Batch                                                      Default    Actual    
+Item              RUN-SPECIFYING PARAMETERS                 Value     Value     
+ 
+#20    Number of pedigrees sampled for each input pedigree  1000         0      
+#21    Number of parallel runs during simulated annealing:     1         1      
+#22    Initial temperature value:                            100.00    100.00   
+#23    Temperature change factor:                              0.990     0.995**
+#24    Number of temperature changes:                        800      1600    **
+#25    Number of pre-simulated annealing steps:                0         0      
+#26    Maximum number of attempts to initialize pedigrees:    64        64      
+ 
+       Number of steps per temperature is roughly:                   49000     
+#29.1    using a minimum number of steps of:                1000      1000      
+#30.1    and a multiplicative factor of:                      10        35    **
+       Number of steps per sampled pedigree is roughly:              49000     
+#29.2    using a minimum number of steps of:                1000      1000      
+#30.2    and a multiplicative factor of:                      10        35      
+       Mean number of transitions per step
+#31.1    during simulated annealing:                           2.00      2.00   
+#31.2    during Markov chain Monte Carlo process:              2.00      2.00   
+       Weight factor for individuals untyped at a locus
+#32.1    during simulated annealing:                          10        10      
+#32.2    during Markov chain Monte Carlo process:             10        10      
+       Frequency that next pivot is forced to be nearby
+#33.1    during simulated annealing:                           0.50      0.50   
+#33.2    during Markov chain Monte Carlo process:              0.50      0.50   
+       Frequency that a founder transition is of type 2
+#34.1    during simulated annealing:                           0.25      0.25   
+#34.2    during Markov chain Monte Carlo process:              0.25      0.25   
+#35    Number of steps between free runs:                      0         0      
+#36.1  Random seed number 1:                               27713        66     
+#36.2  Random seed number 2:                                2321      8080     
+#36.3  Random seed number 3:                               18777     25426     
+#37.1  Error model for mistyping:                          uniform   uniform    
+#37.2  Overall rate of mistyping:                              0.025     0.025  
+ 
+ 
+Batch                                                                 Actual    
+Item              OUTPUT-FILE PARAMETERS                              Value     
+ 
+#39    Files to output from IBD analysis:                        IBD & KINSHIP 
+#40    Output the pedigrees individually in INPED-nn.mmm?               NO     
+#41    Output the location scores per pedigree in SCORE-nn.mmm?         NO     
+#42    Threshold for mistyping probability to be significant:            0.50  
+#43    Export haplotypes for drawing applications?                     YES     
+#44.1  Threshold haplotype   count for RERUN-nn.PED entry:               0     
+#44.2  Threshold recombinant count for RERUN-nn.PED entry:               0     
+#45    Threshold fraction of steps for RERUN-nn.PED entry:               0.85  
+#46.1  Output haplotypes in vertical representations?                   NO     
+#46.2  Output haplotypes using founder-haplotype labels?                NO     
+#46.3  Force allele choice when no allele information exists?           NO     
+#47    Output the sampled peds in LINKAGE-format in MODEL-nn.*?         NO     
+#48    Num. of unconditional simulations for empirical p-value:      10000     
+#49.1  Number of points analyzed within each marker interval:            0     
+#49.2  Size of uniform grid interval for analysis positions:             1.00  
+ 
+ 
+     With the above parameters, the number of steps
+       per simulated annealing run is roughly:                    78400000     
+ 
+ 
+** indicates a relevant 'Run-Specifying Parameter'
+   that has been altered from its default value.
+ 
+________________________________________________________________________________
+ 

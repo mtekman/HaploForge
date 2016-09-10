@@ -1,0 +1,161 @@
+TRAIT   AUTOSOME 2 2  <= Locus,Type,# Alleles,# Phenotypes 
+      1 0.999900      <= Allele, Frequency
+      2 0.000100      <= Allele, Frequency
+ 1       3 # Genotypes
+  1/ 1
+  1/ 2
+  2/ 2
+ 2       3 # Genotypes
+  1/ 1
+  1/ 2
+  2/ 2
+s4959265AUTOSOME 2 0  6 0.103220 <= # Alleles,# Phenotypes. 10.32 cM
+      1 0.033700
+      2 0.966300
+s9405214AUTOSOME 2 0  6 0.105366 <= # Alleles,# Phenotypes. 10.54 cM
+      1 0.393300
+      2 0.606700
+s6938648AUTOSOME 2 0  6 0.106031 <= # Alleles,# Phenotypes. 10.60 cM
+      1 0.185400
+      2 0.814600
+rs626080AUTOSOME 2 0  6 0.106556 <= # Alleles,# Phenotypes. 10.66 cM
+      1 0.320200
+      2 0.679800
+13206717AUTOSOME 2 0  6 0.107158 <= # Alleles,# Phenotypes. 10.72 cM
+      1 0.039300
+      2 0.960700
+s9378848AUTOSOME 2 0  6 0.107735 <= # Alleles,# Phenotypes. 10.77 cM
+      1 0.157300
+      2 0.842700
+s1999022AUTOSOME 2 0  6 0.108341 <= # Alleles,# Phenotypes. 10.83 cM
+      1 0.483100
+      2 0.516900
+s9392582AUTOSOME 2 0  6 0.110366 <= # Alleles,# Phenotypes. 11.04 cM
+      1 0.162900
+      2 0.837100
+rs339294AUTOSOME 2 0  6 0.111232 <= # Alleles,# Phenotypes. 11.12 cM
+      1 0.353900
+      2 0.646100
+s7762514AUTOSOME 2 0  6 0.111750 <= # Alleles,# Phenotypes. 11.17 cM
+      1 0.314600
+      2 0.685400
+s1265242AUTOSOME 2 0  6 0.112272 <= # Alleles,# Phenotypes. 11.23 cM
+      1 0.483100
+      2 0.516900
+s6926616AUTOSOME 2 0  6 0.113184 <= # Alleles,# Phenotypes. 11.32 cM
+      1 0.292100
+      2 0.707900
+s4960005AUTOSOME 2 0  6 0.113748 <= # Alleles,# Phenotypes. 11.37 cM
+      1 0.033700
+      2 0.966300
+rs234427AUTOSOME 2 0  6 0.116071 <= # Alleles,# Phenotypes. 11.61 cM
+      1 0.157300
+      2 0.842700
+s9378408AUTOSOME 2 0  6 0.117590 <= # Alleles,# Phenotypes. 11.76 cM
+      1 0.258400
+      2 0.741600
+s4959312AUTOSOME 2 0  6 0.118331 <= # Alleles,# Phenotypes. 11.83 cM
+      1 0.415700
+      2 0.584300
+s1849564AUTOSOME 2 0  6 0.119908 <= # Alleles,# Phenotypes. 11.99 cM
+      1 0.264000
+      2 0.736000
+s3812183AUTOSOME 2 0  6 0.121367 <= # Alleles,# Phenotypes. 12.14 cM
+      1 0.393300
+      2 0.606700
+s4502986AUTOSOME 2 0  6 0.124958 <= # Alleles,# Phenotypes. 12.50 cM
+      1 0.157300
+      2 0.842700
+s6918380AUTOSOME 2 0  6 0.125552 <= # Alleles,# Phenotypes. 12.56 cM
+      1 0.112400
+      2 0.887600
+s1417657AUTOSOME 2 0  6 0.126277 <= # Alleles,# Phenotypes. 12.63 cM
+      1 0.275300
+      2 0.724700
+s3804547AUTOSOME 2 0  6 0.127035 <= # Alleles,# Phenotypes. 12.70 cM
+      1 0.331500
+      2 0.668500
+rs431060AUTOSOME 2 0  6 0.127858 <= # Alleles,# Phenotypes. 12.79 cM
+      1 0.191000
+      2 0.809000
+s1246996AUTOSOME 2 0  6 0.129972 <= # Alleles,# Phenotypes. 13.00 cM
+      1 0.078700
+      2 0.921300
+rs421473AUTOSOME 2 0  6 0.130726 <= # Alleles,# Phenotypes. 13.07 cM
+      1 0.185400
+      2 0.814600
+11242995AUTOSOME 2 0  6 0.131528 <= # Alleles,# Phenotypes. 13.15 cM
+      1 0.449400
+      2 0.550600
+s9392671AUTOSOME 2 0  6 0.132237 <= # Alleles,# Phenotypes. 13.22 cM
+      1 0.393300
+      2 0.606700
+s6932040AUTOSOME 2 0  6 0.133158 <= # Alleles,# Phenotypes. 13.32 cM
+      1 0.146100
+      2 0.853900
+rs414830AUTOSOME 2 0  6 0.133760 <= # Alleles,# Phenotypes. 13.38 cM
+      1 0.146100
+      2 0.853900
+rs191833AUTOSOME 2 0  6 0.135091 <= # Alleles,# Phenotypes. 13.51 cM
+      1 0.432600
+      2 0.567400
+s7774359AUTOSOME 2 0  6 0.135596 <= # Alleles,# Phenotypes. 13.56 cM
+      1 0.174200
+      2 0.825800
+s9405272AUTOSOME 2 0  6 0.137218 <= # Alleles,# Phenotypes. 13.72 cM
+      1 0.202200
+      2 0.797800
+s6937827AUTOSOME 2 0  6 0.138560 <= # Alleles,# Phenotypes. 13.86 cM
+      1 0.353900
+      2 0.646100
+s9504439AUTOSOME 2 0  6 0.139178 <= # Alleles,# Phenotypes. 13.92 cM
+      1 0.432600
+      2 0.567400
+11962015AUTOSOME 2 0  6 0.139732 <= # Alleles,# Phenotypes. 13.97 cM
+      1 0.016900
+      2 0.983100
+s4959341AUTOSOME 2 0  6 0.140396 <= # Alleles,# Phenotypes. 14.04 cM
+      1 0.393300
+      2 0.606700
+10484314AUTOSOME 2 0  6 0.142026 <= # Alleles,# Phenotypes. 14.20 cM
+      1 0.432600
+      2 0.567400
+12190311AUTOSOME 2 0  6 0.142837 <= # Alleles,# Phenotypes. 14.28 cM
+      1 0.331500
+      2 0.668500
+13210778AUTOSOME 2 0  6 0.143660 <= # Alleles,# Phenotypes. 14.37 cM
+      1 0.151700
+      2 0.848300
+s6926774AUTOSOME 2 0  6 0.144249 <= # Alleles,# Phenotypes. 14.42 cM
+      1 0.089900
+      2 0.910100
+s6911736AUTOSOME 2 0  6 0.145155 <= # Alleles,# Phenotypes. 14.52 cM
+      1 0.056200
+      2 0.943800
+s9502340AUTOSOME 2 0  6 0.147504 <= # Alleles,# Phenotypes. 14.75 cM
+      1 0.056200
+      2 0.943800
+s9504549AUTOSOME 2 0  6 0.148570 <= # Alleles,# Phenotypes. 14.86 cM
+      1 0.348300
+      2 0.651700
+s6914546AUTOSOME 2 0  6 0.149130 <= # Alleles,# Phenotypes. 14.91 cM
+      1 0.432600
+      2 0.567400
+s9504579AUTOSOME 2 0  6 0.152035 <= # Alleles,# Phenotypes. 15.20 cM
+      1 0.078700
+      2 0.921300
+s9405884AUTOSOME 2 0  6 0.152625 <= # Alleles,# Phenotypes. 15.26 cM
+      1 0.224700
+      2 0.775300
+s7745233AUTOSOME 2 0  6 0.153365 <= # Alleles,# Phenotypes. 15.34 cM
+      1 0.129200
+      2 0.870800
+rs582186AUTOSOME 2 0  6 0.153917 <= # Alleles,# Phenotypes. 15.39 cM
+      1 0.314600
+      2 0.685400
+rs667875AUTOSOME 2 0  6 0.154429 <= # Alleles,# Phenotypes. 15.44 cM
+      1 0.410100
+      2 0.589900
+s2170618AUTOSOME 2 0  6 0.155105 <= # Alleles,# Phenotypes. 15.51 cM
+      1 0.095500
+      2 0.904500

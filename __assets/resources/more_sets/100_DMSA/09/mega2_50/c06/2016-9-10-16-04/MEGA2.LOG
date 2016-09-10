@@ -1,0 +1,46 @@
+==========================================================
+                          MEGA2 4.2 
+  by Daniel E. Weeks, Nandita Mukhopadhyay, Lee W. Almasy, 
+            William Mullvihill and Mark Schroeder
+     Copyright (c) 1997-2009 The University of Pittsburgh
+     Last updated: Jun 22 2009, 10:54:11
+     Mega2 comes with ABSOLUTELY NO WARRANTY.
+See LICENSE.txt for terms of copying, modifying & redistributing Mega2.
+==========================================================
+-----------------------------------------------------
+        Mega2 version 4.2
+Run date:                  2016-9-10-16-04
+This file created on       Sat Sep 10 16:04:19 2016
+Input file names
+#       Pedigree file :              datain.06
+#          Locus file :              datain.06
+#            Map file :              pedin.06
+#           Omit file :              map.06
+  Untyped pedigree option: Include all pedigrees whether typed or not
+Mendelianly-inconsistent genotypes included in output.
+Half-typed individuals' genotypes included in output.
+---------------------------------------------
+
+===========================================================
+Analysis option: Simwalk2.
+Analysis sub-option: Haplotype analysis.
+Checking format of input files ....
+	datain.06 is in LINKAGE format.
+	datain.06 is in LINKAGE format.
+	pedin.06 is in LINKAGE format.
+	map.06 is in ANNOTATED format.
+ERROR: Input files appear to be in mixed ANNOTATED and LINKAGE format.
+ERROR: Please use only ANNOTATED or only LINKAGE files.
+ERROR: Unsuccessful in reading input files - aborting mega2!
+
+===========================================================
+Run parameters stored in batch file 2016-9-10-16-04/MEGA2.BATCH
+If you use Mega2 as part of a published work, please reference 
+ Mukhopadhyay N, Almasy L, Schroeder M, Mulvihill WP, Weeks DE (2005)
+ Mega2: data-handling for facilitating genetic linkage and association analyses.
+ Bioinformatics. 2005 May 15;21(10):2556-7, PMID: 15746282
+as well as the version used, which is currently Version 4.2
+===========================================================
+See run summaries in directory 2016-9-10-16-04 
+   MEGA2.LOG, MEGA2.ERR
+===========================================================

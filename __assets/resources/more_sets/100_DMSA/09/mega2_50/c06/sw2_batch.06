@@ -1,0 +1,126 @@
+
+000001                 ! batch item number
+1                      ! Analysis: 1=Haplo, 2=LOD, 3=NPL, 4=IBD, 5=Mistyping
+
+000002                 ! batch item number
+1                      ! integer label for this run of the program
+
+000003                 ! batch item number
+Chr  6; Infiles: Sat Sep 10 16:07:17 2016
+
+000004                 ! batch item number
+N                      ! continuation of a previous job?
+
+000005                 ! batch item number
+N                      ! run silently?
+
+000010                 ! batch item number
+LOCUS.DAT              ! name of locus file
+
+000011                 ! batch item number
+PEDIGREE.DAT           ! name of pedigree file
+
+000012                 ! batch item number
+F                      ! symbol for female (case insensitive)
+M                      ! symbol for   male (case insensitive)
+
+000013                 ! batch item number
+Y                      ! is trait listed in locus and pedigree files?
+1.00                   ! the a-priori proportion of linked pedigrees
+
+000016                 ! batch item number
+2                      ! label indicating an affected individual
+
+000017                 ! batch item number
+0                      ! affected status in:0=>trait locus; n=>n-th qant var
+
+000018                 ! batch item number
+1                      ! number of quantitative variables in pedigree
+
+000019                 ! batch item number
+PEN.DAT                ! Name of penetrance file; blank impies no file
+
+000020                 ! batch item number
+1000                   ! number of pedigrees sampled for each input pedigree
+
+000021                 ! batch item number {for simulated annealing}
+1                      ! number of parallel runs to perform
+
+000022                 ! batch item number {for simulated annealing}
+100.0                  ! temperature at start of simulated annealing
+
+000023                 ! batch item number {for simulated annealing}
+0.99                   ! factor by which the temperature changes
+
+000024                 ! batch item number {for simulated annealing}
+800                    ! number of temperature changes
+
+000025                 ! batch item number {for simulated annealing}
+0                      ! number of pre-simulated annealing steps
+
+00026                  ! batch item number
+64                     ! maximum number of attempts to find a legal state
+
+000029                 ! batch item number
+1000                   ! min. # of steps between sampled peds in sim. annealing
+1000                   ! min. # of steps between sampled peds in random walk
+
+000030                 ! batch item number
+10                     ! factor for number of steps in sim. annealing
+10                     ! factor for number of steps in random walk
+
+000031                 ! batch item number
+2.00                   ! mean # of transitions/step in sim. annealing
+2.00                   ! mean # of transitions/step in random walk
+
+000032                 ! batch item number
+10                     ! weight for untyped people in sim. annealing
+10                     ! weight for untyped people in random walk
+
+000033                 ! batch item number
+0.50                   ! weight for neighbor-pivot in sim. annealing
+0.50                   ! weight for neighbor-pivot in random walk
+
+000034                 ! batch item number
+0.25                   ! freq of transition type 2 in sim. annealing
+0.25                   ! freq of transition type 2 in random walk
+
+000035                 ! batch item number
+0                      ! number of steps between 'free' runs
+
+000036                 ! batch item number
+27713                  ! random seed: positive integer < 30000
+ 2321                  ! random seed: positive integer < 30000
+18777                  ! random seed: positive integer < 30000
+
+000040                 ! batch item number
+N                      ! create the INPED-nn.mmm files?
+
+000041                 ! batch item number {only for location scores}
+Y                      ! create the SCORE-nn.mmm files?
+
+000043                 ! batch item number {only for haplotyping}
+Y                      ! create the haplotype export files?
+
+000044                 ! batch item number {only for haplotyping}
+0                      ! Haplotype threshold for rerunning a pedigree
+0                      ! Recombination threshold for rerunning a pedigree
+
+000045                 ! batch item number {only for haplotyping}
+0.85                   ! Step count threshold for rerunning a pedigree
+
+000046                 ! batch item number {only for haplotyping}
+N                      ! haplotypes displayed vertically?
+N                      ! haplotypes displayed using founder-source label?
+N                      ! allele specified even when no information available?
+
+000047                 ! batch item number {only for sampling}
+N                      ! output the sampled pedigrees in LINKAGE-format?
+
+000048                 ! batch item number {only for NPL statistics}
+10000                  ! number of unconditional simulations for p-value
+
+000049                 ! batch item number {only for IBD analysis}
+4                      ! number of points analyzed between markers
+
+000050                 ! batch item number signifying end of data

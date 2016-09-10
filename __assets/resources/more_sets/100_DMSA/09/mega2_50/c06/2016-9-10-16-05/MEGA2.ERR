@@ -1,0 +1,25 @@
+==========================================================
+                          MEGA2 4.2 
+  by Daniel E. Weeks, Nandita Mukhopadhyay, Lee W. Almasy, 
+            William Mullvihill and Mark Schroeder
+     Copyright (c) 1997-2009 The University of Pittsburgh
+     Last updated: Jun 22 2009, 10:54:11
+     Mega2 comes with ABSOLUTELY NO WARRANTY.
+See LICENSE.txt for terms of copying, modifying & redistributing Mega2.
+==========================================================
+-----------------------------------------------------
+        Mega2 version 4.2
+Run date:                  2016-9-10-16-05
+This file created on       Sat Sep 10 16:06:36 2016
+Input file names
+#       Pedigree file :              pedin_3.06
+#          Locus file :              datain_3.06
+#            Map file :              map_3.06
+  Untyped pedigree option: Include all pedigrees whether typed or not
+Mendelianly-inconsistent genotypes included in output.
+Half-typed individuals' genotypes included in output.
+---------------------------------------------
+
+WARNING: Missing allele and affection values set to '0'
+WARNING: Unable to create html-formatted run summary.
+WARNING: mega2log2html.pl may not be installed on your system.

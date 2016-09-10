@@ -1,0 +1,38 @@
+                                                                               
+                                                                               
+       SimWalk2 version 2.91                                                   
+                                                                               
+                                                                               
+       Type of data analysis:         Haplotyping                              
+                                                                               
+       Locus data INPUT file:         RERUN-02.LOC                             
+       Pedigree data INPUT file:      RERUN-02.PED                             
+       Map data INPUT file:           MAP.DAT                                  
+                                                                               
+                                                                               
+       Individual OUTPUT files:       HAPLO-03.mmm                             
+       Overall OUTPUT file:           QUICK-03.ALL                             
+       Summary OUTPUT file:           TABLE-03.ALL                             
+       Copy of all screen output:     VIDEO-03.TXT                             
+                                                                               
+       Here 'mmm' is from the order within the input pedigree file,            
+       e.g., '001' for the first pedigree, etc.                                
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+  Working on data initialization ...                                           
+   Map data file 'MAP.DAT' completed initialization;                           
+   Locus data file 'RERUN-02.LOC' completed initialization;                    
+   Pedigree #001 completed initialization;                                     
+   Pedigree #002 completed initialization;                                     
+   Pedigree #003 completed initialization;                                     
+   Pedigree #004 completed initialization;                                     
+  All data completed initialization.                                           
+                                                                               
+                                                                               
+  Working on pedigree analysis ...                                             
+                                                                               
+   Pedigree #004 ('1004') working on haplotyping ...                           
+      (Found an initial consistent state.)                                     
+          25% done ...                                                         

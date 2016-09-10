@@ -1,0 +1,110 @@
+==========================================================
+                          MEGA2 4.2 
+  by Daniel E. Weeks, Nandita Mukhopadhyay, Lee W. Almasy, 
+            William Mullvihill and Mark Schroeder
+     Copyright (c) 1997-2009 The University of Pittsburgh
+     Last updated: Jun 22 2009, 10:54:11
+     Mega2 comes with ABSOLUTELY NO WARRANTY.
+See LICENSE.txt for terms of copying, modifying & redistributing Mega2.
+==========================================================
+-----------------------------------------------------
+        Mega2 version 4.2
+Run date:                  2016-9-10-16-05
+This file created on       Sat Sep 10 16:06:27 2016
+Input file names
+#       Pedigree file :              pedin_3.06
+#          Locus file :              datain_3.06
+#            Map file :              map_3.06
+  Untyped pedigree option: Include all pedigrees whether typed or not
+Mendelianly-inconsistent genotypes included in output.
+Half-typed individuals' genotypes included in output.
+---------------------------------------------
+
+===========================================================
+Analysis option: Simwalk2.
+Analysis sub-option: Haplotype analysis.
+Checking format of input files ....
+	pedin_3.06 is in LINKAGE format.
+	datain_3.06 is in LINKAGE format.
+	map_3.06 is in LINKAGE format.
+Pedigree, names and map file appear to be in LINKAGE format.
+Input files will be read in as LINKAGE format files.
+WARNING: Missing allele and affection values set to '0'
+===========================================================
+Checking format of pedigree file pedin_3.06.
+Pedigree file pedin_3.06 is in pre-makeped format.
+Locus file is in Linkage format
+Reading in map file map_3.06.
+Data read in from map file.
+
+===========================================================
+Locus file is in LINKAGE format.
+Total number of loci =  51
+1 trait locus 
+      1 Affection status locus: 
+                TRAIT
+      50 Marker loci 
+Number of loci found per chromosome (chromosome:number)
+   6:50
+===========================================================
+Data read in from pedigree file:
+===========================================================
+Input pedigree data consists of:
+Input pedigree file is in pre-makeped format. 
+                                             Marker Genotypes
+                                             Fully    Half
+      Pedigrees    People   Males   Females  Typed    Typed  Total
+TOTAL        4       27      13      14        950       0     1350
+Typed        4       19       9      10
+Untyped      0        8       4       4
+===========================================================
+Pedigree exclusion option : Include all pedigrees whether typed or not.
+===========================================================
+After excluding untyped pedigrees :
+Input pedigree file is in pre-makeped format. 
+                                             Marker Genotypes
+                                             Fully    Half
+      Pedigrees    People   Males   Females  Typed    Typed  Total
+TOTAL        4       27      13      14        950       0     1350
+Typed        4       19       9      10
+Untyped      0        8       4       4
+===========================================================
+Output will combine markers and the following selected traits:
+                TRAIT [MARKERS]
+After selecting traits and covariates
+1 trait locus 
+      1 Affection status locus: 
+                TRAIT
+Pedigree statistics after selecting chromosomes and marker loci:
+                                             Marker Genotypes
+                                             Fully    Half
+      Pedigrees    People   Males   Females  Typed    Typed  Total
+TOTAL        4       27      13      14        950       0     1350
+Typed        4       19       9      10
+Untyped      0        8       4       4
+===========================================================
+Person id in output pedigree file = Individual id
+===========================================================
+Pedigree identifier in output pedigree file = Premakeped pedigree number.
+===========================================================
+Mega2 created the following file(s) for Simwalk2-Haplotype analysis:
+        Locus file:           sw2_locus.06
+        Pedigree file:        sw2_pedigree.06
+        Map file:             sw2_map.06
+        Penetrance file:      sw2_pen.06
+        Simwalk2 batch file:  sw2_batch.06
+        C-Shell script:       sw2_haplo.06.sh
+===========================================================
+===========================================================
+Run parameters stored in batch file 2016-9-10-16-05/MEGA2.BATCH
+If you use Mega2 as part of a published work, please reference 
+ Mukhopadhyay N, Almasy L, Schroeder M, Mulvihill WP, Weeks DE (2005)
+ Mega2: data-handling for facilitating genetic linkage and association analyses.
+ Bioinformatics. 2005 May 15;21(10):2556-7, PMID: 15746282
+as well as the version used, which is currently Version 4.2
+===========================================================
+See run summaries in directory 2016-9-10-16-05 
+   MEGA2.LOG, MEGA2.ERR, MEGA2.KEYS
+WARNING: Unable to create html-formatted run summary.
+WARNING: mega2log2html.pl may not be installed on your system.
+===========================================================

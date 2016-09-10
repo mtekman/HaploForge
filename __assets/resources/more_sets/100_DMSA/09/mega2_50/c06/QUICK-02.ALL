@@ -1,0 +1,115 @@
+ 
+                    Chr  6; Infiles: Sat Sep 10 16:07;RUN 02
+ 
+       Quick View of the Haplotype Analysis from SimWalk2 2.91
+ 
+ 
+ Below you will find a quick view of the best haplotype vector found for each
+ pedigree analyzed. Specifically, for each pedigree the quick view includes
+ one line for each founder, listing their name, sex and trait value (if any).
+ For each non-founder there is a set of two lines and then a blank line.
+ The data lines contain the following information, in order: the letter
+ 'M' or 'P' (indicating whether this is the maternal or paternal haplotype),
+ the child's name, their mother's name, their father's name, their sex,
+ their trait value (if any), the haplotype's 'source information',
+ a series of letters 'R' (one for each recombination in the haplotype),
+ the run label, the number of the pedigree, and finally the pedigree name.
+ The 'source information' for a haplotype is a string of digits, one for each
+ allele in the haplotype, indicating the grandparental source of the allele.
+ A '1' indicates the corresponding allele came from a grandmaternal haplotype,
+ and a '2' indicates grandpaternal origin. Thus any transition from a '1' to a
+ '2', or vice versa, in either the maternal or paternal haplotypes, implies
+ a recombination event within that haplotype.
+ 
+________________________________________________________________________________
+                                                                                
+ The results for the pedigree named: 1001                                       
+ which is pedigree number:           001                                        
+                                                                                
+ This haplotype run has the label:   01                                         
+ The number of individuals is:       4                                          
+                                                                                
+  20                         M 1                                                
+  21                         F 1                                                
+M 22       21       20       M 2        22222222222222222222222222222222222222222222222222    01 001 1001
+P 22       21       20       M 2        22222222222222222222222222222222222222222222222222    01 001 1001
+                                                                                
+M 23       21       20       F 1        11111111111111111111111111111111111111111111111111    01 001 1001
+P 23       21       20       F 1        11111111111111111111111111111111111111111111111111    01 001 1001
+                                                                                
+________________________________________________________________________________
+                                                                                
+ The results for the pedigree named: 1002                                       
+ which is pedigree number:           002                                        
+                                                                                
+ This haplotype run has the label:   01                                         
+ The number of individuals is:       5                                          
+                                                                                
+  16                         M 1                                                
+  15                         F 1                                                
+M 17       15       16       F 2        11111111111111111111111111111111111111111111111111    01 002 1002
+P 17       15       16       F 2        22222222222222222222222222222222222222222222222222    01 002 1002
+                                                                                
+M 18       15       16       F 1        11111111111111111111111111111111111111111111111111    01 002 1002
+P 18       15       16       F 1        22222222222222222222222222222222222222222222222222    01 002 1002
+                                                                                
+M 19       15       16       M 1        22222222222222222222222222222222222222222222222222    01 002 1002
+P 19       15       16       M 1        22222222222222222222222222222222222222222222222222    01 002 1002
+                                                                                
+________________________________________________________________________________
+                                                                                
+ The results for the pedigree named: 1003                                       
+ which is pedigree number:           003                                        
+                                                                                
+ This haplotype run has the label:   01                                         
+ The number of individuals is:       4                                          
+                                                                                
+  24                         F 1                                                
+  7611                       M 1                                                
+M 27       24       7611     M 2        11111111111111111111111111111111111111111111111111    01 003 1003
+P 27       24       7611     M 2        11111111111111111111111111111111111111111111111111    01 003 1003
+                                                                                
+M 25       24       7611     F 2        22222222222222222222222222222222222222222222222222    01 003 1003
+P 25       24       7611     F 2        22222222222222222222222111111111111111111111111111 R  01 003 1003
+                                                                                
+________________________________________________________________________________
+                                                                                
+ The results for the pedigree named: 1004                                       
+ which is pedigree number:           004                                        
+                                                                                
+ This haplotype run has the label:   02                                         
+ The number of individuals is:       14                                         
+                                                                                
+  76521                      M 1                                                
+  76522                      F 1                                                
+  76611                      F 1                                                
+M 7661     76611    76521    M 1        11111111111111111111111111111111111111111111111111    02 004 1004
+P 7661     76611    76521    M 1        22222222222222222222222222222222222222222222222222    02 004 1004
+                                                                                
+  7662                       F 1                                                
+  7651                       M 1                                                
+M 7652     76522    76521    F 1        11111111111111111111111111111111111111111111111111    02 004 1004
+P 7652     76522    76521    F 1        22222222222222222222222222222222222222222222222222    02 004 1004
+                                                                                
+M 6        7662     7661     M 1        11111111111111111111111111111111111111111111111111    02 004 1004
+P 6        7662     7661     M 1        11111111111111111111111111111111111111111111111111    02 004 1004
+                                                                                
+M 5        7652     7651     F 1        11111111111111111111111111111111111111111111111111    02 004 1004
+P 5        7652     7651     F 1        11111111111111111111111111111111111111111111111111    02 004 1004
+                                                                                
+M 11       5        6        F 1        11111111111111111111111111111111111111111111111111    02 004 1004
+P 11       5        6        F 1        11111111111111111111111111111111111111111111222222 R  02 004 1004
+                                                                                
+M 10       5        6        F 1        22222222222222222222222222222222222222222222222222    02 004 1004
+P 10       5        6        F 1        11111111111111111111111111111111111111111111111111    02 004 1004
+                                                                                
+M 9        5        6        M 1        11111111111111111111111111111111111111111111111111    02 004 1004
+P 9        5        6        M 1        22222222222222222222222222211111111111111111111111 R  02 004 1004
+                                                                                
+M 8        5        6        M 1        11111111111111111111111111111111111111111111111111    02 004 1004
+P 8        5        6        M 1        11111111111111111111111111111111111111111111111111    02 004 1004
+                                                                                
+M 7        5        6        M 2        22222222222222222222222222222222222222222222222222    02 004 1004
+P 7        5        6        M 2        22222222222222222222222222222222222222222222222222    02 004 1004
+                                                                                
+________________________________________________________________________________

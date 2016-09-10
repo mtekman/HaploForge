@@ -1,0 +1,4 @@
+    1                            <= Number of Affection Status locus
+TRAIT          1                    <= Trait name, Number of liability classes
+       1 1.00000 1.00000 0.00000 <= Penetrances : Affection = 1 & Liability = 1
+       2 0.00000 0.00000 1.00000 <= Penetrances : Affection = 2 & Liability = 1

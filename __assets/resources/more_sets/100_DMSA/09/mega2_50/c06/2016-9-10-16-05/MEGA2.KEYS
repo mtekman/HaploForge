@@ -1,0 +1,42 @@
+-----------------------------------------------------
+        Mega2 version 4.2
+Run date:                  2016-9-10-16-05
+This file created on       Sat Sep 10 16:07:17 2016
+Input file names
+#       Pedigree file :              pedin_3.06
+#          Locus file :              datain_3.06
+#            Map file :              map_3.06
+  Untyped pedigree option: Include all pedigrees whether typed or not
+Mendelianly-inconsistent genotypes included in output.
+Half-typed individuals' genotypes included in output.
+---------------------------------------------
+
+INPUT                           OUTPUT                                                                                  
+Pedigree   Person     Loop id  Pedigree    Person      
+1001       20                  1001       20         
+1001       21                  1001       21         
+1001       22                  1001       22         
+1001       23                  1001       23         
+1002       16                  1002       16         
+1002       15                  1002       15         
+1002       17                  1002       17         
+1002       18                  1002       18         
+1002       19                  1002       19         
+1003       24                  1003       24         
+1003       7611                1003       7611       
+1003       27                  1003       27         
+1003       25                  1003       25         
+1004       76521               1004       76521      
+1004       76522               1004       76522      
+1004       76611               1004       76611      
+1004       7661                1004       7661       
+1004       7662                1004       7662       
+1004       7651                1004       7651       
+1004       7652                1004       7652       
+1004       6                   1004       6          
+1004       5                   1004       5          
+1004       11                  1004       11         
+1004       10                  1004       10         
+1004       9                   1004       9          
+1004       8                   1004       8          
+1004       7                   1004       7          

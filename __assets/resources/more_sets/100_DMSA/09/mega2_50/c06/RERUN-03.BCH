@@ -1,0 +1,242 @@
+ 
+000001                 ! batch item number
+1
+ 
+000002                 ! batch item number
+     4
+ 
+000003                 ! batch item number
+Chr  6; Infiles: Sat Sep 10 16:07;RUN 04
+ 
+000004                 ! batch item number
+Y
+ 
+000005                 ! batch item number
+N
+ 
+000010                 ! batch item number
+RERUN-03.LOC   
+ 
+000011                 ! batch item number
+RERUN-03.PED   
+ 
+000012                 ! batch item number
+F
+M
+ 
+000013                 ! batch item number
+Y
+ 1.00000
+ 
+000014                 ! batch item number
+    50
+     1
+     2
+     3
+     4
+     5
+     6
+     7
+     8
+     9
+    10
+    11
+    12
+    13
+    14
+    15
+    16
+    17
+    18
+    19
+    20
+    21
+    22
+    23
+    24
+    25
+    26
+    27
+    28
+    29
+    30
+    31
+    32
+    33
+    34
+    35
+    36
+    37
+    38
+    39
+    40
+    41
+    42
+    43
+    44
+    45
+    46
+    47
+    48
+    49
+    50
+ 
+000015                 ! batch item number
+    50
+ 0.00214 0.00214
+ 0.00066 0.00066
+ 0.00052 0.00052
+ 0.00060 0.00060
+ 0.00058 0.00058
+ 0.00061 0.00061
+ 0.00202 0.00202
+ 0.00086 0.00086
+ 0.00052 0.00052
+ 0.00052 0.00052
+ 0.00091 0.00091
+ 0.00056 0.00056
+ 0.00232 0.00232
+ 0.00152 0.00152
+ 0.00074 0.00074
+ 0.00157 0.00157
+ 0.00146 0.00146
+ 0.00358 0.00358
+ 0.00059 0.00059
+ 0.00073 0.00073
+ 0.00076 0.00076
+ 0.00082 0.00082
+ 0.00211 0.00211
+ 0.00075 0.00075
+ 0.00080 0.00080
+ 0.00071 0.00071
+ 0.00092 0.00092
+ 0.00060 0.00060
+ 0.00133 0.00133
+ 0.00050 0.00050
+ 0.00162 0.00162
+ 0.00134 0.00134
+ 0.00062 0.00062
+ 0.00055 0.00055
+ 0.00066 0.00066
+ 0.00163 0.00163
+ 0.00081 0.00081
+ 0.00082 0.00082
+ 0.00059 0.00059
+ 0.00091 0.00091
+ 0.00234 0.00234
+ 0.00106 0.00106
+ 0.00056 0.00056
+ 0.00290 0.00290
+ 0.00059 0.00059
+ 0.00074 0.00074
+ 0.00055 0.00055
+ 0.00051 0.00051
+ 0.00068 0.00068
+ 
+000016                 ! batch item number
+2       
+ 
+000017                 ! batch item number
+     0
+ 
+000018                 ! batch item number
+     1
+ 
+000019                 ! batch item number
+PEN.DAT        
+ 
+000020                 ! batch item number
+  1000
+ 
+000021                 ! batch item number
+     1
+ 
+000022                 ! batch item number
+100.00
+ 
+000023                 ! batch item number
+ 0.99500
+ 
+000024                 ! batch item number
+  1600
+ 
+000030                 ! batch item number
+    65
+    65
+ 
+000025                 ! batch item number
+     0
+ 
+000026                 ! batch item number
+    64
+ 
+000029                 ! batch item number
+  1000
+  1000
+ 
+000031                 ! batch item number
+  2.00
+  2.00
+ 
+000032                 ! batch item number
+    10
+    10
+ 
+000033                 ! batch item number
+  0.50
+  0.50
+ 
+000034                 ! batch item number
+  0.25
+  0.25
+ 
+000035                 ! batch item number
+     0
+ 
+000036                 ! batch item number
+  4119
+ 12313
+  5320
+ 
+000037                 ! batch item number
+     0
+ 0.02500
+ 
+000039                 ! batch item number
+ALL
+ 
+000040                 ! batch item number
+N
+ 
+000041                 ! batch item number
+N
+ 
+000042                 ! batch item number
+ 0.50000
+ 
+000043                 ! batch item number
+Y
+ 
+000044                 ! batch item number
+     0
+     0
+ 
+000045                 ! batch item number
+  0.85
+ 
+000046                 ! batch item number
+N
+N
+N
+ 
+000047                 ! batch item number
+N
+ 
+000048                 ! batch item number
+ 10000
+ 
+000049                 ! batch item number
+     0
+  1.00
+ 
+000050                 ! batch item number

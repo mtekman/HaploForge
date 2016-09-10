@@ -1,0 +1,98 @@
+                                                                                
+                     Chr  6; Infiles: Sat Sep 10 16:07:17 201                   
+                                                                                
+                     Haplotyping Results from SimWalk2 2.91                     
+                                                                                
+                                                                                
+ The results for the pedigree named: 1001                                       
+ which is pedigree number:           001                                        
+                                                                                
+ This haplotype run has the label:   01                                         
+ The number of individuals is:       4                                          
+                                                                                
+  NAME     MOTHER   FATHER SEX TRAIT    MARKERS                                 
+                                                                                
+M 20       --       --       M 1        2   2   2   2   2   1   1   2   2   1   2   2   1   1   2   1   2   2   1   1   2   2   1   1   2   1   2   1   2   1   1   2   2   1   2   1   2   1   2   1   2   2   2   2   1   1   1   2   1   1
++                                       -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+P 20       --       --       M 1        2   2   2   1   1   1   2   1   1   2   2   2   2   1   1   2   1   1   1   1   2   2   2   1   2   2   1   2   1   1   2   2   2   1   2   2   2   1   2   1   2   1   2   1   1   2   1   1   2   2
+                                                                                
+                                                                                
+M 21       --       --       F 1        2   2   2   1   1   1   2   2   2   1   2   2   2   1   1   2   1   1   1   1   1   2   1   1   1   2   2   1   1   1   2   2   1   1   2   1   1   2   1   2   2   1   1   2   1   2   1   2   1   2
++                                       -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+P 21       --       --       F 1        2   2   2   2   2   1   1   2   2   1   1   2   2   1   1   1   2   1   1   1   2   1   1   2   1   2   1   1   2   2   2   1   2   1   2   1   1   1   2   1   2   1   2   2   1   2   1   1   2   2
+                                                                                
+                                                                                
+M 22       21       20       M 2        2   2   2   2   2   1   1   2   2   1   1   2   2   1   1   1   2   1   1   1   2   1   1   2   1   2   1   1   2   2   2   1   2   1   2   1   1   1   2   1   2   1   2   2   1   2   1   1   2   2
++                                       -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+P 22       21       20       M 2        2   2   2   1   1   1   2   1   1   2   2   2   2   1   1   2   1   1   1   1   2   2   2   1   2   2   1   2   1   1   2   2   2   1   2   2   2   1   2   1   2   1   2   1   1   2   1   1   2   2
+                                                    *   *       *                                   *   *                                               *
+                                                                                
+M 23       21       20       F 1        2   2   2   1   1   1   2   2   2   1   2   2   2   1   1   2   1   1   1   1   1   2   1   1   1   2   2   1   1   1   2   2   1   1   2   1   1   2   1   2   2   1   1   2   1   2   1   2   1   2
++                                       -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+P 23       21       20       F 1        2   2   2   2   2   1   1   2   2   1   2   2   1   1   2   1   2   2   1   1   2   2   1   1   2   1   2   1   2   1   1   2   2   1   2   1   2   1   2   1   2   2   2   2   1   1   1   2   1   1
+                                                    *   *       *                                   *   *                                               *
+________________________________________________________________________________
+                                                                                
+                                                                                
+ The above haplotype vector uses the actual allele names within the haplotype   
+ representation. There is an option to instead use labels indicating from which 
+ founder haplotype an allele is descended; with this option the allele flow     
+ through the pedigree is even easier to see. Of course the actual allele names  
+ associated with the labels are also provided. This option is batch item #46.2. 
+                                                                                
+ The above haplotype vector lists for each individual, in order: the letter     
+ M or P indicating whether this line is their maternal or paternal haplotype,   
+ the individual's name, their mother's name, their father's name, their sex,    
+ and their trait phenotype, if any. The haplotype is then listed horizontally.  
+                                                                                
+ @ is used as the allele name when there is no information in this haplotype    
+   vector to determine which allele is in that locus at that individual.        
+   This occurs when a founder allele's descent through the pedigree does not    
+   place it in any typed locus; this allele slot can be filled by ANY ALLELE.   
+   If one must choose an allele, then the maximum likelihood solution is to     
+   place into this slot the allele with largest frequency at that marker        
+   (this option can be implemented using batch item #46.3).                     
+                                                                                
+ Separating the maternal and paternal haplotypes is a line of symbols:          
+                                                                                
+ - is the default symbol;                                                       
+ ^ indicates recombination in this interval only in the maternal haplotype      
+   (this symbol points towards the marker interval on the maternal haplotype);  
+ V indicates recombination in this interval only in the paternal haplotype      
+   (this symbol points towards the marker interval on the paternal haplotype);  
+ | indicates recombination in both maternal and paternal haplotypes.            
+                                                                                
+ = highlights maternal or paternal alleles which have been inferred.            
+   That is, these alleles were originally undetermined but in this              
+   haplotype vector are identical-by-descent to alleles which are known.        
+   (This symbol is not applied to untyped alleles that are unambiguously        
+   determined by the other alleles which are typed within the pedigree data.)   
+                                                                                
+ * marks those non-founder ordered genotypes whose phase is not fixed in this   
+   haplotype vector; however, the largest likelihood was found using the phase  
+   shown above. Of course, phase is also not fixed at any heterozygous founder  
+   genotype. This symbol is displayed outside the genotype's paternal allele.   
+                                                                                
+ Batch item #46.1 gives the option of listing these haplotypes vertically.      
+ This may be more convenient for viewing large numbers of marker loci.          
+                                                                                
+ As mentioned above, for non-founders, the maternal haplotype is listed first,  
+ the paternal second. For founders, although the order is arbitrary,            
+ when refering to the haplotype that is listed first, we again use the          
+ term 'maternal'; the second haplotype is again called the 'paternal'.          
+                                                                                
+                                                                                
+ Summary Table:                                                                 
+                                                                                
+RUN  PED    PED    STEPS   LOG-10     RECOMBINATIONS   HAPLOTYPES WITH r RECOMB:
+NUM  NUM    NAME   TAKEN  LIKELIHOOD  EXPECTED  SEEN   r=0  r=1  r=2  r=3  r>3  
+                                                                                
+01   001   1001     43%    -83.32701     0.2      0     8    0    0    0    0   
+                                                                                
+                                                                                
+ This haplotype vector was found without regard to the trait locus.             
+                                                                                
+ The above pedigree was found on step number:                      5613971      
+                                                                                
+________________________________________________________________________________
+                                                                                

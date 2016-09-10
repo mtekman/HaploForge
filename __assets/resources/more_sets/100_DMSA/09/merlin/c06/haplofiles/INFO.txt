@@ -1,0 +1,21 @@
+
+Haplotype File Output:
+http://csg.sph.umich.edu/abecasis/Merlin/tour/haplotyping.html
+
+.chr output:
+================
+| = no recomb
+/\+: = recomb
+A,B,C,... = Ambiguous
+
+
+.flow output:
+==============
+ABCD = founder allele groups
+
+
+
+Haplo Command:
+merlin -d datain.06 -p pedin.06 -m merlin_map.06 --best > merlin.out
+
+

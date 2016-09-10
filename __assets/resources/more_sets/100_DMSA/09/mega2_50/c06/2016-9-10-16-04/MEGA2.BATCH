@@ -1,0 +1,88 @@
+#          Sat Sep 10 16:04:19 2016
+# Lines beginning with # are comments.
+# 
+# Currently implemented keywords:
+#   1) Input_Pedigree_File 
+#   2) Input_Locus_File 
+#   3) Input_Map_File 
+#   4) Input_Omit_File 
+#   5) Input_Untyped_Ped_Option 
+#   6) Analysis_Option 
+#   7) Analysis_Sub_Option 
+#   8) Chromosome_Single 
+#   9) Chromosomes_Multiple_Num 
+#   10) Chromosomes_Multiple 
+#   11) Loci_Selected_Num 
+#   12) Loci_Selected 
+#   13) Trait_Single 
+#   15) Traits_Loop_Over 
+#   16) Traits_Combine 
+#   17) Trait_Subdirs 
+#   18) Value_Missing_Quant 
+#   19) Value_Affecteds 
+#   20) Error_Loci 
+#   21) Error_Except_Loci 
+#   22) Error_Loci_Num 
+#   23) Error_Model 
+#   24) Error_Probabilities 
+#   25) Input_Do_Error_Sim 
+#   26) Default_Outfile_Names 
+#   27) Default_Reset_Invalid 
+#   28) Default_Other_Values 
+#   29) Default_Ignore_Nonfatal 
+#   30) Default_Rplot_Options 
+#   31) Xlinked_Analysis_Mode 
+#   33) Covariates_Selected 
+#   34) Output_Path 
+#   35) Count_Genotypes 
+#   36) Rplot_Statistics 
+#   37) Count_Halftypes 
+#   38) AlleleFreq_SquaredDev 
+#   39) Count_HWE_genotypes 
+#   40) Input_Frequency_File 
+#   41) Input_Penetrance_File 
+#   42) Output_Map_Num 
+#   43) Value_Missing_Allele_Aff 
+# 
+# Restrictions on usage:
+#   Use either Chromosome_Single or 
+#     Chromosome_Single and Loci_Selected or
+#     Chromosomes_Multiple and Chromsomes_Multiple_Num
+# 
+#  Use either Trait_Single or
+#             Traits_Loop_Over or
+#             Traits_Combine.
+#  Keyword    Trait_Subdirs is allowed only if
+#  keyword    Traits_Loop_Over is defined.
+# 
+#     Error_Loci and Error_Loci_Num or
+#     Error_Except_Loci and Error_Loci_Num.
+# 
+# Default settings :
+# Default_Reset_Invalid: 
+#   "yes"= set inconsistent genotypes to 0 and continue.
+#   "no"= continue without setting inconsistent genotypes to 0.
+# Default_Ignore_Nonfatal : 
+#   Don't pause for other non-fatal errors in input:
+# Default_Other_Values: 
+#   Use Mega2's default values instead of asking user
+#   inside analysis-option menus. 
+# Xlinked_Analysis_Mode:
+#   Set x-linked based on chromosome number(human).
+#   treat all markers as autosomal,
+#   or treat all markers as x-linked.
+# Count_Genotypes and Count_Halftypes
+#   These correspond to the Select Individuals menu
+#   within the allele-recoding step.
+# 
+Input_Pedigree_File=datain.06
+Input_Locus_File=datain.06
+Input_Map_File=pedin.06
+Input_Omit_File=map.06
+Input_Untyped_Ped_Option=2
+Input_Do_Error_Sim=no 
+Output_Path=.
+AlleleFreq_SquaredDev=999999.000000
+Value_Missing_Allele_Aff=NA
+Analysis_Option=Simwalk2
+Analysis_Sub_Option=Haplotype analysis
