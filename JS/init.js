@@ -56,7 +56,7 @@ function test(){
 	}, 500);
 }
 
-FounderColor.__testColors(48)
+//FounderColor.__testColors(48)
 //test();
 
 

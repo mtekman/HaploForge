@@ -14,53 +14,27 @@ var FounderColor = {
 			hgroup = FounderColor.hgroup;
 			map = FounderColor.unique;
 		}
-
 		var num_colors = hgroup.length;
-		console.log("num_colours", num_colors);
 
 		// More stepped approach -- no more than 3 tiers of darkness
 		var max_tiers = 5,
-			max_colors_per_tier = 9,
-			colours_per_tier,
-			num_tiers = Math.floor(num_colors / 10);
+			colours_per_tier = 10,
+			num_tiers = Math.floor(num_colors / colours_per_tier);
 
 
-		if (num_colors < 10){
+		if (num_colors < colours_per_tier){
 			num_tiers = 1;
 			colours_per_tier = num_colors
 		
 		} else {
-			// 14,15
-			if (num_tiers < 2){
-				num_tiers = 2
-			}
-			colours_per_tier = Math.floor(num_colors / num_tiers);
-			
+			num_tiers += 1;			
 		}
-
-
-		if (num_colors)
-
-
-		if (num_tiers > max_tiers){
-			num_tiers = max_tiers;
-		}
-		else if (num_tiers < 1){
-			num_tiers = 1;
-			colours_per_tier = 10;
-		}
-		else {
-			colours_per_tier = Math.floor(num_colors / num_tiers);	
-		}
-
 		var hue_step = Math.floor(360/colours_per_tier);
-
-		console.log("colors per tier", colours_per_tier, hue_step, num_tiers);
 
 		for (var tier=0; tier < num_tiers; tier ++)
 		{
-			var sat = 90 - (tier * (90/max_tiers)),
-				val = 80 - (tier * (60/max_tiers)),
+			var sat = 100 - (tier * (80/num_tiers)),
+				val = 90 - (tier * (80/num_tiers)),
 				hue = 0;
 
 
@@ -68,17 +42,13 @@ var FounderColor = {
 			{
 				var index = (tier*colours_per_tier)+c;
 
-				if (index > num_colors){
+				if (index >= num_colors){
 					break;
 				}
-				
 				map[index] = FounderColor.__hsv2rgb(hue, sat, val);
-				console.log( index, ":", hue, sat, val, map[index] )
-
 				hue += hue_step;
 			}
 		}
-
 		return colours_per_tier;
 	},
 
@@ -152,8 +122,6 @@ var FounderColor = {
 	    r = Math.round(r * 255);
 	    g = Math.round(g * 255);
 	    b = Math.round(b * 255);
-
-	    console.log(r,g,b);
 
 		return FounderColor.__rgb2hex(r,g,b);
 	},

@@ -382,7 +382,6 @@ function addHaploBlocksAll()
 							+ haploinfos[i][0].data_array[m]
 							+ haploblock_buffers.ht_2_ht
 							+ haploinfos[i][1].data_array[m]);
-
 		total_text +='\n';
 	}
 	var text = new Kinetic.Text({
