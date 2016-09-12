@@ -9,7 +9,9 @@ var FounderColor = {
 
 	makeUniqueColors: function()
 	{
-		FounderColor.unique = FounderColor.__generateColorRange(hgroup.length).rgb_array;
+		FounderColor.unique = FounderColor.__generateArrays(
+			FounderColor.hgroup.length
+		).rgb;
 	},
 
 	__mapped_used : {}, //needs to be cleared after final mapped() call

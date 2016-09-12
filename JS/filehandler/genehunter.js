@@ -19,16 +19,24 @@ var FORMAT = {
 	PEDFILE : 1,
 	HAPLO : {
 		ALLEGRO : {
-			HAPLO: 1,
-			MAP  : 0
+			HAPLO:   1, // ihaplo
+			DESCENT: 0, // inher
+			MAP  :   0  // map
 		},
 		SIMWALK : {
-			HAPLO: 1,
-			MAP  : 1
+			HAPLO:   1, // HEF
+			MAP  :   1  // map
 		},
 		GHM     : {
-			HAPLO: 1,
-			MAP  : 0
+			HAPLO:   1, // haplo
+			MAP  :   0, // map
+			PED  :   0  // pedin
+		},
+		MERLIN  : {
+			PED :    1, // pedin
+			HAPLO:   1,	// chr
+			DESCENT: 0, // flow
+			MAP:     0  // map
 		}
 	},
 	UNKNOWN : 0

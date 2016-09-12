@@ -8,7 +8,10 @@ var MainButtonActions  = {
 		PersistData.clearMaps();
 	},
 
-	processHaploFile: function() {
+
+	fileUpload: fileSelector.init,
+
+	/*processHaploFile: function() {
 	    var file = document.getElementById("haploupload").files[0];
 	    var lr = new FileReader();
 
@@ -20,11 +23,11 @@ var MainButtonActions  = {
 
 			MainButtonActions.processinput(
 				MainButtonActions._temphaploload
-			) /* type unknown at this point */
+			) /* type unknown at this point 
 	    };
 
 	    lr.readAsText(file);
-	},
+	},*/
 
 	loadHaploFromStorage: function() {
 		MainButtonActions.preamble();
@@ -114,14 +117,17 @@ var MainButtonActions  = {
 
 	processinput: function(data, type = null){
 		var pi = new ProcessInput(data, type);
+
+		// if type is null, it is determined
 		MainButtonActions.fileType = (type === null)?pi.type:type;
+
 
 		if (MainButtonActions.fileType === FORMAT.HAPLO.ALLEGRO){
 			MainButtonActions._temphaploload = data;
 		}
 
 		if (MainPageHandler._currentMode === MainPageHandler.modes.haploview ){
-			init.haploview();			
+			init.haploview.allegro();
 		}
 		else if (MainPageHandler._currentMode === MainPageHandler.modes.pedcreate ){
 			init.pedcreate();

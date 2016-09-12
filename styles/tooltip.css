@@ -1,0 +1,39 @@
+
+.tooltip_box {
+  display: inline-block;
+  color: blue;
+  border: 1px solid;
+  border-radius: 1px;
+  font-size: 2em;
+  font-style: bold;
+  padding-top: 2px;
+  padding-left: 10px;
+  padding-right:10px;
+  -webkit-transform: scale(0.35) translate(-40px,-15px);  /* Chrome, Opera 15+, Safari 3.1+ */
+      -ms-transform: scale(0.35) translate(-40px,-15px);  /* IE 9  */
+          transform: scale(0.35) translate(-40px,-15px);  /* Firefox 16+, IE 10+, Opera  */
+
+}
+
+.tooltip_text {
+  display: none;
+  position: fixed;
+  background-color: yellow;
+  color:blue;
+  border-radius: 5px;
+  padding: 10px;
+  max-width: 40%;
+  font-size: 0.8em;
+  opacity: 0.9;
+  z-index: 602;
+}
+
+.tooltip_text p { /*title*/
+  font-size:1em;
+  font-style: bold;
+  margin-bottom:0px;
+}
+
+.tooltip_box:hover ~ .tooltip_text {
+  display:block;
+}

@@ -8,6 +8,7 @@
         <link rel="stylesheet" type="text/css" href="styles/mainpage.css" >
         <link rel="stylesheet" type="text/css" href="styles/main.css" >
         <link rel="stylesheet" type="text/css" href="styles/filebox.css" >
+        <link rel="stylesheet" type="text/css" href="styles/tooltip.css" >
 	<!-- STYLE -->
     </head>
     <body onresize="resizeCanvas()" >
@@ -22,55 +23,121 @@
 
          <!-- STRICTLY TESTING -->
          <div id="filebox" >
+            <input type="button" id="filebox_close" value="X">
+
             <select id="fileselector">
+              <option selected value="null" >---</option>
               <option value="allegro">Allegro</option>
-              <option selected value="genehunter">Genehunter</option>
-              <option value="simwalk">Simwalk</option>
-              <option value="merlin">Merlin</option>
+              <option value="genehunter">Genehunter</option>
+              <option value="simwalk" >Simwalk (N/A)</option>
+              <option value="merlin" >Merlin (N/A)</option>
             </select>
 
-            <div id="box_allegro" class="upload_box">
-              <label for="allegro_haplo">
-                <input type="file" id="allegro_haplo">Allegro ihaplo File</label>
-              <br/>
-              <label for="allegro_map">
-                <input type="file" id="allegro_map">Allegro Map</label>
-                <br />
-                <input id="submit_allegro" type="button" value="Submit" />
+            <!-- null -->
+            <div id="box_null" class="boxed">
+            <h6>            
+              Please select a file format from the above list
+              </h6>
             </div>
 
-            <div id="box_ghm" class="upload_box">
-              <label for="ghm_haplo">
-                <input type="file" id="ghm_haplo">GH haplo.dump</label>
+            <!-- Allegro -->
+            <div id="box_allegro" class="upload_box border">
+              <label for="allegro_haplo"><input type="file" id="allegro_haplo">ihaplo file
+                  <div class="tooltip_box" >?</div>
+                  <div class="tooltip_text"><p>Haplotypes file</p>Contains phased genotypes and pedigree data. Points of recombination are determined by HaploHTML5's own algorithm.</div>
+              </label>
               <br/>
-              <label for="ghm_map">
-                <input type="file" id="ghm_map">GH map</label>
-                <br/>
-                <input id="submit_ghm" type="button" value="Submit" onclick="test()" />
+              <label for="allegro_descent"><input disabled type="file" id="allegro_descent">(optional) inher file
+                <div class="tooltip_box" >?</div>
+                <div class="tooltip_text" ><p>Descent Graph file</p>Contains founder allele groups and descent vectors. Use this instead of HaploHTML5's own method for determining points of recombination.</div>
+              </label>
+              <br/>
+              <label for="allegro_map"><input disabled type="file" id="allegro_map">(optional) map
+                <div class="tooltip_box" >?</div>
+                <div class="tooltip_text"><p>Map file</p>Will provide genetic marker distances in addition to the marker identifiers already present in the ihaplo and inher output files.</div>
+              </label>
+              <br/>
+              <br/>
+              <input id="submit_allegro" type="button" value="Submit" />
             </div>
 
-            <div id="box_sw" class="upload_box">
+
+            <!-- Genehunter -->
+            <div id="box_ghm" class="upload_box border">
+              <label for="ghm_haplo"><input type="file" id="ghm_haplo">haplo file
+                <div class="tooltip_box" >?</div>
+                <div class="tooltip_text" ><p>Haplotypes file</p>Contains phased genotypes and partial pedigree data. Points of recombination are determined by HaploHTML5's own algorithm.</div>
+              </label>
+              <br/>
+              <label for="ghm_map"><input disabled type="file" id="ghm_map">(optional) map
+                <div class="tooltip_box" >?</div>
+                <div class="tooltip_text" ><p>Map file</p>Provides marker identifiers and genetic distances.</div>
+              </label>
+              <br/>
+              <label for="ghm_ped"><input disabled type="file" id="ghm_ped">(optional) pedin
+                <div class="tooltip_box" >?</div>
+                <div class="tooltip_text" ><p>Pedigree file</p>Without this, genders are inferred from the haplo file through parentage. A pedigree file is required to correctly determine the genders of the last generation.</div>
+              </label>
+              <br/>
+              <br/>
+              <input id="submit_ghm" type="button" value="Submit" onclick="test()" />
+            </div>
+
+            <!-- Simwalk -->
+            <div id="box_sw" class="upload_box border">
               <label for="sw_haplo">
-                <input type="file" id="sw_haplo">Simwalk haplo.dump</label>
+                <input disabled type="file" id="sw_haplo" >HEF file
+                <div class="tooltip_box" >?</div>
+                <div class="tooltip_text" ><p>Haplotypes and Descent Graph</p>Contains pedigree, phased genotypes, and descent graph vectors.</div>
+              </label>
               <br/>
+              <label for="sw_infer_box" >
+                <input disabled type="checkbox" id="sw_infer_box" />
+                <h5>Ignore descent graph vectors?</h5>
+                <div class="tooltip_box" >?</div>
+                <div class="tooltip_text" ><p></p>Ignores vectors in HEF file and uses HaploHTML5's own algorithm to determine points of recombination.</div>
+              </label>
+              <br />
               <label for="sw_map">
-                <input type="file" id="sw_map">Simwalk map</label>
-                <br/>
-               <input id="submit_sw" type="button" value="Submit" />
-            </div>
-
-            <div id="box_merlin" class="upload_box">
-              <label for="merlin_haplo">
-                <input type="file" id="merlin_haplo">Merlin haplo.dump</label>
+                <input disabled type="file" id="sw_map" />(optional) map
+                  <div class="tooltip_box" >?</div>
+                  <div class="tooltip_text" ><p>Map file</p>Provides marker identifiers and genetic distances.</div>
+              </label>
               <br/>
-              <label for="merlin_map">
-                <input type="file" id="merlin_map">Merlin map</label>
-                <br/>
-                <input id="submit_merlin" type="button" value="Submit" />
+              <br/>
+              <input id="submit_sw" type="button" value="Submit" />
             </div>
-        </div>
 
-
+            <!-- Merlin -->
+            <div id="box_merlin" class="upload_box border">
+              <label for="merlin_ped">
+                <input disabled type="file" id="merlin_ped" >pedin file
+                <div class="tooltip_box" >?</div>
+                <div class="tooltip_text" ><p>Pedigree file</p>Required file due to the way Merlin splits off pedigree data from haplotype output data.</div>
+              </label>
+              <br />
+              <label for="merlin_haplo">
+                <input disabled type="file" id="merlin_haplo">chr file
+                <div class="tooltip_box" >?</div>
+                <div class="tooltip_text" ><p>Haplotypes file</p>Contains phased genotypes and partial pedigree data. Points of recombination are determined by HaploHTML5's own algorithm.</div>
+              </label>
+              <br />
+              <label for="merlin_descent">
+                <input disabled type="file" id="merlin_descent" >(optional) flow file
+                <div class="tooltip_box" >?</div>
+                <div class="tooltip_text" ><p>Descent Graph file</p>Contains founder allele groups and descent vectors. Use this instead of HaploHTML5's own method for determining points of recombination.</div>
+              </label>
+              <br />
+              <label for="merlin_map">
+                <input disabled type="file" id="merlin_map">(optional) map
+                <div class="tooltip_box" >?</div>
+                <div class="tooltip_text" ><p>Map file</p>Provides marker identifiers and genetic distances.</div>
+              </label>
+              <br/>
+              <br/>
+              <input id="submit_merlin" type="button" value="Submit" />
+            </div>
+          </div>
 
 
 
@@ -80,8 +147,8 @@
               <source src="http://i.imgur.com/qiOZUij.webm">
            </video> -->
 
-          <input id="haploupload" type="file" 
-                 onchange="MainButtonActions.processHaploFile()" />
+          <input id="haploupload" type="button" 
+                 onclick="MainButtonActions.fileUpload()" />
 
           <input id="haploresume" type="button"
                  onclick="MainButtonActions.loadHaploFromStorage()"  />
@@ -290,6 +357,9 @@
         <div id='container' ><!-- KineticJS creates a canvas for each layer, so no need --></div>
 
     <!-- CODE GOES HERE -->
+        <script src="JS/filehandler/genehunter.js" ></script>
+        <script src="JS/filehandler/boxselector.js" ></script>
+
         <script src="JS/cssfuncs/dialog/message_box.js" ></script>
         <script src="JS/cssfuncs/mainpage/mainpagehandler.js" ></script>
         <script src="JS/cssfuncs/mainpage/mainbuttonactions.js" ></script>
@@ -298,8 +368,6 @@
         <script src="JS/cssfuncs/buttonmodes/sidetool.js" ></script>
         <script src="JS/cssfuncs/buttonmodes/wrapper.js" ></script>
 
-        <script src="JS/filehandler/genehunter.js" ></script>
-        <script src="JS/filehandler/boxselector.js" ></script>
 
         <script src="JS/frameworks/kinetic-v5.1.0.js" ></script>
         <script src="JS/globals.js" ></script>

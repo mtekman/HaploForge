@@ -1,16 +1,55 @@
 
-
 var init = {
 
-	haploview : function(){
-		HaploPedProps.init();
-		graphInitPos(nodeSize + 10, grid_rezY);
+	haploview : {
 
-		if (MainButtonActions.fileType === FORMAT.HAPLO.ALLEGRO){
+		__BegFuncs(){
+			MainButtonActions.preamble();
+			MainPageHandler.haplomodeload();
+		},
+
+		__EndFuncs(){
+			graphInitPos(nodeSize + 10, grid_rezY);
+
 			assignHGroups();
 			washMarkerMap();
 
-			populateIndexDataList();
+			populateIndexDataList();	
+		},
+
+		allegro : function()
+		{
+			init.haploview.__BegFuncs();
+
+/*			(new Allegro(function(){
+				HaploPedProps.init();
+			}));*/ TODO
+			
+			HaploPedProps.init();
+			
+			init.haploview.__EndFuncs();
+		},
+
+		genehunter: function()
+		{
+			init.haploview.__BegFuncs();
+
+			(new Genehunter(function(){
+				HaploPedProps.init(function(){
+					familyMapOps.inferGenders();
+				})
+			}));
+
+			init.haploview.__EndFuncs();
+		},
+
+		simwalk: function()
+		{
+			utility.notify("TODO", "simwalk")
+		},
+
+		merlin: function(){
+			utility.notify("TODO", "merlin");
 		}
 	},
 
@@ -23,6 +62,9 @@ var init = {
 
 MainPageHandler.defaultload();
 //MainButtonActions.loadPedFromStorage();
+
+
+
 
 
 // Genehunter test
