@@ -5,6 +5,11 @@ var familyMapOps = {
 	_insertionLog : {}, // famid+pedid : counter of how many times attempted insertion
 						// should not exceed 2 (per allele line from pedfile)
 
+
+	export: function(fam_id = null){
+
+	},
+
 	clear: function(){
 		familyMapOps._map = {}; // reset
 	},

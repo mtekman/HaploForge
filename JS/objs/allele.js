@@ -15,15 +15,6 @@ class Allele {
 		// ^ Empty until pter_array is completely unambiguous, where pter_array is then deleted (dereferenced, left for GC)
 	}
 
-
-	export(){
-		return "{\
-			data_array: ["+this.data_array.join(" ")+"],\
-			haplogroup_array: ["+this.haplogroup_array.join(" ")+"],\
-			unique_groups : ["+this.unique_groups.join(" ")+"]}";
-
-	}
-
 	getLength(){
 		return this.data_array.length
 	}
