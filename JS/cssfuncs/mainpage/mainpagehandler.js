@@ -40,7 +40,10 @@ var MainPageHandler = {
 	},
 
 	defaultload: function(){
+		PersistData.clearMaps();
+
 		MainPageHandler._currentMode = MainPageHandler.modes.main
+		fileSelector.end();
 
 		/** Show main page, hide rest **/
 		MainPageHandler.showDiv("main", true);
@@ -55,6 +58,8 @@ var MainPageHandler = {
 	haplomodeload: function(){
 		MainPageHandler._currentMode = MainPageHandler.modes.haploview
 
+		fileSelector.end();
+
 		/** Show haplotypes, after file (up)load **/
 		MainPageHandler.showDiv("main", false);
 		MainPageHandler.showDiv("container", true);
@@ -68,8 +73,11 @@ var MainPageHandler = {
 	createpedmode: function(){
 		MainPageHandler._currentMode = MainPageHandler.modes.pedcreate
 
+		fileSelector.end();
+
 		/** Show haplotypes, after file (up)load **/
 		MainPageHandler.showDiv("main", false);
+		
 		MainPageHandler.showDiv("container", true);
 
 		MainPageHandler.showDiv("ToolButtons", true);

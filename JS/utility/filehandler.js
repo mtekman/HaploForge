@@ -1,31 +1,3 @@
-// "Pads rs identifiers into fixed width string based on max length
-function washMarkerMap(){
-	var maxlen = 0;
-	for (var i= 0; i < MarkerData.rs_array.length; i++){
-		var len = MarkerData.rs_array[i].length;
-		if (len > maxlen)
-			maxlen = len;
-	}
-	var format = (
-		function(){
-			var m=maxlen,
-				tx="";
-			while(m --> 0){
-				tx +=" ";
-			}
-			return tx;}
-	)();
-
-	// Not 10 causes formatting problems in haplomode
-	maxlen = 10;
-	maxlen_marker = maxlen;
-
-	for (var i=0; i < MarkerData.rs_array.length; i++)
-		MarkerData.rs_array[i] = (MarkerData.rs_array[i] + format).slice(0,maxlen);
-
-}
-
-
 
 
 //"Reads the haplofile, maps the markers to array indices, and populates pedigree array with persons"
@@ -58,18 +30,6 @@ class ProcessInput {
 		if (this.type === FORMAT.PEDFILE){
 			this.splitHeaderFromData();		
 		}
-
-		else if (this.type === FORMAT.HAPLO.ALLEGRO)
-		{
-			this.splitHeaderFromData();
-			this.handleAllegroHeaders();
-
-			// Set HAP_DRAW_LIM to length of markers if dealing with a small set
-			if (MarkerData.rs_array.length-1 < HAP_DRAW_LIM){
-				HAP_DRAW_LIM = MarkerData.rs_array.length - 1;
-			}
-    	}
-	    else {} // other formats TODO
 	}
 
 
@@ -134,29 +94,6 @@ class ProcessInput {
 				familyMapOps.getPerc(id,fam).stored_meta = meta;					// Holds graphics, person's name, other meta
 			}
 		}
-	}
-
-	handleAllegroHeaders(){
-		var count_markers = 0;                              //Process header lines --> Transpose matrix
-		//
-		for (var col=this._start_extract; col < this._header_lines[0].length; col++){
-			var col_string = "";
-
-			for (var row=this._header_lines.length; row > 0 ;){
-				col_string += this._header_lines[--row][col];
-			}
-
-			col_string = col_string.trim();
-
-			if (col_string!=="") {
-// 					marker_map[col_string] = count_markers++;
-				MarkerData.rs_array.push( col_string );
-			}
-
-		}
-// 			assert(Object.keys(marker_map).length === num_alleles_markers,
-// 				   "Marker map length does not match with haplo data: "
-// 				   + Object.keys(marker_map).length +" and " + num_alleles_markers);
 	}
 
 	_determineFileType()

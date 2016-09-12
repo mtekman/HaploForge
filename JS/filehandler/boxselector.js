@@ -60,7 +60,7 @@ var fileSelector = {
   },
 
   init() {
-    document.getElementById('maincircle').style.display = "none";
+    utility.showBG();
     fileSelector._container.style.display = "block"
 
 
@@ -85,7 +85,7 @@ var fileSelector = {
   },
 
   end(){
-    document.getElementById('maincircle').style.display = "";
-    fileSelector._container.style.display = "none"
+    utility.hideBG();
+    fileSelector._container.style.display = "none";
   }
 }

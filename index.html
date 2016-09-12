@@ -21,7 +21,7 @@
 
 
 
-         <!-- STRICTLY TESTING -->
+         <!-- Different File Uploads -->
          <div id="filebox" >
             <input type="button" id="filebox_close" value="X">
 
@@ -32,6 +32,7 @@
               <option value="simwalk" >Simwalk (N/A)</option>
               <option value="merlin" >Merlin (N/A)</option>
             </select>
+            <br />
 
             <!-- null -->
             <div id="box_null" class="boxed">
@@ -357,8 +358,12 @@
         <div id='container' ><!-- KineticJS creates a canvas for each layer, so no need --></div>
 
     <!-- CODE GOES HERE -->
-        <script src="JS/filehandler/genehunter.js" ></script>
+        <script src="JS/filehandler/formats.js" ></script>
+        <script src="JS/filehandler/generalfileutils.js" ></script>
         <script src="JS/filehandler/boxselector.js" ></script>
+        
+        <script src="JS/filehandler/allegro.js" ></script>
+        <script src="JS/filehandler/genehunter.js" ></script>
 
         <script src="JS/cssfuncs/dialog/message_box.js" ></script>
         <script src="JS/cssfuncs/mainpage/mainpagehandler.js" ></script>
@@ -369,7 +374,8 @@
         <script src="JS/cssfuncs/buttonmodes/wrapper.js" ></script>
 
 
-        <script src="JS/frameworks/kinetic-v5.1.0.js" ></script>
+        <script src="JS/__frameworks/kinetic-v5.1.0.js" ></script>
+        <script src="JS/utility/markerdata.js" ></script>
         <script src="JS/globals.js" ></script>
 
         <script src="JS/objs/person.js" ></script>

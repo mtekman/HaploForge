@@ -116,15 +116,28 @@ var MainButtonActions  = {
 	},
 
 	processinput: function(data, type = null){
+
+		if (type !== null){
+
+			if (type === FORMAT.ALLEGRO.HAPLO){
+				init.haploview.allegro
+
+
+			}
+
+
+		}
+
+
 		var pi = new ProcessInput(data, type);
 
 		// if type is null, it is determined
 		MainButtonActions.fileType = (type === null)?pi.type:type;
 
 
-		if (MainButtonActions.fileType === FORMAT.HAPLO.ALLEGRO){
+		//if (MainButtonActions.fileType === FORMAT.HAPLO.ALLEGRO){
 			MainButtonActions._temphaploload = data;
-		}
+		//}
 
 		if (MainPageHandler._currentMode === MainPageHandler.modes.haploview ){
 			init.haploview.allegro();

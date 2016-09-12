@@ -10,9 +10,18 @@ class Allele {
 		for (var i=0; i < data.length; i++)
 			this.pter_array.push( {color_group: []} ); 	//Array due to phase ambiguity
 
-		this.haplogroup_array;
+		this.haplogroup_array = null;
 		this.unique_groups = [];
 		// ^ Empty until pter_array is completely unambiguous, where pter_array is then deleted (dereferenced, left for GC)
+	}
+
+
+	export(){
+		return "{\
+			data_array: ["+this.data_array.join(" ")+"],\
+			haplogroup_array: ["+this.haplogroup_array.join(" ")+"],\
+			unique_groups : ["+this.unique_groups.join(" ")+"]}";
+
 	}
 
 	getLength(){

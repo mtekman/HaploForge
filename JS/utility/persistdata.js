@@ -1,11 +1,19 @@
 
 var PersistData = {
 
+	__clearData: function(){
+		localStorage.clear();
+		MainPageHandler.setPrevExistingButtons();
+	},
+
 	clearMaps: function(){
 		familyDraw.active_fam_group = null;
+		
 		GlobalLevelGrid.clear();
+		MarkerData.clear();
 		familyMapOps.clear();
 		uniqueGraphOps.clear();
+
 	},
 
 	makeTextFile: function(tex, textFile = null){

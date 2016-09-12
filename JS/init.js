@@ -3,44 +3,15 @@ var init = {
 
 	haploview : {
 
-		__BegFuncs(){
-			MainButtonActions.preamble();
-			MainPageHandler.haplomodeload();
-		},
-
-		__EndFuncs(){
-			graphInitPos(nodeSize + 10, grid_rezY);
-
-			assignHGroups();
-			washMarkerMap();
-
-			populateIndexDataList();	
-		},
-
 		allegro : function()
 		{
-			init.haploview.__BegFuncs();
-
-/*			(new Allegro(function(){
-				HaploPedProps.init();
-			}));*/ TODO
-			
-			HaploPedProps.init();
-			
-			init.haploview.__EndFuncs();
+			(new Allegro());
 		},
 
 		genehunter: function()
 		{
-			init.haploview.__BegFuncs();
-
-			(new Genehunter(function(){
-				HaploPedProps.init(function(){
-					familyMapOps.inferGenders();
-				})
-			}));
-
-			init.haploview.__EndFuncs();
+			(new Genehunter()); // yeah "new" is required...
+								// gc does its job
 		},
 
 		simwalk: function()
@@ -85,7 +56,7 @@ function test(){
 			graphInitPos(nodeSize + 10, grid_rezY);
 			assignHGroups();
 
-			washMarkerMap();
+			MarkerData.padMarkerMap();
 
 			populateIndexDataList();
 

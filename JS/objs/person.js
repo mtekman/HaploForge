@@ -17,6 +17,29 @@ class Person {
 		this.name = name;
 	}
 
+	export(){
+		return [this.id,
+			this.mother.id||0,
+			this.father.id||0,
+			this.gender,
+			this.affected,
+			this.name||"null",
+			this.haplo_data[0].data_array.join(" "),
+			this.haplo_data[1].data_array.join(" ")
+			].join(",");
+	}
+
+	import(string){
+		var tokens = string.split(",");
+
+		var id = parseInt(tokens[0]),
+			mother_id = parseInt(tokens[1]),
+			father_id = parseInt(tokens[2]),
+			gender = parseInt(tokens[3]),
+			affected = parseInt(tokens[4]),
+			
+	}
+
 	insertHaploData(normal_array){
 		var num_alleles = this.haplo_data.length;
 

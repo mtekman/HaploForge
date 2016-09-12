@@ -17,11 +17,6 @@ var PED = {
 
 
 
-//General storage, global scope
-var MarkerData = {
-	rs_array: [], // rsid
-	gp_array: [], // genpos
-}
 
 
 // Draw globals
@@ -38,7 +33,7 @@ var grid_rezY = nodeSize*6,
 var max_fam_width = 160
 
 var HAP_DRAW_LIM = 30, // No more than 30 haplotypes on screen
-	HAP_MIN_DRAW = 50,  // Minimum before haplos aare updated on drag.
+	HAP_MIN_DRAW = 50,  // Minimum before haplos are updated on drag.
 	HAP_VERT_SPA = 10;
 
 
@@ -102,10 +97,6 @@ function isEmpty(map){
 	return Object.getOwnPropertyNames(map).length === 0;
 }
 
-
-var maxlen_marker = 0; // set by filehandler, read by addHaploBlocks
-
-
 // Button
 var butt_w = 90,
 	butt_h = 20;
@@ -139,7 +130,7 @@ var haploblock_buffers = {
 
 
 var haploblock_spacers = {
-	marker_offset_px: ((maxlen_marker+11)*haploblock_settings.space_pixels)+1,
+	marker_offset_px: ((MarkerData.maxlen_marker+11)*haploblock_settings.space_pixels)+1,
 	person_offset_px: 10 * haploblock_settings.space_pixels,
 	block_width_px: HAP_VERT_SPA*1.2,
 	block_offset_px: (HAP_VERT_SPA*1.2) +2

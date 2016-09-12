@@ -1,100 +1,45 @@
-/** Local storage keys
-
-Two types of saves: pedigree and haplotype (regardless of format)
-
-Pedigree is a LINKAGE format with graphics meta appended at the end
-Haplotype is a compressed JSON with haplo + map data (if map given);
-
-**/
-var localStor = {
-	ped_save : 'ped_data',
-	ped_type : 'ped_type',
-	hap_save : 'hap_data',  // Own data format
-	hap_type : 'hap_type',
-	transfer : 'transferFromHaploToPed' // pedigrees in haplo can be modified
-}
-
-// 1 -- required, 0 -- optional
-var FORMAT = {
-	PEDFILE : 1,
-	HAPLO : {
-		ALLEGRO : {
-			HAPLO:   1, // ihaplo
-			DESCENT: 0, // inher
-			MAP  :   0  // map
-		},
-		SIMWALK : {
-			HAPLO:   1, // HEF
-			MAP  :   1  // map
-		},
-		GHM     : {
-			HAPLO:   1, // haplo
-			MAP  :   0, // map
-			PED  :   0  // pedin
-		},
-		MERLIN  : {
-			PED :    1, // pedin
-			HAPLO:   1,	// chr
-			DESCENT: 0, // flow
-			MAP:     0  // map
-		}
-	},
-	UNKNOWN : 0
-}
 
 
-
-
-
-class Genehunter {
+class Genehunter extends FileFormat {
 	
 	constructor(mode_init = null){
 
-		var haplofile = document.getElementById("ghm_haplo").files[0] || null,
-			mapfile   = document.getElementById("ghm_map").files[0] || null;
+		var haplo = {
+			id: "ghm_haplo",
+			process: function(haplo_text){
+//				localStorage.setItem("test", haplo_text);*/
+//				var haplo_text = localStorage.getItem("test");
+				Genehunter.populateFamilyAndHaploMap(haplo_text);				
+			}
+		}
 
-/*		if (haplofile !== null){
-			Genehunter.readFile(haplofile, function(haplo_text)
-			{
-				localStorage.setItem("test", haplo_text);*/
-				var haplo_text = localStorage.getItem("test");
-				Genehunter.populateFamilyMap(haplo_text);
+		var map = {
+			id: "ghm_map",
+			process: function(map_text){
+//				localStorage.setItem("maptest", map_text);
+//				var map_text = localStorage.getItem("maptest");
+				Genehunter.populateMarkerMap(map_text);			
+			},
+			nonexistent: function(){
+				// No map -- enumerate markers off some random perc
+				var randomperc = familyMapOps.getRandomPerc(),
+					allele_length = randomperc.haplo_data[0].data_array.length;
 
+				for (var m=0; m < allele_length; m++){
+					MarkerData.rs_array.push(String("          " + m).slice(-10));
+				}	
+			}
+		}
 
-/*				if (mapfile !== null){
-					Genehunter.readFile(mapfile, function(map_text){
+		var ped = {
+			id: "ghm_ped",
+			process: function(ped_text){
+				Genehunter.populateFamilyMap(ped_text);
+			}
+		}
 
-						localStorage.setItem("maptest", map_text);*/
-						var map_text = localStorage.getItem("maptest");
-						Genehunter.populateMarkerMap(map_text);
-/*					});
-				}
-				else {
-					var randomperc = familyMapOps.getRandomPerc(),
-						allele_length = randomperc.haplo_data.data_array.length;
-
-					for (var m=0; m < allele_length; m++){
-						MarkerData.rs_array.push(String("          " + m).slice(-10));
-					}
-				}
-*/
-
-				if (mode_init !== null){
-					mode_init();
-				}
-/*			});
-		}*/
-	}
-
-
-	static readFile(file, callback){
-	    var fr = new FileReader();
-
-	    fr.onloadend = function(e){
-	    	callback(e.target.result);
-	    };
-
-	    fr.readAsText(file);
+		super(haplo, map, ped, null, mode_init);
+		
 	}
 
 	static populateMarkerMap(text_unformatted){
@@ -127,8 +72,9 @@ class Genehunter {
 		}
 	}
 
+	static populateFamilyMap(text_unformatted){}
 
-	static populateFamilyMap(text_unformatted){
+	static populateFamilyAndHaploMap(text_unformatted){
 		
 		var lines = text_unformatted.split('\n'),
 			tmp_perc = null,
@@ -175,6 +121,5 @@ class Genehunter {
 
 			tmp_perc = person;
 		}
-		console.log("POPULALTE FAMILY MAP", familyMapOps._map);
 	}
 }
