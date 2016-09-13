@@ -221,10 +221,90 @@ function touchlines(grid_use){
 }
 
 
+function spaceFamGroups(){
+
+	var fam_placements = {}; // fid -> [position, width]
+
+	familyMapOps.foreachfam(function(fid){
+
+		// Get group width
+		var min_x = 999999999, min_y = 9999999,
+			max_x = 0, max_y = 0;
+
+		var famgfx = uniqueGraphOps.getFam(fid),
+			fgroup = famgfx.group;
+
+		uniqueGraphOps.foreachnode(function(nid, node)
+		{
+			var xer = node.graphics.getX(),
+				yer = node.graphics.getY()
+
+			if (min_x > xer - nodeSize){ min_x = xer - nodeSize; }
+			if (max_x < xer + nodeSize){ max_x = xer + nodeSize; }
+			
+			if (min_y > yer - nodeSize){ min_y = yer - nodeSize; }		
+			if (max_y < yer + nodeSize){ max_y = yer + nodeSize; }
+		}, fid);
+
+		var group_pos = fgroup.getAbsolutePosition(),
+			group_width = max_x - min_x,
+			group_height = max_y - min_y;
+
+		fam_placements[fid] = [fgroup, group_pos, group_width, group_height];
+	});
+
+	var start_x = nodeSize * 5,
+		start_y = 50;
+
+	var total_width = stage.getWidth(),
+		last_w = 0;
+
+	for (var f_id in fam_placements){
+		var pack = fam_placements[f_id],
+			group = pack[0],
+			pos = pack[1],
+			w = pack[2],
+			h = pack[3];
+
+		
+		group.setX( start_x );
+		group.setY( start_y );
+
+		console.log("setting", f_id, start_x, w, last_w);
+
+		main_layer.add( new Kinetic.Rect({
+			x:start_x,
+			y:0,
+			stroke:"red",
+			strokeWidth: 2,
+			width: 2,
+			height: stage.getHeight()
+		}));
+		
+/*		if (start_x + w > total_width){
+			start_x = 10;
+			start_y = h + nodeSize*2;
+		}*/
+		start_x += w;
+
+		group.add( new Kinetic.Rect({
+			x:0,
+			y:0,
+			stroke:"blue",
+			strokeWidth: 2,
+			width: 2,
+			height: stage.getHeight()
+		}));
+
+	}
+}
+
+
+
 // Initial spacing of groups
-function spaceFamGroups()
+function spaceFamGroups2()
 {
-	var leftover_gap = window.innerWidth,
+	var leftover_gap = stage.getWidth(),
 		num_fams = 0;
 
 	var global_minx = 9999999;

@@ -33,10 +33,16 @@ var MainButtonActions  = {
 		MainButtonActions.preamble();
 		MainPageHandler.haplomodeload();
 
-		var hap_data = localStorage.getItem( localStor.hap_save ),
-			hap_type = localStorage.getItem( localStor.hap_type );
+		var hap_data = localStorage.getItem( localStor.hap_save );
+			//hap_type = localStorage.getItem( localStor.hap_type );
 
-		MainButtonActions.processinput(hap_data, hap_type);
+		//MainButtonActions.processinput(hap_data, hap_type);
+
+		SerialParse.All.import( hap_data );
+		HaploPedProps.init();
+		graphInitPos();
+
+
 	},
 
 
@@ -70,8 +76,8 @@ var MainButtonActions  = {
 
 	saveHaploToStorage: function(){
 		//Save to local storage
-		localStorage.setItem(localStor.hap_save, MainButtonActions._temphaploload)
-		localStorage.setItem(localStor.hap_type, MainButtonActions.fileType)
+		localStorage.setItem(localStor.hap_save, SerialParse.All.export() )
+//		localStorage.setItem(localStor.hap_type, MainButtonActions.fileType)
 
 		utility.notify("Haplo File Saved","...");		
 	},

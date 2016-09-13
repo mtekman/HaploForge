@@ -31,11 +31,22 @@ Notes:
 // After populating, add graphics
 function graphInitPos(start_x, start_y, enable_ped_edit = false){
 
-	var x_shift_fam = 0;
+	var x_shift_fam = 0,
+		y_start = 10;
 
 	GlobalLevelGrid.foreachfam(function(grid, fam){
 		// Each fam gets their own group
-		var fam_group = addFamily(fam, x_shift_fam, 10);
+		var fam_group;
+
+		console.log(x_shift_fam,y_start)
+
+		if (uniqueGraphOps.famExists(fam) && uniqueGraphOps.getFam(fam).group !== null){
+			fam_group = uniqueGraphOps.getFam(fam).group;
+		}
+		else {
+			fam_group = addFamily(fam, x_shift_fam, y_start);
+		}
+
 		var max_x = 0;
 
 		var fam_gfx = uniqueGraphOps.getFam(fam);
@@ -65,7 +76,7 @@ function graphInitPos(start_x, start_y, enable_ped_edit = false){
 			and then expand out
 			*/
 
-			//Can't be helped, JS doesn't support macros...
+			//Can't be helped, JS doesn't support macros... mendokuse na...
 			function placePerp(index, posx){
 				var perp_id = indivs_in_gen[index],
 					perp = familyMapOps.getPerc(perp_id, fam),
@@ -73,12 +84,11 @@ function graphInitPos(start_x, start_y, enable_ped_edit = false){
 
 				// Restore meta
 				if (typeof perp.stored_meta !== "undefined"){
-					//console.log("using stored meta", perp_id, perp.stored_meta);
-					var meta = JSON.parse(perp.stored_meta);
+					console.log("using stored meta", perp_id, perp.stored_meta);
+					var meta = perp.stored_meta;
 
 					posx = meta.x;
 					y_pos = meta.y;
-					perp.name = meta.name;
 
 					delete perp.stored_meta;
 				}
@@ -196,8 +206,7 @@ function graphInitPos(start_x, start_y, enable_ped_edit = false){
 				edge.graphics.moveToBottom();
 			}
 		}
-		x_shift_fam += max_x + 20;
-	
+		x_shift_fam += max_x + 20;	
 	});
 
 

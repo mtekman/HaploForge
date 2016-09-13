@@ -15,6 +15,9 @@ class Person {
 
 		//Optional
 		this.name = name;
+
+		//Placeholder to be immediately deleted after read
+		this.stored_meta;
 	}
 
 	insertHaploData(normal_array){
@@ -139,39 +142,5 @@ class Person {
 			}
 		}
 		return -1
-	}
-
-
-	// Used for serializing/parsing
-	static export(person){
-		return [person.id,
-			person.mother.id||0,
-			person.father.id||0,
-			person.gender,
-			person.affected,
-			person.name||"null",
-			person.haplo_data[0].data_array.join(" "),
-			person.haplo_data[1].data_array.join(" ")
-			].join(",");
-	}
-
-	static import(string){
-		var tokens = string.split(",");
-
-		var id = parseInt(tokens[0]),
-			mother_id = parseInt(tokens[1]),
-			father_id = parseInt(tokens[2]),
-			gender = parseInt(tokens[3]),
-			affected = parseInt(tokens[4]),
-			name = tokens[5] === "null"?null:tokens[5].trim();
-
-		var haplo_data_one = tokens[6].trim().split(" ").map(x=> parseInt(x)),
-			haplo_data_two = tokens[7].trim().split(" ").map(x=> parseInt(x));
-
-		var person = new Person(id, gender, affected, mother_id, father_id, name);
-		person.insertHaploData(haplo_data_one);
-		person.insertHaploData(haplo_data_two);
-
-		return person;
 	}
 }

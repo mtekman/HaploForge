@@ -10,7 +10,7 @@ var uniqueGraphOps = {
 
 	foreachfam: function(callback){
 		for (var fam in uniqueGraphOps._map){
-			callback(fam);
+			callback(fam, uniqueGraphOps.getFam(fam));
 		}
 	},
 
@@ -19,12 +19,18 @@ var uniqueGraphOps = {
 
 			for (var fam in uniqueGraphOps._map){
 				for (var node in uniqueGraphOps.getFam(fam).nodes){
-					callback(node, fam);
+					if (node === "0"){
+						continue;
+					}
+					callback(node, fam, uniqueGraphOps.getNode(node, fam));
 				}
 			}
 		} else {
 			for (var node in uniqueGraphOps.getFam(fam_id).nodes){
-				callback(node);
+				if (node === "0"){
+					continue;
+				}
+				callback(node, uniqueGraphOps.getNode(node, fam_id));
 			}
 		}
 	},

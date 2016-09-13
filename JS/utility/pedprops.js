@@ -189,8 +189,8 @@ var HaploPedProps = {
 				
 						// Restore meta
 						if (typeof perp.stored_meta !== "undefined"){
-							//console.log("using stored meta", perc_id, perp.stored_meta);
-							var meta = JSON.parse(perp.stored_meta);
+							console.log("using stored meta", perc_id, perp.stored_meta);
+							var meta = perp.stored_meta;
 
 							uniqueGraphOps.insertNode(perc_id, fam_id, null);
 
