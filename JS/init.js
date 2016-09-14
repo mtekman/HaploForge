@@ -3,20 +3,17 @@ var init = {
 
 	haploview : {
 
-		allegro : function()
-		{
+		allegro : function(){
 			(new Allegro());
 		},
 
-		genehunter: function()
-		{
+		genehunter: function(){
 			(new Genehunter()); // yeah "new" is required...
 								// gc does its job
 		},
 
-		simwalk: function()
-		{
-			utility.notify("TODO", "simwalk")
+		simwalk: function(){
+			(new Simwalk());
 		},
 
 		merlin: function(){

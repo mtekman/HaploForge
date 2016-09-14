@@ -3,10 +3,10 @@ document.write('\
             <input type="button" id="filebox_close" value="X">\
 \
             <select id="fileselector">\
-              <option selected value="null" >---</option>\
+              <option value="null" >---</option>\
               <option value="allegro">Allegro</option>\
               <option value="genehunter">Genehunter</option>\
-              <option value="simwalk" >Simwalk (N/A)</option>\
+              <option selected value="simwalk" >Simwalk (N/A)</option>\
               <option value="merlin" >Merlin (N/A)</option>\
             </select>\
             <br />\
@@ -64,13 +64,13 @@ document.write('\
             <!-- Simwalk -->\
             <div id="box_sw" class="upload_box border">\
               <label for="sw_haplo">\
-                <input disabled type="file" id="sw_haplo" >HEF file\
+                <input type="file" id="sw_haplo" >HEF file\
                 <div class="tooltip_box" >?</div>\
                 <div class="tooltip_text" ><p>Haplotypes and Descent Graph</p>Contains pedigree, phased genotypes, and descent graph vectors.</div>\
               </label>\
               <br/>\
               <label for="sw_infer_box" >\
-                <input disabled type="checkbox" id="sw_infer_box" />\
+                <input checked type="checkbox" id="sw_infer_box" />\
                 <h5>Ignore descent graph vectors?</h5>\
                 <div class="tooltip_box" >?</div>\
                 <div class="tooltip_text" ><p></p>Ignores vectors in HEF file and uses HaploHTML5\'s own algorithm to determine points of recombination.</div>\

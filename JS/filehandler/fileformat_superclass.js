@@ -20,7 +20,7 @@ class FileFormat {
 		FileFormat.__begFuncs();
 
 
-		var that = this
+		var that = this;
 
 		FileFormat.readFile(this.haplofile, function(haplo_text){
 			// Read pedfile first if given
@@ -35,13 +35,19 @@ class FileFormat {
 
 			haplo.process(haplo_text);
 
+			// Sometimes the haplo file has RS data and this
+			// step is not neccesary.
+			if (!haplo.hasMarkerNames){
+				// Enumerate map based on number of locus
+				FileFormat.enumerateMarkers();
+			}
+
 			// Map depends on pedigree data
 			if (that.mapfile !== 0){
 				FileFormat.readFile(that.mapfile, map.process);
 			}
-			else if ("nonexistent" in map){
-				map.nonexistent();
-			}
+
+
 
 			//Callback
 			if (afterCallback !== null){
@@ -53,7 +59,7 @@ class FileFormat {
 
 			// They all call this, but it should not really be here.
 			FileFormat.__endFuncs();
-		})
+		});
 	}
 
 
@@ -74,11 +80,23 @@ class FileFormat {
 	}
 
 	static __endFuncs(){
+		
 		graphInitPos(nodeSize + 10, grid_rezY);
 
 		assignHGroups();
 		MarkerData.padMarkerMap();
 
 		populateIndexDataList();
+	}
+
+
+	static enumerateMarkers(){
+		// No map -- enumerate markers off some random perc
+		var randomperc = familyMapOps.getRandomPerc(),
+			allele_length = randomperc.haplo_data[0].data_array.length;
+
+		for (var m=0; m < allele_length; m++){
+			MarkerData.rs_array.push(String("          " + m).slice(-10));
+		}	
 	}
 }

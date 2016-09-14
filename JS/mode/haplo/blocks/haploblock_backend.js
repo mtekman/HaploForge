@@ -74,7 +74,7 @@ function child2parent_link(pers, moth, fath, fam) // fam only needed for consang
 	assert(pers_hp[0].data_array.length === moth_hp[0].data_array.length
 	    && pers_hp[0].data_array.length === fath_hp[0].data_array.length
 		&& pers_hp[1].data_array.length === moth_hp[1].data_array.length
-		&& pers_hp[1].data_array.length === fath_hp[1].data_array.length, "Allele lengths dont match");
+		&& pers_hp[1].data_array.length === fath_hp[1].data_array.length, "Allele lengths dont match for moth,fath,chil:"+ moth.id+" "+fath.id+" "+pers.id);
 
 	var tmp_i = -1;
 

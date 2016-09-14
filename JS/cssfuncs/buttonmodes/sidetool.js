@@ -134,6 +134,11 @@ var ToolButtons = {
 				MarkerSlider.showSlider(!MarkerSlider._visible)
 			});
 			ToolButtons.addToolsButton("Marker Search", showIndexCSS);
+
+			ToolButtons.addToolsButton("Recolour", function(){
+				FounderColor.makeUniqueColors(true); //random = true
+				redrawHaplos(false);
+			});
 		},
 
 		/* From comparison mode, the buttons showed during homology selection */

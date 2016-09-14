@@ -8,7 +8,8 @@ class Allegro extends FileFormat {
 			id: "allegro_haplo",
 			process: function(haplo_text){
 				Allegro.__populateFamilyAndHaploMap(haplo_text);			
-			}
+			},
+			hasMarkerNames : true
 		}
 
 		var map = {

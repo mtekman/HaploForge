@@ -10,7 +10,8 @@ class Genehunter extends FileFormat {
 //				localStorage.setItem("test", haplo_text);*/
 //				var haplo_text = localStorage.getItem("test");
 				Genehunter.populateFamilyAndHaploMap(haplo_text);				
-			}
+			},
+			hasMarkerNames : false
 		}
 
 		var map = {
@@ -19,15 +20,6 @@ class Genehunter extends FileFormat {
 //				localStorage.setItem("maptest", map_text);
 //				var map_text = localStorage.getItem("maptest");
 				Genehunter.populateMarkerMap(map_text);			
-			},
-			nonexistent: function(){
-				// No map -- enumerate markers off some random perc
-				var randomperc = familyMapOps.getRandomPerc(),
-					allele_length = randomperc.haplo_data[0].data_array.length;
-
-				for (var m=0; m < allele_length; m++){
-					MarkerData.rs_array.push(String("          " + m).slice(-10));
-				}	
 			}
 		}
 

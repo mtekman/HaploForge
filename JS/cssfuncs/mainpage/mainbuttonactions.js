@@ -29,10 +29,10 @@ var MainButtonActions  = {
 	    lr.readAsText(file);
 	},*/
 
-	loadHaploFromStorage: function() {
-		MainButtonActions.preamble();
-		MainPageHandler.haplomodeload();
-
+	loadHaploFromStorage: function()
+	{
+		FileFormat.__begFuncs();
+		
 		var hap_data = localStorage.getItem( localStor.hap_save );
 			//hap_type = localStorage.getItem( localStor.hap_type );
 
@@ -40,9 +40,8 @@ var MainButtonActions  = {
 
 		SerialParse.All.import( hap_data );
 		HaploPedProps.init();
-		graphInitPos();
-
-
+		
+		FileFormat.__endFuncs();
 	},
 
 

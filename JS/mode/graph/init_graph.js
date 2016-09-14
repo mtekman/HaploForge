@@ -84,7 +84,7 @@ function graphInitPos(start_x, start_y, enable_ped_edit = false){
 
 				// Restore meta
 				if (typeof perp.stored_meta !== "undefined"){
-					console.log("using stored meta", perp_id, perp.stored_meta);
+					//console.log("using stored meta", perp_id, perp.stored_meta);
 					var meta = perp.stored_meta;
 
 					posx = meta.x;

@@ -7,19 +7,31 @@ var FounderColor = {
 
 	zero_color_grp : -1,
 
-	makeUniqueColors: function()
+	makeUniqueColors: function(random = false)
 	{
 		FounderColor.unique = FounderColor.__generateArrays(
-			FounderColor.hgroup.length
+			FounderColor.hgroup.length, random
 		).rgb;
 	},
 
-	__mapped_used : {}, //needs to be cleared after final mapped() call
 	__good_hues : [
 		  0,  30,  36,  41,  48,  54,
 		 60,  72, 120, 180, 186, 192,
 	    204, 240, 262, 276, 288, 300
 	],
+
+
+	__shuffled(array){
+		var a = array.slice(0); //clone 
+	    var j, x, i;
+    	for (i = a.length; i; i--) {
+        	j = Math.floor(Math.random() * i);
+        	x = a[i - 1];
+        	a[i - 1] = a[j];
+        	a[j] = x;
+    	}
+    	return a;
+	},
 
 
 	__evenlySpacedRange: function(req, array)
@@ -42,7 +54,7 @@ var FounderColor = {
 		return dd;
 	},
 
-	__getColorRange: function(total){
+	__getColorRange: function(total, random = false){
 		var hues = FounderColor.__good_hues,
 			huelen = hues.length;
 
@@ -53,11 +65,18 @@ var FounderColor = {
 		if (total > huelen){
 			throw new Error("Please tier S and V values")
 		}
-		return FounderColor.__evenlySpacedRange(total, hues);
+
+		var range = FounderColor.__evenlySpacedRange(total, hues);
+
+		if (random){
+			return FounderColor.__shuffled(range);	
+		}
+
+		return range;
 	},
 
 
-	__generateArrays(num_colors)
+	__generateArrays(num_colors, random = false)
 	{
 		var colours_per_tier = FounderColor.__good_hues.length,
 			num_tiers = Math.floor(num_colors / colours_per_tier);
@@ -82,7 +101,7 @@ var FounderColor = {
 				val = 90 - (tier * (80/num_tiers)),
 				hue = 0;
 
-			var hues = FounderColor.__getColorRange(colours_per_tier)
+			var hues = FounderColor.__getColorRange(colours_per_tier, random)
 
 			for (var c = 0; c < colours_per_tier; c++)
 			{
