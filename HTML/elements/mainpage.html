@@ -1,0 +1,38 @@
+document.write('\
+\
+        <div id="maincircle">\
+<!--           <video poster="http://i.imgur.com/qiOZUij.webm" id="bgvid" loop autoplay>\
+              <source src="http://i.imgur.com/qiOZUij.webm">\
+           </video> -->\
+\
+          <input id="haploupload" type="button" \
+                 onclick="MainButtonActions.fileUpload()" />\
+\
+          <input id="haploresume" type="button"\
+                 onclick="MainButtonActions.loadHaploFromStorage()"  />\
+          \
+          <input id="pedmodebutton" type="button"\
+                 onclick="MainButtonActions.createNewPed()" />      \
+\
+          <input id="pedresume" type="button" \
+                 onclick="MainButtonActions.loadPedFromStorage()" />\
+\
+          <ul class="nodots">\
+            <li class="smallspace">\
+              <h1>HaploHTML5</h1>\
+              <h2 class="smallspace">Extensive Haplotype Resolution and Pedigree Creation Tool</h2>\
+             </li>\
+             <li>\
+              <label for="haploupload">Visualize New Haplotypes</label>    \
+              <label id="haploresume_label" for="haploresume">Resume Previous Analysis</label>    \
+            </li>\
+            <li>\
+              <hr class="style15">\
+            </li>\
+            <li>\
+               <label for="pedmodebutton">Create New Pedigree</label>   \
+               <label id="pedresume_label" for="pedresume">Resume Pedigree</label>     \
+            </li>\
+          </ul>\
+        </div>\
+');

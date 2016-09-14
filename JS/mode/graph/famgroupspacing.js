@@ -2,10 +2,12 @@
 var FamSpacing = {
 
 
-	init(){
+	init(max_width, debug = false){
+		max_width = max_width || stage.getWidth();
+
 		var placements = FamSpacing.__getFamBounds();
 
-		FamSpacing.__performPacking(placements);
+		FamSpacing.__performPacking(placements, max_width, debug);
 		FamSpacing.__setDerivedPositions(placements);
 	},
 
@@ -68,22 +70,27 @@ var FamSpacing = {
 	},
 
 
-	__performPacking : function(fam_placements)
+	__performPacking : function(fam_placements, max_width, debug = false)
 	{
 		var start_x = nodeSize,
 			start_y = 50;
 
-		var total_width = stage.getWidth(),
-			last_w = 0;
+		var total_width = max_width,
+			ma_rect;
 
-		// main_layer.add(new Kinetic.Rect({
-		// 	x:total_width,
-		// 	y:0,
-		// 	stroke:"blue",
-		// 	strokeWidth: 2,
-		// 	width: 5,
-		// 	height: stage.getHeight()
-		// }));
+		if (debug){
+			ma_rect = new Kinetic.Rect({
+				x:total_width,
+				y:0,
+				stroke:"blue",
+				strokeWidth: 2,
+				width: 5,
+				height: stage.getHeight()
+			});
+			
+			main_layer.add(ma_rect);
+			main_layer.draw();
+		}
 
 		for (var group_id in fam_placements)
 		{
@@ -120,6 +127,10 @@ var FamSpacing = {
 					group.setX(start_x);
 					group.setY(start_y);
 
+					if (debug){
+						main_layer.draw();
+						debugger;
+					}
 					continue;
 				}
 
@@ -127,6 +138,11 @@ var FamSpacing = {
 				break;
 			}
 		}
+
+		if (debug){
+			ma_rect.destroy();
+		}
+
 	},
 
 

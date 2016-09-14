@@ -1,0 +1,76 @@
+document.write('\
+\
+      <!-- Family Props -->\
+        <div id="family_props" class="input_props" >\
+          <div class="messages">\
+             <h3 id="message_head" >Family</h3>\
+             <input class="messages" id="family_submit" type="button" value="✓" />\
+          </div>\
+\
+          <table>\
+             <tr>\
+               <td>Fam ID: </td>\
+               <td><input id="family_id" type="number" /></td>\
+             </tr>\
+             <tr>\
+               <td>Surname:</td>\
+               <td><input id="family_name" type="text" /></td>\
+             </tr>\
+           </table>\
+        </div>\
+\
+\
+        <!-- Person Props http://jsfiddle.net/cysCx/258/ -->\
+        <div id="person_props" class="input_props">\
+          <div class="messages">\
+            <h3 id="message_head">Person</h3>\
+            <input class="messages" id="pers_submit" type="button" value="✓" />\
+            <input class="messages" id="pers_delete" type="button" value="✘" />\
+          </div>\
+\
+          <table>\
+            <tr>\
+              <td>ID: </td>\
+              <td>\
+                <input id="pers_id" type="number" />\
+              </td>\
+            </tr>\
+\
+            <tr>\
+              <td>Name:</td>\
+              <td>\
+                <input id="pers_name" type="text" /> </td>\
+            </tr>\
+\
+            <tr>\
+              <td colspan="2">\
+                <input type="checkbox" id="pers_gender_unknown" class="deselector" />\
+               <div>\
+                <div style="display:inline;z-index:130">\
+                  <input type="checkbox" id="pers_gender" name="pers_gender" class="switch" />\
+                  <label for="pers_gender">\
+                    <span class="first">Male</span>\
+                    <span class="second">Female</span>\
+                  </label>\
+                </div>\
+                </div>\
+              </td>\
+            </tr>\
+\
+            <tr>\
+              <td colspan=2>\
+                <input type="checkbox" id="pers_affect_unknown" class="deselector" />\
+                <div>\
+                <div style="display:inline;">\
+                  <input type="checkbox" id="pers_affect" name="pers_affect" class="switch" />\
+                  <label for="pers_affect">\
+                    <span class="first">Unaffected</span>\
+                    <span class="second">Affected</span>\
+                  </label>\
+                </div>\
+                </div>\
+              </td>\
+            </tr>\
+          </table>\
+        </div>\
+');

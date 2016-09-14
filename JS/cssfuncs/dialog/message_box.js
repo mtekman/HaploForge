@@ -84,36 +84,40 @@ var famProps = {
 	_name : document.getElementById('family_name'),
 	_submit: document.getElementById('family_submit'),
 
-	hide: function(){ this._box.style.display = "none";},
-	show: function(){ 
-		this._box.style.display = "";
-		this._name.focus();
+	hide: function(){ 
+		famProps._box.style.display = "none";
+		famProps._box.style.zIndex = -2;
+	},
+	show: function(){
+		famProps._box.style.display = "block";
+		famProps._box.style.zIndex = 502;
+		famProps._name.focus();
 	},
 
 	showProps: function(family){
+		famProps.show();
 		utility.showBG(function(){
 			famProps.hide();
 		});
-		this.show();
 
-		this._id.value   = family.id;
-		this._name.value = family.name;
+		famProps._id.value   = family.id;
+		famProps._name.value = family.name;
 	},
 
 	getProps: function(){
 		var fam = {id:-1, name:""};
 
-		fam.id = Number( this._id.value );
-		fam.name = this._name.value;
+		fam.id = Number( famProps._id.value );
+		fam.name = famProps._name.value;
 
 		utility.hideBG();
-		this.hide();
+		famProps.hide();
 		return fam;
 	},
 
 	display: function(family, callback){
-		this.showProps(family);
-		this._submit.onclick = function(){
+		famProps.showProps(family);
+		famProps._submit.onclick = function(){
 			var fam = famProps.getProps();
 			callback(fam);
 		}

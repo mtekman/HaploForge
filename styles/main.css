@@ -126,17 +126,20 @@
 }
 
 #selection_tools {
+  display:none;
   position: fixed;
   top: 10px;
   right: 10px;
 }
 
 #message_props {
+  display:none;
   left:40%;
   top: 40%;
 }
 
 #save_and_close {
+  display:none;
   position:fixed;
   right: 10px;
   bottom: 10px;
@@ -198,7 +201,12 @@
   border-color: black;
 }
 
+#family_props.input_props {
+  display: none;
+}
+
 #person_props.input_props  {
+  display:none;
   left:40%;
 }
 
