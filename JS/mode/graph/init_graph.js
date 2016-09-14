@@ -213,7 +213,7 @@ function graphInitPos(start_x, start_y, enable_ped_edit = false){
 	//Go over everyone and touch their lines
 	finishDraw();
 	touchlines();
-	spaceFamGroups();
+	FamSpacing.init();
 
 	main_layer.draw();
 }

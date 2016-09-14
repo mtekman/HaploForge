@@ -83,5 +83,7 @@ function resizeCanvas()
 
             haplo_layer.draw();
         }
+
+        FamSpacing.init();
     }
 }
