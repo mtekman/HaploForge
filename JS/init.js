@@ -36,7 +36,7 @@ MainPageHandler.defaultload();
 
 
 
-// Genehunter test
+// Merlin test
 function test(){
 
 	MainButtonActions.preamble();
@@ -46,23 +46,21 @@ function test(){
 
 		setTimeout(function(){
 
-			(new Genehunter(function(){
-				HaploPedProps.init(function(){
-					familyMapOps.inferGenders();
-				})
-			}));
-			graphInitPos(nodeSize + 10, grid_rezY);
-			assignHGroups();
+			var haplo_text  = localStorage.getItem("TEST");			
 
-			MarkerData.padMarkerMap();
+			Merlin.populateFamilyAndHaploMap(haplo_text);
+			FileFormat.enumerateMarkers();
 
-			populateIndexDataList();
+			HaploPedProps.init(familyMapOps.inferGenders);
+			FileFormat.__endFuncs();
 
-			setTimeout(function(){
+//			(new Simwalk());
+
+/*			setTimeout(function(){
 				SelectionMode.init();
 				SelectionAction.selectAffecteds();
 				HaploWindow.init();
-			},500)
+			},500)*/
 		}, 500);
 	}, 500);
 }

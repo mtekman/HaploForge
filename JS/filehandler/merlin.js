@@ -114,7 +114,7 @@ class Merlin extends FileFormat {
 				console.log(trimmed, multiple_alleles, tmp_perc_array)
 				throw new Error("Num alleles and num percs do not align");
 			}
-			
+
 			for (var a=0; a < multiple_alleles.length; a++)
 			{
 				var alleles = multiple_alleles[a];
@@ -122,12 +122,30 @@ class Merlin extends FileFormat {
 				// We ignore all types of phasing and for 
 				// ambiguously marker alleles "A", we pick the
 				// first (this holds consistent for inherited).
-				var left_right = alleles.split(/\s[:|\/]\s/)
-										.map(x=> parseInt(x
-											.split(",")[0]
-											.replace("A","")
-											.replace("?","0"))
-										);
+				
+				//var left_right = alleles.split(/\s[+:|\\/]\s/)
+				var left_right = alleles.split(/\s[^\d]\s/)
+					.map(x=> Number(
+						x.split(",")[0]
+						 .replace("A","")
+						 //.replace("?","9")
+					));
+
+/*				for (var l=0; l < left_right.length; l++)
+				{
+					var allele = left_right[l];
+
+					if (allele.indexOf("A")!==-1){
+						left_right[l] = allele.replace("A","");;
+					}
+
+					else if (allele === "?"){
+						left_right[l] = "0";
+					}
+
+					left_right[l] = parseInt(left_right[l]);
+				}
+*/
 
 				tmp_alleles_array[a][0].push(left_right[0]);
 				tmp_alleles_array[a][1].push(left_right[1]);
@@ -135,6 +153,26 @@ class Merlin extends FileFormat {
 		}
 
 		flushTmpData();
+	//	debugger;
+
+		// DEBUGGING -- examine a small subset
+/*		familyMapOps.foreachperc(function(p,f,perc){
+			var haplos = perc.haplo_data;
+
+			var start=570, end=580;
+			console.log(start,end);
+
+			var hap1 = haplos[0].data_array,
+				hap2 = haplos[1].data_array;
+
+			var newhap1 = hap1.slice(start,end),
+				newhap2 = hap2.slice(start,end);
+
+			perc.haplo_data = [];
+
+			perc.insertHaploData(newhap1);
+			perc.insertHaploData(newhap2);
+		});*/
 	}
 
 

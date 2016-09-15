@@ -23,6 +23,9 @@ class FileFormat {
 		var that = this;
 
 		FileFormat.readFile(this.haplofile, function(haplo_text){
+
+			MainButtonActions._temphaploload = haplo_text; // for debugging
+
 			// Read pedfile first if given
 			if (that.pedfile !== 0){
 				FileFormat.readFile(that.pedfile, ped.process);

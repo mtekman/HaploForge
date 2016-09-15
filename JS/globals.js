@@ -130,7 +130,7 @@ var haploblock_buffers = {
 
 
 var haploblock_spacers = {
-	marker_offset_px: ((MarkerData.maxlen_marker+11)*haploblock_settings.space_pixels)+1,
+	marker_offset_px: ((MarkerData.maxlen_marker+1)*haploblock_settings.space_pixels)+1,
 	person_offset_px: 10 * haploblock_settings.space_pixels,
 	block_width_px: HAP_VERT_SPA*1.2,
 	block_offset_px: (HAP_VERT_SPA*1.2) +2

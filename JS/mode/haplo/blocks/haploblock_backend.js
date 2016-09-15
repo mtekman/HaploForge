@@ -250,8 +250,12 @@ function child2parent_link(pers, moth, fath, fam) // fam only needed for consang
 	if (res0 === null){
 		res0 = a_star_bestfirst(pers_hp[0].pter_array, paternal_exclusion);
 
-		if (res0 === null)
+		if (res0 === null){
+			console.log( pers_hp[0], paternal_exclusion, maternal_exclusion,
+				consang_check, 
+				pers.id, moth.id, fath.id );
 			throw new Error( "Skipper's Log: No land in sight.");
+		}
 
 
 		res1 = a_star_bestfirst(pers_hp[1].pter_array, maternal_exclusion);
