@@ -11,7 +11,8 @@ class Genehunter extends FileFormat {
 //				var haplo_text = localStorage.getItem("test");
 				Genehunter.populateFamilyAndHaploMap(haplo_text);				
 			},
-			hasMarkerNames : false
+			hasMarkerNames : false,
+			inferGenders : true // unless ped is uploaded!
 		}
 
 		var map = {

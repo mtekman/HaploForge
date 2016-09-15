@@ -54,7 +54,11 @@ class FileFormat {
 				afterCallback();
 			} else {
 				// Assume Haplo mode is final callback
-				HaploPedProps.init();
+				HaploPedProps.init(function(){
+					if (haplo.inferGenders){
+						familyMapOps.inferGenders();
+					}
+				});
 			}
 
 			// They all call this, but it should not really be here.

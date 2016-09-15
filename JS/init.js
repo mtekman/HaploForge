@@ -17,7 +17,8 @@ var init = {
 		},
 
 		merlin: function(){
-			utility.notify("TODO", "merlin");
+			//utility.notify("TODO", "merlin");
+			(new Merlin());
 		}
 	},
 
