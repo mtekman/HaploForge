@@ -64,7 +64,7 @@ var HomologyMode = {
 			text += score_columns + '\n';
 		}
 		// Write
-		window.open(PersistData.makeTextFile(text));
+		exportToTab(text);
 	},
 
 	removeScores: function(redrawtoo = true)

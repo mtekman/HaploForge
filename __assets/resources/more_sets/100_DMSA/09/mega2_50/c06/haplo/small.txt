@@ -1,0 +1,31 @@
+       4 pedigrees in this analysis
+ 
+Pedigree Name,       ID   Father   Mother Sex   Trait  Alleles  Source    Data  
+Num. of Individuals                             Pheno  Pat Mat  Pat Mat  Pat Mat
+and Pedigree Score
+________________________________________________________________________________
+1001(ped#001;run#01)                                                            
+       4 individuals                                                            
+ -83.327                                                                        
+                  20        0        0  1        1                           
+                                                        2   2    0   0    1   1 
+                                                        2   2    0   0    1   1 
+                                                        2   2    0   0    1   1 
+                                                        1   2    0   0    1   1 
+                                                        1   2    0   0    1   1 
+                                                        1   1    0   0    1   1 
+                  21        0        0  2        1                           
+                                                        2   2    0   0    1   1 
+                                                        2   2    0   0    1   1 
+                                                        2   2    0   0    1   1 
+                                                        2   1    0   0    1   1 
+                                                        2   1    0   0    1   1 
+                                                        1   1    0   0    1   1 
+                   22       20       21  1        2*                          
+                                                        2   2    1   1    1   1 
+                                                        2   2    1   1    1   1 
+                                                        2   2    1   1    1   1 
+                                                        1   2    1   1    1   1 
+                                                        1   2    1   1    1   1 
+                                                        1   1    1   1    1   1 
+

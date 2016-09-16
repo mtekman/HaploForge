@@ -1,7 +1,6 @@
 // UI configurable:
 var userOpts = {
 	allowTransitions: true,
-	exportPedGraphicLocs: true,
 	showTooltips: true
 };
 
@@ -66,6 +65,25 @@ function intersectArrays(a,b){
 		}
 	}
 	return result;
+}
+
+
+
+
+function exportToTab(text)
+{
+	function makeTextFile(tex, textFile = null)
+	{
+		var data = new Blob([tex],{type:'text/plain'});
+
+		if (textFile !== null){
+			window.URL.revokeObjectURL(textFile);
+		}
+
+		textFile = window.URL.createObjectURL(data);
+		return textFile;
+	}
+	window.open(makeTextFile(text));
 }
 
 

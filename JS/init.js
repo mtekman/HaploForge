@@ -1,6 +1,15 @@
 
 var init = {
 
+	clearMaps: function(){
+		familyDraw.active_fam_group = null;
+		
+		GlobalLevelGrid.clear();
+		MarkerData.clear();
+		familyMapOps.clear();
+		uniqueGraphOps.clear();
+	},
+
 	haploview : {
 
 		allegro : function(){

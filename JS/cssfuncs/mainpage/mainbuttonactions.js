@@ -5,38 +5,17 @@ var MainButtonActions  = {
 
 	preamble: function(){
 		makeStage();
-		PersistData.clearMaps();
+		init.clearMaps();
 	},
 
 
 	fileUpload: fileSelector.init,
-
-	/*processHaploFile: function() {
-	    var file = document.getElementById("haploupload").files[0];
-	    var lr = new FileReader();
-
-	    lr.onloadend = function(e){
-	    	MainButtonActions.preamble();
-			MainPageHandler.haplomodeload();
-
-			MainButtonActions._temphaploload = e.target.result;
-
-			MainButtonActions.processinput(
-				MainButtonActions._temphaploload
-			) /* type unknown at this point 
-	    };
-
-	    lr.readAsText(file);
-	},*/
 
 	loadHaploFromStorage: function()
 	{
 		FileFormat.__begFuncs();
 		
 		var hap_data = localStorage.getItem( localStor.hap_save );
-			//hap_type = localStorage.getItem( localStor.hap_type );
-
-		//MainButtonActions.processinput(hap_data, hap_type);
 
 		SerialParse.All.import( hap_data );
 		HaploPedProps.init();
@@ -53,18 +32,18 @@ var MainButtonActions  = {
 
 		if (!haplotransfer){
 			ped_data = localStorage.getItem( localStor.ped_save );
-			ped_type = localStorage.getItem( localStor.ped_type );
-	
+			Pedfile.import(ped_data);
 		} else {
 			ped_data = localStorage.getItem( localStor.transfer );
-			ped_type = localStorage.getItem( localStor.hap_type );
+			//Do.Something.Else();
 		}
-		MainButtonActions.processinput(ped_data, ped_type);
+
+		init.pedcreate();
 	},
 
 	savePedToStorage: function() {
 
-		var ped_to_string = PersistData.toPedfileString(true); 
+		var ped_to_string = Pedfile.export(true); 
 		/*always store graphics for local, only export has no graphics option*/
 
 		localStorage.setItem( localStor.ped_save, ped_to_string );
@@ -84,7 +63,7 @@ var MainButtonActions  = {
 	exitToMenu: function(){
 
 		if (MainButtonActions.fileType === FORMAT.PEDFILE){
-			var changeDetected = PersistData.pedigreeChanged();
+			var changeDetected = Pedfile.pedigreeChanged();
 
 			if (changeDetected){
 				utility.yesnoprompt("Pedigree Modified", "Save changes before exit?",

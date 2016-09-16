@@ -203,23 +203,6 @@ var a_star_bestfirst = new Function(
 	strre
 );
 
-// var makeTextFile = function(text){
-// 	var data = new Blob([text], {type: 'text/plain'});
-// 	return window.URL.createObjectURL(data);
-// };
-
-
-// var lin1 = document.getElementById('downloadlink1'),
-// 	lin2 = document.getElementById('downloadlink2'),
-// 	lin3 = document.getElementById('downloadlink3');
-
-// lin1.href = makeTextFile( a_star_bestfirst__DEBUG.toString());
-// lin3.href = makeTextFile( a_star_bestfirst.toString() );
-
-// strre = strre.substr(0,100);
-// console.log(strre);
-
-
 
 // var	array = [
 // 	[4,2,6],

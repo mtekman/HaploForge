@@ -84,6 +84,9 @@ function resizeCanvas()
             haplo_layer.draw();
         }
 
-        FamSpacing.init();
+        if (  ModeTracker.currentMode === ModeTracker.modes.pedcreate
+            ||ModeTracker.currentMode === ModeTracker.modes.haploview){
+              FamSpacing.init();
+        }
     }
 }

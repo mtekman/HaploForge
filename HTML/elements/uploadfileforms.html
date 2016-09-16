@@ -3,11 +3,11 @@ document.write('\
             <input type="button" id="filebox_close" value="X">\
 \
             <select id="fileselector">\
-              <option value="null" >---</option>\
+              <option selected value="null" >---</option>\
               <option value="allegro">Allegro</option>\
               <option value="genehunter">Genehunter</option>\
               <option value="simwalk" >Simwalk</option>\
-              <option selected value="merlin" >Merlin (N/A)</option>\
+              <option value="merlin" >Merlin</option>\
             </select>\
             <br />\
 \
@@ -70,7 +70,7 @@ document.write('\
               </label>\
               <br/>\
               <label for="sw_infer_box" >\
-                <input checked type="checkbox" id="sw_infer_box" />\
+                <input disabled checked type="checkbox" id="sw_infer_box" />\
                 <h5>Ignore descent graph vectors?</h5>\
                 <div class="tooltip_box" >?</div>\
                 <div class="tooltip_text" ><p></p>Ignores vectors in HEF file and uses HaploHTML5\'s own algorithm to determine points of recombination.</div>\

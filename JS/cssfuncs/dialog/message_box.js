@@ -5,7 +5,7 @@ var statusProps = {
 
 	hide: function(){ this._box.style.display = "none";},
 	show: function(){ 
-		this._box.style.display = "";
+		this._box.style.display = "block";
 		this._box.style.opacity = 1;
 		this._box.style.zIndex = 503;
 	},
@@ -184,7 +184,7 @@ var persProps = {
 		this._box.style.zIndex = -99;
 	},
 	show: function(){
-		this._box.style.display = "";
+		this._box.style.display = "block";
 		this._box.style.zIndex = 501;
 		this.name.focus();
 	},
@@ -269,8 +269,8 @@ var messProps = {
 	_aftercallbacks: function(){
 		this.hide();
 		utility.hideBG();
-		this._inputrow.style.display = "";
-		this._text.style.display = "";
+		this._inputrow.style.display = "block";
+		this._text.style.display = "block";
 	},
 
 	hide: function(){ 
@@ -278,7 +278,7 @@ var messProps = {
 		this._box.style.zIndex = -99;
 	},
 	show: function(){ 
-		this._box.style.display = "";
+		this._box.style.display = "block";
 		this._box.style.zIndex = 502;
 		this._input.focus();
 	},
@@ -302,7 +302,7 @@ var messProps = {
 		/*Submit */
 		if (submit){
 			this._buttonrow.style.display = "none";
-			this._inputrow.style.display = "";
+			this._inputrow.style.display = "block";
 			
 			this._submit.value = "Submit";
 			this._submit.onclick = submit;
@@ -318,7 +318,7 @@ var messProps = {
 		else
 		/* Input box */
 		{
-			this._buttonrow.style.display = "";
+			this._buttonrow.style.display = "block";
 			this._inputrow.style.display = "none";
 
 			if (yes_no_object.yes !== null)

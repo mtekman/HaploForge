@@ -72,16 +72,16 @@ var BottomButtons = {
 
 				utility.yesnoprompt("Export", "Strip graphics tags?", 
 					"Yes", function(){
-						userOpts.exportPedGraphicLocs = false;
-						PersistData.export();
+						Pedfile.exportToTab(false);
 					},
 					"No", function(){
-						userOpts.exportPedGraphicLocs = true;
-						PersistData.export();
+						Pedfile.exportToTab(true);
 					}
 				);
 			});
 			BottomButtons.addToolsButton("Exit", MainButtonActions.exitToMenu);
+
+			ModeTracker.setMode( "pedcreate" );
 		},
 
 		/* HaploView */
@@ -90,16 +90,20 @@ var BottomButtons = {
 
 			BottomButtons.addToolsButton("Save", MainButtonActions.saveHaploToStorage);
 			BottomButtons.addToolsButton("Exit", MainButtonActions.exitToMenu);
+
+			ModeTracker.setMode( "haploview" );
 		},
 
 		/* Selection View */
 		setToSelectionMode: function(){
 			BottomButtons.modes.__clearMode();
+			ModeTracker.setMode( "selection" );
 		},
 
 		/* Side by side Haploblocks */
 		setToComparisonMode: function(){
 			BottomButtons.modes.__clearMode();
+			ModeTracker.setMode( "comparison" );
 		},
 
 
@@ -107,12 +111,14 @@ var BottomButtons = {
 		setToHomologySelection: function()
 		{
 			BottomButtons.modes.__clearMode();
+			ModeTracker.setMode( "homselection" );
 		},
 
 		/* Align, Find Hom, Range, Marker */
 		setToHomologyMode: function()
 		{
 			BottomButtons.modes.__clearMode();
+			ModeTracker.setMode( "homology" );
 		}
 	}
 }

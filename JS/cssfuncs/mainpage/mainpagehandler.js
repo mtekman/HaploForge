@@ -40,7 +40,7 @@ var MainPageHandler = {
 	},
 
 	defaultload: function(){
-		PersistData.clearMaps();
+		init.clearMaps();
 
 		MainPageHandler._currentMode = MainPageHandler.modes.main
 		fileSelector.end();

@@ -213,7 +213,25 @@ function graphInitPos(start_x, start_y, enable_ped_edit = false){
 	//Go over everyone and touch their lines
 	finishDraw();
 	touchlines();
-	FamSpacing.init();
+
+
+	if (Pedfile.__tmpfamdata === {}){
+		// Space automatically
+		FamSpacing.init();		
+	}
+	else {
+		// Use stored positions
+		for (var fam in Pedfile.__tmpfamdata)
+		{
+			var pos = Pedfile.__tmpfamdata[fam],
+				fgr = uniqueGraphOps.getFam(fam).group;
+
+			fgr.setX(pos.x);
+			fgr.setY(pos.y);
+		}
+		Pedfile.__tmpfamdata = {}; //clear
+	}
+
 
 	main_layer.draw();
 }
