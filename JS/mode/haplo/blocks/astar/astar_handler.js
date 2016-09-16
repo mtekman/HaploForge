@@ -25,7 +25,8 @@ var AstarHandler = {
 	Some assumptions:
 	- Founder pointers are already set (for founders)
 	- Always two alleles
-	- Paternal allele is first, and maternal is second.
+	- Paternal allele is first, and maternal is second (though the other way around works just
+	  as well, as long as they're phased.)
 	*/
 	child2parent_link: function(pers, moth, fath, fam) // fam only needed for consang check.
 	{

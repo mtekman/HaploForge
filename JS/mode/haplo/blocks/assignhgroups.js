@@ -46,7 +46,7 @@ var AssignHGroups = {
 											use_descent) {
 		
 		if (use_descent){
-			console.log("IMPLEMENT!");
+			DescentResolver.child2parent_link(child, mother, father, fam);
 		}
 		else {
 			// A* method
