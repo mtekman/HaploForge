@@ -20,7 +20,7 @@ class FileFormat {
 
 		var that = this;
 
-		var resolveblocks = true;
+		var usedescent = false;
 
 		FileFormat.readFile(this.haplofile, function(haplo_text){
 
@@ -43,11 +43,11 @@ class FileFormat {
 			// Descent graph 
 			if (that.descentfile !== 0){
 				FileFormat.readFile(that.descentfile, descent.process);
-				resolveblocks = false;
+				usedescent = true;
 			}
 			else if (haplo.processDescentGraph !== undefined){
 				haplo.processDescentGraph(haplo_text);
-				resolveblocks = false;
+				usedescent = true;
 			}
 
 
@@ -72,7 +72,7 @@ class FileFormat {
 			}
 
 			// No descent file performs Hgroup assignment
-			FileFormat.__endFuncs(resolveblocks);
+			FileFormat.__endFuncs(usedescent);
 		});
 	}
 
@@ -93,14 +93,11 @@ class FileFormat {
 		MainPageHandler.haplomodeload();
 	}
 
-	static __endFuncs(resolveblocks = true){
+	static __endFuncs(usedescent = false){
 		
 		graphInitPos(nodeSize + 10, grid_rezY);
 
-		if (resolveblocks){
-			assignHGroups();
-		}
-
+		AssignHGroups.init(usedescent);
 		MarkerData.padMarkerMap();
 
 		populateIndexDataList();
