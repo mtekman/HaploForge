@@ -13,6 +13,9 @@ class Allele {
 		this.haplogroup_array = null;
 		this.unique_groups = [];
 		// ^ Empty until pter_array is completely unambiguous, where pter_array is then deleted (dereferenced, left for GC)
+
+		// Descent graph -- unused unless specified
+		this.descent = null;
 	}
 
 	getLength(){

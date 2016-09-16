@@ -12,7 +12,7 @@ var Keyboard = {
 		if (!Keyboard.__listening){
 			document.addEventListener("keydown", Keyboard.__processKeyDown, false);
 			document.addEventListener("keyup", Keyboard.__processKeyUp, false);
-			console.log("keyboard listening")
+//			console.log("keyboard listening")
 
 			Keyboard.__listening = true;
 		}
@@ -24,7 +24,7 @@ var Keyboard = {
 			document.removeEventListener("keyup", Keyboard.__processKeyUp, false);
 
 			Keyboard.__listening = false;
-			console.log("keyboard stopped")
+//			console.log("keyboard stopped")
 		}
 	},
 

@@ -92,7 +92,7 @@ class Person {
 	}
 
 	hasHaplo(){
-		return this.haplo_data.length > 0;
+		return this.haplo_data.length > 1 && this.haplo_data[0].haplogroup_array !== null;
 	}
 
 	hasChild(child){

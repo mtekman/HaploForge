@@ -1,5 +1,4 @@
 
-
 class FileFormat {
 
 	constructor(haplo,
@@ -19,8 +18,9 @@ class FileFormat {
 		}
 		FileFormat.__begFuncs();
 
-
 		var that = this;
+
+		var resolveblocks = true;
 
 		FileFormat.readFile(this.haplofile, function(haplo_text){
 
@@ -31,11 +31,6 @@ class FileFormat {
 				FileFormat.readFile(that.pedfile, ped.process);
 			}
 
-			// Descent graph should be set before haplotypes are parsed	
-			if (that.descentfile !== 0){
-				FileFormat.readFile(that.descentfile, descent.process);
-			}
-
 			haplo.process(haplo_text);
 
 			// Sometimes the haplo file has RS data and this
@@ -44,6 +39,18 @@ class FileFormat {
 				// Enumerate map based on number of locus
 				FileFormat.enumerateMarkers();
 			}
+
+			// Descent graph 
+			if (that.descentfile !== 0){
+				FileFormat.readFile(that.descentfile, descent.process);
+				resolveblocks = false;
+			}
+			else if (haplo.processDescentGraph !== undefined){
+				haplo.processDescentGraph(haplo_text);
+				resolveblocks = false;
+			}
+
+
 
 			// Map depends on pedigree data
 			if (that.mapfile !== 0){
@@ -64,8 +71,8 @@ class FileFormat {
 				});
 			}
 
-			// They all call this, but it should not really be here.
-			FileFormat.__endFuncs();
+			// No descent file performs Hgroup assignment
+			FileFormat.__endFuncs(resolveblocks);
 		});
 	}
 
@@ -86,11 +93,14 @@ class FileFormat {
 		MainPageHandler.haplomodeload();
 	}
 
-	static __endFuncs(){
+	static __endFuncs(resolveblocks = true){
 		
 		graphInitPos(nodeSize + 10, grid_rezY);
 
-		assignHGroups();
+		if (resolveblocks){
+			assignHGroups();
+		}
+
 		MarkerData.padMarkerMap();
 
 		populateIndexDataList();

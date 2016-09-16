@@ -7,9 +7,18 @@ var SelectionMode = {
 
 	_select_group : null,
 	_background : null,
+	_exit: null,
 
 	toggle_selection_affecteds : null,
 	toggle_selection_all: null,
+
+
+	// use this instead of "destroy" for general mode use-cases
+	quit: function(){
+		HaploWindow.destroy();
+		SelectionMode.destroy();
+		ButtonModes.setToHaploView()
+	},
 
 	destroy: function stopSelectionMode()
 	{
@@ -18,6 +27,10 @@ var SelectionMode = {
 		SelectionMode._select_group.destroyChildren();
 		SelectionMode._select_group.destroy();
 		SelectionMode._background.destroy();
+		
+		if (SelectionMode._exit !== null){
+			SelectionMode._exit.destroy();
+		}
 
 		// Reset all
 		SelectionMode._ids_map = {}
@@ -68,6 +81,8 @@ var SelectionMode = {
 
 			SelectionMode._select_group.add(text_bounder)
 
+			var all_no_haplo = true;
+
 			uniqueGraphOps.foreachnode(function(node_id, fid){
 
 				if (node_id != 0)
@@ -75,6 +90,10 @@ var SelectionMode = {
 					var key = fid+"_"+node_id
 
 					var hasHaplo = familyMapOps.getPerc(node_id, fid).hasHaplo();
+
+					if (hasHaplo){
+						all_no_haplo = false;
+					}
 
 					var gfx = uniqueGraphOps.getFam(fid).nodes[node_id].graphics,
 						pos = gfx.getAbsolutePosition(),
@@ -91,18 +110,18 @@ var SelectionMode = {
 					SelectionMode._select_group.add(bounder);
 				}
 			});
+
+			if (all_no_haplo){
+				utility.notify("Error", "No haplotypes detected",4);
+				SelectionMode.toggle_selection_all = false;
+				SelectionMode.quit();
+			}
 		});
 
 		// Exit button
-		SelectionMode._exit = addExitButton({x: 20, y: 20}, function(){
-			HaploWindow.destroy();
-			SelectionMode.destroy();
-			ButtonModes.setToHaploView()
-		});
-
+		SelectionMode._exit = addExitButton({x: 20, y: 20}, SelectionMode.quit);
 		SelectionMode._select_group.add( SelectionMode._exit );
-		
-
+	
 		main_layer.add(SelectionMode._select_group);
 		SelectionMode._select_group.setZIndex(20);
 

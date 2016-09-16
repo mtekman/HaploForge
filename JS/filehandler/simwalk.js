@@ -6,6 +6,8 @@ class Simwalk extends FileFormat {
 	{
 		var ignore_descent = document.getElementById('sw_infer_box').checked;
 
+		console.log("IGNORE DESCENT", ignore_descent)
+
 		var haplo = {
 			id: "sw_haplo",
 			process: function(haplo_text){
@@ -13,6 +15,11 @@ class Simwalk extends FileFormat {
 			},
 			hasMarkerNames : true
 		}
+
+		if (!ignore_descent){
+			haplo.processDescentGraph = Simwalk.processDescentGraph;
+		}
+
 
 		/*
 		var map = {
@@ -150,6 +157,11 @@ class Simwalk extends FileFormat {
 				tmp_allmat.push( tokens[1] );
 			}
 		}
+	}
+
+
+	static processDescentGraph(text_unformatted){
+
 	}
 
 
