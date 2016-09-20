@@ -44,7 +44,7 @@ class GraphicsLevelGrid {
 			}
 		);
 
-		console.log(fid, level_grid);
+//		console.log(fid, level_grid);
 
 		GlobalLevelGrid.insertGrid(fid, level_grid);
 

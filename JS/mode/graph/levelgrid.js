@@ -32,7 +32,7 @@ var GlobalLevelGrid = {
 	},
 
 	updateGrid: function(fid, grid){
-		console.log("updating with grid");
+		console.log("GLG: update", fid);
 		GlobalLevelGrid._map[fid] = grid;
 	},
 
