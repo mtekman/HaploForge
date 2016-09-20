@@ -1,4 +1,4 @@
-"use strict";
+
 
 var HaploWindow = {
 
@@ -261,6 +261,8 @@ var HaploWindow = {
 				if (finishfunc!==0) {
 					finishfunc();
 				}
+
+				MarkerSlider.showSlider(true)
 			}
 		}).play();
 	},
