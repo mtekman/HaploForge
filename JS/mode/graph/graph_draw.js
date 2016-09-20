@@ -168,6 +168,17 @@ function redrawNodes(pers_id, fam_id, drawLinesToo)
 //						e1_x = matemate.getX(), e1_y = matemate.getY();
 
 					changeRLineHoriz(mateline, nmate.getPosition(), matemate_gfx.getPosition());
+
+					// And now their children...!
+					var child_edges = uniqueGraphOps.findAllOffspringEdges(fam_id, male_id, female_id);
+
+					for (var cc=0; cc < child_edges.length; cc++){
+						var ops = child_edges[cc].split('-');
+						var child_id = ops[ops.length-1];
+
+						updateGraph.childline(fam_id, child_id);
+					}
+
 				}
 			}
 		}
