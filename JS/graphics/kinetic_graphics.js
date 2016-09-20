@@ -24,6 +24,9 @@ function makeStage(){
 
 	main_layer = new Kinetic.Layer({id:"main"});
 	haplo_layer = new Kinetic.Layer({id:"haplo"});
+
+	stage.add(main_layer);
+	stage.add(haplo_layer);
 }
 
 
@@ -207,14 +210,6 @@ function addRLine(fam_group, start, end, consang)
 }
 
 
-
-function finishDraw(){
-	stage.add(main_layer);
-	stage.add(haplo_layer);
-//	stage.add(mscale_layer)
-}
-
-
 // ------- Family Functions --------------
 function addFamily(fam_id, sx, sy){
 
@@ -224,6 +219,15 @@ function addFamily(fam_id, sx, sy){
 		id: fam_id
 	});
 
+	var bounds = new Kinetic.Rect({
+		x: sx, y:sy,
+		draggable : false,
+		stroke: "red",
+		strokeWidth: 1
+	});
+
+	g._boundsrect = bounds;
+	g.add(bounds);
 
 	var t = new Kinetic.Text({
 		x: 50,
@@ -238,6 +242,7 @@ function addFamily(fam_id, sx, sy){
 
 	t.on('mouseover', function(){
 		t.setFill('red');
+		g._boundsrect.show();
 		main_layer.draw();
 	});
 
@@ -245,12 +250,14 @@ function addFamily(fam_id, sx, sy){
 	t.on('mousedown', function(){
 		g.setScale({x:0.95, y:0.95});
 		familyDraw.active_fam_group = g;
+		g.moveToTop();
 	})
 
 	t.on('mouseout mouseup', function(){
 		g.setScale({x:1, y:1});
 		t.setFill('black');
-		main_layer.draw()
+		g._boundsrect.hide();
+		main_layer.draw();
 	})
 
 
@@ -508,9 +515,14 @@ function addPerson(person, fam_group,  t_x, t_y)  //positions relative to family
 		this.setY( (Math.floor(y/grid_rezY)*grid_rezY) );
 
 
-		if (familyMapOps.famExists(fam_group.id)){
+//		if (familyMapOps.famExists(fam_group.id)){
 			redrawNodes(id, fam_group.attrs.id, true);
-		}
+//		}
+	});
+
+	group.on("dragend", function(){
+		updateFamBoundsRect(fam_group);
+		redrawNodes(id, fam_group.attrs.id, true);
 	});
 
 	//Assume addFamily has already been called
@@ -519,3 +531,17 @@ function addPerson(person, fam_group,  t_x, t_y)  //positions relative to family
 }
 
 
+function updateFamBoundsRect(fgroup)
+{
+	var new_bounds = FamSpacing.getBoundsForFamily(fgroup),
+		new_rect = new_bounds.rect,
+		minpos = new_bounds.minpos;
+
+	var buffer = nodeSize * 2;
+
+
+	fgroup._boundsrect.setX(minpos.x - buffer);
+	fgroup._boundsrect.setY(minpos.y - buffer);
+	fgroup._boundsrect.setWidth(new_rect.getWidth() + 2*buffer);
+	fgroup._boundsrect.setHeight(new_rect.getHeight() + 2*buffer);
+}
