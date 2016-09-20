@@ -231,9 +231,12 @@ var persProps = {
 				"Delete",
 				"Remove individual " + person.id,
 				"Yes", function(){
+					// Migrate this to personDraw.js
 					var famid = familyDraw.active_fam_group.id;
 
+					delete personDraw.used_ids[person.id]
 					uniqueGraphOps.deleteNode(person.id, famid);
+
 					familyMapOps.removePerc(person.id, famid);
 
 					main_layer.draw();
