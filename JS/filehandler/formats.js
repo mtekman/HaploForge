@@ -1,3 +1,5 @@
+"use strict";
+
 /** Local storage keys
 
 Two types of saves: pedigree and haplotype (regardless of format)
