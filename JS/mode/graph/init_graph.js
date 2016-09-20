@@ -38,8 +38,6 @@ function graphInitPos(start_x, start_y, enable_ped_edit = false){
 		// Each fam gets their own group
 		var fam_group;
 
-		console.log(x_shift_fam,y_start)
-
 		if (uniqueGraphOps.famExists(fam) && uniqueGraphOps.getFam(fam).group !== null){
 			fam_group = uniqueGraphOps.getFam(fam).group;
 		}
@@ -206,18 +204,13 @@ function graphInitPos(start_x, start_y, enable_ped_edit = false){
 				edge.graphics.moveToBottom();
 			}
 		}
-		x_shift_fam += max_x + 20;	
+		x_shift_fam += max_x + 20;
 	});
 
-
-	//Go over everyone and touch their lines
-	finishDraw();
-	touchlines();
-
-
-	if (Pedfile.__tmpfamdata === {}){
+	// --- Placement Positions
+	if (isEmpty(Pedfile.__tmpfamdata)){
 		// Space automatically
-		FamSpacing.init();		
+		FamSpacing.init(20);		
 	}
 	else {
 		// Use stored positions
@@ -232,8 +225,23 @@ function graphInitPos(start_x, start_y, enable_ped_edit = false){
 		Pedfile.__tmpfamdata = {}; //clear
 	}
 
+	// --- Determine Bounds for each fam after final placements
+	uniqueGraphOps.foreachfam(function(fid,fgr){
+		updateFamBoundsRect(fgr.group);
+		fgr.group._boundsrect.hide();
+	});
 
-	main_layer.draw();
+
+	// --- Placement Animations
+	if (userOpts.allowTransitions){
+		// Solitaire
+		FancyGraphics.init();
+	}
+	else {
+		touchlines();
+		main_layer.draw();
+	}
+
 }
 
 
