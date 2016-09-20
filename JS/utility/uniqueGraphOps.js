@@ -35,6 +35,22 @@ var uniqueGraphOps = {
 		}
 	},
 
+
+	foreachedge: function(callback, fam_id = null){
+		if (fam_id === null){
+
+			for (var fam in uniqueGraphOps._map){
+				for (var edge in uniqueGraphOps.getFam(fam).edges){
+					callback(edge, fam, uniqueGraphOps.getEdge(edge, fam));
+				}
+			}
+		} else {
+			for (var edge in uniqueGraphOps.getFam(fam_id).edges){
+				callback(edge, uniqueGraphOps.getEdge(edge, fam_id));
+			}
+		}
+	},
+
 	insertFam: function(family_id, fam_group){
 
 		if (!(family_id in uniqueGraphOps._map))
@@ -197,9 +213,27 @@ var uniqueGraphOps = {
 	{
 		if (family_id in uniqueGraphOps._map)
 		{
-			var mate_key = edgeAccessor.matelineID(father_id, mother_id)
-			var child_key = edgeAccessor.childlineID(mate_key, child_id)
+			var mate_key = edgeAccessor.matelineID(father_id, mother_id);
+			var child_key = edgeAccessor.childlineID(mate_key, child_id);
 			return child_key;
+		}
+		throw new Error("No such family "+family_id);
+	},
+
+
+	findAllOffspringEdges: function(family_id, father_id, mother_id)
+	{
+		if (family_id in uniqueGraphOps._map)
+		{
+			var mate_key = edgeAccessor.matelineID(father_id, mother_id);
+
+			var child_edges = [];
+			for (var edge in uniqueGraphOps._map[family_id].edges){
+				if (edge.startsWith("c:"+mate_key+"-")){
+					child_edges.push(edge);
+				}
+			}
+			return child_edges
 		}
 		throw new Error("No such family "+family_id);
 	},
