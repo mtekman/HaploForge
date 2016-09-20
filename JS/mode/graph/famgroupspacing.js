@@ -2,13 +2,60 @@
 var FamSpacing = {
 
 
-	init(max_width, debug = false){
+	init(offsetY, max_width, debug = false){
 		max_width = max_width || stage.getWidth();
+		offsetY = offsetY || 0;
 
 		var placements = FamSpacing.__getFamBounds();
 
 		FamSpacing.__performPacking(placements, max_width, debug);
-		FamSpacing.__setDerivedPositions(placements);
+		FamSpacing.__setDerivedPositions(placements, offsetY);
+	},
+
+	// Accessible to node drag functions too
+	getBoundsForFamily: function(fgroup){
+		// Get group width
+		var min_x = 999999999, min_y = 9999999,
+			max_x = 0, max_y = 0;
+
+		var title_y = fgroup.fam_title_text.getY();
+
+		uniqueGraphOps.foreachnode(function(nid, node)
+		{
+			var xer = node.graphics.getX(),
+				yer = node.graphics.getY()
+
+			var l_offs = nodeSize,
+				r_offs = l_offs;
+
+			if (min_x > xer - l_offs){ min_x = xer - l_offs; }
+			if (max_x < xer + r_offs){ max_x = xer + r_offs; }		
+			if (min_y > yer - nodeSize){ min_y = yer - nodeSize; }		
+			if (max_y < yer + nodeSize){ max_y = yer + nodeSize; }
+		}, fgroup.id);
+
+//		var min_y = title_y
+
+		var pos = fgroup.getAbsolutePosition();
+		var w = max_x - min_x,
+			h = max_y - min_y;
+
+		var rect = new Kinetic.Rect({
+			x:min_x + pos.x,
+			y:min_y + pos.y,
+			stroke:"red",
+			strokeWidth: 2,
+			width: w,
+			height: h
+		});
+
+		// Move out of way for now
+		rect.setX(-1000);
+		rect.setY(-1000);
+
+		main_layer.add(rect);
+
+		return {rect: rect, minpos: { x: min_x, y: min_y}};
 	},
 
 
@@ -16,54 +63,10 @@ var FamSpacing = {
 	{
 		var fam_placements = {}; // fid -> [position, width]
 
-		familyMapOps.foreachfam(function(fid)
+		uniqueGraphOps.foreachfam(function(fid,fgr)
 		{
-			// Get group width
-			var min_x = 999999999, min_y = 9999999,
-				max_x = 0, max_y = 0;
-
-			var famgfx = uniqueGraphOps.getFam(fid),
-				fgroup = famgfx.group,
-				title_y = fgroup.fam_title_text.getY();
-
-			uniqueGraphOps.foreachnode(function(nid, node)
-			{
-				var xer = node.graphics.getX(),
-					yer = node.graphics.getY()
-
-				var l_offs = nodeSize,
-					r_offs = l_offs;
-
-				if (min_x > xer - l_offs){ min_x = xer - l_offs; }
-				if (max_x < xer + r_offs){ max_x = xer + r_offs; }		
-	//			if (min_y > yer - nodeSize){ min_y = yer - nodeSize; }		
-				if (max_y < yer + nodeSize){ max_y = yer + nodeSize; }
-			}, fid);
-
-			var min_y = title_y
-
-			var pos = fgroup.getAbsolutePosition();
-			var w = max_x - min_x,
-				h = max_y - min_y;
-
-			var rect = new Kinetic.Rect({
-				x:min_x + pos.x,
-				y:min_y + pos.y,
-				stroke:"red",
-				strokeWidth: 2,
-				width: w,
-				height: h
-			});
-
-			fgroup.hide();
-
-			// Move out of way for now
-			rect.setX(-1000);
-			rect.setY(-1000);
-
-			main_layer.add(rect);
-
-			fam_placements[fid] = {rect: rect, minx: min_x};
+			fgr.group.hide();
+			fam_placements[fid] = FamSpacing.getBoundsForFamily(fgr.group);
 
 		});
 		return fam_placements;
@@ -146,16 +149,18 @@ var FamSpacing = {
 	},
 
 
-	__setDerivedPositions: function(fam_placements)
+	__setDerivedPositions: function(fam_placements, offsetY = 0)
 	{
 		for (var g_id in fam_placements)
 		{
 			var group = fam_placements[g_id].rect,
-				offx  = fam_placements[g_id].minx,
+				offset  = fam_placements[g_id].minpos,
+				offx = offset.x,
+				offy = offset.y,
 				fgroup = uniqueGraphOps.getFam(g_id).group;
 
 			fgroup.setX( group.getX() - offx );
-			fgroup.setY( group.getY() );
+			fgroup.setY( group.getY() + offsetY - offy );
 			fgroup.show();
 
 			//Remove rects after ananlyis
