@@ -10,7 +10,7 @@ var personDraw = {
 		var id_counter = 0;
 		while (++id_counter in this.used_ids){}
 
-		return new Person(id_counter, 0, 0, 0 ,0);
+		return new Person(id_counter, 1, 1, 0 ,0);
 	},
 
 
