@@ -72,7 +72,7 @@ var homology_selection_mode = function()
 
 			var gfx = node,
 				pos = gfx.getAbsolutePosition(),
-				bounder = SelectionGraphics.addBounder(pos, key, false);
+				bounder = SelectionGraphics.addBounder(pos, key, false, null); // false -> haplo_layer, null --> testHaplos
 
 			// By default not enabled
 			SelectionMode._items[key] = {

@@ -93,6 +93,7 @@ var SelectionMode = {
 					var key = fid+"_"+node_id
 
 					var hasHaplo = familyMapOps.getPerc(node_id, fid).hasHaplo();
+					console.log("HasHaplo:", hasHaplo, node_id, fid)
 
 					if (hasHaplo){
 						all_no_haplo = false;
