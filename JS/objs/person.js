@@ -20,6 +20,20 @@ class Person {
 		this.stored_meta;
 	}
 
+	insertDescentData(normal_array){
+
+		if (this.haplo_data[0].descent === null){
+			this.haplo_data[0].addDescent(normal_array) // paternal
+			return 0;
+		}
+
+		if (this.haplo_data[1].descent === null){
+			this.haplo_data[1].addDescent(normal_array); //maternal
+			return 0;
+		}
+		throw new Error(this.id+" already has populated Alleles");
+	}
+
 	insertHaploData(normal_array){
 		var num_alleles = this.haplo_data.length;
 

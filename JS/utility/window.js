@@ -86,7 +86,7 @@ function resizeCanvas()
 
         if (  ModeTracker.currentMode === ModeTracker.modes.pedcreate
             ||ModeTracker.currentMode === ModeTracker.modes.haploview){
-              FamSpacing.init();
+              FamSpacing.init(20);
         }
     }
 }

@@ -18,6 +18,10 @@ class Allele {
 		this.descent = null;
 	}
 
+	addDescent(data){
+		this.descent = new Int8Array(data);
+	}
+
 	getLength(){
 		return this.data_array.length
 	}

@@ -45,9 +45,10 @@ class FileFormat {
 				FileFormat.readFile(that.descentfile, descent.process);
 				usedescent = true;
 			}
-			else if (haplo.processDescentGraph !== undefined){
-				haplo.processDescentGraph(haplo_text);
-				usedescent = true;
+			else if (haplo.useDescent !== undefined){
+				if (haplo.useDescent){
+					usedescent = true;					
+				}
 			}
 
 

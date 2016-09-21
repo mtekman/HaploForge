@@ -11,15 +11,11 @@ class Simwalk extends FileFormat {
 		var haplo = {
 			id: "sw_haplo",
 			process: function(haplo_text){
-				Simwalk.populateFamilyAndHaploMap(haplo_text);
+				Simwalk.populateFamilyAndHaploMap(haplo_text, !ignore_descent);
 			},
+			useDescent : !ignore_descent,
 			hasMarkerNames : true
 		}
-
-		if (!ignore_descent){
-			haplo.processDescentGraph = Simwalk.processDescentGraph;
-		}
-
 
 		/*
 		var map = {
@@ -41,7 +37,8 @@ class Simwalk extends FileFormat {
 	}
 
 
-	static populateFamilyAndHaploMap(text_unformatted){
+	static populateFamilyAndHaploMap(text_unformatted, use_descent = false){
+
 		var lines = text_unformatted.split('\n');
 
 		var marker_header_found = false,
@@ -83,8 +80,31 @@ class Simwalk extends FileFormat {
 		var dashedlines_found = false,
 			tmp_fam = null,
 			tmp_perc = null,
-			tmp_allpat = [],
-			tmp_allmat = [];
+			tmp_allpat = [],  // alleles
+			tmp_allmat = [],
+			tmp_decpat = [], // descent
+			tmp_decmat = [];
+
+
+		function insertDat(){
+			if (tmp_allpat.length > 0){
+				// console.log("appending haplo data to", tmp_perc.id)
+				tmp_perc.insertHaploData(tmp_allpat);
+				tmp_perc.insertHaploData(tmp_allmat);
+
+				if (use_descent){
+					tmp_perc.insertDescentData(tmp_decpat); // paternal first
+					tmp_perc.insertDescentData(tmp_decmat); // maternal second
+				}
+
+				tmp_perc = null;
+				tmp_allmat = [];
+				tmp_allpat = [];
+				tmp_decpat = [];
+				tmp_decmat = [];
+			}
+		}
+
 
 		for (; l < lines.length; l++){
 			var line = lines[l];
@@ -93,15 +113,7 @@ class Simwalk extends FileFormat {
 
 				// Flush data from last perc if new fam found
 				if (tmp_perc !== null){
-					if (tmp_allpat.length > 0){
-						// console.log("appending haplo data to", tmp_perc.id)
-						tmp_perc.insertHaploData(tmp_allpat);
-						tmp_perc.insertHaploData(tmp_allmat);
-
-						tmp_perc = null;
-						tmp_allmat = [];
-						tmp_allpat = [];
-					}
+					insertDat();
 				}
 
 				dashedlines_found = true;
@@ -124,15 +136,7 @@ class Simwalk extends FileFormat {
 			// Person Data
 			if (tmp_fam !== null && tokens.length===5){
 
-				if (tmp_allpat.length > 0){
-					// console.log("appending haplo data to", tmp_perc.id)
-					tmp_perc.insertHaploData(tmp_allpat);
-					tmp_perc.insertHaploData(tmp_allmat);
-
-					tmp_perc = null;
-					tmp_allmat = [];
-					tmp_allpat = [];
-				}
+				insertDat();
 
 				var id = parseInt(tokens[0]),
 					father_id = parseInt(tokens[1]),
@@ -155,6 +159,11 @@ class Simwalk extends FileFormat {
 
 				tmp_allpat.push( tokens[0] );
 				tmp_allmat.push( tokens[1] );
+
+				if (use_descent){
+					tmp_decpat.push( tokens[2] );
+					tmp_decmat.push( tokens[3] );
+				}
 			}
 		}
 	}
