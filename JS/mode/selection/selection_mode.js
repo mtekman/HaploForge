@@ -47,6 +47,9 @@ var SelectionMode = {
 
 	init: function startSelectionMode()
 	{
+		SelectionAction.toggle_selection_all = false;
+		SelectionAction.toggle_selection_affecteds = false;
+
 		ButtonModes.setToSelectionMode()
 
 		SelectionMode.toggle_selection_affecteds = false;

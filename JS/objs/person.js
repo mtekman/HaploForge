@@ -34,6 +34,21 @@ class Person {
 		throw new Error(this.id+" already has populated Alleles");
 	}
 
+
+	setHaplogroupArray(normal_array){
+		if (this.haplo_data[0].haplogroup_array === null){
+			this.haplo_data[0].haplogroup_array = new Int8Array(normal_array);
+			return 0;
+		}
+
+		if (this.haplo_data[1].haplogroup_array === null){
+			this.haplo_data[1].haplogroup_array = new Int8Array(normal_array);
+			return 0;
+		}
+		throw new Error(this.id+" already has haplogroups set!");
+	}
+	
+
 	insertHaploData(normal_array){
 		var num_alleles = this.haplo_data.length;
 

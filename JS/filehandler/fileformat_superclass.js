@@ -94,11 +94,22 @@ class FileFormat {
 		MainPageHandler.haplomodeload();
 	}
 
+	// If usedescent === null, we ignore assignHGroups
+	//   altogether (useful when loading a prior analysis)
 	static __endFuncs(usedescent = false){
 		
 		graphInitPos(nodeSize + 10, grid_rezY);
 
-		AssignHGroups.init(usedescent);
+
+		if (usedescent !== null){
+			console.log("Resolve Method: "+usedescent?"Descent Graph":"A* Search");
+			AssignHGroups.init(usedescent);
+		}
+		else {
+			console.log("Resolve Method: Load From Storage");
+		}
+
+
 		MarkerData.padMarkerMap();
 
 		populateIndexDataList();

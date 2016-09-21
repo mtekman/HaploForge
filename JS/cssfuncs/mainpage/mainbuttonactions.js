@@ -20,7 +20,7 @@ var MainButtonActions  = {
 		SerialParse.All.import( hap_data );
 		HaploPedProps.init();
 		
-		FileFormat.__endFuncs();
+		FileFormat.__endFuncs(null);  // :=null  ensures that HGroups aren't reassigned.
 	},
 
 

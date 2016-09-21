@@ -29,15 +29,15 @@ var SerialParse = {
 				name = tokens[5] === "null"?null:tokens[5].trim(),
 				graphics = {x:Number(tokens[6]),y:Number(tokens[7])};
 
-			var haplo_data_one = tokens[8].trim().split(" ").map(x=> parseInt(x)),
-				haplo_data_two = tokens[9].trim().split(" ").map(x=> parseInt(x));
-
 			var person = new Person(id, gender, affected, mother_id, father_id, name);
+			var haplo_data = SerialParse.Alleles.import( tokens[8].trim() );
 
 			person.stored_meta = graphics;
 
-			person.insertHaploData(haplo_data_one);
-			person.insertHaploData(haplo_data_two);
+			person.insertHaploData(haplo_data[0].data);
+			person.setHaplogroupArray(haplo_data[0].haplo);
+			person.insertHaploData(haplo_data[1].data);
+			person.setHaplogroupArray(haplo_data[1].haplo)
 
 			return person;
 		},
@@ -55,11 +55,35 @@ var SerialParse = {
 				person.name||"null",
 				graphx.getX(),
 				graphx.getY(),
-				person.haplo_data[0].data_array.join(" "),
-				person.haplo_data[1].data_array.join(" ")
+				SerialParse.Alleles.export(person),
 				].join(",");
 		}	
 	},
+
+	Alleles : {
+		import : function(string){
+			var tokens = string.split("%");
+
+			return {
+				0: {
+					data : tokens[0].split(" ").map(x => Number(x)),
+					haplo: tokens[1].split(" ").map(x => Number(x))
+				},
+				1: {
+					data : tokens[2].split(" ").map(x => Number(x)),
+					haplo: tokens[3].split(" ").map(x => Number(x))
+				}
+			}
+		},
+
+		export : function(person){
+			return person.haplo_data[0].data_array.join(" ")
+			 +"%"+ person.haplo_data[0].haplogroup_array.join(" ")
+			 +"%"+ person.haplo_data[1].data_array.join(" ")
+			 +"%"+ person.haplo_data[1].haplogroup_array.join(" ");
+		}
+	},
+
 
 	// Fam + Graphics
 	All : {

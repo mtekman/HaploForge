@@ -4,7 +4,7 @@ var AssignHGroups = {
 
 	// First pass -- assign groups
 	init: function(use_descent_graph = false)
-	{
+	{	
 		GlobalLevelGrid.foreachfam(function(grid, fam){
 			// First generation must be founders
 			var founder_gen = grid[0];
@@ -46,12 +46,10 @@ var AssignHGroups = {
 											use_descent) {
 		
 		if (use_descent){
-			console.log("Resolve Method: Descent Graph")
 			DescentResolver.child2parent_link(child, mother, father, fam);
 		}
 		else {
 			// A* method
-			console.log("Resolve Method: A* Search")
 			AstarHandler.child2parent_link(child, mother, father, fam);
 		}
 	},
@@ -116,6 +114,7 @@ var AssignHGroups = {
 
 				// Leave for GC
 				delete both_alleles[a].pter_array;
+				delete both_alleles[a].descent;
 			}
 		}, fam);
 	}
