@@ -34,12 +34,18 @@ var DescentResolver = {
 			var c1_ht = c1_gts[index],		c1_ds = c1_des[index],
 				c2_ht = c2_gts[index],		c2_ds = c2_des[index];
 
-			var m1_col = m1_cls[index].color_group,		m2_col = m2_cls[index].color_group,
-				f1_col = f1_cls[index].color_group,		f2_col = f2_cls[index].color_group;
+			var m1_col = m1_cls[index],		m2_col = m2_cls[index],
+				f1_col = f1_cls[index],		f2_col = f2_cls[index];
 
 			var m1_ht = m1_gts[index],		m2_ht = m2_gts[index],
 				f1_ht = f1_gts[index],		f2_ht = f2_gts[index];
 
+
+
+			if (f1_ht === 0) f1_col.color_group = [FounderColor.zero_color_grp];
+			if (f2_ht === 0) f2_col.color_group = [FounderColor.zero_color_grp];
+			if (m1_ht === 0) m1_col.color_group = [FounderColor.zero_color_grp];
+			if (m2_ht === 0) m2_col.color_group = [FounderColor.zero_color_grp];
 
 			// Do paternal (1st)
 			var color_assign_c1 = -1
@@ -48,22 +54,22 @@ var DescentResolver = {
 				case 0: color_assign_c1 = -1; break;
 
 				case 1: 
-					color_assign_c1 = f1_col;
+					color_assign_c1 = f1_col.color_group;
 					if (c1_ht !== f1_ht){
 						throw new Error("Inconsistent HTs [c1,f1]: " + c1_ht + " != " + f1_ht);
 					}
 					break;
 				
 				case 2: 
-					color_assign_c1 = f2_col;
+					color_assign_c1 = f2_col.color_group;
 					if (c1_ht !== f2_ht){
 						throw new Error("Inconsistent HTs [c1,f2]: " + c1_ht + " != " + f2_ht);
-					}					
+					}
 					break;
 
 				default: throw new Error("Invalid descent assignment");
 			}
-			c1_cls[index].color_group = c1_ht===0?FounderColor.zero_color_grp:color_assign_c1
+			c1_cls[index].color_group = color_assign_c1
 
 			
 
@@ -74,14 +80,14 @@ var DescentResolver = {
 				case 0: color_assign_c2 = -1; break;
 
 				case 1: 
-					color_assign_c2 = m1_col;
+					color_assign_c2 = m1_col.color_group;
 					if (c2_ht !== m1_ht){
 						throw new Error("Inconsistent HTs [c2,m1]: " + c2_ht + " != " + m1_ht);
 					}
 					break;
 				
 				case 2: 
-					color_assign_c2 = m2_col; 
+					color_assign_c2 = m2_col.color_group; 
 					if (c2_ht !== m2_ht){
 						throw new Error("Inconsistent HTs [c2,m2]: " + c2_ht + " != " + m2_ht);
 					}
@@ -89,7 +95,7 @@ var DescentResolver = {
 
 				default: throw new Error("Invalid descent assignment");	
 			}
-			c2_cls[index].color_group = c2_ht===0?FounderColor.zero_color_grp:color_assign_c2;
+			c2_cls[index].color_group = color_assign_c2;
 		}
 	}
 }
