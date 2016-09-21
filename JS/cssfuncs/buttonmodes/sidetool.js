@@ -122,23 +122,15 @@ var ToolButtons = {
 
 			ToolButtons.setTitle("Haplo Tools");
 
-			ToolButtons.addToolsButton("Align Pedigree", function(){
-				alignTopSelection( DOS.haplo_group_nodes, DOS.haplo_group_lines);
-			});
 			ToolButtons.addToolsButton("Find Homology", function(){
 				// Function exits selection mode auto
 				homology_selection_mode();
 				//returns marker pair list
 			});
-			ToolButtons.addToolsButton("Range Slider", function(){
+/*			ToolButtons.addToolsButton("Range Slider", function(){
 				MarkerSlider.showSlider(!MarkerSlider._visible)
-			});
+			});*/
 			ToolButtons.addToolsButton("Marker Search", showIndexCSS);
-
-			ToolButtons.addToolsButton("Recolour", function(){
-				FounderColor.makeUniqueColors(true); //random = true
-				redrawHaplos(false);
-			});
 		},
 
 		/* From comparison mode, the buttons showed during homology selection */

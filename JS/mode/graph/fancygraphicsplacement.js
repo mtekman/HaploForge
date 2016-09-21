@@ -10,7 +10,7 @@ var FancyGraphics = {
 		scale : 50,
 		x: -100,
 		y: 2000,
-		duration: 1
+		duration: 0.5
 	},
 
 

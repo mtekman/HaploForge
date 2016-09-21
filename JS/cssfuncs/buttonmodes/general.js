@@ -102,7 +102,18 @@ var BottomButtons = {
 
 		/* Side by side Haploblocks */
 		setToComparisonMode: function(){
-			BottomButtons.modes.__clearMode();
+			BottomButtons.modes.__preamble();
+
+			BottomButtons.addToolsButton("Align Pedigree", function(){
+				alignTopSelection( DOS.haplo_group_nodes, DOS.haplo_group_lines);
+			});
+
+			BottomButtons.addToolsButton("Recolour", function(){
+				FounderColor.makeUniqueColors(true); //random = true
+				redrawHaplos(false);
+			});
+
+//			BottomButtons.modes.__clearMode();
 			ModeTracker.setMode( "comparison" );
 		},
 

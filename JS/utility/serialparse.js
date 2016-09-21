@@ -15,6 +15,20 @@ var SerialParse = {
 				+ "gp_array:" + MarkerData.gp_array.join(",");
 		}
 	},
+
+	HGroups: {
+		import : function(string){
+			var un_hg = string.split('|');
+
+			FounderColor.unique = JSON.parse(un_hg[0]);
+			FounderColor.hgroup = JSON.parse(un_hg[1]);
+		},
+
+		export : function(){
+			return JSON.stringify(FounderColor.unique)
+				+ '|' + JSON.stringify(FounderColor.hgroup);
+		}
+	},
 	
 	// Fam + Graphics
 	Person : {
@@ -92,6 +106,7 @@ var SerialParse = {
 			begin : "::",
 			marker : "$$",
 			fidsep : "|",
+			colors : "&&",
 		},
 
 		export: function()
@@ -118,6 +133,7 @@ var SerialParse = {
 			});
 
 			outstring += SerialParse.All._delims.marker + SerialParse.Marker.export();
+			outstring += '\n' + SerialParse.All._delims.colors + SerialParse.HGroups.export();
 
 			return outstring;
 		},
@@ -133,6 +149,11 @@ var SerialParse = {
 					SerialParse.Marker.import(data);
 				}
 
+				else if (line.startsWith(SerialParse.All._delims.colors)){
+					var data = line.split(SerialParse.All._delims.colors)[1];
+					SerialParse.HGroups.import(data);
+				}
+
 				else if (line.startsWith(SerialParse.All._delims.begin)){
 					// Fam data
 					var fid_graphics = line.split(SerialParse.All._delims.begin)[1]
@@ -145,7 +166,8 @@ var SerialParse = {
 
 					uniqueGraphOps.insertFam(fid, fam_group);
 					// familyMapOps.insertFam is performed automatically at person level.
-				} 
+				}
+
 
 				else {
 					// Person data
