@@ -46,10 +46,12 @@ var AssignHGroups = {
 											use_descent) {
 		
 		if (use_descent){
+			console.log("Resolve Method: Descent Graph")
 			DescentResolver.child2parent_link(child, mother, father, fam);
 		}
 		else {
 			// A* method
+			console.log("Resolve Method: A* Search")
 			AstarHandler.child2parent_link(child, mother, father, fam);
 		}
 	},

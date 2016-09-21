@@ -2,14 +2,14 @@
 var FamSpacing = {
 
 
-	init(offsetY, max_width, debug = false){
+	init(offset, max_width, debug = false){
 		max_width = max_width || stage.getWidth();
-		offsetY = offsetY || 0;
+		offset = offset || 0;
 
 		var placements = FamSpacing.__getFamBounds();
 
 		FamSpacing.__performPacking(placements, max_width, debug);
-		FamSpacing.__setDerivedPositions(placements, offsetY);
+		FamSpacing.__setDerivedPositions(placements, offset);
 	},
 
 	// Accessible to node drag functions too
@@ -149,7 +149,7 @@ var FamSpacing = {
 	},
 
 
-	__setDerivedPositions: function(fam_placements, offsetY = 0)
+	__setDerivedPositions: function(fam_placements, offsetT = 0)
 	{
 		for (var g_id in fam_placements)
 		{
@@ -159,8 +159,8 @@ var FamSpacing = {
 				offy = offset.y,
 				fgroup = uniqueGraphOps.getFam(g_id).group;
 
-			fgroup.setX( group.getX() - offx );
-			fgroup.setY( group.getY() + offsetY - offy );
+			fgroup.setX( group.getX() + offsetT - offx );
+			fgroup.setY( group.getY() + offsetT - offy );
 			fgroup.show();
 
 			//Remove rects after ananlyis

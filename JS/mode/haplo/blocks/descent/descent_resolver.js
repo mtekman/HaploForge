@@ -45,7 +45,7 @@ var DescentResolver = {
 			var color_assign_c1 = -1
 
 			switch(c1_ds){
-				case 0: color_assign_c1 = FounderColor.zero_color_grp; break;
+				case 0: color_assign_c1 = -1; break;
 
 				case 1: 
 					color_assign_c1 = f1_col;
@@ -63,7 +63,7 @@ var DescentResolver = {
 
 				default: throw new Error("Invalid descent assignment");
 			}
-			c1_cls[index].color_group = color_assign_c1
+			c1_cls[index].color_group = c1_ht===0?FounderColor.zero_color_grp:color_assign_c1
 
 			
 
@@ -71,7 +71,7 @@ var DescentResolver = {
 			var color_assign_c2 = -1
 
 			switch(c2_ds){
-				case 0: color_assign_c2 = FounderColor.zero_color_grp; break;
+				case 0: color_assign_c2 = -1; break;
 
 				case 1: 
 					color_assign_c2 = m1_col;
@@ -89,7 +89,7 @@ var DescentResolver = {
 
 				default: throw new Error("Invalid descent assignment");	
 			}
-			c2_cls[index].color_group = color_assign_c2;
+			c2_cls[index].color_group = c2_ht===0?FounderColor.zero_color_grp:color_assign_c2;
 		}
 	}
 }
