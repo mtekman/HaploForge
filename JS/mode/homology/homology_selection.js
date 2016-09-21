@@ -44,6 +44,9 @@ var HomologySelectionMode = {
 
 	__addBounders: function()
 	{
+		//Clear previous SelectionMode._items
+		SelectionMode._items = {};
+
 		for (var c=0; c < DOS.haplo_group_nodes.children.length; c++)
 		{
 			var node = DOS.haplo_group_nodes.children[c];

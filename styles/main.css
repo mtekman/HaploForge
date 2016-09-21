@@ -39,6 +39,7 @@
 
 #homology_buttons select {
   border-radius: 5px;
+  width: 100%;
 }
 
 #homology_buttons input[type=number] {
@@ -46,7 +47,7 @@
 }
 
 #homology_buttons input[type=button] {
-  max-width: 100px;
+  /*max-width: 100px;*/
 }
 
 #homology_buttons label {
@@ -296,7 +297,7 @@
 
 
 .input_props input {
-  max-width: 150px;
+  /*max-width: 150px;*/
 }
 
 .status {
