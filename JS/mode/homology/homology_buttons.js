@@ -1,4 +1,5 @@
 
+
 var HomologyButtons = {
 
 	_group : document.getElementById('homology_buttons'),
@@ -6,33 +7,34 @@ var HomologyButtons = {
 	_minext_accessor : document.getElementById('zygous_min_stretch'),
 	_minscore_accessor : document.getElementById('zygous_min_score'),
 
-	_printcurrent_accessor : document.getElementById('print_current'),
-	_printall_accessor : document.getElementById('print_all'),
-	_redraw_accessor : document.getElementById('plot_redraw'),
-	_exit_accessor : document.getElementById('hom_exit'),
+	_export_accessor : document.getElementById('homology_export'),
+	_redraw_accessor : document.getElementById('homology_redraw'),
+	//_exit_accessor : document.getElementById('hom_exit'),
 
 	init: function(){
 		// Make onclick events
 		HomologyButtons._exit_accessor.onclick = HomologyButtons._exit;
 		HomologyButtons._redraw_accessor.onclick = HomologyButtons._redraw;
-		HomologyButtons._printall_accessor.onclick = HomologyButtons._printAll;
-		HomologyButtons._printcurrent_accessor.onclick = HomologyButtons._printCurrent;
+		HomologyButtons._export_accessor.onclick = function(){
+			utility.yesnoprompt("Homology Export", "Export All or Shown?",
+				"All", HomologyButtons._printAll,
+		 		"Shown", HomologyButtons._printCurrent
+			);
+		};
 	},
 
 	updateHomologyInputs: function(){
-		HomologyMode._type = HomologyButtons._type_accessor.options[
-			HomologyButtons._type_accessor.selectedIndex
-		].value;
+		HomologyMode._type = HomologyButtons._type_accessor.value;
 
-		HomologyButtons._minexten = parseInt( HomologyButtons._minext_accessor.value );
-		HomologyButtons._minscore = parseInt( HomologyButtons._minscore_accessor.value );
+		HomologyButtons._minexten = Number( HomologyButtons._minext_accessor.value );
+		HomologyButtons._minscore = Number( HomologyButtons._minscore_accessor.value );
 	},
 
 	_exit: function()
 	{
-		if (sub_select_group != null){
-			sub_select_group.destroyChildren();
-			sub_select_group.destroy();
+		if (HomologySelectionMode.sub_select_group != null){
+			HomologySelectionMode.sub_select_group.destroyChildren();
+			HomologySelectionMode.sub_select_group.destroy();
 		}
 		HomologyMode._active = false;
 		HomologyButtons._group.style.display = "none";
@@ -46,7 +48,7 @@ var HomologyButtons = {
 
 		HomologyMode.plotScoresOnMarkerScale
 		(
-			plots[HomologyMode._type],
+			HomologyMode.plots[HomologyMode._type],
 			HomologyMode._minexten,
 			HomologyMode._minscore
 		);
@@ -64,5 +66,4 @@ var HomologyButtons = {
 		HomologyMode._active = true;
 		HomologyButtons._group.style.display = "block";
 	},
-
 }

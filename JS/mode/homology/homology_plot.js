@@ -13,7 +13,7 @@ var HomologyMode = {
 
 
 	debugUpdatePlots: function(spec_plot, stretch, score){
-		plotScoresOnMarkerScale( spec_plot, stretch, score )
+		HomologyMode.plotScoresOnMarkerScale( spec_plot, stretch, score )
 	},
 
 	printToFile: function( ht_ids, 
@@ -54,9 +54,9 @@ var HomologyMode = {
 				text += '\t' + a1.toString() + "" + a2.toString()
 			}
 
-			var hom_v = plots.HOM[l],
-				het_v = plots.HET[l],
-				chet_v = plots.CHET[l];
+			var hom_v = HomologyMode.plots.HOM[l],
+				het_v = HomologyMode.plots.HET[l],
+				chet_v = HomologyMode.plots.CHET[l];
 
 			var score_columns = '\t ' + hom_v.toString() + '\t ' + het_v.toString() + '\t ' + chet_v.toString();
 			score_columns = score_columns.replace(/ -/g, "-");

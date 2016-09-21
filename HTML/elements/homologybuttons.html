@@ -1,35 +1,43 @@
 document.write('\
 \
-<div id="homology_buttons">\
-            <input type=button id="hom_exit" value="X" /> \
+<div id="homology_buttons" class="input_props" >\
+<!--            <input type=button id="hom_exit" value="X" />-->\
 \
             <table>\
                 <tr>\
-                    <td>\
+                    <td colspan="2" >\
                         <select id="plot_type">\
-                            <option selected >HOM</option>\
-                            <option>HET</option>\
-                            <option>CHET</option>\
+                            <option selected value="HOM" >Homozygous</option>\
+                            <option value="HET" >Heterozygous</option>\
+                            <option value="CHET" >Compound Het.</option>\
                         </select>\
-                        <input type=button id="plot_redraw" value="Redraw" />\
                     </td>\
                 </tr>\
 \
                 <tr>\
                     <td>\
-                    <span class="numbers">\
                         <label for="zygous_min_stretch">Min Exten:</label>\
+                    </td>\
+                    <td>\
                         <input type=number id="zygous_min_stretch" value="1" min=1 />\
-                        <label for="zygous_min_score"  >Min Score:</label>\
-                        <input type=number id="zygous_min_score" value="1" min=1 />\
-                    </span>\
-\
                     </td>\
                 </tr>\
                 <tr>\
                     <td>\
-                        <input type=button id="print_all" value="Print All" />\
-                        <input type=button id="print_current" value="Print Current"/>\
+                        <label for="zygous_min_score"  >Min Score:</label>\
+                    </td>\
+                    <td>\
+                        <input type=number id="zygous_min_score" value="1" min=1 />\
+                    </td>\
+                </tr>\
+                <tr>\
+                    <td>\
+                        <input type=button id="homology_redraw" value="Update" />\
+                    </td>\
+                </tr>\
+                <tr>\
+                    <td>\
+                        <input type=button id="homology_export" value="Export Data" />\
                     </td>\
                 </tr>\
             </table>\

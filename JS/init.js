@@ -43,8 +43,6 @@ MainPageHandler.defaultload();
 
 
 
-
-
 // Merlin test
 function test(){
 

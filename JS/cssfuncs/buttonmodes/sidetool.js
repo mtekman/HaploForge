@@ -6,6 +6,10 @@ var ToolButtons = {
 	table : document.getElementById("selection_table"),
 	title : document.getElementById("selection_title"),
 
+	setWidth: function(px){
+		ToolButtons.div.style.width = px + 'px';
+	},
+
 	setTitle: function(title){
 		ToolButtons.title.innerHTML = title;
 	},
@@ -86,11 +90,11 @@ var ToolButtons = {
 		/* Haplo View */
 		setToHaploView: function()
 		{
-			console.log("tool", "premode")
-
 			ToolButtons.modes.preamble();
 
-			ToolButtons.setTitle("Pedigree Arrange");
+			ToolButtons.setWidth(90);
+			ToolButtons.setTitle("Pedigree");
+
 			ToolButtons.addToolsButton("Start Analysis", SelectionMode.init);
 
 			ToolButtons.addToolsButton("Modify Pedigree", function()
@@ -108,10 +112,10 @@ var ToolButtons = {
 		{
 			ToolButtons.modes.preamble();
 
-			ToolButtons.setTitle("Selection Tools");
+			ToolButtons.setTitle("Selection");
 			ToolButtons.addToolsButton("Select All", SelectionAction.selectAll);
 			ToolButtons.addToolsButton("Select Affecteds", SelectionAction.selectAffecteds);
-			ToolButtons.addToolsButton("Submit Selection", HaploWindow.init);
+			ToolButtons.addToolsButton("Submit", HaploWindow.init);
 		},
 
 
@@ -120,28 +124,37 @@ var ToolButtons = {
 		{
 			ToolButtons.modes.preamble();
 
-			ToolButtons.setTitle("Haplo Tools");
+			ToolButtons.setTitle("Haplotypes");
 
-			ToolButtons.addToolsButton("Find Homology", function(){
-				// Function exits selection mode auto
-				homology_selection_mode();
-				//returns marker pair list
-			});
+			ToolButtons.addToolsButton("Find Homology", HomologySelectionMode.init);
+			ToolButtons.addToolsButton("Marker Search", showIndexCSS);
+
 /*			ToolButtons.addToolsButton("Range Slider", function(){
 				MarkerSlider.showSlider(!MarkerSlider._visible)
 			});*/
-			ToolButtons.addToolsButton("Marker Search", showIndexCSS);
+
 		},
 
 		/* From comparison mode, the buttons showed during homology selection */
+		// called by HomologySelectionMode.init
 		setToHomologySelection: function(){
-			console.log("implement later");
+			ToolButtons.modes.preamble();
+
+			ToolButtons.setTitle("Homology");
+			ToolButtons.addToolsButton("Select All", SelectionAction.selectAll);
+			ToolButtons.addToolsButton("Select Affecteds", SelectionAction.selectAffecteds);
+			ToolButtons.addToolsButton("Submit", HomologySelectionMode.submit);
+			
 		},
 
 
 		/* Actual tools used in homology plots */
+		// called by HomologySelectionMode.submit()
 		setToHomologyMode: function(){
-			throw new Error("implement");
+			ToolButtons.modes.preamble();
+
+			ToolButtons.setTitle("Homology");
+			ToolButtons.addToolsButton("Marker Search", showIndexCSS);
 		}
 	}
 }

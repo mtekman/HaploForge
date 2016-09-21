@@ -5,16 +5,14 @@ var SelectionGraphics = {
 	// Replicate existing objects with bounding square
 	addBounder: function(pos, key, main_layer_yes, hasHaplo){
 
-		console.log("adding bounder", pos, key, main_layer_yes, hasHaplo)
+		if (hasHaplo === null){
+			var fid_id = key.split('_').map(x => Number(x));
+			hasHaplo = familyMapOps.getPerc(fid_id[1], fid_id[0]).hasHaplo();
+		}
 
 		var rect = SelectionGraphics._addInvisibleOrangeBox(pos);
-
 		rect.on('click', function(){
 
-			if (hasHaplo === null){
-				var fid_id = key.split('_').map(x => Number(x));
-				hasHaplo = familyMapOps.getPerc(fid_id[1], fid_id[0]).hasHaplo();
-			}
 
 			if (!hasHaplo){
 				utility.notify("Error", "No haplotypes for individual "+key.split('_')[1]);
