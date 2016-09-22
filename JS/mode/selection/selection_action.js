@@ -4,6 +4,10 @@ var SelectionAction = {
 	toggle_selection_all : false,
 	toggle_selection_affecteds : false,
 
+	reset : function(){
+		SelectionAction.toggle_selection_all = false;
+		SelectionAction.toggle_selection_affecteds = false;
+	},
 
 	selectAll: function ()
 	{

@@ -47,13 +47,8 @@ var SelectionMode = {
 
 	init: function startSelectionMode()
 	{
-		SelectionAction.toggle_selection_all = false;
-		SelectionAction.toggle_selection_affecteds = false;
-
+		SelectionAction.reset();
 		ButtonModes.setToSelectionMode()
-
-		SelectionMode.toggle_selection_affecteds = false;
-		SelectionMode.toggle_selection_all = false;
 
 		// Main selection layer
 		SelectionMode._select_group = new Kinetic.Group({
