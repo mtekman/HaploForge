@@ -3,38 +3,99 @@
 var Keyboard = {
 	
 	__map : {
-		"Shift": false
+		"Shift": false,
+		"ArrowDown": false,
+		"ArrowUp" : false
 	},
-	__listening: false,
+
+	__listening: 0, 
+	//smart pointer 
+	    // --> at zero it stops listening
+	    //     increments for each beginListen
+
+	dn_tasks : {},  // keydn --> function()
+	up_tasks : {},    // keyup --> function()
 
 
 	beginListen(){
-		if (!Keyboard.__listening){
+		console.log("KEYBOARD", Keyboard.__listening)
+
+		if (Keyboard.__listening === 0){
 			document.addEventListener("keydown", Keyboard.__processKeyDown, false);
 			document.addEventListener("keyup", Keyboard.__processKeyUp, false);
-//			console.log("keyboard listening")
+			console.log("keyboard listening")
 
-			Keyboard.__listening = true;
 		}
+		Keyboard.__listening += 1;
 	},
 
 	endListen(){
-		if (Keyboard.__listening){
+		Keyboard.__listening -= 1;
+
+
+		
+		if (Keyboard.__listening <= 0){
 			document.removeEventListener("keydown", Keyboard.__processKeyDown, false);
 			document.removeEventListener("keyup", Keyboard.__processKeyUp, false);
 
-			Keyboard.__listening = false;
-//			console.log("keyboard stopped")
+			console.log("keyboard stopped")
+
+			Keyboard.__listening = 0;
 		}
+		console.log("KEYBOARD", Keyboard.__listening)
 	},
 
 	__processKeyDown(event){
 		Keyboard.__map[event.key] = true;
+
+		console.log(event.key);
+
+		if (event.key in Keyboard.dn_tasks){
+			Keyboard.dn_tasks[event.key]();
+		}
 	},
 
 	__processKeyUp(event){
 		Keyboard.__map[event.key] = false;
+
+		if (event.key in Keyboard.up_tasks){
+			Keyboard.up_tasks[event.key]();
+		}
 	},
+
+
+	//  -- Key tasks
+	addKeyUpTask(key, func){
+		if (key in Keyboard.up_tasks){
+			throw new Error("This will override the up task for "+key);
+		}
+		Keyboard.up_tasks[key] = func;
+	},
+
+	removeKeyUpTask(key, func){
+		if (key in Keyboard.up_tasks){
+			delete Keyboard.up_tasks[key];
+		}
+		throw new Error(key+" not in keyup tasks");
+	},
+
+
+	addKeyDownTask(key, func){
+		if (key in Keyboard.dn_tasks){
+			throw new Error("This will override the down task for "+key);
+		}
+		Keyboard.dn_tasks[key] = func;
+	},
+
+	removeKeyDownTask(key, func){
+		if (key in Keyboard.dn_tasks){
+			delete Keyboard.dn_tasks[key];
+			return 0;
+		}
+		throw new Error(key+" not in keydown tasks");
+	},
+
+
 
 	isPressed(key){
 		if (key in Keyboard.__map){
