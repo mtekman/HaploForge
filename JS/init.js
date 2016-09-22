@@ -39,7 +39,32 @@ var init = {
 
 
 MainPageHandler.defaultload();
-//MainButtonActions.loadPedFromStorage();
+
+
+function testhomology(){
+
+	userOpts.allowTransitions = false;
+
+	MainButtonActions.loadHaploFromStorage();
+
+	setTimeout(function(){
+
+		SelectionMode.init();
+		SelectionAction.selectAffecteds();
+		HaploWindow.init();
+
+		setTimeout(function(){
+
+			HomologySelectionMode.init();
+			SelectionAction.selectAffecteds();
+			HomologySelectionMode.submit();
+
+		},1000);
+	}, 1000);
+}
+
+
+
 
 
 
