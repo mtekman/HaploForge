@@ -109,9 +109,7 @@ class FileFormat {
 			console.log("Resolve Method: Load From Storage");
 		}
 
-
 		MarkerData.padMarkerMap();
-
 		populateIndexDataList();
 	}
 
