@@ -1,9 +1,3 @@
-// UI configurable:
-var userOpts = {
-	allowTransitions: true,
-	showTooltips: true
-};
-
 
 
 var PED = {
