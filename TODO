@@ -1,1 +1,5 @@
-// Delete node in pedcreate does not free the id for reuse
+
+
+Holding down on arrow key for a certain interval of time should freeze 
+the haplotypes and move the slider instead, where on keyup it updates the haplotypes
+
