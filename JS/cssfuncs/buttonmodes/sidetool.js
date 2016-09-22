@@ -97,14 +97,12 @@ var ToolButtons = {
 
 			ToolButtons.addToolsButton("Start Analysis", SelectionMode.init);
 
-			ToolButtons.addToolsButton("Modify Pedigree", function()
-			{
+			ToolButtons.addToolsButton("Modify Pedigree", function(){
 				localStorage.setItem(localStor.transfer, MainButtonActions._temphaploload);
 				utility.notify("transferring","...");
 
 				MainButtonActions.loadPedFromStorage(true);
-			})
-
+			});
 		},
 
 		/* Selection Editting View */
