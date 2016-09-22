@@ -5,7 +5,7 @@ var HomologySelectionMode = {
 	{
 		ButtonModes.setToHomologySelection();
 
-		HomologySelectionMode. sub_select_group = null;   //destroyed by homology_buttons exit function
+		HomologySelectionMode.sub_select_group = null;   //destroyed by homology_buttons exit function
 		HomologySelectionMode.__makeBackground();
 		HomologySelectionMode.__addBounders();
 
