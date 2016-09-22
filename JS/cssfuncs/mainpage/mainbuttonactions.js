@@ -62,6 +62,8 @@ var MainButtonActions  = {
 
 	exitToMenu: function(){
 
+		Keyboard.endListen();
+
 		if (MainButtonActions.fileType === FORMAT.PEDFILE){
 			var changeDetected = Pedfile.pedigreeChanged();
 
