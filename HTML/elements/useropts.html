@@ -1,7 +1,7 @@
 document.write('\
         <div id="useropts">\
-          <label><input type="checkbox" onchange="userOpts.allowTransitions=this.checked;" checked />Transitions</label>\
+          <label><input type="checkbox" id="user_transitions" onchange="userOpts.update(\'allowTransitions\',this.checked);" />Transitions</label>\
           <br />\
-          <label><input type="checkbox" onchange="userOpts.showTooltips=this.checked;" checked />Tooltips</label>\
+          <label><input type="checkbox" id="user_tooltips" onchange="userOpts.update(\'showTooltips\', this.checked);" />Tooltips</label>\
         </div>\
 ');
