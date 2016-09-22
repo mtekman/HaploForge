@@ -1,19 +1,13 @@
 
-var HomologyMode = {
+var HomologyPlot = {
 
 	plots: null,
 	rendered_filtered_plot: null,
-	selected_for_homology: null,
 
-	_active : false,
 	_type : "HOM",
 
-	_minexten : 0,
-	_minscore : 0,
-
-
 	debugUpdatePlots: function(spec_plot, stretch, score){
-		HomologyMode.plotScoresOnMarkerScale( spec_plot, stretch, score )
+		HomologyPlot.plotScoresOnMarkerScale( spec_plot, stretch, score )
 	},
 
 	printToFile: function( ht_ids, 
@@ -54,9 +48,9 @@ var HomologyMode = {
 				text += '\t' + a1.toString() + "" + a2.toString()
 			}
 
-			var hom_v = HomologyMode.plots.HOM[l],
-				het_v = HomologyMode.plots.HET[l],
-				chet_v = HomologyMode.plots.CHET[l];
+			var hom_v = HomologyPlot.plots.HOM[l],
+				het_v = HomologyPlot.plots.HET[l],
+				chet_v = HomologyPlot.plots.CHET[l];
 
 			var score_columns = '\t ' + hom_v.toString() + '\t ' + het_v.toString() + '\t ' + chet_v.toString();
 			score_columns = score_columns.replace(/ -/g, "-");
@@ -93,9 +87,13 @@ var HomologyMode = {
 			r_height = r_points[3] - r_points[1],
 			plen = specific_plot.length;
 
-		HomologyMode.removeScores(false);
+		HomologyPlot.removeScores(false);
 
-		var inform_points = HomologyMode.plotAxis4( specific_plot, stretch, score);
+		var inform_points = HomologyPlot.plotAxis4( specific_plot, stretch, score);
+
+		inform_points = [0,0] + inform_points + [inform_points[inform_points.length-2],0]
+
+
 		rendered_filtered_plot = inform_points;
 		
 		var infline = new Kinetic.Line({
@@ -165,8 +163,6 @@ var HomologyMode = {
 
 			return_xy.push( new_plot[p], p);
 		}
-
-		console.log( return_xy )
 		return return_xy;
 	}
 }

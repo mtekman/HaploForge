@@ -4,6 +4,7 @@ var HomologySelectionMode = {
 	init: function()
 	{
 		ButtonModes.setToHomologySelection();
+		HomologyMode.init();
 
 		HomologySelectionMode.sub_select_group = null;   //destroyed by homology_buttons exit function
 		HomologySelectionMode.__makeBackground();
@@ -95,10 +96,12 @@ var HomologySelectionMode = {
 		if (HomologyMode.selected_for_homology.length === 0)
 			return -1;
 
-		HomologyMode.plots = scan_alleles_for_homology( HomologyMode.selected_for_homology );
 
-		HomologyButtons._show();
-		HomologyButtons._redraw();
+		HomologyPlot.plots = scan_alleles_for_homology( HomologyMode.selected_for_homology );
+
+		HomologyMode.init();
+//		HomologyButtons._show();
+		HomologyMode.redraw();
 
 		return 0;
 	}

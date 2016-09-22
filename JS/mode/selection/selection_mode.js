@@ -22,7 +22,9 @@ var SelectionMode = {
 
 	destroy: function stopSelectionMode()
 	{
-		HomologyButtons._exit();
+		if (HomologyMode._active){
+			HomologyMode.quit();
+		}
 
 		SelectionMode._select_group.destroyChildren();
 		SelectionMode._select_group.destroy();
