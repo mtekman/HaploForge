@@ -5,7 +5,9 @@ var Keyboard = {
 	__map : {
 		"Shift": false,
 		"ArrowDown": false,
-		"ArrowUp" : false
+		"ArrowUp" : false,
+		"PageDown" : false,
+		"PageUp" : false
 	},
 
 	__listening: 0, 
