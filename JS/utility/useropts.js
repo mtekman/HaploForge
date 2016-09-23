@@ -1,11 +1,10 @@
 
 // UI configurable:
 var userOpts = {
-	allowTransitions: true,
 	showTooltips: true,
+	fancyGraphics: true,
 
 	update: function(key, value){
-//		console.log("setting", key, value)
 
 		if (key in userOpts){
 			userOpts[key] = value;
@@ -16,12 +15,32 @@ var userOpts = {
 	retrieve: function(key){
 		if (key in userOpts){
 			var value = localStorage.getItem("userOpts."+key);
-//			console.log("Trying", key, value)
-			if (value === null){
-				return true; // deafault enable everything
-			}
-			return value === "true";
+
+			var res = false
+
+			// default enable everything
+			if (value === null){res = true;}
+			res = (value === "true");
+			
+			// Set
+			userOpts[key] = res;
+
+			return res;
 		}
 		throw new Error(key+" not in userOpts");
+	},
+
+	setGraphics: function(){
+		if (userOpts.fancyGraphics)
+		{
+			HaploBlockFormat.applyFancy();
+		} 
+		else {
+			HaploBlockFormat.applyDefault();
+		}
+
+		if (uniqueGraphOps.haplo_scroll !== null){
+			redrawHaplos();
+		}
 	}
 };
