@@ -58,7 +58,8 @@ var HomologySelectionMode = {
 			SelectionMode._items[s].box.off('click');
 		}
 
-		HomologySelectionMode.__cleanup();
+		// Do not perform cleanup until mode fully eits --> HomologySelection --> (submit) --> HomologyMode --> (exit)
+//		HomologySelectionMode.__cleanup();
 		HomologySelectionMode._exit.hide();
 
 		haplo_layer.draw();
@@ -72,7 +73,6 @@ var HomologySelectionMode = {
 		HomologyPlot.plots = scan_alleles_for_homology( HomologyMode.selected_for_homology );
 
 		HomologyMode.init();
-
 		HomologyMode.redraw();
 
 		return 0;

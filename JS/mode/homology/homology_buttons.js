@@ -11,6 +11,8 @@ var HomologyMode = {
 
 
 	init(){
+		ButtonModes.setToHomologyMode();
+
 		HomologyMode._active = true;
 		HaploWindow._exit.hide();
 
