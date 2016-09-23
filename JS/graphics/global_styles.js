@@ -50,7 +50,7 @@ function kineticTween(props)
 	props.easing = props.easing || Kinetic.Easings.EaseIn;
 	props.duration = props.duration || 0.8;
 
-	if (userOpts.allowTransitions){
+	if (userOpts.fancyGraphics){
 		return new Kinetic.Tween(props);
 	}
 
@@ -110,9 +110,16 @@ function addButton(message, xp, yp, callback, show_state)
 	return group;
 }
 
-function addExitButton(center, callback, cross_diam)
+function addExitButton(center, callback, color_level = 0)
 {
-	cross_diam = cross_diam || 20;
+
+	var colors = ['#555', '#777', '#aaa', '#ddd'];
+	if (color_level >= colors.length){
+		color_level = 0;
+	}
+
+
+	var cross_diam = 20;
 	var cross_rad = cross_diam/2;
 
 	var rect = new Kinetic.Rect({
@@ -120,7 +127,7 @@ function addExitButton(center, callback, cross_diam)
 		y: -cross_rad,
 		width: cross_diam,
 		height: cross_diam,
-		fill: 'grey',
+		fill: colors[color_level],
 		stroke: 'black',
 		strokeWidth: 1.5,
 		cornerRadius: 3
