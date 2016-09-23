@@ -13,6 +13,18 @@ var HaploModeEvents = {
 		haplo_layer.draw();
 	},
 
+	// Public
+	addKeys : function(){
+		HaploModeEvents._addArrowKeys();
+		HaploModeEvents._addPageKeys();
+	},
+
+	removeKeys : function(){
+		HaploModeEvents._removeArrowKeys();
+		HaploModeEvents._removePageKeys();
+	},
+
+
 	// KeyEvents
 	_addArrowKeys: function(){
 
@@ -26,12 +38,24 @@ var HaploModeEvents = {
 		Keyboard.removeKeyDownTask("ArrowUp", HaploModeEvents._keyScrollUp);
 	},
 
-	_keyScrollUp : function(){
-		HaploModeEvents.shiftHaplotypes(-5);
+	// Page Events
+	_addPageKeys : function (){
+		Keyboard.addKeyDownTask("PageDown", HaploModeEvents._pageScrollDown )
+		Keyboard.addKeyDownTask("PageUp", HaploModeEvents._pageScrollUp )
 	},
 
-	_keyScrollDown: function(){
-		HaploModeEvents.shiftHaplotypes(5);
+	_removePageKeys : function (){
+		Keyboard.removeKeyDownTask("PageDown", HaploModeEvents._pageScrollDown )
+		Keyboard.removeKeyDownTask("PageUp", HaploModeEvents._pageScrollUp )
+	},
+
+	_keyScrollUp : function(){HaploModeEvents._keyScroller(-5);},
+	_keyScrollDown:function(){HaploModeEvents._keyScroller( 5);},
+	_pageScrollUp: function(){HaploModeEvents._keyScroller( -15);},
+	_pageScrollDown: function(){HaploModeEvents._keyScroller(15);},
+
+	_keyScroller: function(amount){
+		HaploModeEvents.shiftHaplotypes(amount)
 	},
 
 

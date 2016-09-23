@@ -195,14 +195,14 @@ var HaploWindow = {
 			Keyboard.beginListen();
 
 			HaploModeEvents._addMouseWheel();
-			HaploModeEvents._addArrowKeys();
+			HaploModeEvents.addKeys();
 			
 			HaploWindow.__showBottom( finishfunc );
 		} else {
 			Keyboard.endListen();
 
 			HaploModeEvents._removeMouseWheel();
-			HaploModeEvents._removeArrowKeys();
+			HaploModeEvents.removeKeys();
 
 			HaploWindow.__hideBottom( finishfunc );
 		}
