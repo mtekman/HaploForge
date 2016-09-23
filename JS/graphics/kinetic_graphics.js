@@ -272,7 +272,7 @@ function addFamily(fam_id, sx, sy){
 function addHomologyPlotOverlay()
 {
 	// Note: Due to [x,y,x,y] specs, this is DOUBLE the marker length
-	var current_specific_plot = rendered_filtered_plot;
+	var current_specific_plot = HomologyPlot.rendered_filtered_plot;
 	var npoints = [0,0];
 
 	var count = 1;
@@ -312,6 +312,68 @@ function addHomologyPlotOverlay()
 
 
 
+var HaploBlockFormat = {
+
+	format: {},
+
+	__default : {
+		textprops : {
+			x: -38,
+			y: -nodeSize*2,
+			fontFamily: MarkerSlider._style.I_fontFamily,
+			fontSize: 10,
+			fill: 'black'
+		},
+		blockprops : {
+			width: haploblock_spacers.block_width_px
+		}
+	},
+
+	__fancy : {
+		textprops : {
+			strokeWidth: 0.001,
+			stroke: 'white',
+			shadowColor: 'black',
+			shadowOffset: {x:5, y:5},
+		},
+		blockprops: {
+			stroke: '#888',
+			strokeWidth: 0.7,
+			shadowColor: 'black',
+			shadowOffset: {x:5, y:5},
+		}
+	},
+
+
+	clearFormat : function(){
+		HaploBlockFormat.format["textprops"] = {};
+		HaploBlockFormat.format["blockprops"] = {};
+	},
+
+	applyDefault: function(){
+
+		HaploBlockFormat.clearFormat();
+
+		for (var prop_super in HaploBlockFormat.__default){
+			HaploBlockFormat.format[prop_super] = {};
+
+			for (var prop in HaploBlockFormat.__default[prop_super]){
+				HaploBlockFormat.format[prop_super][prop] = HaploBlockFormat.__default[prop_super][prop];
+			}
+		}
+	},
+
+	applyFancy: function(){
+	
+		HaploBlockFormat.applyDefault();
+
+		for (var prop_super in HaploBlockFormat.__fancy){
+			for (var prop in HaploBlockFormat.__fancy[prop_super]){
+				HaploBlockFormat.format[prop_super][prop] = HaploBlockFormat.__fancy[prop_super][prop];
+			}
+		}
+	}
+}
 
 
 
@@ -340,22 +402,16 @@ function addHaploBlocksAll()
 					   && iter <= end_index){}
 
 
-				var rec = new Kinetic.Rect({
-					x: haploblock_spacers.marker_offset_px + (
+				var rec = new Kinetic.Rect(HaploBlockFormat.format.blockprops);
+
+				rec.attrs.y = ((ind - sta_index - 2) * HAP_VERT_SPA);
+				rec.attrs.height = (iter-ind) * HAP_VERT_SPA;
+				rec.attrs.fill = FounderColor.unique[color_group];		
+				rec.attrs.x = haploblock_spacers.marker_offset_px + (
 						(q * haploblock_spacers.person_offset_px)
-						+ (j * haploblock_spacers.block_offset_px) ),
+						+ (j * haploblock_spacers.block_offset_px) );
 
-					y: ((ind - sta_index - 2) * HAP_VERT_SPA),
-					width: haploblock_spacers.block_width_px,
-					height: (iter-ind) * HAP_VERT_SPA,
-
-					fill: FounderColor.unique[color_group],
-
-					strokeWidth: 1,
-					stroke: 'white'
-				});
 				haplo.add( rec );
-
 				ind = iter;
 			}
 		}
@@ -391,18 +447,12 @@ function addHaploBlocksAll()
 							+ haploinfos[i][1].data_array[m]);
 		total_text +='\n';
 	}
-	var text = new Kinetic.Text({
-		x: -38,
-		y: -nodeSize*2,
-		text: total_text,
-		fontFamily: MarkerSlider._style.I_fontFamily,
-		fontSize: 10,
-		fill: 'black'
-	});
-	grp.add(text);
 
+	HaploBlockFormat.format.textprops.text = total_text;
+	var texter = new Kinetic.Text(HaploBlockFormat.format.textprops);
+
+	grp.add(texter);
 	return grp;
-
 }
 
 
