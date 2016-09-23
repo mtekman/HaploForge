@@ -233,7 +233,7 @@ function graphInitPos(start_x, start_y, enable_ped_edit = false){
 
 
 	// --- Placement Animations
-	if (userOpts.allowTransitions){
+	if (userOpts.fancyGraphics){
 		// Solitaire
 		FancyGraphics.init();
 	}

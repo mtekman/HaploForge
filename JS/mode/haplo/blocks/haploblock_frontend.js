@@ -95,7 +95,7 @@ function redrawHaplos(resizeToo){
 	var new_haplos = addHaploBlocksAll();
 	scroll_area.add( new_haplos );
 
-	if (HomologyMode._active)
+	if (HomologyPlot.rendered_filtered_plot !== null && HomologyPlot.rendered_filtered_plot.length > 0)
 	{
 		var homology_overlays = addHomologyPlotOverlay();
 		scroll_area.add( homology_overlays );

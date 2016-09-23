@@ -4,14 +4,13 @@ var HomologyMode = {
 	selected_for_homology: null,
 
 	_exit : null, //set by init and destroyed by quit
-
 	_active : false,
+
 	_minexten : 0,
 	_minscore : 0,
 
 
 	init(){
-
 		HomologyMode._active = true;
 		HaploWindow._exit.hide();
 
@@ -19,7 +18,8 @@ var HomologyMode = {
 			HomologyMode._exit = addExitButton(
 				{x: 20,
 				 y: 60},
-				 HomologyMode.quit
+				 HomologyMode.quit,
+				 3
 			);
 			HaploWindow._group.add( HomologyMode._exit );
 		}
@@ -31,7 +31,6 @@ var HomologyMode = {
 
 	quit: function(){
 
-		ButtonModes.setToHomologySelection();
 
 		HomologyMode._active = false;
 		HomologyMode._exit.hide();
@@ -43,9 +42,11 @@ var HomologyMode = {
 
 		HomologyMode._active = false;
 		HomologyButtons._group.style.display = "none";
+
 		HomologyPlot.removeScores();
 
 		HomologySelectionMode.init();
+//		ButtonModes.setToHomologySelection();
 
 		haplo_layer.draw();
 	},
@@ -60,8 +61,6 @@ var HomologyMode = {
 			HomologyMode._minscore
 		);
 	},
-
-
 }
 
 

@@ -65,9 +65,10 @@ function onWindowLoad(){
     // Define all your load modes here
     browserDetection();
 
-    document.getElementById('user_transitions').checked = userOpts.retrieve('allowTransitions');
     document.getElementById('user_tooltips').checked = userOpts.retrieve('showTooltips');
+    document.getElementById('user_fancy').checked = userOpts.retrieve('fancyGraphics');
 
+    userOpts.setGraphics();
 }
 
 
