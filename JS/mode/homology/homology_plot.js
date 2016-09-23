@@ -63,12 +63,17 @@ var HomologyPlot = {
 
 	removeScores: function(redrawtoo = true)
 	{
-		if ((MarkerSlider._instance !== null) && (MarkerSlider._instance.plotline !== undefined)){
+		if ((MarkerSlider._instance !== null)
+		 && (MarkerSlider._instance.plotline !== undefined))
+		{
 			MarkerSlider._instance.plotline.destroy();
 		
-			if (redrawtoo){
-				haplo_layer.draw();
-			}
+		}
+		HomologyPlot.rendered_filtered_plot = null;
+		
+		if (redrawtoo){
+			redrawHaplos();
+			//haplo_layer.draw();
 		}
 	},
 
@@ -93,8 +98,7 @@ var HomologyPlot = {
 
 		inform_points = [0,0] + inform_points + [inform_points[inform_points.length-2],0]
 
-
-		rendered_filtered_plot = inform_points;
+		HomologyPlot.rendered_filtered_plot = inform_points;
 		
 		var infline = new Kinetic.Line({
 			x: rangeline.getX(),
