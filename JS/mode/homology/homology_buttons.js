@@ -1,71 +1,4 @@
 
-var HomologyMode = {
-
-	selected_for_homology: null,
-
-	_exit : null, //set by init and destroyed by quit
-	_active : false,
-
-	_minexten : 0,
-	_minscore : 0,
-
-
-	init(){
-		ButtonModes.setToHomologyMode();
-
-		HomologyMode._active = true;
-		HaploWindow._exit.hide();
-
-		if (HomologyMode._exit === null){
-			HomologyMode._exit = addExitButton(
-				{x: 20,
-				 y: 60},
-				 HomologyMode.quit,
-				 3
-			);
-			HaploWindow._group.add( HomologyMode._exit );
-		}
-
-		HomologyMode._exit.show();
-
-		HomologyButtons.init();
-	},
-
-	quit: function(){
-
-
-		HomologyMode._active = false;
-		HomologyMode._exit.hide();
-
-		if (HomologySelectionMode.sub_select_group != null){
-			HomologySelectionMode.sub_select_group.destroyChildren();
-			HomologySelectionMode.sub_select_group.destroy();
-		}
-
-		HomologyMode._active = false;
-		HomologyButtons._group.style.display = "none";
-
-		HomologyPlot.removeScores();
-
-		HomologySelectionMode.init();
-//		ButtonModes.setToHomologySelection();
-
-		haplo_layer.draw();
-	},
-
-	redraw: function(){
-		HomologyButtons.updateHomologyInputs();
-
-		HomologyPlot.plotScoresOnMarkerScale
-		(
-			HomologyPlot.plots[HomologyMode._type],
-			HomologyMode._minexten,
-			HomologyMode._minscore
-		);
-	},
-}
-
-
 
 var HomologyButtons = {
 
@@ -81,12 +14,15 @@ var HomologyButtons = {
 	//_exit_accessor : document.getElementById('hom_exit'),
 
 	init: function(){
+
+		HomologyButtons._show();
+
 		if (HomologyButtons._alreadyset){
 			return 0;
 		}
 
 		// Make onclick events
-		HomologyButtons._redraw_accessor.onclick = HomologyButtons._redraw;
+		HomologyButtons._redraw_accessor.onclick = HomologyMode.redraw;
 		HomologyButtons._export_accessor.onclick = function(){
 
 			utility.yesnoprompt("Homology Export", "Export All or Shown?",
@@ -98,19 +34,19 @@ var HomologyButtons = {
 	},
 
 	updateHomologyInputs: function(){
-		HomologyMode._type = HomologyButtons._type_accessor.value;
+		HomologyMode.type = HomologyButtons._type_accessor.value;
 
-		HomologyButtons._minexten = Number( HomologyButtons._minext_accessor.value );
-		HomologyButtons._minscore = Number( HomologyButtons._minscore_accessor.value );
+		HomologyMode.minexten = Number( HomologyButtons._minext_accessor.value );
+		HomologyMode.minscore = Number( HomologyButtons._minscore_accessor.value );
 	},
 
 
 	_printAll: function(){
-		HomologyMode.printToFile(HomologyMode.selected_for_homology);
+		HomologyPlot.printToFile(HomologyMode.selected_for_homology);
 	},
 
 	_printCurrent: function(){
-		HomologyMode.printToFile(HomologyMode.selected_for_homology, sta_index, end_index);
+		HomologyPlot.printToFile(HomologyMode.selected_for_homology, sta_index, end_index);
 	},
 
 	_show: function(){

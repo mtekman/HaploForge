@@ -69,15 +69,6 @@ class LineDrawOps {
 	}
 
 
-	static changeToArrowCursor(){
-		document.body.style.cursor = "url('styles/Precision.cur'),auto";
-	}
-
-	static restoreCursor() {
-		document.body.style.cursor = "";
-	}
-
-
 	updateLine() {
 		this._RLineMethod(
 			this._tmpLine,
@@ -134,7 +125,7 @@ class LineDrawOps {
 			this._tmpLine = null;
 		}
 		
-		LineDrawOps.restoreCursor();
+		MouseStyle.restoreCursor();
 
 		if (this._onendlinedraw !== null){
 			this._onendlinedraw(); // pass this?
@@ -175,7 +166,7 @@ class LineDrawOps {
 			circle.on("mouseover", function(event){
 				
 				if (_this._startPoint.x === -1){
-					LineDrawOps.changeToArrowCursor();
+					MouseStyle.changeToArrowCursor();
 				}
 				else { //Start point set
 
@@ -188,7 +179,7 @@ class LineDrawOps {
 
 			circle.on("mouseout", function(){
 				if (_this._startPoint.x === -1){
-					LineDrawOps.restoreCursor();
+					MouseStyle.restoreCursor();
 				}
 			});
 

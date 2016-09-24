@@ -56,7 +56,9 @@
 
 
 #index_class {
-	bottom:0px;
+  display:none;
+	top:55%;
+  right:0px;
 }
 
 /*
@@ -83,13 +85,11 @@
 
 
 .numbers,.not-numbers {
-	background-color: white;
 	color: black;
 	border: 2px solid gray;
 	border-radius: 8px;
 	font-size: 10px;
 	font-family: 'Arial';
-	text-align: right;
 	padding: 3px;
 	width: 120px;
 	display: inline-block;
@@ -106,14 +106,13 @@
 	text-align: center;
 }
 
-.numbers,.not-numbers label {
-	vertical-align: middle;
-	width:80px;
-	padding-right: 20px;
+.not-numbers input[list]{
+  font-size: 1.3em;
+	width:102px;
 }
 
-.not-numbers input[list] {
-	width:115px;
+.not-numbers input[type=button] {
+  width:100%;
 }
 
 
@@ -149,12 +148,23 @@
   position: fixed;
   top: 10px;
   right: 10px;
+  width: 100px;
 }
 
 #message_props {
   display:none;
   left:40%;
   top: 40%;
+  height: 60px;
+}
+
+#message_props .messages {
+  border-radius: 12px 12px 0px 0px;
+}
+
+#message_props .messages h3 {
+  text-shadow: 0 0 white;
+  width: 180px;
 }
 
 #save_and_close {

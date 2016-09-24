@@ -110,7 +110,7 @@ class FileFormat {
 		}
 
 		MarkerData.padMarkerMap();
-		populateIndexDataList();
+//		populateIndexDataList();
 	}
 
 

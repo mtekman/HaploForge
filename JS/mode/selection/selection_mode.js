@@ -120,7 +120,11 @@ var SelectionMode = {
 		});
 
 		// Exit button
-		SelectionMode._exit = addExitButton({x: 20, y: 20}, SelectionMode.quit);
+		SelectionMode._exit = addExitButton(
+			{x: 20, y: 20},
+			SelectionMode.quit,
+			3
+		);
 		SelectionMode._select_group.add( SelectionMode._exit );
 	
 		main_layer.add(SelectionMode._select_group);

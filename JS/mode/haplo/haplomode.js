@@ -159,7 +159,8 @@ var HaploWindow = {
 		HaploWindow._exit = addExitButton(
 			{x: 20,
 			 y: 20},
-			 HaploWindow.destroy);
+			 HaploWindow.destroy,
+			 2);
 
 		HaploWindow._group.add( HaploWindow._exit );
 

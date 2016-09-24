@@ -115,6 +115,12 @@ var MarkerSlider = {
 			SliderHandler.updateHaploPositions(true);
 		});
 
+		if (top){
+			input_group.on('mouseover dragmove', MouseStyle.changeToVerticalN);
+		} else {
+			input_group.on('mouseover dragmove', MouseStyle.changeToVerticalS);
+		}
+
 		input_group.add(mark_label);
 		input_group.add(line_out);
 
@@ -142,20 +148,25 @@ var MarkerSlider = {
 		});
 
 		//Highlight
-		marker_slider.on("mouseover", function(){
+/*		marker_slider.on("mouseover", function(){
+			//MouseStyle.changeToGrab();
 			rangeline.setStroke('blue');
 			haplo_layer.draw();
-		});
+		});*/
 
 		//Highlight
 		marker_slider.on("mouseout", function(){
+			MouseStyle.restoreCursor();
 			rangeline.setStroke('red');
 			haplo_layer.draw();
 		});
 
+		rangeline.on("mouseover", MouseStyle.changeToGrab);
+
 
 		// Update all input positions
 		rangeline.on('mousedown mouseout', function (e){
+			MouseStyle.changeToMove();
 			MarkerSlider._rangeline_pos = this.getAbsolutePosition();
 			MarkerSlider._last_input1_posy = MarkerSlider._sl_input1.getAbsolutePosition().y;
 			MarkerSlider._last_input2_posy = MarkerSlider._sl_input2.getAbsolutePosition().y;
@@ -170,14 +181,16 @@ var MarkerSlider = {
 		});
 
 		MarkerSlider._slwin_group.on('dragmove', function(){
+			MouseStyle.changeToMove();
 			if (HAP_DRAW_LIM < HAP_MIN_DRAW){
 				SliderHandler.updateHaploPositions();
 			}
 		});
 		
 		MarkerSlider._slwin_group.on('mousedown', function(){
-
+			MouseStyle.changeToGrab();
 			function mouseUpFunc(){
+				MouseStyle.restoreCursor();
 				SliderHandler.updateHaploPositions();
 				document.removeEventListener("mouseup", arguments.callee, false)
 				//console.log("ASA")
@@ -207,6 +220,8 @@ var MarkerSlider = {
 		// Easy accessors
 		MarkerSlider._slwin_group.line = slwin_lin;
 		MarkerSlider._slwin_group.message = slwin_tex;
+
+		MarkerSlider._slwin_group.message.on("mouseover", MouseStyle.changeToMove);
 
 		//Inputs
 		MarkerSlider._sl_input1 = MarkerSlider.__makeInputSlider(true),

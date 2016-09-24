@@ -18,7 +18,8 @@ var HomologySelectionMode = {
 		haplo_layer.draw();
 	},
 
-	__cleanup: function(){
+	// Also used by HomologyMode
+	cleanup: function(){
 		HomologySelectionMode.sub_select_group.rect.destroy();
 
 		// Detach top back to normal haplowindow
@@ -32,7 +33,7 @@ var HomologySelectionMode = {
 	// HomologySelection --> HaploMode/Comparison	
 	quit: function(){
 		HomologySelectionMode._active = false;
-		HomologySelectionMode.__cleanup();
+		HomologySelectionMode.cleanup();
 
 		ButtonModes.setToComparisonMode();
 
@@ -53,12 +54,14 @@ var HomologySelectionMode = {
 			if (SelectionMode._items[s].selected)
 			{
 				SelectionMode._items[s].box.stroke('green')
+				SelectionMode._items[s].box.off("mouseover mouseout mouseup");
 				HomologyMode.selected_for_homology.push(s);
 			}
 			SelectionMode._items[s].box.off('click');
 		}
 
-		// Do not perform cleanup until mode fully eits --> HomologySelection --> (submit) --> HomologyMode --> (exit)
+		// Do not perform cleanup until mode fully exits
+		//     --> HomologySelection --> (submit) --> HomologyMode --> (exit)
 //		HomologySelectionMode.__cleanup();
 		HomologySelectionMode._exit.hide();
 
@@ -104,9 +107,9 @@ var HomologySelectionMode = {
 		// Destroyed on quit();
 		HomologySelectionMode._exit = addExitButton(
 			{x: 20,
-			 y: 40},
+			 y: 20},
 			 HomologySelectionMode.quit,
-			 2
+			 1
 		);
 		HomologySelectionMode.sub_select_group.add( HomologySelectionMode._exit );
 

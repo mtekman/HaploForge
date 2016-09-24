@@ -241,6 +241,7 @@ function addFamily(fam_id, sx, sy){
 	g.id = fam_id;
 
 	t.on('mouseover', function(){
+		MouseStyle.changeToGrab();
 		t.setFill('red');
 		g._boundsrect.show();
 		main_layer.draw();
@@ -248,12 +249,14 @@ function addFamily(fam_id, sx, sy){
 
 
 	t.on('mousedown', function(){
+		MouseStyle.changeToMove();
 		g.setScale({x:0.95, y:0.95});
 		familyDraw.active_fam_group = g;
 		g.moveToTop();
 	})
 
 	t.on('mouseout mouseup', function(){
+		MouseStyle.restoreCursor();
 		g.setScale({x:1, y:1});
 		t.setFill('black');
 		g._boundsrect.hide();

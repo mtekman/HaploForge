@@ -11,13 +11,13 @@ function testhomology(){
 		SelectionAction.selectAffecteds();
 		HaploWindow.init();
 
-		setTimeout(function(){
+/*		setTimeout(function(){
 
 			HomologySelectionMode.init();
 			SelectionAction.selectAffecteds();
 			HomologySelectionMode.submit();
 
-		},1000);
+		},1000);*/
 	}, 1000);
 }
 

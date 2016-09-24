@@ -94,7 +94,7 @@ var Keyboard = {
 			delete Keyboard.dn_tasks[key];
 			return 0;
 		}
-		throw new Error(key+" not in keydown tasks");
+		console.error(key+" not in keydown tasks");
 	},
 
 

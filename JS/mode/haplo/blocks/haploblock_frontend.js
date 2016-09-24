@@ -104,6 +104,8 @@ function redrawHaplos(resizeToo){
 	scroll_area.parent.show();
 	haplo_layer.draw();
 
+	//SliderHandler.updateInputsByIndex(sta_index, end_index)
+
 
 	if (resizeToo)
 		resizeCanvas();

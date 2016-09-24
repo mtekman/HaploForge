@@ -92,7 +92,7 @@ var ToolButtons = {
 		{
 			ToolButtons.modes.preamble();
 
-			ToolButtons.setWidth(90);
+			//ToolButtons.setWidth(90);
 			ToolButtons.setTitle("Pedigree");
 
 			ToolButtons.addToolsButton("Start Analysis", SelectionMode.init);
@@ -125,7 +125,7 @@ var ToolButtons = {
 			ToolButtons.setTitle("Haplotypes");
 
 			ToolButtons.addToolsButton("Find Homology", HomologySelectionMode.init);
-			ToolButtons.addToolsButton("Marker Search", showIndexCSS);
+			ToolButtons.addToolsButton("Marker Search", CSSMarkerRange.init);
 
 /*			ToolButtons.addToolsButton("Range Slider", function(){
 				MarkerSlider.showSlider(!MarkerSlider._visible)

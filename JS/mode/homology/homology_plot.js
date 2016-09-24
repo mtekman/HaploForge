@@ -95,8 +95,10 @@ var HomologyPlot = {
 		HomologyPlot.removeScores(false);
 
 		var inform_points = HomologyPlot.plotAxis4( specific_plot, stretch, score);
-
-		inform_points = [0,0] + inform_points + [inform_points[inform_points.length-2],0]
+		
+		// Insert [0,0] at the start
+		inform_points.splice(0,0,0)
+		inform_points.splice(0,0,0)
 
 		HomologyPlot.rendered_filtered_plot = inform_points;
 		

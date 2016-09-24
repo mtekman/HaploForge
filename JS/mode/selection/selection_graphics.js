@@ -26,6 +26,11 @@ var SelectionGraphics = {
 				else haplo_layer.draw();
 			}
 		});
+
+		// Disabled externally after HomologySelection submit
+		rect.on('mouseover', MouseStyle.changeToPointer);
+		rect.on('mouseout mouseup', MouseStyle.restoreCursor);
+
 		return rect;
 	},
 
