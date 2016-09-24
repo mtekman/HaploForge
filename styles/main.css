@@ -148,7 +148,7 @@
   position: fixed;
   top: 10px;
   right: 10px;
-  width: 100px;
+  width: 120px;
 }
 
 #message_props {
@@ -172,6 +172,7 @@
   position:fixed;
   right: 10px;
   bottom: 10px;
+  width: 120px;
 }
 
 
@@ -276,7 +277,7 @@
 .input_props table input[type=button],button {
   border-radius: 5px;
   border: 2px solid #222;
-  width:100%;
+  width: 112px;
   /*min-width: 70px;*/
 }
 

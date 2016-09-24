@@ -152,7 +152,7 @@ var ToolButtons = {
 			ToolButtons.modes.preamble();
 
 			ToolButtons.setTitle("Homology");
-			ToolButtons.addToolsButton("Marker Search", showIndexCSS);
+			ToolButtons.addToolsButton("Marker Search", CSSMarkerRange.showIndexCSS);
 		}
 	}
 }
