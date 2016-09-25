@@ -46,7 +46,10 @@ var HomologyButtons = {
 	},
 
 	_printCurrent: function(){
-		HomologyPlot.printToFile(HomologyMode.selected_for_homology, sta_index, end_index);
+		HomologyPlot.printToFile(HomologyMode.selected_for_homology,
+			HaploBlock.sta_index, 
+			HaploBlock.end_index
+		);
 	},
 
 	_show: function(){

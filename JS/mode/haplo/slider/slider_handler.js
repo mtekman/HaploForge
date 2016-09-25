@@ -119,6 +119,9 @@ var SliderHandler = {
 
 	updateInputsByIndex(ind1, ind2)
 	{
+		ind1 = ind1 || HaploBlock.sta_index;
+		ind2 = ind2 || HaploBlock.end_index;
+
 		if (ind2 >= MarkerData.rs_array.length){
 			ind2 = MarkerData.rs_array.length -1
 			ind1 = ind2 - HAP_DRAW_LIM;
@@ -150,14 +153,14 @@ var SliderHandler = {
 	// ---- Called by mouseup events
 	updateHaploPositions(resizecanvastoo){
 
-		sta_index = MarkerSlider._last_input1_ind;
-		end_index = MarkerSlider._last_input2_ind;
-		HAP_DRAW_LIM = end_index - sta_index;
+		HaploBlock.sta_index = MarkerSlider._last_input1_ind;
+		HaploBlock.end_index = MarkerSlider._last_input2_ind;
+		HAP_DRAW_LIM = HaploBlock.end_index - HaploBlock.sta_index;
 
 		HaploWindow._bottom
 			.rect
 			.setHeight( (HAP_DRAW_LIM+3) * HAP_VERT_SPA);
 
-		redrawHaplos(resizecanvastoo);
+		HaploBlock.redrawHaplos(resizecanvastoo);
 	}
 }

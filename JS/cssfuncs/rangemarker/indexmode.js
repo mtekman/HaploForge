@@ -76,16 +76,16 @@ var CSSMarkerRange = {
 			return 0;
 		}
 
-		sta_index = min_range;
-		end_index = max_range;
+		HaploBlock.sta_index = min_range;
+		HaploBlock.end_index = max_range;
 
-		HAP_DRAW_LIM = end_index - sta_index;
+		HAP_DRAW_LIM = max_range - min_range;
 
 		HaploWindow._bottom
 			.rect
 			.setHeight( (HAP_DRAW_LIM+3) * HAP_VERT_SPA);
 
-		redrawHaplos(true);
+		HaploBlock.redrawHaplos(true);
 
 		CSSMarkerRange.hideIndexCSS();
 	}

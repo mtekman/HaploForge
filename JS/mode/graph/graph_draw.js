@@ -216,9 +216,8 @@ function redrawNodes(pers_id, fam_id, drawLinesToo)
 
 
 // Performs redrawNodes upon all
-function touchlines(grid_use){
-	use_grid = grid_use;
-
+function touchlines()
+{
 	familyMapOps.foreachperc(function( perid, famid){
 
 		//console.log("touch", perid, famid);
@@ -228,7 +227,6 @@ function touchlines(grid_use){
 
 		o.dispatchEvent(e);
 	});
-	use_grid = true;
 }
 
 

@@ -72,7 +72,7 @@ var HomologyPlot = {
 		HomologyPlot.rendered_filtered_plot = null;
 		
 		if (redrawtoo){
-			redrawHaplos();
+			HaploBlock.redrawHaplos();
 			//haplo_layer.draw();
 		}
 	},
@@ -170,5 +170,50 @@ var HomologyPlot = {
 			return_xy.push( new_plot[p], p);
 		}
 		return return_xy;
+	},
+
+
+	// Over(under?)lays the haploblocks rendered if the
+	// homology mode is active/present.
+	addHomologyPlotOverlay()
+	{
+		// Note: Due to [x,y,x,y] specs, this is DOUBLE the marker length
+		var current_specific_plot = HomologyPlot.rendered_filtered_plot;
+		var npoints = [0,0];
+
+		var count = 1;
+
+		for (var i=HaploBlock.sta_index; i <= HaploBlock.end_index; i++){
+
+			var x_coord = current_specific_plot[i*2],
+				y_coord = current_specific_plot[(i*2)+1];
+
+			var score_coord = (x_coord < 0)?0:x_coord*HaploBlock.haploinfos.length*10;
+
+			var y_initial = (count) * HAP_VERT_SPA,
+				y_next = (count +1) * HAP_VERT_SPA;
+
+			npoints.push( score_coord, y_initial)
+			npoints.push( score_coord, y_next)
+
+			// It may seem like regions overlap over subsequent iterations,
+			// but bear in mind that they do so at different score positions.
+			count ++;
+		}
+		npoints.push( 0, (count) * HAP_VERT_SPA)
+
+
+
+		return line = new Kinetic.Line({
+			x: -haploblock_spacers.marker_offset_px - 20,
+			y: HAP_VERT_SPA,
+			stroke: 'red',
+			strokeWidth: 1,
+			closed: true,
+			fill: 'red',
+			opacity: 0.3,
+			points: npoints
+		});
 	}
+
 }

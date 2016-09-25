@@ -250,9 +250,11 @@ var HaploWindow = {
 
 
 				scroll_area__.on('mouseup', function(){
-					redrawHaplos(false); // starting=300
-					SliderHandler.updateInputsByIndex( sta_index, end_index );
+					HaploBlock.redrawHaplos(false); // starting=300
+
+					SliderHandler.updateInputsByIndex();					
 					SliderHandler.updateSlide();
+					
 					haplo_layer.draw();
 				});
 
@@ -267,7 +269,7 @@ var HaploWindow = {
 				HaploWindow._left.moveToBottom();
 				HaploWindow._left.moveUp();
 
-				addHaplosAnyone( SelectionMode._ids );
+				HaploBlock.init( SelectionMode._ids );
 
 				if (finishfunc!==0) {
 					finishfunc();

@@ -126,6 +126,8 @@ var ToolButtons = {
 
 			ToolButtons.addToolsButton("Find Homology", HomologySelectionMode.init);
 			ToolButtons.addToolsButton("Marker Search", CSSMarkerRange.init);
+			ToolButtons.addToolsButton("Prev. Recomb.", HaploBlock.scrollToPrevRecomb);
+			ToolButtons.addToolsButton("Next. Recomb.", HaploBlock.scrollToNextRecomb);
 
 /*			ToolButtons.addToolsButton("Range Slider", function(){
 				MarkerSlider.showSlider(!MarkerSlider._visible)

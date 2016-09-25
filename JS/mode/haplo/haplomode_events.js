@@ -3,15 +3,21 @@ var HaploModeEvents = {
 
 	shiftHaplotypes : function(delta)
 	{
-		sta_index += delta;
-		end_index += delta;
+		HaploBlock.sta_index += delta;
+		HaploBlock.end_index += delta;
 
-		SliderHandler.updateInputsByIndex( sta_index, end_index );
-		SliderHandler.updateSlide();
-		redrawHaplos(false);
-	
-		haplo_layer.draw();
+		HaploModeEvents.moveHaplotypes();
 	},
+
+
+	moveHaplotypes : function()
+	{
+		SliderHandler.updateInputsByIndex();
+		SliderHandler.updateSlide();
+		
+		HaploBlock.redrawHaplos(false);	
+	},
+
 
 	// Public
 	addKeys : function(){

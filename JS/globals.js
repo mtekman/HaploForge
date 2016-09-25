@@ -30,9 +30,6 @@ var HAP_DRAW_LIM = 30, // No more than 30 haplotypes on screen
 	HAP_VERT_SPA = 10;
 
 
-var use_right_angles = true,
-	use_grid = true;
-
 
 var col_affs = [
     'grey',        // 0 - Unknown

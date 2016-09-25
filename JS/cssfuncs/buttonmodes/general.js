@@ -110,7 +110,7 @@ var BottomButtons = {
 
 			BottomButtons.addToolsButton("Recolour", function(){
 				FounderColor.makeUniqueColors(true); //random = true
-				redrawHaplos(false);
+				HaploBlock.redrawHaplos(false);
 			});
 
 //			BottomButtons.modes.__clearMode();

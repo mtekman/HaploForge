@@ -40,7 +40,7 @@ var userOpts = {
 		}
 
 		if (uniqueGraphOps.haplo_scroll !== null){
-			redrawHaplos();
+			HaploBlock.redrawHaplos();
 		}
 	}
 };
