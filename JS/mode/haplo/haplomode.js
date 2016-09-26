@@ -275,7 +275,8 @@ var HaploWindow = {
 					finishfunc();
 				}
 
-				MarkerSlider.showSlider(true)
+				console.log("SHOWSLIDER");
+				MarkerSlider.makeVisible(true)
 			}
 		}).play();
 	},

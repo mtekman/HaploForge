@@ -40,8 +40,11 @@ var HomologyMode = {
 
 		HomologyPlot.removeScores();
 
-		HomologySelectionMode.init();
-//		ButtonModes.setToHomologySelection();
+		//HomologySelectionMode.init();
+		// Just quit to comparison view instead
+		HomologySelectionMode.quit();
+
+
 
 		haplo_layer.draw();
 	},

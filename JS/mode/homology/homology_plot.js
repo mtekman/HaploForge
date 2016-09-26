@@ -86,7 +86,10 @@ var HomologyPlot = {
 		 ~~~ hopefully Kinetic/canvas handles mipmaps efficiently
 		     so I don't have to ~~~
 		*/
-		var marker_scale = MarkerSlider.showSlider(true),
+
+		MarkerSlider.makeVisible(true);
+
+		var marker_scale = MarkerSlider._instance,
 			rangeline = marker_scale.rangeline,
 			r_points = rangeline.getPoints(),
 			r_height = r_points[3] - r_points[1],

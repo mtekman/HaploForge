@@ -2,7 +2,6 @@
 var MarkerSlider = {
 
 	_instance : null, //markerInstance
-	_visible : false, //markerscale_visible
 
 	// Updated by functions, instead of continuously checking
 	_last_input1_posy : null,
@@ -39,35 +38,44 @@ var MarkerSlider = {
 	},
 
 
-	/** General wrapper for slider
-		Use this if in doubt**/
-	showSlider: function(visible)
+	makeVisible: function(visible)
 	{
-		MarkerSlider._visible = visible;
 
-		var marker_slid = MarkerSlider.getSlider(
-			 HaploWindow._top.getX()
-			+HaploWindow._top.rect.getWidth() + 20, 60);
+		var slider = MarkerSlider._get();
 
-		if (MarkerSlider._visible)
-		{
-			haplo_layer.add(marker_slid)
+		if (visible){
+			haplo_layer.add(slider);
 
-			SliderHandler.updateInputsByIndex(0, HAP_DRAW_LIM);
+			SliderHandler.updateInputsByIndex();
 			SliderHandler.updateSlide();
 		}
 		else {
-			marker_slid.remove();
+			slider.remove();
+
+			// Fuckit, just delete it for now
+			MarkerSlider._slwin_group.destroyChildren();
+			MarkerSlider._slwin_group.destroy();
+			MarkerSlider._sl_input1.destroyChildren();
+			MarkerSlider._sl_input1.destroy();
+			MarkerSlider._sl_input2.destroyChildren();
+			MarkerSlider._sl_input2.destroy();
+
+			MarkerSlider._instance.destroyChildren();
+			MarkerSlider._instance.destroy();
+
+			MarkerSlider._instance = null;
+
 		}
 		haplo_layer.draw();
-		return marker_slid;
 	},
 
-	getSlider: function(xer, yer)
-	{
-		// Already one present?
+	_get(){
+
 		if (MarkerSlider._instance === null){
-			MarkerSlider._instance = MarkerSlider._makeSlider(xer,yer);
+			MarkerSlider._instance = MarkerSlider._makeSlider(
+			 	 HaploWindow._top.getX()
+				+HaploWindow._top.rect.getWidth() + 20, 60
+			);
 		}
 		return MarkerSlider._instance;
 	},

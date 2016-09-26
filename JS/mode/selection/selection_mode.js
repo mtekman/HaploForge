@@ -40,9 +40,8 @@ var SelectionMode = {
 		SelectionMode._items = {}
 
 		//Delete zoom
-		if (MarkerSlider._instance !== null){
-			MarkerSlider._instance.remove();
-		}
+		MarkerSlider.makeVisible(false);
+
 		haplo_layer.draw();
 		main_layer.draw();
 	},
@@ -68,7 +67,6 @@ var SelectionMode = {
 			strokeWidth: 0,
 			opacity: 0.1
 		})
-
 
 		SelectionMode._select_group.add( SelectionMode._background );
 
