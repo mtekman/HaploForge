@@ -74,6 +74,7 @@ var MainPageHandler = {
 		MainPageHandler._currentMode = MainPageHandler.modes.pedcreate
 
 		fileSelector.end();
+		personDraw.used_ids = {};
 
 		/** Show haplotypes, after file (up)load **/
 		MainPageHandler.showDiv("main", false);

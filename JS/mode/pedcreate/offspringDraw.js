@@ -168,6 +168,7 @@ class OffspringDraw extends LineDrawOps {
 		GlobalLevelGrid.refreshGrid(this._family);
 
 		redrawNodes(father.id, this._family, true);
+		touchlines();
 		main_layer.draw();
 	}
 

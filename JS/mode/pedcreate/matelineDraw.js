@@ -142,6 +142,7 @@ class MatelineDraw extends LineDrawOps {
 		//reset
 		this.endLineDraw();
 		redrawNodes(fath.id, this._family, true);
+		touchlines();
 		main_layer.draw();
 	}
 

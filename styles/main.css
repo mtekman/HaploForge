@@ -240,6 +240,10 @@
   left:40%;
 }
 
+#person_props table td {
+  width: inherit;
+}
+
 /* Except custom submit, which is below */
 .input_props #message_buttonsrow {
   position: relative;
@@ -262,6 +266,8 @@
   border-color: black;
   box-shadow: 3px 3px 3px #888;
 }
+
+
 
 
 .input_props table td {
