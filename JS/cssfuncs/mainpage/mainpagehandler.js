@@ -21,6 +21,14 @@ var MainPageHandler = {
 		"hapexist"  : document.getElementById('haploresume_label')
 	},
 
+	__bgDefault(){
+		document.body.style.backgroundColor = "#cdcdcd";
+	},
+
+	__bgWhite(){
+		document.body.style.backgroundColor = "rgb( 250, 246, 242)"; // derived by trial and error...
+	},
+
 	div_groups: function(key){
 		return MainPageHandler.__mainpage_divgroups[key];
 	},
@@ -46,6 +54,8 @@ var MainPageHandler = {
 		fileSelector.end();
 
 		/** Show main page, hide rest **/
+		MainPageHandler.__bgDefault();
+
 		MainPageHandler.showDiv("main", true);
 		MainPageHandler.showDiv("container", false);
 
@@ -61,6 +71,7 @@ var MainPageHandler = {
 		fileSelector.end();
 
 		/** Show haplotypes, after file (up)load **/
+		MainPageHandler.__bgWhite();
 		MainPageHandler.showDiv("main", false);
 		MainPageHandler.showDiv("container", true);
 

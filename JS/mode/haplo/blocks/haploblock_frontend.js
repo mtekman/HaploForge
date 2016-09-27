@@ -2,7 +2,7 @@
 var HaploBlock = {
 
 	sta_index : 0,
-	end_index : HAP_DRAW_LIM,
+	end_index : 0,
 
 	haploinfos : null, // what addHaploBlocksAll uses 
 
@@ -11,6 +11,9 @@ var HaploBlock = {
 	init(haplofam_map, parent_node)
 	{
 		HaploBlock.haploinfos = []; //clean
+
+		HaploBlock.sta_index = 0;
+		HaploBlock.end_index = numVisibleHaplos();
 
 		var position_by_xpos = {};
 
@@ -47,7 +50,7 @@ var HaploBlock = {
 
 
 	/* Redraws the current haplodata_arr group, regardless of who they are*/
-	redrawHaplos(resizeToo){
+	redrawHaplos(){
 		var scroll_rect = uniqueGraphOps.haplo_scroll,
 			scroll_area = uniqueGraphOps.haplo_area;
 
@@ -94,10 +97,9 @@ var HaploBlock = {
 
 		//SliderHandler.updateInputsByIndex(sta_index, end_index)
 
-
-		if (resizeToo){
-			resizeCanvas();
-		}
+//		if (resizeToo){
+//			resizeCanvas();
+//		}
 	},
 
 

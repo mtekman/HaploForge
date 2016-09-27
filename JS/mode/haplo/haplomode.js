@@ -69,7 +69,7 @@ var HaploWindow = {
 				}
 			}
 			// KILL THEM, MWAAHAHA -- it's 5amm....
-			HaploWindow._group.remove( HaploWindow._background );
+//			haplo_layer.remove( HaploWindow._background );
 			HaploWindow._group.destroyChildren();
 			HaploWindow._group.destroy();
 			HaploWindow._background = null;
@@ -120,7 +120,8 @@ var HaploWindow = {
 			opacity: 0.5
 		});
 
-		HaploWindow._group.add( HaploWindow._background )
+		haplo_layer.add( HaploWindow._background )
+		HaploWindow._background.setZIndex(-20);
 
 		//DOS.js
 		DOS.render( line_points, slot_array, 
@@ -276,7 +277,9 @@ var HaploWindow = {
 				}
 
 				console.log("SHOWSLIDER");
+
 				MarkerSlider.makeVisible(true)
+				resizeCanvas();
 			}
 		}).play();
 	},

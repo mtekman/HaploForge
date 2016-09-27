@@ -4,6 +4,7 @@ var SliderHandler = {
 
 	i_slider_top_y:0,
 	i_slider_length:0,
+	exceeds_window : false,
 
 	// -- Drag specific -- //
 	inputDragFunc( abspos){
@@ -97,7 +98,17 @@ var SliderHandler = {
 			-MarkerSlider._style.bevel + bot_slider[0] + offs*2, bot_slider[1] + MarkerSlider._style.bevel
 		]);
 
-		MarkerSlider._slwin_group.message.setText( MarkerSlider._last_input2_ind - MarkerSlider._last_input1_ind );
+		var diff = MarkerSlider._last_input2_ind - MarkerSlider._last_input1_ind;
+
+		if (diff > numVisibleHaplos()){
+			HaploBlock.exceeds_window = true;
+			diff = "[" + diff + "]";
+		} 
+		else {
+			HaploBlock.exceeds_window = false;
+		}
+
+		MarkerSlider._slwin_group.message.setText( diff );
 		MarkerSlider._slwin_group.message.setY( (SliderHandler.i_slider_length/2) - HAP_VERT_SPA/2 );
 	},
 
@@ -155,12 +166,8 @@ var SliderHandler = {
 
 		HaploBlock.sta_index = MarkerSlider._last_input1_ind;
 		HaploBlock.end_index = MarkerSlider._last_input2_ind;
-		HAP_DRAW_LIM = HaploBlock.end_index - HaploBlock.sta_index;
 
-		HaploWindow._bottom
-			.rect
-			.setHeight( (HAP_DRAW_LIM+3) * HAP_VERT_SPA);
-
+		updateHaploScrollHeight( HaploBlock.end_index - HaploBlock.sta_index );
 		HaploBlock.redrawHaplos(resizecanvastoo);
 	}
 }

@@ -121,6 +121,7 @@ var MarkerSlider = {
 
 		input_group.on('mouseup', function(){
 			SliderHandler.updateHaploPositions(true);
+			resizeCanvas();
 		});
 
 		if (top){

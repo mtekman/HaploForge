@@ -231,6 +231,8 @@ function graphInitPos(start_x, start_y, enable_ped_edit = false){
 		fgr.group._boundsrect.hide();
 	});
 
+	resizeCanvas();
+
 
 	// --- Placement Animations
 	if (userOpts.fancyGraphics){

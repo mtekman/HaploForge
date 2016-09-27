@@ -80,28 +80,42 @@ function resizeCanvas()
     var margin = 5;
 
     if (stage !== null){
-    	stage.setWidth(window.innerWidth - margin);
+    	stage.setWidth(window.innerWidth);
 
-    	var new_height = ((HAP_DRAW_LIM+5) * HAP_VERT_SPA)+200;
+        var stageHeight = window.innerHeight - 4;
 
-    	if (new_height < window.innerHeight)
-    		new_height = window.innerHeight - margin;
-
-    	stage.setHeight(new_height);
 
         if (HaploWindow._background !== null){
+
             HaploWindow._background.setWidth(window.innerWidth);
-            HaploWindow._background.setHeight(new_height);
-
             SelectionMode._background.setWidth(window.innerWidth);
-            SelectionMode._background.setHeight(window.innerHeight);
+            
+            var secHeight = stageHeight;
 
+            if (HaploBlock.exceeds_window){
+                secHeight = (HAP_VERT_SPA * HAP_DRAW_LIM) + 130;
+            }
+            else {
+                updateHaploScrollHeight( 
+                  parseInt(
+                    (stageHeight / HAP_VERT_SPA) - 15
+                ));
+            }
+
+            HaploWindow._background.setHeight(secHeight);
+            SelectionMode._background.setHeight(secHeight);
+            stage.setHeight(secHeight);
+              
+
+
+            if (  ModeTracker.currentMode === ModeTracker.modes.pedcreate
+                ||ModeTracker.currentMode === ModeTracker.modes.haploview){
+                  FamSpacing.init(20);
+            }
             haplo_layer.draw();
         }
-
-        if (  ModeTracker.currentMode === ModeTracker.modes.pedcreate
-            ||ModeTracker.currentMode === ModeTracker.modes.haploview){
-              FamSpacing.init(20);
+        else {
+            stage.setHeight(stageHeight);
         }
     }
 }
