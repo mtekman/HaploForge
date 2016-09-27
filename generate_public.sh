@@ -4,6 +4,8 @@ outdir=$1
 
 [ "$outdir" = "" ] && echo "`basename $0` <outdir>" && exit -1
 
+[ -e $outdir ] && echo "$outdir already exists" && exit -1
+
 mkdir -p $outdir
 
 JS_file=$outdir/total.js
@@ -32,13 +34,8 @@ for f in `grep -oP "(?<=(src=\"))[^\"]*" HTML/code_includes.html`; do
 	echo "" >> $JS_file
 done
 
-#obf=__assets/__obfuscate/compiler.jar
-#minf=__assets/__obfuscate/jsminc
-#
-#java -jar $obf --language_in=ECMASCRIPT6 \
-# $JS_file  >> $JS_file.final.js
-
-#cat $JS_file | $minf >> $JS_file.final.js
+imbin="__assets/__obfuscate/to_image.py"
+$imbin $JS_file $outdir/logo.png
 
 
 # Copy over essentials
@@ -47,8 +44,8 @@ cp -r favicon.ico styles $outdir
 cat index.html | grep -v "<script src=" > tmp.txt
 
 #cat tmp.txt\
-# | sed "s|<!-- User Options -->|<script src=\"`basename $JS_file.divs.js`\" ></script>|"\
-# > tmp2.txt
+# | sed "s|<!-- CODE GOES HERE -->|<script src=\"`basename $JS_file`\" ></script>|"\
+# > $outdir/index.html
 
 cat tmp.txt\
  | sed "s|<!-- CODE GOES HERE -->|<script src=\"`basename $JS_file`\" ></script>|"\

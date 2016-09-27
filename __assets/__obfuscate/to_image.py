@@ -5,13 +5,15 @@ from random import randint
 from scipy import misc,ndimage
 import numpy as np
 
-if len(sys.argv) != 2:
+if len(sys.argv) != 3:
 	print >> sys.stderr, '''Produces an 8-bit rgb png out of text (alpha is garbled)
-	%s <textfile>
+	%s <textfile> <outimg>
 ''' % sys.argv[0].split('/')[-1]
 	exit(-1)
 
 script_file=sys.argv[1]
+out_img=sys.argv[2]
+
 dimensions=4
 
 
@@ -170,7 +172,8 @@ b = np.copy(x)
 encodeAll2(x)
 
 img = misc.toimage(x, high=255, low=0)
-img.save("logo.png")
+#img.save("logo.png")
+img.save( out_img );
 
 
 
