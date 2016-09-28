@@ -1,3 +1,16 @@
+
+// Singleton
+(function onWindowLoad(){
+    // Define all your load modes here
+    browserDetection();
+
+    document.getElementById('user_tooltips').checked = userOpts.retrieve('showTooltips');
+    document.getElementById('user_fancy').checked = userOpts.retrieve('fancyGraphics');
+
+    userOpts.setGraphics();
+})()
+
+
 function browserDetection(){
     //
     //Quick browser detector
@@ -23,98 +36,26 @@ function browserDetection(){
 
     var browser_flag = false;
 
+
+    function exit( status ) {
+        var i;
+        document.getElementById('content').innerHTML="<head>"+status+"</head><body></body>"
+
+        function stopPropagation (e) {e.stopPropagation();}
+        window.addEventListener('error', function (e) {e.preventDefault();e.stopPropagation();}, false);
+
+        var handlers = [ 'copy', 'cut', 'paste', 'beforeunload', 'blur', 'change', 'click', 'contextmenu', 'dblclick', 'focus', 'keydown', 'keypress', 'keyup', 'mousedown', 'mousemove', 'mouseout', 'mouseover', 'mouseup', 'resize', 'scroll', 'DOMNodeInserted', 'DOMNodeRemoved', 'DOMNodeRemovedFromDocument', 'DOMNodeInsertedIntoDocument', 'DOMAttrModified', 'DOMCharacterDataModified', 'DOMElementNameChanged', 'DOMAttributeNameChanged', 'DOMActivate', 'DOMFocusIn', 'DOMFocusOut', 'online', 'offline', 'textInput', 'abort', 'close', 'dragdrop', 'load', 'paint', 'reset', 'select', 'submit', 'unload'];
+
+        for (i=0; i < handlers.length; i++) {window.addEventListener(handlers[i], function (e) {stopPropagation(e);}, true);}
+        if (window.stop){window.stop();}
+        throw '';
+    }
+
     if (!(
            (browser_name === "Chrome" && browser_vers >= 43)
         || (browser_name === "Firefox" && browser_vers >= 38)
        )) {
         console.log(browser_name, browser_vers)
         exit("<h1 style=\"color: #111; font-family: 'Helvetica Neue', sans-serif; font-size: 100px; font-weight: bold; letter-spacing: -1px; line-height: 1; text-align: center;  \" >NOPE.</h1><h2 style=\"color: #111; font-family: 'Open Sans', sans-serif; font-size: 30px; font-weight: 300; line-height: 32px; margin: 0 0 72px; text-align: center;\" >Not This Browser.<br/>Not In A Million Years.<br/><br/>Try <a href=\"https://www.mozilla.org/en-US/firefox/new/\" style='color:DarkOrange; text-decoration:none;font-family:\"Papyrus\",fantasy;' >Firefox</a> or <a style='color:DodgerBlue;text-decoration:none;font-family:\"Arial\",sans-serif;' href=\"http://chromium.woolyss.com/\">Chromium.</a><br/><div style='font-size:12px;'>Chrome/Opera/Safari (if you must...)</div></h2>");
-    }
-}
-
-
-function exit( status ) {
-    var i;
-
-	document.getElementById('content').innerHTML="<head>"+status+"</head><body></body>"
-
-    window.addEventListener('error', function (e) {e.preventDefault();e.stopPropagation();}, false);
-
-    var handlers = [ 'copy', 'cut', 'paste', 'beforeunload', 'blur', 'change', 'click', 'contextmenu', 'dblclick', 'focus', 'keydown', 'keypress', 'keyup', 'mousedown', 'mousemove', 'mouseout', 'mouseover', 'mouseup', 'resize', 'scroll', 'DOMNodeInserted', 'DOMNodeRemoved', 'DOMNodeRemovedFromDocument', 'DOMNodeInsertedIntoDocument', 'DOMAttrModified', 'DOMCharacterDataModified', 'DOMElementNameChanged', 'DOMAttributeNameChanged', 'DOMActivate', 'DOMFocusIn', 'DOMFocusOut', 'online', 'offline', 'textInput', 'abort', 'close', 'dragdrop', 'load', 'paint', 'reset', 'select', 'submit', 'unload'];
-
-    function stopPropagation (e) {
-        e.stopPropagation();
-        // e.preventDefault(); // Stop for the form controls, etc., too?
-    }
-    for (i=0; i < handlers.length; i++) {
-        window.addEventListener(handlers[i], function (e) {stopPropagation(e);}, true);
-    }
-
-    if (window.stop) {
-        window.stop();
-    }
-
-    throw '';
-}
-
-
-
-
-
-function onWindowLoad(){
-    // Define all your load modes here
-    browserDetection();
-
-    document.getElementById('user_tooltips').checked = userOpts.retrieve('showTooltips');
-    document.getElementById('user_fancy').checked = userOpts.retrieve('fancyGraphics');
-
-    userOpts.setGraphics();
-}
-
-
-onWindowLoad();
-
-
-function resizeCanvas(playing = 90)
-{
-    var margin = 5;
-
-    if (stage !== null){
-    	stage.setWidth(window.innerWidth);
-
-        var stageHeight = window.innerHeight - 4;
-
-
-        if (HaploWindow._background !== null){
-
-            HaploWindow._background.setWidth(window.innerWidth);
-            SelectionMode._background.setWidth(window.innerWidth);
-            
-            var secHeight = stageHeight;
-
-            if (HaploBlock.exceeds_window){
-                secHeight = (HAP_VERT_SPA * HAP_DRAW_LIM) + playing;
-            }
-            else {
-                updateHaploScrollHeight( 
-                  parseInt(
-                    (stageHeight / HAP_VERT_SPA) - 15
-                ));
-            }
-
-            HaploWindow._background.setHeight(secHeight);
-            SelectionMode._background.setHeight(secHeight);
-            stage.setHeight(secHeight);
-
-
-            if (  ModeTracker.currentMode === ModeTracker.modes.pedcreate
-                ||ModeTracker.currentMode === ModeTracker.modes.haploview){
-                  FamSpacing.init(20);
-            }
-            haplo_layer.draw();
-        }
-        else {
-            stage.setHeight(stageHeight);
-        }
     }
 }
