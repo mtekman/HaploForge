@@ -32,6 +32,8 @@ var HAP_DRAW_LIM = 30, // No more than 30 haplotypes on screen
 	{
 		HAP_DRAW_LIM = new_lim || HAP_DRAW_LIM;
 
+		console.log("new_lim", new_lim);
+
 		HaploBlock.end_index = HaploBlock.sta_index + HAP_DRAW_LIM;
 	
 		HaploWindow._bottom.rect.setHeight(
@@ -43,8 +45,16 @@ var HAP_DRAW_LIM = 30, // No more than 30 haplotypes on screen
 		SliderHandler.updateSlide();
 
 	},
-	numVisibleHaplos = function(){
-		return Math.floor(((window.innerHeight - 4) / HAP_VERT_SPA) - 15);
+	numFittableHaplos = function(){
+		var y_offset = HaploWindow._top.rect.getAbsolutePosition().y 
+			+ HaploWindow._top.rect.getHeight()
+			+ 10;
+
+		var avail_space = window.innerHeight - y_offset;
+
+		return Math.floor( avail_space / HAP_VERT_SPA ) - 6;
+
+		//return Math.floor(((window.innerHeight - 4) / HAP_VERT_SPA) - 15);
 	}
 
 

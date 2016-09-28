@@ -75,7 +75,7 @@ function onWindowLoad(){
 onWindowLoad();
 
 
-function resizeCanvas()
+function resizeCanvas(playing = 90)
 {
     var margin = 5;
 
@@ -93,7 +93,7 @@ function resizeCanvas()
             var secHeight = stageHeight;
 
             if (HaploBlock.exceeds_window){
-                secHeight = (HAP_VERT_SPA * HAP_DRAW_LIM) + 130;
+                secHeight = (HAP_VERT_SPA * HAP_DRAW_LIM) + playing;
             }
             else {
                 updateHaploScrollHeight( 
@@ -105,7 +105,6 @@ function resizeCanvas()
             HaploWindow._background.setHeight(secHeight);
             SelectionMode._background.setHeight(secHeight);
             stage.setHeight(secHeight);
-              
 
 
             if (  ModeTracker.currentMode === ModeTracker.modes.pedcreate

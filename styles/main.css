@@ -37,6 +37,10 @@
   text-align: center;
 }
 
+#homology_buttons table {
+  width:100%;
+}
+
 #homology_buttons select {
   border-radius: 5px;
   width: 100%;
@@ -47,7 +51,7 @@
 }
 
 #homology_buttons input[type=button] {
-  /*max-width: 100px;*/
+  width: 100%;
 }
 
 #homology_buttons label {

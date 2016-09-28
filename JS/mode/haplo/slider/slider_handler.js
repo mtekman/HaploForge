@@ -11,7 +11,23 @@ var SliderHandler = {
 
 		var perc, rsindex;
 
+		// Dampening in effect
+		if (Keyboard.isShiftDown())
+		{
+			MouseStyle.changeToArrowCursor();
+
+			var center = (SliderHandler.i_slider_top_y + SliderHandler.i_slider_length/2);
+			var diff_from_center = Math.abs(center - abspos.y);
+			
+			abspos.y = center + 0.2 * diff_from_center;
+		}
+		else {
+			this.isTop?MouseStyle.changeToVerticalN():MouseStyle.changeToVerticalS();
+		}
+
+
 		if (this.isTop){
+
 			var atstart = false;
 
 			if (abspos.y >= MarkerSlider._last_input2_posy)
@@ -100,7 +116,7 @@ var SliderHandler = {
 
 		var diff = MarkerSlider._last_input2_ind - MarkerSlider._last_input1_ind;
 
-		if (diff > numVisibleHaplos()){
+		if (diff > numFittableHaplos()){
 			HaploBlock.exceeds_window = true;
 			diff = "[" + diff + "]";
 		} 
@@ -168,6 +184,6 @@ var SliderHandler = {
 		HaploBlock.end_index = MarkerSlider._last_input2_ind;
 
 		updateHaploScrollHeight( HaploBlock.end_index - HaploBlock.sta_index );
-		HaploBlock.redrawHaplos(resizecanvastoo);
+		HaploBlock.redrawHaplos(false);
 	}
 }
