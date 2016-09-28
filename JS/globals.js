@@ -23,40 +23,9 @@ var default_stroke_color = 'blue',
 var grid_rezY = nodeSize*6,
 	grid_rezX = nodeSize*2;
 
-var max_fam_width = 160
-
-var HAP_DRAW_LIM = 30, // No more than 30 haplotypes on screen
-	HAP_MIN_DRAW = 70,  // Minimum before haplos are updated on drag.
-	HAP_VERT_SPA = 10,
-	updateHaploScrollHeight = function(new_lim = null)
-	{
-		HAP_DRAW_LIM = new_lim || HAP_DRAW_LIM;
-
-		console.log("new_lim", new_lim);
-
-		HaploBlock.end_index = HaploBlock.sta_index + HAP_DRAW_LIM;
-	
-		HaploWindow._bottom.rect.setHeight(
-			(HAP_DRAW_LIM+3) * HAP_VERT_SPA 
-		);
-
-		HaploBlock.redrawHaplos();
-		SliderHandler.updateInputsByIndex();
-		SliderHandler.updateSlide();
-
-	},
-	numFittableHaplos = function(){
-		var y_offset = HaploWindow._top.rect.getAbsolutePosition().y 
-			+ HaploWindow._top.rect.getHeight()
-			+ 10;
-
-		var avail_space = window.innerHeight - y_offset;
-
-		return Math.floor( avail_space / HAP_VERT_SPA ) - 6;
-
-		//return Math.floor(((window.innerHeight - 4) / HAP_VERT_SPA) - 15);
-	}
-
+var HAP_DRAW_LIM = 30; // No more than 30 haplotypes on screen
+var	HAP_MIN_DRAW = 70;  // Minimum before haplos are updated on drag.
+var HAP_VERT_SPA = 10;  // <-- DO NOT MODIFY
 
 
 var col_affs = [
@@ -133,16 +102,6 @@ function map2orderedArray(mapper){
 function isEmpty(map){
 	return Object.getOwnPropertyNames(map).length === 0;
 }
-
-// Button
-var butt_w = 90,
-	butt_h = 20;
-
-// Haplo
-var min_haplo_x = horiz_space,
-	max_haplo_x = horiz_space + 30;
-
-
 
 
 var in2Space = function(integ){
