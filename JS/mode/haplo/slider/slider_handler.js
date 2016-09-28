@@ -116,7 +116,7 @@ var SliderHandler = {
 
 		var diff = MarkerSlider._last_input2_ind - MarkerSlider._last_input1_ind;
 
-		if (diff > numFittableHaplos()){
+		if (diff > Resize.numFittableHaplos()){
 			HaploBlock.exceeds_window = true;
 			diff = "[" + diff + "]";
 		} 
@@ -183,7 +183,7 @@ var SliderHandler = {
 		HaploBlock.sta_index = MarkerSlider._last_input1_ind;
 		HaploBlock.end_index = MarkerSlider._last_input2_ind;
 
-		updateHaploScrollHeight( HaploBlock.end_index - HaploBlock.sta_index );
-		HaploBlock.redrawHaplos(false);
+		Resize.updateHaploScrollHeight( HaploBlock.end_index - HaploBlock.sta_index );
+		HaploBlock.redrawHaplos(resizecanvastoo);
 	}
 }

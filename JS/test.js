@@ -9,6 +9,7 @@ function testhomology(){
 
 		SelectionMode.init();
 		SelectionAction.selectAffecteds();
+		userOpts.fancyGraphics = true;
 		HaploWindow.init();
 
 /*		setTimeout(function(){

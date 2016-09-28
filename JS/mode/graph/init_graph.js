@@ -32,7 +32,8 @@ Notes:
 function graphInitPos(start_x, start_y, enable_ped_edit = false){
 
 	var x_shift_fam = 0,
-		y_start = 10;
+		y_start = 10,
+		max_fam_width = 160;
 
 	GlobalLevelGrid.foreachfam(function(grid, fam){
 		// Each fam gets their own group
@@ -231,7 +232,7 @@ function graphInitPos(start_x, start_y, enable_ped_edit = false){
 		fgr.group._boundsrect.hide();
 	});
 
-	resizeCanvas();
+	Resize.resizeCanvas();
 
 
 	// --- Placement Animations

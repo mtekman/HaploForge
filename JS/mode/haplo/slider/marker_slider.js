@@ -132,6 +132,7 @@ var MarkerSlider = {
 			function uponMouseUp(){
 				if (input_group.is_being_dragged){
 					SliderHandler.updateHaploPositions(true);
+					MouseStyle.restoreCursor();
 					
 					input_group.is_being_dragged = false;
 				//	input_group.mousedown_ypos = null;

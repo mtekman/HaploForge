@@ -59,6 +59,11 @@ function kineticTween(props)
 
 
 
+/*
+// Button
+var butt_w = 90,
+	butt_h = 20;
+	
 function addButton(message, xp, yp, callback, show_state)
 {
 	var group = new Kinetic.Group({x: xp, y: yp});
@@ -109,6 +114,7 @@ function addButton(message, xp, yp, callback, show_state)
 
 	return group;
 }
+*/
 
 function addExitButton(center, callback, color_level = 0)
 {

@@ -279,7 +279,7 @@ var HaploWindow = {
 				console.log("SHOWSLIDER");
 
 				MarkerSlider.makeVisible(true)
-				resizeCanvas();
+				Resize.resizeCanvas();
 			}
 		}).play();
 	},

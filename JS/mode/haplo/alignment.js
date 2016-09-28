@@ -102,7 +102,6 @@ function alignTopSelection( group_nodes, group_lines)
 				})
 			);
 		}
-
 	}
 
 	// Smoother to build tweens first, then execute them
@@ -110,6 +109,8 @@ function alignTopSelection( group_nodes, group_lines)
 	{
 		tween_array[t++].play();
 	}
+
+	setTimeout(Resize.resizeCanvas, 800);
 
 	haplo_layer.draw();
 }

@@ -19,12 +19,16 @@ var Resize = {
 
 	},
 
-	numFittableHaplos : function(){
-		var y_offset = HaploWindow._top.rect.getAbsolutePosition().y 
+	getYOffset : function (){
+		return HaploWindow._top.rect.getAbsolutePosition().y 
 			+ HaploWindow._top.rect.getHeight()
 			+ 10;
 
-		var avail_space = window.innerHeight - y_offset;
+	},
+
+	numFittableHaplos : function(){
+		var y_offset = Resize.getYOffset(),
+			avail_space = window.innerHeight - y_offset;
 
 		return Math.floor( avail_space / HAP_VERT_SPA ) - 6;
 
@@ -46,14 +50,17 @@ var Resize = {
 	            
 	            var secHeight = stageHeight;
 
-	            if (HaploBlock.exceeds_window){
-	                secHeight = (HAP_VERT_SPA * HAP_DRAW_LIM) + playing;
+	            var fittable = Resize.numFittableHaplos();
+
+	            if (HAP_DRAW_LIM > fittable){
+	            	var y_offs = Resize.getYOffset()
+//	            if (HaploBlock.exceeds_window){
+	                secHeight = y_offs + ((HAP_DRAW_LIM+3) * HAP_VERT_SPA );
+	                console.log("EXCEEDS WINDOW")
+	                Resize.updateHaploScrollHeight( HAP_DRAW_LIM );
 	            }
 	            else {
-	                Resize.updateHaploScrollHeight( 
-	                  parseInt(
-	                    (stageHeight / HAP_VERT_SPA) - 15
-	                ));
+	                Resize.updateHaploScrollHeight( Resize.numFittableHaplos() );
 	            }
 
 	            HaploWindow._background.setHeight(secHeight);

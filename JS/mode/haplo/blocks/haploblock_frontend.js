@@ -13,7 +13,7 @@ var HaploBlock = {
 		HaploBlock.haploinfos = []; //clean
 
 		HaploBlock.sta_index = 0;
-		HaploBlock.end_index = numFittableHaplos();
+		HaploBlock.end_index = Resize.numFittableHaplos();
 
 		var position_by_xpos = {};
 
@@ -50,7 +50,7 @@ var HaploBlock = {
 
 
 	/* Redraws the current haplodata_arr group, regardless of who they are*/
-	redrawHaplos(){
+	redrawHaplos(resizeToo){
 		var scroll_rect = uniqueGraphOps.haplo_scroll,
 			scroll_area = uniqueGraphOps.haplo_area;
 
@@ -97,9 +97,9 @@ var HaploBlock = {
 
 		//SliderHandler.updateInputsByIndex(sta_index, end_index)
 
-//		if (resizeToo){
-//			resizeCanvas();
-//		}
+		if (resizeToo){
+			Resize.resizeCanvas();
+		}
 	},
 
 

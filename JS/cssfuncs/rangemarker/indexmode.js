@@ -79,7 +79,7 @@ var CSSMarkerRange = {
 		HaploBlock.sta_index = min_range;
 		HaploBlock.end_index = max_range;
 
-		updateHaploScrollHeight( max_range - min_range );
+		Resize.updateHaploScrollHeight( max_range - min_range );
 
 		HaploBlock.redrawHaplos(true);
 
