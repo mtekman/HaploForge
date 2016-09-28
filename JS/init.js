@@ -4,6 +4,7 @@ var init = {
 	clearMaps: function(){
 		familyDraw.active_fam_group = null;
 		
+		FounderColor.clear();
 		GlobalLevelGrid.clear();
 		MarkerData.clear();
 		familyMapOps.clear();

@@ -31,8 +31,6 @@ var Resize = {
 			avail_space = window.innerHeight - y_offset;
 
 		return Math.floor( avail_space / HAP_VERT_SPA ) - 6;
-
-		//return Math.floor(((window.innerHeight - 4) / HAP_VERT_SPA) - 15);
 	},
 
 	resizeCanvas : function(playing = 90)

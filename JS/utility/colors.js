@@ -14,6 +14,11 @@ var FounderColor = {
 		).rgb;
 	},
 
+	clear(){
+		FounderColor.hgroup = [];
+		FounderColor.unique = [];
+	},
+
 	__good_hues : [
 		  0,  30,  36,  41,  48,  54,
 		 60,  72, 120, 180, 186, 192,
