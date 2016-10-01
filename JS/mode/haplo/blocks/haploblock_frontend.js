@@ -13,7 +13,7 @@ var HaploBlock = {
 		HaploBlock.haploinfos = []; //clean
 
 		HaploBlock.sta_index = 0;
-		HaploBlock.end_index = Resize.numFittableHaplos();
+		HaploBlock.end_index = Resize.numVisibleHaplos;
 
 		var position_by_xpos = {};
 

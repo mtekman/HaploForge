@@ -4,11 +4,10 @@ var SliderHandler = {
 
 	i_slider_top_y:0,
 	i_slider_length:0,
-	exceeds_window : false,
+	inputsLocked : false,
 
 	// -- Drag specific -- //
-	inputDragFunc( abspos){
-
+	inputDragFunc( abspos ){
 		var perc, rsindex;
 
 		// Dampening in effect
@@ -20,49 +19,82 @@ var SliderHandler = {
 			var diff_from_center = Math.abs(center - abspos.y);
 			
 			abspos.y = center + 0.2 * diff_from_center;
-		}
-		else {
+		
+		} else {
 			this.isTop?MouseStyle.changeToVerticalN():MouseStyle.changeToVerticalS();
 		}
 
 
-		if (this.isTop){
+		var lockmargin = 30,
+			lockToRange = false;
 
+		// Out of the way swirly glasses...
+		if (this.isTop){
 			var atstart = false;
 
-			if (abspos.y >= MarkerSlider._last_input2_posy)
-				abspos.y = MarkerSlider._last_input2_posy;
-			if (abspos.y <= MarkerSlider._rangeline_pos.y)
-			{
-				abspos.y = MarkerSlider._rangeline_pos.y + 1;
+			if (abspos.y >= MarkerSlider._last_input2_posy){abspos.y  = MarkerSlider._last_input2_posy;}
+			if (abspos.y <= MarkerSlider._rangeline_pos.y){
+				abspos.y  = MarkerSlider._rangeline_pos.y + 1;
 				atstart = true;
 			}
+			perc =  (abspos.y - MarkerSlider._rangeline_pos.y) / MarkerSlider._config.slider_height;
+			rsindex = (atstart?0:Math.floor(perc * MarkerData.rs_array.length));
+
 			MarkerSlider._last_input1_posy = abspos.y;
 
-			perc =  (abspos.y - MarkerSlider._rangeline_pos.y) / MarkerSlider._config.slider_height;
+			if (Keyboard.isCtrlDown() &&  MarkerSlider._last_input2_ind){
+				var frontindex = (MarkerSlider._last_input2_ind - Resize.numVisibleHaplos);
+//					backindex = frontindex - lockmargin;
 
-			MarkerSlider._last_input1_ind = rsindex = (atstart?0:Math.floor(perc * MarkerData.rs_array.length));
+//				if (rsindex >= backindex && rsindex <= frontindex){
+					lockToRange = true;
+					rsindex = frontindex;
+//				}
+			}
+			MarkerSlider._last_input1_ind = rsindex;
+
 		}
+		// Always obstructing our forwards momentum...
 		else {
 			var atend = false;
 
-			if (abspos.y <= MarkerSlider._last_input1_posy)
-				abspos.y = MarkerSlider._last_input1_posy;
+			if (abspos.y <= MarkerSlider._last_input1_posy){
+				abspos.y  = MarkerSlider._last_input1_posy;
+			}
 	 		if (abspos.y > MarkerSlider._rangeline_pos.y + MarkerSlider._config.slider_height){
 				abspos.y = MarkerSlider._rangeline_pos.y + MarkerSlider._config.slider_height;
 				atend = true;
 			}
-			MarkerSlider._last_input2_posy = abspos.y;
 
 			perc =  (abspos.y - MarkerSlider._rangeline_pos.y) / MarkerSlider._config.slider_height;
+			rsindex = (atend?MarkerData.rs_array.length-1:Math.floor(perc * MarkerData.rs_array.length));
 
-			MarkerSlider._last_input2_ind = rsindex = (atend?MarkerData.rs_array.length-1:Math.floor(perc * MarkerData.rs_array.length));
+			MarkerSlider._last_input2_posy = abspos.y;
+
+			if (Keyboard.isCtrlDown() && MarkerSlider._last_input1_ind){
+				var backindex = (MarkerSlider._last_input1_ind + Resize.numVisibleHaplos);
+//					frontindex = backindex + lockmargin;
+
+//				if (rsindex >= backindex && rsindex <= frontindex){
+					lockToRange = true;
+					rsindex = backindex;
+//				}
+			}
+			MarkerSlider._last_input2_ind = rsindex;
 		}
+
+
+		var new_y = abspos.y;
+		if (lockToRange){
+			new_y = SliderHandler.__updateSingleInputByIndex(rsindex, this.isTop);
+		}
+		SliderHandler.inputsLocked = lockToRange;
+
 		this.message.setText(MarkerData.rs_array[rsindex]);
 
-		SliderHandler.updateSlide();
+		SliderHandler.updateSlide(lockToRange);
 
-		return {x: this.getAbsolutePosition().x, y: abspos.y};
+		return {x: this.getAbsolutePosition().x, y: new_y};
 	},
 
 	sliderDragFunc( p ){
@@ -91,7 +123,7 @@ var SliderHandler = {
 
 
 	// --- Non-drag specific, but called by Drag Events
-	updateSlide()
+	updateSlide(rangelocked)
 	{
 		if (MarkerSlider._rangeline_pos === null){
 			return -1;
@@ -116,13 +148,17 @@ var SliderHandler = {
 
 		var diff = MarkerSlider._last_input2_ind - MarkerSlider._last_input1_ind;
 
-		if (diff > Resize.numFittableHaplos()){
-			HaploBlock.exceeds_window = true;
+		if (diff > Resize.numVisibleHaplos){
 			diff = "[" + diff + "]";
-		} 
-		else {
-			HaploBlock.exceeds_window = false;
 		}
+
+		var strokeWidth = 1;
+		if (rangelocked){
+			strokeWidth = 3;
+		}
+		MarkerSlider._slwin_group.line.setStrokeWidth(strokeWidth);
+		MarkerSlider._sl_input1.line.setStrokeWidth(strokeWidth);
+		MarkerSlider._sl_input2.line.setStrokeWidth(strokeWidth);
 
 		MarkerSlider._slwin_group.message.setText( diff );
 		MarkerSlider._slwin_group.message.setY( (SliderHandler.i_slider_length/2) - HAP_VERT_SPA/2 );
@@ -141,6 +177,32 @@ var SliderHandler = {
 
 		MarkerSlider._last_input1_posy = top + MarkerSlider._rangeline_pos.y;
 		MarkerSlider._last_input2_posy = bot + MarkerSlider._rangeline_pos.y;
+	},
+
+
+	__updateSingleInputByIndex(index, isTop){
+		if (index >= MarkerData.rs_array.length){
+			index = MarkerData.rs_array.length -1
+		}
+		else if (index < 0){
+			index = 0
+		}
+
+		var ypos = (index / MarkerData.rs_array.length) * MarkerSlider._config.slider_height;
+
+		if (isTop){
+			MarkerSlider._last_input1_ind = index;
+			MarkerSlider._sl_input1.setY(ypos);
+			MarkerSlider._sl_input1.message.setText( MarkerData.rs_array[MarkerSlider._last_input1_ind] );
+			MarkerSlider._last_input1_posy = ypos + MarkerSlider._rangeline_pos.y;
+		}
+		else {
+			MarkerSlider._last_input2_ind = index;
+			MarkerSlider._sl_input2.setY(ypos);
+			MarkerSlider._sl_input2.message.setText( MarkerData.rs_array[MarkerSlider._last_input2_ind] );
+			MarkerSlider._last_input2_posy = ypos + MarkerSlider._rangeline_pos.y;
+		}
+		return ypos + MarkerSlider._rangeline_pos.y;
 	},
 
 

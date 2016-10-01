@@ -119,23 +119,15 @@ var MarkerSlider = {
 			strokeWidth:ms_s.I_strokeWidth
 		});
 
-//		input_group.mousedown_ypos = null;
-
 		input_group.on('mousedown', function(val){
 			input_group.is_being_dragged = true;
-			
-			// Log only the first mousedown position
-/*			if (input_group.mousedown_ypos === null){
-				input_group.mousedown_ypos = val.evt.y; //used by inputDragFunc
-			}*/
-
+		
 			function uponMouseUp(){
 				if (input_group.is_being_dragged){
 					SliderHandler.updateHaploPositions(true);
 					MouseStyle.restoreCursor();
 					
 					input_group.is_being_dragged = false;
-				//	input_group.mousedown_ypos = null;
 
 					document.removeEventListener("mouseup", uponMouseUp, false);
 
@@ -145,17 +137,15 @@ var MarkerSlider = {
 		});
 
 
-		if (top){
-			input_group.on('mouseover', MouseStyle.changeToVerticalN);
-		} else {
-			input_group.on('mouseover', MouseStyle.changeToVerticalS);
-		}
-
+		input_group.on('mouseover', 
+			top?MouseStyle.changeToVerticalN:MouseStyle.changeToVerticalS
+		);
 		input_group.add(mark_label);
 		input_group.add(line_out);
 
-		input_group.message = mark_label; // Accessor
+		input_group.message = mark_label; // Accessors
 		input_group.isTop = top;
+		input_group.line = line_out;
 
 		return input_group;
 	},

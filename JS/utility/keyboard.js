@@ -3,6 +3,7 @@
 var Keyboard = {
 	
 	__map : {
+		"Control" : false,
 		"Shift": false,
 		"ArrowDown": false,
 		"ArrowUp" : false,
@@ -110,6 +111,11 @@ var Keyboard = {
 
 	isShiftDown(){
 		return Keyboard.isPressed("Shift");
-	}
+	},
+
+
+	isCtrlDown(){
+		return Keyboard.isPressed("Control");
+	},	
 
 }

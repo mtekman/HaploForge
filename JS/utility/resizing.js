@@ -1,11 +1,11 @@
 
 var Resize = {
 
+	numVisibleHaplos: -1,
+
 	updateHaploScrollHeight : function(new_lim = null)
 	{
-		HAP_DRAW_LIM = new_lim || HAP_DRAW_LIM;
-
-		console.log("new_lim", new_lim);
+		HAP_DRAW_LIM = new_lim || Resize.numVisibleHaplos;
 
 		HaploBlock.end_index = HaploBlock.sta_index + HAP_DRAW_LIM;
 	
@@ -16,7 +16,6 @@ var Resize = {
 		HaploBlock.redrawHaplos();
 		SliderHandler.updateInputsByIndex();
 		SliderHandler.updateSlide();
-
 	},
 
 	getYOffset : function (){
@@ -26,55 +25,62 @@ var Resize = {
 
 	},
 
-	numFittableHaplos : function(){
-		var y_offset = Resize.getYOffset(),
-			avail_space = window.innerHeight - y_offset;
-
-		return Math.floor( avail_space / HAP_VERT_SPA ) - 6;
-	},
-
 	resizeCanvas : function(playing = 90)
 	{  	
 	    if (stage !== null){
-	    	stage.setWidth(window.innerWidth);
-
 	        var stageHeight = window.innerHeight - 4;
 
+	    	var newWidth = window.innerWidth;
 
-	        if (HaploWindow._background !== null){
+	        if (HaploWindow._background !== null)
+	        {         
+	            // Update the number of visible haplotypes number
+	            Resize.__numFittableHaplos();
 
-	            HaploWindow._background.setWidth(window.innerWidth);
-	            SelectionMode._background.setWidth(window.innerWidth);
-	            
-	            var secHeight = stageHeight;
-
-	            var fittable = Resize.numFittableHaplos();
-
-	            if (HAP_DRAW_LIM > fittable){
+	            if (HAP_DRAW_LIM > Resize.numVisibleHaplos + 2){
 	            	var y_offs = Resize.getYOffset()
-//	            if (HaploBlock.exceeds_window){
-	                secHeight = y_offs + ((HAP_DRAW_LIM+3) * HAP_VERT_SPA );
-	                console.log("EXCEEDS WINDOW")
-	                Resize.updateHaploScrollHeight( HAP_DRAW_LIM );
-	            }
-	            else {
-	                Resize.updateHaploScrollHeight( Resize.numFittableHaplos() );
+	                stageHeight = y_offs + ((HAP_DRAW_LIM+3) * HAP_VERT_SPA );
 	            }
 
-	            HaploWindow._background.setHeight(secHeight);
-	            SelectionMode._background.setHeight(secHeight);
-	            stage.setHeight(secHeight);
+	            Resize.updateHaploScrollHeight(
+	            	SliderHandler.inputsLocked?null:HAP_DRAW_LIM 
+	            );
 
+	            HaploWindow._background.setHeight(stageHeight);
+	            SelectionMode._background.setHeight(stageHeight);
+	            stage.setHeight(stageHeight);
 
 	            if (  ModeTracker.currentMode === ModeTracker.modes.pedcreate
 	                ||ModeTracker.currentMode === ModeTracker.modes.haploview){
 	                  FamSpacing.init(20);
 	            }
+
+
+	            var defWidth = HaploWindow._top.rect.getWidth()
+	                         + HaploWindow._top.rect.getAbsolutePosition().x 
+	                         + 120; // 120 for CSS
+	            if (defWidth > newWidth){
+	            	newWidth = defWidth;
+	            }
+
+	            HaploWindow._background.setWidth(newWidth);
+	            SelectionMode._background.setWidth(newWidth);
+	            stage.setWidth(newWidth);
+	            
 	            haplo_layer.draw();
 	        }
 	        else {
 	            stage.setHeight(stageHeight);
+		    	stage.setWidth(newWidth);
 	        }
 	    }
+	},
+
+	__numFittableHaplos : function(){
+		var y_offset = Resize.getYOffset(),
+			avail_space = window.innerHeight - y_offset;
+
+		Resize.numVisibleHaplos = Math.floor( avail_space / HAP_VERT_SPA ) - 6;
+
 	}
 }

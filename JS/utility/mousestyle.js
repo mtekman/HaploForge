@@ -5,7 +5,7 @@ var MouseStyle = {
 
 	//"url('styles/Precision.cur'),auto";
 	changeToArrowCursor(){document.body.style.cursor = "crosshair";},
-	changeToGrab(){document.body.style.cursor = "grab";},
+	changeToGrab(){document.body.style.cursor = "move";}, // grab no chrome support..
 	changeToMove(){document.body.style.cursor = "move";},
 	changeToPointer(){document.body.style.cursor = "pointer";},
 
