@@ -24,7 +24,7 @@ var grid_rezY = nodeSize*6,
 	grid_rezX = nodeSize*2;
 
 var HAP_DRAW_LIM = 30; // No more than 30 haplotypes on screen
-var	HAP_MIN_DRAW = 70;  // Minimum before haplos are updated on drag.
+var	HAP_MIN_DRAW = 100;  // Minimum before haplos are updated on drag.
 var HAP_VERT_SPA = 10;  // <-- DO NOT MODIFY
 
 
