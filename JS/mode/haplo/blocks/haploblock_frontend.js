@@ -45,12 +45,18 @@ var HaploBlock = {
 			HaploBlock.haploinfos.push( position_by_xpos[key].data );
 		}
 
+		SliderHandler.inputsLocked = true;
 		HaploBlock.redrawHaplos(true);
 	},
 
 
 	/* Redraws the current haplodata_arr group, regardless of who they are*/
 	redrawHaplos(resizeToo){
+
+		if (resizeToo){
+			Resize.resizeCanvas();
+		}
+
 		var scroll_rect = uniqueGraphOps.haplo_scroll,
 			scroll_area = uniqueGraphOps.haplo_area;
 
@@ -94,12 +100,6 @@ var HaploBlock = {
 
 		scroll_area.parent.show();
 		haplo_layer.draw();
-
-		//SliderHandler.updateInputsByIndex(sta_index, end_index)
-
-		if (resizeToo){
-			Resize.resizeCanvas();
-		}
 	},
 
 

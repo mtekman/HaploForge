@@ -33,10 +33,28 @@ var Resize = {
 	    	var newWidth = window.innerWidth;
 
 	        if (HaploWindow._background !== null)
-	        {         
+	        {
+	        	// Check width
+	            var defWidth = HaploWindow._top.rect.getWidth()
+	                         + HaploWindow._top.rect.getAbsolutePosition().x 
+	                         + 120; // 120 for CSS
+
+	            var width_over = false;
+
+	            if (defWidth > newWidth){
+	            	newWidth = defWidth;
+	            	width_over = true;
+	            }
+
+	            HaploWindow._background.setWidth(newWidth);
+	            SelectionMode._background.setWidth(newWidth);
+	            stage.setWidth(newWidth);
+
+
 	            // Update the number of visible haplotypes number
 	            Resize.__numFittableHaplos();
 
+	            // Check height
 	            if (HAP_DRAW_LIM > Resize.numVisibleHaplos + 2){
 	            	var y_offs = Resize.getYOffset()
 	                stageHeight = y_offs + ((HAP_DRAW_LIM+3) * HAP_VERT_SPA );
@@ -45,6 +63,11 @@ var Resize = {
 	            Resize.updateHaploScrollHeight(
 	            	SliderHandler.inputsLocked?null:HAP_DRAW_LIM 
 	            );
+
+	            if (width_over){
+	            	//Shorten height slightly caused by horizontal scroller now in existence
+	            	stageHeight -= 15; // 15px
+	            }
 
 	            HaploWindow._background.setHeight(stageHeight);
 	            SelectionMode._background.setHeight(stageHeight);
@@ -55,17 +78,6 @@ var Resize = {
 	                  FamSpacing.init(20);
 	            }
 
-
-	            var defWidth = HaploWindow._top.rect.getWidth()
-	                         + HaploWindow._top.rect.getAbsolutePosition().x 
-	                         + 120; // 120 for CSS
-	            if (defWidth > newWidth){
-	            	newWidth = defWidth;
-	            }
-
-	            HaploWindow._background.setWidth(newWidth);
-	            SelectionMode._background.setWidth(newWidth);
-	            stage.setWidth(newWidth);
 	            
 	            haplo_layer.draw();
 	        }

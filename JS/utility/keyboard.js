@@ -21,12 +21,12 @@ var Keyboard = {
 
 
 	beginListen(){
-		console.log("KEYBOARD", Keyboard.__listening)
+//		console.log("KEYBOARD", Keyboard.__listening)
 
 		if (Keyboard.__listening === 0){
 			document.addEventListener("keydown", Keyboard.__processKeyDown, false);
 			document.addEventListener("keyup", Keyboard.__processKeyUp, false);
-			console.log("keyboard listening")
+			//console.log("keyboard listening")
 
 		}
 		Keyboard.__listening += 1;
@@ -41,17 +41,17 @@ var Keyboard = {
 			document.removeEventListener("keydown", Keyboard.__processKeyDown, false);
 			document.removeEventListener("keyup", Keyboard.__processKeyUp, false);
 
-			console.log("keyboard stopped")
+//			console.log("keyboard stopped")
 
 			Keyboard.__listening = 0;
 		}
-		console.log("KEYBOARD", Keyboard.__listening)
+//		console.log("KEYBOARD", Keyboard.__listening)
 	},
 
 	__processKeyDown(event){
 		Keyboard.__map[event.key] = true;
 
-		console.log(event.key);
+//		console.log(event.key);
 
 		if (event.key in Keyboard.dn_tasks){
 			Keyboard.dn_tasks[event.key]();

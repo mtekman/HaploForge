@@ -121,7 +121,7 @@ var HomologyPlot = {
 		marker_scale.add( marker_scale.plotline );
 		marker_scale.plotline.setZIndex(-99);
 
-		haplo_layer.draw();
+		HaploBlock.redrawHaplos();
 	},
 
 

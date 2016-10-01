@@ -250,13 +250,16 @@ var HaploWindow = {
 				});
 
 
-				scroll_area__.on('mouseup', function(){
-					HaploBlock.redrawHaplos(false); // starting=300
+				scroll_area__.on('mousedown', function(){
 
-					SliderHandler.updateInputsByIndex();					
-					SliderHandler.updateSlide();
-					
-					haplo_layer.draw();
+					function mouseUp(){
+						HaploBlock.redrawHaplos(false); // starting=300
+						SliderHandler.updateInputsByIndex();					
+						SliderHandler.updateSlide();
+						haplo_layer.draw();
+						document.removeEventListener("mouseup", mouseUp, false);
+					}
+					document.addEventListener("mouseup", mouseUp, false);
 				});
 
 				uniqueGraphOps.haplo_scroll = HaploWindow._bottom;
@@ -275,8 +278,6 @@ var HaploWindow = {
 				if (finishfunc!==0) {
 					finishfunc();
 				}
-
-				console.log("SHOWSLIDER");
 
 				MarkerSlider.makeVisible(true)
 				Resize.resizeCanvas();
