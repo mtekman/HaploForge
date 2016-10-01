@@ -124,7 +124,7 @@ var ToolButtons = {
 
 			ToolButtons.setTitle("Haplotypes");
 
-			ToolButtons.addToolsButton("Find Homology", HomologySelectionMode.init);
+			ToolButtons.addToolsButton("Compare Genotypes", HomologySelectionMode.init);
 			ToolButtons.addToolsButton("Marker Search", CSSMarkerRange.init);
 			ToolButtons.addToolsButton("Prev. Recomb.", HaploBlock.scrollToPrevRecomb);
 			ToolButtons.addToolsButton("Next. Recomb.", HaploBlock.scrollToNextRecomb);
@@ -135,7 +135,7 @@ var ToolButtons = {
 		setToHomologySelection: function(){
 			ToolButtons.modes.preamble();
 
-			ToolButtons.setTitle("Homology");
+			ToolButtons.setTitle("GT Compare");
 			ToolButtons.addToolsButton("Select All", SelectionAction.selectAll);
 			ToolButtons.addToolsButton("Select Affecteds", SelectionAction.selectAffecteds);
 			ToolButtons.addToolsButton("Submit", HomologySelectionMode.submit);
@@ -148,7 +148,7 @@ var ToolButtons = {
 		setToHomologyMode: function(){
 			ToolButtons.modes.preamble();
 
-			ToolButtons.setTitle("Homology");
+			ToolButtons.setTitle("GT Compare");
 			ToolButtons.addToolsButton("Marker Search", CSSMarkerRange.showIndexCSS);
 		}
 	}
