@@ -22,7 +22,7 @@ function testhomology(){
 	}, 1000);
 }
 
-testhomology();
+//testhomology();
 
 
 
