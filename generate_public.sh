@@ -35,7 +35,7 @@ for f in `grep -oP "(?<=(src=\"))[^\"]*" HTML/code_includes.html`; do
 done
 
 imbin="__assets/__obfuscate/to_image.py"
-$imbin $JS_file $outdir/logo.png
+#$imbin $JS_file $outdir/logo.png
 
 
 # Copy over essentials
@@ -52,3 +52,6 @@ cat tmp.txt\
  > $outdir/index.html
 
 rm tmp.txt 
+
+# Copy test assets
+cp -r __assets/resources/test/ $outdir/
