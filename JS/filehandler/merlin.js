@@ -12,41 +12,49 @@ class Merlin extends FileFormat {
 			inferGenders : true
 		}
 
-		super(haplo, null, null, null, mode_init);
+		var descent = {
+			id: "merlin_descent",
+			process: function(descent_text){
+				Merlin.populateDescent(descent_text);
+			}
+		}
+
+		super(haplo, null, null, descent, mode_init);
 	}
 
 
 	static populateFamilyAndHaploMap(text_unformatted){
 		var lines = text_unformatted.split('\n');
 
-		var tmp_fam = null,
-			tmp_perc_array = [], // horizontal percs
-			tmp_alleles_array = []; // vertical haplos [ [[],[]] , [[],[]] ]
+		var tmp = {
+			_fam : null,
+			_perc_array : [], // horizontal percs
+			_alleles_array : [] // vertical haplos [ [[],[]] , [[],[]] ]
+		}
 
 
-
-		function flushTmpData(){
+		function flushTmpData(tmp){
 			// Finish populating alleles and insert percs
-			if (tmp_perc_array.length > 0)
+			if (tmp._perc_array.length > 0)
 			{
-				if (tmp_perc_array.length !== tmp_alleles_array.length){
+				if (tmp._perc_array.length !== tmp._alleles_array.length){
 					console.log("Length mismatch");
 					throw new Error("");
 				}
 
 
-				for (var tpa=0; tpa < tmp_perc_array.length; tpa ++)
+				for (var tpa=0; tpa < tmp._perc_array.length; tpa ++)
 				{
-					var perc_alleles = tmp_alleles_array[tpa],
-						perc = tmp_perc_array[tpa];
+					var perc_alleles = tmp._alleles_array[tpa],
+						perc = tmp._perc_array[tpa];
 
 					perc.insertHaploData( perc_alleles[0] )
 					perc.insertHaploData( perc_alleles[1] )
-					familyMapOps.insertPerc(perc, tmp_fam);
+					familyMapOps.insertPerc(perc, tmp._fam);
 				}
 
-				tmp_perc_array = [];
-				tmp_alleles_array = [];
+				tmp._perc_array = [];
+				tmp._alleles_array = [];
 			}
 		}
 
@@ -60,15 +68,15 @@ class Merlin extends FileFormat {
 
 			if (line.startsWith("FAMILY")){
 
-				flushTmpData();
+				flushTmpData(tmp);
 
 				var fid = line.split(/\s+/)[1]
-				tmp_fam = fid;
+				tmp._fam = fid;
 				continue
 			}
 
 
-			if (tmp_perc_array.length === 0){
+			if (tmp._perc_array.length === 0){
 				// Hunt for names
 				if (line.indexOf('(')!==-1 && line.indexOf(')')!==-1)
 				{
@@ -94,8 +102,8 @@ class Merlin extends FileFormat {
 						// Gender's and Affecteds are unknown.
 						// Gender's can be inferred, but affectation needs a ped file
 						var newp = new Person(id, 0, 0, mother_id, father_id);
-						tmp_perc_array.push(newp);
-						tmp_alleles_array.push([ [],[] ])
+						tmp._perc_array.push(newp);
+						tmp._alleles_array.push([ [],[] ])
 					}
 				}
 				continue;
@@ -103,15 +111,15 @@ class Merlin extends FileFormat {
 
 			var trimmed = line.trim();
 			if (trimmed.length == 0){
-				flushTmpData();
+				flushTmpData(tmp);
 				continue;
 			}
 
 			//Allele lines
 			var multiple_alleles = trimmed.split(/\s{3,}/);
 
-			if (multiple_alleles.length  !== tmp_perc_array.length){
-				console.log(trimmed, multiple_alleles, tmp_perc_array)
+			if (multiple_alleles.length  !== tmp._perc_array.length){
+				console.log(trimmed, multiple_alleles, tmp._perc_array)
 				throw new Error("Num alleles and num percs do not align");
 			}
 
@@ -131,48 +139,11 @@ class Merlin extends FileFormat {
 						 //.replace("?","9")
 					));
 
-/*				for (var l=0; l < left_right.length; l++)
-				{
-					var allele = left_right[l];
-
-					if (allele.indexOf("A")!==-1){
-						left_right[l] = allele.replace("A","");;
-					}
-
-					else if (allele === "?"){
-						left_right[l] = "0";
-					}
-
-					left_right[l] = parseInt(left_right[l]);
-				}
-*/
-
-				tmp_alleles_array[a][0].push(left_right[0]);
-				tmp_alleles_array[a][1].push(left_right[1]);
+				tmp._alleles_array[a][0].push(left_right[0]);
+				tmp._alleles_array[a][1].push(left_right[1]);
 			}
 		}
-
-		flushTmpData();
-	//	debugger;
-
-		// DEBUGGING -- examine a small subset
-/*		familyMapOps.foreachperc(function(p,f,perc){
-			var haplos = perc.haplo_data;
-
-			var start=570, end=580;
-			console.log(start,end);
-
-			var hap1 = haplos[0].data_array,
-				hap2 = haplos[1].data_array;
-
-			var newhap1 = hap1.slice(start,end),
-				newhap2 = hap2.slice(start,end);
-
-			perc.haplo_data = [];
-
-			perc.insertHaploData(newhap1);
-			perc.insertHaploData(newhap2);
-		});*/
+		flushTmpData(tmp);
 	}
 
 

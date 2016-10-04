@@ -88,12 +88,6 @@ document.write('\
 \
             <!-- Merlin -->\
             <div id="box_merlin" class="upload_box border">\
-              <label for="merlin_ped">\
-                <input disabled type="file" id="merlin_ped" >pedin file\
-                <div class="tooltip_box" >?</div>\
-                <div class="tooltip_text" ><p>Pedigree file</p>Required file due to the way Merlin splits off pedigree data from haplotype output data.</div>\
-              </label>\
-              <br />\
               <label for="merlin_haplo">\
                 <input type="file" id="merlin_haplo">chr file\
                 <div class="tooltip_box" >?</div>\
@@ -101,7 +95,7 @@ document.write('\
               </label>\
               <br />\
               <label for="merlin_descent">\
-                <input disabled type="file" id="merlin_descent" >(optional) flow file\
+                <input type="file" id="merlin_descent" >(optional) flow file\
                 <div class="tooltip_box" >?</div>\
                 <div class="tooltip_text" ><p>Descent Graph file</p>Contains founder allele groups and descent vectors. Use this instead of HaploHTML5\'s own method for determining points of recombination.</div>\
               </label>\
@@ -112,6 +106,12 @@ document.write('\
                 <div class="tooltip_text" ><p>Map file</p>Provides marker identifiers and genetic distances.</div>\
               </label>\
               <br/>\
+              <label for="merlin_ped">\
+                <input disabled type="file" id="merlin_ped" >(optional) pedin file\
+                <div class="tooltip_box" >?</div>\
+                <div class="tooltip_text" ><p>Pedigree file</p>Required only if affectation is required as well as gender-specificity. Parentage is otherwise inferred from haplotype output data.</div>\
+              </label>\
+              <br />\
               <br/>\
               <input id="submit_merlin" type="button" value="Submit" />\
             </div>\

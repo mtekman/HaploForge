@@ -49,6 +49,7 @@ class FileFormat {
 				FileFormat.readFile(that.descentfile, descent.process);
 				usedescent = true;
 			}
+			// The descent graph for simwalk is within the haplo data
 			else if (haplo.useDescent !== undefined){
 				if (haplo.useDescent){
 					usedescent = true;					

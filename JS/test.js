@@ -26,7 +26,7 @@ function testhomology(){
 
 
 
-function descentTest(){
+function simwalkDescentTest(){
 
 	MainButtonActions.preamble();
 
@@ -45,8 +45,6 @@ function descentTest(){
 		}, 500);
 	}, 500);
 }
-
-descentTest();
 
 
 
