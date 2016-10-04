@@ -35,12 +35,13 @@ function descentTest(){
 
 		setTimeout(function()
 		{
+			var usedesc = true;
 			var haplo_text  = localStorage.getItem("TEST");
-			Simwalk.populateFamHaploAndDesc(haplo_text, true);
+			Simwalk.populateFamHaploAndDesc(haplo_text, usedesc);
 
-			FileFormat.enumerateMarkers();
+//			FileFormat.enumerateMarkers();
 			HaploPedProps.init();
-			FileFormat.__endFuncs();
+			FileFormat.__endFuncs(usedesc);
 		}, 500);
 	}, 500);
 }

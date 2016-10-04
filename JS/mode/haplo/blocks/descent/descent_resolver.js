@@ -41,7 +41,6 @@ var DescentResolver = {
 				f1_ht = f1_gts[index],		f2_ht = f2_gts[index];
 
 
-
 			if (f1_ht === 0) f1_col.color_group = [FounderColor.zero_color_grp];
 			if (f2_ht === 0) f2_col.color_group = [FounderColor.zero_color_grp];
 			if (m1_ht === 0) m1_col.color_group = [FounderColor.zero_color_grp];

@@ -104,13 +104,11 @@ class FileFormat {
 		
 		graphInitPos(nodeSize + 10, grid_rezY);
 
-
-		if (usedescent !== null){
-			console.log("Resolve Method: "+usedescent?"Descent Graph":"A* Search");
-			AssignHGroups.init(usedescent);
-		}
-		else {
+		if (usedescent === null){
 			console.log("Resolve Method: Load From Storage");
+		} else {
+			console.log("Resolve Method: "+(usedescent?"Descent Graph":"A* Search"));
+			AssignHGroups.init(usedescent);
 		}
 
 		MarkerData.padMarkerMap();
