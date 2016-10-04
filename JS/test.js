@@ -26,6 +26,26 @@ function testhomology(){
 
 
 
+function descentTest(){
+
+	MainButtonActions.preamble();
+
+	setTimeout(function(){
+		MainPageHandler.haplomodeload();
+
+		setTimeout(function()
+		{
+			var haplo_text  = localStorage.getItem("TEST");
+			Simwalk.populateFamHaploAndDesc(haplo_text, true);
+
+			FileFormat.enumerateMarkers();
+			HaploPedProps.init();
+			FileFormat.__endFuncs();
+		}, 500);
+	}, 500);
+}
+
+descentTest();
 
 
 

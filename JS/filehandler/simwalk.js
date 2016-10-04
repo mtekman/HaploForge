@@ -4,16 +4,16 @@ class Simwalk extends FileFormat {
 
 	constructor(mode_init = null)
 	{
-		var ignore_descent = document.getElementById('sw_infer_box').checked;
+		var use_descent = document.getElementById('sw_infer_box').checked;
 
-		console.log("IGNORE DESCENT", ignore_descent)
+		console.log("use descent", use_descent)
 
 		var haplo = {
 			id: "sw_haplo",
 			process: function(haplo_text){
-				Simwalk.populateFamilyAndHaploMap(haplo_text, !ignore_descent);
+				Simwalk.populateFamHaploAndDesc(haplo_text, use_descent);
 			},
-			useDescent : !ignore_descent,
+			useDescent : use_descent,
 			hasMarkerNames : true
 		}
 
@@ -37,7 +37,7 @@ class Simwalk extends FileFormat {
 	}
 
 
-	static populateFamilyAndHaploMap(text_unformatted, use_descent = false){
+	static populateFamHaploAndDesc(text_unformatted, use_descent = false){
 
 		var lines = text_unformatted.split('\n');
 
@@ -78,30 +78,33 @@ class Simwalk extends FileFormat {
 
 		//Ped Name
 		var dashedlines_found = false,
-			tmp_fam = null,
-			tmp_perc = null,
-			tmp_allpat = [],  // alleles
-			tmp_allmat = [],
-			tmp_decpat = [], // descent
-			tmp_decmat = [];
+			tmp = {
+				_fam : null,
+				_perc : null,
+				_allpat : [],  // alleles
+				_allmat : [],
+				_decpat : [], // descent
+				_decmat : []
+			};
 
 
-		function insertDat(){
-			if (tmp_allpat.length > 0){
+		function insertDat(tmp){
+			if (tmp._allpat.length > 0){
 				// console.log("appending haplo data to", tmp_perc.id)
-				tmp_perc.insertHaploData(tmp_allpat);
-				tmp_perc.insertHaploData(tmp_allmat);
+				tmp._perc.insertHaploData(tmp._allpat);
+				tmp._perc.insertHaploData(tmp._allmat);
 
 				if (use_descent){
-					tmp_perc.insertDescentData(tmp_decpat); // paternal first
-					tmp_perc.insertDescentData(tmp_decmat); // maternal second
+//					console.log("use_descent", tmp_decpat, tmp_decmat);
+					tmp._perc.insertDescentData(tmp._decpat); // paternal first
+					tmp._perc.insertDescentData(tmp._decmat); // maternal second
 				}
 
-				tmp_perc = null;
-				tmp_allmat = [];
-				tmp_allpat = [];
-				tmp_decpat = [];
-				tmp_decmat = [];
+				tmp._perc = null;
+				tmp._allmat = [];
+				tmp._allpat = [];
+				tmp._decpat = [];
+				tmp._decmat = [];
 			}
 		}
 
@@ -112,8 +115,8 @@ class Simwalk extends FileFormat {
 			if (line.startsWith("________")){
 
 				// Flush data from last perc if new fam found
-				if (tmp_perc !== null){
-					insertDat();
+				if (tmp._perc !== null){
+					insertDat( tmp );
 				}
 
 				dashedlines_found = true;
@@ -123,7 +126,7 @@ class Simwalk extends FileFormat {
 			if (dashedlines_found && !line.startsWith(" "))
 			{
 				var fam = line.split("(")[0].trim();
-				tmp_fam = fam;
+				tmp._fam = fam;
 				dashedlines_found = false;
 				// console.log("identified fam", tmp_fam, line)
 				continue
@@ -134,9 +137,9 @@ class Simwalk extends FileFormat {
 			// console.log(tokens.length, tokens)
 
 			// Person Data
-			if (tmp_fam !== null && tokens.length===5){
+			if (tmp._fam !== null && tokens.length===5){
 
-				insertDat();
+				insertDat(tmp);
 
 				var id = parseInt(tokens[0]),
 					father_id = parseInt(tokens[1]),
@@ -147,30 +150,25 @@ class Simwalk extends FileFormat {
 				var perc = new Person(id, gender, affected, mother_id, father_id);
 				// console.log("found new perc", perc)
 
-				familyMapOps.insertPerc(perc, tmp_fam);				
-				tmp_perc = familyMapOps.getPerc(perc.id, tmp_fam);
+				familyMapOps.insertPerc(perc, tmp._fam);
+				tmp._perc = familyMapOps.getPerc(perc.id, tmp._fam);
 
-				continue
+				//continue
 			}
 
 			//Allele Data
-			if (tmp_fam !== null && tmp_perc !== null && tokens.length === 6){
+			if (tmp._fam !== null && tmp._perc !== null && tokens.length === 6){
 				tokens = tokens.map(x=> parseInt(x));
 
-				tmp_allpat.push( tokens[0] );
-				tmp_allmat.push( tokens[1] );
+				tmp._allpat.push( tokens[0] );
+				tmp._allmat.push( tokens[1] );
 
 				if (use_descent){
-					tmp_decpat.push( tokens[2] );
-					tmp_decmat.push( tokens[3] );
+					tmp._decpat.push( tokens[2] );
+					tmp._decmat.push( tokens[3] );
 				}
 			}
 		}
-	}
-
-
-	static processDescentGraph(text_unformatted){
-
 	}
 
 

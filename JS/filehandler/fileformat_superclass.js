@@ -1,4 +1,8 @@
 
+function debugSaveHaplo(){
+	localStorage.setItem("TEST", MainButtonActions._temphaploload);
+}
+
 class FileFormat {
 
 	constructor(haplo,

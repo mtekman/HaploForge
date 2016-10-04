@@ -113,8 +113,9 @@ var AssignHGroups = {
 				}
 
 				// Leave for GC
-				delete both_alleles[a].pter_array;
-				delete both_alleles[a].descent;
+				console.log("GC disabled")
+				//delete both_alleles[a].pter_array;
+				//delete both_alleles[a].descent;
 			}
 		}, fam);
 	}
