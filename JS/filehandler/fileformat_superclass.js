@@ -20,11 +20,11 @@ class FileFormat {
 		if (haplo === null){
 			throw new Error("No haplo file given")
 		}
+
 		FileFormat.__begFuncs();
 
-		var that = this;
-
-		var usedescent = false;
+		var that = this,
+			useresolver = AssignHGroups.resolvers.ASTAR;
 
 		FileFormat.readFile(this.haplofile, function(haplo_text){
 
@@ -43,20 +43,6 @@ class FileFormat {
 				// Enumerate map based on number of locus
 				FileFormat.enumerateMarkers();
 			}
-
-			// Descent graph 
-			if (that.descentfile !== 0){
-				FileFormat.readFile(that.descentfile, descent.process);
-				usedescent = true;
-			}
-			// The descent graph for simwalk is within the haplo data
-			else if (haplo.useDescent !== undefined){
-				if (haplo.useDescent){
-					usedescent = true;					
-				}
-			}
-
-
 
 			// Map depends on pedigree data
 			if (that.mapfile !== 0){
@@ -77,8 +63,21 @@ class FileFormat {
 				});
 			}
 
+
+			// Descent graph 
+			if (that.descentfile !== 0){
+				FileFormat.readFile(that.descentfile, descent.process);
+				useresolver = descent.resolver_mode;
+			}
+			// The descent graph for simwalk is within the haplo data
+			else if (haplo.useDescent !== undefined){
+				if (haplo.useDescent){
+					useresolver = haplo.resolver_mode;
+				}
+			}
+
 			// No descent file performs Hgroup assignment
-			FileFormat.__endFuncs(usedescent);
+			FileFormat.__endFuncs(useresolver);
 		});
 	}
 
@@ -99,21 +98,19 @@ class FileFormat {
 		MainPageHandler.haplomodeload();
 	}
 
-	// If usedescent === null, we ignore assignHGroups
+	// If useresolver === null, we ignore assignHGroups
 	//   altogether (useful when loading a prior analysis)
-	static __endFuncs(usedescent = false){
+	static __endFuncs(descentmode = 0){
 		
 		graphInitPos(nodeSize + 10, grid_rezY);
 
-		if (usedescent === null){
-			console.log("Resolve Method: Load From Storage");
+		if (descentmode === null){
+			console.log("Resolve: Load From Storage");
 		} else {
-			console.log("Resolve Method: "+(usedescent?"Descent Graph":"A* Search"));
-			AssignHGroups.init(usedescent);
+			AssignHGroups.init(descentmode);
 		}
 
 		MarkerData.padMarkerMap();
-//		populateIndexDataList();
 	}
 
 
