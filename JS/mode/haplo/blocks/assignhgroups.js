@@ -2,15 +2,24 @@
 
 var AssignHGroups = {
 
+	resolvers : {
+		ASTAR : 0,    // default
+		DESCENT : 1,  // Simwalk  (1 2 1 2 1 2)
+		FLOW : 2 	  // Merlin   (A B C D E F)
+	},
+
 	// First pass -- assign groups
-	init: function(use_descent_graph = false)
-	{	
+	init: function(resolver_method = 0)
+	{
+
+		var resolveBlocks = AssignHGroups.__setResolverMethod(resolver_method);
+
 		GlobalLevelGrid.foreachfam(function(grid, fam){
 			// First generation must be founders
 			var founder_gen = grid[0];
 
 			for (var p = 0; p < founder_gen.length; p++){
-				AssignHGroups.initFounderAlleles( fam, founder_gen[p] )
+				AssignHGroups.initFounderAlleles( fam, founder_gen[p]);
 			}
 
 			for (var g = 1; g < grid.length; g++){
@@ -31,34 +40,52 @@ var AssignHGroups = {
 					var moth = familyMapOps.getPerc(moth_id, fam),
 						fath = familyMapOps.getPerc(fath_id, fam);
 
-
-					AssignHGroups.resolveBlocks(pers, moth, fath, fam, use_descent_graph)
+					resolveBlocks(pers, moth, fath, fam);
 				}
 			}
 			AssignHGroups.pointerCleanup(fam);
 		});
+
+		// Flow determines founder allele groups directly
+		if (resolver_method === AssignHGroups.resolvers.FLOW)
+		{
+			FlowResolver.initFounderAlleles();
+		}
+
 		FounderColor.makeUniqueColors();
 	},
 
+	__setResolverMethod: function(resolver){
 
+		var resolverMethod = null;
 
-	resolveBlocks: function(child, mother, father, fam, 
-											use_descent) {
-		
-		if (use_descent){
-			DescentResolver.child2parent_link(child, mother, father, fam);
+		switch(resolver){
+			case AssignHGroups.resolvers.ASTAR:
+				console.log("Resolve: ASTAR");
+				resolverMethod = AstarHandler.child2parent_link;
+				break;
+
+			case AssignHGroups.resolvers.DESCENT:
+				console.log("Resolve: DESCENT");
+				resolverMethod = DescentResolver.child2parent_link;
+				break;
+
+			case AssignHGroups.resolvers.FLOW:
+				console.log("Resolve: FLOW");
+				resolverMethod = FlowResolver.child2parent_link;
+				break;
+
+			default:
+				throw new Error("Invalid resolver mode :" + resolver);
 		}
-		else {
-			// A* method
-			AstarHandler.child2parent_link(child, mother, father, fam);
-		}
+		return resolverMethod;
 	},
 
 
-
-
+	// Only used by Astar and Descent resolvers
 	initFounderAlleles: function(fid,id)
 	{
+
 		var perc_hdata = familyMapOps.getPerc(id,fid).haplo_data;
 
 		for (var a = 0; a < perc_hdata.length; a++) 	// current allele
@@ -113,9 +140,9 @@ var AssignHGroups = {
 				}
 
 				// Leave for GC
-				console.log("GC disabled")
-				//delete both_alleles[a].pter_array;
-				//delete both_alleles[a].descent;
+				delete both_alleles[a].pter_array;
+				delete both_alleles[a].descent;
+				delete both_alleles[a].flow
 			}
 		}, fam);
 	}
