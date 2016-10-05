@@ -1,4 +1,7 @@
 
+var debugMerlin = {};
+
+
 class Merlin extends FileFormat {
 
 	constructor(mode_init = null)
@@ -6,6 +9,7 @@ class Merlin extends FileFormat {
 		var haplo = {
 			id: "merlin_haplo",
 			process: function(haplo_text){
+				debugMerlin.haplo = haplo_text;
 				Merlin.populateFamilyAndHaploMap(haplo_text);
 			},
 			hasMarkerNames : false,
@@ -15,15 +19,22 @@ class Merlin extends FileFormat {
 		var descent = {
 			id: "merlin_descent",
 			process: function(descent_text){
-				Merlin.populateDescent(descent_text);
-			}
+				debugMerlin.descent = descent_text;
+				Merlin.populateFlow(descent_text);
+			},
+			resolver_mode: AssignHGroups.resolvers.FLOW
 		}
 
 		super(haplo, null, null, descent, mode_init);
 	}
 
+	static populateFlow(text_unformatted){
+		Merlin.populateFamilyAndHaploMap(text_unformatted, true);
+	}
 
-	static populateFamilyAndHaploMap(text_unformatted){
+
+	static populateFamilyAndHaploMap(text_unformatted, flow = false){
+
 		var lines = text_unformatted.split('\n');
 
 		var tmp = {
@@ -31,6 +42,7 @@ class Merlin extends FileFormat {
 			_perc_array : [], // horizontal percs
 			_alleles_array : [] // vertical haplos [ [[],[]] , [[],[]] ]
 		}
+
 
 
 		function flushTmpData(tmp){
@@ -48,9 +60,17 @@ class Merlin extends FileFormat {
 					var perc_alleles = tmp._alleles_array[tpa],
 						perc = tmp._perc_array[tpa];
 
-					perc.insertHaploData( perc_alleles[0] )
-					perc.insertHaploData( perc_alleles[1] )
-					familyMapOps.insertPerc(perc, tmp._fam);
+
+					if (flow){ // flow relies on prior perc existence
+						var perc = familyMapOps.getPerc(perc.id, tmp._fam)
+						perc.haplo_data[0].addFlow( perc_alleles[0] );
+						perc.haplo_data[1].addFlow( perc_alleles[1] );
+					}
+					else {
+						perc.insertHaploData( perc_alleles[0] )
+						perc.insertHaploData( perc_alleles[1] )
+						familyMapOps.insertPerc(perc, tmp._fam);
+					}
 				}
 
 				tmp._perc_array = [];
@@ -125,19 +145,36 @@ class Merlin extends FileFormat {
 
 			for (var a=0; a < multiple_alleles.length; a++)
 			{
-				var alleles = multiple_alleles[a];
+				var alleles = multiple_alleles[a],
+					left_right = null;
 
-				// We ignore all types of phasing and for 
-				// ambiguously marker alleles "A", we pick the
-				// first (this holds consistent for inherited).
-				
-				//var left_right = alleles.split(/\s[+:|\\/]\s/)
-				var left_right = alleles.split(/\s[^\d]\s/)
-					.map(x=> Number(
-						x.split(",")[0]
-						 .replace("A","")
-						 //.replace("?","9")
-					));
+				if (!flow){
+					// We ignore all types of phasing and for 
+					// ambiguously marker alleles "A", we pick the
+					// first (this holds consistent for inherited).
+					//var left_right = alleles.split(/\s[+:|\\/]\s/)
+
+					left_right = alleles.split(/\s[^\d]\s/)
+						.map(x=> Number(
+							x.split(",")[0]
+							 .replace("A","")
+							 //.replace("?","9")
+						));
+				}
+				else {
+					left_right = alleles.split(/\s[^\d]\s/);
+
+					for (var v = 0; v < left_right.length; v++)
+					{
+						// 'A' 'B' 'C' alone are unique only to family, so we add family magic
+						var alpha = left_right[v].trim() + '--' + tmp._fam;
+
+						if (FlowResolver.unique_haplos.indexOf(alpha) === -1){
+							FlowResolver.unique_haplos.push(alpha);
+						}
+						left_right[v] = FlowResolver.unique_haplos.indexOf(alpha);
+					}
+				}
 
 				tmp._alleles_array[a][0].push(left_right[0]);
 				tmp._alleles_array[a][1].push(left_right[1]);
