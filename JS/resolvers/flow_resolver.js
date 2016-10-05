@@ -9,6 +9,8 @@ var FlowResolver = {
 
 	child2parent_link: function(child, mother, father, fam){
 		
+		console.log(child, mother, father)
+
 		var chil_allele1 = child.haplo_data[0],
 			moth_allele1 = mother.haplo_data[0],
 			fath_allele1 = father.haplo_data[0];

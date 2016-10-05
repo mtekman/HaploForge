@@ -26,67 +26,72 @@ class FileFormat {
 		var that = this,
 			useresolver = AssignHGroups.resolvers.ASTAR;
 
+			// I NEED TO CHAIN THESE TOGETHER SOMEHOW
+
+		// Read pedfile first if given
+		if (that.pedfile !== 0){
+			FileFormat.readFile(that.pedfile, ped.process);
+		}
+
+
 		FileFormat.readFile(this.haplofile, function(haplo_text){
-
 			MainButtonActions._temphaploload = haplo_text; // for debugging
-
-			// Read pedfile first if given
-			if (that.pedfile !== 0){
-				FileFormat.readFile(that.pedfile, ped.process);
-			}
-
 			haplo.process(haplo_text);
-
-			// Sometimes the haplo file has RS data and this
-			// step is not neccesary.
-			if (!haplo.hasMarkerNames){
-				// Enumerate map based on number of locus
-				FileFormat.enumerateMarkers();
-			}
-
-			// Map depends on pedigree data
-			if (that.mapfile !== 0){
-				FileFormat.readFile(that.mapfile, map.process);
-			}
-
-
-
-			//Callback
-			if (afterCallback !== null){
-				afterCallback();
-			} else {
-				// Assume Haplo mode is final callback
-				HaploPedProps.init(function(){
-					if (haplo.inferGenders){
-						familyMapOps.inferGenders();
-					}
-				});
-			}
-
-
-			// Descent graph 
-			if (that.descentfile !== 0){
-				FileFormat.readFile(that.descentfile, descent.process);
-				useresolver = descent.resolver_mode;
-			}
-			// The descent graph for simwalk is within the haplo data
-			else if (haplo.useDescent !== undefined){
-				if (haplo.useDescent){
-					useresolver = haplo.resolver_mode;
-				}
-			}
-
-			// No descent file performs Hgroup assignment
-			FileFormat.__endFuncs(useresolver);
 		});
+
+		// Descent graph 
+		if (that.descentfile !== 0){
+			useresolver = descent.resolver_mode;			
+			FileFormat.readFile(that.descentfile, descent.process);
+		}
+		// The descent graph for simwalk is within the haplo data
+		else if (haplo.useDescent !== undefined){
+			if (haplo.useDescent){
+				useresolver = haplo.resolver_mode;
+			}
+		}
+
+
+		// Sometimes the haplo file has RS data and this
+		// step is not neccesary.
+		if (!haplo.hasMarkerNames){
+			// Enumerate map based on number of locus
+			FileFormat.enumerateMarkers();
+		}
+
+		// Map depends on pedigree data
+		if (that.mapfile !== 0){
+			FileFormat.readFile(that.mapfile, map.process);
+		}
+
+		//Callback
+		if (afterCallback !== null){
+			afterCallback();
+		} else {
+			// Assume Haplo mode is final callback
+			HaploPedProps.init(function(){
+				if (haplo.inferGenders){
+					familyMapOps.inferGenders();
+				}
+			});
+		}
+
+		// No descent file performs Hgroup assignment
+		FileFormat.__endFuncs(useresolver);
 	}
 
 
-	static readFile(file, callback){
+	static readFile(file, callback, finishfunc = 0){
 	    var fr = new FileReader();
 
 	    fr.onloadend = function(e){
 	    	callback(e.target.result);
+
+	    	//For sequential ops
+	    	if (finishfunc !==0){
+	    		finishfunc();
+	    	}
+
 	    };
 
 	    fr.readAsText(file);

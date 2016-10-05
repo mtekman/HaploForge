@@ -225,7 +225,7 @@ var familyMapOps = {
 		familyMapOps.foreachperc(function(pid,fid,perc){
 
 			if (perc.gender === PED.UNKNOWN){
-				console.log("unknown", perc.id, perc.children);
+				//console.log("unknown", perc.id, perc.children);
 
 				if (perc.children.length > 0){
 					var firstChild = perc.children[0];
@@ -233,7 +233,7 @@ var familyMapOps = {
 					var mother_id = firstChild.mother.id,
 						father_id = firstChild.father.id;
 
-					console.log("unknown has kids", perc.id, mother_id, father_id);
+					//console.log("unknown has kids", perc.id, mother_id, father_id);
 
 					if (mother_id === perc.id){
 						perc.gender = PED.FEMALE;

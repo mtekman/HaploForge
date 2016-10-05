@@ -62,9 +62,9 @@ class Merlin extends FileFormat {
 
 
 					if (flow){ // flow relies on prior perc existence
-						var perc = familyMapOps.getPerc(perc.id, tmp._fam)
-						perc.haplo_data[0].addFlow( perc_alleles[0] );
-						perc.haplo_data[1].addFlow( perc_alleles[1] );
+						var perc = familyMapOps.getPerc(perc.id, tmp._fam);
+						perc.insertFlowData( perc_alleles[0] );
+						perc.insertFlowData( perc_alleles[1] );
 					}
 					else {
 						perc.insertHaploData( perc_alleles[0] )

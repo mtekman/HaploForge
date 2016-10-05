@@ -34,6 +34,20 @@ class Person {
 		throw new Error(this.id+" already has populated Alleles");
 	}
 
+	insertFlowData(normal_array){
+
+		if (this.haplo_data[0].flow === null){
+			this.haplo_data[0].addFlow(normal_array) // paternal
+			return 0;
+		}
+
+		if (this.haplo_data[1].flow === null){
+			this.haplo_data[1].addFlow(normal_array); //maternal
+			return 0;
+		}
+		throw new Error(this.id+" already has populated Alleles");
+	}
+
 
 	setHaplogroupArray(normal_array){
 		if (this.haplo_data[0].haplogroup_array === null){
