@@ -14,8 +14,13 @@ class Allele {
 		this.unique_groups = [];
 		// ^ Empty until pter_array is completely unambiguous, where pter_array is then deleted (dereferenced, left for GC)
 
-		// Descent graph -- unused unless specified
-		this.descent = null;
+		// UNUSED UNLESS SPECIFIED
+		this.descent = null;    // Descent data [1 2 1 2 1 1 1]
+		this.flow = null        // Flow data    [A A A A B B G]
+	}
+
+	addFlow(data){
+		this.flow = new Int8Array(data);
 	}
 
 	addDescent(data){
