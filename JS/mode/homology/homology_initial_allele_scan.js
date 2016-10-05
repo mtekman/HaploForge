@@ -1,7 +1,7 @@
 
 /* Needs to be rerun for each selection */
 
-function scan_alleles_for_homology( ids_to_scan ){
+function scan_alleles_for_homology( ids_to_scan, same_family_hblock = true ){
 
 	var alleles = [];
 
@@ -13,7 +13,7 @@ function scan_alleles_for_homology( ids_to_scan ){
 			fid = fid_id[0], 
 			id = fid_id[1];
 
-		var perc_affected = (familyMapOps.getPerc(id,fid).affected == PED.AFFECTED),
+		var perc_affected = (familyMapOps.getPerc(id,fid).affected === PED.AFFECTED),
 			perc_haplo_data = familyMapOps.getPerc(id,fid).haplo_data;
 
 		var data_only = [
@@ -21,8 +21,13 @@ function scan_alleles_for_homology( ids_to_scan ){
 			perc_haplo_data[1].data_array
 		];
 
+		var group_only = [
+			perc_haplo_data[0].haplogroup_array,
+			perc_haplo_data[1].haplogroup_array
+		];
 
-		alleles.push( {data:data_only, aff:perc_affected} );
+
+		alleles.push( {data:data_only, aff:perc_affected, fam:fid, colors:group_only} );
 	}
 
 	// Begin processing
@@ -53,6 +58,13 @@ function scan_alleles_for_homology( ids_to_scan ){
 			// Fuckit just assume two alleles per patient
 			var ht1 = alleles[afs].data[0][m],
 				ht2 = alleles[afs].data[1][m];
+
+			// If we're comparing haploblocks too, then hts become unique strings.
+			if (same_family_hblock){
+				ht1 = ht1 + "-" + alleles[afs].fam + "-" + alleles[afs].colors[0][m];
+				ht2 = ht2 + "-" + alleles[afs].fam + "-" + alleles[afs].colors[1][m];
+			}
+
 
 			var perc_is_hom_at_marker = (ht1 === ht2);
 
