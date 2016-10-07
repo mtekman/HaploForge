@@ -14,7 +14,7 @@ class Simwalk extends FileFormat {
 				Simwalk.populateFamHaploAndDesc(haplo_text, use_descent);
 			},
 			useDescent : use_descent,
-			resolver_method: AssignHGroups.resolvers.DESCENT, //only used if use_descent true
+			resolver_mode: AssignHGroups.resolvers.DESCENT, //only used if use_descent true
 			hasMarkerNames : true
 		}
 
