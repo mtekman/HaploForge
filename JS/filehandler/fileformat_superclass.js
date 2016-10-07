@@ -5,6 +5,24 @@ function debugSaveHaplo(){
 
 class FileFormat {
 
+    addReadJob(job) {
+	    console.log("Queuing:", job.file.name);
+
+    	if (this.firstjob === undefined) {
+      		this.firstjob = function(){};
+    	}
+	    // Store previous job 
+    	var lastjob = this.firstjob;
+
+    	// Create new job that passes the previous job
+    	// as a readbeforefunc argument to new job.
+    	this.firstjob = function(finish) {
+      		lastjob();
+      		FileFormat.readFile(job.file, job.task, finish);
+    	}
+  	}
+
+
 	constructor(haplo,
 		map = null ,
 		ped = null ,
@@ -29,20 +47,29 @@ class FileFormat {
 			// I NEED TO CHAIN THESE TOGETHER SOMEHOW
 
 		// Read pedfile first if given
-		if (that.pedfile !== 0){
-			FileFormat.readFile(that.pedfile, ped.process);
+		if (this.pedfile !== 0){
+			this.addReadJob({file:this.pedfile, task:ped.process});
 		}
 
 
-		FileFormat.readFile(this.haplofile, function(haplo_text){
-			MainButtonActions._temphaploload = haplo_text; // for debugging
-			haplo.process(haplo_text);
+		this.addReadJob({
+			file: this.haplofile,
+			task: function(haplo_text){
+				MainButtonActions._temphaploload = haplo_text; // for debugging
+				haplo.process(haplo_text);
+
+				// Sometimes the haplo file has RS data and this step is not neccesary.
+				if (!haplo.hasMarkerNames){
+					// Enumerate map based on number of locus
+					FileFormat.enumerateMarkers();
+				}
+			}
 		});
 
 		// Descent graph 
-		if (that.descentfile !== 0){
-			useresolver = descent.resolver_mode;			
-			FileFormat.readFile(that.descentfile, descent.process);
+		if (this.descentfile !== 0){
+			useresolver = descent.resolver_mode;
+			this.addReadJob({file:this.descentfile, task: descent.process});
 		}
 		// The descent graph for simwalk is within the haplo data
 		else if (haplo.useDescent !== undefined){
@@ -51,33 +78,33 @@ class FileFormat {
 			}
 		}
 
-
-		// Sometimes the haplo file has RS data and this
-		// step is not neccesary.
-		if (!haplo.hasMarkerNames){
-			// Enumerate map based on number of locus
-			FileFormat.enumerateMarkers();
-		}
-
 		// Map depends on pedigree data
-		if (that.mapfile !== 0){
-			FileFormat.readFile(that.mapfile, map.process);
+		if (this.mapfile !== 0){
+			this.addReadJob({file:that.mapfile, task:map.process});
 		}
 
-		//Callback
-		if (afterCallback !== null){
-			afterCallback();
-		} else {
-			// Assume Haplo mode is final callback
-			HaploPedProps.init(function(){
-				if (haplo.inferGenders){
-					familyMapOps.inferGenders();
-				}
-			});
-		}
+		// Process all jobs
+		this.firstjob(
 
-		// No descent file performs Hgroup assignment
-		FileFormat.__endFuncs(useresolver);
+			// Add a final finishing function after all the files are processed
+			function finalFinishFunc(){
+
+			//Callback
+			if (afterCallback !== null){
+				afterCallback();
+			} else {
+				// Assume Haplo mode is final callback
+				HaploPedProps.init(function(){
+					if (haplo.inferGenders){
+						familyMapOps.inferGenders();
+					}
+				});
+			}
+
+			// No descent file performs Hgroup assignment
+			FileFormat.__endFuncs(useresolver);
+		});
+
 	}
 
 
@@ -87,13 +114,8 @@ class FileFormat {
 	    fr.onloadend = function(e){
 	    	callback(e.target.result);
 
-	    	//For sequential ops
-	    	if (finishfunc !==0){
-	    		finishfunc();
-	    	}
-
-	    };
-
+	    	if (finishfunc !== 0){ finishfunc();}
+    	};
 	    fr.readAsText(file);
 	}
 

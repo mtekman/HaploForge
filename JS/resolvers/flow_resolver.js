@@ -9,7 +9,7 @@ var FlowResolver = {
 
 	child2parent_link: function(child, mother, father, fam){
 		
-		console.log(child, mother, father)
+//		console.log(child, mother, father)
 
 		var chil_allele1 = child.haplo_data[0],
 			moth_allele1 = mother.haplo_data[0],
@@ -35,7 +35,7 @@ var FlowResolver = {
 			moth_allele2.pter_array[i].color_group = [moth_allele2.flow[i]];
 			fath_allele2.pter_array[i].color_group = [fath_allele2.flow[i]];
 
-			console.log(i, fam, child.id, mother.id, father.id)
+			//console.log(i, fam, child.id, mother.id, father.id)
 
 		}
 
