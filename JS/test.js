@@ -2,6 +2,41 @@
 
 var Test = {
 
+	Allegro : {
+		saveChrAndFlow(){
+			localStorage.setItem("ALLFLOW", debugAllegro.descent);
+			localStorage.setItem("ALLCHR", debugAllegro.haplo);
+		},
+
+		run(){
+			MainButtonActions.preamble();
+
+			setTimeout(function(){
+				MainPageHandler.haplomodeload();
+
+				setTimeout(function(){
+					userOpts.fancyGraphics = false;
+
+					var haplo_text = localStorage.getItem("ALLCHR");
+					var found_text = localStorage.getItem("ALLFLOW");
+
+					Allegro.__populateFamilyAndHaploMap(haplo_text);
+					Allegro.__populateFlow(found_text);
+
+					HaploPedProps.init();
+					FileFormat.__endFuncs( AssignHGroups.resolvers.FLOW );
+
+		/*			setTimeout(function(){
+						SelectionMode.init();
+						SelectionAction.selectAffecteds();
+						HaploWindow.init();
+					},500)*/
+				}, 500);
+			}, 500);
+		}
+	},
+
+
 	Merlin : {
 		saveChrAndFlow(){
 			localStorage.setItem("MERLINFLOW", debugMerlin.descent);
