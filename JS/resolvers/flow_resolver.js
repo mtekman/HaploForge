@@ -3,6 +3,21 @@ var FlowResolver = {
 
 	unique_haplos : [], // accessed by Merlin
 
+
+	// 'A' 'B' 'C' alone are unique only to family, so we add family magic
+	convertGroupsToFamilySpecific(data, fam){
+		for (var v = 0; v < data.length; v++)
+		{
+			var alpha = data[v] + '--' + fam;
+
+			if (FlowResolver.unique_haplos.indexOf(alpha) === -1){
+				FlowResolver.unique_haplos.push(alpha);
+			}
+			data[v] = FlowResolver.unique_haplos.indexOf(alpha);
+		}
+	},
+	
+
 	initFounderAlleles : function(){
 		FounderColor.hgroup = FlowResolver.unique_haplos;
 	},
