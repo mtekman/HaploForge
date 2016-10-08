@@ -163,17 +163,7 @@ class Merlin extends FileFormat {
 				}
 				else {
 					left_right = alleles.split(/\s[^\d]\s/);
-
-					for (var v = 0; v < left_right.length; v++)
-					{
-						// 'A' 'B' 'C' alone are unique only to family, so we add family magic
-						var alpha = left_right[v].trim() + '--' + tmp._fam;
-
-						if (FlowResolver.unique_haplos.indexOf(alpha) === -1){
-							FlowResolver.unique_haplos.push(alpha);
-						}
-						left_right[v] = FlowResolver.unique_haplos.indexOf(alpha);
-					}
+					FlowResolver.convertGroupsToFamilySpecific(left_right, tmp._fam);
 				}
 
 				tmp._alleles_array[a][0].push(left_right[0]);

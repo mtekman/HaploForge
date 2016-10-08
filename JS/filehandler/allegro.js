@@ -1,4 +1,5 @@
 
+debugAllegro = {}
 
 class Allegro extends FileFormat {
 	
@@ -7,6 +8,7 @@ class Allegro extends FileFormat {
 		var haplo = {
 			id: "allegro_haplo",
 			process: function(haplo_text){
+				debugAllegro.haplo = haplo_text;
 				Allegro.__populateFamilyAndHaploMap(haplo_text);			
 			},
 			hasMarkerNames : true
@@ -22,17 +24,23 @@ class Allegro extends FileFormat {
 		var descent = {
 			id: "allegro_descent",
 			process: function(descent_text){
-				Allegro.__populateDescentVectors(descent_text);
-			}
+				debugAllegro.descent = descent_text;
+				Allegro.__populateFlow(descent_text);
+			},
+			resolver_mode: AssignHGroups.resolvers.FLOW
 		}
-
 		super(haplo, map, null, descent, mode_init);
-
 	}
 
 
-	static __populateFamilyAndHaploMap(text_unformatted){
-		
+	static __populateFlow(text_unformatted){
+		Allegro.__populateFamilyAndHaploMap(text_unformatted, true);
+	}
+
+	static __populateFamilyAndHaploMap(text_unformatted, founder = false){
+
+		console.log("POPPER", founder)
+	
 		var lines = text_unformatted.split('\n'),
 			haplo_start_col = -1;
 
@@ -80,17 +88,28 @@ class Allegro extends FileFormat {
 				familyMapOps.insertPerc(pers, fam);
 			}
 
-			// Handle HaploData		
-			pers.insertHaploData( haplo_data );
+			// Handle HaploData
+			if (founder){
+				FlowResolver.convertGroupsToFamilySpecific( haplo_data, fam);
+				pers.insertFlowData ( haplo_data );
+			} else {
+				pers.insertHaploData( haplo_data );
+			}
 		}
 
 		Allegro.__handleHeaders(header_lines, haplo_start_col);
 	}
 
 	// Transpose marker names
-	static __handleHeaders(header_lines, start_col){
+	static __handleHeaders(header_lines, start_col)
+	{
+		if (MarkerData.rs_array.length !== 0){
+			console.log("Markers already populated, skipping");
+			return 0;
+		}
 
-		for (var col= start_col; col < header_lines[0].length; col++){
+		for (var col = start_col; col < header_lines[0].length; col++)
+		{
 			var col_string = "";
 
 			for (var row=header_lines.length; row > 0 ;){
@@ -99,7 +118,7 @@ class Allegro extends FileFormat {
 
 			col_string = col_string.trim();
 
-			if (col_string!=="") {
+			if (col_string!==""){
 				MarkerData.rs_array.push( col_string );
 			}
 		}
