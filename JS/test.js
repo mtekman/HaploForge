@@ -6,6 +6,7 @@ var Test = {
 		saveChrAndFlow(){
 			localStorage.setItem("ALLFLOW", debugAllegro.descent);
 			localStorage.setItem("ALLCHR", debugAllegro.haplo);
+			localStorage.setItem("ALLMAP", debugAllegro.map);
 		},
 
 		run(){

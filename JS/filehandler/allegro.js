@@ -132,11 +132,23 @@ class Allegro extends FileFormat {
 		}
 	}
 
-	static __populateGeneticPositions(text_unformatted){}
-	static __populateDescentVectors(text_unformatted){}
-	static __populateMarkerMap(text_unformatted){
-/*			MarkerData.rs_array.push(marker);
-			MarkerData.gp_array.push(genpos);*/
-	}
+	static __populateGeneticPositions(text_unformatted)
+	{
+		if (MarkerData.gp_array.length === 0){
+			console.log("GP data already populated");
+			return 0;
+		}
 
+		var lines = text_unformatted.split('\n'),
+			len = lines.length;
+
+		for (var l=1; l < len; l++)
+		{
+			var chr_genpos_marker_physpos_nr = lines[len].split(/\s+/),
+				genpos = [1];
+
+				MarkerData.gp_array.push( Number(genpos) );
+			}
+		}
+	}
 }

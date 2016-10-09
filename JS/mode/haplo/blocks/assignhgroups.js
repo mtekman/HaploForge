@@ -135,14 +135,14 @@ var AssignHGroups = {
 				// 64-bit iterator, yet implicit 64 --> 8 bit conv: How? Fuck knows.
 
 				var curr_index = -1;
-				while (++curr_index < pointer_array.length){
+				while (++curr_index < pointer_array.length) {
 					group_array[curr_index] = pointer_array[curr_index].color_group[0];
 				}
 
 				// Leave for GC
 				delete both_alleles[a].pter_array;
 				delete both_alleles[a].descent;
-//				delete both_alleles[a].flow
+				delete both_alleles[a].flow
 			}
 		}, fam);
 	}
