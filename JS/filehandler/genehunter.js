@@ -40,6 +40,8 @@ class Genehunter extends FileFormat {
 			current_chrom = null;
 
 		// Skip header
+		var markers = [],
+			gps = [];
 
 		for (var l=1; l < lines.length; l++){
 			var line = lines[l].trim(),
@@ -60,9 +62,11 @@ class Genehunter extends FileFormat {
 				marker = tokens[2].trim();
 
 
-			MarkerData.rs_array.push(marker);
-			MarkerData.gp_array.push(genpos);
+			markers.push(marker);
+			gps.push(genpos);
 		}
+		MarkerData.addMarkers( markers );
+		MarkerData.addGenepos( gps );
 	}
 
 	static populateFamilyMap(text_unformatted){}

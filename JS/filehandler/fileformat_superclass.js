@@ -19,6 +19,7 @@ class FileFormat {
     	this.firstjob = function(finish) {
       		lastjob();
       		FileFormat.readFile(job.file, job.task, finish);
+    		console.log("Processing:", job.file.name);
     	}
   	}
 
@@ -55,8 +56,10 @@ class FileFormat {
 		this.addReadJob({
 			file: this.haplofile,
 			task: function(haplo_text){
-				MainButtonActions._temphaploload = haplo_text; // for debugging
+				MainButtonActions._temphaploload = haplo_text; // for transferring from haplo to pedcreate
+				debugger;
 				haplo.process(haplo_text);
+
 
 				// Sometimes the haplo file has RS data and this step is not neccesary.
 				if (!haplo.hasMarkerNames){
@@ -80,30 +83,30 @@ class FileFormat {
 
 		// Map depends on pedigree data
 		if (this.mapfile !== 0){
-			this.addReadJob({file:that.mapfile, task:map.process});
+			this.addReadJob({file:that.mapfile, task:function(text){map.process(text);debugger;}});
 		}
 
 		// Process all jobs
 		this.firstjob(
-
 			// Add a final finishing function after all the files are processed
 			function finalFinishFunc(){
 
-			//Callback
-			if (afterCallback !== null){
-				afterCallback();
-			} else {
-				// Assume Haplo mode is final callback
-				HaploPedProps.init(function(){
-					if (haplo.inferGenders){
-						familyMapOps.inferGenders();
-					}
-				});
-			}
+				//Callback
+				if (afterCallback !== null){
+					afterCallback();
+				} else {
+					// Assume Haplo mode is final callback
+					HaploPedProps.init(function(){
+						if (haplo.inferGenders){
+							familyMapOps.inferGenders();
+						}
+					});
+				}
 
-			// No descent file performs Hgroup assignment
-			FileFormat.__endFuncs(useresolver);
-		});
+				// No descent file performs Hgroup assignment
+				FileFormat.__endFuncs(useresolver);
+			}
+		);
 
 	}
 
@@ -146,8 +149,12 @@ class FileFormat {
 		var randomperc = familyMapOps.getRandomPerc(),
 			allele_length = randomperc.haplo_data[0].data_array.length;
 
+		var markers = [];
+
 		for (var m=0; m < allele_length; m++){
-			MarkerData.rs_array.push(String("          " + m).slice(-10));
-		}	
+			markers.push(String("          " + m).slice(-10));
+		}
+
+		MarkerData.addMarkers( markers );
 	}
 }

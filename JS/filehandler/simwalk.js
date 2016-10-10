@@ -46,6 +46,8 @@ class Simwalk extends FileFormat {
 			pedname_header_found = false;
 
 		// Populate Marker
+		var markers = [];
+
 		var l = 0;
 		for (;l < lines.length; l++)
 		{
@@ -70,11 +72,12 @@ class Simwalk extends FileFormat {
 					if (!line.startsWith(" ")){
 						// console.log("found marker line!", line);
 						var markername = line.split(/\s+/)[0];
-						MarkerData.rs_array.push( markername );
+						markers.push( markername );
 					}
 				}
 			}
 		}
+		MarkerData.addMarkers( markers );
 		// console.log("finished marker data");
 
 		//Ped Name

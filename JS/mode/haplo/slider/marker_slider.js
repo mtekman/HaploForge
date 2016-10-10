@@ -73,7 +73,7 @@ var MarkerSlider = {
 
 		if (MarkerSlider._instance === null){
 			MarkerSlider._instance = MarkerSlider._makeSlider(
-			 	 HaploWindow._top.getX()
+			 	 HaploWindow._top.rect.getAbsolutePosition().x
 				+HaploWindow._top.rect.getWidth() + 20, 60
 			);
 		}

@@ -1,4 +1,6 @@
 
+var htext = null; // DEBUG
+
 var HaploBlock = {
 
 	sta_index : 0,
@@ -84,8 +86,8 @@ var HaploBlock = {
 			HaploBlock.sta_index = 0;
 			HaploBlock.end_index = HAP_DRAW_LIM;
 		}
-		if (HaploBlock.end_index > MarkerData.rs_array.length -1){
-			HaploBlock.end_index = MarkerData.rs_array.length -1
+		if (HaploBlock.end_index > MarkerData.getLength() -1){
+			HaploBlock.end_index = MarkerData.getLength() -1
 			HaploBlock.sta_index = HaploBlock.end_index - HAP_DRAW_LIM;
 		}
 
@@ -163,7 +165,7 @@ var HaploBlock = {
 		var total_text="";
 		for (var m=HaploBlock.sta_index; m <= HaploBlock.end_index; m++)
 		{
-			total_text += MarkerData.rs_array[m] + haploblock_buffers.marker_offset;
+			total_text += MarkerData.padded[m] + haploblock_buffers.marker_offset;
 
 			for (var i=0; i < HaploBlock.haploinfos.length; i++)
 				total_text +=  (haploblock_buffers.ht_offset
@@ -176,6 +178,7 @@ var HaploBlock = {
 		HaploBlockFormat.format.textprops.text = total_text;
 		var texter = new Kinetic.Text(HaploBlockFormat.format.textprops);
 
+		htext = texter;
 		grp.add(texter);
 		return grp;
 	},
@@ -195,7 +198,7 @@ var HaploBlock = {
 				if (curr_i < 0){ return 0;}
 			} else {
 				curr_i ++;
-				var last = MarkerData.rs_array.length - 1;
+				var last = MarkerData.getLength() - 1;
 				if (curr_i > last){ return last;}
 			}
 

@@ -104,10 +104,12 @@ class Allegro extends FileFormat {
 	// Transpose marker names
 	static __handleHeaders(header_lines, start_col)
 	{
-		if (MarkerData.rs_array.length !== 0){
+		if (MarkerData.getLength() !== 0){
 			console.log("Markers already populated, skipping");
 			return 0;
 		}
+
+		var markers = []
 
 		for (var col = start_col; col < header_lines[0].length; col++)
 		{
@@ -120,17 +122,20 @@ class Allegro extends FileFormat {
 			col_string = col_string.trim();
 
 			if (col_string!==""){
-				MarkerData.rs_array.push( col_string );
+				markers.push( col_string );
 			}
 		}
 
 		var expected_num = familyMapOps.getRandomPerc().haplo_data[0].data_array.length,
-			actual_num = MarkerData.rs_array.length;
+			actual_num = markers.length;
 
 		if (expected_num !== actual_num){
 			throw new Error("Error, allele sizes do not match:" 
 				+ expected_num + " != " + actual_num);
 		}
+
+		MarkerData.addMarkers( markers );
+		console.log("Markers", markers);
 	}
 
 	static __populateGeneticPositions(text_unformatted){
@@ -155,11 +160,6 @@ class Allegro extends FileFormat {
 			}
 		}
 
-		if (MarkerData.gp_array.length !== MarkerData.rs_array.length){
-			console.log("GP array and RS array do not match",
-				MarkerData.gp_array.length,
-				MarkerData.rs_array.length);
-			return 0;
-		}
+		MarkerData.sanityCheck();
 	}
 }
