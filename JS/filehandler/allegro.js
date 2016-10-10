@@ -17,6 +17,7 @@ class Allegro extends FileFormat {
 		var map = {
 			id: "allegro_map",
 			process: function(map_text){
+				debugAllegro.map = map_text;
 				Allegro.__populateGeneticPositions(map_text);
 			}
 		}
@@ -132,9 +133,9 @@ class Allegro extends FileFormat {
 		}
 	}
 
-	static __populateGeneticPositions(text_unformatted)
-	{
-		if (MarkerData.gp_array.length === 0){
+	static __populateGeneticPositions(text_unformatted){
+		
+		if (MarkerData.gp_array.length !== 0){
 			console.log("GP data already populated");
 			return 0;
 		}
@@ -144,11 +145,21 @@ class Allegro extends FileFormat {
 
 		for (var l=1; l < len; l++)
 		{
-			var chr_genpos_marker_physpos_nr = lines[len].split(/\s+/),
-				genpos = [1];
+			var line = lines[l].trim();
+
+			if (line.length > 0){
+				var chr_genpos_marker_physpos_nr = line.split(/\s+/),
+					genpos = chr_genpos_marker_physpos_nr[1];
 
 				MarkerData.gp_array.push( Number(genpos) );
 			}
+		}
+
+		if (MarkerData.gp_array.length !== MarkerData.rs_array.length){
+			console.log("GP array and RS array do not match",
+				MarkerData.gp_array.length,
+				MarkerData.rs_array.length);
+			return 0;
 		}
 	}
 }
