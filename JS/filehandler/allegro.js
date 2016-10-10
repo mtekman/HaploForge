@@ -135,18 +135,18 @@ class Allegro extends FileFormat {
 		}
 
 		MarkerData.addMarkers( markers );
-		console.log("Markers", markers);
 	}
 
-	static __populateGeneticPositions(text_unformatted){
-		
+	static __populateGeneticPositions(text_unformatted)
+	{		
 		if (MarkerData.gp_array.length !== 0){
 			console.log("GP data already populated");
 			return 0;
 		}
 
 		var lines = text_unformatted.split('\n'),
-			len = lines.length;
+			len = lines.length,
+			markers = [];
 
 		for (var l=1; l < len; l++)
 		{
@@ -156,10 +156,11 @@ class Allegro extends FileFormat {
 				var chr_genpos_marker_physpos_nr = line.split(/\s+/),
 					genpos = chr_genpos_marker_physpos_nr[1];
 
-				MarkerData.gp_array.push( Number(genpos) );
+				markers.push( Number(genpos) );
 			}
 		}
 
-		MarkerData.sanityCheck();
+		MarkerData.addGenePos( markers );
+//		MarkerData.sanityCheck();
 	}
 }

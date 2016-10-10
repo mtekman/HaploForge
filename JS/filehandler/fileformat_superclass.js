@@ -42,10 +42,13 @@ class FileFormat {
 
 		FileFormat.__begFuncs();
 
-		var that = this,
-			useresolver = AssignHGroups.resolvers.ASTAR;
+		var useresolver = AssignHGroups.resolvers.ASTAR;
 
-			// I NEED TO CHAIN THESE TOGETHER SOMEHOW
+		// Map depends on pedigree data... does it?
+		if (this.mapfile !== 0){
+			this.addReadJob({file:this.mapfile, task:map.process});
+		}
+
 
 		// Read pedfile first if given
 		if (this.pedfile !== 0){
@@ -57,7 +60,6 @@ class FileFormat {
 			file: this.haplofile,
 			task: function(haplo_text){
 				MainButtonActions._temphaploload = haplo_text; // for transferring from haplo to pedcreate
-				debugger;
 				haplo.process(haplo_text);
 
 
@@ -79,11 +81,6 @@ class FileFormat {
 			if (haplo.useDescent){
 				useresolver = haplo.resolver_mode;
 			}
-		}
-
-		// Map depends on pedigree data
-		if (this.mapfile !== 0){
-			this.addReadJob({file:that.mapfile, task:function(text){map.process(text);debugger;}});
 		}
 
 		// Process all jobs

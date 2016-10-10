@@ -22,16 +22,18 @@ var MarkerData = {
 	},
 
 	sanityCheck(){
-		if (MarkerData.gp_array.length !== MarkerData.rs_array.length){
-			console.log("GP array and RS array do not match",
-				MarkerData.gp_array.length,
-				MarkerData.rs_array.length);
-			throw new Error();
+		if (MarkerData.padded.length > 0){
+			if (MarkerData.gp_array.length !== MarkerData.rs_array.length){
+				console.log("GP array and RS array do not match",
+					MarkerData.gp_array.length,
+					MarkerData.rs_array.length);
+				throw new Error();
+			}
 		}
 	},
 
 	// "Pads rs identifiers into fixed width string based on max length
-	padMarkerMap: function(){
+	padMarkerMap(){
 		var format = "            ",
 			withgp = MarkerData.gp_array.length !==0;
 
