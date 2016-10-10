@@ -20,18 +20,20 @@ var Test = {
 
 					var haplo_text = localStorage.getItem("ALLCHR");
 					var found_text = localStorage.getItem("ALLFLOW");
+					var map_text   = localStorage.getItem("ALLMAP");
 
 					Allegro.__populateFamilyAndHaploMap(haplo_text);
 					Allegro.__populateFlow(found_text);
+					Allegro.__populateGeneticPositions(map_text);
 
 					HaploPedProps.init();
 					FileFormat.__endFuncs( AssignHGroups.resolvers.FLOW );
 
-		/*			setTimeout(function(){
+					setTimeout(function(){
 						SelectionMode.init();
 						SelectionAction.selectAffecteds();
 						HaploWindow.init();
-					},500)*/
+					},500)
 				}, 500);
 			}, 500);
 		}
