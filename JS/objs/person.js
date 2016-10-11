@@ -2,12 +2,14 @@
 //
 class Person {
 
-	constructor(id, gender, affected, mother = 0, father = 0, name = null){
-		this.id = id;
-		this.gender = gender;	         // 1 - male, 2-female, 0-unknown
-		this.affected = affected ; 	     // 0,1,2
+	constructor(id, gender, affected, mother = 0, father = 0, name = null)
+	{
+		this.id = Number(id);
+		this.gender = Number(gender);     // 1 - male, 2-female, 0-unknown
+		this.affected = Number(affected); // 0,1,2
 
-		this.mother = mother; this.father = father;
+		this.mother = Number(mother); 
+		this.father = Number(father);
 		this.haplo_data = [];  			// [Allele1, Allele2]
 
 		this.mates = [];
