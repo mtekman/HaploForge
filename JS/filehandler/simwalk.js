@@ -18,22 +18,7 @@ class Simwalk extends FileFormat {
 			hasMarkerNames : true
 		}
 
-		/*
-		var map = {
-			id: "sw_map",
-			process: function(map_text){
-				Simwalk.populateMarkerMap(map_text);
-			},
-			nonexistent: FileFormat.enumerateMarkers;
-		}
-
-		var ped = {
-			id: "sw_ped",
-			process: function(ped_text){
-				Genehunter.populateFamilyMap(ped_text);
-			}
-		}*/
-
+		// Simwalk HEF files have rs and gp marker data, as well as ped and haplo
 		super(haplo, null, null, null, mode_init);
 	}
 
@@ -46,7 +31,8 @@ class Simwalk extends FileFormat {
 			pedname_header_found = false;
 
 		// Populate Marker
-		var markers = [];
+		var markers = [],
+			genepos = [];
 
 		var l = 0;
 		for (;l < lines.length; l++)
@@ -71,13 +57,15 @@ class Simwalk extends FileFormat {
 				{
 					if (!line.startsWith(" ")){
 						// console.log("found marker line!", line);
-						var markername = line.split(/\s+/)[0];
-						markers.push( markername );
+						var markerdata = line.split(/\s+/);
+						markers.push( markerdata[0].trim()  );
+						genepos.push( Number(markerdata[1]) );
 					}
 				}
 			}
 		}
 		MarkerData.addMarkers( markers );
+		MarkerData.addGenePos( genepos )
 		// console.log("finished marker data");
 
 		//Ped Name

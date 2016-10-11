@@ -25,7 +25,22 @@ class Merlin extends FileFormat {
 			resolver_mode: AssignHGroups.resolvers.FLOW
 		}
 
-		super(haplo, null, null, descent, mode_init);
+		var map = {
+			id: "merlin_map",
+			process : Merlin.populateMarkerMap
+		}
+
+		var pedin = {
+			id: "merlin_ped",
+			process : Merlin.populateFamily
+		}
+
+		super(haplo, map, pedin, descent, mode_init);
+	}
+
+
+	static populateFamily(text_unformatted){
+		Genehunter.populateFamilyMap(text_unformatted);
 	}
 
 	static populateFlow(text_unformatted){
@@ -69,7 +84,7 @@ class Merlin extends FileFormat {
 					else {
 						perc.insertHaploData( perc_alleles[0] )
 						perc.insertHaploData( perc_alleles[1] )
-						familyMapOps.insertPerc(perc, tmp._fam);
+						familyMapOps.insertPerc(perc, Number(tmp._fam));
 					}
 				}
 
@@ -91,7 +106,7 @@ class Merlin extends FileFormat {
 				flushTmpData(tmp);
 
 				var fid = line.split(/\s+/)[1]
-				tmp._fam = fid;
+				tmp._fam = Number(fid);
 				continue
 			}
 
@@ -106,14 +121,14 @@ class Merlin extends FileFormat {
 					{
 						var perc = people[p].split(" ");
 
-						var id = parseInt(perc[0]),
+						var id = Number(perc[0]),
 							parents = perc[1].split("(")[1].split(")")[0];
 
 						var mother_id = 0,
 							father_id = 0;
 
 						if (parents !== "F"){
-							parents = parents.split(",").map(x => parseInt(x));
+							parents = parents.split(",").map(x => Number(x));
 							
 							mother_id = parents[0];
 							father_id = parents[1];
@@ -173,9 +188,29 @@ class Merlin extends FileFormat {
 		flushTmpData(tmp);
 	}
 
+	static populateMarkerMap(text_unformatted)
+	{
+		var lines = text_unformatted.split('\n');
 
-	static populateMarkerMap(text_unformatted){}
+		var markers = [],
+			genepos = [];
 
-	
+		for (var l=1; l < lines.length; l++){ //skip headers
 
+			var line = lines[l].trim()
+
+			if (line === ""){
+				continue;
+			}
+
+			var chr_genpos_marker = line.split(/\s+/);
+
+//			console.log(chr_genpos_marker, chr_genpos_marker.length, line);
+			markers.push( chr_genpos_marker[2].trim()  )
+			genepos.push( Number(chr_genpos_marker[1]) );
+		}
+
+		MarkerData.addMarkers( markers );
+		MarkerData.addGenePos( genepos );
+	}
 }

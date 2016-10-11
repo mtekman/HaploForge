@@ -80,6 +80,8 @@ class Genehunter extends FileFormat {
 			var fam = tokens[0].trim();
 
 			if (fam !== ""){
+				fam = Number(fam);
+
 				var pers = new Person(
 					tokens[1], // id
 					tokens[4], // gender
@@ -88,6 +90,10 @@ class Genehunter extends FileFormat {
 					tokens[2]  // father
 				);
 
+				console.log(pers, fam);
+				debugger;
+
+				// This should ONLY update existing
 				familyMapOps.updatePerc( pers.id, pers, fam );
 			}
 		}

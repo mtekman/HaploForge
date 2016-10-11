@@ -142,6 +142,17 @@ var familyMapOps = {
 	},
 
 
+	updateIntoPerc: function(old_id, person, family_id)
+	{
+		if (familyMapOps.percExists(old_id, family_id)){
+			familyMapOps.updatePerc(old_id,person, family_id);
+			return 0;
+		}
+
+		familyMapOps.insertPerc(person, family_id);
+	},
+
+
 	insertPerc: function(person, family_id){
 		
 		if (!(family_id in familyMapOps._map)){

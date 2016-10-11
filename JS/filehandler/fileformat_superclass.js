@@ -62,6 +62,12 @@ class FileFormat {
 					// Enumerate map based on number of locus
 					FileFormat.enumerateMarkers();
 				}
+
+
+				// Read pedfile first if given
+				if (that.pedfile !== 0){
+					that.addReadJob({file:that.pedfile, task:ped.process});
+				}
 			}
 		});
 
@@ -76,12 +82,6 @@ class FileFormat {
 				useresolver = haplo.resolver_mode;
 			}
 		}
-
-		// Read pedfile first if given
-		if (this.pedfile !== 0){
-			this.addReadJob({file:this.pedfile, task:ped.process});
-		}
-
 
 		// Process all jobs
 		this.firstjob(
