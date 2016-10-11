@@ -2,6 +2,42 @@
 
 var Test = {
 
+	GHM : {
+		saveChrAndFlow(){
+			localStorage.setItem("GHMPED", debugGH.ped);
+			localStorage.setItem("GHMHAP", debugGH.haplo);
+			localStorage.setItem("GHMMAP", debugGH.map);
+		},
+
+		run(){
+			MainButtonActions.preamble();
+
+			setTimeout(function(){
+				MainPageHandler.haplomodeload();
+
+				setTimeout(function(){
+					userOpts.fancyGraphics = false;
+
+					var haplo_text = localStorage.getItem("GHMHAP");
+					var ped_text = localStorage.getItem("GHMPED");
+					var map_text   = localStorage.getItem("GHMMAP");
+
+					Genehunter.populateFamilyAndHaploMap(haplo_text);
+					Genehunter.populateMarkerMap(map_text);
+					
+					HaploPedProps.init();
+					FileFormat.__endFuncs( AssignHGroups.resolvers.FLOW );
+
+					setTimeout(function(){
+						SelectionMode.init();
+						SelectionAction.selectAffecteds();
+						HaploWindow.init();
+					},500)
+				}, 500);
+			}, 500);
+		}
+	},
+
 	Allegro : {
 		saveChrAndFlow(){
 			localStorage.setItem("ALLFLOW", debugAllegro.descent);
