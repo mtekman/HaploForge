@@ -59,7 +59,9 @@
 #filebox input[type=file]{
   display: "";
   font-size: 0.7em;
+  width:160px;
 }
+
 
 .hidden {
   position: absolute;
