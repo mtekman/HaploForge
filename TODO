@@ -1,8 +1,6 @@
 
+Map and pedin for merlin
+Simwalk map
+genehunter, parse vectors
 
-Holding down on arrow key for a certain interval of time should freeze 
-the haplotypes and move the slider instead, where on keyup it updates the haplotypes
-
-
-
-Button to find next recombination in side-by-side mode. (iterate through )
+Modify existing pedigree without removing haplo data
