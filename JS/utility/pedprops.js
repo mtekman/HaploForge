@@ -35,7 +35,7 @@ var HaploPedProps = {
 		}
 
 		utility.notify("Pedigree", 
-			(HaploPedProps.xlinked?"X-Linked":"Autosomal") 
+			 (HaploPedProps.xlinked?"X-Linked":"Autosomal") 
 			+ " "
 			+(HaploPedProps.dominant?"Dominant":"Recessive")
 		);

@@ -133,7 +133,7 @@ var familyMapOps = {
 	},
 
 	updatePerc: function(old_id, person, family_id){
-		var oldperson = familyMapOps.getPerc(old_id, family_id)
+		var oldperson = familyMapOps.getPerc(old_id, family_id);
 
 		oldperson.id = person.id;
 		oldperson.name = person.name;
