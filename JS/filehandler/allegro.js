@@ -1,5 +1,5 @@
 
-debugAllegro = {}
+//debugAllegro = {}
 
 class Allegro extends FileFormat {
 	
@@ -8,7 +8,7 @@ class Allegro extends FileFormat {
 		var haplo = {
 			id: "allegro_haplo",
 			process: function(haplo_text){
-				debugAllegro.haplo = haplo_text;
+//				debugAllegro.haplo = haplo_text;
 				Allegro.__populateFamilyAndHaploMap(haplo_text);			
 			},
 			hasMarkerNames : true
@@ -17,7 +17,7 @@ class Allegro extends FileFormat {
 		var map = {
 			id: "allegro_map",
 			process: function(map_text){
-				debugAllegro.map = map_text;
+//				debugAllegro.map = map_text;
 				Allegro.__populateGeneticPositions(map_text);
 			}
 		}
@@ -25,7 +25,7 @@ class Allegro extends FileFormat {
 		var descent = {
 			id: "allegro_descent",
 			process: function(descent_text){
-				debugAllegro.descent = descent_text;
+//				debugAllegro.descent = descent_text;
 				Allegro.__populateFlow(descent_text);
 			},
 			resolver_mode: AssignHGroups.resolvers.FLOW

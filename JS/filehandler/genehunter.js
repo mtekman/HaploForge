@@ -1,4 +1,5 @@
 
+debugGH = {};
 
 class Genehunter extends FileFormat {
 	
@@ -7,9 +8,8 @@ class Genehunter extends FileFormat {
 		var haplo = {
 			id: "ghm_haplo",
 			process: function(haplo_text){
-//				localStorage.setItem("test", haplo_text);*/
-//				var haplo_text = localStorage.getItem("test");
-				Genehunter.populateFamilyAndHaploMap(haplo_text);				
+				debugGH.haplo = haplo_text;
+				Genehunter.populateFamilyAndHaploMap(haplo_text);
 			},
 			hasMarkerNames : false,
 			inferGenders : true // unless ped is uploaded!
@@ -18,15 +18,15 @@ class Genehunter extends FileFormat {
 		var map = {
 			id: "ghm_map",
 			process: function(map_text){
-//				localStorage.setItem("maptest", map_text);
-//				var map_text = localStorage.getItem("maptest");
-				Genehunter.populateMarkerMap(map_text);			
+				debugGH.map = map_text;
+				Genehunter.populateMarkerMap(map_text);
 			}
 		}
 
 		var ped = {
 			id: "ghm_ped",
 			process: function(ped_text){
+				debugGH.ped = ped_text;
 				Genehunter.populateFamilyMap(ped_text);
 			}
 		}
@@ -65,11 +65,33 @@ class Genehunter extends FileFormat {
 			markers.push(marker);
 			gps.push(genpos);
 		}
+
+		MarkerData.addGenePos( gps );
 		MarkerData.addMarkers( markers );
-		MarkerData.addGenepos( gps );
 	}
 
-	static populateFamilyMap(text_unformatted){}
+	static populateFamilyMap(text_unformatted)
+	{
+		var lines = text_unformatted.split('\n');
+
+		for (var l=0; l < lines.length; l++){
+			//1001 20 0 0 1 1
+			var tokens = lines[l].split(/\s+/);		
+			var fam = tokens[0].trim();
+
+			if (fam !== ""){
+				var pers = new Person(
+					tokens[1], // id
+					tokens[4], // gender
+					tokens[5], // affect
+					tokens[3], // mother
+					tokens[2]  // father
+				);
+
+				familyMapOps.updatePerc( pers.id, pers, fam );
+			}
+		}
+	}
 
 	static populateFamilyAndHaploMap(text_unformatted){
 		

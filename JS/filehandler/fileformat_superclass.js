@@ -42,19 +42,13 @@ class FileFormat {
 
 		FileFormat.__begFuncs();
 
-		var useresolver = AssignHGroups.resolvers.ASTAR;
+		var useresolver = AssignHGroups.resolvers.ASTAR,
+			that = this;
 
 		// Map depends on pedigree data... does it?
 		if (this.mapfile !== 0){
 			this.addReadJob({file:this.mapfile, task:map.process});
 		}
-
-
-		// Read pedfile first if given
-		if (this.pedfile !== 0){
-			this.addReadJob({file:this.pedfile, task:ped.process});
-		}
-
 
 		this.addReadJob({
 			file: this.haplofile,
@@ -64,7 +58,7 @@ class FileFormat {
 
 
 				// Sometimes the haplo file has RS data and this step is not neccesary.
-				if (!haplo.hasMarkerNames){
+				if (!haplo.hasMarkerNames && that.mapfile === 0){
 					// Enumerate map based on number of locus
 					FileFormat.enumerateMarkers();
 				}
@@ -83,18 +77,23 @@ class FileFormat {
 			}
 		}
 
+		// Read pedfile first if given
+		if (this.pedfile !== 0){
+			this.addReadJob({file:this.pedfile, task:ped.process});
+		}
+
+
 		// Process all jobs
 		this.firstjob(
 			// Add a final finishing function after all the files are processed
 			function finalFinishFunc(){
-
 				//Callback
 				if (afterCallback !== null){
 					afterCallback();
 				} else {
 					// Assume Haplo mode is final callback
 					HaploPedProps.init(function(){
-						if (haplo.inferGenders){
+						if (haplo.inferGenders && that.pedfile === 0){
 							familyMapOps.inferGenders();
 						}
 					});
