@@ -140,9 +140,9 @@ var AssignHGroups = {
 				}
 
 				// Leave for GC
-				delete both_alleles[a].pter_array;
-				delete both_alleles[a].descent;
-				delete both_alleles[a].flow
+//				delete both_alleles[a].pter_array;
+//				delete both_alleles[a].descent;
+//				delete both_alleles[a].flow
 			}
 		}, fam);
 	}

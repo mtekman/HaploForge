@@ -13,7 +13,7 @@ class Merlin extends FileFormat {
 				Merlin.populateFamilyAndHaploMap(haplo_text);
 			},
 			hasMarkerNames : false,
-			inferGenders : true
+			inferGenders : true,
 		}
 
 		var descent = {
@@ -74,6 +74,7 @@ class Merlin extends FileFormat {
 
 
 					if (flow){ // flow relies on prior perc existence
+						console.log("INSERTING FLOW", perc, tmp);
 						var perc = familyMapOps.getPerc(perc.id, tmp._fam);
 						perc.insertFlowData( perc_alleles[0] );
 						perc.insertFlowData( perc_alleles[1] );
@@ -82,6 +83,7 @@ class Merlin extends FileFormat {
 						perc.insertHaploData( perc_alleles[0] )
 						perc.insertHaploData( perc_alleles[1] )
 						familyMapOps.insertPerc(perc, Number(tmp._fam));
+//						familyMapOps.getRandomPerc(tmp._fam);
 					}
 				}
 
