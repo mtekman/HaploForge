@@ -1,6 +1,6 @@
 #!/bin/bash
 
-def=0.5
+def=0.1
 ref=1.5
 
 function pollOpen {
@@ -26,7 +26,7 @@ xdotool key Tab; sleep 0.5; xdotool key Return; pollOpen; xdotool key Return; po
 xdotool key Tab; sleep 0.5; xdotool key Return; pollOpen; xdotool key Return; pollClose; sleep $def;
 xdotool key Tab; sleep 0.5; xdotool key Return; pollOpen; xdotool key Return; pollClose; sleep $def;
 
-xdotool key Tab; sleep 0.5; xdotool key Return; pollOpen; 
+xdotool key Tab; sleep 0.5; xdotool key Return; pollOpen; xdotool key Tab; sleep 0.1;
 xdotool key Down
 xdotool key Down
 xdotool key Down

@@ -3,7 +3,7 @@
 class PromiseQueue {
 
 	constructor(jobfunc){
-		this.lastjob = Promise.resolve();
+		this.jobs = [];
 
 		this.async_task = function(job){
 			console.log("---Processing:", job.file.name);
@@ -13,19 +13,27 @@ class PromiseQueue {
 
 	
 	addJob(job){
-
 		console.log("---Queuing:", job.file.name)
-		this.lastjob.then(new Promise(function(resolve,reject)
+
+		var that = this;
+
+		this.jobs.push(new Promise(function(resolve,reject)
 		{
-			this.async_task(job);
+			that.async_task(job);
 			resolve();  			//run next job set by then
 		}));
 	}
 
-	exec(finishfunc){
-		this.lastjob.then(finishfunc).resolve();
-	}
 
+	exec(finishfunc)
+	{
+		this.jobs.reduce(function(c,n){
+			return c.then(n);
+		}, Promise.resolve())
+		.then(new Promise(function(c,b){
+			finishfunc();
+		}));
+	}
 }
 
 
@@ -33,8 +41,9 @@ class PromiseQueue {
 class Queue2 {
 
 	constructor(task){
-		this.activejobs = []];
+		this.activejobs = [];
 		this.jobtask = task;
+		this.run = null;
 	}
 
 	addJob(job){
@@ -44,31 +53,61 @@ class Queue2 {
 
 	exec1(finish){
 		//Try launching them one after the other
-		for (var f=0; f  this.activejobs.length; f++)
+		for (var f=0; f < this.activejobs.length; f++)
 		{
-			this.jobtask( this.activejobs[f] );
+			var job = this.activejobs[f];
+			console.log("---Processing", job.file.name )
+			Queue2.readFile( job );
 		}
 		finish();
 	}
 
+	rchain(finish)
+	{
+		if (this.activejobs.length == 0){
+			finish();
+			return 0
+		}
+		
+		var job = this.activejobs.pop();
+		console.log("THINK", job.file.name);
+		this.jobtask( job, this.rchain(finish))
+	}
+
+	exec3(finish)
+	{
+		this.activejobs = this.activejobs.reverse();
+		this.rchain(finish);
+	}
+
 	exec2(finish){
-		// Chain one job into the next (iterate backwards)
+
+		var that = this;
 		var nextjob = finish;
 		for (var f = this.activejobs.length -1; f >=0; f--)
 		{
-			this.jobtask( this.activejobs[f], nextjob)
+			var job = this.activejobs[f];
+
+			bind(this.run, function(){
+				console.log("---Processing", job.file.name )
+				that.jobtask( job, nextjob );
+			});
+
+			that.run = this.run;
+			nextjob = that.run;
 		}
+
+		this.run();
 
 	}
 
-	static readFile(fac, finish){
+	static readFile(fac){
 	    var fr = new FileReader();
 
-	    fr.onloadstart = function(e){
+	    fr.onloadend = function(e){
 	    	fac.task(e.target.result);
     	};
 
-   		fr.onloadend = finish;
 	    fr.readAsText(fac.file);
 	}
 }

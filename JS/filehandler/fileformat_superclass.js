@@ -13,10 +13,10 @@ class FileFormat {
 		afterCallback = null)
 	{
 
-		this.descentfile = (descent === null)?0:document.getElementById(descent.id).files[0] || 0;
-		this.haplofile = (haplo === null)?0:document.getElementById(haplo.id).files[0] || 0;
-		this.mapfile = (map === null)?0:document.getElementById(map.id).files[0] || 0;
-		this.pedfile = (ped === null)?0:document.getElementById(ped.id).files[0] || 0;
+		this.descentfile = (descent === null)?0:document.getElementById(descent.id).files[0] ||  0;
+		this.haplofile =     (haplo === null)?0:document.getElementById(haplo.id).files[0]   ||  0;
+		this.mapfile =         (map === null)?0:document.getElementById(map.id).files[0]     ||  0;
+		this.pedfile =         (ped === null)?0:document.getElementById(ped.id).files[0]     ||  0;
 
 		if (haplo === null){
 			throw new Error("No haplo file given")
@@ -24,10 +24,12 @@ class FileFormat {
 
 		FileFormat.__begFuncs();
 
-		var useresolver = AssignHGroups.resolvers.ASTAR,
-			that = this;
+		this.useresolver = AssignHGroups.resolvers.ASTAR,
+		this.afterCallback = afterCallback;
 
-		var queue = new PromiseQueue(FileFormat.readFile)
+		var that = this;
+
+		var queue = new PromiseQueue(Queue2.readFile)
 
 		// Map depends on pedigree data... does it?
 		if (this.mapfile !== 0){
@@ -36,73 +38,80 @@ class FileFormat {
 
 		queue.addJob({
 			file: this.haplofile,
-			task: function(haplo_text){
-
+			task: function(haplo_text)
+			{
 				MainButtonActions._temphaploload = haplo_text; // for transferring from haplo to pedcreate
 
-				haplo.process(haplo_text);
+				haplo.process(haplo_text, function(){
 
-				// Sometimes the haplo file has RS data and this step is not neccesary.
-				if (!haplo.hasMarkerNames && that.mapfile === 0){
-					// Enumerate map based on number of locus
-					FileFormat.enumerateMarkers();
-				}
+					// Sometimes the haplo file has RS data and this step is not neccesary.
+					if (!haplo.hasMarkerNames && that.mapfile === 0){
+						// Enumerate map based on number of locus
+						FileFormat.enumerateMarkers();
+					}
+
+
+					if (that.pedfile !== 0){
+						FileFormat.readFile({file:that.pedfile, task:ped.process}, that.finiShitAll);
+					}
+					else {
+						that.finiShitAll();
+					}
+				
+				});
+
 			}
 		});
 
-		// Read pedfile last if given
-		if (this.pedfile !== 0){
-			queue.addJob({file:this.pedfile, task:ped.process});
-		}
-
-
 		// Descent graph 
 		if (this.descentfile !== 0){
-			useresolver = descent.resolver_mode;
+			this.useresolver = descent.resolver_mode;
 			queue.addJob({file:this.descentfile, task: descent.process});
 		}
 		// The descent graph for simwalk is within the haplo data
 		else if (haplo.useDescent !== undefined){
 			if (haplo.useDescent){
-				useresolver = haplo.resolver_mode;
+				this.useresolver = haplo.resolver_mode;
 			}
 		}
 
-
-
 		// Process all jobs
-		queue.triggerjobs = true;
-		queue.exec(function finalFinishFunc(){
+		queue.exec(function(){});
+	}
 
-			// Add a final finishing function after all the files are processed
-			//Callback
-			if (afterCallback !== null){
-				afterCallback();
-			} else {
-				// Assume Haplo mode is final callback
-				HaploPedProps.init(function(){
-					if (haplo.inferGenders && that.pedfile === 0){
-						familyMapOps.inferGenders();
-					}
-				});
-			}
-			// No descent file performs Hgroup assignment
-			FileFormat.__endFuncs(useresolver);
-		});
+
+	finiShitAll(){
+		// Add a final finishing function after all the files are processed
+		//Callback
+		var that = this;
+
+		if (that.afterCallback !== null){
+			that.afterCallback();
+		} else {
+			console.log("AND HERE");
+			// Assume Haplo mode is final callback
+			HaploPedProps.init(function(){
+				console.log("VAN KEILS");
+				if (that.haplo.inferGenders && that.pedfile === 0){
+					familyMapOps.inferGenders();
+				}
+			});
+		}
+		// No descent file performs Hgroup assignment
+		FileFormat.__endFuncs(that.useresolver);
 	}
 
 
 	static readFile(fac, finish = 0){
 	    var fr = new FileReader();
 
-	    fr.onloadstart = function(e){
+	    fr.onloadend = function(e){
 	    	fac.task(e.target.result);
+
+	    	if (finish === 0){
+	    		finish();
+	    	}
     	};
-
-    	if (finish !== 0){
-    		fr.onloadend = finish;
-    	}
-
 	    fr.readAsText(fac.file);
 	}
 
@@ -111,6 +120,7 @@ class FileFormat {
 		MainButtonActions.preamble();
 		MainPageHandler.haplomodeload();
 	}
+
 
 	// If useresolver === null, we ignore assignHGroups
 	//   altogether (useful when loading a prior analysis)
@@ -169,8 +179,7 @@ class FileFormat {
 			// This should ONLY update existing
 			//console.log( pers.id, fam );
 			var perc = familyMapOps.getPerc( pers.id, fam );
-			//console.log( perc );
-			familyMapOps.updatePerc( perc.id, pers, fam );
+			familyMapOps.updateIntoPerc( perc.id, pers, fam );
 		}
 	}
 }
