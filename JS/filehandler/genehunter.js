@@ -25,10 +25,7 @@ class Genehunter extends FileFormat {
 
 		var ped = {
 			id: "ghm_ped",
-			process: function(ped_text){
-				debugGH.ped = ped_text;
-				Genehunter.populateFamilyMap(ped_text);
-			}
+			process: FileFormat.updateFamily
 		}
 
 		super(haplo, map, ped, null, mode_init);
@@ -72,31 +69,7 @@ class Genehunter extends FileFormat {
 
 	static populateFamilyMap(text_unformatted)
 	{
-		var lines = text_unformatted.split('\n');
 
-		for (var l=0; l < lines.length; l++){
-			//1001 20 0 0 1 1
-			var tokens = lines[l].split(/\s+/);		
-			var fam = tokens[0].trim();
-
-			if (fam !== ""){
-				fam = Number(fam);
-
-				var pers = new Person(
-					tokens[1], // id
-					tokens[4], // gender
-					tokens[5], // affect
-					tokens[3], // mother
-					tokens[2]  // father
-				);
-
-				console.log(pers, fam);
-				debugger;
-
-				// This should ONLY update existing
-				familyMapOps.updatePerc( pers.id, pers, fam );
-			}
-		}
 	}
 
 	static populateFamilyAndHaploMap(text_unformatted){

@@ -3,26 +3,8 @@ function debugSaveHaplo(){
 	localStorage.setItem("TEST", MainButtonActions._temphaploload);
 }
 
+
 class FileFormat {
-
-    addReadJob(job) {
-	    console.log("Queuing:", job.file.name);
-
-    	if (this.firstjob === undefined) {
-      		this.firstjob = function(){};
-    	}
-	    // Store previous job 
-    	var lastjob = this.firstjob;
-
-    	// Create new job that passes the previous job
-    	// as a readbeforefunc argument to new job.
-    	this.firstjob = function(finish) {
-      		lastjob();
-      		FileFormat.readFile(job.file, job.task, finish);
-    		console.log("Processing:", job.file.name);
-    	}
-  	}
-
 
 	constructor(haplo,
 		map = null ,
@@ -56,13 +38,11 @@ class FileFormat {
 				MainButtonActions._temphaploload = haplo_text; // for transferring from haplo to pedcreate
 				haplo.process(haplo_text);
 
-
 				// Sometimes the haplo file has RS data and this step is not neccesary.
 				if (!haplo.hasMarkerNames && that.mapfile === 0){
 					// Enumerate map based on number of locus
 					FileFormat.enumerateMarkers();
 				}
-
 
 				// Read pedfile first if given
 				if (that.pedfile !== 0){
@@ -70,6 +50,8 @@ class FileFormat {
 				}
 			}
 		});
+
+
 
 		// Descent graph 
 		if (this.descentfile !== 0){
@@ -83,39 +65,38 @@ class FileFormat {
 			}
 		}
 
+
+
 		// Process all jobs
-		this.firstjob(
+		this.triggerjobs = true;
+		this.firstjob(function finalFinishFunc(){
+
 			// Add a final finishing function after all the files are processed
-			function finalFinishFunc(){
-				//Callback
-				if (afterCallback !== null){
-					afterCallback();
-				} else {
-					// Assume Haplo mode is final callback
-					HaploPedProps.init(function(){
-						if (haplo.inferGenders && that.pedfile === 0){
-							familyMapOps.inferGenders();
-						}
-					});
-				}
-
-				// No descent file performs Hgroup assignment
-				FileFormat.__endFuncs(useresolver);
+			//Callback
+			if (afterCallback !== null){
+				afterCallback();
+			} else {
+				// Assume Haplo mode is final callback
+				HaploPedProps.init(function(){
+					if (haplo.inferGenders && that.pedfile === 0){
+						familyMapOps.inferGenders();
+					}
+				});
 			}
-		);
 
+			// No descent file performs Hgroup assignment
+			FileFormat.__endFuncs(useresolver);
+		});
 	}
 
 
-	static readFile(file, callback, finishfunc = 0){
+	static readFile(fac){
 	    var fr = new FileReader();
 
 	    fr.onloadend = function(e){
-	    	callback(e.target.result);
-
-	    	if (finishfunc !== 0){ finishfunc();}
+	    	fac.callback(e.target.result);
     	};
-	    fr.readAsText(file);
+	    fr.readAsText(fac.file);
 	}
 
 	static __begFuncs(){
@@ -152,5 +133,36 @@ class FileFormat {
 		}
 
 		MarkerData.addMarkers( markers );
+	}
+
+	// Shared utils
+	static updateFamily(text_unformatted){
+		var lines = text_unformatted.split('\n');
+
+		for (var l=0; l < lines.length; l++){
+			var line = lines[l].trim();
+
+			if (line.length === 0){
+				continue;
+			}
+
+			var tokens = line.split(/\s+/);
+
+			var fam = Number(tokens[0]);
+
+			var pers = new Person(
+				Number(tokens[1]), // id
+				Number(tokens[4]), // gender
+				Number(tokens[5]), // affect
+				Number(tokens[3]), // mother
+				Number(tokens[2])  // father
+			);
+
+			// This should ONLY update existing
+			//console.log( pers.id, fam );
+			//var perc = familyMapOps.getPerc( pers.id, fam );
+			//console.log( perc );
+			familyMapOps.updatePerc( pers.id, pers, fam );
+		}
 	}
 }

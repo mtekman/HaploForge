@@ -1,0 +1,37 @@
+#!/bin/bash
+
+function pollOpen {
+  while [ "`xdotool search --name \"Open File\"`" = "" ]; do sleep 0.01; done;
+}
+
+function pollClose {
+  while [ "`xdotool search --name \"Open File\"`" != "" ]; do sleep 0.01; done;
+}
+
+
+
+
+xdotool mousemove  72  50 click 1; sleep 0.5;
+xdotool mousemove 336 314 click 1; sleep 0.1;
+xdotool mousemove 455 342 click 1; sleep 0.1;
+
+xdotool key Down
+xdotool key Down
+xdotool key Down
+xdotool key Down
+xdotool key Return
+
+xdotool key Tab; sleep 0.5; xdotool key Return; pollOpen; xdotool key Return; pollClose; sleep 0.1;
+xdotool key Tab; sleep 0.5; xdotool key Return; pollOpen; xdotool key Return; pollClose; sleep 0.1;
+xdotool key Tab; sleep 0.5; xdotool key Return; pollOpen; xdotool key Return; pollClose; sleep 0.1;
+
+xdotool key Tab; sleep 0.5; xdotool key Return; pollOpen; 
+xdotool key Down
+xdotool key Down
+xdotool key Down
+xdotool key Down
+xdotool key Return
+
+pollClose;
+sleep 0.1 
+xdotool key Tab; sleep 0.1; xdotool key Return

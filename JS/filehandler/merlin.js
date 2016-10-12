@@ -32,15 +32,10 @@ class Merlin extends FileFormat {
 
 		var pedin = {
 			id: "merlin_ped",
-			process : Merlin.populateFamily
+			process : FileFormat.updateFamily
 		}
 
 		super(haplo, map, pedin, descent, mode_init);
-	}
-
-
-	static populateFamily(text_unformatted){
-		Genehunter.populateFamilyMap(text_unformatted);
 	}
 
 	static populateFlow(text_unformatted){
@@ -49,6 +44,8 @@ class Merlin extends FileFormat {
 
 
 	static populateFamilyAndHaploMap(text_unformatted, flow = false){
+
+		console.log("POPFAMANDHAP", flow?"FLOW":"HAPLO");
 
 		var lines = text_unformatted.split('\n');
 
@@ -190,6 +187,8 @@ class Merlin extends FileFormat {
 
 	static populateMarkerMap(text_unformatted)
 	{
+		debugMerlin.map = text_unformatted;
+
 		var lines = text_unformatted.split('\n');
 
 		var markers = [],

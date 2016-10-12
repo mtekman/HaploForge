@@ -80,6 +80,8 @@ var Test = {
 		saveChrAndFlow(){
 			localStorage.setItem("MERLINFLOW", debugMerlin.descent);
 			localStorage.setItem("MERLINCHR", debugMerlin.haplo);
+			localStorage.setItem("MERLINPED", debugMerlin.ped);
+			localStorage.setItem("MERLINMAP", debugMerlin.map);
 		},
 
 		run(){
@@ -93,11 +95,13 @@ var Test = {
 
 					var haplo_text = localStorage.getItem("MERLINCHR");
 					var chr_text   = localStorage.getItem("MERLINFLOW");
+					var map_text   = localStorage.getItem("MERLINMAP");
+					var ped_text   = localStorage.getItem("MERLINPED");
 
 					Merlin.populateFamilyAndHaploMap(haplo_text);
-					FileFormat.enumerateMarkers();
-
+					Merlin.populateMarkerMap(map_text)
 					Merlin.populateFlow(chr_text);
+					FileFormat.updateFamily(ped_text);
 
 					HaploPedProps.init(familyMapOps.inferGenders);
 					FileFormat.__endFuncs( AssignHGroups.resolvers.FLOW );
