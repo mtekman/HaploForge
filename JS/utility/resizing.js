@@ -7,6 +7,13 @@ var Resize = {
 	{
 		HAP_DRAW_LIM = new_lim || Resize.numVisibleHaplos;
 
+		// For small sets, shrink HAP_DRAW_LIM
+		var num_marks = MarkerData.getLength() - 1;
+		if (HAP_DRAW_LIM > num_marks){
+			HAP_DRAW_LIM = num_marks;
+		}
+
+
 		HaploBlock.end_index = HaploBlock.sta_index + HAP_DRAW_LIM;
 	
 		HaploWindow._bottom.rect.setHeight(

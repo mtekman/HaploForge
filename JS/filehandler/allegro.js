@@ -40,7 +40,7 @@ class Allegro extends FileFormat {
 
 	static __populateFamilyAndHaploMap(text_unformatted, founder = false){
 
-		console.log("POPPER", founder)
+//		console.log("POPPER", founder)
 	
 		var lines = text_unformatted.split('\n'),
 			haplo_start_col = -1;

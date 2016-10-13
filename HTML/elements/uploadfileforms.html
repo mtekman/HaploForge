@@ -20,12 +20,12 @@ document.write('\
 \
             <!-- Allegro -->\
             <div id="box_allegro" class="upload_box border">\
-              <label for="allegro_haplo"><input type="file" id="allegro_haplo">ihaplo file\
+              <label for="allegro_haplo"><input type="file" id="allegro_haplo" accept=".out" >ihaplo file\
                   <div class="tooltip_box" >?</div>\
                   <div class="tooltip_text"><p>Haplotypes file</p>Contains phased genotypes and pedigree data. Points of recombination are determined by HaploHTML5\'s own algorithm.</div>\
               </label>\
               <br/>\
-              <label for="allegro_descent"><input type="file" id="allegro_descent">(optional) founder file\
+              <label for="allegro_descent"><input type="file" id="allegro_descent" accept=".out" >(optional) founder file\
                 <div class="tooltip_box" >?</div>\
                 <div class="tooltip_text" ><p>Descent Graph file</p>Contains founder allele groups and descent vectors. Use this instead of HaploHTML5\'s own method for determining points of recombination.</div>\
               </label>\
@@ -64,7 +64,7 @@ document.write('\
             <!-- Simwalk -->\
             <div id="box_sw" class="upload_box border">\
               <label for="sw_haplo">\
-                <input type="file" id="sw_haplo" >HEF file\
+                <input type="file" id="sw_haplo" accept=".ALL" >HEF file\
                 <div class="tooltip_box" >?</div>\
                 <div class="tooltip_text" ><p>Haplotypes and Descent Graph</p>Contains pedigree, phased genotypes, marker identifiers with genetic positions, and descent graph vectors.</div>\
               </label>\

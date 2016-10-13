@@ -51,7 +51,7 @@ class FileFormat {
 			}
 		});
 
-		// Map
+		// Map GOES FIRST!
 		if (this.mapfile !== 0){
 			queue.addJob({file:this.mapfile, task:map.process});
 		}
