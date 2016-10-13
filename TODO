@@ -1,5 +1,5 @@
-
-Map and pedin for merlin
 genehunter, parse vectors
+
+input checking -- throw errors on specifying the wrong file (map and pedin for merlin for example)
 
 Modify existing pedigree without removing haplo data
