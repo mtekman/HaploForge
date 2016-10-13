@@ -22,20 +22,17 @@ class FileFormat {
 			throw new Error("No haplo file given")
 		}
 
+		var that = this,
+			useresolver = AssignHGroups.resolvers.ASTAR,
+			queue = new PromiseQueue(PromiseQueue.pFileRead);
+		
+
+
 		FileFormat.__begFuncs();
 
-		this.useresolver = AssignHGroups.resolvers.ASTAR,
-		this.afterCallback = afterCallback;
 
-		var that = this;
 
-		var queue = new PromiseQueue(Queue2.readFile)
-
-		// Map depends on pedigree data... does it?
-		if (this.mapfile !== 0){
-			queue.addJob({file:this.mapfile, task:map.process});
-		}
-
+		// Haplo *must* get called
 		queue.addJob({
 			file: this.haplofile,
 			task: function(haplo_text)
@@ -48,72 +45,55 @@ class FileFormat {
 					if (!haplo.hasMarkerNames && that.mapfile === 0){
 						// Enumerate map based on number of locus
 						FileFormat.enumerateMarkers();
-					}
-
-
-					if (that.pedfile !== 0){
-						FileFormat.readFile({file:that.pedfile, task:ped.process}, that.finiShitAll);
-					}
-					else {
-						that.finiShitAll();
-					}
-				
+					}			
 				});
 
 			}
 		});
 
+		// Map
+		if (this.mapfile !== 0){
+			queue.addJob({file:this.mapfile, task:map.process});
+		}
+
+
 		// Descent graph 
 		if (this.descentfile !== 0){
-			this.useresolver = descent.resolver_mode;
+			useresolver = descent.resolver_mode;
 			queue.addJob({file:this.descentfile, task: descent.process});
 		}
 		// The descent graph for simwalk is within the haplo data
 		else if (haplo.useDescent !== undefined){
 			if (haplo.useDescent){
-				this.useresolver = haplo.resolver_mode;
+				useresolver = haplo.resolver_mode;
 			}
 		}
 
-		// Process all jobs
-		queue.exec(function(){});
+		// Ped data
+		if (this.pedfile !== 0){
+			queue.addJob({file:that.pedfile, task:ped.process});
+		}		
+
+
+		// Process all jobs, then run finish func
+		queue.exec(function(res_array){
+
+			if (afterCallback !== null){
+				afterCallback();
+			} else {
+				// Assume Haplo mode is final callback
+				HaploPedProps.init(function(){
+					if (haplo.inferGenders && that.pedfile === 0){
+						familyMapOps.inferGenders();
+					}
+				});
+			}
+			// No descent file performs Hgroup assignment
+			FileFormat.__endFuncs(useresolver);
+		});
 	}
 
 
-	finiShitAll(){
-		// Add a final finishing function after all the files are processed
-		//Callback
-		var that = this;
-
-		if (that.afterCallback !== null){
-			that.afterCallback();
-		} else {
-			console.log("AND HERE");
-			// Assume Haplo mode is final callback
-			HaploPedProps.init(function(){
-				console.log("VAN KEILS");
-				if (that.haplo.inferGenders && that.pedfile === 0){
-					familyMapOps.inferGenders();
-				}
-			});
-		}
-		// No descent file performs Hgroup assignment
-		FileFormat.__endFuncs(that.useresolver);
-	}
-
-
-	static readFile(fac, finish = 0){
-	    var fr = new FileReader();
-
-	    fr.onloadend = function(e){
-	    	fac.task(e.target.result);
-
-	    	if (finish === 0){
-	    		finish();
-	    	}
-    	};
-	    fr.readAsText(fac.file);
-	}
 
 	static __begFuncs(){
 		// Flush all maps
@@ -154,6 +134,8 @@ class FileFormat {
 
 	// Shared utils
 	static updateFamily(text_unformatted){
+//		console.log("::Pedin --- start");
+		
 		var lines = text_unformatted.split('\n');
 
 		for (var l=0; l < lines.length; l++)
@@ -181,5 +163,6 @@ class FileFormat {
 			var perc = familyMapOps.getPerc( pers.id, fam );
 			familyMapOps.updateIntoPerc( perc.id, pers, fam );
 		}
+//		console.log("::Pedin --- finish");
 	}
 }

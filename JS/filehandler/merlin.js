@@ -44,8 +44,7 @@ class Merlin extends FileFormat {
 
 
 	static populateFamilyAndHaploMap(text_unformatted, flow = false){
-
-		console.log("POPFAMANDHAP", flow?"FLOW":"HAPLO");
+		//console.log("::"+(flow?"Flow":"Chr")+" --- start");
 
 		var lines = text_unformatted.split('\n');
 
@@ -184,10 +183,13 @@ class Merlin extends FileFormat {
 			}
 		}
 		flushTmpData(tmp);
+
+		//console.log("::"+(flow?"Flow":"Chr")+" --- finish");
 	}
 
-	static populateMarkerMap(text_unformatted)
-	{
+	static populateMarkerMap(text_unformatted){
+		//console.log("::Map --- start");
+
 		debugMerlin.map = text_unformatted;
 
 		var lines = text_unformatted.split('\n');
@@ -212,5 +214,7 @@ class Merlin extends FileFormat {
 
 		MarkerData.addMarkers( markers );
 		MarkerData.addGenePos( genepos );
+
+		//console.log("::Map --- finish");
 	}
 }

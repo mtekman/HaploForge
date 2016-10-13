@@ -3,12 +3,8 @@
 class PromiseQueue {
 
 	constructor(jobfunc){
-		this.jobs = [];
-
-		this.async_task = function(job){
-			console.log("---Processing:", job.file.name);
-			jobfunc(job);
-		}
+		this.promise = Promise.resolve();
+		this.generaltask = jobfunc;
 	}
 
 	
@@ -17,22 +13,88 @@ class PromiseQueue {
 
 		var that = this;
 
-		this.jobs.push(new Promise(function(resolve,reject)
-		{
-			that.async_task(job);
-			resolve();  			//run next job set by then
-		}));
+		this.promise = this.promise.then(function(){
+			console.log("---Process:", job.file.name);
+			return that.generaltask(job);
+		});
+	}
+
+
+	// general task, as set externally to constructor
+	static pFileRead(fileprops){
+		var file = fileprops.file,
+			task = fileprops.task;
+
+		return new Promise((resolve, reject) => {
+			var fr = new FileReader();
+			
+			fr.onload = function(e){
+	    		task(e.target.result);
+	    		resolve();
+	    	}
+			fr.readAsText(file);
+		});
 	}
 
 
 	exec(finishfunc)
 	{
-		this.jobs.reduce(function(c,n){
-			return c.then(n);
-		}, Promise.resolve())
-		.then(new Promise(function(c,b){
-			finishfunc();
-		}));
+		this.promise.then( finishfunc );
+	}
+}
+
+
+
+
+// Works, but convoluted
+
+/*
+class PromiseQueue_eski {
+
+	//https://jsfiddle.net/Lsobypup/
+
+	constructor(jobfunc){
+		this.jobs = [];
+		this.async_task = jobfunc;
+	}
+
+	
+	addJob(job){
+
+
+		console.log("---Queuing:", job.file.name)
+
+		var p1 = job;
+		this.jobs.push(p1);
+	}
+
+	
+
+	static pFileRead(file, task){
+		return new Promise((resolve, reject) => {
+			var fr = new FileReader();
+			
+			fr.onload = function(e){
+	    		task(e.target.result);
+	    		resolve();
+	    	}
+			fr.readAsText(file);
+		});
+	}
+
+
+	exec(finishfunc)
+	{
+		var inputs = this.jobs;
+		var promise = Promise.resolve();
+
+		inputs.map(
+			file_and_task => promise = promise.then(
+				() => PromiseQueue.pFileRead(file_and_task.file, file_and_task.task)
+			)
+		);
+
+		promise.then( finishfunc );
 	}
 }
 
@@ -106,8 +168,8 @@ class Queue2 {
 
 	    fr.onloadend = function(e){
 	    	fac.task(e.target.result);
+	    	return 0;
     	};
-
 	    fr.readAsText(fac.file);
 	}
 }
@@ -154,4 +216,4 @@ class Queuer {
 	exec(finishfunc){
 		this.firstjob(finishfunc);
 	}
-}
+}*/
