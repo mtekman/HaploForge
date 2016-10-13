@@ -34,33 +34,32 @@ class FileFormat {
 
 		// Haplo *must* get called
 		queue.addJob({
+			type: "haplo",
 			file: this.haplofile,
 			task: function(haplo_text)
 			{
 				MainButtonActions._temphaploload = haplo_text; // for transferring from haplo to pedcreate
 
-				haplo.process(haplo_text, function(){
+				haplo.process(haplo_text);
 
-					// Sometimes the haplo file has RS data and this step is not neccesary.
-					if (!haplo.hasMarkerNames && that.mapfile === 0){
-						// Enumerate map based on number of locus
-						FileFormat.enumerateMarkers();
-					}			
-				});
-
+				// Sometimes the haplo file has RS data and this step is not neccesary.
+				if (!haplo.hasMarkerNames && that.mapfile === 0){
+					// Enumerate map based on number of locus
+					FileFormat.enumerateMarkers();
+				}			
 			}
 		});
 
 		// Map GOES FIRST!
 		if (this.mapfile !== 0){
-			queue.addJob({file:this.mapfile, task:map.process});
+			queue.addJob({type:"map", file:this.mapfile, task:map.process});
 		}
 
 
 		// Descent graph 
 		if (this.descentfile !== 0){
 			useresolver = descent.resolver_mode;
-			queue.addJob({file:this.descentfile, task: descent.process});
+			queue.addJob({type:"descent", file:this.descentfile, task: descent.process});
 		}
 		// The descent graph for simwalk is within the haplo data
 		else if (haplo.useDescent !== undefined){
@@ -71,7 +70,7 @@ class FileFormat {
 
 		// Ped data
 		if (this.pedfile !== 0){
-			queue.addJob({file:that.pedfile, task:ped.process});
+			queue.addJob({type:"pedfile", file:that.pedfile, task:ped.process});
 		}		
 
 

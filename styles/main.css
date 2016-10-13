@@ -325,11 +325,11 @@
   font-size: 10pt;
   background: #333;
   border: 1px solid black;
-  border-radius: 11px 11px 1px 1px;
+  border-radius: 1px 1px 11px 11px;
   padding: 0px;
   position: absolute;
-  bottom: 0px;
-  left: 0px;
+  top: 0px;
+  left: 4px;
   z-index: 99;
   box-shadow: 5px 5px 5px #888;
 }
@@ -343,7 +343,7 @@
 .status .reflect {
   background: #ddc0c0;
   color: black;
-  border-radius: 10px 0px 0px 0px;
+  border-radius: 0px 0px 0px 10px;
   margin-top: -5px;
   margin-left: 0px;
   padding-right: 2px;

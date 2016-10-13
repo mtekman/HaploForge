@@ -10,7 +10,7 @@ class PromiseQueue {
 	
 	addJob(job){
 		console.log("---Queuing:", job.file.name)
-
+		
 		var that = this;
 
 		this.promise = this.promise.then(function(){
@@ -23,14 +23,20 @@ class PromiseQueue {
 	// general task, as set externally to constructor
 	static pFileRead(fileprops){
 		var file = fileprops.file,
-			task = fileprops.task;
+			task = fileprops.task,
+			type = fileprops.type;
 
 		return new Promise((resolve, reject) => {
 			var fr = new FileReader();
 			
 			fr.onload = function(e){
-	    		task(e.target.result);
-	    		resolve();
+				try {
+		    		task(e.target.result);
+	    			resolve();
+
+	    		} catch(e){
+	    			reject(file.name + " is not a " + type);
+	    		}
 	    	}
 			fr.readAsText(file);
 		});
@@ -39,7 +45,12 @@ class PromiseQueue {
 
 	exec(finishfunc)
 	{
-		this.promise.then( finishfunc );
+		this.promise.then( finishfunc ).catch(
+			function(errors){
+				MainButtonActions.exitToMenu();
+				utility.notify("Check your inputs", errors, 10);
+			}
+		);
 	}
 }
 
