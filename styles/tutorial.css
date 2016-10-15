@@ -2,8 +2,9 @@
 	position: absolute;
   	top:30%;
   	max-width: 40%;
-	background: #ced500;
+	background: yellow;
 	border: 2px solid #6b6969;
+	border-radius: 10px;
 }
 
 .tutorial:after,.tutorial:before {
@@ -28,7 +29,7 @@
 .left.tutorial:after {
 	right:100%;
 	top:50%;
-	border-right-color: #ced500;
+	border-right-color: yellow;
 	margin-top: -38px;
 }
 
@@ -44,7 +45,7 @@
 .right.tutorial:after {
 	left:100%;
 	top:50%;
-	border-left-color: #ced500;
+	border-left-color: yellow;
 	margin-top: -38px;
 }
 
@@ -59,7 +60,7 @@
 .top.tutorial:after {
 	left: 50%;
 	bottom: 100%;
-	border-bottom-color: #ced500;
+	border-bottom-color: yellow;
 	margin-left: -38px;
 }
 
@@ -74,7 +75,7 @@
 .bot.tutorial:after {
 	left: 50%;
 	top: 100%;
-	border-top-color: #ced500;
+	border-top-color: yellow;
 	margin-left: -38px;
 }
 

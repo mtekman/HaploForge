@@ -2,13 +2,22 @@
 
 class Tutorial {
 
-	constructor(id, direct, head, text, pos){
+	constructor(id, direct, head, text, pos = null){
 
 		this.box = Tutorial.__makePointy(id, direct, head, text);
 
 		this.box.style.position = "absolute";
-		this.box.style.top  = pos.top  + 'px';
-		this.box.style.left = pos.left + 'px';
+		
+		if (pos === null){
+			this.box.style.top  = '200px';
+			this.box.style.left = '400px';
+		}
+		else {
+			for (var prop in pos){
+				this.box.style[prop] = pos[prop];
+			}
+		}
+
 
 		this.__shake();
 	}
