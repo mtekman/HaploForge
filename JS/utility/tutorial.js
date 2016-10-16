@@ -2,30 +2,59 @@
 
 class Tutorial {
 
-	constructor(id, direct, head, text, pos = null){
 
-		this.box = Tutorial.__makePointy(id, direct, head, text);
+	constructor(id, direct, head, text, pos = null, onclick = null){
 
-		this.box.style.position = "absolute";
+		var box = Tutorial.__makePointy(direct, head, text);
+
+		// Add to map
+		if (Tutorial.__list === undefined){
+			Tutorial.__list = {};
+		}
+		Tutorial.__list[id] = box;
+
+
+		var doc  = document.getElementById(id);
+		doc.appendChild(box);
+		box.style.zIndex = 999;
 		
-		if (pos === null){
-			this.box.style.top  = '200px';
-			this.box.style.left = '400px';
-		}
-		else {
-			for (var prop in pos){
-				this.box.style[prop] = pos[prop];
-			}
-		}
+		//document.getElementsByTagName('body')[0].appendChild(box);
+		//box.style.position = "absolute";
+		//box.style.left = doc.offsetLeft + 'px'
+		//box.style.top = doc.offsetTop + 'px'
+		
+		// if (pos === null){
+		// 	this.box.style.top  = '200px';
+		// 	this.box.style.left = '400px';
+		// }
+		// else {
+//			for (var prop in pos){
+//				this.box.style[prop] = pos[prop];
+//			}
+		// }
+
+		//this.box.style.position = "absolute";
+		//this.box.style.top = top + 'px';
+		//this.box.style.left= left + 'px';
 
 
-		this.__shake();
+		this.box = box;
+//		this.__shake(onclick);
+	}
+
+	static updatePositions(){ // called by resize
+		
+		for (var id in Tutorial.__list)
+		{
+			var box = Tutorial.__list[id];
+
+		}
 	}
 
 
 
 	// Smacky
-	__shake(){
+	__shake(clicker = null){
 
 		var that = this,
 			box = that.box;
@@ -53,16 +82,22 @@ class Tutorial {
 		box.onclick = function(){
 			clearInterval(tim);
 			this.parentNode.removeChild(this);
+
+			if (clicker !== null){
+				clicker();
+			}
+
 		}
 	}
 
 
 	// new block
-	static __makePointy(id, direct, head, text){
+	static __makePointy(direct, head, text){
+
 		var div1 = document.createElement('div');
-		div1.id = id;
+		//div1.id = id;
 		div1.className = 'tutorial ' + direct;
-		document.getElementsByTagName('body')[0].appendChild(div1);
+
 
 		// Now create and append to iDiv
 		var divtext = document.createElement('div');

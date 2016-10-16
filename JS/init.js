@@ -40,6 +40,3 @@ var init = {
 
 
 MainPageHandler.defaultload();
-
-
-new Tutorial("fred","top","Save It Up", "Helper monkey evil sidekick it started with a dude in a purple hat")

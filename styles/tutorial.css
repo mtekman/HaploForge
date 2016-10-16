@@ -1,7 +1,6 @@
 .tutorial {
 	position: absolute;
-  	top:30%;
-  	max-width: 40%;
+  	max-width: 230px;
 	background: yellow;
 	border: 2px solid #6b6969;
 	border-radius: 10px;
@@ -57,6 +56,17 @@
 }
 
 /* TOP */
+.top.tutorial {	margin-top: 35px; }
+.bot.tutorial {	margin-top: -200px; }
+.left.tutorial {
+	margin-top: -80px;
+	margin-left: 90px;
+}
+.right.tutorial {
+	margin-top: -80px;
+	margin-left: -250px;
+}
+
 .top.tutorial:after {
 	left: 50%;
 	bottom: 100%;
