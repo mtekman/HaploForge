@@ -2,10 +2,12 @@
 
 var Tutorial = {
 
-	directions : {'top' : 0,'bot': 0 ,'left' : 0,'right': 0},
 	__list : {},
+	directions : {'top' : 0,'bot': 0 ,'left' : 0,'right': 0},
 
-	create(id, direct, head, text, pos = null, offset = null, onclick = null){
+	
+	create(id, direct, head, text, pos = null, offset = null, onclick = null)
+	{
 
 		var box = Tutorial.__makePointy(direct, head, text);
 
