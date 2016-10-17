@@ -4,6 +4,10 @@
 	background: yellow;
 	border: 2px solid #6b6969;
 	border-radius: 10px;
+	margin-left: 0px;
+	margin-right:0px;
+	margin-top: 0px;
+	margin-bottom: 0px;
 }
 
 .tutorial:after,.tutorial:before {
@@ -17,11 +21,11 @@
 
 .tutorial:after {
 	border-color: rgba(206, 213, 0, 0);
-	border-width: 38px;
+	border-width: 10px;
 }
 .tutorial:before {
 	border-color: rgba(107, 105, 105, 0);
-	border-width: 41px;
+	border-width: 13px;
 }
 
 /* LEFT */
@@ -29,14 +33,14 @@
 	right:100%;
 	top:50%;
 	border-right-color: yellow;
-	margin-top: -38px;
+	margin-top: -10px;
 }
 
 .left.tutorial:before {
 	right:100%;
 	top:50%;
 	border-right-color: #6b6969;
-	margin-top: -41px;
+	margin-top: -13px;
 }
 
 
@@ -45,40 +49,40 @@
 	left:100%;
 	top:50%;
 	border-left-color: yellow;
-	margin-top: -38px;
+	margin-top: -10px;
 }
 
 .right.tutorial:before {
 	left:100%;
 	top:50%;
 	border-left-color: #6b6969;
-	margin-top: -41px;
+	margin-top: -13px;
 }
 
 /* TOP */
-.top.tutorial {	margin-top: 35px; }
-.bot.tutorial {	margin-top: -200px; }
+.top.tutorial {	margin-top: 1em; }
+.bot.tutorial {	margin-top: -5em; }
 .left.tutorial {
-	margin-top: -80px;
-	margin-left: 90px;
+	margin-top: -2em;
+	margin-left: 6em;
 }
 .right.tutorial {
-	margin-top: -80px;
-	margin-left: -250px;
+	margin-top: -2em;
+	margin-left: -6em;
 }
 
 .top.tutorial:after {
 	left: 50%;
 	bottom: 100%;
 	border-bottom-color: yellow;
-	margin-left: -38px;
+	margin-left: -10px;
 }
 
 .top.tutorial:before {
 	left: 50%;
 	bottom: 100%;
 	border-bottom-color: #6b6969;
-	margin-left: -41px;
+	margin-left: -13px;
 }
 
 /* BOTTOM */
@@ -86,38 +90,34 @@
 	left: 50%;
 	top: 100%;
 	border-top-color: yellow;
-	margin-left: -38px;
+	margin-left: -10px;
 }
 
 .bot.tutorial:before {
 	left: 50%;
 	top: 100%;
 	border-top-color: #6b6969;
-	margin-left: -41px;
+	margin-left: -13px;
 }
-
 
 
 
 .tutorial_text {
+  background-color: yellow;
   color:blue;
   border-radius: 5px;
   padding: 10px;
-  font-size: 0.8em;
+  font-size: 0.6em;
   opacity: 0.9;
   z-index: 602;
+  font-style: italic;
 }
 
-.tutorial_text h4 {
-  margin-top: 2px;
-  text-align: center;
-  font-family: 'Helvetica Neue', sans-serif;
-  font-size: 1.5em;
-}
 
 .tutorial_text p { /*title*/
   font-size:1em;
   font-style: bold;
-  margin-bottom:0px;
-  margin-top:-10px;
+  margin-top:-6px;
+  margin-bottom:-6px;
+  text-align: left;
 }
