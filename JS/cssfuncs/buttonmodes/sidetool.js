@@ -14,9 +14,10 @@ var ToolButtons = {
 		ToolButtons.title.innerHTML = title;
 	},
 
-	addButton: function(message, callback, show_state){
+	addButton: function(message, title_text, callback, show_state){
 		var button = document.createElement("button");
 
+		button.title = title_text;
 		button.innerHTML = message;
 		button.onclick = function(){
 			callback(show_state)
@@ -35,10 +36,12 @@ var ToolButtons = {
 		cell.appendChild(button);
 	},
 
-	addToolsButton: function(message, callback, show_state){
+	addToolsButton: function(message, shortcut_key, callback, show_state){
 		ToolButtons.addToToolsContainer(
-			ToolButtons.addButton(message, callback, show_state)
+			ToolButtons.addButton(message, shortcut_key, callback, show_state)
 		);
+
+		ButtonModes.addKeyboardShortcut( "sidetool", shortcut_key, callback)
 	},
 
 	removeFromToolsContainer: function(key)
@@ -62,6 +65,8 @@ var ToolButtons = {
 			for (var k in ToolButtons.table_keys){
 				ToolButtons.removeFromToolsContainer(k);
 			}
+			ButtonModes.removeKeyboardShortcuts("sidetool");
+
 			ToolButtons.setTitle("");
 			ToolButtons.div.style.display = "none";
 		},
@@ -77,12 +82,12 @@ var ToolButtons = {
 			ToolButtons.modes.preamble();
 
 			ToolButtons.setTitle("Ped Tools");
-			ToolButtons.addToolsButton("Add Individual", function(){personDraw.addNode();});
-			ToolButtons.addToolsButton("Add Family", function(){familyDraw.addFam();});
-			ToolButtons.addToolsButton("Mate-Mate", function(){
+			ToolButtons.addToolsButton("Add Individual", "I", function(){personDraw.addNode();});
+			ToolButtons.addToolsButton("Add Family", "F", function(){familyDraw.addFam();});
+			ToolButtons.addToolsButton("Mate-Mate", "M", function(){
 				(new MatelineDraw(familyDraw.active_fam_group.id)).init();
 			});
-			ToolButtons.addToolsButton("Parent-Offspring", function(){
+			ToolButtons.addToolsButton("Parent-Offspring", "P", function(){
 				(new OffspringDraw(familyDraw.active_fam_group.id)).init();
 			});
 		},
@@ -95,9 +100,9 @@ var ToolButtons = {
 			//ToolButtons.setWidth(90);
 			ToolButtons.setTitle("Pedigree");
 
-			ToolButtons.addToolsButton("Start Analysis", SelectionMode.init);
+			ToolButtons.addToolsButton("Start Analysis", "Enter" , SelectionMode.init);
 
-			ToolButtons.addToolsButton("Modify Pedigree", function(){
+			ToolButtons.addToolsButton("Modify Pedigree", "Ctrl + M", function(){
 				localStorage.setItem(localStor.transfer, MainButtonActions._temphaploload);
 				utility.notify("transferring","...");
 
@@ -111,9 +116,9 @@ var ToolButtons = {
 			ToolButtons.modes.preamble();
 
 			ToolButtons.setTitle("Selection");
-			ToolButtons.addToolsButton("Select All", SelectionAction.selectAll);
-			ToolButtons.addToolsButton("Select Affecteds", SelectionAction.selectAffecteds);
-			ToolButtons.addToolsButton("Submit", HaploWindow.init);
+			ToolButtons.addToolsButton("Select All", "A", SelectionAction.selectAll);
+			ToolButtons.addToolsButton("Select Affecteds", "F", SelectionAction.selectAffecteds);
+			ToolButtons.addToolsButton("Submit", "Enter", HaploWindow.init);
 		},
 
 
@@ -124,10 +129,10 @@ var ToolButtons = {
 
 			ToolButtons.setTitle("Haplotypes");
 
-			ToolButtons.addToolsButton("Compare Genotypes", HomologySelectionMode.init);
-			ToolButtons.addToolsButton("Marker Search", CSSMarkerRange.init);
-			ToolButtons.addToolsButton("Prev. Recomb.", HaploBlock.scrollToPrevRecomb);
-			ToolButtons.addToolsButton("Next. Recomb.", HaploBlock.scrollToNextRecomb);
+			ToolButtons.addToolsButton("Compare Genotypes", "Ctrl + G", HomologySelectionMode.init);
+			ToolButtons.addToolsButton("Marker Search", "M", CSSMarkerRange.init);
+			ToolButtons.addToolsButton("Prev. Recomb.", "[", HaploBlock.scrollToPrevRecomb);
+			ToolButtons.addToolsButton("Next. Recomb.", "]", HaploBlock.scrollToNextRecomb);
 		},
 
 		/* From comparison mode, the buttons showed during homology selection */
@@ -136,9 +141,9 @@ var ToolButtons = {
 			ToolButtons.modes.preamble();
 
 			ToolButtons.setTitle("GT Compare");
-			ToolButtons.addToolsButton("Select All", SelectionAction.selectAll);
-			ToolButtons.addToolsButton("Select Affecteds", SelectionAction.selectAffecteds);
-			ToolButtons.addToolsButton("Submit", HomologySelectionMode.submit);
+			ToolButtons.addToolsButton("Select All", "A", SelectionAction.selectAll);
+			ToolButtons.addToolsButton("Select Affecteds", "F", SelectionAction.selectAffecteds);
+			ToolButtons.addToolsButton("Submit", "Enter", HomologySelectionMode.submit);
 			
 		},
 
@@ -149,7 +154,7 @@ var ToolButtons = {
 			ToolButtons.modes.preamble();
 
 			ToolButtons.setTitle("GT Compare");
-			ToolButtons.addToolsButton("Marker Search", CSSMarkerRange.showIndexCSS);
+			ToolButtons.addToolsButton("Marker Search", "M", CSSMarkerRange.showIndexCSS);
 		}
 	}
 }

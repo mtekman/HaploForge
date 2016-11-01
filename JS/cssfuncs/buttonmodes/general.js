@@ -5,9 +5,10 @@ var BottomButtons = {
 	div   : document.getElementById("save_and_close"),
 	table : document.getElementById("save_and_close_table"),
 
-	addButton: function(message, callback, show_state){
+	addButton: function(message, title_text, callback, show_state){
 		var button = document.createElement("button");
 
+		button.title = title_text;
 		button.innerHTML = message;
 		button.onclick = function(){
 			callback(show_state)
@@ -26,10 +27,12 @@ var BottomButtons = {
 		cell.appendChild(button);
 	},
 
-	addToolsButton: function(message, callback, show_state){
+	addToolsButton: function(message, shortcut, callback, show_state){
 		BottomButtons.addToToolsContainer(
-			BottomButtons.addButton(message, callback, show_state)
+			BottomButtons.addButton(message, shortcut, callback, show_state)
 		);
+
+		ButtonModes.addKeyboardShortcut( "general", shortcut, callback );
 	},
 
 	removeFromToolsContainer: function(key)
@@ -53,13 +56,14 @@ var BottomButtons = {
 			for (var k in BottomButtons.table_keys){
 				BottomButtons.removeFromToolsContainer(k);
 			}
+			ButtonModes.removeKeyboardShortcuts("general");
+
 			BottomButtons.div.style.display = "none";
 		},
 
 		__preamble: function(){
 			BottomButtons.modes.__clearMode();
 			BottomButtons.div.style.display = "block";
-			
 		},
 
 		/* Pedigree Creation View */
@@ -67,8 +71,11 @@ var BottomButtons = {
 		{
 			BottomButtons.modes.__preamble();
 
-			BottomButtons.addToolsButton("Save", MainButtonActions.savePedToStorage);
-			BottomButtons.addToolsButton("Export", function(){
+			Keyboard.beginListen();
+
+
+			BottomButtons.addToolsButton("Save", "Ctrl+S", MainButtonActions.savePedToStorage);
+			BottomButtons.addToolsButton("Export", "Ctrl+X", function(){
 
 				utility.yesnoprompt("Export", "Strip graphics tags?", 
 					"Yes", function(){
@@ -79,7 +86,10 @@ var BottomButtons = {
 					}
 				);
 			});
-			BottomButtons.addToolsButton("Exit", MainButtonActions.exitToMenu);
+			BottomButtons.addToolsButton("Exit", "Escape", function(){
+				Keyboard.endListen();
+				MainButtonActions.exitToMenu();
+			});
 
 			ModeTracker.setMode( "pedcreate" );
 		},
@@ -88,8 +98,8 @@ var BottomButtons = {
 		setToHaploView: function(){
 			BottomButtons.modes.__preamble();
 
-			BottomButtons.addToolsButton("Save", MainButtonActions.saveHaploToStorage);
-			BottomButtons.addToolsButton("Exit", MainButtonActions.exitToMenu);
+			BottomButtons.addToolsButton("Save", "Ctrl+S", MainButtonActions.saveHaploToStorage);
+			BottomButtons.addToolsButton("Exit", "Escape", MainButtonActions.exitToMenu);
 
 			ModeTracker.setMode( "haploview" );
 		},
@@ -104,11 +114,11 @@ var BottomButtons = {
 		setToComparisonMode: function(){
 			BottomButtons.modes.__preamble();
 
-			BottomButtons.addToolsButton("Align Pedigree", function(){
+			BottomButtons.addToolsButton("Align Pedigree", "V", function(){
 				alignTopSelection( DOS.haplo_group_nodes, DOS.haplo_group_lines);
 			});
 
-			BottomButtons.addToolsButton("Recolour", function(){
+			BottomButtons.addToolsButton("Recolour", "R", function(){
 				FounderColor.makeUniqueColors(true); //random = true
 				HaploBlock.redrawHaplos(false);
 			});

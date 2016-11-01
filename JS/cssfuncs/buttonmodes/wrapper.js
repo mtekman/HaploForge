@@ -15,6 +15,48 @@ var ButtonModes = {
 		"setToHomologyMode": true         /* Plot types */
 	},
 
+	__shortcuts : {},
+
+	addKeyboardShortcut(caller, keycombo, func){
+
+		// Key and modifier
+		var alt_key = keycombo.split('+'),
+			key = null,
+			alt = null;
+
+		if (alt_key.length == 2){
+			alt = alt_key[0];
+			key = alt_key[1];
+			
+			if (alt === "Ctrl"){
+				alt = "Control"
+			}
+		}
+		else {
+			key = alt_key[0]
+		}
+
+		if (key.length === 1){
+			key = key.toLowerCase();
+		}
+
+		if (!(caller in ButtonModes.__shortcuts)){
+			ButtonModes.__shortcuts[caller] = {};
+		}
+
+		ButtonModes.__shortcuts[caller][key] = true;
+		Keyboard.addKeyPressTask(key, func, alt);
+	},
+
+	removeKeyboardShortcuts(caller){
+		for (var k in ButtonModes.__shortcuts[caller]){
+			Keyboard.removeKeyPressTask(k);
+		}
+		ButtonModes.__shortcuts[caller] = {}; //reset
+	},
+
+
+
 	__switchMode: function(funcname){
 
 		console.log("ButtonMode", funcname)

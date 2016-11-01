@@ -51,7 +51,7 @@ var Keyboard = {
 	__processKeyDown(event){
 		Keyboard.__map[event.key] = true;
 
-//		console.log(event.key);
+		console.log(event.key);
 
 		if (event.key in Keyboard.dn_tasks){
 			Keyboard.dn_tasks[event.key]();
@@ -68,6 +68,39 @@ var Keyboard = {
 
 
 	//  -- Key tasks
+	addKeyPressTask(key, func, modifier_key = null){
+		console.log(key, "PP", modifier_key);
+		if (key in Keyboard.dn_tasks){
+			throw new Error("This will override the down AND up tasks for "+ key);
+		}
+
+		Keyboard.dn_tasks[key] = function(){
+			if (modifier_key !== null){
+				if (!(Keyboard.isPressed( modifier_key ))){
+					return -1;
+				}
+			}
+
+			if (func.fired === undefined){
+				func.fired = true;
+				func();
+			}
+
+			Keyboard.up_tasks[key] = function(){
+				delete func.fired;
+			};
+		}
+	},
+
+	removeKeyPressTask(key){
+		if (key in Keyboard.dn_tasks){
+			delete Keyboard.dn_tasks[key];
+			delete Keyboard.up_tasks[key];
+			return 0;
+		}
+		throw new Error(key + " not in down tasks (or up tasks)?");
+	},
+
 	addKeyUpTask(key, func){
 		if (key in Keyboard.up_tasks){
 			throw new Error("This will override the up task for "+key);
@@ -75,9 +108,10 @@ var Keyboard = {
 		Keyboard.up_tasks[key] = func;
 	},
 
-	removeKeyUpTask(key, func){
+	removeKeyUpTask(key){
 		if (key in Keyboard.up_tasks){
 			delete Keyboard.up_tasks[key];
+			return 0;
 		}
 		throw new Error(key+" not in keyup tasks");
 	},
@@ -90,7 +124,7 @@ var Keyboard = {
 		Keyboard.dn_tasks[key] = func;
 	},
 
-	removeKeyDownTask(key, func){
+	removeKeyDownTask(key){
 		if (key in Keyboard.dn_tasks){
 			delete Keyboard.dn_tasks[key];
 			return 0;
