@@ -36,12 +36,17 @@ var ToolButtons = {
 		cell.appendChild(button);
 	},
 
-	addToolsButton: function(message, shortcut_key, callback, show_state){
+	addToolsButton: function(message, shortcut_text, callback, show_state){
+
+		var splitter = shortcut_text.split('|'),
+			shortcut = splitter[0],
+			text = (" [" + shortcut + "] " + splitter[1]) || (" [" + shortcut + "] ");
+
 		ToolButtons.addToToolsContainer(
-			ToolButtons.addButton(message, shortcut_key, callback, show_state)
+			ToolButtons.addButton(message, text, callback, show_state)
 		);
 
-		ButtonModes.addKeyboardShortcut( "sidetool", shortcut_key, callback)
+		ButtonModes.addKeyboardShortcut( "sidetool", shortcut, callback)
 	},
 
 	removeFromToolsContainer: function(key)
@@ -82,12 +87,20 @@ var ToolButtons = {
 			ToolButtons.modes.preamble();
 
 			ToolButtons.setTitle("Ped Tools");
-			ToolButtons.addToolsButton("Add Individual", "I", function(){personDraw.addNode();});
-			ToolButtons.addToolsButton("Add Family", "F", function(){familyDraw.addFam();});
-			ToolButtons.addToolsButton("Mate-Mate", "M", function(){
+			ToolButtons.addToolsButton("Add Individual", 
+				"I|Adds an individual to the active family, which can then be modified by double-clicking on it", 
+				function(){personDraw.addNode();});
+			ToolButtons.addToolsButton("Add Family", 
+				"F|Adds a new family to the screen",
+				function(){familyDraw.addFam();});
+			ToolButtons.addToolsButton("Mate-Mate", 
+				"M|Draws a line between two individuals who will acts as parents.", 
+				function(){
 				(new MatelineDraw(familyDraw.active_fam_group.id)).init();
 			});
-			ToolButtons.addToolsButton("Parent-Offspring", "P", function(){
+			ToolButtons.addToolsButton("Parent-Offspring", 
+				"P|Draws a line between an individual and a couple who will be their parents",
+				function(){
 				(new OffspringDraw(familyDraw.active_fam_group.id)).init();
 			});
 		},
@@ -100,9 +113,13 @@ var ToolButtons = {
 			//ToolButtons.setWidth(90);
 			ToolButtons.setTitle("Pedigree");
 
-			ToolButtons.addToolsButton("Start Analysis", "Enter" , SelectionMode.init);
+			ToolButtons.addToolsButton("Start Analysis", 
+				"Enter|Begins the selection process",
+				SelectionMode.init);
 
-			ToolButtons.addToolsButton("Modify Pedigree", "Ctrl + M", function(){
+			ToolButtons.addToolsButton("Modify Pedigree",
+				"Ctrl + M|[NOT YET IMPLEMENTED]Modifies the current pedigree",
+				function(){
 				localStorage.setItem(localStor.transfer, MainButtonActions._temphaploload);
 				utility.notify("transferring","...");
 
@@ -116,9 +133,15 @@ var ToolButtons = {
 			ToolButtons.modes.preamble();
 
 			ToolButtons.setTitle("Selection");
-			ToolButtons.addToolsButton("Select All", "A", SelectionAction.selectAll);
-			ToolButtons.addToolsButton("Select Affecteds", "F", SelectionAction.selectAffecteds);
-			ToolButtons.addToolsButton("Submit", "Enter", HaploWindow.init);
+			ToolButtons.addToolsButton("Select All", 
+				"A|Selects all individuals from all families",
+				SelectionAction.selectAll);
+			ToolButtons.addToolsButton("Select Affecteds", 
+				"F|Selects all affected individuals from all families",
+				SelectionAction.selectAffecteds);
+			ToolButtons.addToolsButton("Submit", 
+				"Enter|Submits selection for haplotype viewing"
+				, HaploWindow.init);
 		},
 
 
@@ -129,10 +152,18 @@ var ToolButtons = {
 
 			ToolButtons.setTitle("Haplotypes");
 
-			ToolButtons.addToolsButton("Compare Genotypes", "Ctrl + G", HomologySelectionMode.init);
-			ToolButtons.addToolsButton("Marker Search", "M", CSSMarkerRange.init);
-			ToolButtons.addToolsButton("Prev. Recomb.", "[", HaploBlock.scrollToPrevRecomb);
-			ToolButtons.addToolsButton("Next. Recomb.", "]", HaploBlock.scrollToNextRecomb);
+			ToolButtons.addToolsButton("Compare Genotypes", 
+				"Ctrl + G|Begins selection process for genotype comparison mode",
+				HomologySelectionMode.init);
+			ToolButtons.addToolsButton("Marker Search", 
+				"M|Toggles marker search window",
+				CSSMarkerRange.init);
+			ToolButtons.addToolsButton("Prev. Recomb.", 
+				"[|Shifts view up to previous recombination",
+				HaploBlock.scrollToPrevRecomb);
+			ToolButtons.addToolsButton("Next. Recomb.", 
+				"]|Shifts view down to next recombination",
+				HaploBlock.scrollToNextRecomb);
 		},
 
 		/* From comparison mode, the buttons showed during homology selection */
@@ -141,9 +172,15 @@ var ToolButtons = {
 			ToolButtons.modes.preamble();
 
 			ToolButtons.setTitle("GT Compare");
-			ToolButtons.addToolsButton("Select All", "A", SelectionAction.selectAll);
-			ToolButtons.addToolsButton("Select Affecteds", "F", SelectionAction.selectAffecteds);
-			ToolButtons.addToolsButton("Submit", "Enter", HomologySelectionMode.submit);
+			ToolButtons.addToolsButton("Select All", 
+				"A|Selects all individuals shown",
+				SelectionAction.selectAll);
+			ToolButtons.addToolsButton("Select Affecteds", 
+				"F|Selects only affected individuals from shown",
+				SelectionAction.selectAffecteds);
+			ToolButtons.addToolsButton("Submit", 
+				"Enter|Initiates genotypes comparison mode from those selected",
+				HomologySelectionMode.submit);
 			
 		},
 
@@ -154,7 +191,9 @@ var ToolButtons = {
 			ToolButtons.modes.preamble();
 
 			ToolButtons.setTitle("GT Compare");
-			ToolButtons.addToolsButton("Marker Search", "M", CSSMarkerRange.showIndexCSS);
+			ToolButtons.addToolsButton("Marker Search", 
+				"M|Toggles marker search window",
+				CSSMarkerRange.showIndexCSS);
 		}
 	}
 }

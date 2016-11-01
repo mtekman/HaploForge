@@ -27,9 +27,14 @@ var BottomButtons = {
 		cell.appendChild(button);
 	},
 
-	addToolsButton: function(message, shortcut, callback, show_state){
+	addToolsButton: function(message, shortcut_text, callback, show_state){
+
+		var splitter = shortcut_text.split('|'),
+			shortcut = splitter[0],
+			text = (" [" + shortcut + "] " + splitter[1]) || (" [" + shortcut + "] ");
+
 		BottomButtons.addToToolsContainer(
-			BottomButtons.addButton(message, shortcut, callback, show_state)
+			BottomButtons.addButton(message, text, callback, show_state)
 		);
 
 		ButtonModes.addKeyboardShortcut( "general", shortcut, callback );
@@ -74,8 +79,12 @@ var BottomButtons = {
 			Keyboard.beginListen();
 
 
-			BottomButtons.addToolsButton("Save", "Ctrl+S", MainButtonActions.savePedToStorage);
-			BottomButtons.addToolsButton("Export", "Ctrl+X", function(){
+			BottomButtons.addToolsButton("Save", 
+				"Ctrl+S|Saves current pedigree to be automatically loaded next time", 
+				MainButtonActions.savePedToStorage);
+			BottomButtons.addToolsButton("Export", 
+				"Ctrl+E|Exports pedigree in LINKAGE format with or without graphics positions saved",
+				function(){
 
 				utility.yesnoprompt("Export", "Strip graphics tags?", 
 					"Yes", function(){
@@ -86,7 +95,7 @@ var BottomButtons = {
 					}
 				);
 			});
-			BottomButtons.addToolsButton("Exit", "Escape", function(){
+			BottomButtons.addToolsButton("Exit", "Ctrl+X|Exits to Main Menu", function(){
 				Keyboard.endListen();
 				MainButtonActions.exitToMenu();
 			});
@@ -98,8 +107,13 @@ var BottomButtons = {
 		setToHaploView: function(){
 			BottomButtons.modes.__preamble();
 
-			BottomButtons.addToolsButton("Save", "Ctrl+S", MainButtonActions.saveHaploToStorage);
-			BottomButtons.addToolsButton("Exit", "Escape", MainButtonActions.exitToMenu);
+			BottomButtons.addToolsButton("Save", 
+				"Ctrl+S|Save current analysis data to be automatically loaded next time",
+				MainButtonActions.saveHaploToStorage);
+			
+			BottomButtons.addToolsButton("Exit", 
+				"Ctrl+X|Exits to Main Menu",
+				MainButtonActions.exitToMenu);
 
 			ModeTracker.setMode( "haploview" );
 		},
@@ -114,11 +128,11 @@ var BottomButtons = {
 		setToComparisonMode: function(){
 			BottomButtons.modes.__preamble();
 
-			BottomButtons.addToolsButton("Align Pedigree", "V", function(){
+			BottomButtons.addToolsButton("Align Pedigree", "V|Shifts individuals vertically to be at the same position, or offset by generation", function(){
 				alignTopSelection( DOS.haplo_group_nodes, DOS.haplo_group_lines);
 			});
 
-			BottomButtons.addToolsButton("Recolour", "R", function(){
+			BottomButtons.addToolsButton("Recolour", "R|Random colour assignment to haplo blocks. Founder groups are preserved.", function(){
 				FounderColor.makeUniqueColors(true); //random = true
 				HaploBlock.redrawHaplos(false);
 			});
