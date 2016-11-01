@@ -19,33 +19,49 @@ var Keyboard = {
 	dn_tasks : {},  // keydn --> function()
 	up_tasks : {},    // keyup --> function()
 
+	__beginListen(){
+		document.addEventListener("keydown", Keyboard.__processKeyDown, false);
+		document.addEventListener("keyup", Keyboard.__processKeyUp, false);
+	},
+
+	__endListen(){
+		document.removeEventListener("keydown", Keyboard.__processKeyDown, false);
+		document.removeEventListener("keyup", Keyboard.__processKeyUp, false);
+	},
 
 	beginListen(){
 //		console.log("KEYBOARD", Keyboard.__listening)
 
 		if (Keyboard.__listening === 0){
-			document.addEventListener("keydown", Keyboard.__processKeyDown, false);
-			document.addEventListener("keyup", Keyboard.__processKeyUp, false);
+			Keyboard.__beginListen();
 			//console.log("keyboard listening")
-
 		}
 		Keyboard.__listening += 1;
 	},
 
 	endListen(){
 		Keyboard.__listening -= 1;
-
-
 		
 		if (Keyboard.__listening <= 0){
-			document.removeEventListener("keydown", Keyboard.__processKeyDown, false);
-			document.removeEventListener("keyup", Keyboard.__processKeyUp, false);
-
-//			console.log("keyboard stopped")
-
+			Keyboard.__endListen();
 			Keyboard.__listening = 0;
 		}
 //		console.log("KEYBOARD", Keyboard.__listening)
+	},
+
+	// Pausing is useful for input entering operations.
+	pause_state: null,
+
+	pause(){
+		Keyboard.pause_state = Keyboard.__listening
+		Keyboard.__endListen();
+	},
+
+	unpause(){
+		if (Keyboard.pause_state > 0){
+			Keyboard.__beginListen();
+		}
+		Keyboard.pause_state = null;
 	},
 
 	__processKeyDown(event){
@@ -69,27 +85,28 @@ var Keyboard = {
 
 	//  -- Key tasks
 	addKeyPressTask(key, func, modifier_key = null){
-		console.log(key, "PP", modifier_key);
+
 		if (key in Keyboard.dn_tasks){
 			throw new Error("This will override the down AND up tasks for "+ key);
 		}
 
 		Keyboard.dn_tasks[key] = function(){
+			func.pressed = true;
+		};
+
+		Keyboard.up_tasks[key] = function(){
+
 			if (modifier_key !== null){
 				if (!(Keyboard.isPressed( modifier_key ))){
 					return -1;
 				}
 			}
 
-			if (func.fired === undefined){
-				func.fired = true;
+			if (func.pressed){
 				func();
 			}
-
-			Keyboard.up_tasks[key] = function(){
-				delete func.fired;
-			};
-		}
+			func.pressed = false;
+		};
 	},
 
 	removeKeyPressTask(key){
