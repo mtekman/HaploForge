@@ -85,10 +85,12 @@ var famProps = {
 	_submit: document.getElementById('family_submit'),
 
 	hide: function(){ 
+		Keyboard.unpause()
 		famProps._box.style.display = "none";
 		famProps._box.style.zIndex = -2;
 	},
 	show: function(){
+		Keyboard.pause()
 		famProps._box.style.display = "block";
 		famProps._box.style.zIndex = 502;
 		famProps._name.focus();
@@ -180,10 +182,12 @@ var persProps = {
 
 
 	hide: function(){ 
+		Keyboard.unpause()
 		this._box.style.display = "none";
 		this._box.style.zIndex = -99;
 	},
 	show: function(){
+		Keyboard.pause()
 		this._box.style.display = "block";
 		this._box.style.zIndex = 501;
 		this.name.focus();
@@ -277,10 +281,12 @@ var messProps = {
 	},
 
 	hide: function(){ 
+		Keyboard.unpause()
 		this._box.style.display = "none";
 		this._box.style.zIndex = -99;
 	},
 	show: function(){ 
+		Keyboard.pause()
 		this._box.style.display = "block";
 		this._box.style.zIndex = 502;
 		this._input.focus();
