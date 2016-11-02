@@ -312,31 +312,19 @@ function mapLines(line_points, haplo_group_lines){
 
 		 			if(sib_gfx_pos.x < min_x_of_sibgroup){
 		 				min_x_of_sibgroup = sib_gfx_pos.x;
-		 				y_pos_of_any_sibline = sibline.getPoints()[3];
+		 				y_pos_of_any_sibline = sibline.getPoints()[3] + sibline.getY();
 		 			}
 		 		}
 
-		 		//Add dos info
+ 		//Add dos info
 		 		if (info.text > 1){
-			 		haplo_group_lines.add( 
-			 			new Kinetic.Circle({
-			 				x: ((sib_anchor_pos.x + min_x_of_sibgroup) / 2),
-			 				y: y_pos_of_any_sibline, 
-			 				radius: 6,
-			 				fill: 'white',
-			 				stroke: 'black',
-			 				strokeWidth: 1
-			 			})
-			 		);
-
-			 		haplo_group_lines.add(
-			 			new Kinetic.Text({
-			 				x: ((sib_anchor_pos.x + min_x_of_sibgroup) / 2) - 3,
-			 				y: y_pos_of_any_sibline - 5,
-				 			text: info.text,
-			 				fontSize: 11,
-							fill: 'black'}) 
-		 			);
+		 			haplo_group_lines.add(
+			 			createDOSCircle(
+							(sib_anchor_pos.x + min_x_of_sibgroup) / 2,
+							y_pos_of_any_sibline,
+							info.text
+						)
+					);
 			 	}
 			}
 		}
@@ -345,3 +333,34 @@ function mapLines(line_points, haplo_group_lines){
 	main_layer.draw();
 	haplo_layer.draw();
 }
+
+
+
+var createDOSCircle = function(xx,yy, dos_text){
+
+	var group = new Kinetic.Group({
+		x: xx,
+		y: yy
+	});
+
+	var circle = new Kinetic.Circle({
+		x: 0,
+		y: 0,
+		radius: 6,
+		fill: 'white', stroke: 'black', strokeWidth: 1
+	});
+
+	var text = new Kinetic.Text({
+		x: - 3,
+		y: - 5,
+		text: dos_text,
+		fontSize: 11, fill: 'black'
+	});
+
+	group.add(circle);
+	group.add(text);
+
+	return group;
+}
+
+

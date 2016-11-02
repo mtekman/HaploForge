@@ -129,7 +129,7 @@ var BottomButtons = {
 			BottomButtons.modes.__preamble();
 
 			BottomButtons.addToolsButton("Align Pedigree", "V|Shifts individuals vertically to be at the same position, or offset by generation", function(){
-				alignTopSelection( DOS.haplo_group_nodes, DOS.haplo_group_lines);
+				HaploWindow.alignTopSelection( DOS.haplo_group_nodes, DOS.haplo_group_lines);
 			});
 
 			BottomButtons.addToolsButton("Recolour", "R|Random colour assignment to haplo blocks. Founder groups are preserved.", function(){

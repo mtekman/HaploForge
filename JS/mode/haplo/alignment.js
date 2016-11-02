@@ -1,12 +1,16 @@
-var haplomode_alignment_toggle = false;
 
-function alignTopSelection( group_nodes, group_lines)
+HaploWindow.__aligntoggle = false;
+
+HaploWindow.alignTopSelection = function(group_nodes, group_lines)
 {
-	haplomode_alignment_toggle = !haplomode_alignment_toggle;
+	// Group lines = DOS lines 
+	// Group nodes = Pedigree nodes.
+
+	HaploWindow.__aligntoggle = !HaploWindow.__aligntoggle;
 
 	var tween_array = [];
 	
-	if (haplomode_alignment_toggle){
+	if (HaploWindow.__aligntoggle){
 		group_lines.hide();
 
 		var y_line = HaploWindow.min_node_placement_y + DOS.initial_group_node_offset.y;
@@ -114,3 +118,5 @@ function alignTopSelection( group_nodes, group_lines)
 
 	haplo_layer.draw();
 }
+
+

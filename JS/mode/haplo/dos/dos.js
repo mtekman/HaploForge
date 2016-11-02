@@ -1,6 +1,40 @@
 
+var SubSelectLevel = {
+
+/* The naive approach would be to use the existing LevelGrid to
+   determine DOS between individuals, but we would still need
+   to determine whether said individuals are related, meaning
+   recursing through parents would still be required and we can
+   calculate DOS from that alone.
+
+   The better approach -- (1) For each individual
+*/
+	function(selection_map){
+
+		// Grab level grids for each family member
+
+		for (var fam in selection_map){
+
+			var fam_grid = GlobalLevelGrid.getGrid(fam);
+
+			for (var g=0; g < selection_map[fam].length; g++) // gen
+			{
+				for (var i=0; i < selection_map[fam][g].length; i++) // indiv
+				{
+					var indiv = selection_map[fam][g][i];
+					if (indiv.id){}
+				}
+			}
+		}
+	}
+}
+
+
+
 
 function findDOSinSelection(selection_map){
+
+	console.log(selection_map)
 
 	// Replace this as the main argument, if generations are not needed....
 	var selection_map_map = {}; // This is an actual map, no generations
