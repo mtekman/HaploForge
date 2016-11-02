@@ -35,7 +35,7 @@ var MarkerData = {
 	// "Pads rs identifiers into fixed width string based on max length
 	padMarkerMap(){
 		var format = "            ",
-			withgp = MarkerData.gp_array.length !==0;
+			withgp = MarkerData.gp_array.length > 1 ;
 
 
 		for (var i=0; i < MarkerData.rs_array.length; i++){
