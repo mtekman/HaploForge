@@ -196,7 +196,7 @@ function graphInitPos(start_x, start_y, enable_ped_edit = false){
 					end_pos = {	x: child_pos.x,	y: child_pos.y	};
 				}
 
-				else assert(false,"Wrong type! "+key+", type= "+type);
+				else console.assert(false,"Wrong type! "+key+", type= "+type);
 
 
 				edge.graphics = addRLine(fam_group, start_pos, end_pos, consang); 					//DRAW

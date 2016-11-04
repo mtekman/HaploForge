@@ -150,6 +150,9 @@ var HaploPedProps = {
 
 
 	_populateGraphics: function populateGrids_and_UniqueObjs() {
+
+		console.groupCollapsed("Populate Graphics")
+
 		//First root indiv for each family -- all members must be connected!
 		familyMapOps.foreachfam(function(fam_id){
 
@@ -205,13 +208,9 @@ var HaploPedProps = {
 						}
 					}
 				}, fam_id);
-
-
-
-
-
 			}
 		});
+		console.groupEnd();
 	}
 }
 

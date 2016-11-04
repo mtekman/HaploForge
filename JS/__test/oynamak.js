@@ -1,5 +1,5 @@
 function longestCommon(alle1, alle2) {
-	assert(alle1.length === alle2.length, "Arrays must be of equal length");
+	console.assert(alle1.length === alle2.length, "Arrays must be of equal length");
 
 	var found_sequences = {}; // length: {s_i, f_i} }
 

@@ -75,10 +75,10 @@ function exportToTab(text)
 }
 
 
-
-function assert(bool, message){                     //General error handling
-    if (!bool) throw new Error(message);
-}
+// Console.assert is better
+//function assert(bool, message){                     //General error handling
+//    if (!bool) throw new Error(message);
+//}
 
 // for some reason keys wont sort numerically for negative keys
 function sortedKeys(mapper){

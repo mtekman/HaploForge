@@ -40,9 +40,9 @@ var Keyboard = {
 	},
 
 	endListen(){
-		Keyboard.__listening -= 1;
+//		Keyboard.__listening -= 1;
 		
-		if (Keyboard.__listening <= 0){
+		if (Keyboard.__listening > 0){
 			Keyboard.__endListen();
 			Keyboard.__listening = 0;
 		}

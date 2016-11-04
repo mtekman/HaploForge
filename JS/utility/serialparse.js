@@ -141,6 +141,8 @@ var SerialParse = {
 		import: function(famstring){
 			var lines = famstring.split('\n');
 
+			console.groupCollapsed("Serial Parse Import")
+
 			for (var l=0; l < lines.length; l++){
 				var line = lines[l];
 
@@ -181,6 +183,7 @@ var SerialParse = {
 					familyMapOps.insertPerc(person, fid);
 				}
 			}
+			console.groupEnd();
 		}
 	}
 }

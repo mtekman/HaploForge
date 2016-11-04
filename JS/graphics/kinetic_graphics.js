@@ -290,7 +290,7 @@ function addPerson(person, fam_group,  t_x, t_y)  //positions relative to family
 			case 1: (function addMale()  { shape = addSquare (col_affs[aff]) })(); break;
 			case 2: (function addFemale(){ shape = addCircle (col_affs[aff]) })(); break;
 			default:
-				assert(false, "No gender for index "+gender);
+				console.assert(false, "No gender for index "+gender);
 		}
 		return shape;
 	};

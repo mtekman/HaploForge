@@ -157,7 +157,7 @@ var familyMapOps = {
 		
 		if (!(family_id in familyMapOps._map)){
 			familyMapOps._map[family_id] = {}
-			console.log("FMO: added new fam " + family_id);
+			console.log("FMO: added new fam", family_id);
 		}
 		
 		var num_attempts = familyMapOps._loginsertion(person.id, family_id);		

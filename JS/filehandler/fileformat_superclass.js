@@ -31,6 +31,7 @@ class FileFormat {
 		FileFormat.__begFuncs();
 
 
+		console.groupCollapsed("File Processing")
 
 		// Haplo *must* get called
 		queue.addJob({
@@ -77,6 +78,8 @@ class FileFormat {
 		// Process all jobs, then run finish func
 		queue.exec(function(res_array){
 
+			console.groupEnd()
+
 			if (afterCallback !== null){
 				afterCallback();
 			} else {
@@ -107,11 +110,13 @@ class FileFormat {
 		
 		graphInitPos(nodeSize + 10, grid_rezY);
 
+		console.groupCollapsed("Haploblock Assignment")
 		if (descentmode === null){
 			console.log("Resolve: Load From Storage");
 		} else {
 			AssignHGroups.init(descentmode);
 		}
+		console.groupEnd();
 
 		MarkerData.padMarkerMap();
 	}

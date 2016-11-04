@@ -14,7 +14,7 @@ class PromiseQueue {
 		var that = this;
 
 		this.promise = this.promise.then(function(){
-			console.log("---Process:", job.file.name);
+			console.log("---Dispatching:", job.file.name);
 			return that.generaltask(job);
 		});
 	}

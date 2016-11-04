@@ -35,7 +35,7 @@ var AstarHandler = {
 			fath_hp = fath.haplo_data,
 			gender = pers.gender;
 
-		assert(pers_hp[0].data_array.length === moth_hp[0].data_array.length
+		console.assert(pers_hp[0].data_array.length === moth_hp[0].data_array.length
 		    && pers_hp[0].data_array.length === fath_hp[0].data_array.length
 			&& pers_hp[1].data_array.length === moth_hp[1].data_array.length
 			&& pers_hp[1].data_array.length === fath_hp[1].data_array.length, "Allele lengths dont match for moth,fath,chil:"+ moth.id+" "+fath.id+" "+pers.id);
