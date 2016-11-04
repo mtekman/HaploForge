@@ -11,57 +11,66 @@ var Keyboard = {
 		"PageUp" : false
 	},
 
-	__listening: 0, 
-	//smart pointer 
-	    // --> at zero it stops listening
-	    //     increments for each beginListen
+	__listening: false, 
+
+	__pause_state: null,	// Pausing is useful for input entering operations.
+	__tmptasks : [], // temporary layer for holding up and down tasks during pauses.
 
 	dn_tasks : {},  // keydn --> function()
 	up_tasks : {},    // keyup --> function()
 
-	__beginListen(){
+	__begin(){
 		document.addEventListener("keydown", Keyboard.__processKeyDown, false);
 		document.addEventListener("keyup", Keyboard.__processKeyUp, false);
 	},
 
-	__endListen(){
+	__end(){
 		document.removeEventListener("keydown", Keyboard.__processKeyDown, false);
 		document.removeEventListener("keyup", Keyboard.__processKeyUp, false);
 	},
 
 	beginListen(){
-//		console.log("KEYBOARD", Keyboard.__listening)
-
-		if (Keyboard.__listening === 0){
-			Keyboard.__beginListen();
-			//console.log("keyboard listening")
+		if (!Keyboard.__listening){
+			Keyboard.__begin();
 		}
-		Keyboard.__listening += 1;
+		Keyboard.__listening = true;
 	},
 
 	endListen(){
-//		Keyboard.__listening -= 1;
-		
-		if (Keyboard.__listening > 0){
-			Keyboard.__endListen();
-			Keyboard.__listening = 0;
+		if (Keyboard.__listening){
+			Keyboard.__end();
+			Keyboard.__listening = true;
 		}
-//		console.log("KEYBOARD", Keyboard.__listening)
 	},
 
-	// Pausing is useful for input entering operations.
-	pause_state: null,
+	pause(except_func = null){
+		Keyboard.__pause_state = Keyboard.__listening
 
-	pause(){
-		Keyboard.pause_state = Keyboard.__listening
-		Keyboard.__endListen();
+		if (except_func !== null){
+			Keyboard.__tmptasks = [Keyboard.dn_tasks, Keyboard.up_tasks];
+			Keyboard.dn_tasks = {};
+			Keyboard.up_tasks = {};
+
+			except_func();
+		}
+		else {
+			Keyboard.endListen();		
+		}
 	},
 
 	unpause(){
-		if (Keyboard.pause_state > 0){
-			Keyboard.__beginListen();
+
+		// Unload except_func layer if required
+		if (Keyboard.__tmptasks.length > 0){
+			Keyboard.dn_tasks = Keyboard.__tmptasks[0];
+			Keyboard.up_tasks = Keyboard.__tmptasks[1];
+			Keyboard.__tmptasks = [];
 		}
-		Keyboard.pause_state = null;
+
+		if (Keyboard.__pause_state){
+			Keyboard.beginListen();
+		}
+		Keyboard.__pause_state = null;
 	},
 
 	__processKeyDown(event){

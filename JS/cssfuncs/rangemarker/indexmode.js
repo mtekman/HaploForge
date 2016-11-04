@@ -48,11 +48,25 @@ var CSSMarkerRange = {
 	},
 
 	showIndexCSS(){
+		Keyboard.pause(function(){
+			Keyboard.addKeyPressTask("Enter", function(){
+				if (CSSMarkerRange._max_input.value.length < 4){
+					CSSMarkerRange._max_input.focus();
+				}
+				else {
+					CSSMarkerRange.submitIndexRange();
+				}
+			});
+		});
+
+
 		CSSMarkerRange._visible = true;
 		document.getElementById('index_class').style.display = "block"
+		CSSMarkerRange._min_input.focus()
 	},
 
 	hideIndexCSS(){
+		Keyboard.unpause()
 		CSSMarkerRange._visible = false;
 		document.getElementById('index_class').style.display = "none"
 	},

@@ -193,7 +193,7 @@ var ToolButtons = {
 			ToolButtons.setTitle("GT Compare");
 			ToolButtons.addToolsButton("Marker Search", 
 				"M|Toggles marker search window",
-				CSSMarkerRange.showIndexCSS);
+				CSSMarkerRange.init);
 		}
 	}
 }
