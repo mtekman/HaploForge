@@ -37,9 +37,9 @@ var SelectionAction = {
 				}
 			}
 		}
-		console.log("affecteds:", 
-			Object.keys(SelectionMode._items).filter( function (n){ return SelectionMode._items[n].affected === true;})
-		);
+//		console.log("affecteds:", 
+//			Object.keys(SelectionMode._items).filter( function (n){ return SelectionMode._items[n].affected === true;})
+//		);
 	}
 
 }

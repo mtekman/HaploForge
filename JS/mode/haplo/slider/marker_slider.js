@@ -41,6 +41,12 @@ var MarkerSlider = {
 	makeVisible: function(visible)
 	{
 
+		if (HaploWindow._bottom === null){
+			return 0;
+			// Haplo has not been initiated yet
+			// so slider has no placement
+		}
+
 		var slider = MarkerSlider._get();
 
 		if (visible){

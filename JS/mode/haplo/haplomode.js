@@ -86,16 +86,18 @@ var HaploWindow = {
 	
 	init: function launchHaplomode()
 	{
-		SelectionAction.reset();
-
-		SelectionMode._exit.hide();
-		
+		SelectionAction.reset();	
 		SelectionMode.markSelecteds();
 
 		if (SelectionMode.noneSelected()){
-			SelectionMode.destroy();
+			utility.notify("Error", "Please select some individuals")
+//			SelectionMode.destroy();
+//			HaploWindow.destroy();
+//			main_layer.draw();
 			return;
 		}
+
+		SelectionMode._exit.hide();
 
 		var line_data = findDOSinSelection( SelectionMode._ids_map );
 
