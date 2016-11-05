@@ -110,5 +110,9 @@ function addExitButton(center, callback, color_level = 0)
 	group.add( crossUp );
 	group.add( crossDown );
 
+	// hack
+//	ButtonModes.addKeyboardShortcut("sidetool", "Escape", callback);
+
+
 	return group;
 }
