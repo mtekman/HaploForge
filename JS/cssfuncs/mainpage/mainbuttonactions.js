@@ -4,10 +4,13 @@ var MainButtonActions  = {
 	_temphaploload: null,
 
 	preamble: function(){
+		Keyboard.layerOff();
+
 		makeStage();
 		init.clearMaps();
-	},
 
+		Keyboard.layerOn();
+	},
 
 	fileUpload: fileSelector.init,
 
@@ -61,8 +64,6 @@ var MainButtonActions  = {
 	},
 
 	exitToMenu: function(){
-
-		Keyboard.endListen();
 
 		if (MainButtonActions.fileType === FORMAT.PEDFILE){
 			var changeDetected = Pedfile.pedigreeChanged();
