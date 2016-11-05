@@ -61,6 +61,8 @@ HaploWindow.alignTopSelection = function(group_nodes, group_lines)
 		}
 	}
 	else {
+		group_lines.show();
+
 		var render_counter = group_nodes.children.length - 1;
 		// preserved until no longer used
 

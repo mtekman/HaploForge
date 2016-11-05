@@ -31,6 +31,8 @@ var HaploWindow = {
 
 	destroy : function stopHaplomode(){
 
+		HaploWindow.__aligntoggle = false; // workaround for alignment issue on re-entering mode
+
 		HaploModeEvents._removeMouseWheel();
 
 		HaploWindow._toggleBottom(false, function(){
@@ -196,15 +198,11 @@ var HaploWindow = {
 		HaploWindow.y_margin = 30;
 
 		if (show){
-			Keyboard.beginListen();
-
 			HaploModeEvents._addMouseWheel();
 			HaploModeEvents.addKeys();
 			
 			HaploWindow.__showBottom( finishfunc );
 		} else {
-			Keyboard.endListen();
-
 			HaploModeEvents._removeMouseWheel();
 			HaploModeEvents.removeKeys();
 
