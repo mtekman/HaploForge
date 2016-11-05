@@ -60,15 +60,15 @@ var ButtonModes = {
 
 
 	__switchMode: function(funcname){
-
 		console.log("ButtonMode", funcname)
 
 		ButtonModes.__preamble();
 
-
+		Keyboard.layerOff();
+		Keyboard.layerOn();
+		
 		BottomButtons.modes[funcname]();
 		ToolButtons.modes[funcname]();
-
 	},
 	
 	__preamble: function(){
