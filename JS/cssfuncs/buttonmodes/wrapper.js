@@ -19,6 +19,8 @@ var ButtonModes = {
 
 	addKeyboardShortcut(caller, keycombo, func){
 
+//		console.trace("__shortcuts")
+
 		// Key and modifier
 		var alt_key = keycombo.split('+'),
 			key = null,
@@ -62,9 +64,11 @@ var ButtonModes = {
 		console.log("ButtonMode", funcname)
 
 		ButtonModes.__preamble();
-		
+
+
 		BottomButtons.modes[funcname]();
 		ToolButtons.modes[funcname]();
+
 	},
 	
 	__preamble: function(){
@@ -75,18 +79,15 @@ var ButtonModes = {
 			}
 			ButtonModes.__modespopulated = true
 		}
-		Keyboard.endListen();
 	},
 
 	/* Switch mode has to be called at least once, keep these functions here */
 	setToPedCreate(){
 		ButtonModes.__switchMode(arguments.callee.name)
-		Keyboard.beginListen();
 	},
 
 	setToHaploView(){
 		ButtonModes.__switchMode(arguments.callee.name)
-		Keyboard.beginListen();
 	},
 }
 

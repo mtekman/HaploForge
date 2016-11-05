@@ -14,7 +14,7 @@ var Keyboard = {
 	__listening: false, 
 
 	__pause_state: null,	// Pausing is useful for input entering operations.
-	__tmptasks : [], // temporary layer for holding up and down tasks during pauses.
+	__tmptasks : [],        // holds each layer of up and down tasks, pops/pushes each 
 
 	__dn_tasks : {},  // keydn --> function()
 	__up_tasks : {},    // keyup --> function()
@@ -23,19 +23,21 @@ var Keyboard = {
 	// -- Layer handling
 
 	/** Store previous config and override if neccesary, restoring on layerOff **/	
-	layerOn(newfuncs, replace = false){
+	layerOn(replace = true){
+		Keyboard.__beginListen();
+
 		Keyboard.__tmptasks.push( [Keyboard.__dn_tasks, Keyboard.__up_tasks] )
 
 		if (replace){
 			Keyboard.__dn_tasks = {};
 			Keyboard.__up_tasks = {};
 		}
-		newfuncs();
 	},
 
 	layerOff(){
 		if (Keyboard.__tmptasks.length == 0){
-			console.log("No layer to pop");
+			console.trace("No layer to pop");
+			Keyboard.__endListen(); //No tasks to process
 			return -1;
 		}
 
@@ -44,8 +46,71 @@ var Keyboard = {
 		Keyboard.__up_tasks = dnup_tasks[1];
 	},
 
-	pause(){Keyboard.__endListen();},
-	unpause(){Keyboard.__beginListen();},
+	__prevlistenstate: null,
+
+	pause(){
+		Keyboard.__prevlistenstate = Keyboard.__listening;
+		Keyboard.__endListen();
+	},
+	
+	unpause(){
+		if (Keyboard.__prevlistenstate){
+			Keyboard.__beginListen();
+		}
+		Keyboard.__prevlistenstate = null;
+	},
+
+
+
+
+	// Private
+	__begin(){
+		console.trace("begin");
+		document.addEventListener("keydown", Keyboard.__processKeyDown, false);
+		document.addEventListener("keyup", Keyboard.__processKeyUp, false);
+	},
+
+	__end(){
+		console.trace("end");
+
+		document.removeEventListener("keydown", Keyboard.__processKeyDown, false);
+		document.removeEventListener("keyup", Keyboard.__processKeyUp, false);
+	},
+
+	__beginListen(){
+		if (!Keyboard.__listening){
+			Keyboard.__begin();
+		}
+		Keyboard.__listening = true;
+	},
+
+	__endListen(){
+		if (Keyboard.__listening){
+			Keyboard.__end();
+			Keyboard.__listening = false;
+		}
+	},
+
+
+	__processKeyDown(event){
+		Keyboard.__map[event.key] = true;
+
+		console.log(event.key);
+
+		if (event.key in Keyboard.__dn_tasks){
+			Keyboard.__dn_tasks[event.key]();
+		}
+	},
+
+	__processKeyUp(event){
+		Keyboard.__map[event.key] = false;
+
+		if (event.key in Keyboard.__up_tasks){
+			Keyboard.__up_tasks[event.key]();
+		}
+	},
+
+
 
 
 	//  -- Key tasks
@@ -131,52 +196,6 @@ var Keyboard = {
 	isCtrlDown(){
 		return Keyboard.isPressed("Control");
 	},	
-
-
-	// Private
-	__begin(){
-		document.addEventListener("keydown", Keyboard.__processKeyDown, false);
-		document.addEventListener("keyup", Keyboard.__processKeyUp, false);
-	},
-
-	__end(){
-		document.removeEventListener("keydown", Keyboard.__processKeyDown, false);
-		document.removeEventListener("keyup", Keyboard.__processKeyUp, false);
-	},
-
-	__beginListen(){
-		if (!Keyboard.__listening){
-			Keyboard.__begin();
-		}
-		Keyboard.__listening = true;
-	},
-
-	__endListen(){
-		if (Keyboard.__listening){
-			Keyboard.__end();
-			Keyboard.__listening = true;
-		}
-	},
-
-
-	__processKeyDown(event){
-		Keyboard.__map[event.key] = true;
-
-		console.log(event.key);
-
-		if (event.key in Keyboard.__dn_tasks){
-			Keyboard.__dn_tasks[event.key]();
-		}
-	},
-
-	__processKeyUp(event){
-		Keyboard.__map[event.key] = false;
-
-		if (event.key in Keyboard.__up_tasks){
-			Keyboard.__up_tasks[event.key]();
-		}
-	},
-
 
 
 }

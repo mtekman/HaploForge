@@ -13,7 +13,6 @@ var BottomButtons = {
 		button.onclick = function(){
 			callback(show_state)
 		};
-
 		return button;
 	},
 
@@ -76,12 +75,10 @@ var BottomButtons = {
 		{
 			BottomButtons.modes.__preamble();
 
-			Keyboard.beginListen();
-
-
 			BottomButtons.addToolsButton("Save", 
 				"Ctrl+S|Saves current pedigree to be automatically loaded next time", 
 				MainButtonActions.savePedToStorage);
+
 			BottomButtons.addToolsButton("Export", 
 				"Ctrl+E|Exports pedigree in LINKAGE format with or without graphics positions saved",
 				function(){
@@ -95,8 +92,8 @@ var BottomButtons = {
 					}
 				);
 			});
+
 			BottomButtons.addToolsButton("Exit", "Ctrl+X|Exits to Main Menu", function(){
-				Keyboard.endListen();
 				MainButtonActions.exitToMenu();
 			});
 
