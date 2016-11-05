@@ -51,15 +51,15 @@ var Keyboard = {
 	//  -- Key tasks
 	addKeyPressTask(key, func, modifier_key = null){
 
-		if (key in Keyboard.dn_tasks){
+		if (key in Keyboard.__dn_tasks){
 			throw new Error("This will override the down AND up tasks for "+ key);
 		}
 
-		Keyboard.dn_tasks[key] = function(){
+		Keyboard.__dn_tasks[key] = function(){
 			func.pressed = true;
 		};
 
-		Keyboard.up_tasks[key] = function(){
+		Keyboard.__up_tasks[key] = function(){
 
 			if (modifier_key !== null){
 				if (!(Keyboard.isPressed( modifier_key ))){
@@ -75,24 +75,24 @@ var Keyboard = {
 	},
 
 	removeKeyPressTask(key){
-		if (key in Keyboard.dn_tasks){
-			delete Keyboard.dn_tasks[key];
-			delete Keyboard.up_tasks[key];
+		if (key in Keyboard.__dn_tasks){
+			delete Keyboard.__dn_tasks[key];
+			delete Keyboard.__up_tasks[key];
 			return 0;
 		}
 		throw new Error(key + " not in down tasks (or up tasks)?");
 	},
 
 	addKeyUpTask(key, func){
-		if (key in Keyboard.up_tasks){
+		if (key in Keyboard.__up_tasks){
 			throw new Error("This will override the up task for "+key);
 		}
-		Keyboard.up_tasks[key] = func;
+		Keyboard.__up_tasks[key] = func;
 	},
 
 	removeKeyUpTask(key){
-		if (key in Keyboard.up_tasks){
-			delete Keyboard.up_tasks[key];
+		if (key in Keyboard.__up_tasks){
+			delete Keyboard.__up_tasks[key];
 			return 0;
 		}
 		throw new Error(key+" not in keyup tasks");
@@ -100,15 +100,15 @@ var Keyboard = {
 
 
 	addKeyDownTask(key, func){
-		if (key in Keyboard.dn_tasks){
+		if (key in Keyboard.__dn_tasks){
 			throw new Error("This will override the down task for "+key);
 		}
-		Keyboard.dn_tasks[key] = func;
+		Keyboard.__dn_tasks[key] = func;
 	},
 
 	removeKeyDownTask(key){
-		if (key in Keyboard.dn_tasks){
-			delete Keyboard.dn_tasks[key];
+		if (key in Keyboard.__dn_tasks){
+			delete Keyboard.__dn_tasks[key];
 			return 0;
 		}
 		console.error(key+" not in keydown tasks");
@@ -164,16 +164,16 @@ var Keyboard = {
 
 		console.log(event.key);
 
-		if (event.key in Keyboard.dn_tasks){
-			Keyboard.dn_tasks[event.key]();
+		if (event.key in Keyboard.__dn_tasks){
+			Keyboard.__dn_tasks[event.key]();
 		}
 	},
 
 	__processKeyUp(event){
 		Keyboard.__map[event.key] = false;
 
-		if (event.key in Keyboard.up_tasks){
-			Keyboard.up_tasks[event.key]();
+		if (event.key in Keyboard.__up_tasks){
+			Keyboard.__up_tasks[event.key]();
 		}
 	},
 
