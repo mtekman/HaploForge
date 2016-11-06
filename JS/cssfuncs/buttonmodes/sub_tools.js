@@ -97,6 +97,8 @@ var ToolButtons = {
 				function(){
 				(new OffspringDraw(familyDraw.active_fam_group.id)).init();
 			});
+			ButtonModes.addKeyboardShortcut("sidetool", "Escape", MainButtonActions.exitToMenu);
+
 		},
 
 		/* Haplo View */
@@ -121,6 +123,7 @@ var ToolButtons = {
 					MainButtonActions.loadPedFromStorage(true);
 				}
 			);
+			ButtonModes.addKeyboardShortcut("sidetool", "Escape", MainButtonActions.exitToMenu);
 		},
 
 		/* Selection Editting View */
@@ -141,6 +144,8 @@ var ToolButtons = {
 			ToolButtons.addToolsButton("Submit", 
 				"Enter|Submits selection for haplotype viewing",
 				HaploWindow.init);
+
+			ButtonModes.addKeyboardShortcut("sidetool", "Escape", SelectionMode.quit);
 		},
 
 
@@ -166,6 +171,8 @@ var ToolButtons = {
 			ToolButtons.addToolsButton("Next. Recomb.", 
 				"]|Shifts view down to next recombination",
 				HaploBlock.scrollToNextRecomb);
+
+			ButtonModes.addKeyboardShortcut("sidetool", "Escape", HaploWindow.destroy);
 		},
 
 		/* From comparison mode, the buttons showed during homology selection */
@@ -187,6 +194,7 @@ var ToolButtons = {
 				"Enter|Initiates genotypes comparison mode from those selected",
 				HomologySelectionMode.submit);
 			
+			ButtonModes.addKeyboardShortcut("sidetool", "Escape", HomologySelectionMode.quit);
 		},
 
 
@@ -200,6 +208,8 @@ var ToolButtons = {
 			ToolButtons.addToolsToggleButton("Marker Search", 
 				"M|Toggles marker search window",
 				CSSMarkerRange.init);
+
+			ButtonModes.addKeyboardShortcut("sidetool", "Escape", HomologyMode.quit);
 		}
 	}
 }

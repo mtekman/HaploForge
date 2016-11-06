@@ -17,8 +17,8 @@ var ButtonModes = {
 
 	__shortcuts : {},
 
-	makeToolsToggleButton(from, message, shortcut_text, callback){
-
+	makeToolsToggleButton(from, message, shortcut_text, callback)
+	{
 		var splitter = shortcut_text.split('|'),
 			shortcut = splitter[0],
 			text = (" (  " + shortcut + "  ) " + splitter[1]) || (" (  " + shortcut + "  ) ");
@@ -28,7 +28,7 @@ var ButtonModes = {
 			button.prevstate = null;
 
 		function newcallback(){
-			console.log(button,"clicked");
+//			console.log(button,"clicked");
 			if (button.prevstate === null){
 				button.prevstate = [button.style.background, button.style.color];
 				button.style.background = 'black'
@@ -122,9 +122,6 @@ var ButtonModes = {
 	},
 	
 	__preamble: function(nameOfMode){
-		ButtonModes.removeKeyboardShortcuts("general");
-		ButtonModes.removeKeyboardShortcuts("sidetool");
-		Keyboard.layerOff();
 
 		if (!ButtonModes.__modespopulated){
 			for (var mode in ButtonModes.__validmodes)
@@ -133,6 +130,10 @@ var ButtonModes = {
 			}
 			ButtonModes.__modespopulated = true
 		}
+
+		ButtonModes.removeKeyboardShortcuts("general");
+		ButtonModes.removeKeyboardShortcuts("sidetool");
+		Keyboard.layerOff();
 		Keyboard.layerOn(nameOfMode);
 	},
 
