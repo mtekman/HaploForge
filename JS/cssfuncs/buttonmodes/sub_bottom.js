@@ -5,17 +5,6 @@ var BottomButtons = {
 	div   : document.getElementById("save_and_close"),
 	table : document.getElementById("save_and_close_table"),
 
-	addButton: function(message, title_text, callback, show_state){
-		var button = document.createElement("button");
-
-		button.title = title_text;
-		button.innerHTML = message;
-		button.onclick = function(){
-			callback(show_state)
-		};
-		return button;
-	},
-
 	addToToolsContainer: function(button)
 	{
 		BottomButtons.table_keys[button.innerHTML] = button;
@@ -26,14 +15,14 @@ var BottomButtons = {
 		cell.appendChild(button);
 	},
 
-	addToolsButton: function(message, shortcut_text, callback, show_state){
+	addToolsButton: function(message, shortcut_text, callback, show_state = false){
 
 		var splitter = shortcut_text.split('|'),
 			shortcut = splitter[0],
 			text = (" [" + shortcut + "] " + splitter[1]) || (" [" + shortcut + "] ");
 
 		BottomButtons.addToToolsContainer(
-			BottomButtons.addButton(message, text, callback, show_state)
+			ButtonModes.addButton(message, text, callback, show_state)
 		);
 
 		ButtonModes.addKeyboardShortcut( "general", shortcut, callback );

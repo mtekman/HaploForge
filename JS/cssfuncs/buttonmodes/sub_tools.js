@@ -14,18 +14,6 @@ var ToolButtons = {
 		ToolButtons.title.innerHTML = title;
 	},
 
-	addButton: function(message, title_text, callback, show_state){
-		var button = document.createElement("button");
-
-		button.title = title_text;
-		button.innerHTML = message;
-		button.onclick = function(){
-			callback(show_state)
-		};
-
-		return button;
-	},
-
 	addToToolsContainer: function(button)
 	{
 		ToolButtons.table_keys[button.innerHTML] = button;
@@ -36,17 +24,45 @@ var ToolButtons = {
 		cell.appendChild(button);
 	},
 
-	addToolsButton: function(message, shortcut_text, callback, show_state)
+	addToolsButton: function(message, shortcut_text, callback, show_state = false)
 	{
 		var splitter = shortcut_text.split('|'),
 			shortcut = splitter[0],
 			text = (" (  " + shortcut + "  ) " + splitter[1]) || (" (  " + shortcut + "  ) ");
 
-		ToolButtons.addToToolsContainer(
-			ToolButtons.addButton(message, text, callback, show_state)
-		);
 
-		ButtonModes.addKeyboardShortcut( "sidetool", shortcut, callback)
+		if (!show_state){
+			ToolButtons.addToToolsContainer(
+				ButtonModes.addButton(message, text, callback));
+			ButtonModes.addKeyboardShortcut( "sidetool", shortcut, callback)
+			return 0;
+		}
+
+
+		// State with toggleable colours
+		var button = ButtonModes.addButton(message, text);
+			button.prevstate = null;
+
+		function newcallback(){
+			console.log(button,"clicked");
+			if (button.prevstate === null){
+				button.prevstate = [button.style.background, button.style.color];
+				button.style.background = 'black'
+				button.style.color = 'white'
+			}
+			else {
+				button.style.background = button.prevstate[0];
+				button.style.color = button.prevstate[1];
+				button.prevstate = null;
+			}
+			callback();
+		}
+
+		button.onclick = newcallback.bind(button);
+
+		ToolButtons.addToToolsContainer(button);
+		ButtonModes.addKeyboardShortcut( "sidetool", shortcut, button.onclick)
+		return 0;
 	},
 
 	removeFromToolsContainer: function(key)
@@ -141,11 +157,11 @@ var ToolButtons = {
 
 			ToolButtons.setTitle("Selection");
 	
-			ToolButtons.addToolsButton("Select All", 
+			ToolButtons.addToolsButton("Toggle All", 
 				"A|Selects all individuals from all families",
 				SelectionAction.selectAll);
 	
-			ToolButtons.addToolsButton("Select Affecteds", 
+			ToolButtons.addToolsButton("Toggle Affecteds", 
 				"F|Selects all affected individuals from all families",
 				SelectionAction.selectAffecteds);
 	
@@ -168,7 +184,8 @@ var ToolButtons = {
 	
 			ToolButtons.addToolsButton("Marker Search", 
 				"M|Toggles marker search window",
-				CSSMarkerRange.init);
+				CSSMarkerRange.init,
+				true);
 	
 			ToolButtons.addToolsButton("Prev. Recomb.", 
 				"[|Shifts view up to previous recombination",
@@ -186,11 +203,11 @@ var ToolButtons = {
 
 			ToolButtons.setTitle("GT Compare");
 	
-			ToolButtons.addToolsButton("Select All", 
+			ToolButtons.addToolsButton("Toggle All", 
 				"A|Selects all individuals shown",
 				SelectionAction.selectAll);
 	
-			ToolButtons.addToolsButton("Select Affecteds", 
+			ToolButtons.addToolsButton("Toggle Affecteds", 
 				"F|Selects only affected individuals from shown",
 				SelectionAction.selectAffecteds);
 	
@@ -210,7 +227,8 @@ var ToolButtons = {
 	
 			ToolButtons.addToolsButton("Marker Search", 
 				"M|Toggles marker search window",
-				CSSMarkerRange.init);
+				CSSMarkerRange.init,
+				true);
 		}
 	}
 }

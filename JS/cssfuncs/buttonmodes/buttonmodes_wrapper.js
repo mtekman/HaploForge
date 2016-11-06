@@ -17,6 +17,17 @@ var ButtonModes = {
 
 	__shortcuts : {},
 
+	addButton: function(message, title_text, callback){
+		var button = document.createElement("button");
+
+		button.title = title_text;
+		button.innerHTML = message;
+		button.onclick = callback;
+
+		return button;
+	},
+
+
 	addKeyboardShortcut(caller, keycombo, func){
 		// Key and modifier
 		console.log(keycombo)
