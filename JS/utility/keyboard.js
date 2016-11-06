@@ -142,7 +142,7 @@ var Keyboard = {
 			delete Keyboard.__up_tasks[key];
 			return 0;
 		}
-		throw new Error(key + " not in down tasks (or up tasks)?");
+		console.warn(key,"not in down tasks (or up tasks)?");
 	},
 
 	addKeyUpTask(key, func){
@@ -157,7 +157,7 @@ var Keyboard = {
 			delete Keyboard.__up_tasks[key];
 			return 0;
 		}
-		throw new Error(key+" not in keyup tasks");
+		console.warn(key, "not in keyup tasks");
 	},
 
 
