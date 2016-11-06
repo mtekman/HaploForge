@@ -14,58 +14,31 @@ var ToolButtons = {
 		ToolButtons.title.innerHTML = title;
 	},
 
-	addToToolsContainer: function(button)
+	__addToToolsContainer: function(toolbutton)
 	{
-		ToolButtons.table_keys[button.innerHTML] = button;
+		ToolButtons.table_keys[toolbutton.innerHTML] = toolbutton;
 
 		var row = ToolButtons.table.insertRow(),
 			cell = row.insertCell();
 
-		cell.appendChild(button);
+		cell.appendChild(toolbutton);
 	},
 
-	addToolsButton: function(message, shortcut_text, callback, show_state = false)
+
+	addToolsToggleButton(message, shortcut_text, callback){
+		ToolButtons.__addToToolsContainer(
+			ButtonModes.makeToolsToggleButton("sidetool", message, shortcut_text, callback)
+		);
+	},
+
+	addToolsButton: function(message, shortcut_text, callback)
 	{
-		var splitter = shortcut_text.split('|'),
-			shortcut = splitter[0],
-			text = (" (  " + shortcut + "  ) " + splitter[1]) || (" (  " + shortcut + "  ) ");
-
-
-		if (!show_state){
-			ToolButtons.addToToolsContainer(
-				ButtonModes.addButton(message, text, callback));
-			ButtonModes.addKeyboardShortcut( "sidetool", shortcut, callback)
-			return 0;
-		}
-
-
-		// State with toggleable colours
-		var button = ButtonModes.addButton(message, text);
-			button.prevstate = null;
-
-		function newcallback(){
-			console.log(button,"clicked");
-			if (button.prevstate === null){
-				button.prevstate = [button.style.background, button.style.color];
-				button.style.background = 'black'
-				button.style.color = 'white'
-			}
-			else {
-				button.style.background = button.prevstate[0];
-				button.style.color = button.prevstate[1];
-				button.prevstate = null;
-			}
-			callback();
-		}
-
-		button.onclick = newcallback.bind(button);
-
-		ToolButtons.addToToolsContainer(button);
-		ButtonModes.addKeyboardShortcut( "sidetool", shortcut, button.onclick)
-		return 0;
+		ToolButtons.__addToToolsContainer(
+			ButtonModes.makeToolsButton("sidetool", message, shortcut_text, callback)
+		);
 	},
 
-	removeFromToolsContainer: function(key)
+	__removeFromToolsContainer: function(key)
 	{
 		var button = ToolButtons.table_keys[key],
 			cell = button.parentNode,
@@ -85,7 +58,7 @@ var ToolButtons = {
 		clearMode: function(){
 
 			for (var k in ToolButtons.table_keys){
-				ToolButtons.removeFromToolsContainer(k);
+				ToolButtons.__removeFromToolsContainer(k);
 			}
 			ButtonModes.removeKeyboardShortcuts("sidetool");
 
@@ -166,8 +139,8 @@ var ToolButtons = {
 				SelectionAction.selectAffecteds);
 	
 			ToolButtons.addToolsButton("Submit", 
-				"Enter|Submits selection for haplotype viewing"
-				, HaploWindow.init);
+				"Enter|Submits selection for haplotype viewing",
+				HaploWindow.init);
 		},
 
 
@@ -182,10 +155,9 @@ var ToolButtons = {
 				"G|Begins selection process for genotype comparison mode",
 				HomologySelectionMode.init);
 	
-			ToolButtons.addToolsButton("Marker Search", 
+			ToolButtons.addToolsToggleButton("Marker Search", 
 				"M|Toggles marker search window",
-				CSSMarkerRange.init,
-				true);
+				CSSMarkerRange.init);
 	
 			ToolButtons.addToolsButton("Prev. Recomb.", 
 				"[|Shifts view up to previous recombination",
@@ -225,10 +197,9 @@ var ToolButtons = {
 
 			ToolButtons.setTitle("GT Compare");
 	
-			ToolButtons.addToolsButton("Marker Search", 
+			ToolButtons.addToolsToggleButton("Marker Search", 
 				"M|Toggles marker search window",
-				CSSMarkerRange.init,
-				true);
+				CSSMarkerRange.init);
 		}
 	}
 }

@@ -17,20 +17,63 @@ var ButtonModes = {
 
 	__shortcuts : {},
 
-	addButton: function(message, title_text, callback){
-		var button = document.createElement("button");
+	makeToolsToggleButton(from, message, shortcut_text, callback){
 
-		button.title = title_text;
-		button.innerHTML = message;
-		button.onclick = callback;
+		var splitter = shortcut_text.split('|'),
+			shortcut = splitter[0],
+			text = (" (  " + shortcut + "  ) " + splitter[1]) || (" (  " + shortcut + "  ) ");
+
+
+		var button = ButtonModes.__makeButton(message, text);
+			button.prevstate = null;
+
+		function newcallback(){
+			console.log(button,"clicked");
+			if (button.prevstate === null){
+				button.prevstate = [button.style.background, button.style.color];
+				button.style.background = 'black'
+				button.style.color = 'white'
+			}
+			else {
+				button.style.background = button.prevstate[0];
+				button.style.color = button.prevstate[1];
+				button.prevstate = null;
+			}
+			callback();
+		}
+
+		ButtonModes.addKeyboardShortcut( from, shortcut, button.onclick)
+		button.onclick = newcallback.bind(button);
 
 		return button;
+	},
+
+	makeToolsButton: function(from, message, shortcut_text, callback)
+	{
+		var splitter = shortcut_text.split('|'),
+			shortcut = splitter[0],
+			text = (" (  " + shortcut + "  ) " + splitter[1]) || (" (  " + shortcut + "  ) ");
+
+		ButtonModes.addKeyboardShortcut( from , shortcut, callback)
+
+		return ButtonModes.__makeButton(message, text, callback)
+	},
+
+
+	__makeButton: function(message, title_text, callback){
+		var butt = document.createElement("button");
+
+		butt.title = title_text;
+		butt.innerHTML = message;
+		butt.onclick = callback;
+
+		return butt;
 	},
 
 
 	addKeyboardShortcut(caller, keycombo, func){
 		// Key and modifier
-		console.log(keycombo)
+		//console.log(keycombo)
 
 		var alt_key = keycombo.split('+'),
 			key = null,

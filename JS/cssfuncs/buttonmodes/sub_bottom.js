@@ -5,7 +5,16 @@ var BottomButtons = {
 	div   : document.getElementById("save_and_close"),
 	table : document.getElementById("save_and_close_table"),
 
-	addToToolsContainer: function(button)
+
+	addToolsButton: function(message, shortcut_text, callback)
+	{
+		BottomButtons.__addToToolsContainer(
+			ButtonModes.makeToolsButton("general", message, shortcut_text, callback)
+		);
+	},
+
+
+	__addToToolsContainer: function(button)
 	{
 		BottomButtons.table_keys[button.innerHTML] = button;
 
@@ -15,20 +24,7 @@ var BottomButtons = {
 		cell.appendChild(button);
 	},
 
-	addToolsButton: function(message, shortcut_text, callback, show_state = false){
-
-		var splitter = shortcut_text.split('|'),
-			shortcut = splitter[0],
-			text = (" [" + shortcut + "] " + splitter[1]) || (" [" + shortcut + "] ");
-
-		BottomButtons.addToToolsContainer(
-			ButtonModes.addButton(message, text, callback, show_state)
-		);
-
-		ButtonModes.addKeyboardShortcut( "general", shortcut, callback );
-	},
-
-	removeFromToolsContainer: function(key)
+	__removeFromToolsContainer: function(key)
 	{
 		var button = BottomButtons.table_keys[key],
 			cell = button.parentNode,
@@ -47,7 +43,7 @@ var BottomButtons = {
 
 		__clearMode: function(){
 			for (var k in BottomButtons.table_keys){
-				BottomButtons.removeFromToolsContainer(k);
+				BottomButtons.__removeFromToolsContainer(k);
 			}
 			BottomButtons.div.style.display = "none";
 		},
