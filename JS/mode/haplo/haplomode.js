@@ -135,6 +135,10 @@ var HaploWindow = {
 		);
 	},
 
+	// cs + cs + mu + to + ca + ca + ba = 100 + 100 + 100 + 40 + 60 + 60 + 100 = 560
+	// pi + ch + fi + sa + ol = 120 + 80 + 80 + 20 + 20 = 320 
+	// 880
+
 
 	_makeTop(){
 		var render_group = DOS.group;
