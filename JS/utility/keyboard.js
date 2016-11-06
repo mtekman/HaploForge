@@ -94,8 +94,6 @@ var Keyboard = {
 	__processKeyDown(event){
 		Keyboard.__map[event.key] = true;
 
-		console.log(event.key);
-
 		if (event.key in Keyboard.__dn_tasks){
 			Keyboard.__dn_tasks[event.key]();
 		}
