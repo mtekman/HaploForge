@@ -45,6 +45,7 @@ var HomologyMode = {
 		HomologySelectionMode.quit();
 
 
+		MarkerSlider.makeVisible(true)
 
 		haplo_layer.draw();
 	},
