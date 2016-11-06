@@ -232,7 +232,9 @@ var HaploBlock = {
 	},
 
 
-	scrollToNextRecomb(reverse=false)
+	// Better to have to seperate function for forward and back
+	// so that onclick events don't pass the evt as first paremeter instead.
+	__scrollRecomb(reverse)
 	{
 		var diff = HaploBlock.end_index - HaploBlock.sta_index;
 		var recomb = HaploBlock.__indexOfNextRecomb(reverse);
@@ -248,7 +250,10 @@ var HaploBlock = {
 	},
 
 	scrollToPrevRecomb(){
-		HaploBlock.scrollToNextRecomb(true);
+		HaploBlock.__scrollRecomb(true);
+	},
+	scrollToNextRecomb(){
+		HaploBlock.__scrollRecomb(false);
 	}
 }
 
