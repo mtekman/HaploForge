@@ -23,10 +23,10 @@ var Keyboard = {
 	// -- Layer handling
 
 	/** Store previous config and override if neccesary, restoring on layerOff **/	
-	layerOn(replace = true){
+	layerOn(name, replace = true){
 		Keyboard.__beginListen();
 
-		Keyboard.__tmptasks.push( [Keyboard.__dn_tasks, Keyboard.__up_tasks] )
+		Keyboard.__tmptasks.push([ name, Keyboard.__dn_tasks, Keyboard.__up_tasks ])
 
 		if (replace){
 			Keyboard.__dn_tasks = {};
@@ -42,8 +42,8 @@ var Keyboard = {
 		}
 
 		var dnup_tasks = Keyboard.__tmptasks.pop();
-		Keyboard.__dn_tasks = dnup_tasks[0];
-		Keyboard.__up_tasks = dnup_tasks[1];
+		Keyboard.__dn_tasks = dnup_tasks[1];
+		Keyboard.__up_tasks = dnup_tasks[2];
 	},
 
 	__prevlistenstate: null,
@@ -72,7 +72,6 @@ var Keyboard = {
 
 	__end(){
 		console.trace("end");
-
 		document.removeEventListener("keydown", Keyboard.__processKeyDown, false);
 		document.removeEventListener("keyup", Keyboard.__processKeyUp, false);
 	},
@@ -80,8 +79,8 @@ var Keyboard = {
 	__beginListen(){
 		if (!Keyboard.__listening){
 			Keyboard.__begin();
+			Keyboard.__listening = true;
 		}
-		Keyboard.__listening = true;
 	},
 
 	__endListen(){

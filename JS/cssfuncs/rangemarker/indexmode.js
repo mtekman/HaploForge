@@ -11,7 +11,6 @@ var CSSMarkerRange = {
 	_visible: false,
 
 	init(){
-
 		CSSMarkerRange._visible?CSSMarkerRange.hideIndexCSS():CSSMarkerRange.showIndexCSS();
 
 		if (CSSMarkerRange._initialised){
@@ -48,7 +47,7 @@ var CSSMarkerRange = {
 	},
 
 	showIndexCSS(){
-		Keyboard.layerOn()
+		Keyboard.layerOn("indexCSS");
 
 		Keyboard.addKeyPressTask("Enter", function(){
 			if (CSSMarkerRange._max_input.value.length < 4){
@@ -67,6 +66,7 @@ var CSSMarkerRange = {
 
 	hideIndexCSS(){
 		Keyboard.layerOff();
+
 		CSSMarkerRange._visible = false;
 		document.getElementById('index_class').style.display = "none"
 	},

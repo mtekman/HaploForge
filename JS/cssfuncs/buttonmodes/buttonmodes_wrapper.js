@@ -18,10 +18,9 @@ var ButtonModes = {
 	__shortcuts : {},
 
 	addKeyboardShortcut(caller, keycombo, func){
-
-//		console.trace("__shortcuts")
-
 		// Key and modifier
+		console.log(keycombo)
+
 		var alt_key = keycombo.split('+'),
 			key = null,
 			alt = null;
@@ -58,20 +57,21 @@ var ButtonModes = {
 	},
 
 
-
 	__switchMode: function(funcname){
-		console.log("ButtonMode", funcname)
+		console.log("ButtonMode", funcname);
 
-		ButtonModes.__preamble();
+		ButtonModes.__preamble(funcname);
 
-		Keyboard.layerOff();
-		Keyboard.layerOn();
-		
 		BottomButtons.modes[funcname]();
 		ToolButtons.modes[funcname]();
+
 	},
 	
-	__preamble: function(){
+	__preamble: function(nameOfMode){
+		ButtonModes.removeKeyboardShortcuts("general");
+		ButtonModes.removeKeyboardShortcuts("sidetool");
+		Keyboard.layerOff();
+
 		if (!ButtonModes.__modespopulated){
 			for (var mode in ButtonModes.__validmodes)
 			{
@@ -79,6 +79,7 @@ var ButtonModes = {
 			}
 			ButtonModes.__modespopulated = true
 		}
+		Keyboard.layerOn(nameOfMode);
 	},
 
 	/* Switch mode has to be called at least once, keep these functions here */

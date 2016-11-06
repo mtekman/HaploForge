@@ -36,8 +36,8 @@ var ToolButtons = {
 		cell.appendChild(button);
 	},
 
-	addToolsButton: function(message, shortcut_text, callback, show_state){
-
+	addToolsButton: function(message, shortcut_text, callback, show_state)
+	{
 		var splitter = shortcut_text.split('|'),
 			shortcut = splitter[0],
 			text = (" (  " + shortcut + "  ) " + splitter[1]) || (" (  " + shortcut + "  ) ");
@@ -67,6 +67,7 @@ var ToolButtons = {
 	modes: {
 
 		clearMode: function(){
+
 			for (var k in ToolButtons.table_keys){
 				ToolButtons.removeFromToolsContainer(k);
 			}
@@ -122,13 +123,15 @@ var ToolButtons = {
 				SelectionMode.init);
 
 			ToolButtons.addToolsButton("Modify Pedigree",
-				"Ctrl + M|[NOT YET IMPLEMENTED]Modifies the current pedigree",
+				"Ctrl+M|[NOT YET IMPLEMENTED]Modifies the current pedigree",
+				
 				function(){
-				localStorage.setItem(localStor.transfer, MainButtonActions._temphaploload);
-				utility.notify("transferring","...");
+					localStorage.setItem(localStor.transfer, MainButtonActions._temphaploload);
+					utility.notify("transferring","...");
 
-				MainButtonActions.loadPedFromStorage(true);
-			});
+					MainButtonActions.loadPedFromStorage(true);
+				}
+			);
 		},
 
 		/* Selection Editting View */
@@ -160,7 +163,7 @@ var ToolButtons = {
 			ToolButtons.setTitle("Haplotypes");
 
 			ToolButtons.addToolsButton("Compare Genotypes", 
-				"Ctrl + G|Begins selection process for genotype comparison mode",
+				"G|Begins selection process for genotype comparison mode",
 				HomologySelectionMode.init);
 	
 			ToolButtons.addToolsButton("Marker Search", 

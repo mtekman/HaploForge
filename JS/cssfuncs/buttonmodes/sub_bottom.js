@@ -60,8 +60,6 @@ var BottomButtons = {
 			for (var k in BottomButtons.table_keys){
 				BottomButtons.removeFromToolsContainer(k);
 			}
-			ButtonModes.removeKeyboardShortcuts("general");
-
 			BottomButtons.div.style.display = "none";
 		},
 
@@ -125,11 +123,13 @@ var BottomButtons = {
 		setToComparisonMode: function(){
 			BottomButtons.modes.__preamble();
 
-			BottomButtons.addToolsButton("Align Pedigree", "V|Shifts individuals vertically to be at the same position, or offset by generation", function(){
+			BottomButtons.addToolsButton("Align Pedigree",
+				"V|Shifts individuals vertically to be at the same position, or offset by generation", function(){
 				HaploWindow.alignTopSelection( DOS.haplo_group_nodes, DOS.haplo_group_lines);
 			});
 
-			BottomButtons.addToolsButton("Recolour", "R|Random colour assignment to haplo blocks. Founder groups are preserved.", function(){
+			BottomButtons.addToolsButton("Recolour",
+				"R|Random colour assignment to haplo blocks. Founder groups are preserved.", function(){
 				FounderColor.makeUniqueColors(true); //random = true
 				HaploBlock.redrawHaplos(false);
 			});
