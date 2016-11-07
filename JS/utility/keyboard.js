@@ -64,16 +64,26 @@ var Keyboard = {
 
 
 	// Private
-	__begin(){
+	__begin(func1 = null, func2 = null){
+		if (func1 === null){
+			func1 = Keyboard.__processKeyDown;
+			func2 = Keyboard.__processKeyUp;
+		}
+
 		console.trace("begin");
-		document.addEventListener("keydown", Keyboard.__processKeyDown, false);
-		document.addEventListener("keyup", Keyboard.__processKeyUp, false);
+		document.addEventListener("keydown", func1, false);
+		document.addEventListener("keyup",   func2, false);
 	},
 
-	__end(){
+	__end(func1 = null, func2 = null){
+		if (func1 === null){
+			func1 = Keyboard.__processKeyDown;
+			func2 = Keyboard.__processKeyUp;
+		}
+
 		console.trace("end");
-		document.removeEventListener("keydown", Keyboard.__processKeyDown, false);
-		document.removeEventListener("keyup", Keyboard.__processKeyUp, false);
+		document.removeEventListener("keydown", func1, false);
+		document.removeEventListener("keyup",   func2, false);
 	},
 
 	__beginListen(){
@@ -192,7 +202,40 @@ var Keyboard = {
 
 	isCtrlDown(){
 		return Keyboard.isPressed("Control");
-	},	
+	},
+
+	noKeysPressed(){
+		for (var key in Keyboard.__map){
+			if (Keyboard.__map[key]){
+				console.log(key);
+				return false;
+			}
+		}
+		return true;
+	},
 
 
+	setCombo(callback){
+		Keyboard.pause()
+
+		function upper(){
+			if(Keyboard.noKeysPressed){
+				callback(Keyboard.__tempcombo)
+			}
+			Keyboard.__end(Keyboard.__getCombo, upper);
+			Keyboard.unpause();
+		}
+
+		Keyboard.__begin(Keyboard.__getCombo, upper);
+	},
+
+	__getCombo(evt){
+		var key = evt.key;
+
+		var ctrl = evt.ctrlKey,
+			shift = evt.shiftKey,
+			alt = evt.altKey;
+
+		Keyboard.__tempcombo = (ctrl?"Ctrl+":"")+(alt?"Alt+":"")+(shift?"Shift+":"")+key.toUpperCase();
+	}
 }

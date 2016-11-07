@@ -1,0 +1,92 @@
+
+#settings_wheel {
+  position:absolute;
+  width: 1.6em;
+  height:1.6em;
+  right: 0.5em;
+  bottom:0.5em;
+}
+#settings_wheel:hover {
+  width: 1.7em;
+  height: 1.7em;
+}
+
+
+#settings_box {
+  display: none;
+  position:absolute;
+
+/*  top:50%;
+  left:50%; 
+  -webkit-transform: translateX(-50%) translateY(-50%);
+  -moz-transform: translateX(-50%) translateY(-50%);
+  transform: translateX(-50%) translateY(-50%);*/
+
+  top: 5%;
+  left: 10%;
+  right: 10%;
+
+  padding: 2px;
+  border: solid black;
+  border-radius: 20px;
+  background-color: #cdc;
+  box-shadow: 5px 5px 5px #888;
+  z-index: 501;
+}
+
+/*#settings_box td {
+	text-align: center;
+	max-width: 30%;
+}*/
+
+/*
+<ul>
+	<li>
+    	<h5>group</h5>
+    	<ul>
+			<li>key</li><li>value</li>
+		</ul>
+	</li>
+</ul>
+*/
+
+#settings_box ul {   /* list of groups */
+	list-style-type: none;
+	float: left;
+}
+
+#settings_box ul li {    /* Group */
+	display: inline-table;
+}
+
+#settings_box ul li h5 {   /* Group title */
+	margin: 0;
+}
+
+#settings_box ul li ul {    /* Array of settings */
+	margin: 1px;
+    padding: 2px;
+}
+
+#settings_box ul li ul li {  /* A single key-bind setting group -- DO NOT USE */
+}
+
+#settings_box ul li ul li ul {  /*  A single key-bind setting pair */
+	border: 1px solid black;
+    border-radius: 5px;
+}
+
+
+#settings_box ul li ul li ul li { /* A key or value */
+	display: inline;
+}
+
+#settings_box ul li ul li ul li:last-child {  /* Just the value */
+	padding-left: 5px;
+}
+
+
+#settings_box input {
+	width: 50px;
+	text-align: center;
+}

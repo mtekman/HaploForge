@@ -1,15 +1,3 @@
-#settings_wheel {
-  position:absolute;
-  width: 1.6em;
-  height:1.6em;
-  right: 0.5em;
-  bottom:0.5em;
-}
-#settings_wheel:hover {
-  width: 1.7em;
-  height: 1.7em;
-}
-
 #maincircle {
   position:absolute;
   width:70%;
