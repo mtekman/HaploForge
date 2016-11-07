@@ -8,6 +8,7 @@
     document.getElementById('user_fancy').checked = userOpts.retrieve('fancyGraphics');
 
     userOpts.setGraphics();
+    Settings.init();
 })()
 
 

@@ -230,12 +230,28 @@ var Keyboard = {
 	},
 
 	__getCombo(evt){
-		var key = evt.key;
+
+		var key = null;
+
+		var test = evt.key.toUpperCase();
+
+		switch(test){
+			case "CONTROL":
+			case "SHIFT":
+			case "ALT": key = '?'; break;
+			default: key = test; break
+		}
 
 		var ctrl = evt.ctrlKey,
 			shift = evt.shiftKey,
 			alt = evt.altKey;
 
-		Keyboard.__tempcombo = (ctrl?"Ctrl+":"")+(alt?"Alt+":"")+(shift?"Shift+":"")+key.toUpperCase();
+		Keyboard.__tempcombo = (ctrl?"Ctrl+":"")+(alt?"Alt+":"")+(shift?"Shift+":"")+key;
+
+		// Stop browser events
+		if (window.event){
+			evt.preventDefault();
+			evt.stopPropagation();
+		}
 	}
 }

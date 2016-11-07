@@ -76,7 +76,7 @@ var Settings = {
 		    var ul = document.createElement('ul');
 
     		for (var key in Settings.bindings[group]){
-    			var bind = Settings.bindings[group][key];
+    			var combo = Settings.bindings[group][key];
 
     			var lli = document.createElement('li'),
     				uul = document.createElement('ul');
@@ -86,9 +86,15 @@ var Settings = {
 
     			var inp = document.createElement('input');
     			inp.type = 'text'
-    			inp.value = bind;
+    			inp.value = combo;
+
+    			function change(){
+    				var button = inp;
+    				Settings.changeBinding(button);
+    			}
 
     			inp.onclick = Settings.changeBinding.bind(inp);
+//    			change.bind(inp);
 
     			li1.innerHTML = key;
     			li2.appendChild(inp)
@@ -107,10 +113,14 @@ var Settings = {
 		div.appendChild(uu);
 	},
 
-	changeBinding(button){
-		var obj = button;
+	changeBinding(){
+		var that = this;
+		that.value = "[Type Now]";
+		that.style.width = '6em';
 		Keyboard.setCombo(function(keycombo){
-			obj.value = keycombo;
+			console.log(keycombo);
+			that.value = keycombo;
+			that.style.width = (keycombo.length * 6 / 10) + 'em';
 		});
 	},
 
