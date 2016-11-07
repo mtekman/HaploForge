@@ -93,3 +93,8 @@
   width: 50px;
   text-align: center;
 }
+
+#settings_box button {
+  width: 100px;
+  height: 50px;
+}

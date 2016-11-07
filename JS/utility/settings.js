@@ -9,13 +9,15 @@ var Settings = {
 		if (!Settings.__set){
 			Settings.__set = true;
 			Settings.__img.onclick = Settings.__showSettings;
+			Settings.__makeDefaults;
 		}
 		Settings.__showSettings();
 	},
 
 	__showSettings(){
 		utility.showBG();
-		Settings.makeTables();
+		Settings.readBindingsFromLocal();
+		Settings.updateTables();
 		Settings.__div.style.display = "block";
 	},
 
@@ -57,6 +59,8 @@ var Settings = {
 		}
 	},
 
+	defaults : {}, // populated as bindingsChange
+
 	makeTables(){
 		var div = Settings.__div;
 
@@ -88,19 +92,14 @@ var Settings = {
     			inp.type = 'text'
     			inp.value = combo;
 
-    			function change(){
-    				var button = inp;
-    				Settings.changeBinding(button);
-    			}
-
-    			inp.onclick = Settings.changeBinding.bind(inp);
-//    			change.bind(inp);
-
     			li1.innerHTML = key;
-    			li2.appendChild(inp)
 
+    			li2.appendChild(inp);
     			uul.appendChild(li1);
     			uul.appendChild(li2);
+    			
+    			uul.onclick = Settings.changeBinding.bind(inp);
+    			
     			lli.appendChild(uul);
 
 //    			lli.appendChild(document.createElement('br'));
@@ -111,14 +110,30 @@ var Settings = {
 		    uu.appendChild(childdiv);
 		}
 		div.appendChild(uu);
+
+		var dli1 = document.createElement('li');
+
+		var save = document.createElement('button');
+		save.innerHTML = "Save";
+		save.onclick = Settings.saveBindings;
+		dli1.appendChild(save);
+
+		var restore = document.createElement('button')
+		restore.innerHTML = "Restore Defaults";
+		restore.onclick = Settings.setDefaultBindings();
+		dli1.appendChild(restore);
+
+		uu.appendChild(dli1);
+
 	},
 
 	changeBinding(){
 		var that = this;
+
 		that.value = "[Type Now]";
 		that.style.width = '6em';
+
 		Keyboard.setCombo(function(keycombo){
-			console.log(keycombo);
 			that.value = keycombo;
 			that.style.width = (keycombo.length * 6 / 10) + 'em';
 		});
@@ -132,7 +147,53 @@ var Settings = {
 		}
 	},
 
-	readLocalSettings(){},
-	saveBindings(){},
+	// Run once
+	__makeDefaults(){
+		for (var group in Settings.bindings)
+		{
+			Settings.defaults[group] = {};
 
+			for (var key in Settings.bindings[group]){
+				var value = Settings.bindings[group][key]
+				Settings.defaults[group][key] = value;
+			}
+		}
+	},
+
+	setDefaultBindings(){
+		for (var group in Settings.defaults){
+			Settings.bindings[group] = {};
+
+			for (var key in Settings.defaults[group]){
+				var value = Settings.defaults[group][key]
+				Settings.bindings[group][key] = value;
+			}
+		}
+	},
+
+
+	saveBindings(){
+		Settings.saveBindingstoLocal();
+		Settings.__hideSettings();
+	},
+
+
+	saveBindingstoLocal(){
+		localStorage.setItem("bindings", JSON.stringify(Settings.bindings))
+	},
+
+	readBindingsFromLocal(){
+		var bind = localStorage.getItem("bindings");
+		if (bind === null){
+			Settings.setDefaultBindings();
+		}
+		else {
+			Settings.bindings = JSON.parse(bind);
+		}
+	},
+
+	updateTables(){
+		Settings.destroyTables();
+		Settings.makeTables();
+	}
 }
