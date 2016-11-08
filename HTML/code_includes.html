@@ -7,13 +7,18 @@ document.write('\
         <script src="JS/filehandler/fileformat_superclass.js" ></script>\
         <script src="JS/filehandler/boxselector.js" ></script>\
 \
+        <script src="JS/filehandler/queuer.js" ></script>\
         <script src="JS/filehandler/pedfile.js" ></script>\
         <script src="JS/filehandler/allegro.js" ></script>\
         <script src="JS/filehandler/genehunter.js" ></script>\
         <script src="JS/filehandler/simwalk.js" ></script>\
         <script src="JS/filehandler/merlin.js" ></script>\
+        <script src="JS/filehandler/markerdata.js" ></script>\
 \
-        <script src="JS/utility/keyboard.js" ></script>\
+        <script src="JS/iofuncs/keyboard.js" ></script>\
+        <script src="JS/iofuncs/mousestyle.js" ></script>\
+        <script src="JS/iofuncs/serialparse.js" ></script>\
+\
         <script src="JS/cssfuncs/dialog/message_box.js" ></script>\
         <script src="JS/cssfuncs/mainpage/mainpagehandler.js" ></script>\
         <script src="JS/cssfuncs/mainpage/mainbuttonactions.js" ></script>\
@@ -21,12 +26,14 @@ document.write('\
         <script src="JS/cssfuncs/buttonmodes/sub_bottom.js" ></script>\
         <script src="JS/cssfuncs/buttonmodes/sub_tools.js" ></script>\
         <script src="JS/cssfuncs/buttonmodes/buttonmodes_wrapper.js" ></script>\
+        <script src="JS/cssfuncs/tutorial.js" ></script>\
 \
-        <script src="JS/utility/markerdata.js" ></script>\
         <script src="JS/globals.js" ></script>\
 \
-        <script src="JS/objs/person.js" ></script>\
-        <script src="JS/objs/allele.js" ></script>\
+        <script src="JS/pedigree/person.js" ></script>\
+        <script src="JS/pedigree/allele.js" ></script>\
+        <script src="JS/pedigree/familymapops.js" ></script>\
+        <script src="JS/pedigree/uniquegraphops.js" ></script>\
 \
         <script src="JS/mode/haplo/slider/slider_handler.js" ></script>\
         <script src="JS/mode/haplo/slider/marker_slider.js" ></script>\
@@ -37,7 +44,6 @@ document.write('\
         <script src="JS/mode/modetracker.js" ></script>\
 \
         <script src="JS/mode/graph/graph_draw.js" ></script>\
-        <script src="JS/mode/graph/init_graph.js" ></script>\
         <script src="JS/mode/graph/levelgrid.js" ></script>\
         <script src="JS/mode/graph/graphicslevelgrid.js" ></script>\
         <script src="JS/mode/graph/famgroupspacing.js" ></script>\
@@ -57,14 +63,19 @@ document.write('\
         <script src="JS/mode/pedcreate/matelineDraw.js" ></script>\
         <script src="JS/mode/pedcreate/offspringDraw.js" ></script>\
 \
+        <script src="JS/mode/haplo/blocks/assignhgroups.js" ></script>\
+        <script src="JS/mode/haplo/blocks/haploblock_frontend.js" ></script>\
+        <script src="JS/mode/haplo/blocks/haploblockformat.js" ></script>\
+        <script src="JS/mode/haplo/blocks/colors.js" ></script>\
+\
+        <script src="JS/init/init.js" ></script>\
+        <script src="JS/init/init_graph.js" ></script>\
+        <script src="JS/init/haplopedprops.js" ></script>\
+\
         <script src="JS/resolvers/flow_resolver.js" ></script>\
         <script src="JS/resolvers/descent_resolver.js" ></script>\
         <script src="JS/resolvers/astarpath_resolver.js" ></script>\
         <script src="JS/resolvers/astar_handler.js" ></script>\
-\
-        <script src="JS/mode/haplo/blocks/assignhgroups.js" ></script>\
-        <script src="JS/mode/haplo/blocks/haploblock_frontend.js" ></script>\
-        <script src="JS/mode/haplo/blocks/haploblockformat.js" ></script>\
 \
         <script src="JS/mode/haplo/dos/dos.js" ></script>\
         <script src="JS/mode/haplo/dos/render_dos.js" ></script>\
@@ -75,23 +86,14 @@ document.write('\
         <script src="JS/mode/homology/homology_plot.js" ></script>\
         <script src="JS/mode/homology/homology_initial_allele_scan.js" ></script>\
 \
-        <script src="JS/utility/filehandler.js" ></script>\
-        <script src="JS/utility/pedprops.js" ></script>\
-        <script src="JS/utility/familymapOps.js" ></script>\
-        <script src="JS/utility/uniqueGraphOps.js" ></script>\
-        <script src="JS/utility/mousestyle.js" ></script>\
-        <script src="JS/utility/colors.js" ></script>\
-        <script src="JS/utility/useropts.js" ></script>\
-        <script src="JS/utility/settings.js" ></script>\
-        <script src="JS/utility/window.js" ></script>\
-        <script src="JS/utility/serialparse.js" ></script>\
-        <script src="JS/utility/resizing.js" ></script>\
-        <script src="JS/utility/queuer.js" ></script>\
-        <script src="JS/utility/tutorial.js" ></script>\
+        <script src="JS/userconfig/useropts.js" ></script>\
+        <script src="JS/userconfig/settings.js" ></script>\
+\
+        <script src="JS/window/window.js" ></script>\
+        <script src="JS/window/resizing.js" ></script>\
 \
         <script src="JS/__test/pedfile_create_view.js" ></script>\
 \
-        <script src="JS/init.js" ></script>\
         <script src="JS/test.js" ></script>\
 \
 ');

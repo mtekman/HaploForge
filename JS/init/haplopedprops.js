@@ -16,7 +16,7 @@ var HaploPedProps = {
 
 	init: function(hookfunc = null)
 	{
-		PedProps.connectAll();
+		HaploPedProps.connectAll();
 
 		// Genehunter can infer genders at this stage
 		if(hookfunc !== null){
@@ -40,6 +40,37 @@ var HaploPedProps = {
 			+(HaploPedProps.dominant?"Dominant":"Recessive")
 		);
 
+	},
+
+	connectAll: function connectAllIndividuals()
+	{
+		familyMapOps.foreachperc(function(id,famid, new_root)
+		{
+			//Assign father and mother to actual people
+			var pers_father = 0, pers_mother = 0;
+
+			if (new_root.father != 0) {
+				pers_father = familyMapOps.getPerc(new_root.father, famid);
+
+				new_root.father = pers_father;         // Add father to child
+				pers_father.addChild(new_root);   // And child to father
+			}
+
+			if (new_root.mother != 0){
+				pers_mother = familyMapOps.getPerc(new_root.mother,famid);
+
+				new_root.mother = pers_mother;         // Add mother to child
+				pers_mother.addChild(new_root);   // And child to mother
+			}
+
+			if (pers_father != 0 )                     //Add parents as mates to each other
+				if(pers_mother != 0) pers_father.addMate(pers_mother);
+				else pers_father.addMate(0);
+
+			if (pers_mother !=0 )
+				if(pers_father != 0) pers_mother.addMate(pers_father);
+				else pers_mother.addMate(0);
+		});
 	},
 
 	_largestPedigree : function(){
@@ -213,42 +244,3 @@ var HaploPedProps = {
 		console.groupEnd();
 	}
 }
-
-
-var PedProps = {
-
-	connectAll: function connectAllIndividuals()
-	{
-		familyMapOps.foreachperc(function(id,famid, new_root)
-		{
-			//Assign father and mother to actual people
-			var pers_father = 0, pers_mother = 0;
-
-			if (new_root.father != 0) {
-				pers_father = familyMapOps.getPerc(new_root.father, famid);
-
-				new_root.father = pers_father;         // Add father to child
-				pers_father.addChild(new_root);   // And child to father
-			}
-
-			if (new_root.mother != 0){
-				pers_mother = familyMapOps.getPerc(new_root.mother,famid);
-
-				new_root.mother = pers_mother;         // Add mother to child
-				pers_mother.addChild(new_root);   // And child to mother
-			}
-
-			if (pers_father != 0 )                     //Add parents as mates to each other
-				if(pers_mother != 0) pers_father.addMate(pers_mother);
-				else pers_father.addMate(0);
-
-			if (pers_mother !=0 )
-				if(pers_father != 0) pers_mother.addMate(pers_father);
-				else pers_mother.addMate(0);
-		});
-	}
-}
-
-
-
-//function readInP
