@@ -3,42 +3,44 @@ var Settings = {
 
 	__img : document.getElementById('settings_wheel'),
 	__div : document.getElementById('settings_box'),
+
 	__set: false,
 
-	init(){
-		if (!Settings.__set){
-			Settings.__set = true;
-			Settings.__img.onclick = Settings.__showSettings;
-			Settings.__makeDefaults(); // clones not sets
+	init(){ // called by window load
+		if (Settings.__set){
+			return 0
 		}
-		Settings.__showSettings();
-	},
 
-		// Run once
-	__makeDefaults(){
+		// Set buttons
+		Settings.__set = true;
+		Settings.__img.onclick = Settings.__showSettings;
+
+		// Make default bindings
 		for (var group in Settings.bindings)
 		{
-			Settings.defaults[group] = {};
+			Settings.__defaults[group] = {};
 
 			for (var key in Settings.bindings[group]){
 				var value = Settings.bindings[group][key]
-				Settings.defaults[group][key] = value;
+				Settings.__defaults[group][key] = value;
 			}
 		}
 	},
 
 
 	__showSettings(){
+		console.groupCollapsed("Settings:");
 		utility.showBG();
 		Settings.readBindingsFromLocal();
-		Settings.updateTables();
+		Settings.__updateTables();
 		Settings.__div.style.display = "block";
 	},
 
 	__hideSettings(){
 		utility.hideBG();
-		Settings.destroyTables();
+		Settings.__destroyTables();
 		Settings.__div.style.display = "none";
+		console.groupEnd();
 	},
 
 	bindings : {
@@ -72,10 +74,79 @@ var Settings = {
 			"Export" :  'Ctrl+E'
 		}
 	},
+	__defaults : {}, // populated as bindingsChange
 
-	defaults : {}, // populated as bindingsChange
+	__width_mod : 8 / 10,
 
-	makeTables(){
+	changeBinding(){
+		var that = this;
+
+		that.value = "[Type Now]";
+		that.style.width = '6em';
+
+		Keyboard.setCombo(function(keycombo){
+			that.value = keycombo;
+			that.style.width = (Settings.__width_mod * keycombo.length) + 'em';
+
+			var group_key = that.id.split(':');
+			Settings.bindings[group_key[0]][group_key[1]] = keycombo;
+		});
+	},
+
+	__destroyTables(){
+		var parent = Settings.__div;
+
+		while (parent.firstChild) {
+    		parent.removeChild(parent.firstChild);
+		}
+	},
+
+
+
+	__setDefaultBindings(){
+		for (var group in Settings.__defaults){
+			Settings.bindings[group] = {};
+
+			for (var key in Settings.__defaults[group]){
+				var value = Settings.__defaults[group][key]
+				Settings.bindings[group][key] = value;
+			}
+		}
+	},
+
+	setDefaultBindings(){
+		Settings.__setDefaultBindings();
+		Settings.__updateTables();
+	},
+
+	saveBindings(){
+		Settings.saveBindingstoLocal();
+		Settings.__hideSettings();
+	},
+
+
+	saveBindingstoLocal(){
+		localStorage.setItem("bindings", JSON.stringify(Settings.bindings))
+	},
+
+	readBindingsFromLocal(){
+		var bind = localStorage.getItem("bindings");
+		if (bind === null){
+			console.log("no local settings found, setting defaults");
+			Settings.setDefaultBindings();
+		}
+		else {
+			Settings.bindings = JSON.parse(bind);
+			console.log("reading from local");
+		}
+	},
+
+	__updateTables(){
+		Settings.__destroyTables();
+		Settings.__makeTables();
+	},
+
+	__makeTables(){
 		var div = Settings.__div;
 
 		var uu = document.createElement('ul')
@@ -156,73 +227,6 @@ var Settings = {
 
 	},
 
-	__width_mod : 8 / 10,
-
-	changeBinding(){
-		var that = this;
-
-		that.value = "[Type Now]";
-		that.style.width = '6em';
-
-		Keyboard.setCombo(function(keycombo){
-			that.value = keycombo;
-			that.style.width = (Settings.__width_mod * keycombo.length) + 'em';
-
-			var group_key = that.id.split(':');
-			Settings.bindings[group_key[0]][group_key[1]] = keycombo;
-		});
-	},
-
-	destroyTables(){
-		var parent = Settings.__div;
-
-		while (parent.firstChild) {
-    		parent.removeChild(parent.firstChild);
-		}
-	},
 
 
-
-	__setDefaultBindings(){
-		for (var group in Settings.defaults){
-			Settings.bindings[group] = {};
-
-			for (var key in Settings.defaults[group]){
-				var value = Settings.defaults[group][key]
-				Settings.bindings[group][key] = value;
-			}
-		}
-	},
-
-	setDefaultBindings(){
-		Settings.__setDefaultBindings();
-		Settings.updateTables();
-	},
-
-	saveBindings(){
-		Settings.saveBindingstoLocal();
-		Settings.__hideSettings();
-	},
-
-
-	saveBindingstoLocal(){
-		localStorage.setItem("bindings", JSON.stringify(Settings.bindings))
-	},
-
-	readBindingsFromLocal(){
-		var bind = localStorage.getItem("bindings");
-		if (bind === null){
-			console.log("no local settings found, setting defaults");
-			Settings.setDefaultBindings();
-		}
-		else {
-			Settings.bindings = JSON.parse(bind);
-			console.log("reading from local", Settings.bindings);
-		}
-	},
-
-	updateTables(){
-		Settings.destroyTables();
-		Settings.makeTables();
-	}
 }
