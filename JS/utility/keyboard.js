@@ -233,18 +233,20 @@ var Keyboard = {
 
 		var key = null;
 
-		var test = evt.key.toUpperCase();
-
-		switch(test){
-			case "CONTROL":
-			case "SHIFT":
-			case "ALT": key = '?'; break;
-			default: key = test; break
+		switch(evt.key){
+			case "Control":
+			case "Shift":
+			case "Alt": key = '?'; break;
+			default: key = evt.key; break
 		}
 
 		var ctrl = evt.ctrlKey,
 			shift = evt.shiftKey,
 			alt = evt.altKey;
+
+		if (key.length === 1){
+			key = key.toUpperCase();
+		}
 
 		Keyboard.__tempcombo = (ctrl?"Ctrl+":"")+(alt?"Alt+":"")+(shift?"Shift+":"")+key;
 
