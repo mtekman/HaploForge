@@ -160,6 +160,7 @@
   left:40%;
   top: 40%;
   height: 60px;
+  z-index: -99;
 }
 
 #message_props .messages {
@@ -237,6 +238,7 @@
 
 #family_props.input_props {
   display: none;
+  z-index: -2;
 }
 
 #person_props.input_props  {
@@ -322,6 +324,7 @@
 }
 
 .status {
+  display: none;
   font-size: 10pt;
   background: #333;
   border: 1px solid black;

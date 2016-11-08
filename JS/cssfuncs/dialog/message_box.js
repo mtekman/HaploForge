@@ -3,7 +3,9 @@ var statusProps = {
 	_header: document.getElementById('status_head'),
 	_message: document.getElementById('status_text'),
 
-	hide: function(){ this._box.style.display = "none";},
+	hide: function(){ 
+		this._box.style.display = "none";
+	},
 	show: function(){ 
 		this._box.style.display = "block";
 		this._box.style.opacity = 1;
@@ -377,8 +379,5 @@ var messProps = {
 }
 
 
-famProps.hide();
-persProps.hide();
-messProps.hide();
-statusProps.hide();
+//persProps.hide();
 
