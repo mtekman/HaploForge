@@ -96,5 +96,10 @@
 
 #settings_box button {
   width: 100px;
-  height: 50px;
+  height: 40px;
+}
+
+#settings_box ul.buttons_inline {
+	position:absolute;
+	top:10px;
 }

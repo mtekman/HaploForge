@@ -9,10 +9,24 @@ var Settings = {
 		if (!Settings.__set){
 			Settings.__set = true;
 			Settings.__img.onclick = Settings.__showSettings;
-			Settings.__makeDefaults;
+			Settings.__makeDefaults(); // clones not sets
 		}
 		Settings.__showSettings();
 	},
+
+		// Run once
+	__makeDefaults(){
+		for (var group in Settings.bindings)
+		{
+			Settings.defaults[group] = {};
+
+			for (var key in Settings.bindings[group]){
+				var value = Settings.bindings[group][key]
+				Settings.defaults[group][key] = value;
+			}
+		}
+	},
+
 
 	__showSettings(){
 		utility.showBG();
@@ -29,12 +43,12 @@ var Settings = {
 
 	bindings : {
 		"global" : {
-			"Marker Search" : "M",
-			"Exit Mode"    : "Escape",
 			"Toggle All" : 'A',
 			"Toggle Affecteds" : 'F',
+			"Submit" : 'Enter',
+			"Marker Search" : "M",
 			"Save" : 'Ctrl+S',
-			"Submit" : 'Enter'
+			"Exit Mode"    : "Escape",
 		},
 
 		"comparison" : {
@@ -72,7 +86,10 @@ var Settings = {
 
 			// Head
 			var hh = document.createElement('h5');
-			hh.innerHTML = group + " bindings";
+
+			var groupname = (group === "global")?"haploview + comparison":group;
+
+			hh.innerHTML = groupname + " bindings";
 
 			childdiv.appendChild(hh);
 
@@ -91,6 +108,8 @@ var Settings = {
     			var inp = document.createElement('input');
     			inp.type = 'text'
     			inp.value = combo;
+    			inp.style.width = (Settings.__width_mod * inp.value.length) + 'em';
+    			inp.id = group + ':' + key; // for quick access later
 
     			li1.innerHTML = key;
 
@@ -111,21 +130,33 @@ var Settings = {
 		}
 		div.appendChild(uu);
 
-		var dli1 = document.createElement('li');
+		var dli0 = document.createElement('li'),
+			dul0 = document.createElement('ul'),
+			dli2a = document.createElement('li'),
+			dli2b = document.createElement('li');
+
 
 		var save = document.createElement('button');
 		save.innerHTML = "Save";
 		save.onclick = Settings.saveBindings;
-		dli1.appendChild(save);
+		dli2a.appendChild(save);
 
 		var restore = document.createElement('button')
 		restore.innerHTML = "Restore Defaults";
-		restore.onclick = Settings.setDefaultBindings();
-		dli1.appendChild(restore);
+		restore.onclick = Settings.setDefaultBindings;
+		dli2b.appendChild(restore);
 
-		uu.appendChild(dli1);
+		dul0.className = 'buttons_inline'
+
+		dul0.appendChild(dli2a);
+		dul0.appendChild(dli2b);
+
+		dli0.appendChild(dul0);
+		uu.appendChild(dli0);
 
 	},
+
+	__width_mod : 8 / 10,
 
 	changeBinding(){
 		var that = this;
@@ -135,7 +166,10 @@ var Settings = {
 
 		Keyboard.setCombo(function(keycombo){
 			that.value = keycombo;
-			that.style.width = (keycombo.length * 6 / 10) + 'em';
+			that.style.width = (Settings.__width_mod * keycombo.length) + 'em';
+
+			var group_key = that.id.split(':');
+			Settings.bindings[group_key[0]][group_key[1]] = keycombo;
 		});
 	},
 
@@ -147,20 +181,9 @@ var Settings = {
 		}
 	},
 
-	// Run once
-	__makeDefaults(){
-		for (var group in Settings.bindings)
-		{
-			Settings.defaults[group] = {};
 
-			for (var key in Settings.bindings[group]){
-				var value = Settings.bindings[group][key]
-				Settings.defaults[group][key] = value;
-			}
-		}
-	},
 
-	setDefaultBindings(){
+	__setDefaultBindings(){
 		for (var group in Settings.defaults){
 			Settings.bindings[group] = {};
 
@@ -171,6 +194,10 @@ var Settings = {
 		}
 	},
 
+	setDefaultBindings(){
+		Settings.__setDefaultBindings();
+		Settings.updateTables();
+	},
 
 	saveBindings(){
 		Settings.saveBindingstoLocal();
@@ -185,10 +212,12 @@ var Settings = {
 	readBindingsFromLocal(){
 		var bind = localStorage.getItem("bindings");
 		if (bind === null){
+			console.log("no local settings found, setting defaults");
 			Settings.setDefaultBindings();
 		}
 		else {
 			Settings.bindings = JSON.parse(bind);
+			console.log("reading from local", Settings.bindings);
 		}
 	},
 
