@@ -1,6 +1,6 @@
 
 // Singleton
-(function onWindowLoad(){
+function onWindowLoad(){
     
     (function browserDetection(){
         //
@@ -58,6 +58,6 @@
 
     userOpts.setGraphics();
     Settings.init();
-})()
+}
 
-
+onWindowLoad(); // singleton in a singleton is frowned upon

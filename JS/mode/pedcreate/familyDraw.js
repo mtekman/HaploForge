@@ -20,8 +20,8 @@ var familyDraw = {
 	addFam: function(fam_id = null, position = null, callback = null){	
 
 		if (fam_id === null){
-			utility.inputprompt("Family ID?", function(){
-				fam_id = messProps._input.value;
+			utility.inputprompt("Family ID?", function(family){
+				fam_id = family; /*messProps._input.value*/
 				familyDraw.addFam(fam_id,position,callback);
 			});
 			return;
