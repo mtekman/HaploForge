@@ -46,7 +46,7 @@ var MainButtonActions  = {
 		/*always store graphics for local, only export has no graphics option*/
 
 		localStorage.setItem( localStor.ped_save, ped_to_string );
-		localStorage.setItem( localStor.ped_type, FORMAT.PEDFILE);
+		localStorage.setItem( localStor.ped_type, localStor.ped_type);
 
 		utility.notify("Pedigree Saved","...");
 	},
@@ -61,7 +61,7 @@ var MainButtonActions  = {
 
 	exitToMenu: function(){
 
-		if (MainButtonActions.fileType === FORMAT.PEDFILE){
+		if (MainButtonActions.fileType === localStor.ped_type){
 			var changeDetected = Pedfile.pedigreeChanged();
 
 			if (changeDetected){

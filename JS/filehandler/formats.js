@@ -16,6 +16,8 @@ var localStor = {
 	transfer : 'transferFromHaploToPed' // pedigrees in haplo can be modified
 }
 
+
+/*
 var FORMAT = {
 	PEDFILE : 0,
 	ALLEGRO : {
@@ -40,3 +42,4 @@ var FORMAT = {
 	},
 	UNKNOWN : -1
 }
+*/
