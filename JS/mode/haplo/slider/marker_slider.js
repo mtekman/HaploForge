@@ -77,7 +77,7 @@ var MarkerSlider = {
 
 	_get(){
 
-		if (MarkerSlider._instance === null){
+		if (MarkerSlider._instance === null || MarkerSlider._instance.children.length === 0){
 			MarkerSlider._instance = MarkerSlider._makeSlider(
 			 	 HaploWindow._top.rect.getAbsolutePosition().x
 				+HaploWindow._top.rect.getWidth() + 20, 60
