@@ -1,6 +1,104 @@
 
+var Tutorial  = {
 
-var Tutorial = {
+	add( page_array_of_details ){
+		var div = Tutorial.__makeTutorial( page_array_of_details );
+		document.body.appendChild(div);
+	},
+
+	 __makeTutorial( pages ) {
+		var divparent = document.createElement('div');
+		divparent.className = "tutorial"
+
+		// Make pages
+		var pageholder = document.createElement('div');
+		pageholder.className = "pages";
+
+		divparent.appendChild(pageholder);
+
+		for (var p=0; p < pages.length; p++)
+		{
+			var pageinfo = pages[p];
+			pageholder.appendChild( new TutorialPage(pageinfo).getPage() );
+		}
+
+		//Forward, back, exit
+		var forw = document.createElement('button'),
+			back = document.createElement('button'),
+			exit = document.createElement('button');
+
+		forw.id = "tutorial_forw";
+		back.id = "tutorial_back";
+		exit.id = "tutorial_exit";
+
+		forw.onclick = Tutorial._forwardPage;
+		back.onclick = Tutorial._backwardPage;
+		exit.onclick = Tutorial._exit;
+
+		// Collate
+		divparent.appendChild(forw);
+		divparent.appendChild(back);
+		divparent.appendChild(exit);
+
+		return divparent;
+	}
+}
+
+
+class TutorialPage {
+
+	constructor(obj_or_title, top, bottom, centerImageSrc, pageno = 0){
+
+		if (arguments.length > 1){
+			this.title = obj_or_title;
+			this.text_top = top;
+			this.text_bot = bottom;
+			this.imgsrc = centerImageSrc;
+			this.page = pageno;
+		} else {
+			for (var prop in obj_or_title){
+				this[prop] = obj_or_title[prop];
+			}
+		}
+	}
+
+	__makePage(){
+		var divmain = document.createElement('div'),
+			h2 = document.createElement('h2'),
+			h5 = document.createElement('h5'),
+			toptext = document.createElement('span'),
+			img = document.createElement('img'),
+			bottext = document.createElement('span');
+
+		divmain.className = "tutorialpage";
+
+		divmain.appendChild(h2);
+		divmain.appendChild(h5);
+		divmain.appendChild(toptext);
+		divmain.appendChild(img);
+		divmain.appendChild(bottext);
+
+		h2.innerText      = this.title;
+		h5.innerText      = this.page;
+		toptext.innerText = this.text_top;
+		bottext.innerText = this.text_bot;
+		img.src           = this.imgsrc;
+
+		return divmain;
+	}
+
+	getPage(){
+		return this.__makePage();
+	}
+}
+
+
+
+
+
+
+/*var Tutorial = {
+
 
 	__list : {},
 	directions : {'top' : 0,'bot': 0 ,'left' : 0,'right': 0},
@@ -118,7 +216,7 @@ var Tutorial = {
 		  	}
 		  	console.log(current, move)
 		  	setcurrent(box, current + move );
-		}, 1000);*/
+		}, 1000);*//*
 
 		var prev = box.style.borderWidth;
 
@@ -178,4 +276,4 @@ var Tutorial = {
 
 		return div1;
 	}
-}
+}*/
