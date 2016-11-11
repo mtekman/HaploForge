@@ -1,5 +1,7 @@
 
-var Tutorial  = {
+//Tutorial.add([{ title:"Yo", text_top:"Hey there", text_bot:"Bye there", imgsrc:"assets/this.jpg", page:0} ])
+
+var Tutorial = {
 
 	add( page_array_of_details ){
 		var div = Tutorial.__makeTutorial( page_array_of_details );
@@ -49,7 +51,9 @@ class TutorialPage {
 
 	constructor(obj_or_title, top, bottom, centerImageSrc, pageno = 0){
 
-		if (arguments.length > 1){
+		console.log(arguments);
+
+		if (arguments.length > 3){
 			this.title = obj_or_title;
 			this.text_top = top;
 			this.text_bot = bottom;
@@ -60,6 +64,7 @@ class TutorialPage {
 				this[prop] = obj_or_title[prop];
 			}
 		}
+		console.log(this);
 	}
 
 	__makePage(){
