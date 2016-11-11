@@ -1,16 +1,35 @@
 
 //Tutorial.add([{ title:"Yo", text_top:"Hey there", text_bot:"Bye there", imgsrc:"assets/this.jpg", page:0} ])
 
-var Tutorial = {
+class Tutorial {
 
-	add( page_array_of_details ){
-		var div = Tutorial.__makeTutorial( page_array_of_details );
+	static visible
+
+
+	constructor( page_array_of_details ){
+		this._num_pages = page_array_of_details.length;
+		this._currentpage = 0;
+
+		this._pages = [];
+
+		var div = this.__makeTutorial( page_array_of_details );
 		document.body.appendChild(div);
-	},
+	}
 
-	 __makeTutorial( pages ) {
+	_forwardPage(){
+		var len = this._pages.length;
+		this._currentpage ++;
+		if ()
+
+		for (var p=0; p < this._pages.length; p++){
+			this._pages[p];
+		}
+	}
+
+
+	__makeTutorial( pages ) {
 		var divparent = document.createElement('div');
-		divparent.className = "tutorial"
+		divparent.className = "tutor"
 
 		// Make pages
 		var pageholder = document.createElement('div');
@@ -20,38 +39,56 @@ var Tutorial = {
 
 		for (var p=0; p < pages.length; p++)
 		{
-			var pageinfo = pages[p];
-			pageholder.appendChild( new TutorialPage(pageinfo).getPage() );
+			var newpage = new TutorialPage( pages[p] ).getPage();
+			this._page.append( newpage );
+		
+			pageholder.appendChild( newpage );
 		}
 
 		//Forward, back, exit
-		var forw = document.createElement('button'),
-			back = document.createElement('button'),
-			exit = document.createElement('button');
+		var forw = document.createElement('div'),
+			back = document.createElement('div'),
+			exit = document.createElement('div');
 
-		forw.id = "tutorial_forw";
-		back.id = "tutorial_back";
-		exit.id = "tutorial_exit";
+		forw.id = "tutor_forw";
+		back.id = "tutor_back";
+		exit.id = "tutor_exit";
 
-		forw.onclick = Tutorial._forwardPage;
-		back.onclick = Tutorial._backwardPage;
-		exit.onclick = Tutorial._exit;
+		forw.onclick = this._forwardPage;
+		back.onclick = this._backwardPage;
+		exit.onclick = this._exit;
+
+		// Page no
+		var pageno = document.createElement('div');
+		pageno.id = "tutor_pageno";
+
 
 		// Collate
-		divparent.appendChild(forw);
-		divparent.appendChild(back);
-		divparent.appendChild(exit);
+		var buttons = document.createElement('div');
+		buttons.className = "tutorbuttons"
+		buttons.appendChild(forw);
+		buttons.appendChild(back);
+		buttons.appendChild(exit);
+		buttons.appendChild(pageno);
 
-		return divparent;
+		divparent.appendChild(buttons);
+
+		var superparent = document.createElement('div');
+		superparent.appendChild(divparent);
+		superparent.className = 'tutorcontainer'
+
+		//BG
+		var bg = document.createElement('div');
+		bg.
+
+		return superparent;
 	}
 }
 
 
 class TutorialPage {
 
-	constructor(obj_or_title, top, bottom, centerImageSrc, pageno = 0){
-
-		console.log(arguments);
+	constructor(obj_or_title, top, bottom, centerImageSrc){
 
 		if (arguments.length > 3){
 			this.title = obj_or_title;
@@ -64,27 +101,23 @@ class TutorialPage {
 				this[prop] = obj_or_title[prop];
 			}
 		}
-		console.log(this);
 	}
 
 	__makePage(){
 		var divmain = document.createElement('div'),
 			h2 = document.createElement('h2'),
-			h5 = document.createElement('h5'),
-			toptext = document.createElement('span'),
+			toptext = document.createElement('h6'), // top text
 			img = document.createElement('img'),
-			bottext = document.createElement('span');
+			bottext = document.createElement('h7');   // image caption
 
-		divmain.className = "tutorialpage";
+		divmain.className = "tutorpage";
 
 		divmain.appendChild(h2);
-		divmain.appendChild(h5);
 		divmain.appendChild(toptext);
 		divmain.appendChild(img);
 		divmain.appendChild(bottext);
 
 		h2.innerText      = this.title;
-		h5.innerText      = this.page;
 		toptext.innerText = this.text_top;
 		bottext.innerText = this.text_bot;
 		img.src           = this.imgsrc;
