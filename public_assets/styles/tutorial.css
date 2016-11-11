@@ -1,3 +1,93 @@
+.tutorcontainer {
+	position: absolute;
+	width: 300px;
+	height: 300px;
+}
+
+.tutorbg {
+	background: white;
+	width: 100%; height: 100%;
+	opacity: 1;
+}
+
+
+.tutor {
+	position:relative;
+	left: 100%;
+	top: 50%;
+	border: 2px solid #6b6969;
+	border-radius: 10px;
+	background: yellow;
+	padding: 10px;
+}
+
+
+.tutor .tutorbuttons div {
+	position:absolute;
+	top:-1px; right:20px;
+
+	background:
+		url("/public_assets/images/tutor_arrow.png")
+		no-repeat;
+	background-size: 100% 100%;
+	width: 18px;
+	height: 18px;
+}
+
+.tutor .tutorbuttons div#tutor_exit {
+	right: -5px;
+	top: -5px;
+	background:
+		url("/public_assets/images/tutor_exit.png")
+		no-repeat;
+	background-size: 100% 100%;
+}
+
+.tutor .tutorbuttons div#tutor_back {
+	margin-right: 20px;
+	transform: scaleX(-1);
+}
+
+.tutor h2 { /* Title */
+  	font-family: "Ubuntu", sans-serif;
+  	font-size: 1.3em;
+  	color: #333;
+  	font-weight: initial;
+  	line-height: initial;
+  	margin-top: -0.4em;
+  	margin-bottom: 0.4em;
+}
+
+.tutor h6 { /* Top text */
+  	font-family: "Ubuntu", sans-serif;
+  	font-size: 0.9em;
+  	font-style:normal;
+  	line-height: initial;
+  	font-weight: 300;
+  	color: #333;
+  	margin-top: -10px;
+  	margin-bottom: 5px;
+}
+
+
+
+.tutor h7 { /* Bot text */
+	color: #685206;
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 14px;
+    line-height: 24px;
+    margin: 0 0 24px;
+}
+
+.tutor img {
+	width: 100%;
+	height: auto;
+}
+
+
+
+
+
 .tutorial {
 	position: absolute;
   	max-width: 230px;
