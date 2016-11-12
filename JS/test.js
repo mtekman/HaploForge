@@ -1,4 +1,3 @@
-Tutorial.add([{ title:"Yo", text_top:"Hey there", text_bot:"Bye there", imgsrc:"assets/this.jpg", page:0} ])
 
 var Test = {
 

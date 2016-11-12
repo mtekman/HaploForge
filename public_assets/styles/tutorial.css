@@ -27,7 +27,7 @@
 	top:-1px; right:20px;
 
 	background:
-		url("/public_assets/images/tutor_arrow.png")
+		url("../images/tutor_arrow.png")
 		no-repeat;
 	background-size: 100% 100%;
 	width: 18px;
@@ -38,7 +38,7 @@
 	right: -5px;
 	top: -5px;
 	background:
-		url("/public_assets/images/tutor_exit.png")
+		url("../images/tutor_exit.png")
 		no-repeat;
 	background-size: 100% 100%;
 }
@@ -47,6 +47,20 @@
 	margin-right: 20px;
 	transform: scaleX(-1);
 }
+
+.tutor .tutorbuttons div#tutor_forw {
+	margin-right: 0px;
+	transform: scaleX(1);
+}
+
+
+
+.tutor .tutorbuttons div#pageno {
+	left: 0px;
+	right: 0;
+}
+
+
 
 .tutor h2 { /* Title */
   	font-family: "Ubuntu", sans-serif;
