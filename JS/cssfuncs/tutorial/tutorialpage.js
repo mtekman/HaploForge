@@ -1,18 +1,18 @@
 
 class TutorialPage {
 
-	constructor(obj_or_title, top, bottom, centerImageSrc){
+	constructor(array_or_title, top, bottom, centerImageSrc){
 
 		if (arguments.length > 3){
-			this.title = obj_or_title;
+			this.title = array_or_title;
 			this.text_top = top;
 			this.text_bot = bottom;
 			this.imgsrc = centerImageSrc;
-			this.page = pageno;
 		} else {
-			for (var prop in obj_or_title){
-				this[prop] = obj_or_title[prop];
-			}
+			this.title    = array_or_title[0];
+			this.text_top = array_or_title[1];
+			this.text_bot = array_or_title[2];
+			this.imgsrc   = array_or_title[3];
 		}
 	}
 
@@ -33,7 +33,11 @@ class TutorialPage {
 		h2.innerText      = this.title;
 		toptext.innerText = this.text_top;
 		bottext.innerText = this.text_bot;
-		img.src           = this.imgsrc;
+
+		if (this.imgsrc === null){
+			img.parentNode.removeChild(img);
+		}
+		else img.src = this.imgsrc;
 
 		return divmain;
 	}
