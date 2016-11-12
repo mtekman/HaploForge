@@ -1,30 +1,26 @@
 .tutorcontainer {
 	position: absolute;
-	width: 300px;
-	height: 300px;
+	width: 100%;
+	height: 100%;
 }
-
-.tutorbg {
-	background: white;
-	width: 100%; height: 100%;
-	opacity: 1;
-}
-
 
 .tutor {
 	position:relative;
-	left: 100%;
-	top: 50%;
+	z-index: 24;
+	margin: auto;
+	width: 50%;
+	top: 20%;
 	border: 2px solid #6b6969;
 	border-radius: 10px;
 	background: yellow;
 	padding: 10px;
+	box-shadow: 20px 20px 9px 0px rgba(0,0,0,0.2);
 }
-
 
 .tutor .tutorbuttons div {
 	position:absolute;
-	top:-1px; right:20px;
+	top:-1px; 
+	right:20px;
 
 	background:
 		url("../images/tutor_arrow.png")
@@ -35,16 +31,18 @@
 }
 
 .tutor .tutorbuttons div#tutor_exit {
-	right: -5px;
-	top: -5px;
+	right: -14px;
+	top:   -14px;
 	background:
 		url("../images/tutor_exit.png")
 		no-repeat;
 	background-size: 100% 100%;
+	width: 30px;
+	height: 30px;
 }
 
 .tutor .tutorbuttons div#tutor_back {
-	margin-right: 20px;
+	margin-right: 24px;
 	transform: scaleX(-1);
 }
 
@@ -69,10 +67,10 @@
   	font-weight: initial;
   	line-height: initial;
   	margin-top: -0.4em;
-  	margin-bottom: 0.4em;
+  	margin-bottom: 0.8em;
 }
 
-.tutor h6 { /* Top text */
+.tutor h7 { /* Bot text */
   	font-family: "Ubuntu", sans-serif;
   	font-size: 0.9em;
   	font-style:normal;
@@ -83,145 +81,14 @@
   	margin-bottom: 5px;
 }
 
-
-
-.tutor h7 { /* Bot text */
-	color: #685206;
-    font-family: 'Helvetica Neue', sans-serif;
-    font-size: 14px;
-    line-height: 24px;
-    margin: 0 0 24px;
+.tutor h6 { /* Top text */
+	font-family: 'Helvetica Neue', sans-serif;
+	font-size: 0.9em;
+	margin: 0 0 24px;
+	font-weight: 500;
 }
 
 .tutor img {
 	width: 100%;
 	height: auto;
-}
-
-
-
-
-
-.tutorial {
-	position: absolute;
-  	max-width: 230px;
-	background: yellow;
-	border: 2px solid #6b6969;
-	border-radius: 10px;
-	margin-left: 0px;
-	margin-right:0px;
-	margin-top: 0px;
-	margin-bottom: 0px;
-}
-
-.tutorial:after,.tutorial:before {
-	border: solid transparent;
-	content: " ";
-	height: 0;
-	width: 0;
-	position: absolute;
-	pointer-events: none;
-}
-
-.tutorial:after {
-	border-color: rgba(206, 213, 0, 0);
-	border-width: 10px;
-}
-.tutorial:before {
-	border-color: rgba(107, 105, 105, 0);
-	border-width: 13px;
-}
-
-/* LEFT */
-.left.tutorial:after {
-	right:100%;
-	top:50%;
-	border-right-color: yellow;
-	margin-top: -10px;
-}
-
-.left.tutorial:before {
-	right:100%;
-	top:50%;
-	border-right-color: #6b6969;
-	margin-top: -13px;
-}
-
-
-/* RIGHT */
-.right.tutorial:after {
-	left:100%;
-	top:50%;
-	border-left-color: yellow;
-	margin-top: -10px;
-}
-
-.right.tutorial:before {
-	left:100%;
-	top:50%;
-	border-left-color: #6b6969;
-	margin-top: -13px;
-}
-
-/* TOP */
-.top.tutorial {	margin-top: 1em; }
-.bot.tutorial {	margin-top: -5em; }
-.left.tutorial {
-	margin-top: -2em;
-	margin-left: 6em;
-}
-.right.tutorial {
-	margin-top: -2em;
-	margin-left: -6em;
-}
-
-.top.tutorial:after {
-	left: 50%;
-	bottom: 100%;
-	border-bottom-color: yellow;
-	margin-left: -10px;
-}
-
-.top.tutorial:before {
-	left: 50%;
-	bottom: 100%;
-	border-bottom-color: #6b6969;
-	margin-left: -13px;
-}
-
-/* BOTTOM */
-.bot.tutorial:after {
-	left: 50%;
-	top: 100%;
-	border-top-color: yellow;
-	margin-left: -10px;
-}
-
-.bot.tutorial:before {
-	left: 50%;
-	top: 100%;
-	border-top-color: #6b6969;
-	margin-left: -13px;
-}
-
-
-
-.tutorial_text {
-  background-color: yellow;
-  color:blue;
-  border-radius: 5px;
-  padding: 10px;
-  font-size: 0.6em;
-  opacity: 0.9;
-  z-index: 602;
-  font-style: italic;
-}
-
-
-.tutorial_text p { /*title*/
-  font-size:1em;
-  font-style: bold;
-  margin-top:-6px;
-  margin-bottom:-6px;
-  text-align: left;
 }
