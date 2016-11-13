@@ -4,20 +4,33 @@ class TutorialActions {
 
 	constructor( tutorialobj ){
 		this._currentpage = 0;
+
+		Keyboard.layerOn("tutorial");
+		Keyboard.addKeyPressTask("ArrowLeft", this.backwardPage.bind(this));
+		Keyboard.addKeyPressTask("ArrowRight", this.forwardPage.bind(this));
+		Keyboard.addKeyPressTask("Escape", this.quit.bind(this));
 	}
 
 
-	__buttonVisibility(button, visible){
+	static __buttonVisibility(button, visible){
 		button.style.display = visible?"block":"none";
 		button.style.zIndex = visible?2:-1;
 	}
+	static __isButtonVisible(button){
+		return button.style.display !== "none";
+	}
 
-	backwardVisible(vis){ this.__buttonVisibility(this.back, vis);}
-	forwardVisible(vis){  this.__buttonVisibility(this.forw, vis);}
-	quit(){			this.main.parentNode.removeChild( this.main ); }
+	backwardVisible(vis){ TutorialActions.__buttonVisibility(this.back, vis);}
+	forwardVisible(vis){  TutorialActions.__buttonVisibility(this.forw, vis);}
+	quit(){
+		Keyboard.layerOff();
+		this.main.parentNode.removeChild( this.main );
+	}
 
 	forwardPage(){
-		console.log("forward caled");
+		if (!TutorialActions.__isButtonVisible(this.forw)){
+			return 0; //not visible, do nothing
+		}
 
 		var len  = this._pages.length,
 			next = this._currentpage + 1;
@@ -31,6 +44,11 @@ class TutorialActions {
 	}
 
 	backwardPage(){
+		if (!TutorialActions.__isButtonVisible(this.back)){
+			return 0; //not visible, do nothing
+		}
+
+
 		var prev = this._currentpage - 1;
 
 		this.backwardVisible(prev !== 0);
