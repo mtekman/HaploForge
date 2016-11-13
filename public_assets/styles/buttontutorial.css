@@ -9,6 +9,8 @@
 	margin-right:0px;
 	margin-top: 0px;
 	margin-bottom: 0px;
+	transform: translateX(-110%);
+	z-index: 999;
 }
 
 .buttontutorial:after,.buttontutorial:before {
@@ -48,14 +50,14 @@
 /* RIGHT */
 .right.buttontutorial:after {
 	left:100%;
-	top:50%;
+	top:20px;
 	border-left-color: yellow;
 	margin-top: -10px;
 }
 
 .right.buttontutorial:before {
 	left:100%;
-	top:50%;
+	top:20px;
 	border-left-color: #6b6969;
 	margin-top: -13px;
 }
@@ -121,4 +123,15 @@
   margin-top:-6px;
   margin-bottom:-6px;
   text-align: left;
+}
+
+.buttontutorial_bg {
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	width: 100%;
+	height: 100%;
+	background: white;
+	z-index: 1000;
+	opacity: 0.1;
 }
