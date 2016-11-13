@@ -7,7 +7,7 @@ class ButtonTutorial {
 				onclick = null, 
 				styleprops = null){
 
-		console.assert(['U','D','L','R'].indexOf(direction)!==-1, "not a valid direction" + direction);
+		console.assert(['top','bot','left','right'].indexOf(direction)!==-1, "not a valid direction" + direction);
 		console.assert(button!==null,                             "button does not exit" );
 		console.assert(button.children.length === 0,              "button already in use");
 
@@ -20,27 +20,34 @@ class ButtonTutorial {
 			}
 		}
 
-		// Exit function
-
 		// Shakey
-		var vertical = ['U','D'].indexOf(direction)!==-1;
-		this.timers = ButtonTutorial.__shake(this.box, vertical);
-
-		var clicker = button.onclick;
-		this.box.onclick = ButtonTutorial.__ondelete.bind(this.box, clicker);
-//		button.onclick =   ButtonTutorial.__ondelete.bind(this.box, clicker);
+		var vertical = ['top','bot'].indexOf(direction)!==-1;
+		this.timer = ButtonTutorial.__shake(this.box, vertical);
 
 		// Lock to element
-//		var tr = button.parentNode.parentNode;
-//		var cell = tr.insertCell(0);
-//		cell.appendChild(this.box);
-		button.parentNode.appendChild(this.box);
+		this.button = button;
+		this.button.parentNode.appendChild(this.box);
+
+		// Background that obscures all other clicks
+		this.bg = document.createElement('div');
+		this.bg.className = 'buttontutorial_bg';
+		this.button.appendChild(this.bg);
+
+		// Raise element until clicked (doesn't quite work)
+		// __ondelete restores it
+		this.prev_zindex = this.button.style.zIndex || 0;
+
+		this.button.style.zIndex = 999;
+		this.box.style.zIndex = 999;
+
+		var clicker = this.button.onclick;
+		this.box.onclick = this.__ondelete.bind(this, clicker);
+		this.button.onclick =   this.__ondelete.bind(this, clicker);
 	}
 
 	static __makePointy(direct, head, text){
 
 		var div1 = document.createElement('div');
-		//div1.buttonid = buttonid;
 		div1.className = 'buttontutorial ' + direct;
 
 		// Now create and append to iDiv
@@ -50,78 +57,94 @@ class ButtonTutorial {
 		var h2er = document.createElement('p');
 		h2er.innerText = head;
 
-		//var per = document.createElement('p');
 		divtext.innerText = text;
 		divtext.insertBefore(h2er, divtext.firstChild);
 
-//		divtext.appendChild(per);
 		div1.appendChild(divtext)
-		div1.style.zIndex = 999;
 
 		return div1;
 	}
 
-	static __ondelete(box, clicker = null){
-		box.parentNode.removeChild(box);
-		clearInterval(this.timers[0]);
-		clearInterval(this.timers[1]);
+	__ondelete(clicker = null){
+		this.box.parentNode.removeChild(this.box);
+		this.bg.parentNode.removeChild(this.bg);
+
+		this.button.style.zIndex = this.prev_zindex;
+
+		clearInterval(this.timer);
 
 		if (clicker !== null){
 			clicker();
 		}
 	}
 
+	static __getposVert(box) {return Number(box.style.marginTop.split('px')[0]) || 0;}
+	static __getposHoriz(box){return Number(box.style.marginLeft.split('px')[0]) || 0;}
+	static __setposVert(box, am){
+		var num_unit_top = box.style.marginTop.split('px')[0];
+		box.style.marginTop = (num_unit_top + am) + 'px';
+
+		var num_unit_bot = box.style.marginBottom.split('px')[0];
+		box.style.marginBottom = (num_unit_bot + am) + 'px';
+	}
+	static __setposHoriz(box, am){
+		var num_unit_left = box.style.marginLeft.split('px')[0];
+		box.style.marginLeft = (Number(num_unit_left) + am) + 'px';
+
+		var num_unit_right = box.style.marginRight.split('px')[0];
+		box.style.marginRight = (Number(num_unit_right) + am) + 'px';
+
+//		console.log("marginL", num_unit_left, box.style.marginLeft);
+//		console.log("marginR", num_unit_right, box.style.marginRight);
+
+	}
+
 
 	static __shake(box, vertical){
-
-		var move = 1, mult = 1, diff= 10;
 
 		var getcurrent, setcurrent;
 
 		if (vertical){
-			getcurrent = function(box){return Number(box.style.marginTop.split(/\D+/)[0]) || 0;};
-			setcurrent = function(box,am){
-				var num_unit_top = box.style.marginTop.split(/\D+/);
-				box.style.marginTop = (Number(num_unit_top[0]) + am) + 'px';
-
-				var num_unit_bot = box.style.marginBottom.split(/\D+/);
-				box.style.marginBottom = (Number(num_unit_bot[0]) + am) + 'px';
-			}
+			getcurrent = ButtonTutorial.__getposVert;  setcurrent = ButtonTutorial.__setposVert;
 		}
 		else {
-			getcurrent = function(box){return Number(box.style.marginLeft.split(/\D+/)[0]) || 0;};
-			setcurrent = function(box, am){
-				var num_unit_left = box.style.marginLeft.split(/\D+/);
-				box.style.marginLeft = (Number(num_unit_left[0]) + am) + 'px';
-
-				var num_unit_right = box.style.marginRight.split(/\D+/);
-				box.style.marginRight = (Number(num_unit_right[0]) + am) + 'px';
-				
-				console.log(num_unit_left, num_unit_right)
-			}
+			getcurrent = ButtonTutorial.__getposHoriz; setcurrent = ButtonTutorial.__setposHoriz;
 		}
 
-		var box_start = getcurrent(box),
+		// Movement
+		var move = 1, mult = 1.4, diff= 10;
+
+		var box_start  = getcurrent(box),
 			box_offset = box_start - diff;
 
-//		console.log("box_start=", box_start, "box_offset=", box_offset)
+//		console.log("box_start", box_start, "box_offset", box_offset);
 
+		// Shimmy
 		var tim1 = setInterval(function(){
 			var current = getcurrent(box);
 
 		  	if (current <= box_offset ){
 		    	move = mult;
+//				console.log(current + " < " + box_offset, "moving " + move);
 		  	}
 		  	else if (current >= box_start ){
 		    	move = -mult;
+//				console.log(current + " >= " + box_offset, "moving " + move);
 		  	}
-		  	setcurrent(box, current + move );
-		}, 1000)
+		  	setcurrent(box, move );
+		}, 80)
 
-		var prev = box.style.borderButtonWidth;
+		return tim1
+	}
+}
 
-		var tock = 2,
-			diff = 0.5,
+
+
+/* Depreciated function
+
+		// Padding shrink/grow
+/*		var tock = 2,
+			diff = 0.1,
 			mult = diff;
 
 		var tim2 = setInterval(function(){
@@ -140,7 +163,4 @@ class ButtonTutorial {
 			box.style.borderButtonWidth = tock+'px';
 			box.style.padding = tock+'px'; 
 		},80)
-
-		return [tim1,tim2]
-	}
-}
+*/
