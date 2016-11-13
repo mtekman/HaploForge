@@ -1,3 +1,4 @@
+var bb;
 
 var Test = {
 
@@ -9,7 +10,8 @@ var Test = {
 			 "This is the bottom text that rambles on and on about nothing in particular and most people think is a bit much to be honest", null],
 
 		 		["Title2", "This is the text at the top that explains quickly", 
-			 "This is the bottom text that rambles on and on about nothing in particular and most people think is a bit much to be honest", null],
+			 "This is the bottom text that rambles on and on about nothing in particular and most people think is a bit much to be honest", null, 
+			 {enter:function(){console.log("Running enter action")}, exit:function(){console.log("Running exit action")}}],
 
 			 	["Title3", "This is the text at the top that explains quickly", 
 			 "This is the bottom text that rambles on and on about nothing in particular and most people think is a bit much to be honest", null],
@@ -24,7 +26,7 @@ var Test = {
 
 			setTimeout(function(){
 				var tutbutt = document.getElementById('selection_tools').childNodes[3].childNodes[1].childNodes[0].cells[0].childNodes[0]
-				var bb =  new ButtonTutorial(tutbutt, "Go away", "Test this tdiasd a", "R");				
+				bb =  new ButtonTutorial(tutbutt, "Go away", "Test this tdiasd andso", "right");				
 			},1000)
 		}
 	},

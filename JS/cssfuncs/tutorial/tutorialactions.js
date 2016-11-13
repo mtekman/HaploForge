@@ -68,6 +68,15 @@ class TutorialActions {
 			console.log("Invalid page", pageno);
 			return -1
 		}
-		page.style.display = visible?"block":"none";
+
+
+		if (visible){
+			if (page.enterAction !== null){page.enterAction();}
+			page.style.display = "block";
+		}
+		else {
+			if (page.exitAction !== null){page.exitAction();}
+			page.style.display = "none";
+		}
 	}
 }
