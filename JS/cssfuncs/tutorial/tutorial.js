@@ -14,7 +14,6 @@ class Tutorial extends TutorialActions {
 		this.__showpage(0);
 	}
 
-
 	_makeTutorial( pages ) {
 		var divparent = document.createElement('div');
 		divparent.className = "tutor"
