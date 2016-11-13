@@ -35,15 +35,19 @@ var Keyboard = {
 	},
 
 	layerOff(){
-		if (Keyboard.__tmptasks.length == 0){
-			console.trace("No layer to pop");
-			Keyboard.__endListen(); //No tasks to process
+		var dnup_tasks = Keyboard.__tmptasks.pop();
+
+		if (dnup_tasks === undefined){
+			console.log("nothing to pop");
 			return -1;
 		}
 
-		var dnup_tasks = Keyboard.__tmptasks.pop();
 		Keyboard.__dn_tasks = dnup_tasks[1];
 		Keyboard.__up_tasks = dnup_tasks[2];
+
+		if (Keyboard.__tmptasks.length == 0){
+			Keyboard.__endListen(); //No tasks to process
+		}
 	},
 
 	__prevlistenstate: null,
