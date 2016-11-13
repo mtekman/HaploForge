@@ -1,7 +1,5 @@
 
-
-
-.tutorial {
+.buttontutorial {
 	position: absolute;
   	max-width: 230px;
 	background: yellow;
@@ -13,7 +11,7 @@
 	margin-bottom: 0px;
 }
 
-.tutorial:after,.tutorial:before {
+.buttontutorial:after,.buttontutorial:before {
 	border: solid transparent;
 	content: " ";
 	height: 0;
@@ -22,24 +20,24 @@
 	pointer-events: none;
 }
 
-.tutorial:after {
+.buttontutorial:after {
 	border-color: rgba(206, 213, 0, 0);
 	border-width: 10px;
 }
-.tutorial:before {
+.buttontutorial:before {
 	border-color: rgba(107, 105, 105, 0);
 	border-width: 13px;
 }
 
 /* LEFT */
-.left.tutorial:after {
+.left.buttontutorial:after {
 	right:100%;
 	top:50%;
 	border-right-color: yellow;
 	margin-top: -10px;
 }
 
-.left.tutorial:before {
+.left.buttontutorial:before {
 	right:100%;
 	top:50%;
 	border-right-color: #6b6969;
@@ -48,14 +46,14 @@
 
 
 /* RIGHT */
-.right.tutorial:after {
+.right.buttontutorial:after {
 	left:100%;
 	top:50%;
 	border-left-color: yellow;
 	margin-top: -10px;
 }
 
-.right.tutorial:before {
+.right.buttontutorial:before {
 	left:100%;
 	top:50%;
 	border-left-color: #6b6969;
@@ -63,25 +61,25 @@
 }
 
 /* TOP */
-.top.tutorial {	margin-top: 1em; }
-.bot.tutorial {	margin-top: -5em; }
-.left.tutorial {
+.top.buttontutorial {	margin-top: 1em; }
+.bot.buttontutorial {	margin-top: -5em; }
+.left.buttontutorial {
 	margin-top: -2em;
 	margin-left: 6em;
 }
-.right.tutorial {
+.right.buttontutorial {
 	margin-top: -2em;
 	margin-left: -6em;
 }
 
-.top.tutorial:after {
+.top.buttontutorial:after {
 	left: 50%;
 	bottom: 100%;
 	border-bottom-color: yellow;
 	margin-left: -10px;
 }
 
-.top.tutorial:before {
+.top.buttontutorial:before {
 	left: 50%;
 	bottom: 100%;
 	border-bottom-color: #6b6969;
@@ -89,14 +87,14 @@
 }
 
 /* BOTTOM */
-.bot.tutorial:after {
+.bot.buttontutorial:after {
 	left: 50%;
 	top: 100%;
 	border-top-color: yellow;
 	margin-left: -10px;
 }
 
-.bot.tutorial:before {
+.bot.buttontutorial:before {
 	left: 50%;
 	top: 100%;
 	border-top-color: #6b6969;
@@ -105,7 +103,7 @@
 
 
 
-.tutorial_text {
+.buttontutorial_text {
   background-color: yellow;
   color:blue;
   border-radius: 5px;
@@ -117,7 +115,7 @@
 }
 
 
-.tutorial_text p { /*title*/
+.buttontutorial_text p { /*title*/
   font-size:1em;
   font-style: bold;
   margin-top:-6px;

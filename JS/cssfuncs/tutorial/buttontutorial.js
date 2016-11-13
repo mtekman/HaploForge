@@ -34,18 +34,18 @@ class ButtonTutorial {
 //		var tr = button.parentNode.parentNode;
 //		var cell = tr.insertCell(0);
 //		cell.appendChild(this.box);
-		button.appendChild(this.box);
+		button.parentNode.appendChild(this.box);
 	}
 
 	static __makePointy(direct, head, text){
 
 		var div1 = document.createElement('div');
 		//div1.buttonid = buttonid;
-		div1.className = 'tutorial ' + direct;
+		div1.className = 'buttontutorial ' + direct;
 
 		// Now create and append to iDiv
 		var divtext = document.createElement('div');
-		divtext.className = 'tutorial_text';
+		divtext.className = 'buttontutorial_text';
 
 		var h2er = document.createElement('p');
 		h2er.innerText = head;
