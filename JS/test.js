@@ -11,12 +11,28 @@ var pages = [
 
 ];
 
-var pf = new Tutorial( pages );
 
 
 
 
 var Test = {
+
+	Tutorial : {
+		Main(){
+			var pf = new Tutorial( pages );
+		},
+
+		Buttons(){
+			userOpts.fancyGraphics = false;
+			MainButtonActions.loadHaploFromStorage();
+
+			setTimeout(function(){
+				var tutbutt = document.getElementById('selection_tools').childNodes[3].childNodes[1].childNodes[0].cells[0].childNodes[0]
+				var bb =  new ButtonTutorial(tutbutt, "Go away", "Test this tdiasd a", "R");				
+			},1000)
+		}
+	},
+
 
 	GHM : {
 		saveChrAndFlow(){
