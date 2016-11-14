@@ -53,7 +53,11 @@ var messProps = {
 			this._inputrow.style.display = "block";
 			
 			this._submit.value = "Submit";
-			this._submit.onclick = submit;
+			var that = this;
+			this._submit.onclick = function(){
+				submit(that._input.value);
+				that._exit.onclick();
+			}
 		}
 
 
@@ -109,10 +113,12 @@ var messProps = {
 
 		var that = this;
 
-		that.display(header, "", null, null, function(){
-			messProps._aftercallbacks();
-			callback(that._text.value);
-		});
+		that.display(header, "", null, null, callback);
+		/*function(val){
+			console.log(val);
+			callback(val.innerHTML);
+//			messProps._aftercallbacks();
+		});*/
 	}
 
 }
