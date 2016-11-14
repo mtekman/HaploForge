@@ -11,13 +11,15 @@ var Test = {
 
 		 		["Title2", "This is the text at the top that explains quickly", 
 			 "This is the bottom text that rambles on and on about nothing in particular and most people think is a bit much to be honest", null, 
-			 {enter:function(){console.log("Running enter action")}, exit:function(){console.log("Running exit action")}}],
+			 {enter:function(){console.log("page2 enter action")}, exit:function(){console.log("page2 exit action")}}],
 
 			 	["Title3", "This is the text at the top that explains quickly", 
 			 "This is the bottom text that rambles on and on about nothing in particular and most people think is a bit much to be honest", null],
 			];
 
-			var pf = new Tutorial( pages );
+			var pf = new Tutorial( pages, function exit(){
+				console.log("Quit function")
+			} );
 		},
 
 		Buttons(){
@@ -217,4 +219,4 @@ var Test = {
 	}
 }
 
-Test.Tutorial.Buttons();
+//Test.Tutorial.Buttons();
