@@ -89,6 +89,8 @@ function graphInitPos(start_x, start_y, enable_ped_edit = false){
 					posx = meta.x;
 					y_pos = meta.y;
 
+					perp.name = meta.name;
+
 					delete perp.stored_meta;
 				}
 
