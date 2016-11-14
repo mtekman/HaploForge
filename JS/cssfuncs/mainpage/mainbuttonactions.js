@@ -15,6 +15,11 @@ var MainButtonActions  = {
 		FileFormat.__begFuncs();
 		
 		var hap_data = localStorage.getItem( localStor.hap_save );
+		if (hap_data === null){
+			console.log("No haplo data saved");
+			MainButtonActions.exitToMenu();
+			return
+		}
 
 		SerialParse.All.import( hap_data );
 		HaploPedProps.init();
