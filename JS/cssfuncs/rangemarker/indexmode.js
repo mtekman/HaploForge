@@ -11,7 +11,7 @@ var CSSMarkerRange = {
 	_visible: false,
 
 	init(){
-		CSSMarkerRange._visible?CSSMarkerRange.hideIndexCSS():CSSMarkerRange.showIndexCSS();
+		CSSMarkerRange._visible?CSSMarkerRange.__hideIndexCSS():CSSMarkerRange.__showIndexCSS();
 
 		if (CSSMarkerRange._initialised){
 			return 0;
@@ -46,7 +46,7 @@ var CSSMarkerRange = {
 		CSSMarkerRange._max.innerHTML = inner_options;
 	},
 
-	showIndexCSS(){
+	__showIndexCSS(){
 		Keyboard.layerOn("indexCSS");
 
 		Keyboard.addKeyPressTask("Enter", function(){
@@ -64,7 +64,7 @@ var CSSMarkerRange = {
 		CSSMarkerRange._min_input.focus()
 	},
 
-	hideIndexCSS(){
+	__hideIndexCSS(){
 		Keyboard.layerOff();
 
 		CSSMarkerRange._visible = false;
