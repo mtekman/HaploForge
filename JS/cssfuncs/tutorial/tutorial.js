@@ -2,8 +2,8 @@
 
 class Tutorial extends TutorialActions {
 
-	constructor( page_array_of_details ){
-		super();
+	constructor( page_array_of_details, exit_function = null ){
+		super(exit_function);
 		this._pages = [];
 		this.main = this._makeTutorial( page_array_of_details );
 

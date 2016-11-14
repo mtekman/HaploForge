@@ -2,7 +2,8 @@
 
 class TutorialActions {
 
-	constructor( tutorialobj ){
+	constructor( exitfunction ){
+		this._onexit = exitfunction;
 		this._currentpage = 0;
 
 		Keyboard.layerOn("tutorial");
@@ -25,6 +26,10 @@ class TutorialActions {
 	quit(){
 		Keyboard.layerOff();
 		this.main.parentNode.removeChild( this.main );
+		
+		if (this._onexit !== null){
+			this._onexit();
+		}
 	}
 
 	forwardPage(){
