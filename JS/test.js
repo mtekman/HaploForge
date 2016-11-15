@@ -189,12 +189,8 @@ var Test = {
 		}
 	},
 
-	Colors : {
-		run(){
-			FounderColor.__testColors(48);
-		}
-	},
-
+	Colors : FounderColor.testColors,
+	
 	PedCreate : {
 		run(){
 			MainButtonActions.createNewPed()
