@@ -6,6 +6,9 @@ var Settings = {
 
 	__set: false,
 
+	__storageoverridekey: "overridewindow", 
+	__storagebindingskey: "bindings",
+
 	init(){ // called by window load
 		if (Settings.__set){
 			return 0
@@ -126,11 +129,12 @@ var Settings = {
 
 
 	saveBindingstoLocal(){
-		localStorage.setItem("bindings", JSON.stringify(Settings.bindings))
+		localStorage.setItem(Settings.__storagebindingskey, JSON.stringify(Settings.bindings))
+		localStorage.setItem(Settings.__storageoverridekey, Keyboard.overridewindowdefaults);
 	},
 
 	readBindingsFromLocal(){
-		var bind = localStorage.getItem("bindings");
+		var bind = localStorage.getItem(Settings.__storagebindingskey);
 		if (bind === null){
 			console.log("no local settings found, setting defaults");
 			Settings.setDefaultBindings();
@@ -139,6 +143,8 @@ var Settings = {
 			Settings.bindings = JSON.parse(bind);
 			console.log("reading from local");
 		}
+
+		Keyboard.overridewindowdefaults = JSON.parse(localStorage.getItem(Settings.__storageoverridekey) || false);
 	},
 
 	__updateTables(){
@@ -199,8 +205,43 @@ var Settings = {
 		    childdiv.appendChild(ul);
 		    uu.appendChild(childdiv);
 		}
+		//Buttons
+		uu.appendChild( Settings.__makeSaveRestoreButtons());
+
 		div.appendChild(uu);
 
+		// Tick box
+		div.appendChild( Settings.__makeOverrideTickBox());
+
+
+	},
+
+	__makeOverrideTickBox(){
+		//Add tickbox for overriding window activities
+		var unew = document.createElement('ul'),
+			linew = document.createElement('li'),
+			input = document.createElement('input'),
+			label = document.createElement('label');
+
+		label.innerHTML = "Override Window Bindings";
+
+		input.type = "checkbox"
+
+		// set by readBindingsFromLocal()
+		input.checked = Keyboard.overridewindowdefaults;
+
+		input.onchange = function(){
+			Keyboard.overridewindowdefaults = this.checked;
+		}
+		
+		label.appendChild(input);
+		linew.appendChild(label);
+		 unew.appendChild(linew);
+
+		return unew;
+	},
+
+	__makeSaveRestoreButtons(){
 		var dli0 = document.createElement('li'),
 			dul0 = document.createElement('ul'),
 			dli2a = document.createElement('li'),
@@ -218,15 +259,12 @@ var Settings = {
 		dli2b.appendChild(restore);
 
 		dul0.className = 'buttons_inline'
-
 		dul0.appendChild(dli2a);
 		dul0.appendChild(dli2b);
 
 		dli0.appendChild(dul0);
-		uu.appendChild(dli0);
 
-	},
-
-
+		return dli0;
+	}
 
 }

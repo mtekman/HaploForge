@@ -11,6 +11,8 @@ var Keyboard = {
 		"PageUp" : false
 	},
 
+	overridewindowdefaults: false,
+
 	__listening: false, 
 
 	__pause_state: null,	// Pausing is useful for input entering operations.
@@ -118,6 +120,11 @@ var Keyboard = {
 
 
 	__processKeyDown(event){
+		if (Keyboard.overridewindowdefaults){
+			event.preventDefault();
+			event.stopPropagation();
+		}
+
 		Keyboard.__map[event.key] = true;
 
 		if (event.key in Keyboard.__dn_tasks){
@@ -247,6 +254,11 @@ var Keyboard = {
 
 	__getCombo(evt){
 
+		// Stop browser events
+//		console.log(evt)
+		evt.preventDefault();
+		evt.stopPropagation();
+
 		var key = null;
 
 		switch(evt.key){
@@ -264,12 +276,23 @@ var Keyboard = {
 			key = key.toUpperCase();
 		}
 
+		//Test for common window bindings
+/*		if (ctrl && !alt && !shift){
+			var role = "";
+			switch(key){
+				case "S":role="Save";break;
+				case "F":role="Find";break;
+				case "G":role="Find";break;
+				case "K":role="Search";break;
+				case "C":role="Copy";break;
+				case "V":role="Paste";break;
+				case "D":role="Favourites"; break;
+				case "J":role="Downloads"; break
+			}
+		}*/
+
+
 		Keyboard.__tempcombo = (ctrl?"Ctrl+":"")+(alt?"Alt+":"")+(shift?"Shift+":"")+key;
 
-		// Stop browser events
-		if (window.event){
-			evt.preventDefault();
-			evt.stopPropagation();
-		}
 	}
 }
