@@ -215,4 +215,4 @@ var Test = {
 	}
 }
 
-//Test.Tutorial.Buttons();
+userTutorials.setToMain.first();
