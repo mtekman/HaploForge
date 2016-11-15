@@ -23,10 +23,12 @@ class TutorialActions {
 
 	backwardVisible(vis){ TutorialActions.__buttonVisibility(this.back, vis);}
 	forwardVisible(vis){  TutorialActions.__buttonVisibility(this.forw, vis);}
+	
 	quit(){
 		Keyboard.layerOff();
-		this.main.parentNode.removeChild( this.main );
-		
+
+		this.destroy();
+
 		if (this._onexit !== null){
 			this._onexit();
 		}

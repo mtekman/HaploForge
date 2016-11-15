@@ -4,6 +4,10 @@ class Tutorial extends TutorialActions {
 
 	constructor( page_array_of_details, exit_function = null ){
 		super(exit_function);
+		
+		this.__tps = {}; // for destroy
+		
+
 		this._pages = [];
 		this.main = this._makeTutorial( page_array_of_details );
 
@@ -12,6 +16,15 @@ class Tutorial extends TutorialActions {
 		}
 		this.backwardVisible(false);
 		this.__showpage(0);
+
+	}
+
+	destroy(){ /*Called by TutorialActions.quit() */
+		for (var ppp in this.__tps){
+			this.__tps[ppp].destroy();
+		}
+		this.main.parentNode.removeChild(this.main);
+
 	}
 
 	_makeTutorial( pages ) {
@@ -26,7 +39,11 @@ class Tutorial extends TutorialActions {
 
 		for (var p=0; p < pages.length; p++)
 		{
-			var newpage = (new TutorialPage( pages[p] )).getPage();
+			var ppp     = new TutorialPage( pages[p] ),
+				newpage = ppp.getPage();
+
+			this.__tps[p] = ppp;
+
 			newpage.style.display = "none"; // hide by default
 			this._pages.push( newpage );
 		
