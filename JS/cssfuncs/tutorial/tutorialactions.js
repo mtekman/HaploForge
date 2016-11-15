@@ -70,7 +70,9 @@ class TutorialActions {
 	__showpage(pageno){this.___setpage(pageno,true)};
 	___setpage(pageno, visible)
 	{
-		var page = this._pages[pageno];
+		var page = this._pages[pageno],
+			plot = this.__tps[pageno];
+
 		if (page === undefined){
 			console.log("Invalid page", pageno);
 			return -1
@@ -78,11 +80,12 @@ class TutorialActions {
 
 
 		if (visible){
-			if (page.enterAction !== null){page.enterAction();}
+			console.log(plot);
+			if (plot.enterAction !== null){plot.enterAction();}
 			page.style.display = "block";
 		}
 		else {
-			if (page.exitAction !== null){page.exitAction();}
+			if (plot.exitAction !== null){plot.exitAction();}
 			page.style.display = "none";
 		}
 	}

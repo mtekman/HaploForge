@@ -48,7 +48,6 @@ class TutorialPage {
 		h2.innerText      = this.title;
 		toptext.innerText = this.text_top;
 
-
 		var that = this;
 
 		if (this.media !== null)
@@ -62,6 +61,30 @@ class TutorialPage {
 				divmain.appendChild(toptext);
 
 				this.__videotrans = vt; // for destroy();
+
+				// Layer on Keyboard
+				if (this.action.enter === null){
+					this.action.enter = vt.keyboardOn;
+				}
+				else {
+					var enter = this.action.enter;
+					this.action.enter = function(){
+						vt.keyboardOn();
+						enter();
+					}
+				}
+
+				//Layer off Keyboard
+				if (this.action.exit === null){
+					this.action.exit = vt.keyboardOff;
+				}
+				else {
+					var exit = this.action.exit;
+					this.action.exit = function(){
+						vt.keyboardOff()
+						exit();
+					}
+				}
 			}
 			
 			else { //"img"
@@ -78,8 +101,9 @@ class TutorialPage {
 			bottext.innerText = this.text_bot;
 		}
 
-		divmain.enterAction = this.action.enter;
-		divmain.exitAction  = this.action.exit;
+		// Accessors
+		this.enterAction = this.action.enter;
+		this.exitAction  = this.action.exit;
 
 		return divmain;
 	}

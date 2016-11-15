@@ -18,20 +18,32 @@ class VideoTranscript {
 			var last = this.time_array[this.time_array.length -1];
 
 		}
+		// this.autoplay = true;
 
 		this.paused = true;
-		this.autoplay = true;
+		this.__keysset = false;
+	}
 
-//		this.video.play();
+	keyboardOn(){ /* Called by onEnter function in TutorialPage */
+		if (this.__keysset === false){
+			Keyboard.layerOn()
+			Keyboard.addKeyPressTask(" ", this.pauseplay.bind(this));
+			Keyboard.addKeyPressTask("ArrowLeft", this.goPrevTrans.bind(this,true));
+			Keyboard.addKeyPressTask("ArrowRight", this.goNextTrans.bind(this,true));
+			this.__keysset = true;
+		}
+	}
 
-		Keyboard.layerOn();
-		Keyboard.addKeyPressTask("Spacebar", this.pauseplay);
-		Keyboard.addKeyPressTask("Shift+ArrowLeft", this.pauseplay);
-		Keyboard.addKeyPressTask("Shift+ArrowRight", this.pauseplay);
+	keyboardOff(){
+		if (this.__keysset === true){
+			Keyboard.layerOff();
+			this.__keysset = false;
+		}
 	}
 
 	destroy(){ /* called by TutorialPage.destroy() */
-		Keyboard.layerOff()
+		this.keyboardOff();
+
 		while(this.container.firstChild){
 			this.container.removeChild(this.container.firstChild);
 		}
@@ -129,18 +141,15 @@ class VideoTranscript {
 
 		this.pauseVideo();
 		
-		if (true){
-			if (delay!==0){
-				var that = this;
-
-				//Function to highlight
-				// top and bottom
-				setTimeout(function(){
-					if (!that.user_set){
-						that.playVideo();
-					}
-				}, delay * 1000);
-			}
+		if (delay!==0){
+			var that = this;
+			//Function to highlight
+			// top and bottom
+			setTimeout(function(){
+				if (!that.user_set){
+					that.playVideo();
+				}
+			}, delay * 1000);
 		}
 	}
 
@@ -159,16 +168,14 @@ class VideoTranscript {
 		var div   = document.createElement('div'),
 			play  = document.createElement('button'),
 			prev  = document.createElement('button'),
-			next  = document.createElement('button'),
-			check = document.createElement('input'),
-			label = document.createElement('label');
+			next  = document.createElement('button');
+
 
 
 		div.className = "videobuttons";
 		div.appendChild(play);
 		div.appendChild(prev);
 		div.appendChild(next);
-		div.appendChild(label);
 
 		divmain.appendChild(med);
 		divmain.appendChild(div);
@@ -177,11 +184,22 @@ class VideoTranscript {
 		prev.innerHTML = '<'
 		next.innerHTML = '>'
 
+		play.title = " [ Spacebar ] "
+		prev.title = " [   Left  ]"
+		next.title = " [  Right  ]"
+
 		play.onclick = this.pauseplay.bind(this);
 		prev.onclick = this.goPrevTrans.bind(this);
 		next.onclick = this.goNextTrans.bind(this);
 
-		var that = this;
+
+		// Autoplay
+/*		var that = this;
+		
+		var check = document.createElement('input'),
+			label = document.createElement('label');
+		
+		div.appendChild(label);
 
 		label.innerHTML = "autoplay";
 		label.appendChild(check);
@@ -191,6 +209,7 @@ class VideoTranscript {
 		check.onchange = function(){
 			that.autoplay = this.checked;
 		}
+*/
 
 		this.playicon = play;
 		this.video    = med;
