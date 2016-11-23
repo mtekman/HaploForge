@@ -2,6 +2,10 @@ class VideoTranscript {
 
 	constructor(pageTutorial, source, transcript)
 	{
+		this.__symbolplay  = "&#9654";
+		this.__symbolpause = "&#9646;&#9646";
+
+
 		// Access to Top and Bottom modifiers
 		this.pageTutor = pageTutorial;
 
@@ -20,7 +24,7 @@ class VideoTranscript {
 		}
 		// this.autoplay = true;
 
-		this.paused = true;
+		this.paused = false;
 		this.__keysset = false;
 	}
 
@@ -82,12 +86,26 @@ class VideoTranscript {
 		this.pauseVideo(true);
 	}
 
+
+	__animatePlaySwitch(endicon){
+		setTimeout(function(){
+
+			setTimeout(function(){
+
+			}, 100)
+
+		},100);
+		this.playicon
+	}
+
 	playVideo(user_set = false){ 
 		this.paused = false;
 		this.user_set = user_set;
 
 		this.video.play();
-		this.playicon.innerHTML = "&#9646;&#9646"
+		this.playicon.innerHTML = this.__symbolplay;
+
+
 	}
 
 	pauseVideo(user_set = false){
@@ -95,7 +113,18 @@ class VideoTranscript {
 		this.user_set = user_set;
 
 		this.video.pause();
-		this.playicon.innerHTML = '&#9654'
+
+		this.playicon.style.display = "block";
+		this.playicon.innerHTML = this.__symbolplay;
+
+		var that = this;
+		setTimeout(function(){
+			that.playicon.innerHTML = that.__symbolpause;
+
+			setTimeout(function(){
+				that.playicon.style.display = "none";
+			}, 200);
+		}, 100)
 	}
 
 
@@ -141,7 +170,7 @@ class VideoTranscript {
 
 		this.pauseVideo();
 		
-		if (delay!==0){
+/*		if (delay!==0){
 			var that = this;
 			//Function to highlight
 			// top and bottom
@@ -150,37 +179,46 @@ class VideoTranscript {
 					that.playVideo();
 				}
 			}, delay * 1000);
-		}
+		}*/
 	}
 
 
 	__makeVideoDiv(src){
-		var divmain = document.createElement('div'),
+		var parent  = document.createElement('div'), /* relative */
+			divmain = document.createElement('div'), /* absolute */
 			med 	= document.createElement('video'),
 			source  = document.createElement('source');
 		
 		med.controls = "";
 		source.type  = "video/mp4";
 		source.src   = src;
+	
 
+		parent.appendChild(divmain);
 		med.appendChild(source);
 
 		var div   = document.createElement('div'),
-			play  = document.createElement('button'),
+			play  = document.createElement('div'),
 			prev  = document.createElement('button'),
 			next  = document.createElement('button');
 
 
-
-		div.className = "videobuttons";
-		div.appendChild(play);
+		parent.className  = 'videocontainer_parent';
+		divmain.className = 'videocontainer';
+		div.className     = "videobuttons";
+		play.id           = 'vidplay';
+		
+		//div.appendChild(play);
 		div.appendChild(prev);
 		div.appendChild(next);
+
+		parent.appendChild(play);
+		
 
 		divmain.appendChild(med);
 		divmain.appendChild(div);
 
-		play.innerHTML = '&#9654';
+		play.innerHTML = this.__symbolplay;
 		prev.innerHTML = '<'
 		next.innerHTML = '>'
 
@@ -188,6 +226,7 @@ class VideoTranscript {
 		prev.title = " [   Left  ]"
 		next.title = " [  Right  ]"
 
+		med.onclick  = this.pauseplay.bind(this);
 		play.onclick = this.pauseplay.bind(this);
 		prev.onclick = this.goPrevTrans.bind(this);
 		next.onclick = this.goNextTrans.bind(this);
@@ -214,7 +253,7 @@ class VideoTranscript {
 		this.playicon = play;
 		this.video    = med;
 
-		return divmain;
+		return parent;
 	}
 
 

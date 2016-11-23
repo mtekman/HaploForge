@@ -49,6 +49,18 @@ class TutorialPage {
 		toptext.innerText = this.text_top;
 
 		var that = this;
+		
+		if (this.text_bot!== null){
+			bottext.innerText = this.text_bot;
+		}
+
+		var textholder = document.createElement('div');
+		textholder.className = "textholder";
+
+		textholder.appendChild(toptext);
+		textholder.appendChild(bottext);
+
+		divmain.appendChild(textholder);
 
 		if (this.media !== null)
 		{
@@ -57,8 +69,8 @@ class TutorialPage {
 			{
 				var vt = new VideoTranscript(that, this.media.src, this.media.transcript);
 				med = vt.getVideo();
-				divmain.appendChild(med);
-				divmain.appendChild(toptext);
+//				divmain.appendChild(med);
+//				divmain.appendChild(toptext);
 
 				this.__videotrans = vt; // for destroy();
 
@@ -90,16 +102,13 @@ class TutorialPage {
 			else { //"img"
 				med = document.createElement('img');
 				med.src = this.mediasrc; 
-				divmain.appendChild(toptext);
-				divmain.appendChild(med);
+//				divmain.appendChild(toptext);
+//				divmain.appendChild(med);
 			}
-			
+			divmain.appendChild(med);
 		}
 
-		if (this.text_bot!== null){
-			divmain.appendChild(bottext);
-			bottext.innerText = this.text_bot;
-		}
+
 
 		// Accessors
 		this.enterAction = this.action.enter;

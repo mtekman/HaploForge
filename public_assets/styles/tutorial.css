@@ -18,6 +18,27 @@
 	box-shadow: 20px 20px 9px 0px rgba(0,0,0,0.2);
 }
 
+.tutor .videocontainer_parent {
+	position: relative;
+}
+
+.tutor .videocontainer {
+	position: relative;
+}
+
+.tutor #vidplay {
+	position:absolute;
+	top: 50%;
+	left: 50%;
+	font-size: 5em;
+	transform: translateX(-50%) translateY(-70%);
+	opacity: 0.5;
+}
+
+.tutor .videobuttons {
+	margin-bottom: -1.6em;
+}
+
 .tutor .videobuttons button {
 	width: 50px;
 }
@@ -75,22 +96,27 @@
 .tutor h2 { /* Title */
   	font-family: "Ubuntu", sans-serif;
   	font-size: 1.3em;
-  	color: #333;
+	  font-style: italic;
+  	color: blue;
   	font-weight: initial;
   	line-height: initial;
   	margin-top: -0.4em;
-  	margin-bottom: 0.8em;
+  	margin-bottom: 0.5em;
+}
+
+.tutor .textholder {
+	height: 5em;
 }
 
 .tutor h7 { /* Bot text */
-  background-color: yellow;
   color:blue;
   border-radius: 5px;
   font-size: 0.85em;
   /* opacity: 0.9; */
   z-index: 602;
   font-style: italic;
-  margin-top: 5px;
+  /*! margin-top: 5px; */
+	/*! height: 200px; */
 }
 
 .tutor h6 { /* Top text */
