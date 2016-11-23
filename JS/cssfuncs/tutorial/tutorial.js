@@ -6,7 +6,6 @@ class Tutorial extends TutorialActions {
 		super(exit_function);
 		
 		this.__tps = {}; // for destroy
-		
 
 		this._pages = [];
 		this.main = this._makeTutorial( page_array_of_details );
