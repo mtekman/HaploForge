@@ -38,8 +38,9 @@
 #useropts {
   z-index: 90;
   position: fixed;
-  bottom: 5px;
-  left: 2px;
+/*  bottom: 5px;  use this when tooltips is enabled too*/
+  bottom: 9px;
+  left: 0px;
   background: #f0f0f0;
   color: #1c1b1b;
   font-size: 1.5em;
