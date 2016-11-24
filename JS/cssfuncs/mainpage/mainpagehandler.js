@@ -48,6 +48,8 @@ var MainPageHandler = {
 	},
 
 	defaultload: function(){
+		BackgroundVidMain.addVid();
+		
 		init.clearMaps();
 
 		MainPageHandler._currentMode = MainPageHandler.modes.main
@@ -63,9 +65,12 @@ var MainPageHandler = {
 		MainPageHandler.showDiv("ToolButtons", false);
 
 		MainPageHandler.setPrevExistingButtons();
+
 	},
 
 	haplomodeload: function(){
+		BackgroundVidMain.removeVid();
+
 		MainPageHandler._currentMode = MainPageHandler.modes.haploview
 
 		fileSelector.end();
@@ -82,6 +87,8 @@ var MainPageHandler = {
 	},
 
 	createpedmode: function(){
+		BackgroundVidMain.removeVid();
+		
 		MainPageHandler._currentMode = MainPageHandler.modes.pedcreate
 
 		fileSelector.end();
