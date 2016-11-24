@@ -1,3 +1,26 @@
+#test_assets {
+  color: #5a4437;
+  text-decoration: none;
+  position: absolute;
+  left: 8px;
+  bottom: 8px;
+  font-size: 0.9em;
+}
+
+#bgvid {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    opacity: 0.4;
+    object-fit: fill;
+    filter: blur(10px);
+}
+
+
+
 #container {
   background-color:#F9F6F2;
 	position:absolute;
