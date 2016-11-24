@@ -31,12 +31,15 @@ var userOpts = {
 	},
 
 	setGraphics: function(){
+
 		if (userOpts.fancyGraphics)
 		{
 			HaploBlockFormat.applyFancy();
+			BackgroundVidMain.addVid();
 		} 
 		else {
 			HaploBlockFormat.applyDefault();
+			BackgroundVidMain.removeVid();
 		}
 
 		if (uniqueGraphOps.haplo_scroll !== null){
