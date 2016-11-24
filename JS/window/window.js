@@ -51,9 +51,8 @@ function onWindowLoad(){
         }
     })();
 
-
     // Define all load modes here
-    document.getElementById('user_tooltips').checked = userOpts.retrieve('showTooltips');
+    //document.getElementById('user_tooltips').checked = userOpts.retrieve('showTooltips');
     document.getElementById('user_fancy').checked = userOpts.retrieve('fancyGraphics');
 
     userOpts.setGraphics();
