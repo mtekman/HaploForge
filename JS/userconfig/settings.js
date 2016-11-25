@@ -44,6 +44,7 @@ var Settings = {
 		Settings.__destroyTables();
 		Settings.__div.style.display = "none";
 		console.groupEnd();
+		userTutorials.run();
 	},
 
 	bindings : {
@@ -207,13 +208,36 @@ var Settings = {
 		}
 		//Buttons
 		uu.appendChild( Settings.__makeSaveRestoreButtons());
-
 		div.appendChild(uu);
 
 		// Tick box
-		div.appendChild( Settings.__makeOverrideTickBox());
+		div.appendChild( Settings.__makeOverrideTickBox() );
+		div.appendChild( Settings.__makeFirstRunTickBox() );
+	},
 
 
+	__makeFirstRunTickBox(){
+		//Tick box to enable tutorials
+		var unew = document.createElement('ul'),
+			linew = document.createElement('li'),
+			input = document.createElement('input'),
+			label = document.createElement('label');
+
+		label.innerHTML = "Enable Tutorial";
+		input.type = "checkbox"
+
+		// set by readBindingsFromLocal()
+		input.checked = userTutorials.isFirstRun();
+
+		input.onchange = function(){
+			userTutorials.setFirstRun( this.checked );
+		}
+		
+		label.appendChild(input);
+		linew.appendChild(label);
+		 unew.appendChild(linew);
+
+		return unew;
 	},
 
 	__makeOverrideTickBox(){
@@ -224,7 +248,6 @@ var Settings = {
 			label = document.createElement('label');
 
 		label.innerHTML = "Override Window Bindings";
-
 		input.type = "checkbox"
 
 		// set by readBindingsFromLocal()
