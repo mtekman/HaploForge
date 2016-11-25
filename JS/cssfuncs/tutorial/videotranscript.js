@@ -10,7 +10,7 @@ class VideoTranscript {
 		this.pageTutor = pageTutorial;
 
 		this.__lastIndex = 0; // transcript iterator
-		this.__nextTime = -1;
+		this.__nextTime  = -1;
 
 		this.transcript = transcript
 		this.time_array = VideoTranscript.__makeTimeMap(transcript);
@@ -18,13 +18,9 @@ class VideoTranscript {
 		this.container  = this.__makeVideoDiv(source);
 
 		this.video.ontimeupdate = this.__runTranscript.bind(this);
-		this.video.onend = function(){
-			var last = this.time_array[this.time_array.length -1];
+		this.video.onend        = this.__endTranscript;
 
-		}
-		// this.autoplay = true;
-
-		this.paused = false;
+		this.paused    = true;
 		this.__keysset = false;
 	}
 
@@ -87,15 +83,32 @@ class VideoTranscript {
 	}
 
 
-	__animatePlaySwitch(endicon){
+	__animatePlaySwitch(pause)
+	{
+		var that = this;
+		that.playicon.style.opacity = 1;
+		that.playicon.style.display = "block";
+
+		that.playicon.innerHTML = (!pause)?that.__symbolpause:that.__symbolplay;
+
 		setTimeout(function(){
+			that.playicon.innerHTML = (pause)?that.__symbolpause:that.__symbolplay;
 
 			setTimeout(function(){
+				that.playicon.style.opacity = 0.8;
 
-			}, 100)
+				setTimeout(function(){
+					that.playicon.style.opacity = 0.5;
 
+					if (!pause){
+						setTimeout(function(){
+							that.playicon.style.opacity = 0.2;
+							that.playicon.style.display = "none";
+						}, 50);
+					}
+				}, 50);
+			}, 50);
 		},100);
-		this.playicon
 	}
 
 	playVideo(user_set = false){ 
@@ -103,9 +116,7 @@ class VideoTranscript {
 		this.user_set = user_set;
 
 		this.video.play();
-		this.playicon.innerHTML = this.__symbolplay;
-
-
+		this.__animatePlaySwitch(false)
 	}
 
 	pauseVideo(user_set = false){
@@ -113,46 +124,49 @@ class VideoTranscript {
 		this.user_set = user_set;
 
 		this.video.pause();
-
-		this.playicon.style.display = "block";
-		this.playicon.innerHTML = this.__symbolplay;
-
-		var that = this;
-		setTimeout(function(){
-			that.playicon.innerHTML = that.__symbolpause;
-
-			setTimeout(function(){
-				that.playicon.style.display = "none";
-			}, 200);
-		}, 100)
+		this.__animatePlaySwitch(true)
 	}
 
 
 	pauseplay(){
+		console.log(this.video.currentTime);
 		if (this.paused){
-			console.log(this.paused, "play");
 			this.playVideo();
 		} else {
-			console.log(this.paused, "pause");
 			this.pauseVideo();
 		}
 	}
 
 
+	__endTranscript(){
+		var currentTrans = this.transcript[this.transcript.length-1];
+		this.__setText(currentTrans);
+	}
+
+
 	__runTranscript(event)
 	{
+		var timediff = event.target.currentTime - this.__nextTime;
+
 		// Too early, come back later
-		if (event.target.currentTime < this.__nextTime){
-			return 0;
+		if (timediff < 0){
+			return -1;
 		}
 
-		//Screw it, just fire until caught up
-		var currentTrans = this.transcript[
-			this.time_array[this.__lastIndex]
-		];
 		this.__nextTime = this.time_array[++this.__lastIndex];
 
+		// Too late, find 
+		if (timediff > 5){
+			return 1;
+		}
+
+		// Else grab transcript
+		var currentTrans = this.transcript[
+			this.time_array[this.__lastIndex - 1]
+		];
 		this.__setText(currentTrans);
+
+		return 0;
 	}
 
 
@@ -168,18 +182,24 @@ class VideoTranscript {
 		if (top!==null){page.modifyTop(top)};
 		if (bot!==null){page.modifyBot(bot)};
 
-		this.pauseVideo();
-		
-/*		if (delay!==0){
-			var that = this;
-			//Function to highlight
-			// top and bottom
-			setTimeout(function(){
-				if (!that.user_set){
-					that.playVideo();
-				}
-			}, delay * 1000);
-		}*/
+		var that = this;
+
+		switch(delay){
+			case -1:
+				that.pauseVideo();
+				break;
+			case 0:
+				break;
+			default:
+//				that.video.pause();
+				that.pauseVideo();
+				setTimeout(function(){
+					if (!that.user_set){
+//						that.video.play();
+						that.playVideo();
+					}
+				}, delay * 1000);
+		}
 	}
 
 
@@ -190,12 +210,11 @@ class VideoTranscript {
 			source  = document.createElement('source');
 		
 		med.controls = "";
-		source.type  = "video/mp4";
+		source.type  = "video/webm";
 		source.src   = src;
 	
-
-		parent.appendChild(divmain);
 		med.appendChild(source);
+
 
 		var div   = document.createElement('div'),
 			play  = document.createElement('div'),
@@ -212,12 +231,12 @@ class VideoTranscript {
 		div.appendChild(prev);
 		div.appendChild(next);
 
-		parent.appendChild(play);
-		
-
 		divmain.appendChild(med);
 		divmain.appendChild(div);
 
+		parent.appendChild(play);
+		parent.appendChild(divmain);
+		
 		play.innerHTML = this.__symbolplay;
 		prev.innerHTML = '<'
 		next.innerHTML = '>'
