@@ -54,6 +54,8 @@ var MainPageHandler = {
 		MainPageHandler._currentMode = MainPageHandler.modes.main
 		BackgroundVidMain.addVid(); /* Must come after above */
 
+		userTutorials.run();
+
 		fileSelector.end();
 
 		/** Show main page, hide rest **/
