@@ -106,7 +106,7 @@
 }
 
 .tutor .textholder {
-	height: 5em;
+	min-height: 5em;
 }
 
 .tutor h7 { /* Bot text */
