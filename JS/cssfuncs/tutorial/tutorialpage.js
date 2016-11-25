@@ -1,26 +1,31 @@
 
 class TutorialPage {
 
-	constructor(array_or_title, top, bottom = null, media = null, action = null){
+	constructor(object){
 
 		// action is made up of enter and exit functions
-		if (action === null){
-			action = {enter: null, exit: null}
+		if (object.action === undefined){
+			object.action = {enter: null, exit: null}
 		}
 
-		if (arguments.length > 1){
-			this.title     = array_or_title;
-			this.text_top  = top;
-			this.text_bot  = bottom;
-			this.media     = media;
-			this.action    = action;
-		} else {
-			this.title     =  array_or_title[0];
-			this.text_top  =  array_or_title[1];
-			this.text_bot  =  array_or_title[2] || null;
-			this.media     =  array_or_title[3] || null;
-			this.action    =  array_or_title[4] || action;
+		if (object.text !== undefined){
+			this.__text_top  = object.text[0];
+			this.__text_bot  = object.text[1];
+
 		}
+
+		// Text comes from video transcripts, so grab zero times
+		if (object.type === "video"){
+			var trans = object.media.text[0];
+
+			this.__text_top = trans[1]
+			this.__text_bot = trans[2]
+		}
+
+		this.__type      = object.type;
+		this.__title     = object.title;
+		this.__media     = object.media;
+		this.__action    = object.action;
 	}
 
 	destroy(){ /* Called by Tutorial.destroy() */
@@ -45,13 +50,13 @@ class TutorialPage {
 		divmain.className = "tutorpage";
 		divmain.appendChild(h2);
 
-		h2.innerText      = this.title;
-		toptext.innerText = this.text_top;
+		h2.innerText      = this.__title;
+		toptext.innerText = this.__text_top;
 
 		var that = this;
 		
-		if (this.text_bot!== null){
-			bottext.innerText = this.text_bot;
+		if (this.__text_bot!== null){
+			bottext.innerText = this.__text_bot;
 		}
 
 		var textholder = document.createElement('div');
@@ -62,12 +67,12 @@ class TutorialPage {
 
 		divmain.appendChild(textholder);
 
-		if (this.media !== null)
+		if (this.__media !== undefined)
 		{
 			var med;	
-			if (this.media.type === "video")
+			if (this.__type === "video")
 			{
-				var vt = new VideoTranscript(that, this.media.src, this.media.transcript);
+				var vt = new VideoTranscript(that, this.__media.src, this.__media.text);
 				med = vt.getVideo();
 //				divmain.appendChild(med);
 //				divmain.appendChild(toptext);
@@ -75,24 +80,24 @@ class TutorialPage {
 				this.__videotrans = vt; // for destroy();
 
 				// Layer on Keyboard
-				if (this.action.enter === null){
-					this.action.enter = vt.keyboardOn.bind(vt);
+				if (this.__action.enter === null){
+					this.__action.enter = vt.keyboardOn.bind(vt);
 				}
 				else {
-					var enter = this.action.enter;
-					this.action.enter = function(){
+					var enter = this.__action.enter;
+					this.__action.enter = function(){
 						vt.keyboardOn.bind(vt)();
 						enter();
 					}
 				}
 
 				//Layer off Keyboard
-				if (this.action.exit === null){
-					this.action.exit = vt.keyboardOff.bind(vt);
+				if (this.__action.exit === null){
+					this.__action.exit = vt.keyboardOff.bind(vt);
 				}
 				else {
-					var exit = this.action.exit;
-					this.action.exit = function(){
+					var exit = this.__action.exit;
+					this.__action.exit = function(){
 						vt.keyboardOff.bind(vt)()
 						exit();
 					}
@@ -101,7 +106,7 @@ class TutorialPage {
 			
 			else { //"img"
 				med = document.createElement('img');
-				med.src = this.mediasrc; 
+				med.src = this.__mediasrc; 
 //				divmain.appendChild(toptext);
 //				divmain.appendChild(med);
 			}
@@ -111,8 +116,8 @@ class TutorialPage {
 
 
 		// Accessors
-		this.enterAction = this.action.enter;
-		this.exitAction  = this.action.exit;
+		this.enterAction = this.__action.enter;
+		this.exitAction  = this.__action.exit;
 
 		return divmain;
 	}
@@ -125,10 +130,4 @@ class TutorialPage {
 	// Used by VideoTranscript
 	modifyTop(text){this.text.top.innerText = text;}
 	modifyBot(text){this.text.bot.innerText = text;}
-
-/*	modifyText(above,below){
-		this.text.top.innerText = above;
-		this.text.bot.innerText = below;
-	}
-*/
 }
