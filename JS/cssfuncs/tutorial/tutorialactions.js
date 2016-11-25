@@ -15,7 +15,6 @@ class TutorialActions {
 		TutorialActions.__numTutorials--;
 	}
 
-
 	constructor( exitfunction ){
 		this._onexit = exitfunction;
 		this._currentpage = 0;
@@ -52,7 +51,6 @@ class TutorialActions {
 		}
 		TutorialActions.decrementNumTutorials();
 		BackgroundVidMain.addVid();
-
 	}
 
 	forwardPage(){
