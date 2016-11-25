@@ -9,7 +9,7 @@
 	position:relative;
 	z-index: 24;
 	margin: auto;
-	width: 50%;
+	width: 60%;
 	top: 20%;
 	border: 2px solid #6b6969;
 	border-radius: 10px;
@@ -33,6 +33,7 @@
 	font-size: 5em;
 	transform: translateX(-50%) translateY(-70%);
 	opacity: 0.5;
+	z-index: 9;
 }
 
 .tutor .videobuttons {
