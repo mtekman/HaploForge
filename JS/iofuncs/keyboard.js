@@ -88,7 +88,7 @@ var Keyboard = {
 			func2 = Keyboard.__processKeyUp;
 		}
 
-		console.trace("begin");
+//		console.trace("begin");
 		document.addEventListener("keydown", func1, false);
 		document.addEventListener("keyup",   func2, false);
 	},
@@ -99,7 +99,7 @@ var Keyboard = {
 			func2 = Keyboard.__processKeyUp;
 		}
 
-		console.trace("end");
+//		console.trace("end");
 		document.removeEventListener("keydown", func1, false);
 		document.removeEventListener("keyup",   func2, false);
 	},
