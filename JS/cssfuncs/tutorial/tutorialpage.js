@@ -76,24 +76,24 @@ class TutorialPage {
 
 				// Layer on Keyboard
 				if (this.action.enter === null){
-					this.action.enter = vt.keyboardOn;
+					this.action.enter = vt.keyboardOn.bind(vt);
 				}
 				else {
 					var enter = this.action.enter;
 					this.action.enter = function(){
-						vt.keyboardOn();
+						vt.keyboardOn.bind(vt)();
 						enter();
 					}
 				}
 
 				//Layer off Keyboard
 				if (this.action.exit === null){
-					this.action.exit = vt.keyboardOff;
+					this.action.exit = vt.keyboardOff.bind(vt);
 				}
 				else {
 					var exit = this.action.exit;
 					this.action.exit = function(){
-						vt.keyboardOff()
+						vt.keyboardOff.bind(vt)()
 						exit();
 					}
 				}
