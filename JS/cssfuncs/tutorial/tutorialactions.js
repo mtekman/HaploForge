@@ -6,6 +6,8 @@ class TutorialActions {
 		this._onexit = exitfunction;
 		this._currentpage = 0;
 
+		BackgroundVidMain.removeVid(); /*Ttorials stop other videos while running */
+
 		Keyboard.layerOn("tutorial");
 		Keyboard.addKeyPressTask("ArrowLeft", this.backwardPage.bind(this));
 		Keyboard.addKeyPressTask("ArrowRight", this.forwardPage.bind(this));
@@ -32,6 +34,8 @@ class TutorialActions {
 		if (this._onexit !== null){
 			this._onexit();
 		}
+		BackgroundVidMain.addVid();
+
 	}
 
 	forwardPage(){
