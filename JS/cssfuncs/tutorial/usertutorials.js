@@ -26,19 +26,44 @@ var userTutorials = {
 */
 				["Getting Started", 
 				"Since this is your first run, there are two options available to you: Visualizing Haplotypes, or Drawing a Pedigree",
-				 "Let us first explore some of the pedigree creation tools. Please click the indicated button below.", 
-				 {
+				 "Let us first explore some of the pedigree creation tools. Please click next to get started.", 
+				 null
+				],
+
+				[ "", "", "",
+				{
 				 	type:"video", 
-				 	src:"helpers/video/vids/post/jumpintoit.post.mp4", 
+				 	src:"helpers/video/vids/post/jumpintoit.post.webm", 
 				 	transcript: transcript.jumpintoit
 				 }
 				],
 
-				["Title2", "This is the text at the top that explains quickly", 
-				 "This is the bottom text that rambles on and on about nothing in particular and most people think is a bit much to be honest"],
 
-				["Title3", "This is the text at the top that explains quickly", 
-				 "This is the bottom text that rambles on and on about nothing in particular and most people think is a bit much to be honest"],
+				["", "", "",
+				{
+					type: "video",
+					src: "helpers/video/vids/post/bindings.post.webm",
+					transcript: transcript.bindings
+				}
+				],
+
+				["", "", "",
+				{
+					type: "video",
+					src: "helpers/video/vids/post/finecontrol.post.webm",
+					transcript: transcript.finecontrol
+				}
+				],
+
+				["", "", "",
+				{
+					type: "video",
+					src: "helpers/video/vids/post/pedcreate.post.webm",
+					transcript: transcript.pedcreate
+				}
+				],
+
+
 			];
 
 			pf = new Tutorial( pages, function exit(){
@@ -85,34 +110,34 @@ var transcript = {
 
 	jumpintoit : { /* Shows all*/
 
-		 0.0 : [1, "Choosing the mode","Visualize New Haplotypes"],
-		 1.3 : [1, "Uploading Files",""],
-		 2.7 : [1, null, "In this case selecting 'Allegro'"],
-		 4.3 : [1, "Question Marks can be highlighted to show hints on the files", "ihaplo (phased genotypes),..."],
-		 5.5 : [1, null, "... [Optional] founder file (to use existing points of recombination),..."],
-		 6.6 : [1, null, "... or [Optional] map file (to show centiMorgan positions)."],
+		 0.0 : [0, "Choosing the mode","Visualize New Haplotypes"],
+		 1.4 : [-1, "Uploading Files",""],
+		 2.7 : [0, null, "In this case selecting 'Allegro'"],
+		 4.2 : [-1, "Question Marks can be highlighted to show hints on the files", "ihaplo (phased genotypes),..."],
+		 5.5 : [0.5, null, "... [Optional] founder file (to use existing points of recombination),..."],
+		 6.6 : [0.5, null, "... or [Optional] map file (to show centiMorgan positions)."],
 		 7.8 : [1, "Selecting the File", "where:\nihaplo (phased genotypes)\nfounder file (to use existing points of recombination)\nmap file (to show centiMorgan positions)"],
 		 9.7 : [1, "Submitting and beginning the analysis", ""],
-		11.0 : [1, "Main View", ""],
+		11.0 : [-1, "Main View", ""],
 		14.0 : [1, null, "Pedigrees can be moved around and modified internally before continuing to further analysis."],
-		23.4 : [1, "Selection View" , ""],
+		23.4 : [-1, "Selection View" , ""],
 		24.5 : [1, null, "Selecting all affecteds via side buttons..."],
 		26.5 : [1, null, "..or manually selecting with a single click."],
-		27.8 : [1, "Comparison View : Side-by-side analysis of the selected individuals' haplotypes.", ""],
+		27.8 : [-1, "Comparison View : Side-by-side analysis of the selected individuals' haplotypes.", ""],
 		28.9 : [1, null, "Related individual are joined by lines showing the number of generations between them."],
 		30.0 : [1, null, "Haplotypes for each selected individual with marker positions are expanded below."],
-		31.0 : [1, "Region Indicator (red line)", "The displayed locus can be scrolled through by dragging the indicator or scrolling the mousewheel."],
+		31.0 : [-1, "Region Indicator (red line)", "The displayed locus can be scrolled through by dragging the indicator or scrolling the mousewheel."],
 		33.5 : [1, null, "The locus can also be expanded/contracted by dragging either of the handles..."],
 		36.8 : [1, null, "...where the entirety of the region can be examined by scrolling the mouse (if it exceeds window height )..."],
-		43.3 : [1, "Marker Search", "...or a region of interest can be manually specified from a list of ordered markers."],
-		52.1 : [1, "Recombination Finder", "Points of recombination can be automatically scrolled to."],
-		55.3 : [1, "Change Founder Allele Colours", "If founder alleles are too hard to see, their colours can be randomized without affecting the analysis."],
-		57.4 : [1, "Align the Pedigree", ""],
-		62.1 : [1, "Compare Genotypes", "Genotypes for selected individual can be compared to find regions of homology for those who share the same founder alleles (family-specific)."],
+		43.3 : [2, "Marker Search", "...or a region of interest can be manually specified from a list of ordered markers."],
+		52.1 : [2, "Recombination Finder", "Points of recombination can be automatically scrolled to."],
+		55.3 : [2, "Change Founder Allele Colours", "If founder alleles are too hard to see, their colours can be randomized without affecting the analysis."],
+		57.4 : [2, "Align the Pedigree", ""],
+		62.1 : [-1, "Compare Genotypes", "Genotypes for selected individual can be compared to find regions of homology for those who share the same founder alleles (family-specific)."],
 		68.3 : [1, null, "These are then plotted as vertical scores on the region indicator and the haplotypes which can be scrolled through."],
-		73.1 : [1, "Exit mode", "Each mode can be exited by closing the window in the top-left"],
-		79.4 : [1, "Save Analysis", "The analysis can be saved at any time..."],
-		84.0 : [1, null, "...to be resumed at a later date without having to reupload the same data twice."],
+		73.1 : [2, "Exit mode", "Each mode can be exited by closing the window in the top-left"],
+		79.4 : [2, "Save Analysis", "The analysis can be saved at any time..."],
+		84.0 : [2, null, "...to be resumed at a later date without having to reupload the same data twice."],
 		9999 : [0, "Please click the forward button to view the next tutorial", ""]
 	},
 
@@ -138,7 +163,7 @@ var transcript = {
 		2.6 : [ 2, null, "To expand/shrink a viewport drag either handle..."],
 		4.2 : [ 0, null, "... and release to update it."],
 		5.2 : [ 2, null, "Viewports larger than the reigon that can be displayed within the screen area can be scrolled." ],
-		7.8 : [-1, "Region of Interest Handling (Screen Snapping)"],
+		7.8 : [-1, "Region of Interest Handling (Screen Snapping)", ""],
 		8.1 : [ 2, null, "To lock the viewport to a size which can be displayed in the current screen, begin dragging a handle..."],
 		8.9 : [ 2, null, "...and hold down the Control key whist moving..."],
 		9.8 : [ 0, null, "...and release!"],
@@ -179,7 +204,5 @@ var transcript = {
 		74.0 : [2, null, "Our pedigree is saved. Exiting our pedigree brings us back to the main page."],
 		75.6 : [2, null, "A new button allows us to resume the previously saved pedigree and continue where we left off."],
 		9999 : [0, "Pedigree Creation", "Click on the forward button to view the next tutorial."]
-	},
-
-
+	}
 }
