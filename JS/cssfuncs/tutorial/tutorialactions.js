@@ -2,9 +2,25 @@
 
 class TutorialActions {
 
+	static getNumTutorials(){
+		TutorialActions.__numTutorials = TutorialActions.__numTutorials || 0;
+		return TutorialActions.__numTutorials;
+	}
+
+	static incrementNumTutorials(){
+		TutorialActions.__numTutorials = (TutorialActions.__numTutorials || 0) + 1;
+	}
+
+	static decrementNumTutorials(){
+		TutorialActions.__numTutorials--;
+	}
+
+
 	constructor( exitfunction ){
 		this._onexit = exitfunction;
 		this._currentpage = 0;
+
+		TutorialActions.incrementNumTutorials();
 
 		BackgroundVidMain.removeVid(); /*Ttorials stop other videos while running */
 
@@ -34,6 +50,7 @@ class TutorialActions {
 		if (this._onexit !== null){
 			this._onexit();
 		}
+		TutorialActions.decrementNumTutorials();
 		BackgroundVidMain.addVid();
 
 	}
