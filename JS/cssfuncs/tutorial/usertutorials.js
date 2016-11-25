@@ -55,7 +55,7 @@ var userTutorials = {
 			 null
 			],
 
-			[ "", "", "",
+			[ "Jumping Straight in!", "", "",
 			{
 			 	type:"video", 
 			 	src:"helpers/video/vids/post/jumpintoit.post.webm", 
@@ -64,7 +64,7 @@ var userTutorials = {
 			],
 
 
-			["", "", "",
+			["Bindings", "", "",
 			{
 				type: "video",
 				src: "helpers/video/vids/post/bindings.post.webm",
@@ -72,7 +72,7 @@ var userTutorials = {
 			}
 			],
 
-			["", "", "",
+			["Fine Control", "", "",
 			{
 				type: "video",
 				src: "helpers/video/vids/post/finecontrol.post.webm",
@@ -80,7 +80,7 @@ var userTutorials = {
 			}
 			],
 
-			["", "", "",
+			["Pedigree Creation", "", "",
 			{
 				type: "video",
 				src: "helpers/video/vids/post/pedcreate.post.webm",
