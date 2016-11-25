@@ -214,5 +214,3 @@ var Test = {
 		}
 	}
 }
-
-userTutorials.setToMain.first();
