@@ -5,28 +5,28 @@ class VideoTranscript {
 		this.__symbolplay  = "&#9654";
 		this.__symbolpause = "&#9646;&#9646";
 
-
 		// Access to Top and Bottom modifiers
-		this.pageTutor = pageTutorial;
-
-		this.__lastIndex = 0; // transcript iterator
-		this.__nextTime  = -1;
-
+		this.pageTutor  = pageTutorial;
 		this.transcript = transcript
+
+
 		this.time_array = VideoTranscript.__makeTimeMap(transcript);
-		
 		this.container  = this.__makeVideoDiv(source);
+		this.paused     = true;	
 
 		this.video.ontimeupdate = this.__runTranscript.bind(this);
 		this.video.onend        = this.__endTranscript;
 
-		this.paused    = true;
-		this.__keysset = false;
+		this.__keysset   = false;
+		this.__nextTime  = -1;
+		this.__lastIndex = 0; // transcript iterator
 	}
 
 	keyboardOn(){ /* Called by onEnter function in TutorialPage */
+
 		if (this.__keysset === false){
-			Keyboard.layerOn()
+			Keyboard.layerOn("video keys", false) //dont replace
+
 			Keyboard.addKeyPressTask(" ", this.pauseplay.bind(this));
 			Keyboard.addKeyPressTask("ArrowLeft", this.goPrevTrans.bind(this,true));
 			Keyboard.addKeyPressTask("ArrowRight", this.goNextTrans.bind(this,true));
