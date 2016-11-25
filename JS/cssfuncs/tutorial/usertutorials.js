@@ -1,101 +1,101 @@
 
-var pf;
-
 var userTutorials = {
 
 	__firstrun : false,
+	__firstkey : "firstrun",
 
-	init(){
-		userTutorials.__firstrun = (
-			function isFirstRun(){
-			var key = "firstrun"
-			if  (localStorage.getItem(key)===null){
-				localStorage.setItem(key, true);
-				return true
-			}
-			return false;
-		})();
+	__storeFirstRun(){
+		localStorage.setItem(userTutorials.__firstkey, userTutorials.__firstrun);
 	},
-	
-	setToMain : {
 
-		first(){
-			var pages = [
-/*				["Welcome to HaploHTML5!",
-				"This is a tool that helps you draw pedigrees from scratch, and or analyze haplotypes."],
-*/
-				["Getting Started", 
-				"Since this is your first run, there are two options available to you: Visualizing Haplotypes, or Drawing a Pedigree",
-				 "Let us first explore some of the pedigree creation tools. Please click next to get started.", 
-				 null
-				],
+	__getFirstRun(){
+		var val = localStorage.getItem(userTutorials.__firstkey);
 
-				[ "", "", "",
-				{
-				 	type:"video", 
-				 	src:"helpers/video/vids/post/jumpintoit.post.webm", 
-				 	transcript: transcript.jumpintoit
-				 }
-				],
+		if (val === null){
+			userTutorials.__firstrun = true;
+			userTutorials.__storeFirstRun();
+		}
+		else {
+			userTutorials.__firstrun = JSON.parse(val);
+		}
+		return userTutorials.__firstrun;
+	},
+
+	isFirstRun(){
+		return userTutorials.__getFirstRun();
+	},
+
+	setFirstRun(bool){
+		userTutorials.__firstrun = JSON.parse(bool);
+		userTutorials.__storeFirstRun();
+	},
 
 
-				["", "", "",
-				{
-					type: "video",
-					src: "helpers/video/vids/post/bindings.post.webm",
-					transcript: transcript.bindings
+	run(exitfunc = null)
+	{
+		if (userTutorials.isFirstRun()){
+			userTutorials.__first(function ex()
+			{
+				userTutorials.setFirstRun(false);
+				if (exitfunc!==null){
+					exitfunc();
 				}
-				],
-
-				["", "", "",
-				{
-					type: "video",
-					src: "helpers/video/vids/post/finecontrol.post.webm",
-					transcript: transcript.finecontrol
-				}
-				],
-
-				["", "", "",
-				{
-					type: "video",
-					src: "helpers/video/vids/post/pedcreate.post.webm",
-					transcript: transcript.pedcreate
-				}
-				],
-
-
-			];
-
-			pf = new Tutorial( pages, function exit(){
-				console.log("Quit function")
 			});
 		}
-
 	},
+	
+	__first(exitfunc = null){
+		var pages = [
+/*				["Welcome to HaploHTML5!",
+			"This is a tool that helps you draw pedigrees from scratch, and or analyze haplotypes."],
+*/
+			["Getting Started", 
+			"Since this is your first run, there are two options available to you: Visualizing Haplotypes, or Drawing a Pedigree",
+			 "Let us first explore some of the pedigree creation tools. Please click next to get started.", 
+			 null
+			],
 
-	setToPedCreate : {
+			[ "", "", "",
+			{
+			 	type:"video", 
+			 	src:"helpers/video/vids/post/jumpintoit.post.webm", 
+			 	transcript: transcript.jumpintoit
+			 }
+			],
 
+
+			["", "", "",
+			{
+				type: "video",
+				src: "helpers/video/vids/post/bindings.post.webm",
+				transcript: transcript.bindings
+			}
+			],
+
+			["", "", "",
+			{
+				type: "video",
+				src: "helpers/video/vids/post/finecontrol.post.webm",
+				transcript: transcript.finecontrol
+			}
+			],
+
+			["", "", "",
+			{
+				type: "video",
+				src: "helpers/video/vids/post/pedcreate.post.webm",
+				transcript: transcript.pedcreate
+			}
+			],
+		];
+		(new Tutorial( pages, exitfunc));
 	},
-
-	setToHaploView : {
-
-	},
-
-	setToSelectionMode : {
-
-	},
-
-	setToComparisonMode : {
-
-	},
-
-	setToHomologySelection : {
-
-	},
-
-	setToHomologyMode : {
-
-	}
+/*	setToPedCreate : {},
+	setToHaploView : {},
+	setToSelectionMode : {},
+	setToComparisonMode : {},
+	setToHomologySelection : {},
+	setToHomologyMode : {}*/
 }
 
 
