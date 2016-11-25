@@ -24,7 +24,8 @@ var BackgroundVidMain = {
 		// Only works on MainPage, does nothing otherwise
 		if (MainPageHandler._currentMode === MainPageHandler.modes.main 
 			&& userOpts.fancyGraphics
-			&& BackgroundVidMain.__instance === null)
+			&& BackgroundVidMain.__instance === null
+			&& TutorialActions.getNumTutorials() == 0)
 		{
 			var vid = (BackgroundVidMain.__instance = BackgroundVidMain.__makeVid());
 			document.body.appendChild(vid);
