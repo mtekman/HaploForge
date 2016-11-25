@@ -147,7 +147,7 @@ var Keyboard = {
 	addKeyPressTask(key, func, modifier_key = null){
 
 		if (key in Keyboard.__dn_tasks){
-			throw new Error("This will override the down AND up tasks for "+ key);
+			console.warn("This will override the down AND up tasks for "+ key);
 		}
 
 		Keyboard.__dn_tasks[key] = function(){
@@ -180,7 +180,7 @@ var Keyboard = {
 
 	addKeyUpTask(key, func){
 		if (key in Keyboard.__up_tasks){
-			throw new Error("This will override the up task for "+key);
+			console.warn("This will override the up task for "+key);
 		}
 		Keyboard.__up_tasks[key] = func;
 	},
