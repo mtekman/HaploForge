@@ -45,6 +45,7 @@ mkdir -p $outdir/public_assets/
 cp $root/favicon.ico $outdir
 cp -r $root/public_assets/styles $outdir/public_assets/
 cp -r $root/public_assets/images $outdir/public_assets/
+cp -r $root/public_assets/videos $outdir/public_assets/
 
 cat $root/index.html | grep -v "<script src=" > tmp.txt
 

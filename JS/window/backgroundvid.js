@@ -1,6 +1,6 @@
 var BackgroundVidMain = {
 
-	__source : "helpers/video/vids/post/background_general.lesser2.webm",
+	__source : "public_assets/videos/background_general.lesser2.webm",
 	__id : "bgvid",
 	__lasttime : 0,
 	__instance : null,

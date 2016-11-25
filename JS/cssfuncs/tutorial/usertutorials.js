@@ -105,7 +105,7 @@ var transcript = {
 
 	jumpintoit : {
 		 /* Shows all*/
-		src   : "helpers/video/vids/post/jumpintoit.post.webm",
+		src   : "public_assets/videos/jumpintoit.post.webm",
 		text  : {
 
 			 0.0 : [0, "Choosing the mode","Visualize New Haplotypes"],
@@ -142,7 +142,7 @@ var transcript = {
 
 	bindings : {  
 		/* Show settings, haploview, resume analysis, haplo scrolling, genotypes mode, marker */
-		src   : "helpers/video/vids/post/bindings.post.webm",
+		src   : "public_assets/videos/bindings.post.webm",
 		text  : {
 			 0.0 : [-1, "Shortcuts and Bindings", ""],
 			 1.6 : [0, null, "Shortcuts settings can be accessed by clicking on the wheel in the bottom right of the main page."],
@@ -161,7 +161,7 @@ var transcript = {
 
 	finecontrol : {  
 		/* Shows scrolling in haploview */
-		src   : "helpers/video/vids/post/finecontrol.post.webm",
+		src   : "public_assets/videos/finecontrol.post.webm",
 		text  : {
 			0.0 : [-1, "Region of Interest Handling (General)", ""],
 			0.9 : [ 2, null, "The indicator can drag the current viewport to a region of interest"],
@@ -183,7 +183,7 @@ var transcript = {
 
 	pedcreate : {
 		/* Assumes first run, shows pedcreate and ped resume */
-		src   : "helpers/video/vids/post/pedcreate.post.webm",
+		src   : "public_assets/videos/pedcreate.post.webm",
 		text  : {
 			0.0  : [-1, "Pedigree Creation", ""],
 			//1.3  : [ 2, null,]
