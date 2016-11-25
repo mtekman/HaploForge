@@ -48,11 +48,12 @@ var MainPageHandler = {
 	},
 
 	defaultload: function(){
-		BackgroundVidMain.addVid();
 		
 		init.clearMaps();
 
 		MainPageHandler._currentMode = MainPageHandler.modes.main
+		BackgroundVidMain.addVid(); /* Must come after above */
+
 		fileSelector.end();
 
 		/** Show main page, hide rest **/
@@ -69,9 +70,9 @@ var MainPageHandler = {
 	},
 
 	haplomodeload: function(){
-		BackgroundVidMain.removeVid();
 
 		MainPageHandler._currentMode = MainPageHandler.modes.haploview
+		BackgroundVidMain.removeVid();
 
 		fileSelector.end();
 
@@ -87,9 +88,9 @@ var MainPageHandler = {
 	},
 
 	createpedmode: function(){
-		BackgroundVidMain.removeVid();
 		
 		MainPageHandler._currentMode = MainPageHandler.modes.pedcreate
+		BackgroundVidMain.removeVid();
 
 		fileSelector.end();
 		personDraw.used_ids = {};
