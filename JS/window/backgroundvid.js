@@ -9,12 +9,12 @@ var BackgroundVidMain = {
 		var vid = document.createElement('video'),
 			src = document.createElement('source');
 
+		vid.currentTime  = BackgroundVidMain.__lasttime;
 		src.src          = BackgroundVidMain.__source;
 		vid.id           = BackgroundVidMain.__id;
 		vid.loop         = true;
 		vid.autoplay     = true;
-		vid.playbackRate = 0.5;
-		vid.currentTime  = BackgroundVidMain.__lasttime;
+		vid.playbackRate = 0.7;
 
 		vid.appendChild(src);
 		return vid;
