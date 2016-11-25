@@ -24,8 +24,8 @@ class TutorialActions {
 		BackgroundVidMain.removeVid(); /*Ttorials stop other videos while running */
 
 		Keyboard.layerOn("tutorial");
-		Keyboard.addKeyPressTask("ArrowLeft", this.backwardPage.bind(this));
-		Keyboard.addKeyPressTask("ArrowRight", this.forwardPage.bind(this));
+		Keyboard.addKeyPressTask("Backspace", this.backwardPage.bind(this));
+		Keyboard.addKeyPressTask("Enter", this.forwardPage.bind(this));
 		Keyboard.addKeyPressTask("Escape", this.quit.bind(this));
 	}
 
