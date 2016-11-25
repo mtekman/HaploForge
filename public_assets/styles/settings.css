@@ -102,5 +102,5 @@
 #settings_box ul.buttons_inline {
 	position:absolute;
 	top:10px;
-  margin-left: 30px;
+  margin-left: -30px;
 }
