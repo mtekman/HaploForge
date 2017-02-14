@@ -236,8 +236,8 @@ var HomologyPlot = {
 		var score_filter_plot = given_plot.map(x => (x >= score_min)?x:0),
 			tmp_plot = score_filter_plot;
 
-		console.log(given_plot)
-		console.log(tmp_plot)
+		//console.log(given_plot)
+		//console.log(tmp_plot)
 
 		//
 		//
