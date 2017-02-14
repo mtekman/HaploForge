@@ -14,30 +14,117 @@ var HomologyPlot = {
 		start_index = 0, 
 		stop_index = (MarkerData.rs_array.length - 1))
 	{
-		var text = "          ";
+		var padding_marker = "            ", 
+			padding_score  = "     ",
+			padding_names  = "       ",
+			padding_leftmost= padding_names.slice(-(padding_names.length-1)); // must be one less than padding_names
 
-		// Headers
-		for (var i=0; i < ht_ids.length; i++)
+		// TOP LINE
+		// Family names
+		var families_encountered = {};
+
+		for (var i = 0; i < ht_ids.length; i++)
 		{
-			var f_id = ht_ids[i].split('_'),
+			var f_id = ht_ids[i],
+				fid  = f_id.split('_')[0]
+
+			if (!(fid in families_encountered)){
+				families_encountered[fid] = []
+			}
+			families_encountered[fid].push( f_id );
+		}
+
+		var text = padding_marker;
+		
+		// Print names, get their ordering
+		var ordering = {};
+		var order_index = [];
+
+		for (var fid in families_encountered)
+		{
+			num_indivs = families_encountered[fid].length;
+			var padding_fam = "";
+			for (var n=0; n < num_indivs; n++)
+			{
+				var f_id  = families_encountered[fid][n],
+					index = ht_ids.indexOf(f_id);
+
+				ordering[index] = f_id;
+				order_index.push (index )
+				
+				padding_fam += padding_names;
+			}
+
+			text += fid.toString().center('|' + padding_fam.slice(0, padding_fam.length - 1)); //'|' + padding_fam.slice(0, padding_fam.length - 1));
+		}
+		// second pass for family totals
+		for (var fid in families_encountered)
+		{
+			var name = "Scores "+ fid;
+
+			var padding_total = padding_score + padding_score + padding_score;
+			text += name.center('|' + padding_total.slice(0,padding_total.length -1));
+		}
+
+		var padding_total = padding_score + padding_score + padding_score
+		text += "Global totals".center( '|' + padding_total.slice(0, padding_total.length -1) );
+		text += "|\n"
+
+		// SECOND LINE
+		// Individuals names, family totals, global totals
+		text += padding_marker;
+		var tmp_fam = -1
+		for (var o = 0; o < order_index.length; o++)
+		{
+			var index = order_index[o],
+				fid = ordering[index];
+
+			var f_id = fid.split('_'),
 				fid = f_id[0],
 				id = f_id[1];
 
 			var aff = (familyMapOps.getPerc(id,fid).affected == PED.AFFECTED)?'a':'u';
 
-			text += "\t"+id.toString()+'_'+aff
+			if (tmp_fam != fid){
+				tmp_fam = fid;
+				text += (id.toString()+'_'+aff).center('|' + padding_names.slice(0,padding_names.length -1) );
+			} else {
+				text += (id.toString()+'_'+aff).center(padding_names);
+			}
 		}
-		text += "\tHom  \tHet  \tChet\n"
 
-		// Data
+		for (var fid in families_encountered)
+		{
+			text += '|' + "Hom".paddingLeft(padding_score.slice(0, padding_score.length -1));
+			text += "Het".paddingLeft(padding_score);
+			text += "Chet".paddingLeft(padding_score);
+		}
+
+		text += '|' + "Hom".paddingLeft(padding_score.slice(0, padding_score.length -1));
+		text += "Het".paddingLeft(padding_score);
+		text += "Chet".paddingLeft(padding_score) + '|'
+		text += '\n'
+
+
+		// DATA LINES
+		// Marker, GTs, fam scores, total score
+
+		var fam_hom_v = HomologyPlot.plots.family_specific.HOM,
+			fam_het_v = HomologyPlot.plots.family_specific.HET,
+			fam_chet_v=HomologyPlot.plots.family_specific.CHET;
+
+		var hom_v  = HomologyPlot.plots.HOM,
+			het_v  = HomologyPlot.plots.HET,
+			chet_v = HomologyPlot.plots.CHET;
+
 		for (var l=start_index; l <= stop_index; l++)
 		{
 			var marker = MarkerData.rs_array[l];
-			text += marker
+			text += marker.paddingLeft(padding_marker);
 
-			for (var i=0; i < ht_ids.length; i++)
+			for (var i=0; i < order_index.length; i++)
 			{
-				var f_id = ht_ids[i].split('_'),
+				var f_id = ht_ids[order_index[i]].split('_'),
 					fid = f_id[0],
 					id = f_id[1];
 
@@ -45,17 +132,26 @@ var HomologyPlot = {
 					a1 = alleles[0].data_array[l],
 					a2 = alleles[1].data_array[l];
 
-				text += '\t' + a1.toString() + "" + a2.toString()
+				text += (a1.toString() + "" + a2.toString()).center(padding_names)
 			}
 
-			var hom_v = HomologyPlot.plots.HOM[l],
-				het_v = HomologyPlot.plots.HET[l],
-				chet_v = HomologyPlot.plots.CHET[l];
+			//console.log(HomologyPlot.plots.family_specific);
 
-			var score_columns = '\t ' + hom_v.toString() + '\t ' + het_v.toString() + '\t ' + chet_v.toString();
-			score_columns = score_columns.replace(/ -/g, "-");
+			for (var fid in families_encountered)
+			{
+				text += fam_hom_v[fid][l].toString().center(padding_score);
+				text += fam_het_v[fid][l].toString().center(padding_score);
+				text += fam_chet_v[fid][l].toString().center(padding_score);
+			}
 
-			text += score_columns + '\n';
+			text += hom_v[l].toString().center(padding_score);
+			text += het_v[l].toString().center(padding_score);
+			text += chet_v[l].toString().center(padding_score);
+
+			//var score_columns = '\t ' + hom_v.toString() + '\t ' + het_v.toString() + '\t ' + chet_v.toString();
+			//score_columns = score_columns.replace(/ -/g, "-");
+
+			text += '\n';
 		}
 		// Write
 		exportToTab(text);
@@ -209,7 +305,7 @@ var HomologyPlot = {
 
 		return line = new Kinetic.Line({
 			x: -haploblock_spacers.marker_offset_px - 20,
-			y: HAP_VERT_SPA,
+			y: 0,
 			stroke: 'red',
 			strokeWidth: 1,
 			closed: true,
