@@ -60,7 +60,7 @@ function scan_alleles_for_homology( ids_to_scan, same_family_hblock = true ){
 				chet_at_marker_score= 0;
 
 			var affected_indiv = alleles[afs].aff,
-				mult = affected_indiv?2:-1;
+				mult = affected_indiv?1:-1;
 
 			// Fuckit just assume two alleles per patient -- use strings for compatibility
 			var ht1 = '' + alleles[afs].data[0][m] + '',
