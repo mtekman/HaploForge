@@ -75,6 +75,29 @@ function exportToTab(text)
 }
 
 
+// Padding for fixed width output
+String.prototype.paddingLeft = function (paddingValue) {
+   return String(paddingValue + this).slice(-paddingValue.length);
+};
+
+String.prototype.center = function(padding){
+	var pN = padding.length,
+		tN = this.length;
+
+	if (pN < tN){
+		console.log(this,padding.length);
+		throw Error("Text to small to fit in padding");
+	}
+
+	var todist = pN - tN,
+		rightN = Math.floor(todist / 2),
+		leftN  = todist - rightN;
+
+	return String(padding.slice(0,leftN) + this + padding.slice(-rightN));
+
+}
+
+
 // Console.assert is better
 //function assert(bool, message){                     //General error handling
 //    if (!bool) throw new Error(message);
