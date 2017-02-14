@@ -22,7 +22,13 @@ var HomologyButtons = {
 		}
 
 		// Make onclick events
-		HomologyButtons._redraw_accessor.onclick = HomologyMode.redraw;
+		//
+		// For now, hide the redrawer, it's already locked to onchange for other accessors
+		HomologyButtons._redraw_accessor.style.display = "none";
+		//HomologyButtons._redraw_accessor.onclick = HomologyMode.redraw;
+
+
+
 		HomologyButtons._export_accessor.onclick = function(){
 
 			utility.yesnoprompt("Homology Export", "Export All or Shown?",
@@ -30,7 +36,23 @@ var HomologyButtons = {
 		 		"Shown", HomologyButtons._printCurrent
 			);
 		};
+		HomologyButtons.setonchange();
 		HomologyButtons._alreadyset = true;
+	},
+
+	setonchange: function()
+	{
+		for (var item in HomologyButtons)
+		{
+			if (item.indexOf("_accessor")!==-1){
+				HomologyButtons[item].onchange = HomologyButtons.updateAll;
+			}
+		}
+	},
+
+	updateAll: function(){
+		HomologyButtons.updateHomologyInputs();
+		HomologyMode.redraw();
 	},
 
 	updateHomologyInputs: function(){
