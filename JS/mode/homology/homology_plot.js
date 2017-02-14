@@ -3,6 +3,7 @@ var HomologyPlot = {
 
 	plots: null,
 	rendered_filtered_plot: null,
+	rendered_filtered_plot_max: 0,
 
 	_type : "HOM",
 
@@ -163,7 +164,8 @@ var HomologyPlot = {
 		 && (MarkerSlider._instance.plotline !== undefined))
 		{
 			MarkerSlider._instance.plotline.destroy();
-		
+			//haplo_layer.draw();
+			//debugger		
 		}
 		HomologyPlot.rendered_filtered_plot = null;
 		
@@ -179,7 +181,7 @@ var HomologyPlot = {
 
 		 Shape likely to be > 1000 px tall, and rangeline only 300 px,
 		 which is a scale down of 3x that most pc's can handle
-		 ~~~ hopefully Kinetic/canvas handles mipmaps efficiently
+		 ~~~ hopefully Kinetic/canvas mipmaps efficiently
 		     so I don't have to ~~~
 		*/
 
@@ -193,13 +195,17 @@ var HomologyPlot = {
 
 		HomologyPlot.removeScores(false);
 
-		var inform_points = HomologyPlot.plotAxis4( specific_plot, stretch, score);
+		var point_and_max = HomologyPlot.plotAxis4( specific_plot, stretch, score);
+
+		var inform_points = point_and_max.plot,
+			points_max    = point_and_max.max;
 		
 		// Insert [0,0] at the start
 		inform_points.splice(0,0,0)
 		inform_points.splice(0,0,0)
 
 		HomologyPlot.rendered_filtered_plot = inform_points;
+		HomologyPlot.rendered_filtered_plot_max = points_max;
 		
 		var infline = new Kinetic.Line({
 			x: rangeline.getX(),
@@ -210,7 +216,7 @@ var HomologyPlot = {
 		});
 
 		infline.scaleY( r_height/plen );
-		infline.scaleX( 15 );
+		infline.scaleX( 100 / points_max );
 
 		marker_scale.plotline = infline;
 
@@ -261,14 +267,19 @@ var HomologyPlot = {
 		}
 
 		// Fill in blanks
-		var return_xy = [];
-		for (var p=0; p++ < plen;){
-			new_plot[p] = new_plot[p] || 0;
-			if (new_plot[p] <0) new_plot[p] = 0;
+		var return_xy = [],
+			max_score = -1;
 
-			return_xy.push( new_plot[p], p);
+		for (var p=0; p++ < plen;)
+		{
+			new_plot[p] = new_plot[p] || 0;
+			
+			if (new_plot[p] < 0) {			new_plot[p] = 0;   }	
+			else if (new_plot[p] > max_score){	max_score = new_plot[p];	}
+
+			return_xy.push( new_plot[p], p );
 		}
-		return return_xy;
+		return {plot:return_xy, max: max_score};
 	},
 
 
@@ -282,12 +293,15 @@ var HomologyPlot = {
 
 		var count = 1;
 
+		var white_rect_right = HaploWindow._bottom.rect.getWidth() + HaploWindow._bottom.rect.getAbsolutePosition().x;
+		var scale = white_rect_right / HomologyPlot.rendered_filtered_plot_max;
+
 		for (var i=HaploBlock.sta_index; i <= HaploBlock.end_index; i++){
 
 			var x_coord = current_specific_plot[i*2],
 				y_coord = current_specific_plot[(i*2)+1];
 
-			var score_coord = (x_coord < 0)?0:x_coord*HaploBlock.haploinfos.length*10;
+			var score_coord = (x_coord < 0)?0:x_coord*scale;
 
 			var y_initial = (count) * HAP_VERT_SPA,
 				y_next = (count +1) * HAP_VERT_SPA;
