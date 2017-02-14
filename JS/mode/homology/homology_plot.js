@@ -1,7 +1,7 @@
 
 var HomologyPlot = {
 
-	plots: null,
+	plots: null, // valid: HOM, HET, CHET, family_specific.{HOM,HET,CHET}
 	rendered_filtered_plot: null,
 	rendered_filtered_plot_max: 0,
 
@@ -230,24 +230,35 @@ var HomologyPlot = {
 	/* path finding over the entire plot, instead of slwindow*/
 	plotAxis4: function( given_plot, stretch_min, score_min)
 	{
-		var new_plot = [];
+		// Notes: Plot is just score, this is NOT xy data
+		//
+		// 1. Apply score filter
+		var score_filter_plot = given_plot.map(x => (x >= score_min)?x:0),
+			tmp_plot = score_filter_plot;
 
+		console.log(given_plot)
+		console.log(tmp_plot)
+
+		//
+		//
+		// 2. Crawl over plot to find stretches
 		var current_stretch = 0;
 
-		var plen = given_plot.length,
+		var plen = tmp_plot.length,
 			p=0;		// lookahead_base
-			// q=0; 	// lookahead_iterator
+
+		var new_plot = [];
+
 		while (p++ < plen)
 		{
-			if (given_plot[p] <= score_min){
-				// new_plot[p] = 0; // <-- already true
+			if (tmp_plot[p] === 0){
 
-				// End search
+				// End an ongoing search
 				if (current_stretch >= stretch_min){
 
 					// qualifies, copy over results
 					for (var q=p-(current_stretch+1); q++ < p;){
-						new_plot[q] = given_plot[q]
+						new_plot[q] = tmp_plot[q]
 					}
 				}
 				// Regardless, reset counter
@@ -262,11 +273,11 @@ var HomologyPlot = {
 		// Check if still qualifies at end
 		if (current_stretch >= stretch_min){
 			for (var q=p-(current_stretch+1); q++ < p;){
-				new_plot[q] = given_plot[q]
+				new_plot[q] = tmp_plot[q]
 			}
 		}
 
-		// Fill in blanks
+		// Fill in blanks, and convert to XY plot
 		var return_xy = [],
 			max_score = -1;
 
