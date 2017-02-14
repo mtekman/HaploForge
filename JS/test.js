@@ -172,20 +172,24 @@ var Test = {
 	Homology : {
 		run(){
 			userOpts.fancyGraphics = false;
+			userOpts.setGraphics();
 			MainButtonActions.loadHaploFromStorage();
 
 			setTimeout(function(){
 				SelectionMode.init();
 				SelectionAction.selectAffecteds();
-				userOpts.fancyGraphics = true;
 				HaploWindow.init();
 
 				setTimeout(function(){
 					HomologySelectionMode.init();
 					SelectionAction.selectAffecteds();
 					HomologySelectionMode.submit();
+
+					// setTimeout(function(){
+					// 	HomologyButtons._printCurrent();
+					// }, 1000);
 				},1000);
-			}, 1000);
+			},1000);
 		}
 	},
 
