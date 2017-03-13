@@ -166,7 +166,7 @@ var statusProps = {
 
 
 var utility = {
-	_bg: document.getElementById('modal_bg'),
+	_bg: null,
 
 	focus: function(){
 		this.focus();
@@ -187,9 +187,19 @@ var utility = {
 		return stage.getPointerPosition();
 	},
 
-	showBG: function(callback = null){
-		this._bg.style.display = "block";
-		this._bg.style.zIndex = 500;
+	showBG: function(callback = null)
+	{
+		let new_bg = document.createElement('div');
+		new_bg.className = 'modal_bg';
+
+		utility._bg = new_bg
+		document.body.appendChild(utility._bg)
+
+		utility._bg.style.display = "block";
+
+		var messZ = messProps._box.style.zIndex || 500;
+
+		utility._bg.style.zIndex = messZ - 1; /// get Zindex of messPrompt solid
 		if (callback !== null){
 			utility._bg.onclick = function(){
 				callback();
@@ -200,7 +210,8 @@ var utility = {
 	},
 
 	hideBG: function(){
-		this._bg.style.display = "none";
-		this._bg.style.zIndex = -99;
+		if (utility._bg !== null){
+			utility._bg.parentNode.removeChild(utility._bg);
+		}
 	}
 }
