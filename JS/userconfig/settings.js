@@ -19,12 +19,12 @@ var Settings = {
 		Settings.__img.onclick = Settings.__showSettings;
 
 		// Make default bindings
-		for (var group in Settings.bindings)
+		for (let group in Settings.bindings)
 		{
 			Settings.__defaults[group] = {};
 
-			for (var key in Settings.bindings[group]){
-				var value = Settings.bindings[group][key]
+			for (let key in Settings.bindings[group]){
+				let value = Settings.bindings[group][key]
 				Settings.__defaults[group][key] = value;
 			}
 		}
@@ -83,7 +83,7 @@ var Settings = {
 	__width_mod : 8 / 10,
 
 	changeBinding(){
-		var that = this;
+		let that = this;
 
 		that.value = "[Type Now]";
 		that.style.width = '6em';
@@ -92,13 +92,13 @@ var Settings = {
 			that.value = keycombo;
 			that.style.width = (Settings.__width_mod * keycombo.length) + 'em';
 
-			var group_key = that.id.split(':');
+			let group_key = that.id.split(':');
 			Settings.bindings[group_key[0]][group_key[1]] = keycombo;
 		});
 	},
 
 	__destroyTables(){
-		var parent = Settings.__div;
+		let parent = Settings.__div;
 
 		while (parent.firstChild) {
     		parent.removeChild(parent.firstChild);
@@ -108,11 +108,11 @@ var Settings = {
 
 
 	__setDefaultBindings(){
-		for (var group in Settings.__defaults){
+		for (let group in Settings.__defaults){
 			Settings.bindings[group] = {};
 
-			for (var key in Settings.__defaults[group]){
-				var value = Settings.__defaults[group][key]
+			for (let key in Settings.__defaults[group]){
+				let value = Settings.__defaults[group][key]
 				Settings.bindings[group][key] = value;
 			}
 		}
@@ -135,7 +135,7 @@ var Settings = {
 	},
 
 	readBindingsFromLocal(){
-		var bind = localStorage.getItem(Settings.__storagebindingskey);
+		let bind = localStorage.getItem(Settings.__storagebindingskey);
 		if (bind === null){
 			console.log("no local settings found, setting defaults");
 			Settings.setDefaultBindings();
@@ -154,36 +154,36 @@ var Settings = {
 	},
 
 	__makeTables(){
-		var div = Settings.__div;
+		let div = Settings.__div;
 
-		var uu = document.createElement('ul')
+		let uu = document.createElement('ul')
 
-		for (var group in Settings.bindings)
+		for (let group in Settings.bindings)
 		{
-			var childdiv = document.createElement('li');
+			let childdiv = document.createElement('li');
 
 			// Head
-			var hh = document.createElement('h5');
+			let hh = document.createElement('h5');
 
-			var groupname = (group === "global")?"haploview + comparison":group;
+			let groupname = (group === "global")?"haploview + comparison":group;
 
 			hh.innerHTML = groupname + " bindings";
 
 			childdiv.appendChild(hh);
 
 		    // Body
-		    var ul = document.createElement('ul');
+		    let ul = document.createElement('ul');
 
-    		for (var key in Settings.bindings[group]){
-    			var combo = Settings.bindings[group][key];
+    		for (let key in Settings.bindings[group]){
+    			let combo = Settings.bindings[group][key];
 
-    			var lli = document.createElement('li'),
+    			let lli = document.createElement('li'),
     				uul = document.createElement('ul');
 
-    			var li1 = document.createElement('li'),
+    			let li1 = document.createElement('li'),
     				li2 = document.createElement('li');
 
-    			var inp = document.createElement('input');
+    			let inp = document.createElement('input');
     			inp.type = 'text'
     			inp.value = combo;
     			inp.style.width = (Settings.__width_mod * inp.value.length) + 'em';
@@ -213,12 +213,39 @@ var Settings = {
 		// Tick box
 		div.appendChild( Settings.__makeOverrideTickBox() );
 		div.appendChild( Settings.__makeFirstRunTickBox() );
+		div.appendChild( Settings.__makeClearSavedButton());
+	},
+
+	__makeClearSavedButton(){
+		//Button to clear all saved data
+		let unew = document.createElement('ul'),
+			linew = document.createElement('li'),
+			input = document.createElement('input');
+
+		input.value = "Clear Saved Data";
+		input.type = "button"
+
+		input.onclick = function(){
+			utility.yesnoprompt("Clear Data", "Delete all haplotype and pedigree cached data?",
+			"yes",
+			function(){
+				clearLocalHaploStorage()  // -> formats.js
+				MainPageHandler.defaultload()				
+			},
+			"no",
+			function(){});
+		}
+
+		linew.appendChild(input);
+		 unew.appendChild(linew);
+
+		return unew;
 	},
 
 
 	__makeFirstRunTickBox(){
 		//Tick box to enable tutorials
-		var unew = document.createElement('ul'),
+		let unew = document.createElement('ul'),
 			linew = document.createElement('li'),
 			input = document.createElement('input'),
 			label = document.createElement('label');
@@ -242,7 +269,7 @@ var Settings = {
 
 	__makeOverrideTickBox(){
 		//Add tickbox for overriding window activities
-		var unew = document.createElement('ul'),
+		let unew = document.createElement('ul'),
 			linew = document.createElement('li'),
 			input = document.createElement('input'),
 			label = document.createElement('label');
@@ -265,18 +292,18 @@ var Settings = {
 	},
 
 	__makeSaveRestoreButtons(){
-		var dli0 = document.createElement('li'),
+		let dli0 = document.createElement('li'),
 			dul0 = document.createElement('ul'),
 			dli2a = document.createElement('li'),
 			dli2b = document.createElement('li');
 
 
-		var save = document.createElement('button');
+		let save = document.createElement('button');
 		save.innerHTML = "Save";
 		save.onclick = Settings.saveBindings;
 		dli2a.appendChild(save);
 
-		var restore = document.createElement('button')
+		let restore = document.createElement('button')
 		restore.innerHTML = "Restore Defaults";
 		restore.onclick = Settings.setDefaultBindings;
 		dli2b.appendChild(restore);
