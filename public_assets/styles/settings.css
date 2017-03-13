@@ -89,7 +89,7 @@
 }
 
 
-#settings_box input {
+#settings_box input[type='checkbox'] {
   width: 50px;
   text-align: center;
 }
@@ -101,6 +101,6 @@
 
 #settings_box ul.buttons_inline {
 	position:absolute;
-	top:10px;
-  margin-left: -30px;
+	top:5px;
+  margin-left: -3px;
 }
