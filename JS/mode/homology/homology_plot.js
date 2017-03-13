@@ -216,7 +216,7 @@ var HomologyPlot = {
 		});
 
 		infline.scaleY( r_height/plen );
-		infline.scaleX( 100 / points_max );
+		infline.scaleX( 50 / points_max );
 
 		marker_scale.plotline = infline;
 
