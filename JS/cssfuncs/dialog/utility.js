@@ -32,11 +32,14 @@ var messProps = {
 	},
 
 
-	display: function(header,text, exit_callback = null, yes_no_object = null, submit=false){
+	display: function(header,text, exit_callback = null, yes_no_object = null, submit=false)
+	{
+		this.show();
+
+		// must occur after this.show();
 		utility.showBG(function(){
 			messProps.hide();
 		});
-		this.show();
 
 		this._header.innerHTML = header;
 		this._text.innerHTML   = text;
@@ -166,7 +169,7 @@ var statusProps = {
 
 
 var utility = {
-	_bg: null,
+	_bg: document.getElementById('modal_bg'),
 
 	focus: function(){
 		this.focus();
@@ -189,17 +192,13 @@ var utility = {
 
 	showBG: function(callback = null)
 	{
-		let new_bg = document.createElement('div');
-		new_bg.className = 'modal_bg';
-
-		utility._bg = new_bg
-		document.body.appendChild(utility._bg)
-
 		utility._bg.style.display = "block";
 
-		var messZ = messProps._box.style.zIndex || 500;
+		// This property is not updated until later, so showBG
+		// MUST be called AFTER the messProps._box is set to visible.
+		var messZ = messProps._box.style.zIndex;
+		utility._bg.style.zIndex = messZ; /// get Zindex of messPrompt solid
 
-		utility._bg.style.zIndex = messZ - 1; /// get Zindex of messPrompt solid
 		if (callback !== null){
 			utility._bg.onclick = function(){
 				callback();
@@ -210,8 +209,7 @@ var utility = {
 	},
 
 	hideBG: function(){
-		if (utility._bg !== null){
-			utility._bg.parentNode.removeChild(utility._bg);
-		}
+		this._bg.style.display = "none";
+		this._bg.style.zIndex = -99;
 	}
 }
