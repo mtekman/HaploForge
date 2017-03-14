@@ -60,8 +60,9 @@ var fileSelector = {
   },
 
   init() {
-    utility.showBG();
     fileSelector._container.style.display = "block"
+
+    utility.showBG(); // must occur AFTER
 
     fileSelector._div.focus();
 

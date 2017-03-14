@@ -19,6 +19,7 @@ var famProps = {
 
 	showProps: function(family){
 		famProps.show();
+
 		utility.showBG(function(){
 			famProps.hide();
 		});
@@ -115,10 +116,11 @@ var persProps = {
 	},
 
 	showProps: function(person){
+		this.show();
+
 		utility.showBG(function(){
 			persProps.hide();
 		});
-		this.show();
 
 		this.id.value     = person.id;
 		this.name.value   = person.name || "";
