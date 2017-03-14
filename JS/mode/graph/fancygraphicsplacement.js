@@ -73,6 +73,7 @@ var FancyGraphics = {
 		FancyGraphics.__start += 500; // pause
 
 		uniqueGraphOps.foreachnode(function(pid,fid,node){
+			node.graphics.show()
 			FancyGraphics.__place(
 				node.graphics,
 				FancyGraphics.__step
@@ -82,7 +83,7 @@ var FancyGraphics = {
 
 
 	__placeLines(){
-		FancyGraphics.__start += 100; // pause
+		FancyGraphics.__start += 200; // pause
 
 		var show_interval = FancyGraphics.__start + FancyGraphics.__initial.duration*1000;
 

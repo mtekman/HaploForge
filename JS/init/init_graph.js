@@ -24,6 +24,18 @@ Notes:
 */
 
 
+function graphicsShow(show = true){
+
+	uniqueGraphOps.foreachnode(function(pid,fid,node){
+		show?node.graphics.show():node.graphics.hide();
+	});
+
+	uniqueGraphOps.foreachedge(function(pid,fid,edge){
+		show?edge.graphics.show():edge.graphics.hide();
+	});
+	main_layer.draw();
+}
+
 
 
 
@@ -240,13 +252,13 @@ function graphInitPos(start_x, start_y, enable_ped_edit = false){
 	// --- Placement Animations
 	if (userOpts.fancyGraphics){
 		// Solitaire
-		FancyGraphics.init();
+		graphicsShow(false)
+		FancyGraphics.init(); // init performs a graphics show on each node
 	}
 	else {
 		touchlines();
 		main_layer.draw();
 	}
-
 }
 
 
