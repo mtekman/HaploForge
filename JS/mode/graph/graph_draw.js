@@ -55,7 +55,7 @@ var updateGraph = {
 
 //		console.log("childline", childline);
 
-		changeRLine( childline, {x:mid_xx, y:mid_yy}, person_graphics.getPosition());
+		Graphics.Lines.changeRLine( childline, {x:mid_xx, y:mid_yy}, person_graphics.getPosition());
 	}
 }
 
@@ -132,7 +132,7 @@ function redrawNodes(pers_id, fam_id, drawLinesToo)
 			var s1_x = npers_pos.x, s1_y = npers_pos.y,
 				e1_x = nmate_pos.x, e1_y = nmate_pos.y;
 
-			changeRLineHoriz(mateline, npers_pos, nmate_pos);
+			Graphics.Lines.changeRLineHoriz(mateline, npers_pos, nmate_pos);
 
 			//  -- update childlines attached to it
 			var childkey_starting = "c:"+mateline_id;   //Look for all childnodes starting with
@@ -167,7 +167,7 @@ function redrawNodes(pers_id, fam_id, drawLinesToo)
 //					var s1_x = mate.getX(), 	s1_y = mate.getY(),
 //						e1_x = matemate.getX(), e1_y = matemate.getY();
 
-					changeRLineHoriz(mateline, nmate.getPosition(), matemate_gfx.getPosition());
+					Graphics.Lines.changeRLineHoriz(mateline, nmate.getPosition(), matemate_gfx.getPosition());
 
 					// And now their children...!
 					var child_edges = uniqueGraphOps.findAllOffspringEdges(fam_id, male_id, female_id);

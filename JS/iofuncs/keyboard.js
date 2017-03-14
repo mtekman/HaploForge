@@ -54,7 +54,7 @@ var Keyboard = {
 
 	layerOff(){
 		if (Keyboard.__tmptasks.length === 0){
-			console.trace("No layer to pop");
+			console.log("No layer to pop");
 			Keyboard.__endListen();
 			return -1;
 		}

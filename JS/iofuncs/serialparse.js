@@ -164,7 +164,7 @@ var SerialParse = {
 					var fid = Number(fid_graphics[0]),
 						graphics = fid_graphics[1].split(",").map(Number);
 
-					var fam_group = addFamily(fid, graphics[0], graphics[1]);
+					var fam_group = Graphics.Pedigree.addFamily(fid, graphics[0], graphics[1]);
 
 					uniqueGraphOps.insertFam(fid, fam_group);
 					// familyMapOps.insertFam is performed automatically at person level.

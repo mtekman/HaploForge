@@ -13,7 +13,7 @@ class OffspringDraw extends LineDrawOps {
 		
 		} else {
 
-			this._RLineMethod = changeRLine
+			this._RLineMethod = Graphics.Lines.changeRLine
 
 			this._endPoint = {x:-1,y:-1};
 
@@ -70,7 +70,7 @@ class OffspringDraw extends LineDrawOps {
 				var mateline_graphics = edge_map[key].graphics;
 
 				// Sib_Anchor node is TEMPORARY. It is deleted upon ~offspringDraw()
-				var node = addCircle("white", nodeSize/2);
+				var node = Graphics.Shapes.addCircle("white", nodeSize/2);
 
 				node.hitFunc(function(context){
 					var center = this.getPosition();
@@ -113,7 +113,8 @@ class OffspringDraw extends LineDrawOps {
 				var startGraphics = node_map[startID].graphics,
 					endGraphics   = node_map[endID].graphics;
 
-				changeRLineHoriz(mateline_graphics,    // NOT this._RLineMethod
+				Graphics.Lines.changeRLineHoriz(
+					mateline_graphics,    // NOT this._RLineMethod
 					startGraphics.getAbsolutePosition(),
 					endGraphics.getAbsolutePosition());
 			}

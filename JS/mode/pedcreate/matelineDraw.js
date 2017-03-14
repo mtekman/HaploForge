@@ -118,7 +118,7 @@ class MatelineDraw extends LineDrawOps {
 			end = {x:points[6], y:points[7]},
 			
 			consang = checkConsanginuity(fam_group.id, this.startNodeID, this.endNodeID),
-			new_line = addRLine(fam_group, start, end, consang);
+			new_line = Graphics.Lines.addRLine(fam_group, start, end, consang);
 
 		this._tmpLine.destroy();
 

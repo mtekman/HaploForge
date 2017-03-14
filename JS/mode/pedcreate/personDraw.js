@@ -167,7 +167,7 @@ var personDraw = {
 			person = this.makeTempPerson();
 		}
 
-		var perc = addPerson( person, fam_group,  
+		var perc = Graphics.Pedigree.addPerson( person, fam_group,  
 				grid_rezX ,
 				-nodeSize // + Math.random()*grid_rezY*2
 		);

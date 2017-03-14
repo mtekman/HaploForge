@@ -270,12 +270,12 @@ function mapLines(line_points, haplo_group_lines){
 					var to_id = info.to,
 						to_gfx_pos = uniqueGraphOps.getFam(fid).nodes[to_id].graphics.getPosition();
 
-					haplo_group_lines.add( addRLine_simple(from_gfx_pos, to_gfx_pos, info.consang ) );
+					haplo_group_lines.add( Graphics.Lines.addRLine_simple(from_gfx_pos, to_gfx_pos, info.consang ) );
 				}
 			 	else {  
 			 		// DOS line -- direct
 			 		sib_anchor_pos = {x: from_gfx_pos.x, y:from_gfx_pos.y + info.drop/3};
-			 		haplo_group_lines.add( addRLine_simple(from_gfx_pos, sib_anchor_pos, false) );
+			 		haplo_group_lines.add( Graphics.Lines.addRLine_simple(from_gfx_pos, sib_anchor_pos, false) );
 			 	}
 			}
 			else { // DOS line -- mate
@@ -288,7 +288,7 @@ function mapLines(line_points, haplo_group_lines){
 				var mid_point_pos = {x: (parent1_gfx.x + parent2_gfx.x)/2, y: parent1_gfx.y};
 				sib_anchor_pos = {x:mid_point_pos.x, y:mid_point_pos.y + info.drop/3};
 
-				haplo_group_lines.add( addRLine_simple(mid_point_pos, sib_anchor_pos, false ));
+				haplo_group_lines.add( Graphics.Lines.addRLine_simple(mid_point_pos, sib_anchor_pos, false ));
 			}
 
 
@@ -304,9 +304,9 @@ function mapLines(line_points, haplo_group_lines){
 
 		 			var sibline = null;
 		 			if (!info.lastgen)
-		 				sibline = addRLine_nonoverlapY(sib_anchor_pos, sib_gfx_pos, false);
+		 				sibline = Graphics.Lines.addRLine_nonoverlapY(sib_anchor_pos, sib_gfx_pos, false);
 		 			else
-		 				sibline = addRLine_simple(sib_anchor_pos, sib_gfx_pos, false);
+		 				sibline = Graphics.Lines.addRLine_simple(sib_anchor_pos, sib_gfx_pos, false);
 
 		 			haplo_group_lines.add( sibline );
 

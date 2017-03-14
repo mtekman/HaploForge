@@ -32,7 +32,7 @@ var familyDraw = {
 			return;
 		}
 
-		var fam = addFamily( fam_id, 50, 50 );
+		var fam = Graphics.Pedigree.addFamily( fam_id, 50, 50 );
 		uniqueGraphOps.insertFam(fam.id, fam);
 
 		fam.on( "click dragstart" , function(){

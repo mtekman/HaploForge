@@ -43,7 +43,7 @@ function graphInitPos(start_x, start_y, enable_ped_edit = false){
 			fam_group = uniqueGraphOps.getFam(fam).group;
 		}
 		else {
-			fam_group = addFamily(fam, x_shift_fam, y_start);
+			fam_group = Graphics.Pedigree.addFamily(fam, x_shift_fam, y_start);
 		}
 
 		var max_x = 0;
@@ -108,7 +108,7 @@ function graphInitPos(start_x, start_y, enable_ped_edit = false){
 				}
 
 
-				n_perp.graphics = addPerson(perp, fam_group, posx, y_pos);
+				n_perp.graphics = Graphics.Pedigree.addPerson(perp, fam_group, posx, y_pos);
 
 				if (enable_ped_edit){
 					n_perp.graphics.family = fam;
@@ -201,7 +201,7 @@ function graphInitPos(start_x, start_y, enable_ped_edit = false){
 				else console.assert(false,"Wrong type! "+key+", type= "+type);
 
 
-				edge.graphics = addRLine(fam_group, start_pos, end_pos, consang); 					//DRAW
+				edge.graphics = Graphics.Lines.addRLine(fam_group, start_pos, end_pos, consang); 					//DRAW
 				edge.consangineous = consang;
 
 				edge.graphics.moveToBottom();
@@ -230,7 +230,7 @@ function graphInitPos(start_x, start_y, enable_ped_edit = false){
 
 	// --- Determine Bounds for each fam after final placements
 	uniqueGraphOps.foreachfam(function(fid,fgr){
-		updateFamBoundsRect(fgr.group);
+		Graphics.Pedigree.updateFamBoundsRect(fgr.group);
 		fgr.group._boundsrect.hide();
 	});
 

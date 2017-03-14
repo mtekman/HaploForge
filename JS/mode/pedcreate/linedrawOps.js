@@ -14,7 +14,7 @@ class LineDrawOps {
 		this._startPoint = {x:-1,y:-1};
 		this._endPoint = {x:-1,y:-1};
 
-		this._RLineMethod = changeRLineHoriz;
+		this._RLineMethod = Graphics.Lines.changeRLineHoriz;
 
 		// Callbacks
 		// Set before _init
