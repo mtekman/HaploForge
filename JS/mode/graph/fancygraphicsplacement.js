@@ -1,3 +1,9 @@
+/// DO NOT BOTHER TO CHAIN THE END OF ONE TWEEN TO THE START OF ANOTHER
+// the onFinish function in the tweening stage executes only after a node
+// has been launched, and it does not wait for it to finish.
+//
+// Rely on the more or less precise timings set by the setTimeout wrapper.
+
 
 
 var FancyGraphics = {
