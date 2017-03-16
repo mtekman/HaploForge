@@ -127,7 +127,37 @@ class TutorialPage {
 		return this.__mainpage;
 	}
 
+	__transitionText(obj, new_text, interval = 500){
+
+		var step = interval / 6
+
+		setTimeout(function(){
+			obj.style.opacity = 0.7;
+
+		setTimeout(function(){
+			obj.style.opacity = 0.3
+
+		setTimeout(function(){
+			obj.style.opacity = 0
+			obj.innerText = new_text;
+
+		setTimeout(function(){
+			obj.style.opacity = 0.3
+
+		setTimeout(function(){
+			obj.style.opacity = 0.7
+
+		setTimeout(function(){
+			obj.style.opacity = 1
+		}, step)
+		}, step)
+		}, step)
+		}, step)
+		}, step)
+		}, step)
+	}
+
 	// Used by VideoTranscript
-	modifyTop(text){this.text.top.innerText = text;}
-	modifyBot(text){this.text.bot.innerText = text;}
+	modifyTop(text){  this.__transitionText(this.text.top, text, 500);	}
+	modifyBot(text){  this.__transitionText(this.text.bot, text, 500)   }
 }

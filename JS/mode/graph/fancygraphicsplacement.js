@@ -5,7 +5,6 @@
 // Rely on the more or less precise timings set by the setTimeout wrapper.
 
 
-
 var FancyGraphics = {
 
 	__start : null,

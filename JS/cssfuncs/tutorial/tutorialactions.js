@@ -87,7 +87,37 @@ class TutorialActions {
 
 	__hidepage(pageno){this.___setpage(pageno,false)};
 	__showpage(pageno){this.___setpage(pageno,true)};
-	___setpage(pageno, visible)
+
+	__fadeTransition(obj, num_levels, start, interval, callback)
+	{
+		var op_step = 1 / num_levels,
+			op_curr = start,
+			op_mod  = (start === 0)?1:-1
+
+		var wait_step = interval / num_levels
+
+		function recur(obj, level, opacity, cb){
+			console.log(level, opacity, obj)
+			if (level === 0){
+				cb();
+				return 0
+			}
+
+			obj.style.opacity = opacity;
+
+			setTimeout(function(){
+				recur( obj, level - 1, opacity + (op_mod*op_step), cb )
+			},
+			wait_step);
+		}
+
+		recur(obj, num_levels, start, callback);			
+
+
+	}
+
+
+	___setpage(pageno, visible, interval=1000)
 	{
 		var page = this._pages[pageno],
 			plot = this.__tps[pageno];
@@ -97,15 +127,28 @@ class TutorialActions {
 			return -1
 		}
 
+		var step = interval / 4;
+
 
 		if (visible){
-			console.log(plot);
-			if (plot.enterAction !== null){plot.enterAction();}
-			page.style.display = "block";
+			setTimeout(function(){
+				page.style.opacity = 1;
+				console.log(plot);
+				if (plot.enterAction !== null){plot.enterAction();}
+				page.style.display = "block";
+			
+			}, TutorialActions.__wait_amount);
 		}
 		else {
-			if (plot.exitAction !== null){plot.exitAction();}
-			page.style.display = "none";
+			this.__fadeTransition(page, 4, 1, 200, function(){
+				page.style.opacity = 0;
+				if (plot.exitAction !== null){plot.exitAction();}
+				
+				page.style.display = "none";
+			});
 		}
+		TutorialActions.__wait_amount = 200
 	}
 }
+
+TutorialActions.__wait_amount = 0;
