@@ -1,11 +1,25 @@
-#test_assets {
-  color: #5a4437;
-  text-decoration: none;
+#cornerspace {
   position: absolute;
   left: 8px;
   bottom: 8px;
   font-size: 0.9em;
 }
+
+#cornerspace a {
+  color: #000;
+  text-decoration: none;
+  font-style: italic;
+  text-align: left;
+  font-family: monospace;
+  background: #838383;
+  border-radius: 5px;
+  padding: 1.5px;
+}
+
+#cornerspace a:hover {
+  background: #b97f7f;
+}
+
 
 #bgvid {
     position: fixed;
