@@ -31,7 +31,7 @@ Vector files describe the *flow* of genetic information from one generation to t
 
 ### How to use? ###
 
-* Simply go to the [live application](https://mtekman.bitbucket.io/haploforge/) and go through the quick video tutorials (in total no longer than 10 minutes).
+Simply go to the [live application](https://mtekman.bitbucket.io/haploforge/) and go through the quick video tutorials (in total no longer than 10 minutes).
 
 ### Can I read more? ###
 
