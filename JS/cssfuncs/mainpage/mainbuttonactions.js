@@ -66,7 +66,7 @@ var MainButtonActions  = {
 
 	exitToMenu: function(){
 
-		if (MainButtonActions.fileType === localStor.ped_type){
+		if (ModeTracker.currentMode === ModeTracker.modes.pedcreate){
 			var changeDetected = Pedfile.pedigreeChanged();
 
 			if (changeDetected){
