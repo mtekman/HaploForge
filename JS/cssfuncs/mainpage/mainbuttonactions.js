@@ -59,8 +59,6 @@ var MainButtonActions  = {
 	saveHaploToStorage: function(){
 		//Save to local storage
 		localStorage.setItem(localStor.hap_save, SerialParse.All.export() )
-//		localStorage.setItem(localStor.hap_type, MainButtonActions.fileType)
-
 		utility.notify("Haplo File Saved","...");		
 	},
 

@@ -70,6 +70,42 @@ function graphInitPos(start_x, start_y, enable_ped_edit = false){
 			edges = fam_gfx.edges;
 
 
+		// Load stored meta
+		familyMapOps.foreachperc(function(pid, fid, perp){
+
+			var n_perp = uniqueGraphOps.getNode(pid, fid);
+
+			// Restore meta
+			var posx = -1, 
+				ypos = -1;
+
+			if (typeof perp.stored_meta !== "undefined"){
+				//console.log("using stored meta", perp_id, perp.stored_meta);
+				var meta = perp.stored_meta;
+
+				posx  = meta.x;
+				y_pos = meta.y;
+
+				perp.name = meta.name;
+
+				delete perp.stored_meta;
+
+				if (perp.mother === 0 && perp.father === 0){
+	
+					n_perp.graphics = Graphics.Pedigree.addPerson(perp, fam_group, posx, y_pos);
+					console.log("adding", n_perp.graphics);
+
+					if (enable_ped_edit){
+						n_perp.graphics.family = fam;
+					 	personDraw.addClickFunctions(n_perp.graphics);
+			 		}
+			 	}
+			}
+		});
+
+		debugger
+
+
 		// Init Nodes, ordered by generation
 		GlobalLevelGrid.foreachgeneration(fam, function(indivs_in_gen){
 
@@ -105,22 +141,23 @@ function graphInitPos(start_x, start_y, enable_ped_edit = false){
 
 					delete perp.stored_meta;
 				}
+				else {
+					// Center on parent's positions
+					var moth = perp.mother,
+						fath = perp.father;
 
+					// Parent's exist and offsrping is only child
+					if (moth !== 0 && moth.children.length === 1){
+						var moth_gfx = nodes[moth.id].graphics.getX(),
+							fath_gfx = nodes[fath.id].graphics.getX();
 
-				// Center on parent's positions
-				var moth = perp.mother,
-					fath = perp.father;
-
-				// Parent's exist and offsrping is only child
-				if (moth !== 0 && moth.children.length === 1){
-					var moth_gfx = nodes[moth.id].graphics.getX(),
-						fath_gfx = nodes[fath.id].graphics.getX();
-
-					posx = (moth_gfx + fath_gfx) / 2 ;
+						posx = (moth_gfx + fath_gfx) / 2 ;
+					}
 				}
 
 
 				n_perp.graphics = Graphics.Pedigree.addPerson(perp, fam_group, posx, y_pos);
+				console.log("addding", n_perp.graphics);
 
 				if (enable_ped_edit){
 					n_perp.graphics.family = fam;
