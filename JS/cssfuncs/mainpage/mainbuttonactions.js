@@ -59,14 +59,12 @@ var MainButtonActions  = {
 	saveHaploToStorage: function(){
 		//Save to local storage
 		localStorage.setItem(localStor.hap_save, SerialParse.All.export() )
-//		localStorage.setItem(localStor.hap_type, MainButtonActions.fileType)
-
 		utility.notify("Haplo File Saved","...");		
 	},
 
 	exitToMenu: function(){
 
-		if (MainButtonActions.fileType === localStor.ped_type){
+		if (ModeTracker.currentMode === ModeTracker.modes.pedcreate){
 			var changeDetected = Pedfile.pedigreeChanged();
 
 			if (changeDetected){

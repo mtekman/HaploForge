@@ -15,6 +15,8 @@ var Pedfile = {
 	
 			if (line.length < 5 ){continue};
 
+			debugger
+
 			// family lines first
 			if (line.startsWith("////")){
 				var fid_gfx = line.split("////")[1].split('\t');
@@ -62,6 +64,7 @@ var Pedfile = {
 		var text = "";
 
 
+		// Family-header specific 
 		if (store_graphics)
 		{
 			var fid_array = []
@@ -71,6 +74,7 @@ var Pedfile = {
 			text += fid_array.join('\n');
 		}
 
+		// Person specific
 		familyMapOps.foreachperc(function(pid, fid, perc){
 
 			var array = [
@@ -84,14 +88,15 @@ var Pedfile = {
 			if (store_graphics){
 				var gfx = uniqueGraphOps.getNode(pid, fid);
 
-				if (gfx===-1){
-					throw new Error(pid,fid,"does not have any graphics...");
+				if (gfx===-1 || gfx.graphics === null){
+					console.log("[Error]", pid,fid,"does not have any graphics...");
 				}
+				else {
+					var meta = gfx.graphics.getPosition();
+					meta.name = perc.name
 
-				var meta = gfx.graphics.getPosition();
-				meta.name = perc.name
-
-				array.push( "//", JSON.stringify(meta));
+					array.push( "//", JSON.stringify(meta));
+				}
 			}
 			text += "\n"+ array.join('\t');
 		});

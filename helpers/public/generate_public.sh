@@ -59,5 +59,6 @@ cat tmp.txt\
 
 rm tmp.txt 
 
-# Copy test assets
-cp -r $root/public_assets/resources/test/ $outdir/
+# Copy test assets (7z archive)
+mkdir -p $outdir/test/
+cp $root/public_assets/resources/test/supplemental_*.7z  $outdir/test/

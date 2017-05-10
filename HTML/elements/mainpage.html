@@ -1,37 +1,41 @@
 document.write('\
 \
-        <div id="maincircle">\
+  <div id="maincircle">\
 \
-          <input id="haploupload" type="button" \
+    <input id="haploupload" type="button" \
                  onclick="MainButtonActions.fileUpload()" />\
 \
-          <input id="haploresume" type="button"\
+    <input id="haploresume" type="button"\
                  onclick="MainButtonActions.loadHaploFromStorage()"  />\
 \
-          <input id="pedmodebutton" type="button"\
+    <input id="pedmodebutton" type="button"\
                  onclick="MainButtonActions.createNewPed()" />\
 \
-          <input id="pedresume" type="button"\
+    <input id="pedresume" type="button"\
                  onclick="MainButtonActions.loadPedFromStorage()" />\
 \
-          <ul class="nodots">\
-            <li class="smallspace">\
-              <a href="test/index.html" id="test_assets" >[Test Assets]</a>\
-              <h1>HaploHTML5</h1>\
-              <h2 class="smallspace">Extensive Haplotype Resolution and Pedigree Creation Tool</h2>\
-             </li>\
-             <li>\
-              <label id="haploupload_label" for="haploupload">Visualize New Haplotypes</label>\
-              <label id="haploresume_label" for="haploresume">Resume Previous Analysis</label>\
-            </li>\
-            <li>\
-              <hr class="style15">\
-            </li>\
-            <li>\
-               <label id="pedmodebutton" for="pedmodebutton">Create New Pedigree</label>\
-               <label id="pedresume_label" for="pedresume">Resume Pedigree</label>\
-            </li>\
-          </ul>\
-          <img id="settings_wheel" src="public_assets/images/settings_wheel.png" ></img>\
-        </div>\
+    <ul class="nodots">\
+      <li class="smallspace">\
+          <div id="cornerspace">\
+              <a href="https://bitbucket.org/mtekman/haploforge" >source code</a>\
+              <br />\
+              <a href="test/supplemental_test_data.7z" id="test_assets" >test assets</a>\
+          </div>\
+          <h1>HaploForge</h1>\
+          <h2 class="smallspace">Extensive Haplotype Resolution and Pedigree Creation Tool</h2>\
+      </li>\
+      <li>\
+        <label id="haploupload_label" for="haploupload">Visualize New Haplotypes</label>\
+        <label id="haploresume_label" for="haploresume">Resume Previous Analysis</label>\
+      </li>\
+      <li>\
+        <hr class="style15">\
+      </li>\
+      <li>\
+        <label id="pedmodebutton" for="pedmodebutton">Create New Pedigree</label>\
+        <label id="pedresume_label" for="pedresume">Resume Pedigree</label>\
+      </li>\
+    </ul>\
+    <img id="settings_wheel" src="public_assets/images/settings_wheel.png" ></img>\
+  </div>\
 ');
