@@ -112,8 +112,8 @@ function graphInitPos(start_x, start_y, enable_ped_edit = false){
 			var x_pos = start_x;
 
 			var num_peeps = indivs_in_gen.length,
-				isOddNum = !((num_peeps%2)==0),
-				center_x = Math.floor(max_fam_width/2);
+			    isOddNum = !((num_peeps%2)==0),
+			    center_x = Math.floor(max_fam_width/2);
 
 
 			/*
