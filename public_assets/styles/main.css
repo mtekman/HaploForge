@@ -1,11 +1,16 @@
-#cornerspace {
+.cornerspace {
   position: absolute;
   left: 8px;
   bottom: 8px;
   font-size: 0.9em;
 }
 
-#cornerspace a {
+.upper {
+  left:unset;
+  right:45px;
+}
+
+.cornerspace a {
   color: #000;
   text-decoration: none;
   font-style: italic;
@@ -16,7 +21,7 @@
   padding: 1.5px;
 }
 
-#cornerspace a:hover {
+.cornerspace a:hover {
   background: #b97f7f;
 }
 
@@ -197,12 +202,12 @@
   display:none;
   left:40%;
   top: 40%;
-  height: 60px;
+  min-height: 65px;
   z-index: -99;
 }
 
 #message_props .messages {
-  border-radius: 12px 12px 0px 0px;
+  /*! border-radius: 12px 12px 0px 0px; */
 }
 
 #message_props .messages h3 {
@@ -222,11 +227,11 @@
 
 .input_props .messages {
   border: 4px solid black;
-  border-radius: 15px 15px 0px 0px;
+  /*! border-radius: 15px 15px 0px 0px; */
   background: black;
   height: 20px;
   text-align: left;
-  margin-top: -5px;
+  /*! margin-top: -5px; */
   color: white;
   position: relative;
 }
@@ -250,19 +255,23 @@
   background: white;
   border-radius: 5px 5px 5px 10px;
   color: black;
+  border: 2px solid black;
+  margin-top: -2px;
 }
 
 
 
 /* Button top right */
-.input_props #message_exit,#pers_submit {
+.input_props .toprightclose{
   position: absolute;
   right: 0px;
   top: 5px;
-  border-width: 1px;
   background: #dd5500;
+  border: 1px solid #555;
   border-radius: 10px;
-  border-color: black;
+  margin-top: -6px;
+  color: white;
+  
 }
 
 #pers_delete {
@@ -273,6 +282,12 @@
   background: #dd5500;
   border-radius: 10px;
   border-color: black;
+}
+
+#bench_props.input_props {
+  display: block;
+  left:35%;
+  top:50%;
 }
 
 #family_props.input_props {
@@ -294,9 +309,11 @@
   position: relative;
   bottom: 100%;
   left: 10%;
+  /*! color: white; */
 }
 
 .input_props #message_buttonsrow input {
+  color: white;
   border-width: 1px;
   background: #dd5500;
   border-radius: 10px;
@@ -305,18 +322,36 @@
 }
 
 .input_props #message_submit {
-  border-width: 1px;
+  /*! border-width: 1px; */
   background: #dd5500;
   border-radius: 10px;
-  border-color: black;
+  /*! border-color: black; */
   box-shadow: 3px 3px 3px #888;
+  color: white;
+  border: 1px solid #555;
 }
-
-
-
 
 .input_props table td {
   width: 50%;
+}
+
+.input_props table.bench_input tr td:first-child {
+  font-size:small;
+  width: auto;
+}
+
+#bench_close {
+  margin-right: 35px;
+}
+
+/* both of these needed */
+.input_props table.bench_input tr td:last-child {  
+  width: auto; 
+  padding-right: 15px;
+}
+.input_props table.bench_input tr td:last-child input {  
+  width: 50px;
+  text-align:center;
 }
 
 
@@ -344,11 +379,11 @@
   padding-left: 10px;
   margin-bottom: 5px;
   margin-top: -18px;
-  text-shadow: 
+  /*! text-shadow: 
     0px -1px white,
    -1px  0px white,
     1px  0px white,
-    0px  1px white;
+    0px  1px white; */
 }
 
 
