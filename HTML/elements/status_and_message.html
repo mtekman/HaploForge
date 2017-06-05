@@ -11,18 +11,46 @@ document.write('\
           <div class="bg" ></div>\
           <div class="messages">\
               <h3 id="message_head" >Header</h3>\
-              <input class="messages" id="message_exit" type="button" value="X" />\
+              <input class="toprightclose" id="message_exit" type="button" value="✘" />\
               <p id="message_text" >Stuff we can talk about</p>\
               <div id="message_inputrow" >\
-                <input class="messages" type="text" \
+                <input type="text" \
                 id="message_input" />\
-                <input class="messages" type="button" \
+                <input type="button" \
                 id="message_submit" />\
               </div>\
               <div id="message_buttonsrow" >\
-                <input class="messages" id="message_yes" type="button" value="Yes" />\
-                <input class="messages" id="message_no" type="button" value="No" />\
+                <input id="message_yes" type="button" value="Yes" />\
+                <input id="message_no" type="button" value="No" />\
               </div>\
           </div>\
+        </div>\
+\
+        <!-- Benchmark Props -->\
+        <div id="bench_props" class="input_props" >\
+          <div class="messages">\
+             <h3 id="message_head" >Benchmarking</h3>\
+             <input class="toprightclose" id="bench_close" type="button" value="✘" />\
+             <input class="toprightclose" id="bench_submit" type="button" value="✓" />\
+          </div>\
+\
+          <table class="bench_input">\
+             <tr >\
+               <td>Founder Couples:</td>\
+               <td><input id="bench_root_founder" type="number" min=1 value=1 /></td>\
+             </tr>\
+             <tr>\
+               <td>Max Generations:</td>\
+               <td><input id="bench_max_gen" type="number" min=2 value=2 /></td>\
+             </tr>\
+             <tr>\
+               <td>Size of Alleles:</td>\
+               <td><input id="bench_allele_size" type="number" min=5 value=5 /></td>\
+             </tr>\
+             <tr>\
+               <td>Inbreeding Prob:</td>\
+               <td><input id="bench_inbreed_prob" type="number" value=0.1 min=0.1 step=0.1  max=1 /></td>\
+             </tr>\
+           </table>\
         </div>\
 ');
