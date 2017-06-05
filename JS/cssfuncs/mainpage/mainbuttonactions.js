@@ -10,11 +10,15 @@ var MainButtonActions  = {
 
 	fileUpload: fileSelector.init,
 
-	loadHaploFromStorage: function()
+	loadHaploFromStorage: function(hap_data = null)
 	{
 		FileFormat.__begFuncs();
 		
-		var hap_data = localStorage.getItem( localStor.hap_save );
+		if (hap_data === null){
+			hap_data = localStorage.getItem( localStor.hap_save );			
+		}
+
+		// Still empty?
 		if (hap_data === null){
 			console.log("No haplo data saved");
 			MainButtonActions.exitToMenu();

@@ -122,7 +122,27 @@ var messProps = {
 			callback(val.innerHTML);
 //			messProps._aftercallbacks();
 		});*/
-	}
+	},
+
+	/* do not use
+	inputMulti: function(header, input_html, submit_callback){
+		// input_array : [label,input obj]
+		this._text.style.display = "none";
+		this._text.value = "";
+
+		this._buttonrow._old_html = this._buttonrow.innerHTML;
+		this._buttonrow.innerHTML = input_html;
+
+		var that = this;
+
+		that.display(header, "", 
+			function exit(){
+				//restore
+				that._buttonrow.innerHTML = that._buttonrow._old_html
+				delete that._buttonrow._old_html;
+			}, null, submit_callback
+		);
+	}*/
 
 }
 

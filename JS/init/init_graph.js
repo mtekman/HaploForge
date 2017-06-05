@@ -103,7 +103,7 @@ function graphInitPos(start_x, start_y, enable_ped_edit = false){
 			}
 		});
 
-		debugger
+		//debugger
 
 
 		// Init Nodes, ordered by generation

@@ -50,6 +50,67 @@ var famProps = {
 }
 
 
+var benchProps = {
+	_box :              document.getElementById('bench_props'),
+	_rootfounderInput : document.getElementById('bench_root_founder'),
+	_maxgenInput:       document.getElementById('bench_max_gen'),
+	_allelesizeInput:   document.getElementById('bench_allele_size'),
+	_inbreedInput:   document.getElementById('bench_inbreed_prob'),
+	_submit:            document.getElementById('bench_submit'),
+	_close:             document.getElementById('bench_close'),
+
+	maxgen: -1,
+	allelesize: -1,
+	rootfounders: -1,
+	inbreedchance: -1,
+
+	hide: function(){ 
+		Keyboard.unpause()
+		this._box.style.display = "none";
+		this._box.style.zIndex = -99;
+		utility.hideBG()
+	},
+	show: function(){
+		Keyboard.pause()
+		this._box.style.display = "block";
+		this._box.style.zIndex = 501;
+		this._rootfounderInput.focus();
+		utility.showBG()
+	},
+
+	_getInputs: function(){
+		this.maxgen       = this._maxgenInput.value;
+		this.allelesize   = this._allelesizeInput.value;
+		this.rootfounders = this._rootfounderInput.value;
+	},
+
+	display: function(callback){
+		this.show();
+
+		var that = this;
+
+		if (this._submit.onclick === null){
+			this._submit.onclick = function()
+			{
+				that._getInputs();
+				that.hide();
+				callback(
+					that.rootfounders,
+					that.maxgen,
+					that.allelesize,
+					that.inbreedchance)
+			}
+		}
+
+		if (this._close.onclick === null){
+			this._close.onclick = function(){
+				that.hide();
+			}
+		}
+	}
+}
+
+
 var persProps = {
 	_box : document.getElementById('person_props'),	
 	_genderInput : document.getElementById('pers_gender'),

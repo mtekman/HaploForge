@@ -15,8 +15,6 @@ var Pedfile = {
 	
 			if (line.length < 5 ){continue};
 
-			debugger
-
 			// family lines first
 			if (line.startsWith("////")){
 				var fid_gfx = line.split("////")[1].split('\t');
@@ -63,7 +61,6 @@ var Pedfile = {
 	{
 		var text = "";
 
-
 		// Family-header specific 
 		if (store_graphics)
 		{
@@ -75,8 +72,8 @@ var Pedfile = {
 		}
 
 		// Person specific
-		familyMapOps.foreachperc(function(pid, fid, perc){
-
+		familyMapOps.foreachperc(function(pid, fid, perc)
+		{
 			var array = [
 				fid, 
 				perc.id, 
