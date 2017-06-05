@@ -1,44 +1,44 @@
 function randomIndex(len){
-    return Math.floor(Math.random() * len);
+	return Math.floor(Math.random() * len);
 }
 
 
 var BenchAllele  = {
 
-    disease_allele : null,
-    allele_size : 16,
-    __alleles_in_use : {},
+	disease_allele : null,
+	allele_size : 16,
+	__alleles_in_use : {},
 
 
-    newNonDiseaseAllele: function()
-    {
-	if (BenchAllele.disease_allele === null)
+	newNonDiseaseAllele: function()
 	{
-	    BenchAllele.disease_allele = [];
-	    for (let i=0; i < BenchAllele.allele_size; i++){ BenchAllele.disease_allele.push(1); }
-	    
-	    BenchAllele.__alleles_in_use[ BenchAllele.disease_allele.join("") ] = true;
+		if (BenchAllele.disease_allele === null)
+		{
+			BenchAllele.disease_allele = [];
+			for (let i=0; i < BenchAllele.allele_size; i++){ BenchAllele.disease_allele.push(1); }
+				
+				BenchAllele.__alleles_in_use[ BenchAllele.disease_allele.join("") ] = true;
 
-	    console.log("Defining new disease_allele", BenchAllele.disease_allele);
-	};
+			console.log("Defining new disease_allele", BenchAllele.disease_allele);
+		};
 
-	let new_all = [for (i of BenchAllele.disease_allele) [1,2][randomIndex(2)]]
-	let key = new_all.join("")
+		let new_all = [for (i of BenchAllele.disease_allele) [1,2][randomIndex(2)]]
+		let key = new_all.join("")
 
 	// Each FA must be unique
 	if (key in BenchAllele.__alleles_in_use){
-	    return BenchAllele.newNonDiseaseAllele();
+		return BenchAllele.newNonDiseaseAllele();
 	}
 
 	BenchAllele.__alleles_in_use[key] = true
 	return new_all;
-    },
+},
 
-    performMeiosis: function(all1,all2)
-    {
+performMeiosis: function(all1,all2)
+{
 	if ( all1.length !== all2.length){
-	    console.error("Allele lengths do not match");
-	    return 0;
+		console.error("Allele lengths do not match");
+		return 0;
 	}
 
 	let buff = Math.floor(all1.length / 2);
@@ -53,5 +53,5 @@ var BenchAllele  = {
 	// Otherwise recombination
 	index_split -= buff;
 	return all1.slice(0,index_split).concat(all2.slice(index_split,));
-    }
+}
 }
