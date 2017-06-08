@@ -1,3 +1,20 @@
+var tg;
+
+function benchmark_launch(){
+    benchProps.display(function(rootfounders, maxgen, allelesize, inbreedchance)
+    {
+        tg = new TreeGenerator(rootfounders, maxgen, allelesize, inbreedchance);
+        exportToTab( tg.exportToHaploFile() );
+        // FileFormat.__begFuncs();
+        // HaploPedProps.init();
+
+        // FileFormat.__endFuncs(null);
+
+        // console.log(tg);
+
+    });
+}
+
 
 class TreeGenerator {
 
@@ -24,6 +41,7 @@ class TreeGenerator {
         }
 
         this.printmetrics()
+        //this.exportToHaploFile();
     }
 
     printmetrics(){
@@ -105,7 +123,87 @@ class TreeGenerator {
     }
 
 
-    __insertIntoGlobalMaps(){
+    __transposedHeaders(num, initial_buff, spacer){
+        // Make regular headers
+        var markers = [];
+        for (let i = 1; i <= num ; i++){
+            let nn = "" + i + "",
+                nlen = nn.length;
+
+            let name = "mm1000000";
+            name = name.slice(0,-nlen) + nn
+            markers.push( name );
+        }
+
+        // Transpose
+        let str_array = "";
+
+        for (let i = markers[0].length -1 ; i >= 0; i--){  // cols
+            str_array += initial_buff;
+            let tmp_array = []
+            for (let j= 0 ; j < markers.length; j++){
+                let lett = markers[j][i]
+                tmp_array.push( lett );
+            }
+            str_array += tmp_array.join(spacer) + spacer;
+            str_array += '\n'
+        }
+        return str_array;
+    }
+
+
+    static paddID(id, amount = 5){
+        return (id + "          ").slice(0,amount)
+    }
+
+
+    exportToHaploFile(){
+        var fam = 9999;
+
+        var text = "";
+        var spacer = "  ";
+
+        var headers_done = false;
+
+        let padd_amount = 5;
+        let preamble_length = (padd_amount * 4) + (7 * spacer.length); // max allowed space for ped data before  header columns kick in
+        let preamble_stage = "                                                           ".slice(0,preamble_length);
+
+        let pd = function(sd){
+            return TreeGenerator.paddID(sd, padd_amount);
+        }
+
+        // Indiv Data
+        for (let gen in BenchPerson.generation_map)
+        {
+            let indivs = BenchPerson.generation_map[gen];
+            for (let i in indivs)
+            {
+                let ind = indivs[i];
+
+                if (!headers_done){
+                    // Marker Headers
+                    text += this.__transposedHeaders(ind.__temp_haplo_data[0].length, preamble_stage, spacer)
+                    text += '\n'
+                    headers_done = true;
+                }
+
+                let mat = ind.mother === null?0:ind.mother.id,
+                    pat = ind.father === null?0:ind.father.id;
+
+
+                let preamble = [pd(fam), pd(ind.id), pd(pat), pd(mat), ind.gender, ind.affected].join(spacer);
+
+                text += preamble +  spacer + ind.__temp_haplo_data[0].join( spacer ) + '\n'
+                text += preamble +  spacer + ind.__temp_haplo_data[1].join( spacer ) + '\n'
+            }
+        }
+        //console.log(text);
+        return text;
+    }
+
+
+    /*__insertIntoGlobalMaps(){
 
         var fam = 9999;
 
@@ -125,6 +223,6 @@ class TreeGenerator {
             }
             //console.log(gen, indivs);
         }
-    }
+    }*/
 }
 
