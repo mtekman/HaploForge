@@ -27,7 +27,7 @@ document.write('\
         </div>\
 \
         <!-- Benchmark Props -->\
-        <div id="bench_props" class="input_props" >\
+        <div id="bench_props" class="input_props" style="display:none" >\
           <div class="messages">\
              <h3 id="message_head" >Benchmarking</h3>\
              <input class="toprightclose" id="bench_close" type="button" value="✘" />\
@@ -37,15 +37,15 @@ document.write('\
           <table class="bench_input">\
              <tr >\
                <td>Founder Couples:</td>\
-               <td><input id="bench_root_founder" type="number" min=1 value=1 /></td>\
+               <td><input id="bench_root_founder" type="number" min=1 value=3 /></td>\
              </tr>\
              <tr>\
                <td>Max Generations:</td>\
-               <td><input id="bench_max_gen" type="number" min=2 value=2 /></td>\
+               <td><input id="bench_max_gen" type="number" min=2 value=9 max=10 /></td>\
              </tr>\
              <tr>\
                <td>Size of Alleles:</td>\
-               <td><input id="bench_allele_size" type="number" min=5 value=5 /></td>\
+               <td><input id="bench_allele_size" type="number" min=10 value=10 /></td>\
              </tr>\
              <tr>\
                <td>Inbreeding Prob:</td>\
