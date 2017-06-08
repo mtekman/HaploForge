@@ -55,7 +55,7 @@ var benchProps = {
 	_rootfounderInput : document.getElementById('bench_root_founder'),
 	_maxgenInput:       document.getElementById('bench_max_gen'),
 	_allelesizeInput:   document.getElementById('bench_allele_size'),
-	_inbreedInput:   document.getElementById('bench_inbreed_prob'),
+	_inbreedInput:      document.getElementById('bench_inbreed_prob'),
 	_submit:            document.getElementById('bench_submit'),
 	_close:             document.getElementById('bench_close'),
 

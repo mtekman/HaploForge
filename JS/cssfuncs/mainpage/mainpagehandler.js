@@ -82,7 +82,6 @@ var MainPageHandler = {
 		MainPageHandler.__bgWhite();
 		MainPageHandler.showDiv("main", false);
 		MainPageHandler.showDiv("container", true);
-
 		MainPageHandler.showDiv("ToolButtons", true);
 		MainPageHandler.showDiv("BottomButtons", true);
 		
