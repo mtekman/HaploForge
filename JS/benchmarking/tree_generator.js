@@ -4,7 +4,10 @@ function benchmark_launch(){
     benchProps.display(function(rootfounders, maxgen, allelesize, inbreedchance)
     {
         tg = new TreeGenerator(rootfounders, maxgen, allelesize, inbreedchance);
-        exportToTab( tg.exportToHaploFile() );
+        let text = tg.exportToHaploFile();
+
+        new Allegro(haplo);
+
         // FileFormat.__begFuncs();
         // HaploPedProps.init();
 

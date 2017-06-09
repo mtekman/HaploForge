@@ -3,21 +3,30 @@
 
 class Allegro extends FileFormat {
 	
-	constructor(mode_init = null){
+	constructor(mode_init = null, fed_data = null){
 
 		var haplo = {
 			id: "allegro_haplo",
-			process: function(haplo_text){
-//				debugAllegro.haplo = haplo_text;
-				Allegro.__populateFamilyAndHaploMap(haplo_text);			
-			},
 			hasMarkerNames : true
+		};
+
+		if (fed_data === null){
+			haplo.process = function(haplo_text){
+				//debugAllegro.haplo = haplo_text;
+				Allegro.__populateFamilyAndHaploMap(haplo_text);
+			}
+		} 
+		/* Read from benchmarked fabricated data*/
+		else {
+			haplo.process = function(){
+				Allegro.__populateFamilyAndHaploMap(fed_data);
+			}
 		}
 
 		var map = {
 			id: "allegro_map",
 			process: function(map_text){
-//				debugAllegro.map = map_text;
+				//debugAllegro.map = map_text;
 				Allegro.__populateGeneticPositions(map_text);
 			}
 		}
@@ -25,7 +34,7 @@ class Allegro extends FileFormat {
 		var descent = {
 			id: "allegro_descent",
 			process: function(descent_text){
-//				debugAllegro.descent = descent_text;
+				//debugAllegro.descent = descent_text;
 				Allegro.__populateFlow(descent_text);
 			},
 			resolver_mode: AssignHGroups.resolvers.FLOW
@@ -40,8 +49,6 @@ class Allegro extends FileFormat {
 
 	static __populateFamilyAndHaploMap(text_unformatted, founder = false){
 
-//		console.log("POPPER", founder)
-	
 		var lines = text_unformatted.split('\n'),
 			haplo_start_col = -1;
 

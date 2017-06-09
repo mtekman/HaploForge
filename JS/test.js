@@ -2,10 +2,9 @@ var bb;
 
 var Test = {
 
-    Benchmark : {
+    Benchmark : function(rootfounders, maxgen, allelesize, inbreedchance){
 
-        LargestPedigreeSmallMarkers(){},
-        LargestPedigree(){}
+    	let num_ro
     },
         
     
