@@ -157,7 +157,7 @@ function graphInitPos(start_x, start_y, enable_ped_edit = false){
 
 
 				n_perp.graphics = Graphics.Pedigree.addPerson(perp, fam_group, posx, y_pos);
-				console.log("addding", n_perp.graphics);
+				//console.log("addding", n_perp.graphics);
 
 				if (enable_ped_edit){
 					n_perp.graphics.family = fam;

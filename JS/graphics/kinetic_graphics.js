@@ -10,11 +10,17 @@ var main_layer = null,
 // --- Init Kinetic --//
 function makeStage(){
 
-	if (stage !== undefined){
+	if (stage !== undefined && stage !== null){
+		delete stage;
+		delete main_layer;
+		delete haplo_layer;
+	}
+
+	//if (stage === undefined){
 		stage = null;
 		main_layer = null;
 		haplo_layer = null;
-	}
+	//}
 
 	stage = new Kinetic.Stage({
 		container:'container',
