@@ -7,20 +7,15 @@ class Allegro extends FileFormat {
 
 		var haplo = {
 			id: "allegro_haplo",
-			hasMarkerNames : true
-		};
-
-		if (fed_data === null){
-			haplo.process = function(haplo_text){
+			hasMarkerNames : true,
+			process : function(haplo_text){
 				//debugAllegro.haplo = haplo_text;
 				Allegro.__populateFamilyAndHaploMap(haplo_text);
 			}
-		} 
-		/* Read from benchmarked fabricated data*/
-		else {
-			haplo.process = function(){
-				Allegro.__populateFamilyAndHaploMap(fed_data);
-			}
+		}
+
+		if (fed_data !== null){
+			haplo.fed_data = fed_data;
 		}
 
 		var map = {
@@ -48,6 +43,8 @@ class Allegro extends FileFormat {
 	}
 
 	static __populateFamilyAndHaploMap(text_unformatted, founder = false){
+
+		console.log("populateFamAndHapMap")
 
 		var lines = text_unformatted.split('\n'),
 			haplo_start_col = -1;

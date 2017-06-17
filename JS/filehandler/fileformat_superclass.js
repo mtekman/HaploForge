@@ -35,12 +35,12 @@ class FileFormat {
 
 		// Haplo *must* get called
 		queue.addJob({
-			type: "haplo",
-			file: this.haplofile,
-			task: function(haplo_text)
+			type:     "haplo",
+			file:     this.haplofile,
+			fed_data: haplo.fed_data || false,
+			task:     function(haplo_text)
 			{
 				MainButtonActions._temphaploload = haplo_text; // for transferring from haplo to pedcreate
-
 				haplo.process(haplo_text);
 
 				// Sometimes the haplo file has RS data and this step is not neccesary.
@@ -115,6 +115,7 @@ class FileFormat {
 			console.log("Resolve: Load From Storage");
 		} else {
 			AssignHGroups.init(descentmode);
+			BenchMark.stop();
 		}
 		console.groupEnd();
 

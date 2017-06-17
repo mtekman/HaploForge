@@ -24,21 +24,36 @@ class PromiseQueue {
 	static pFileRead(fileprops){
 		var file = fileprops.file,
 			task = fileprops.task,
-			type = fileprops.type;
+			type = fileprops.type,
+			fed_data = fileprops.fed_data || false;
 
 		return new Promise((resolve, reject) => {
-			var fr = new FileReader();
-			
-			fr.onload = function(e){
-				try {
-		    		task(e.target.result);
-	    			resolve();
 
-	    		} catch(e){
-	    			reject(file.name + " is not a " + type);
-	    		}
-	    	}
-			fr.readAsText(file);
+			if (fed_data){
+				//console.log("")
+				try {
+					task(fed_data)
+					resolve();
+				} catch (e) {
+					console.log("error", e);
+					reject("Generated data failed to process")
+				}
+			}
+
+			else {
+				var fr = new FileReader();
+				
+				fr.onload = function(e){
+					try {
+			    		task(e.target.result);
+		    			resolve();
+
+		    		} catch(e){
+		    			reject(file.name + " is not a " + type);
+		    		}
+		    	}
+				fr.readAsText(file);
+			}
 		});
 	}
 
@@ -48,6 +63,11 @@ class PromiseQueue {
 		this.promise.then( finishfunc ).catch(
 			function(errors){
 				MainButtonActions.exitToMenu();
+
+				if (BenchMark.__timeStart !== null ){
+					BenchMark.terminate();
+				}
+
 				utility.notify("Check your inputs", errors, 10);
 			}
 		);
