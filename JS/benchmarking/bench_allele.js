@@ -23,7 +23,8 @@ var BenchAllele  = {
 			console.log("Defining new disease_allele", BenchAllele.disease_allele);
 		};
 
-		let new_all = [for (i of BenchAllele.disease_allele) [1,2,3,4,5,6,7,8][randomIndex(8)]]
+		let new_all = [];
+		for (let i=0 ; i < BenchAllele.disease_allele.length; i++){ new_all.push( [1,2,3,4,5,6,7,8][randomIndex(8)] ); };
 		let key = new_all.join("")
 
 		//console.log(key);

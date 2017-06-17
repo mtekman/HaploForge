@@ -1,0 +1,3 @@
+Tree Generation:	RootFounders	MaxGen	AlleleSize	InbreedChance	NumPeople	NumInbredCouples	TimingTreeGen	TimingRender
+	1	5	100	0	25	0	17.465000000000146	189.27500000000055
+

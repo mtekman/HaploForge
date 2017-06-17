@@ -1,23 +1,3 @@
-var tg;
-
-function benchmark_launch(){
-    benchProps.display(function(rootfounders, maxgen, allelesize, inbreedchance)
-    {
-        tg = new TreeGenerator(rootfounders, maxgen, allelesize, inbreedchance);
-        let text = tg.exportToHaploFile();
-
-        new Allegro(haplo);
-
-        // FileFormat.__begFuncs();
-        // HaploPedProps.init();
-
-        // FileFormat.__endFuncs(null);
-
-        // console.log(tg);
-
-    });
-}
-
 
 class TreeGenerator {
 
@@ -42,22 +22,13 @@ class TreeGenerator {
             let root_indiv = new BenchPerson(1); // generation 0
             this.germinate(root_indiv);    
         }
-
-        this.printmetrics()
-        //this.exportToHaploFile();
     }
 
     printmetrics(){
-        console.log("Num people:", this.num_people)
-
-        let inco = [ for (i of Object.keys(this.inbred_couples)) i];
-        
-        console.log("Inbred couples", inco.length, inco)
-        console.log("Generations",
-            [for (i of Object.keys(BenchPerson.generation_map))
-            i+": "+Object.keys(BenchPerson.generation_map[i]).length ]
-            )
-        console.log(BenchPerson.generation_map);
+        console.log(" [Results: num_people=" + this.num_people + "inbred_couples=" + Object.keys(this.inbred_couples).length + "] ");
+        console.log("   Inbred_couples=", this.inbred_couples)
+        console.log("   Generations", Object.keys(BenchPerson.generation_map).map( i => i+": "+Object.keys(BenchPerson.generation_map[i]).length ), BenchPerson.generation_map);
+        return { numpeople: this.num_people, numinbredcouples: Object.keys(this.inbred_couples).length };
     }
 
 
@@ -83,8 +54,10 @@ class TreeGenerator {
             let perc_gender = perc.gender,
             mate_gender = perc_gender===2?1:2;
 
-            let mate = null;            
-            if (this.chance_of_inbreeding * (generation / this.max_generations ) > Math.random()){
+            let mate = null,
+                breeding_chance = this.chance_of_inbreeding * (generation / this.max_generations);
+
+            if (breeding_chance > Math.random()){
                 // Mate is a cousin
                 mate = perc.findAvailableCousin()
             }

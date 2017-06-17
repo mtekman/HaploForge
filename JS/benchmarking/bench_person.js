@@ -73,7 +73,7 @@ class BenchPerson  extends Person {
 	randomID(modif = 1){
 		
 		let ext = this.gender * modif, // males odd, females even,
-		num = (this.generation * 1000) + ext;
+		num = (this.generation * 10000) + ext;
 
 		//console.log("generation", this.generation, num, modif, ext)
 		if (!(this.generation in BenchPerson.generation_map)){
