@@ -1,5 +1,21 @@
 
+
+
 var SerialParse = {
+
+	Canvas : {
+		export : function(){
+			let canv = document.getElementsByTagName('canvas');
+
+			let export_text = ""
+			for (let c=0; c < canv.length; c++){
+				let cnv = canv[c].toDataURL("image/png");
+
+				export_text += '<img src="' + cnv + '"/>';
+			}
+			exportToTab( export_text );
+		}
+	},
 
 	Marker: {
 		import : function(string){
