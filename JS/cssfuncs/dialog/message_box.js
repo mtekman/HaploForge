@@ -56,6 +56,7 @@ var benchProps = {
 	_maxgenInput:       document.getElementById('bench_max_gen'),
 	_allelesizeInput:   document.getElementById('bench_allele_size'),
 	_inbreedInput:      document.getElementById('bench_inbreed_prob'),
+	_exportInput:       document.getElementById('bench_export_haplo'),
 	_submit:            document.getElementById('bench_submit'),
 	_close:             document.getElementById('bench_close'),
 
@@ -63,6 +64,7 @@ var benchProps = {
 	allelesize: -1,
 	rootfounders: -1,
 	inbreedchance: -1,
+	exportFile: false,
 
 	hide: function(){ 
 		Keyboard.unpause()
@@ -79,9 +81,11 @@ var benchProps = {
 	},
 
 	_getInputs: function(){
-		this.maxgen       = this._maxgenInput.value;
-		this.allelesize   = this._allelesizeInput.value;
-		this.rootfounders = this._rootfounderInput.value;
+		this.maxgen        = Number( this._maxgenInput.value );
+		this.allelesize    = Number(this._allelesizeInput.value );
+		this.rootfounders  = Number(this._rootfounderInput.value );
+		this.inbreedchance = Number(this._inbreedInput.value);
+		this.exportFile    = this._exportInput.checked;
 	},
 
 	display: function(callback){
@@ -98,7 +102,8 @@ var benchProps = {
 					that.rootfounders,
 					that.maxgen,
 					that.allelesize,
-					that.inbreedchance)
+					that.inbreedchance,
+					that.exportFile)
 			}
 		}
 
