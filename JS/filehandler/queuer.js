@@ -64,8 +64,8 @@ class PromiseQueue {
 			function(errors){
 				MainButtonActions.exitToMenu();
 
-				if (BenchMark.__timeStart !== null ){
-					BenchMark.terminate();
+				if (BenchStopwatch.__timeStart !== null ){
+					BenchStopwatch.terminate();
 				}
 
 				utility.notify("Check your inputs", errors, 10);

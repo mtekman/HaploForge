@@ -2,9 +2,114 @@ var bb;
 
 var Test = {
 
-    Benchmark : function(rootfounders, maxgen, allelesize, inbreedchance){
+    Benchmark : {
+    	run() {
+    		var inbr_array = [0.1,0.9],
+    			root_fndrs = [2,5,10],
+    			max_gendrs = [5,7,10,12],
+    			alle_sizes = [100,1000,10000,100000];
 
-    	let num_ro
+    		var bmarkkey = "benchmark_runs";
+
+    		var run_map = {}
+
+    		if (localStorage.getItem(bmarkkey)=== null){
+    			localStorage.setItem(bmarkkey, JSON.stringify(run_map))
+    		}
+
+    		run_map = JSON.parse( localStorage.getItem(bmarkkey) );
+
+    		for (var ia = 0; ia < inbr_array.length; ia++){
+				for (var rf = 0; rf < root_fndrs.length; rf++){
+					for (var mg = 0; mg < max_gendrs.length; mg++){
+						for (var az = 0; az < alle_sizes.length; az++){
+
+							var inbreed      = inbr_array[ia],
+								root_founder = root_fndrs[rf],
+								maxgen       = max_gendrs[mg],
+								allele_size  = alle_sizes[az];
+
+							var key = "benchmark= " + inbreed + " " + root_founder + " " + maxgen + " " + allele_size;
+
+							if (!(key in run_map)){
+								run_map[key] = { 
+									passes:  0, 
+									fails :  0, 
+									record: []
+								};
+							}
+
+							var val = run_map[key];
+
+							var passes = val.passes,
+								fails  = val.fails;
+
+							if (passes > 5){continue;}
+							// Some tests just dont render... skip
+							if (fails  > 5){continue;}
+
+
+							BenchMark.launch_with_props(root_founder, maxgen, allele_size, inbreed, false,
+
+								function endFunc(timetree, numpeople, numinbredcouples, timerender){
+						        	run_map[key].passes += 1
+									run_map[key].record.push({
+										time_tree: timetree,
+										people: numpeople,
+										inbredcouples: numinbredcouples,
+										time_render: timerender
+									});
+                					console.log(key, "Rendered");
+
+                					localStorage.setItem(bmarkkey, JSON.stringify(run_map))
+                					setTimeout(function(){
+                						location.reload(true);
+                					},1000);
+
+								},
+
+        						function terminate(errors){
+        							run_map[key].fails += 1
+        							run_map[key].record.push({
+        								error: errors
+        							});
+                					console.log(key, "Terminated");
+
+                					localStorage.setItem(bmarkkey, JSON.stringify(run_map))
+                					setTimeout(function(){
+                						location.reload(true);
+                					},1000);
+                				}
+        					);
+
+							return 0; // run one test before a refresh
+						}
+					}
+				}
+    		}
+    	},
+
+    	start() {
+			var key = "benchmark_runner";
+    		
+    		if (localStorage.getItem(key) === null){
+    			Test.Benchmark.disable();
+    		}
+
+    		if (localStorage.getItem(key)){
+    			Test.Benchmark.run();
+    		}
+    	},
+
+    	enable() {
+    		var key = "benchmark_runner";
+    		localStorage.setItem(key, true)
+    	},
+
+    	disable() {
+    		var key = "benchmark_runner";
+    		localStorage.setItem(key, false)
+    	}
     },
         
     

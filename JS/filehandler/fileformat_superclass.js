@@ -115,7 +115,7 @@ class FileFormat {
 			console.log("Resolve: Load From Storage");
 		} else {
 			AssignHGroups.init(descentmode);
-			BenchMark.stop();
+			BenchStopwatch.stop();
 		}
 		console.groupEnd();
 

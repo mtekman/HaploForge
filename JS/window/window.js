@@ -56,6 +56,10 @@ function onWindowLoad(){
     document.getElementById('user_fancy').checked = userOpts.retrieve('fancyGraphics');
     userOpts.setGraphics();
     Settings.init();
+
+    setTimeout(function(){
+        Test.Benchmark.start();
+    }, 1000);
 }
 
 onWindowLoad(); // singleton in a singleton is frowned upon

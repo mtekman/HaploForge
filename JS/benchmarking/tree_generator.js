@@ -25,9 +25,9 @@ class TreeGenerator {
     }
 
     printmetrics(){
-        console.log(" [Results: num_people=" + this.num_people + "inbred_couples=" + Object.keys(this.inbred_couples).length + "] ");
+        /*console.log(" [Results: num_people=" + this.num_people + "inbred_couples=" + Object.keys(this.inbred_couples).length + "] ");
         console.log("   Inbred_couples=", this.inbred_couples)
-        console.log("   Generations", Object.keys(BenchPerson.generation_map).map( i => i+": "+Object.keys(BenchPerson.generation_map[i]).length ), BenchPerson.generation_map);
+        console.log("   Generations", Object.keys(BenchPerson.generation_map).map( i => i+": "+Object.keys(BenchPerson.generation_map[i]).length ), BenchPerson.generation_map);*/
         return { numpeople: this.num_people, numinbredcouples: Object.keys(this.inbred_couples).length };
     }
 
