@@ -14,7 +14,11 @@ class BenchPerson  extends Person {
 		this.generation = generation;
 		this.gender = ((gender===0)?this.randomGender():gender);
 
-		this.id = this.randomID()
+		try {
+			this.id = this.randomID()
+		} catch (rangerror){
+			location.refresh(true)
+		} 
 
 		this.mother = mother
 		this.father = father

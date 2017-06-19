@@ -20,7 +20,7 @@ var BenchAllele  = {
 			}
 				
 			BenchAllele.__alleles_in_use[ BenchAllele.disease_allele.join("") ] = true;
-			console.log("Defining new disease_allele", BenchAllele.disease_allele);
+			//console.log("Defining new disease_allele", BenchAllele.disease_allele);
 		};
 
 		let new_all = [];

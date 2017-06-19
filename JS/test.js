@@ -1,5 +1,7 @@
 var bb;
 
+var run_map = {}
+
 var Test = {
 
     Benchmark : {
@@ -7,11 +9,10 @@ var Test = {
     		var inbr_array = [0.1,0.9],
     			root_fndrs = [2,5,10],
     			max_gendrs = [5,7,10,12],
-    			alle_sizes = [100,1000,10000,100000];
+    			alle_sizes = [100,1000,10000,100000,1000000];
 
     		var bmarkkey = "benchmark_runs";
 
-    		var run_map = {}
 
     		if (localStorage.getItem(bmarkkey)=== null){
     			localStorage.setItem(bmarkkey, JSON.stringify(run_map))
@@ -31,10 +32,11 @@ var Test = {
 
 							var key = "benchmark= " + inbreed + " " + root_founder + " " + maxgen + " " + allele_size;
 
+
 							if (!(key in run_map)){
 								run_map[key] = { 
 									passes:  0, 
-									fails :  0, 
+									attempts :  0, 
 									record: []
 								};
 							}
@@ -42,45 +44,53 @@ var Test = {
 							var val = run_map[key];
 
 							var passes = val.passes,
-								fails  = val.fails;
+								attempts  = val.attempts;
 
 							if (passes > 5){continue;}
 							// Some tests just dont render... skip
-							if (fails  > 5){continue;}
+							if (attempts  > 5){continue;}
 
+							console.log("attempting=",key, "[attempts,passes]=[", attempts, passes, "]");
+							run_map[key].attempts += 1
 
-							BenchMark.launch_with_props(root_founder, maxgen, allele_size, inbreed, false,
+							try {
+								BenchMark.launch_with_props(root_founder, maxgen, allele_size, inbreed, false,
 
-								function endFunc(timetree, numpeople, numinbredcouples, timerender){
-						        	run_map[key].passes += 1
-									run_map[key].record.push({
-										time_tree: timetree,
-										people: numpeople,
-										inbredcouples: numinbredcouples,
-										time_render: timerender
-									});
-                					console.log(key, "Rendered");
+									function endFunc(timetree, numpeople, numinbredcouples, timerender){
+							        	run_map[key].passes += 1
+										run_map[key].record.push({
+											time_tree: timetree,
+											people: numpeople,
+											inbredcouples: numinbredcouples,
+											time_render: timerender
+										});
+	                					console.log(key, "Rendered");
 
-                					localStorage.setItem(bmarkkey, JSON.stringify(run_map))
-                					setTimeout(function(){
-                						location.reload(true);
-                					},1000);
+	                					localStorage.setItem(bmarkkey, JSON.stringify(run_map))
+	                					setTimeout(function(){
+	                						location.reload(true);
+	                					},1000);
 
-								},
+									},
 
-        						function terminate(errors){
-        							run_map[key].fails += 1
-        							run_map[key].record.push({
-        								error: errors
-        							});
-                					console.log(key, "Terminated");
+	        						function terminate(errors){
+	        							console.log(key)
+	        							run_map[key].record.push({
+	        								error: errors
+	        							});
+	                					console.log(key, "Terminated");
 
-                					localStorage.setItem(bmarkkey, JSON.stringify(run_map))
-                					setTimeout(function(){
-                						location.reload(true);
-                					},1000);
-                				}
-        					);
+	                					localStorage.setItem(bmarkkey, JSON.stringify(run_map))
+	                					setTimeout(function(){
+	                						location.reload(true);
+	                					},1000);
+	                				}
+	        					);
+							} catch (errors){
+								// Log attempts
+								run_map[key].record.push({error:errors});
+        						localStorage.setItem(bmarkkey, JSON.stringify(run_map));
+							}
 
 							return 0; // run one test before a refresh
 						}

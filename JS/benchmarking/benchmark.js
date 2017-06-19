@@ -23,7 +23,9 @@ var BenchMark = {
         endfunction = function(timetree, numpeople, numinbredcouples, timerender){},
         termfunction= function(){})
     {
-        BenchStopwatch.terminate = termfunction;
+        BenchStopwatch.terminate = function(text){
+            termfunction(text);
+        }
 
 
         BenchStopwatch.start();
@@ -40,14 +42,11 @@ var BenchMark = {
             }
         );
 
-        try {
-            var text = tg.exportToHaploFile();
-            if (exportToFile){
-                exportToTab( text );
-            }
-        } catch (errors){
-            BenchStopwatch.terminate(errors);
+        var text = tg.exportToHaploFile();
+        if (exportToFile){
+            exportToTab( text );
         }
+        //BenchStopwatch.terminate(errors);
 
         new Allegro(null, text);    
     },

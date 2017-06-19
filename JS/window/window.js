@@ -57,9 +57,9 @@ function onWindowLoad(){
     userOpts.setGraphics();
     Settings.init();
 
-    setTimeout(function(){
-        Test.Benchmark.start();
-    }, 1000);
+    //setTimeout(function(){
+    //    Test.Benchmark.start();
+    //}, 1000);
 }
 
 onWindowLoad(); // singleton in a singleton is frowned upon
