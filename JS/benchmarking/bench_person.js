@@ -43,18 +43,26 @@ class BenchPerson  extends Person {
 	findAvailableCousin(){
 		let cousins = BenchPerson.generation_map[this.generation]; // Same generation
 
+		let already_married_match = null;
+
 		for (let c_id in cousins)
 		{
 			let cousin = cousins[c_id];
 
-			if (cousin.mother === null){ continue; }    
-		    if (cousin.mother.id === this.mother.id || cousin.father.id === this.father.id){ continue; } // Not Sibs
+			if (cousin.mother === null){ continue; }
 		    if (cousin.gender === this.gender){ continue; } // Straight
-		    if (cousin.mates.length > 0){ continue; } // Available
+		    if (cousin.mother.id === this.mother.id || cousin.father.id === this.father.id){ continue; }
+
+		     // Available? If can't find a match use this indiv
+		    if (cousin.mates.length > 0){
+		    	already_married_match = cousin;
+		    	continue; 
+		    }
 		    //  console.log("inbreeding:", this.id, cousin.id);	    
 		    return cousin;
 		}
-		return null; // no matches found
+
+		return already_married_match; // null if no matches found
 	}
 
 

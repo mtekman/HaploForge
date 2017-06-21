@@ -37,11 +37,15 @@ document.write('\
           <table class="bench_input">\
              <tr >\
                <td>Founder Couples:</td>\
-               <td><input id="bench_root_founder" type="number" min=1 value=3 /></td>\
+               <td>\
+                <input id="bench_root_founder" type="number" min=1 value=1 />\
+                <div class="tooltip_box" >?</div>\
+                <div class="tooltip_text" ><p>Founder couples &#62;1</p>If the ancestors of seperate founder couples do not mix, a single pedigree cannot be generated.<br/>Either set the number of root founder couples to 1, or alternately increase the number of generations and the inbreeding probability.</div>\
+               </td>\
              </tr>\
              <tr>\
                <td>Max Generations:</td>\
-               <td><input id="bench_max_gen" type="number" min=2 value=9 max=100 /></td>\
+               <td><input id="bench_max_gen" type="number" min=2 max=100 value=4 /></td>\
              </tr>\
              <tr>\
                <td>Size of Alleles:</td>\

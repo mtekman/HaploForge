@@ -1,3 +1,0 @@
-genehunter, parse vectors
-
-Modify existing pedigree without removing haplo data

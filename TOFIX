@@ -11,5 +11,6 @@ Tearing:
  * Disable DOS for complex pedigrees
 
 
-
-
+Ped mode:
+ * Enable transfer from Haplo
+ * Render inbreeding loop upon creation

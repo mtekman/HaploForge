@@ -39,6 +39,11 @@ var BenchMark = {
         BenchStopwatch.start(
             function (rendertime) {
                 endfunction(treetime, metrics.numpeople, metrics.numinbredcouples, rendertime);
+                utility.notify("Benchmark", 
+                    metrics.numpeople+" individuals, " +
+                    metrics.numinbredcouples + " inbred couples," +
+                    "Render Time=" + (rendertime/1000).toFixed(3) +" s", 5);
+
             }
         );
 

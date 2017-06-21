@@ -57,6 +57,7 @@ function onWindowLoad(){
     userOpts.setGraphics();
     Settings.init();
 
+
     //setTimeout(function(){
     //    Test.Benchmark.start();
     //}, 1000);
