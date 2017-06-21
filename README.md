@@ -5,6 +5,7 @@
  * Renders haplotypes for popular haplotyping/linkage programs such as Allegro, Merlin, Genehunter, and Simwalk.
  * Resolves haplotypes using a novel A\*-search based approach for autosomal *and* X-linked disease models, both recessive and dominant. 
  * Performs identity mapping for homozygous, heterozygous, and compound heterozygous disease models.
+ * Can auto-generate large and complex pedigrees via meioses simulation benchmarks.
 
 The live web application is hosted [here](https://mtekman.github.io/haploforge/)
 
