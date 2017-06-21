@@ -8,7 +8,7 @@
 
 The live web application is hosted [here](https://mtekman.bitbucket.io/haploforge/)
 
-![dos2.png](https://bitbucket.org/repo/Baopen/images/2870117814-dos2.png)
+![dos2.png](https://user-images.githubusercontent.com/20641402/27394280-860f8124-56a3-11e7-87ba-205b82a31055.png)
 
 
 ### How are haplotypes phased? ###
