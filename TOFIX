@@ -1,0 +1,15 @@
+
+Benchmark:
+ * wrapper for illegal pedigrees
+ * polling status icon during rendering
+
+Tutorials:
+ * Polish timings and auto-pause functionality
+
+Tearing:
+ * Enforce monospace for large families for alignment fixes
+ * Disable DOS for complex pedigrees
+
+
+
+
