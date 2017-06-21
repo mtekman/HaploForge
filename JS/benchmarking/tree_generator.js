@@ -49,7 +49,7 @@ class TreeGenerator {
         }
 
         // First generation root individuals *must* have a mate
-        let hasMate = (gen_modif * Math.random()) > 0.5 || generation === 0;
+        let hasMate = (gen_modif * Math.random()) > 0.5 || generation < 2;
         if (hasMate){
             let perc_gender = perc.gender,
             mate_gender = perc_gender===2?1:2;

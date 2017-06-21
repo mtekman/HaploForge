@@ -6,10 +6,10 @@ var Test = {
 
     Benchmark : {
     	run() {
-    		var inbr_array = [0.1,0.9],
-    			root_fndrs = [2,5,10],
-    			max_gendrs = [5,7,10,12],
-    			alle_sizes = [100,1000,10000,100000,1000000];
+    		var inbr_array = [0.1],
+    			root_fndrs = [1,4],
+    			max_gendrs = [4,5,6,7],
+    			alle_sizes = [6000,7000,8000,9000];
 
     		var bmarkkey = "benchmark_runs";
 
@@ -46,12 +46,13 @@ var Test = {
 							var passes = val.passes,
 								attempts  = val.attempts;
 
-							if (passes > 5){continue;}
-							// Some tests just dont render... skip
-							if (attempts  > 5){continue;}
-
 							console.log("attempting=",key, "[attempts,passes]=[", attempts, passes, "]");
 							run_map[key].attempts += 1
+
+							if (passes > 40){continue;}
+							// Some tests just dont render... skip
+							if (attempts  > 40){continue;}
+
 
 							try {
 								BenchMark.launch_with_props(root_founder, maxgen, allele_size, inbreed, false,
