@@ -2,8 +2,8 @@
 ##### A Comprehensive Pedigree Drawing and Haplotype Visualisation Web Application #####
 
  * Creates pedigrees and imports/exports them using LINKAGE format.
- * Renders phased haplotypes from popular haplotyping/linkage programs such as Allegro, Merlin, Genehunter, and Simwalk.
- * Supports autosomal and X-linked disease models (both recessive and dominant).
+ * Renders haplotypes for popular haplotyping/linkage programs such as Allegro, Merlin, Genehunter, and Simwalk.
+ * Resolves haplotypes using a novel A\*-search based approach for autosomal *and* X-linked disease models, both recessive and dominant. 
  * Performs identity mapping for homozygous, heterozygous, and compound heterozygous disease models.
 
 The live web application is hosted [here](https://mtekman.github.io/haploforge/)
@@ -15,11 +15,11 @@ The live web application is hosted [here](https://mtekman.github.io/haploforge/)
 
 Haplotype applications output two types of files: phased genotypes, and vectors.
 
-Phased genotypes encode the maternal and paternal alleles for an individual, but does not record the founder allele mapping.
+Phased genotypes encode the maternal and paternal alleles for an individual, but do not record founder allele mapping.
 
-Vector files describe the *flow* of genetic information from one generation to the next. This can be encoded either by recording the founder allele at each individual-marker, or by recording where each recombination took place. 
+Vector files describe the *flow* of genetic information from one generation to the next. This can be encoded either by recording the founder allele at each individual-marker, or by recording where each recombination/crossover event took place. 
 
-*HaploForge* by default makes of it's own novel A*-search based algorithm to find these recombination points and determine the founder allele mapping, but also optionally makes use of vector output.
+*HaploForge* by default makes of it's own novel A\*-search based algorithm to find these recombination points and determine the founder allele mapping, but also optionally makes use of vector output.
 
 
 ### Why is this better than HaploPainter? ###
