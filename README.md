@@ -6,7 +6,7 @@
  * Supports autosomal and X-linked disease models (both recessive and dominant).
  * Performs identity mapping for homozygous, heterozygous, and compound heterozygous disease models.
 
-The live web application is hosted [here](https://mtekman.bitbucket.io/haploforge/)
+The live web application is hosted [here](https://mtekman.github.io/haploforge/)
 
 ![dos2.png](https://user-images.githubusercontent.com/20641402/27394280-860f8124-56a3-11e7-87ba-205b82a31055.png)
 
@@ -31,7 +31,7 @@ Vector files describe the *flow* of genetic information from one generation to t
 
 ### How to use? ###
 
-Simply go to the [live application](https://mtekman.bitbucket.io/haploforge/) and go through the quick video tutorials (in total no longer than 10 minutes).
+Simply go to the [live application](https://mtekman.github.io/haploforge/) and go through the quick video tutorials (in total no longer than 10 minutes).
 
 ### Can I read more? ###
 
