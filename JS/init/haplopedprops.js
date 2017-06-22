@@ -217,7 +217,7 @@ var HaploPedProps = {
 
 				// This is where we need to manually insert the 
 				//  other non-connected individuals
-
+				
 				familyMapOps.foreachperc(function(perc_id, perp){
 					if (!(perc_id in nodes_edges.nodes)){
 				

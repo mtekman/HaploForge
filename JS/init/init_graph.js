@@ -79,7 +79,7 @@ function graphInitPos(start_x, start_y, enable_ped_edit = false){
 			var posx = -1, 
 				ypos = -1;
 
-			if (typeof perp.stored_meta !== "undefined"){
+			if (perp.stored_meta !== undefined){
 				//console.log("using stored meta", perp_id, perp.stored_meta);
 				var meta = perp.stored_meta;
 
@@ -90,16 +90,16 @@ function graphInitPos(start_x, start_y, enable_ped_edit = false){
 
 				delete perp.stored_meta;
 
+				/* -- FIX, orphaned nodes are a problem.
 				if (perp.mother === 0 && perp.father === 0){
 	
 					n_perp.graphics = Graphics.Pedigree.addPerson(perp, fam_group, posx, y_pos);
-					console.log("adding", n_perp.graphics);
 
 					if (enable_ped_edit){
 						n_perp.graphics.family = fam;
 					 	personDraw.addClickFunctions(n_perp.graphics);
 			 		}
-			 	}
+			 	}*/
 			}
 		});
 
