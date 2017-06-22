@@ -15,6 +15,10 @@ var HomologySelectionMode = {
 		HomologySelectionMode.__addBounders();
 
 		haplo_layer.add(HomologySelectionMode.sub_select_group);
+
+		let stage_offset = stage.getPosition();
+		HomologySelectionMode.sub_select_group.setX( -stage_offset.x )
+		HomologySelectionMode.sub_select_group.setY( -stage_offset.y )
 		haplo_layer.draw();
 	},
 

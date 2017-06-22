@@ -53,8 +53,8 @@ var Resize = {
 	            	width_over = true;
 	            }
 
-	            HaploWindow._background.setWidth(newWidth);
-	            SelectionMode._background.setWidth(newWidth);
+	            HaploWindow._background.setWidth(newWidth / main_layer.getScale().x);
+	            SelectionMode._background.setWidth(newWidth / main_layer.getScale().x);
 	            stage.setWidth(newWidth);
 
 
@@ -77,11 +77,11 @@ var Resize = {
 	            }
 
 	            HaploWindow._background.setHeight(stageHeight);
-	            SelectionMode._background.setHeight(stageHeight);
+	            SelectionMode._background.setHeight(stageHeight / main_layer.getScale().y);
 	            stage.setHeight(stageHeight);
 
 	            if (  ModeTracker.currentMode === ModeTracker.modes.pedcreate
-	                ||ModeTracker.currentMode === ModeTracker.modes.haploview){
+	               || ModeTracker.currentMode === ModeTracker.modes.haploview){
 	                  FamSpacing.init(20);
 	            }
 

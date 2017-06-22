@@ -104,6 +104,18 @@ var HaploWindow = {
 		var line_data = findDOSinSelection( SelectionMode._ids_map );
 
 		HaploWindow._makeMainWindow( line_data );
+		HaploWindow._compensateOffset();
+	},
+
+	_compensateOffset : function()
+	{
+		let stage_pos = stage.getPosition();
+
+		HaploWindow._group.setX( -stage_pos.x );
+		HaploWindow._group.setY( -stage_pos.y );
+
+		HaploWindow._background.setX( -stage_pos.x );
+		HaploWindow._background.setY( -stage_pos.y );
 	},
 
 

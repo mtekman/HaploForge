@@ -23,7 +23,9 @@ var HomologyMode = {
 			 HomologyMode.quit,
 			 0
 		);
-		HomologySelectionMode.sub_select_group.add( HomologyMode._exit );
+		HomologySelectionMode.sub_select_group.add(
+			HomologyMode._exit
+		);
 
 		HomologyButtons.init();
 	},
