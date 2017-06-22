@@ -15,14 +15,22 @@ var ModeTracker = {
 		homology: 5
 	},
 
-
 	setMode(mode)
 	{
 		if (mode in ModeTracker.modes){
 			ModeTracker.currentMode = ModeTracker.modes[mode];
+
+			if (mode in MouseResize.resize_modes){
+				MouseResize.on();
+			}
+			else {
+				MouseResize.off();
+			}
+
 			return 0;
 		}
 		console.log("mode", mode);
 		throw new Error("invalid mode");
 	}
 }
+
