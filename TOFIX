@@ -19,4 +19,5 @@ MouseWheel:
   * Update functions HaploModeEvents to point to Mousewheel class
 
 Resizing:
-  * Fix haplomode window offset 
+ * PedMode mate-line gets caught in draggable stage, disable drawing mateline and childline processes
+
