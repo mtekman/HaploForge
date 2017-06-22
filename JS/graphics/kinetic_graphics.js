@@ -25,10 +25,13 @@ function makeStage(){
 	stage = new Kinetic.Stage({
 		container:'container',
 		width: window.innerWidth,
-		height: window.innerHeight
+		height: window.innerHeight,
+		draggable: true
 	});
 
-	main_layer = new Kinetic.Layer({id:"main"});
+	main_layer = new Kinetic.Layer({
+		id:"main"
+	});
 	haplo_layer = new Kinetic.Layer({id:"haplo"});
 
 	stage.add(main_layer);

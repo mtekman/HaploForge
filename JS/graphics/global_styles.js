@@ -99,9 +99,13 @@ function addExitButton(center, callback, color_level = 0)
 	crossDown.setPoints([-cross_buff, cross_buff,
 						  cross_buff,-cross_buff]);
 
+
+	center.scale = center.scale || {x:1,y:1};
+
 	var group = new Kinetic.Group({
-		x: center.x,
-		y: center.y
+		x: center.x / center.scale.x,
+		y: center.y / center.scale.y,
+		scale : { x: 1 / center.scale.x, y: 1 / center.scale.y }
 	});
 
 	group.on('click', callback);
