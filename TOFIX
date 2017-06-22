@@ -14,3 +14,9 @@ Tearing:
 Ped mode:
  * Enable transfer from Haplo
  * Render inbreeding loop upon creation
+
+MouseWheel:
+  * Update functions HaploModeEvents to point to Mousewheel class
+
+Resizing:
+  * Fix haplomode window offset 
