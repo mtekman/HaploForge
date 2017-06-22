@@ -3,12 +3,19 @@ var SelectionGraphics = {
 
 	// Shared with homology_selection.js
 	// Replicate existing objects with bounding square
-	addBounder: function(pos, key, main_layer_yes, hasHaplo){
+	addBounder: function(pos, key, main_layer_yes, hasHaplo, scale = null){
 
 		if (hasHaplo === null){
 			var fid_id = key.split('_').map(x => Number(x));
 			hasHaplo = familyMapOps.getPerc(fid_id[1], fid_id[0]).hasHaplo();
 		}
+
+		if (scale !== null){
+			pos.x /= scale.x;
+			pos.y /= scale.y;
+		}
+
+		// correct for scaling
 
 		var rect = SelectionGraphics._addInvisibleOrangeBox(pos);
 		rect.on('click', function(){

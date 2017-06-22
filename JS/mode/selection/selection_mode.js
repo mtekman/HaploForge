@@ -51,18 +51,30 @@ var SelectionMode = {
 		SelectionAction.reset();
 		ButtonModes.setToSelectionMode()
 
+		// Transformed stage requires recalculation of what's being presented on screen
+		let stage_offset = stage.getAbsolutePosition(),
+			stage_scale  = main_layer.getScale();
+
+		let stage_x = -stage_offset.x / stage_scale.x,
+			stage_y = -stage_offset.y / stage_scale.y,
+			stage_w = stage.getWidth() / stage_scale.x,
+			stage_h = stage.getHeight() / stage_scale.y;
+
+
 		// Main selection layer
 		SelectionMode._select_group = new Kinetic.Group({
-			x:0, y:0,
-			width: stage.getWidth(),
-			height: stage.getHeight()
+			x:stage_x, y:stage_y,
+			width: stage_w,
+			height: stage_h
 		});
 
 
+
 		SelectionMode._background = new Kinetic.Rect({
-			x:0, y:0,
-			width: stage.getWidth(),
-			height: stage.getHeight(),
+			x: 0,
+			y: 0,
+			width: stage_w,
+			height: stage_h,
 			fill: 'black',
 			strokeWidth: 0,
 			opacity: 0.1
@@ -96,7 +108,9 @@ var SelectionMode = {
 
 					var gfx = uniqueGraphOps.getFam(fid).nodes[node_id].graphics,
 						pos = gfx.getAbsolutePosition(),
-						bounder = SelectionGraphics.addBounder(pos, key, true, hasHaplo);
+						bounder = SelectionGraphics.addBounder(pos, key, true, hasHaplo, stage_scale);
+
+
 
 					gfx.attrs.draggable = false;
 
@@ -118,8 +132,9 @@ var SelectionMode = {
 		});
 
 		// Exit button
-		SelectionMode._exit = addExitButton(
-			{x: 20, y: 20},
+		SelectionMode._exit = addExitButton({
+			x: 20, y: 20, scale: stage_scale
+		},
 			SelectionMode.quit,
 			3
 		);
