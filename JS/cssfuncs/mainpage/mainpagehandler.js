@@ -52,13 +52,13 @@ var MainPageHandler = {
 		init.clearMaps();
 
 		MainPageHandler._currentMode = MainPageHandler.modes.main
-		BackgroundVidMain.addVid(); /* Must come after above */
+		BackgroundVidMain.addVid(); //Must come after above 
 
 		userTutorials.run();
 
 		fileSelector.end();
 
-		/** Show main page, hide rest **/
+		// Show main page, hide rest
 		MainPageHandler.__bgDefault();
 
 		MainPageHandler.showDiv("main", true);
