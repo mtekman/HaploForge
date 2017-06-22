@@ -75,7 +75,8 @@ var MainButtonActions  = {
 				utility.yesnoprompt("Pedigree Modified", "Save changes before exit?",
 					"Yes", function(){
 			 			MainButtonActions.savePedToStorage();
-			 			MainPageHandler.defaultload();
+			 			//MainPageHandler.defaultload();
+			 			location.reload();
 			 		},
 			 		"No", function(){
 			 			MainPageHandler.defaultload();	
@@ -83,12 +84,14 @@ var MainButtonActions  = {
 				 );
 			}
 			else{
-				MainPageHandler.defaultload();
+				//MainPageHandler.defaultload();
+				location.reload();
 			}
 		}
 		// Haplo Types are automatically saved and loaded
 		else{
-			MainPageHandler.defaultload();
+			//MainPageHandler.defaultload();
+			location.reload();
 		}
 	},
 
