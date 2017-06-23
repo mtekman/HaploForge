@@ -79,6 +79,9 @@ class LineDrawOps {
 
 
 	beginLineDraw() {
+		this.stage_draggable_state = stage.getDraggable();
+		stage.setDraggable(false);
+
 		var _this = this;
 
 		_this._tmpLine = new Kinetic.Line({
@@ -132,6 +135,9 @@ class LineDrawOps {
 		}
 
 		this._startPoint = {x:-1, y:-1}
+
+		// restore draggable if previously set
+		stage.setDraggable( this.stage_draggable_state );
 
 	}
 

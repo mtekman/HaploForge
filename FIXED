@@ -1,0 +1,4 @@
+
+
+Resizing:
+ * [2017/07/23] PedMode mate-line gets caught in draggable stage, disable drawing mateline and childline processes

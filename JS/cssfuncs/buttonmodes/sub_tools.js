@@ -122,7 +122,7 @@ var ToolButtons = {
 				"[NOT YET IMPLEMENTED]Modifies the current pedigree",
 				
 				function(){
-					localStorage.setItem(localStor.transfer, MainButtonActions._temphaploload);
+					localStorage.setItem(localStor.transfer, SerialParse.All.exportAsPed());
 					utility.notify("transferring","...");
 
 					MainButtonActions.loadPedFromStorage(true);

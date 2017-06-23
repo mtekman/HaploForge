@@ -43,6 +43,7 @@ var MainButtonActions  = {
 			Pedfile.import(ped_data);
 		} else {
 			ped_data = localStorage.getItem( localStor.transfer );
+			console.log(ped_data);
 			//Do.Something.Else();
 		}
 

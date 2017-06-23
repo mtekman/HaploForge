@@ -52,6 +52,71 @@ var Pedfile = {
 		}
 	},
 
+	sanity_check: function(){
+		let unrelated = {}; //
+		let checked = {}; // key of checked pairs
+
+		familyMapOps.foreachfam(function(fid,fam_group){
+			familyMapOps.foreachperc(function(pid1, fid, perc1){
+				familyMapOps.foreachperc(function(pid2, fid, perc2)
+				{
+					if (pid1 === pid2){ return };
+
+					if (!(fid in checked)){
+						checked[fid] = {};
+					}
+
+					if (!(pid1 in checked)){
+						checked[fid][pid1] = {}
+					}
+
+					if (!(pid2 in checked)){
+						checked[fid][pid2] = {}
+					}
+
+					if (checked[fid][pid1][pid2] || checked[fid][pid2][pid1]){ return	};
+
+					checked[fid][pid1][pid2] = true;
+					checked[fid][pid2][pid1] = true;
+
+					let res = familyMapOps.areConnected(fid, pid1, pid2);
+					if (!res){
+						if (!(fid in unrelated)){
+							unrelated[fid] = {}
+						}
+						if (!(pid1 in unrelated[fid])){
+							unrelated[fid][pid1] = {}
+						}
+						if (!(pid2 in unrelated[fid])){
+							unrelated[fid][pid2] = {}
+						}
+						unrelated[fid][pid1][pid2] = true;
+						unrelated[fid][pid2][pid1] = true;
+					}
+				});
+			}, fid);
+		});
+
+		// Go through unrelated connections and single out the main targets.
+		let mentions = {};
+
+		for (var fid in unrelated){
+			mentions[fid] = {};
+			for (var id1 in unrelated[fid]){
+
+				let targets = unrelated[fid][id1];
+				for (var targ in targets){
+					if (!(targ in mentions[fid])){
+						mentions[fid][targ] = 0
+					}
+					mentions[fid][targ] += 1				
+				}
+			}
+		}
+
+		return mentions;
+	},
+
 	exportToTab: function(store_graphics){
 		exportToTab(Pedfile.export(store_graphics));
 	},
@@ -59,7 +124,16 @@ var Pedfile = {
 
 	export: function(store_graphics)
 	{
+		let allconnected = Pedfile.sanity_check();
+		console.log(allconnected, Object.keys(allconnected), Object.keys(allconnected) > 0);
+
+		if (Object.keys(allconnected).length > 0){
+			utility.notify("Unconnected individuals detected", "Delete or Connect before saving")
+			return 0;
+		}
+
 		var text = "";
+
 
 		// Family-header specific 
 		if (store_graphics)
@@ -80,7 +154,7 @@ var Pedfile = {
 				perc.father.id || 0, 
 				perc.mother.id || 0, 
 				perc.gender, perc.affected
-			]
+			]			
 
 			if (store_graphics){
 				var gfx = uniqueGraphOps.getNode(pid, fid);

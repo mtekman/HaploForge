@@ -258,5 +258,58 @@ var familyMapOps = {
 				}
 			}
 		}, family_id);
+	},
+
+
+	/** Members of the same family are actually related via some DOS */
+	areConnected: function(perc1_fam_id, perc1_id, perc2){
+
+		let perc1 = familyMapOps.getPerc(perc1_id, perc1_fam_id),
+			perc2_id = Number(perc2);
+
+		var traversed = {};
+
+		function recurseSearch(perc){
+			if (perc === 0){
+				return 0;
+			}
+
+			if (perc.id in traversed){
+				return 0;
+			}
+			traversed[perc.id] = 1;
+
+			if (perc.id === perc2_id){
+				return true;
+			}
+
+
+			for (var m=0; m < perc.mates.length; m++){
+				let mate = perc.mates[m];
+				let res00 = recurseSearch(mate);
+				if (res00 === true){
+					return true;
+				}
+
+				for (var c =0; c < perc.children.length; c++){
+					let child = perc.children[c];
+					let res01 = recurseSearch(child);
+					if (res01 === true){
+						return true;
+					}
+				}								
+			}
+
+			// Parents
+			let res1 = recurseSearch( perc.mother);
+			let res2 = recurseSearch( perc.father);
+
+			if (res1  === true || res2  === true){
+				return true
+			}
+			return false;
+		}
+		return recurseSearch(perc1);
 	}
 }
+

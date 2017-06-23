@@ -97,6 +97,6 @@ var CSSMarkerRange = {
 
 		HaploBlock.redrawHaplos(true);
 
-		CSSMarkerRange.hideIndexCSS();
+		CSSMarkerRange.__hideIndexCSS();
 	}
 }

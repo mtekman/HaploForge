@@ -20,6 +20,7 @@ var init = {
 		genehunter: function(){
 			(new Genehunter()); // yeah "new" is required...
 								// gc does its job
+								// intergrate the latests changes
 		},
 
 		simwalk: function(){
@@ -27,7 +28,6 @@ var init = {
 		},
 
 		merlin: function(){
-			//utility.notify("TODO", "merlin");
 			(new Merlin());
 		}
 	},

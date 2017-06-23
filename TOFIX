@@ -1,7 +1,6 @@
 
 Benchmark:
  * wrapper for illegal pedigrees
- * polling status icon during rendering
 
 Tutorials:
  * Polish timings and auto-pause functionality
@@ -14,10 +13,14 @@ Tearing:
 Ped mode:
  * Enable transfer from Haplo
  * Render inbreeding loop upon creation
-
-MouseWheel:
-  * Update functions HaploModeEvents to point to Mousewheel class
+ * LineDrawOps need stage offset and scaling functions
+ * Deleting a child keeps the childline somehow, remove it
 
 Resizing:
- * PedMode mate-line gets caught in draggable stage, disable drawing mateline and childline processes
+  * Analysis with Markers offset correct
 
+Export Haplotypes:
+ * Misalignment in an affecteds-only analysis
+
+Resume Haplotypes:
+ * Graphics are not being rendered back to their correct positions

@@ -1,6 +1,18 @@
+Benchmark:
+ * polling status icon during rendering
 
 PedMode
  * Quick add Male and Female buttons
  * Add individuals to cursor rather than random
+ * Import pedigree from file
 
+Export Canvas:
+ * Overlay PNG layers
+ * Buttons to overlay layers and export as one image
+
+Export Haplotypes:
+ * Include marker names (if present)
+
+ MouseWheel:
+  * Update functions HaploModeEvents to point to Mousewheel class
 

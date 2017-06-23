@@ -1,5 +1,3 @@
-TODO:
-======
 - Problem with a haplotype being rendered improperly for haplotypes 
 selection mode. The family_map check of the problematic markers seem to
 contain the correct data, it's just the renderer
@@ -10,9 +8,6 @@ needs to extend by at least one more, as well as rs9461082 which only highlights
 
 - implement a JUMP TO marker input box,
 - also reDRAW resets the slider positions, which it should'nt do.
-
-DONE:
-======
 - Fix reselecting individuals after coming out of select mode
 - Fix block size plotting to be more relevant.
 - Select mode should place nodes ontop of darkened rect, and then return them back
@@ -86,3 +81,31 @@ At the moment haplotypes are stored in an Object array of {data:0(1 or 2), point
 	  -- Do now or do later? It genuinely might not matter.
 
 
+
+
+- Need to reset graphics and containers when using the container from something else, going back to main menu, and then resuming. -- partially implemented
+- Better loading of pedfile graphics from file
+- Selection  
+
+
+ - Modes:
+    - Create mode:
+       - Add individuals -> tree
+       - produce ped file (generate)
+    - Present mode:
+       - Read in pedfile with genotypes
+    - Share mode:
+       - Generate url
+
+
+ - Annotations of SNPs
+
+
+ - Share session between users
+ - Detect if session is
+ - (give option to password) sessions
+ - Impl:
+   - MySQL to store JSON stringified and lzcompressed with session keys set by user.
+   - Save?
+     -> Prompt name (add filler if not unique)
+     -> key[name] = {entire family_map with person data and db_annoations}

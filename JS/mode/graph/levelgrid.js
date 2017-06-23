@@ -118,15 +118,15 @@ class LevelGrid {
 	_recurseLevels(perc, level)
 	{
 		if (perc === 0){
-			return;
+			return 0;
 		}
 
 		if (perc.id in this._alreadytraversed){
-			return;
+			return 0;
 		}
 		this._alreadytraversed[perc.id] = 1;
 		//console.log(perc.id, level);
-		
+
 		// Used by init_graph
 		if (this._callback1 !== 0) {this._callback1(perc);}
 
@@ -153,6 +153,6 @@ class LevelGrid {
 		// Used by init_graph
 		if (this._callback2 !== 0) {this._callback2(perc);}
 
-		return;
+		return 0;
 	}
 }

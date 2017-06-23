@@ -73,15 +73,15 @@ function graphInitPos(start_x, start_y, enable_ped_edit = false){
 		// Load stored meta
 		familyMapOps.foreachperc(function(pid, fid, perp){
 
-			var n_perp = uniqueGraphOps.getNode(pid, fid);
+			let n_perp = uniqueGraphOps.getNode(pid, fid);
 
 			// Restore meta
-			var posx = -1, 
+			let posx = -1, 
 				ypos = -1;
 
 			if (perp.stored_meta !== undefined){
 				//console.log("using stored meta", perp_id, perp.stored_meta);
-				var meta = perp.stored_meta;
+				let meta = perp.stored_meta;
 
 				posx  = meta.x;
 				y_pos = meta.y;
@@ -90,16 +90,19 @@ function graphInitPos(start_x, start_y, enable_ped_edit = false){
 
 				delete perp.stored_meta;
 
-				/* -- FIX, orphaned nodes are a problem.
-				if (perp.mother === 0 && perp.father === 0){
-	
-					n_perp.graphics = Graphics.Pedigree.addPerson(perp, fam_group, posx, y_pos);
+				// -- FIX, orphaned nodes are a problem.
 
+				let orphaned = (perp.children === undefined)
+				console.log("Orphaned node:", orphaned);
+
+				if (orphaned){				
+
+					n_perp.graphics = Graphics.Pedigree.addPerson(perp, fam_group, posx, y_pos);
 					if (enable_ped_edit){
 						n_perp.graphics.family = fam;
 					 	personDraw.addClickFunctions(n_perp.graphics);
-			 		}
-			 	}*/
+				 	}
+				}
 			}
 		});
 
