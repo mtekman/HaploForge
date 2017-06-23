@@ -69,46 +69,7 @@ function graphInitPos(start_x, start_y, enable_ped_edit = false){
 			nodes = fam_gfx.nodes,
 			edges = fam_gfx.edges;
 
-
-		// Load stored meta
-		familyMapOps.foreachperc(function(pid, fid, perp){
-
-			let n_perp = uniqueGraphOps.getNode(pid, fid);
-
-			// Restore meta
-			let posx = -1, 
-				ypos = -1;
-
-			if (perp.stored_meta !== undefined){
-				//console.log("using stored meta", perp_id, perp.stored_meta);
-				let meta = perp.stored_meta;
-
-				posx  = meta.x;
-				y_pos = meta.y;
-
-				perp.name = meta.name;
-
-				delete perp.stored_meta;
-
-				// -- FIX, orphaned nodes are a problem.
-
-				let orphaned = (perp.children === undefined)
-				console.log("Orphaned node:", orphaned);
-
-				if (orphaned){				
-
-					n_perp.graphics = Graphics.Pedigree.addPerson(perp, fam_group, posx, y_pos);
-					if (enable_ped_edit){
-						n_perp.graphics.family = fam;
-					 	personDraw.addClickFunctions(n_perp.graphics);
-				 	}
-				}
-			}
-		});
-
-		//debugger
-
-
+ 
 		// Init Nodes, ordered by generation
 		GlobalLevelGrid.foreachgeneration(fam, function(indivs_in_gen){
 
@@ -134,7 +95,7 @@ function graphInitPos(start_x, start_y, enable_ped_edit = false){
 
 				// Restore meta
 				if (typeof perp.stored_meta !== "undefined"){
-					//console.log("using stored meta", perp_id, perp.stored_meta);
+					console.log("using stored meta", perp_id, perp.stored_meta);
 					var meta = perp.stored_meta;
 
 					posx = meta.x;

@@ -129,7 +129,7 @@ var Pedfile = {
 
 		if (Object.keys(allconnected).length > 0){
 			utility.notify("Unconnected individuals detected", "Delete or Connect before saving")
-			return 0;
+			return -1;
 		}
 
 		var text = "";

@@ -53,6 +53,9 @@ var MainButtonActions  = {
 	savePedToStorage: function() {
 
 		var ped_to_string = Pedfile.export(true); 
+		if (ped_to_string === -1){
+			return;
+		}
 		/*always store graphics for local, only export has no graphics option*/
 
 		localStorage.setItem( localStor.ped_save, ped_to_string );

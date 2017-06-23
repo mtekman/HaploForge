@@ -181,6 +181,7 @@ var SerialParse = {
 						graphics = fid_graphics[1].split(",").map(Number);
 
 					var fam_group = Graphics.Pedigree.addFamily(fid, graphics[0], graphics[1]);
+					Pedfile.__tmpfamdata[fid] = graphics;  // passed onto init_graph
 
 					uniqueGraphOps.insertFam(fid, fam_group);
 					// familyMapOps.insertFam is performed automatically at person level.
