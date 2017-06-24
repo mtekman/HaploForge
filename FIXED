@@ -5,3 +5,7 @@ Resizing:
 
  Resume Haplotypes:
  * [2017/07/23] Graphics are not being rendered back to their correct positions
+
+
+ Ped mode:
+ * [2017/07/24] LineDrawOps now have stage offset and scale with main_layer

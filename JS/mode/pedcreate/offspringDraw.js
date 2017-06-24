@@ -55,7 +55,7 @@ class OffspringDraw extends LineDrawOps {
 			edge_map  = fam_gfx.edges,
 			node_map  = fam_gfx.nodes;
 
-		var nodeGroup = new Kinetic.Group({});
+		var nodeGroup = new Kinetic.Group();
 
 		for (var key in edge_map){
 			if (key[0]==='m')

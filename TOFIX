@@ -13,7 +13,6 @@ Tearing:
 Ped mode:
  * Enable transfer from Haplo
  * Render inbreeding loop upon creation
- * LineDrawOps need stage offset and scaling functions
  * Deleting a child keeps the childline somehow, remove it
 
 Resizing:

@@ -44,16 +44,19 @@ class LineDrawOps {
 
 	_addHitRect() {
 
+		let spos = stage.getAbsolutePosition();
+
 		this._layer = (new Kinetic.Layer({
 			width: stage.getWidth(),
 			height:stage.getHeight(),
-			x:0, y:0
+			scale : main_layer.getScale(),
+			x:-spos.x, y: -spos.y
 		}));
 
 		this._tmpRect = (new Kinetic.Rect({
 			width: stage.getWidth(),
 			height:stage.getHeight(),
-			x:0, y:0,
+			x:0, y:0
 		}))
 
 		stage.add( this._layer );
@@ -79,12 +82,13 @@ class LineDrawOps {
 
 
 	beginLineDraw() {
-		this.stage_draggable_state = stage.getDraggable();
-		stage.setDraggable(false);
+		MouseResize.off()
 
 		var _this = this;
 
 		_this._tmpLine = new Kinetic.Line({
+			x: 0,
+			y: 0,
 			stroke: 'black',
 			strokeWidth: 2,
 		});
@@ -137,15 +141,18 @@ class LineDrawOps {
 		this._startPoint = {x:-1, y:-1}
 
 		// restore draggable if previously set
+		MouseResize.on()
 		stage.setDraggable( this.stage_draggable_state );
 
 	}
 
 	drawCircles(){
+		this.stage_draggable_state = stage.getDraggable();
+		MouseResize.off()
 
 		var _this = this;
 
-		var circleGroup = new Kinetic.Group({});
+		var circleGroup = new Kinetic.Group({x:0, y:0});
 
 		for (var perc_id in personDraw.used_ids)
 		{
