@@ -2,3 +2,6 @@
 
 Resizing:
  * [2017/07/23] PedMode mate-line gets caught in draggable stage, disable drawing mateline and childline processes
+
+ Resume Haplotypes:
+ * [2017/07/23] Graphics are not being rendered back to their correct positions

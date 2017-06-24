@@ -28,10 +28,11 @@ var FamSpacing = {
 			var l_offs = nodeSize,
 				r_offs = l_offs;
 
-			if (min_x > xer - l_offs){ min_x = xer - l_offs; }
-			if (max_x < xer + r_offs){ max_x = xer + r_offs; }		
+			if (min_x > xer - l_offs  ){ min_x = xer - l_offs; }
+			if (max_x < xer + r_offs  ){ max_x = xer + r_offs; }		
 			if (min_y > yer - nodeSize){ min_y = yer - nodeSize; }		
 			if (max_y < yer + nodeSize){ max_y = yer + nodeSize; }
+
 		}, fgroup.id);
 
 //		var min_y = title_y
