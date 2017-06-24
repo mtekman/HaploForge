@@ -26,7 +26,6 @@ class LineDrawOps {
 		this._onbeginlinedraw_mousemove = null;
 		this._onbeginlinedraw_mouseup = null;
 		this._onendlinedraw = null;
-
 	}
 
 
@@ -101,7 +100,10 @@ class LineDrawOps {
 				var mouseX = Math.floor(event.evt.clientX/grid_rezX)*grid_rezX,
 					mouseY = Math.floor(event.evt.clientY/grid_rezY)*grid_rezY;
 
-				_this._endPoint = {x: mouseX, y: mouseY};
+				_this._endPoint = {
+					x: mouseX, 
+					y: mouseY
+				};
 
 				_this.updateLine();
 

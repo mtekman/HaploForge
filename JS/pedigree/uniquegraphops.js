@@ -119,7 +119,9 @@ var uniqueGraphOps = {
 		if (family_id in uniqueGraphOps._map){
 			if (id in uniqueGraphOps._map[family_id].nodes)
 			{
-				uniqueGraphOps._map[family_id].nodes[id].graphics.destroy();
+				if (uniqueGraphOps._map[family_id].nodes[id].graphics !== null){
+					uniqueGraphOps._map[family_id].nodes[id].graphics.destroy();
+				}
 				delete uniqueGraphOps._map[family_id].nodes[id];
 				return 0;
 			}

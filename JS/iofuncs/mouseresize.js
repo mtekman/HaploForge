@@ -18,22 +18,24 @@ var MouseResize = {
 
 		var wheelstatechanged = false;
 
-		if ((delta > 0 && MouseResize._prevwheelstate < 0)
-		  ||(delta < 0 && MouseResize._prevwheelstate > 0))
+		if ( (delta > 0 && MouseResize._prevwheelstate < 0)
+		  || (delta < 0 && MouseResize._prevwheelstate > 0))
 		{
-			wheelstatechanged = true
+			wheelstatechanged = true;
 		}
 
 		if (!wheelstatechanged){
 			let new_scale = main_layer.getScale().x + delta;
+			if (new_scale < 0.1){ new_scale = 0.1;}
 			
 			main_layer.setScale({
-				x:new_scale,y:new_scale
+				x : new_scale, 
+				y : new_scale
 			});
 			utility.notify("Scale", new_scale.toFixed(1))
 			main_layer.draw();
 		}
-		MouseResize._prevwheelstate = delta;
+		MouseResize._prevwheelstate = delta
 	},
 
 	on : function(handler)

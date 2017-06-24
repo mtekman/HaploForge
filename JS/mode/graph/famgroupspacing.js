@@ -22,6 +22,16 @@ var FamSpacing = {
 
 		uniqueGraphOps.foreachnode(function(nid, node)
 		{
+			if (node.graphics === null){
+				console.log("Skipping individual", nid, " due to no graphics and deleting them");
+				uniqueGraphOps.deleteNode(nid, fgroup.id);
+
+				if (familyMapOps.percExists(nid, fgroup.id)){
+					familyMapOps.removePerc(nid, fgroup.id);
+				}
+				return -1;
+			}
+
 			var xer = node.graphics.getX(),
 				yer = node.graphics.getY()
 
@@ -53,6 +63,7 @@ var FamSpacing = {
 		// Move out of way for now
 		rect.setX(-1000);
 		rect.setY(-1000);
+		rect.setVisible(false);
 
 		main_layer.add(rect);
 

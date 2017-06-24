@@ -68,7 +68,7 @@ var Settings = {
 
 		"haploview" : {
 			"Start Analysis" 			: 'Enter',
-			"Modify Pedigree"			: 'Ctrl+M'
+			/*"Modify Pedigree"			: 'Ctrl+M'*/
 		},
 
 		"pedcreate" : {

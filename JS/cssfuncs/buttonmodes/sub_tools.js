@@ -117,7 +117,7 @@ var ToolButtons = {
 				"Begins the selection process",
 				SelectionMode.init);
 
-			ToolButtons.addToolsButton("Modify Pedigree",
+			/*ToolButtons.addToolsButton("Modify Pedigree",
 				Settings.bindings.haploview["Modify Pedigree"],
 				"[NOT YET IMPLEMENTED]Modifies the current pedigree",
 				
@@ -127,7 +127,7 @@ var ToolButtons = {
 
 					MainButtonActions.loadPedFromStorage(true);
 				}
-			);
+			);*/
 
 			ToolButtons.addToolsButton("Reset Positions",
 				Settings.bindings.haploview["Reset Family Positions"],

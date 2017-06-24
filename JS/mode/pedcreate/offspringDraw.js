@@ -24,8 +24,7 @@ class OffspringDraw extends LineDrawOps {
 			// If ids set by constructor, just perform a join
 			if (this.childNodeID !== null)
 			{
-				this.__joinIDs();		
-			
+				this.__joinIDs();
 			} else {
 				// First click, and nodes encapsulate second click
 				//
@@ -39,7 +38,6 @@ class OffspringDraw extends LineDrawOps {
 					this.__drawNodes();
 				}
 			}
-
 		}
 	}
 
@@ -121,7 +119,6 @@ class OffspringDraw extends LineDrawOps {
 		}
 		this._layer.add(nodeGroup);
 		this._layer.draw();
-		//main_layer.draw();
 	}
 
 

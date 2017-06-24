@@ -128,8 +128,14 @@ var Pedfile = {
 		console.log(allconnected, Object.keys(allconnected), Object.keys(allconnected) > 0);
 
 		if (Object.keys(allconnected).length > 0){
-			utility.notify("Unconnected individuals detected", "Delete or Connect before saving")
-			return -1;
+			utility.yesnoprompt(
+				"Unconnected Individuals Detected",
+				"These will be truncated from the pedigree. Continue with save?",
+				"Yes", function(){},
+				"No", function(){
+					return -1;					
+				}
+			);
 		}
 
 		var text = "";

@@ -24,6 +24,7 @@ var messProps = {
 		this._box.style.display = "none";
 		this._box.style.zIndex = -99;
 	},
+
 	show: function(){ 
 		Keyboard.pause()
 		this._box.style.display = "block";
@@ -120,7 +121,7 @@ var messProps = {
 		/*function(val){
 			console.log(val);
 			callback(val.innerHTML);
-//			messProps._aftercallbacks();
+			//messProps._aftercallbacks();
 		});*/
 	},
 
@@ -130,8 +131,8 @@ var messProps = {
 		this._text.style.display = "none";
 		this._text.value = "";
 
-		this._buttonrow._old_html = this._buttonrow.innerHTML;
-		this._buttonrow.innerHTML = input_html;
+		this._buttonrow._old_html = this._buttonrow.innerHTML;  //
+		this._buttonrow.innerHTML = input_html; 				//
 
 		var that = this;
 

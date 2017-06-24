@@ -377,6 +377,8 @@ function autoScaleStage(){
 	console.log(x_scale,y_scale)
 
 	let small_scale = (x_scale < y_scale)?x_scale:y_scale;
+	if (small_scale > 1){ small_scale = 1;}
+	if (small_scale < 0.1){ small_scale = 0.1;} //absolute smallest req
 
 	kineticTween({
 		node:main_layer,
