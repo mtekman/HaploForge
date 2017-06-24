@@ -247,6 +247,8 @@ function graphInitPos(start_x, start_y, enable_ped_edit = false){
 		fgr.group._boundsrect.hide();
 	});
 
+	autoScaleStage();
+
 	Resize.resizeCanvas();
 
 
@@ -314,3 +316,85 @@ function checkConsanginuity(fam_id, pers1_id, pers2_id)
     return false;
 }
 
+
+
+function autoScaleStage(){
+	let min_x = Number.MAX_VALUE,
+		min_y = Number.MAX_VALUE,
+		max_x = Number.MIN_VALUE,
+		max_y = Number.MIN_VALUE;
+
+	// Nodes
+	uniqueGraphOps.foreachfam(function(fam, group)
+	{
+		let rect = group.group._boundsrect;
+
+		let minp = rect.getAbsolutePosition(),
+			widt = rect.getWidth(),
+			heit = rect.getHeight();
+
+		let maxp = {x: minp.x + widt, y: minp.y + heit};
+
+		if (minp.x < min_x){ min_x = minp.x };
+		if (maxp.x > max_x){ max_x = maxp.x };
+		if (minp.y < min_y){ min_y = minp.y };
+		if (maxp.y > max_y){ max_y = maxp.y };
+	});
+
+	// Title
+	uniqueGraphOps.foreachfam(function(fam, group)
+	{
+		let rect = group.group.fam_title_text;
+
+		let minp = rect.getAbsolutePosition(),
+			widt = rect.getWidth(),
+			heit = rect.getHeight();
+
+		let maxp = {x: minp.x + widt, y: minp.y + heit};
+
+		if (minp.x < min_x){ min_x = minp.x };
+		if (maxp.x > max_x){ max_x = maxp.x };
+		if (minp.y < min_y){ min_y = minp.y };
+		if (maxp.y > max_y){ max_y = maxp.y };
+	});
+
+
+	//Add padding
+	let margin = 0;
+	min_x -= margin; min_y -= margin; max_x += margin; max_y += margin;
+
+	// Established bounds for all, now:
+	//   1. Scale Stage.
+	//   2. Center Stage.
+	//
+	var x_scale = stage.getWidth() / (max_x - min_x),
+		y_scale = stage.getHeight()/ (max_y - min_y);
+
+	// Set zoom resolution to 0.1 sensitivity
+	x_scale = Math.floor(x_scale / 0.1).toFixed(0) * 0.1;
+	y_scale = Math.floor(y_scale / 0.1).toFixed(0) * 0.1;
+
+	console.log(x_scale,y_scale)
+
+	let small_scale = (x_scale < y_scale)?x_scale:y_scale;
+
+	kineticTween({
+		node:main_layer,
+		scaleX:small_scale,
+		scaleY:small_scale,
+	}).play();
+
+
+	// Translate all objects by offset
+	uniqueGraphOps.foreachfam(function(fam, group)
+	{
+		let rect = group.group;
+		kineticTween({
+			node: rect,
+			move: {x: -min_x, y: -min_y},
+		}).play();
+	});
+
+
+	stage.draw();
+}
