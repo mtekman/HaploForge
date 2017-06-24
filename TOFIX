@@ -17,6 +17,7 @@ Ped mode:
 
 Resizing:
   * Analysis with Markers offset correct
+  * Offset of stage when transitioning nodes from selection mode to haplomode
 
 Export Haplotypes:
  * Misalignment in an affecteds-only analysis
