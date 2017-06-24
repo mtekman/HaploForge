@@ -49,33 +49,34 @@ var Settings = {
 
 	bindings : {
 		"global" : {
-			"Toggle All" : 'A',
-			"Toggle Affecteds" : 'F',
-			"Submit" : 'Enter',
-			"Marker Search" : "M",
-			"Save" : 'Ctrl+S',
-			"Exit Mode"    : "Escape",
+			"Toggle All" 				: 'A',
+			"Toggle Affecteds" 			: 'F',
+			"Submit" 					: 'Enter',
+			"Marker Search" 			: "M",
+			"Save" 						: 'Ctrl+S',
+			"Exit Mode"    				: "Escape",
+			"Reset Family Positions" 	: "Ctrl+R"
 		},
 
 		"comparison" : {
-			"Compare Genotypes" : 'G',
-			"Prev. Recomb."  : '[',
-			"Next  Recomb."  : ']',
-			"Align Pedigree" : 'V',
-			"Recolour Haploblocks" : 'R'
+			"Compare Genotypes" 		: 'G',
+			"Prev. Recomb."  			: '[',
+			"Next  Recomb."  			: ']',
+			"Align Pedigree" 			: 'V',
+			"Recolour Haploblocks" 		: 'R'
 		},
 
 		"haploview" : {
-			"Start Analysis" : 'Enter',
-			"Modify Pedigree": 'Ctrl+M'
+			"Start Analysis" 			: 'Enter',
+			"Modify Pedigree"			: 'Ctrl+M'
 		},
 
 		"pedcreate" : {
-			"Add Individual" : 'I',
-			"Add Family" : 'F',
-			"Mate-Mate" : 'M',
-			"Parent-Offspring" : 'P',
-			"Export" :  'Ctrl+E'
+			"Add Individual" 			: 'I',
+			"Add Family" 				: 'F',
+			"Mate-Mate" 				: 'M',
+			"Parent-Offspring" 			: 'P',
+			"Export" 					: 'Ctrl+E'
 		}
 	},
 	__defaults : {}, // populated as bindingsChange

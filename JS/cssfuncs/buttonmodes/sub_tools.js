@@ -128,6 +128,16 @@ var ToolButtons = {
 					MainButtonActions.loadPedFromStorage(true);
 				}
 			);
+
+			ToolButtons.addToolsButton("Reset Positions",
+				Settings.bindings.haploview["Reset Family Positions"],
+				"Packs families next to each other",
+				
+				function(){
+					FamSpacing.init();
+					autoScaleStage();
+				}
+			);
 		},
 
 		/* Selection Editting View */
