@@ -7,9 +7,9 @@ var Test = {
     Benchmark : {
     	run() {
     		var inbr_array = [0.1],
-    			root_fndrs = [1,4],
-    			max_gendrs = [4,5,6,7],
-    			alle_sizes = [6000,7000,8000,9000];
+    			root_fndrs = [1],
+    			max_gendrs = [2],
+    			alle_sizes = [10,100,1000,5000,10000,50000,100000,200000,500000,700000,1000000];
 
     		var bmarkkey = "benchmark_runs";
 
@@ -49,9 +49,9 @@ var Test = {
 							console.log("attempting=",key, "[attempts,passes]=[", attempts, passes, "]");
 							run_map[key].attempts += 1
 
-							if (passes > 40){continue;}
+							if (passes > 50){continue;}
 							// Some tests just dont render... skip
-							if (attempts  > 40){continue;}
+							if (attempts  > 50){continue;}
 
 
 							try {

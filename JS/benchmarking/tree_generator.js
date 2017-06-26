@@ -20,6 +20,7 @@ class TreeGenerator {
         for (let i=0; i < num_roots; i++)
         {
             let root_indiv = new BenchPerson(1); // generation 0
+            this.num_people += 1;                // count each root
             this.germinate(root_indiv);    
         }
     }
