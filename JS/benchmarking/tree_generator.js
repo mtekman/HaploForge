@@ -15,6 +15,7 @@ class TreeGenerator {
 
         // To be filled
         this.num_people = 0;
+        this.num_recombinant_alleles = 0;
         this.inbred_couples = {};
 
         for (let i=0; i < num_roots; i++)
@@ -29,7 +30,11 @@ class TreeGenerator {
         /*console.log(" [Results: num_people=" + this.num_people + "inbred_couples=" + Object.keys(this.inbred_couples).length + "] ");
         console.log("   Inbred_couples=", this.inbred_couples)
         console.log("   Generations", Object.keys(BenchPerson.generation_map).map( i => i+": "+Object.keys(BenchPerson.generation_map[i]).length ), BenchPerson.generation_map);*/
-        return { numpeople: this.num_people, numinbredcouples: Object.keys(this.inbred_couples).length };
+        return { 
+            numpeople: this.num_people, 
+            numinbredcouples: Object.keys(this.inbred_couples).length,
+            numallelerecombinations: this.num_recombinant_alleles
+        };
     }
 
 
@@ -69,6 +74,7 @@ class TreeGenerator {
             else {
                 // Mate is a new founder
                 mate = new BenchPerson(generation, mate_gender, null, null)
+                this.num_recombinant_alleles += mate.num_recombinations
                 //console.log("random mate", mate);
             }
 
@@ -84,6 +90,7 @@ class TreeGenerator {
                 for (let n=0; n < numOff; n++)
                 {
                     let child = new BenchPerson(generation + 1, 0, mother, father)
+                    this.num_recombinant_alleles += child.num_recombinations
                     perc.addChild(child);
                     mate.addChild(child);
 

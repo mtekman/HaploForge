@@ -38,8 +38,12 @@ var BenchAllele  = {
 		return new_all;
 	},
 
+	__recombination_occurred : null,
+
 	performMeiosis: function(all1,all2)
 	{
+		BenchAllele.__recombination_occurred = null;
+
 		if ( all1.length !== all2.length){
 			console.error("Allele lengths do not match");
 			return 0;
@@ -51,10 +55,13 @@ var BenchAllele  = {
 
 		let index_split = randomIndex(allele_len);
 
+		BenchAllele.__recombination_occurred = false;
+
 		if (index_split < buff)             { return all1;}
 		if (index_split > allele_len - buff){ return all2;}
 
 		// Otherwise recombination
+		BenchAllele.__recombination_occurred = true;
 		index_split -= buff;
 		return all1.slice(0,index_split).concat(all2.slice(index_split,));
 	}

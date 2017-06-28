@@ -25,6 +25,7 @@ class BenchPerson  extends Person {
 
 
 		this.__temp_haplo_data = []
+		this.num_recombinations = 0;
 
 		if (this.mother !== null){
 		    this.simulateMeiosis();        // Non-Founder
@@ -67,10 +68,18 @@ class BenchPerson  extends Person {
 
 
 	simulateMeiosis(){
-		this.__temp_haplo_data.push( BenchAllele.performMeiosis(
-			this.mother.__temp_haplo_data[0], this.mother.__temp_haplo_data[1]) )
-		this.__temp_haplo_data.push( BenchAllele.performMeiosis(
-			this.father.__temp_haplo_data[0], this.father.__temp_haplo_data[1]) )
+		let all1 = BenchAllele.performMeiosis(this.mother.__temp_haplo_data[0], this.mother.__temp_haplo_data[1]);
+		let rec1 = BenchAllele.__recombination_occurred;
+
+		let all2 = BenchAllele.performMeiosis(this.father.__temp_haplo_data[0], this.father.__temp_haplo_data[1]);
+		let rec2 = BenchAllele.__recombination_occurred;
+
+		this.num_recombinations = 0;
+		if (rec1){ this.num_recombinations += 1;}
+		if (rec2){ this.num_recombinations += 1;}
+
+		this.__temp_haplo_data.push( all1 )
+		this.__temp_haplo_data.push( all2 )
 	}
 
 	generateFounderAlleles(){

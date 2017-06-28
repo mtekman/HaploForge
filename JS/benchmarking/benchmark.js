@@ -20,7 +20,7 @@ var BenchMark = {
     },
 
     launch_with_props( rootfounders, maxgen, allelesize, inbreedchance, exportToFile,
-        endfunction = function(timetree, numpeople, numinbredcouples, timerender){},
+        endfunction = function(timetree, numpeople, numinbredcouples, timerender, numrecombs){},
         termfunction= function(){})
     {
         BenchStopwatch.terminate = function(text){
@@ -38,7 +38,7 @@ var BenchMark = {
         // Completed in FileFormat_superclass.js
         BenchStopwatch.start(
             function (rendertime) {
-                endfunction(treetime, metrics.numpeople, metrics.numinbredcouples, rendertime);
+                endfunction(treetime, metrics.numpeople, metrics.numinbredcouples, rendertime, metrics.numallelerecombinations);
                 utility.notify("Benchmark", 
                     metrics.numpeople+" individuals, " +
                     metrics.numinbredcouples + " inbred couples," +

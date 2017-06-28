@@ -9,7 +9,7 @@ var Test = {
     		var inbr_array = [0.1],
     			root_fndrs = [1],
     			max_gendrs = [2],
-    			alle_sizes = [10,100,1000,5000,10000,50000,100000,200000,500000,700000,1000000];
+    			alle_sizes = [1e5,2e5,3e5,4e5,5e5,6e5,7e5,8e5,9e5,1e6];
 
     		var bmarkkey = "benchmark_runs";
 
@@ -49,21 +49,22 @@ var Test = {
 							console.log("attempting=",key, "[attempts,passes]=[", attempts, passes, "]");
 							run_map[key].attempts += 1
 
-							if (passes > 50){continue;}
+							if (passes > 20){continue;}
 							// Some tests just dont render... skip
-							if (attempts  > 50){continue;}
+							if (attempts  > 20){continue;}
 
 
 							try {
 								BenchMark.launch_with_props(root_founder, maxgen, allele_size, inbreed, false,
 
-									function endFunc(timetree, numpeople, numinbredcouples, timerender){
+									function endFunc(timetree, numpeople, numinbredcouples, timerender, numrecomb){
 							        	run_map[key].passes += 1
 										run_map[key].record.push({
 											time_tree: timetree,
 											people: numpeople,
 											inbredcouples: numinbredcouples,
-											time_render: timerender
+											time_render: timerender,
+											num_allele_recombs : numrecomb
 										});
 	                					console.log(key, "Rendered");
 
