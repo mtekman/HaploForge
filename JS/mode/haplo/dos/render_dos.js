@@ -156,7 +156,7 @@ function mapLinesAndNodes(line_map )
 			for (var sgroup in line_map[fid][g])
 			{
 //				console.log("SIB GROUP", sgroup)
-				// start_y += drop_amount;
+				//start_y += drop_amount;
 
 				var directline = line_map[fid][g][sgroup].directlines,
 					mateline = line_map[fid][g][sgroup].matelines;
@@ -182,11 +182,14 @@ function mapLinesAndNodes(line_map )
 					// Sib line from mateline
 					var dos = mateline[mline];
 
-					addLinePoint(
-						fid, fath_id+'_'+moth_id,
-						{to: sgroup, consang: false, drop:drop_amount, 
-						text: dos, lastgen:(g==line_map[fid].length-1)}
-					);
+					let isLastGen = (g==line_map[fid].length-1);
+					if (isLastGen){
+						addLinePoint(
+							fid, fath_id+'_'+moth_id,
+							{to: sgroup, consang: false, drop:drop_amount, 
+							text: dos, lastgen:isLastGen}
+						);
+					}
 				}
 
 				// Directline
