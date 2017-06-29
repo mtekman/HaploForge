@@ -293,6 +293,21 @@ var Test = {
 	}
     },
 
+    HaploMode : {
+	run(){
+	    userOpts.fancyGraphics = false;
+	    userOpts.setGraphics();
+	    MainButtonActions.loadHaploFromStorage();
+
+	    setTimeout(function(){
+		SelectionMode.init();
+		SelectionAction.selectAll();
+		HaploWindow.init();
+
+	    },1000);
+	}
+    },
+
     Homology : {
 	run(){
 	    userOpts.fancyGraphics = false;
