@@ -1,5 +1,6 @@
 Benchmark:
  * polling status icon during rendering
+ * wrapper for illegal pedigrees
 
 PedMode
  * Quick add Male and Female buttons
@@ -9,6 +10,14 @@ PedMode
 Export Canvas:
  * Overlay PNG layers
  * Buttons to overlay layers and export as one image
+
+HaploMode:
+ * Export haplotypes in region
+
+
+Resize Canvas:
+ * Zoom towards mouse
+
 
 Export Haplotypes:
  * Include marker names (if present)
