@@ -15,7 +15,8 @@ class VideoTranscript {
 		this.paused     = true;	
 
 		this.video.ontimeupdate = this.__runTranscript.bind(this);
-		this.video.onend        = this.__endTranscript;
+		this.video.onend        = this.__endTranscript.bind(this);
+		this.video.onended      = this.__endTranscript.bind(this);
 
 		this.__keysset   = false;
 		this.__nextTime  = -1;
@@ -139,7 +140,13 @@ class VideoTranscript {
 
 
 	__endTranscript(){
-		var currentTrans = this.transcript[this.transcript.length-1];
+		//let key_array = Object.keys(this.transcript);
+		//let last_key = key_array[key_array.length - 1]
+
+		//console.log(key_array, last_key)
+
+		//var currentTrans = this.transcript[last_key];
+		var currentTrans = this.transcript[9999];  // always use this for last text
 		this.__setText(currentTrans);
 	}
 

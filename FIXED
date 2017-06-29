@@ -1,4 +1,5 @@
-
+Tutorials:
+ * [2017/06/29] Polish timings and auto-pause functionality
 
 Resizing:
  * [2017/06/23] PedMode mate-line gets caught in draggable stage, disable drawing mateline and childline processes
@@ -8,7 +9,12 @@ Resume Haplotypes:
 
 Haplo mode:
  * [2017/06/29] Enforce monospace for large families for alignment fixes
+ * [2017/06/29] Fix Marker offset Y  when aligning haplomode
+ * [2017/06/29] Fix peds not moving in low-graphics mode upon aligning haplomode
 
 
  Ped mode:
  * [2017/06/24] LineDrawOps now have stage offset and scale with main_layer
+
+ UserOpts:
+ * [2017/06/29] Fix to default graphics being selected when initially unset

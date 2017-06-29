@@ -1,14 +1,4 @@
 
-Benchmark:
- * wrapper for illegal pedigrees
-
-Tutorials:
- * Polish timings and auto-pause functionality
-
-Tearing:
- * Disable DOS for complex pedigrees
-
-
 Ped mode:
  * Enable transfer from Haplo
  * Render inbreeding loop upon creation
@@ -19,4 +9,4 @@ Resizing:
   * Offset of stage when transitioning nodes from selection mode to haplomode
 
 Export Haplotypes:
- * Misalignment in an affecteds-only analysis
+  * Misalignment in an affecteds-only analysis
