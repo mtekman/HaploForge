@@ -21,6 +21,7 @@ class CustomTweenClass
 		this.node = props.node;
 		this.finishCallback = props.onFinish || null;
 
+
 		for (var pr in props)
 		{
 			if (
@@ -30,14 +31,31 @@ class CustomTweenClass
 			){
 				continue;
 			}
+
+
+			if (pr === "x"){
+				this.node.setX(props[pr])
+				continue;
+			}
+			if (pr === "y"){
+				//console.log("setting", this.node.id, this.node.getY(), props.y)
+				this.node.setY(props[pr])
+				//console.log(" --> to ", this.node.getY())
+				continue;
+			}
+
+
 			this.node.attrs[pr] = props[pr];
-//			console.log(this.node, props[pr])
+
 		}
 	}
 
 	play(){
 		if (this.finishCallback !== null){
-			setTimeout(this.finishCallback, 100);
+			var that = this;
+			setTimeout(function(){
+				that.finishCallback();
+			}, that.duration * 1000 || 800);
 		}
 	}
 }

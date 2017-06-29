@@ -286,6 +286,7 @@ var HaploWindow = {
 
 				HaploWindow._group.add( HaploWindow._left );
 				HaploWindow._left.show();
+				// second lowest element
 				HaploWindow._left.moveToBottom();
 				HaploWindow._left.moveUp();
 

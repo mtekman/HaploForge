@@ -13,18 +13,25 @@ HaploWindow.alignTopSelection = function(group_nodes, group_lines)
 	if (HaploWindow.__aligntoggle){
 		group_lines.hide();
 
+		var render_counter = group_nodes.children.length - 1;
+
 		var y_line = HaploWindow.min_node_placement_y + DOS.initial_group_node_offset.y;
 
 		for (var g=0; g < group_nodes.children.length; g++){
 			var nd = group_nodes.children[g];
+			//console.log("moving", nd.id, "from", nd.getY(), y_line)
 
 			nd.old_ypos = nd.getY();
 
 			tween_array.push(
 				kineticTween({
 					node: nd,
-					x: nd.getX(),
-					y: y_line
+					y: y_line,
+					onFinish: function(){
+						if (render_counter-- === 0){
+							Resize.resizeCanvas()
+						}
+					}
 				})
 			);
 		}
@@ -61,7 +68,7 @@ HaploWindow.alignTopSelection = function(group_nodes, group_lines)
 		}
 	}
 	else {
-		group_lines.show();
+		//group_lines.show();
 
 		var render_counter = group_nodes.children.length - 1;
 		// preserved until no longer used
@@ -77,6 +84,7 @@ HaploWindow.alignTopSelection = function(group_nodes, group_lines)
 					onFinish: function(){
 						if (render_counter-- === 0){
 							group_lines.show();
+							Resize.resizeCanvas()
 						}
 					}
 				})
@@ -115,8 +123,6 @@ HaploWindow.alignTopSelection = function(group_nodes, group_lines)
 	{
 		tween_array[t++].play();
 	}
-
-	setTimeout(Resize.resizeCanvas, 800);
 
 	haplo_layer.draw();
 }
