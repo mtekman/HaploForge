@@ -48,7 +48,7 @@ var HaploBlock = {
 		}
 
 		SliderHandler.inputsLocked = true;
-		HaploBlock.redrawHaplos(true);
+		HaploBlock.redrawHaplos(true);		
 	},
 
 

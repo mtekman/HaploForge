@@ -138,7 +138,8 @@ var haploblock_settings = {
 	space_pixels: 6,    // 1em for monospace 10
 	marker_offset: 1,
 	ht_offset: 7,
-	ht_2_ht: 1
+	ht_2_ht: 1,
+	font_family: "monospace"
 };
 //Do not edit this!
 var haploblock_buffers = {

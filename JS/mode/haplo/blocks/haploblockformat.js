@@ -15,7 +15,7 @@ var HaploBlockFormat = {
 		textprops : {
 			x: -38,
 			y: -nodeSize*2,
-			fontFamily: MarkerSlider._style.I_fontFamily,
+			fontFamily: haploblock_settings.font_family,
 			fontSize: 10,
 			fill: 'black'
 		},
