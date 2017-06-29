@@ -1,11 +1,14 @@
 
 
 Resizing:
- * [2017/07/23] PedMode mate-line gets caught in draggable stage, disable drawing mateline and childline processes
+ * [2017/06/23] PedMode mate-line gets caught in draggable stage, disable drawing mateline and childline processes
 
- Resume Haplotypes:
- * [2017/07/23] Graphics are not being rendered back to their correct positions
+Resume Haplotypes:
+ * [2017/06/23] Graphics are not being rendered back to their correct positions
+
+Haplo mode:
+ * [2017/06/29] Enforce monospace for large families for alignment fixes
 
 
  Ped mode:
- * [2017/07/24] LineDrawOps now have stage offset and scale with main_layer
+ * [2017/06/24] LineDrawOps now have stage offset and scale with main_layer

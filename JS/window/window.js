@@ -1,5 +1,6 @@
 
 // Singleton
+
 function onWindowLoad(){
     
     (function browserDetection(){
@@ -49,6 +50,14 @@ function onWindowLoad(){
             console.log(browser_name, browser_vers)
             exit("<h1 style=\"color: #111; font-family: 'Helvetica Neue', sans-serif; font-size: 100px; font-weight: bold; letter-spacing: -1px; line-height: 1; text-align: center;  \" >NOPE.</h1><h2 style=\"color: #111; font-family: 'Open Sans', sans-serif; font-size: 30px; font-weight: 300; line-height: 32px; margin: 0 0 72px; text-align: center;\" >Not This Browser.<br/>Not In A Million Years.<br/><br/>Try <a href=\"https://www.mozilla.org/en-US/firefox/new/\" style='color:DarkOrange; text-decoration:none;font-family:\"Papyrus\",fantasy;' >Firefox</a> or <a style='color:DodgerBlue;text-decoration:none;font-family:\"Arial\",sans-serif;' href=\"http://chromium.woolyss.com/\">Chromium.</a><br/><div style='font-size:12px;'>Chrome/Opera/Safari (if you must...)</div></h2>");
         }
+
+
+        // Haploblock spacing issue in Chromium:
+        if (browser_name === "Chrome"){
+            haploblock_spacers.person_offset_px += 0.19
+        }
+
+
     })();
 
     // Define all load modes here
@@ -58,9 +67,9 @@ function onWindowLoad(){
     Settings.init();
 
 
-    setTimeout(function(){
-        Test.Benchmark.start();
-    }, 1000);
+    //setTimeout(function(){
+    //    Test.Benchmark.start();
+    //}, 1000);
 }
 
 onWindowLoad(); // singleton in a singleton is frowned upon
