@@ -1,4 +1,4 @@
-var htext = null; // DEBUG
+//var htext = null; // DEBUG
 
 var HaploBlock = {
 
@@ -55,7 +55,7 @@ var HaploBlock = {
 	redrawHaplos(resizeToo){
 
 		if (resizeToo){
-			//Resize.resizeCanvas();
+			Resize.resizeCanvas();
 		}
 
 		var scroll_rect = HaploWindow._bottom,
@@ -177,7 +177,7 @@ var HaploBlock = {
 		HaploBlockFormat.format.textprops.text = total_text;
 		var texter = new Kinetic.Text(HaploBlockFormat.format.textprops);
 
-		htext = texter;
+		//htext = texter;
 		grp.add(texter);
 		return grp;
 	},

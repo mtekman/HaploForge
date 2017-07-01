@@ -4,7 +4,6 @@ Ped mode:
  * Deleting a child keeps the childline somehow, remove it
 
 Resizing:
-  * Analysis with Markers offset correct - occurs when advg graphic ticked after Test.haplomode. (check out htest)
   * Offset of stage when transitioning nodes from selection mode to haplomode
 
 Export Haplotypes:

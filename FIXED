@@ -11,6 +11,7 @@ Haplo mode:
  * [2017/06/29] Enforce monospace for large families for alignment fixes
  * [2017/06/29] Fix Marker offset Y  when aligning haplomode
  * [2017/06/29] Fix peds not moving in low-graphics mode upon aligning haplomode
+ * [2017/07/01] Big one: Analysis with Markers offset corrected
 
 
  Ped mode:

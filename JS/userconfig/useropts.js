@@ -48,6 +48,7 @@ var userOpts = {
 		}
 
 		if (HaploWindow._bottom !== null){
+			HaploBlockFormat.hasGPData( MarkerData.hasGPData );
 			HaploBlock.redrawHaplos();
 		}
 	}

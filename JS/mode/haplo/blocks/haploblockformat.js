@@ -2,7 +2,7 @@
 var HaploBlockFormat = {
 
 	hasGPData(show){
-		HaploBlockFormat.format.textprops.x = show?-86:-38;
+		HaploBlockFormat.format.textprops.x = show?-85:-37;
 		HaploWindow._group.setX(show?45:0);
 
 		HaploWindow._left.setX(show?-40:10);
