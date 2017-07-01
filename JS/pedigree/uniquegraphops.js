@@ -1,8 +1,8 @@
 var uniqueGraphOps = {
 
 	_map : {}, // fam_id --> Holds node and edge data, including pointers to graphics
-	haplo_scroll : null,
-	haplo_area : null,
+	/*haplo_scroll : null,
+	haplo_area : null,*/
 
 	clear: function(){
 		uniqueGraphOps._map = {};

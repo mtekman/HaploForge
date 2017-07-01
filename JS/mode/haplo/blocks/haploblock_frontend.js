@@ -1,4 +1,3 @@
-
 var htext = null; // DEBUG
 
 var HaploBlock = {
@@ -56,11 +55,11 @@ var HaploBlock = {
 	redrawHaplos(resizeToo){
 
 		if (resizeToo){
-			Resize.resizeCanvas();
+			//Resize.resizeCanvas();
 		}
 
-		var scroll_rect = uniqueGraphOps.haplo_scroll,
-			scroll_area = uniqueGraphOps.haplo_area;
+		var scroll_rect = HaploWindow._bottom,
+			scroll_area = HaploWindow._scroll_area;
 
 		var diff_y = scroll_rect.getAbsolutePosition().y - scroll_area.getAbsolutePosition().y,
 			index_start_delta = Math.floor( diff_y / HAP_VERT_SPA );

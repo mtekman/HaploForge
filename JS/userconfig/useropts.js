@@ -47,7 +47,7 @@ var userOpts = {
 			BackgroundVidMain.removeVid();
 		}
 
-		if (uniqueGraphOps.haplo_scroll !== null){
+		if (HaploWindow._bottom !== null){
 			HaploBlock.redrawHaplos();
 		}
 	}

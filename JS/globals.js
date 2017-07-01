@@ -139,7 +139,7 @@ var haploblock_settings = {
 	marker_offset: 1,
 	ht_offset: 7,
 	ht_2_ht: 1,
-	font_family: "monospace"
+	font_family: "Roboto Mono"
 };
 //Do not edit this!
 var haploblock_buffers = {

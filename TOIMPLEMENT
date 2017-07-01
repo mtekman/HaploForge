@@ -6,6 +6,7 @@ PedMode
  * Quick add Male and Female buttons
  * Add individuals to cursor rather than random
  * Import pedigree from file
+ * Enable transfer from Haplo
 
 Export Canvas:
  * Overlay PNG layers

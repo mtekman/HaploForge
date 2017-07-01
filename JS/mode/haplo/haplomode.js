@@ -109,13 +109,17 @@ var HaploWindow = {
 
 	_compensateOffset : function()
 	{
-		let stage_pos = stage.getPosition();
+		let stage_pos = stage.getPosition(),
+			left_x  = HaploWindow._left.getX() - 5;
 
-		HaploWindow._group.setX( -stage_pos.x );
+
+		HaploWindow._group.setX( -stage_pos.x - left_x);
 		HaploWindow._group.setY( -stage_pos.y );
 
 		HaploWindow._background.setX( -stage_pos.x );
 		HaploWindow._background.setY( -stage_pos.y );
+
+		//HaploWindow._exit.setX(20 - left_x);
 	},
 
 
@@ -178,7 +182,7 @@ var HaploWindow = {
 
 		// Exit button
 		HaploWindow._exit = addExitButton(
-			{x: 20,
+			{x: 20 + HaploWindow._left.getX(),
 			 y: 20},
 			 HaploWindow.destroy,
 			 2);
@@ -278,8 +282,8 @@ var HaploWindow = {
 					document.addEventListener("mouseup", mouseUp, false);
 				});
 
-				uniqueGraphOps.haplo_scroll = HaploWindow._bottom;
-				uniqueGraphOps.haplo_area = scroll_area__;
+				HaploWindow._scroll_area = scroll_area__;
+
 
 				HaploWindow._bottom.add( scroll_area__ );
 
@@ -298,13 +302,16 @@ var HaploWindow = {
 
 				MarkerSlider.makeVisible(true)
 				Resize.resizeCanvas();
+				setTimeout(function(){
+					haplo_layer.draw()
+				}, 100);
 			}
 		}).play();
 	},
 
 	__hideBottom: function(finishfunc = 0){
-		if (uniqueGraphOps.haplo_area !== null){
-			uniqueGraphOps.haplo_area.hide();
+		if (HaploWindow._scroll_area !== null){
+			HaploWindow._scroll_area.hide();
 		}
 
 		if (HaploWindow._bottom === null){
@@ -330,6 +337,7 @@ var HaploWindow = {
 				if (finishfunc!==0){
 					finishfunc();
 				}
+				haplo_layer.draw()
 			}
 		}).play();
 	}
