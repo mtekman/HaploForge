@@ -57,15 +57,22 @@ var DOS = {
 			gfx.listening( false );
 			
 			DOS.haplo_group_nodes.add(gfx);
+
+			let mscale = main_layer.getScale(),
+				npos = gfx.main_layer_group.getAbsolutePosition()
+
 			gfx.setPosition(
-				{x: gfx.main_layer_group.getX() + gfx.main_layer_pos.x,
-				 y: gfx.main_layer_group.getY() + gfx.main_layer_pos.y}
+				{x: (npos.x + gfx.main_layer_pos.x)*mscale.x,
+				 y: (npos.y + gfx.main_layer_pos.y)*mscale.y}
 			);
+			gfx.setScale(mscale)
 
 			var tween = kineticTween({
 				node: gfx,
 				x: start_x + DOS.initial_group_node_offset.x,
 				y: y_pos + DOS.initial_group_node_offset.y,
+				scaleX: 1,
+				scaleY: 1,
 				onFinish: function(){
 					if (render_counter-- === 0){
 

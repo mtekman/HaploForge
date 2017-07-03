@@ -63,6 +63,7 @@ var HaploWindow = {
 					// main_layer.draw();
 					// alert("here3");
 
+
 					(kineticTween({
 						node: perc_gfx,
 						x: old_pos.x,
