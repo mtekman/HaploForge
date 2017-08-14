@@ -1,4 +1,5 @@
 # HaploForge #
+
 ##### A Comprehensive Pedigree Drawing and Haplotype Visualisation Web Application #####
 
  * Creates pedigrees and imports/exports them using LINKAGE format.
@@ -6,6 +7,19 @@
  * Resolves haplotypes using a novel A\*-search based approach for autosomal *and* X-linked disease models, both recessive and dominant. 
  * Performs identity mapping for homozygous, heterozygous, and compound heterozygous disease models.
  * Can auto-generate large and complex pedigrees via meioses simulation benchmarks.
+
+HaploForge is licensed under the [GPLv3](https://www.gnu.org/licenses/gpl-3.0.en.html). 
+
+If HaploForge is used to analyse your work, please cite [Tekman et al, 2017](https://doi.org/10.1093/bioinformatics/btx510).
+
+    @article{tekman2017haploforge,
+        title={{H}aplo{F}orge : {A} {C}omprehensive {P}edigree {D}rawing and {H}aplotype {V}isualisation {W}eb {A}pplication},
+        author={Tekman, Mehmet and Medlar, Alan and Mozere, Monika and Kleta, Robert and Stanescu, Horia},
+        journal={Bioinformatics},
+        pubstate = {prepublished},
+        year={2017},
+        publisher={Oxford Univ Press}
+    }
 
 The live web application is hosted [here](https://mtekman.github.io/haploforge/)
 
@@ -34,6 +48,3 @@ Vector files describe the *flow* of genetic information from one generation to t
 
 Simply go to the [live application](https://mtekman.github.io/haploforge/) and go through the quick video tutorials (in total no longer than 10 minutes).
 
-### Can I read more? ###
-
-Pending publication, proper citation and links to the journal will be provided in future.
