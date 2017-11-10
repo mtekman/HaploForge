@@ -258,10 +258,10 @@ var Test = {
 
 		    // Merlin.populateMarkerMap(map_text)
 		    // Merlin.populateFlow(chr_text);
-		    // FileFormat.updateFamily(ped_text);
+		    FileFormat.updateFamily(ped_text);
             //
-		    // HaploPedProps.init(familyMapOps.inferGenders);
-		    // FileFormat.__endFuncs( AssignHGroups.resolvers.FLOW );
+		    HaploPedProps.init(familyMapOps.inferGenders);
+		    FileFormat.__endFuncs( AssignHGroups.resolvers.FLOW );
 
 		    /*			setTimeout(function(){
 					SelectionMode.init();
