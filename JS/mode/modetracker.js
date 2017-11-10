@@ -2,7 +2,7 @@
 // -- but good to keep it here
 
 var ModeTracker = {
-	
+
 	currentMode : null,
 
 	modes : {
@@ -30,7 +30,6 @@ var ModeTracker = {
 			return 0;
 		}
 		console.log("mode", mode);
-		throw new Error("invalid mode");
+		error("invalid mode");
 	}
 }
-

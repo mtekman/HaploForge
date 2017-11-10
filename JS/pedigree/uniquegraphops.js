@@ -72,14 +72,14 @@ var uniqueGraphOps = {
 			delete uniqueGraphOps._map[family_id];
 			return 0;
 		}
-		throw new Error("No such family "+family_id);
+		error("No such family "+family_id);
 	},
 
 	getFam: function(family_id){
 		if (family_id in uniqueGraphOps._map){
 			return uniqueGraphOps._map[family_id];
 		}
-		throw new Error("No such family "+family_id);
+		error("No such family "+family_id);
 	},
 
 	famExists: function(family_id){
@@ -88,9 +88,9 @@ var uniqueGraphOps = {
 
 	edgeExists: function(key, family_id){
 		if (family_id in uniqueGraphOps._map){
-			return (key in uniqueGraphOps._map[family_id].edges)		
+			return (key in uniqueGraphOps._map[family_id].edges)
 		}
-		throw new Error("No such family "+family_id);
+		error("No such family "+family_id);
 	},
 
 
@@ -98,7 +98,7 @@ var uniqueGraphOps = {
 		if (family_id in uniqueGraphOps._map){
 			return (key in uniqueGraphOps._map[family_id].nodes)
 		}
-		throw new Error("No such family "+family_id);
+		error("No such family "+family_id);
 	},
 
 
@@ -126,7 +126,7 @@ var uniqueGraphOps = {
 				return 0;
 			}
 		}
-		throw new Error("No such node "+id);
+		error("No such node "+id);
 	},
 
 	getNode: function(id, family_id){
@@ -135,7 +135,7 @@ var uniqueGraphOps = {
 				return uniqueGraphOps._map[family_id].nodes[id];
 			}
 		}
-		throw new Error("No such node "+id);
+		error("No such node "+id);
 	},
 
 
@@ -190,7 +190,7 @@ var uniqueGraphOps = {
 				return uniqueGraphOps._map[family_id].edges[id];
 			}
 		}
-		throw new Error("No such edge "+id);
+		error("No such edge "+id);
 	},
 
 	getChildEdge: function(family_id, father_id, mother_id, child_id)
@@ -204,11 +204,11 @@ var uniqueGraphOps = {
 				if (uniqueGraphOps.edgeExists(child_key, family_id)){
 					return child_key;
 				}
-				throw new Error("No such child edge "+child_key);
+				error("No such child edge "+child_key);
 			}
-			throw new Error("No such mate edge "+mate_key);
+			error("No such mate edge "+mate_key);
 		}
-		throw new Error("No such family "+family_id);
+		error("No such family "+family_id);
 	},
 
 	makeChildEdge: function(family_id, father_id, mother_id, child_id)
@@ -219,7 +219,7 @@ var uniqueGraphOps = {
 			var child_key = edgeAccessor.childlineID(mate_key, child_id);
 			return child_key;
 		}
-		throw new Error("No such family "+family_id);
+		error("No such family "+family_id);
 	},
 
 
@@ -237,7 +237,7 @@ var uniqueGraphOps = {
 			}
 			return child_edges
 		}
-		throw new Error("No such family "+family_id);
+		error("No such family "+family_id);
 	},
 
 	getMateEdge: function(family_id, father_id, mother_id)
@@ -250,6 +250,6 @@ var uniqueGraphOps = {
 				return mate_key;
 			}
 		}
-		throw new Error("No such family "+family_id);
+		error("No such family "+family_id);
 	}
 }

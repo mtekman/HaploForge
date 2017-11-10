@@ -37,6 +37,12 @@ var col_affs = [
 
 
 
+function error(message) {
+	utility.notify("Error", message, 5);
+	throw new Error(message)
+}
+
+
 function intersectArrays(a,b){
 	var ai=0, bi=0;
 	var result = new Array();
@@ -98,11 +104,6 @@ String.prototype.center = function(padding){
 }
 
 
-// Console.assert is better
-//function assert(bool, message){                     //General error handling
-//    if (!bool) throw new Error(message);
-//}
-
 // for some reason keys wont sort numerically for negative keys
 function sortedKeys(mapper){
 	return Object.keys(mapper).sort(function (a,b){ return a - b});
@@ -115,7 +116,7 @@ function map2orderedArray(mapper){
 
 	for (var k = 0; k < keys.length; k++){
 		var obj = mapper[keys[k]];
-		
+
 		ordered_array.push(obj);
 	}
 
@@ -155,4 +156,3 @@ var haploblock_spacers = {
 	block_width_px: HAP_VERT_SPA*1.2,
 	block_offset_px: (HAP_VERT_SPA*1.2) +2
 };
-

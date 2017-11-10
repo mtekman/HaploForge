@@ -73,13 +73,13 @@ var AstarHandler = {
 
 			if (c0_pr.color_group.length !== 0 ){
 				console.log("c0_pr not [], for "+pers.id+" @ "+tmp_i, c0_pr);
-				throw new Error("");
+				error("colour_group");
 
 			}
 
 			if (c1_pr.color_group.length !== 0 ){
 				console.log("c1_pr not [], for "+pers.id+" @ "+tmp_i, c1_pr);
-				throw new Error("");
+				error("colour_group");
 			}
 
 
@@ -208,9 +208,9 @@ var AstarHandler = {
 
 			if (res0 === null){
 				console.log( pers_hp[0], paternal_exclusion, maternal_exclusion,
-					consang_check, 
+					consang_check,
 					pers.id, moth.id, fath.id );
-				throw new Error( "Skipper's Log: No land in sight.");
+				error( "Skipper's Log: No land in sight.");
 			}
 
 
@@ -227,7 +227,7 @@ var AstarHandler = {
 	 		res1 = a_star_bestfirst(pers_hp[1].pter_array, maternal_exclusion);
 
 			if (res0 === null || res1 === null)
-				throw new Error("Skipper's Log: It's been days...");
+				error("Skipper's Log: It's been days...");
 
 		}
 

@@ -2,7 +2,7 @@
 // Singleton
 
 function onWindowLoad(){
-    
+
     (function browserDetection(){
         //
         //Quick browser detector
@@ -59,10 +59,9 @@ function onWindowLoad(){
     userOpts.setGraphics();
     Settings.init();
 
-
-    //setTimeout(function(){
-    //    Test.HaploMode.run();
-    //}, 1000);
+    setTimeout(function(){
+        Test.Merlin.run();
+    }, 1000);
 }
 
 onWindowLoad(); // singleton in a singleton is frowned upon

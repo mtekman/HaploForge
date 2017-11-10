@@ -2,7 +2,7 @@
 //debugAllegro = {}
 
 class Allegro extends FileFormat {
-	
+
 	constructor(mode_init = null, fed_data = null){
 
 		var haplo = {
@@ -50,21 +50,21 @@ class Allegro extends FileFormat {
 			haplo_start_col = -1;
 
 		var header_lines = [];
-	
+
 		for (var l=0; l < lines.length; l++){
 			var line = lines[l];
-	
+
 			if (line.length < 5 ){
 				continue
 			};
 
-			// Add to header data for later processing.	
+			// Add to header data for later processing.
 			if (line.substr(0,1) === " ") {                        //Temp store header data
 				haplo_start_col = line.lastIndexOf("    ") +4;     //
 				header_lines.push( line );
 				continue;
 			}
-	
+
 			//Populate family map
 			var people_info = line
 				.substring(0, haplo_start_col - 1)
@@ -77,17 +77,17 @@ class Allegro extends FileFormat {
 				.split(/\s+/)
 				.map(x => parseInt(x));
 
-			
+
 			//Handle Person info
 			var fam = people_info[0], id  = people_info[1],
 				pat = people_info[2], mat = people_info[3],
 				sex = people_info[4], aff = people_info[5];
 
 			var pers;
-	
+
 			if (familyMapOps.percExists(id,fam)){
 				pers = familyMapOps.getPerc(id,fam);
-			
+
 			} else {
 				pers = new Person(id, sex, aff, mat, pat);
 				familyMapOps.insertPerc(pers, fam);
@@ -134,7 +134,7 @@ class Allegro extends FileFormat {
 			actual_num = markers.length;
 
 		if (expected_num !== actual_num){
-			throw new Error("Error, allele sizes do not match:" 
+			error("Error, allele sizes do not match:" 
 				+ expected_num + " != " + actual_num);
 		}
 
@@ -142,7 +142,7 @@ class Allegro extends FileFormat {
 	}
 
 	static __populateGeneticPositions(text_unformatted)
-	{		
+	{
 		if (MarkerData.gp_array.length !== 0){
 			console.log("GP data already populated");
 			return 0;

@@ -4,7 +4,7 @@ var stage = null;
 /* All nodes (even across seperate families) share the same node layer,
    but are bound by family_group stored in uniqueGraphOps.getFam(fam_id).group; */
 
-var main_layer = null, 
+var main_layer = null,
 	haplo_layer = null;
 
 // --- Init Kinetic --//
@@ -94,7 +94,7 @@ var Graphics = {
 				line.setY(start.y);
 			} catch(e){
 				console.log("what is line", line)
-				throw new Error(line)
+				error(line)
 			}
 
 			var diff_x = end.x - start.x,
@@ -136,7 +136,7 @@ var Graphics = {
 
 			var mid_x = diff_x/2,
 				mid_y = diff_y/2;
-			
+
 			var	m1    = {	y: 0,	   x: mid_x	},
 				m2    = {	y: diff_y, x: mid_x	};
 
@@ -154,7 +154,7 @@ var Graphics = {
 		//	return {mid1:m1,mid2:m2} /* Useful for spawning of Siblines */
 		},
 
-		overlapping_lines : {}, // ypos 
+		overlapping_lines : {}, // ypos
 
 		linesConflictY: function( st, en, ypos)
 		{
@@ -372,7 +372,7 @@ var Graphics = {
 					main_layer.draw();
 					return 0;
 				}
-				
+
 				//Snap-to-grid  -- relative to parent (fam_group)
 				this.setX( (Math.floor(x/grid_rezX)*grid_rezX) );
 				this.setY( (Math.floor(y/grid_rezY)*grid_rezY) );

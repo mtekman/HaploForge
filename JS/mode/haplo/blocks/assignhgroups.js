@@ -76,7 +76,7 @@ var AssignHGroups = {
 				break;
 
 			default:
-				throw new Error("Invalid resolver mode :" + resolver);
+				error("Invalid resolver mode :" + resolver);
 		}
 		return resolverMethod;
 	},
@@ -89,12 +89,12 @@ var AssignHGroups = {
 		var perc_hdata = familyMapOps.getPerc(id,fid).haplo_data;
 
 		for (var a = 0; a < perc_hdata.length; a++) 	// current allele
-		{			
+		{
 			var color_group = FounderColor.hgroup.length;
 
 			// Push the same guy twice for both alleles
 			// Different colors (indices) will refer to the same (duplicated) id
-			FounderColor.hgroup.push( id );					
+			FounderColor.hgroup.push( id );
 
 			/*
 			This is the color group. If it just pointed to it's data, then only a 0 1 or 2 would propogate down through
@@ -147,6 +147,3 @@ var AssignHGroups = {
 		}, fam);
 	}
 }
-
-
-

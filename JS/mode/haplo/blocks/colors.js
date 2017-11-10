@@ -27,7 +27,7 @@ var FounderColor = {
 
 
 	__shuffled(array){
-		var a = array.slice(0); //clone 
+		var a = array.slice(0); //clone
 	    var j, x, i;
     	for (i = a.length; i; i--) {
         	j = Math.floor(Math.random() * i);
@@ -44,7 +44,7 @@ var FounderColor = {
 		var totalnum = array.length;
 
 		if (req > totalnum){
-			throw new Error(req+" > "+totalnum);
+			error(req+" > "+totalnum);
 		}
 
 		var dd = [],
@@ -68,13 +68,13 @@ var FounderColor = {
 		}
 
 		if (total > huelen){
-			throw new Error("Please tier S and V values")
+			error("Please tier S and V values")
 		}
 
 		var range = FounderColor.__evenlySpacedRange(total, hues);
 
 		if (random){
-			return FounderColor.__shuffled(range);	
+			return FounderColor.__shuffled(range);
 		}
 
 		return range;
@@ -91,9 +91,9 @@ var FounderColor = {
 			colours_per_tier = num_colors
 		}
 		else if (num_colors % colours_per_tier === 0){
-			// nought		
+			// nought
 		} else {
-			num_tiers += 1;			
+			num_tiers += 1;
 		}
 
 		var rgb_array = [],
@@ -118,7 +118,7 @@ var FounderColor = {
 				var hue = hues[c]
 
 				hsv_array.push( [hue,sat,val] )
-				rgb_array.push( FounderColor.__hsv2rgb(hue, sat, val) );			
+				rgb_array.push( FounderColor.__hsv2rgb(hue, sat, val) );
 			}
 		}
 		return {hsv: hsv_array, rgb: rgb_array};
@@ -238,7 +238,7 @@ var FounderColor = {
 // 			];
 
 // 			if (fract > 1 || fract < 0){
-// 				throw new Error("Bad fract", fract)
+// 				error("Bad fract", fract)
 // 			}
 
 // 			var x = fract * 16,
@@ -258,10 +258,9 @@ var FounderColor = {
 
 // 		linear: function(fract){
 // 			if (fract > 1 || fract < 0){
-// 				throw new Error("Bad fract", fract)
+// 				error("Bad fract", fract)
 // 			}
 
 // 			return parseInt(fract * 300); // hue between 300-360/0 are essentially the same colour...
 // 		}
 // 	},
-

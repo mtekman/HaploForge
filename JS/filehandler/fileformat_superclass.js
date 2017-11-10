@@ -19,13 +19,13 @@ class FileFormat {
 		this.pedfile =         (ped === null)?0:document.getElementById(ped.id).files[0]     ||  0;
 
 		if (haplo === null){
-			throw new Error("No haplo file given")
+			error("No haplo file given")
 		}
 
 		var that = this,
 			useresolver = AssignHGroups.resolvers.ASTAR,
 			queue = new PromiseQueue(PromiseQueue.pFileRead);
-		
+
 
 
 		FileFormat.__begFuncs();
@@ -41,13 +41,13 @@ class FileFormat {
 			task:     function(haplo_text)
 			{
 				MainButtonActions._temphaploload = haplo_text; // for transferring from haplo to pedcreate
-				haplo.process(haplo_text);
+				haplo.process(haplo_text, haplo.observedGTs);
 
 				// Sometimes the haplo file has RS data and this step is not neccesary.
 				if (!haplo.hasMarkerNames && that.mapfile === 0){
 					// Enumerate map based on number of locus
 					FileFormat.enumerateMarkers();
-				}			
+				}
 			}
 		});
 
@@ -57,7 +57,7 @@ class FileFormat {
 		}
 
 
-		// Descent graph 
+		// Descent graph
 		if (this.descentfile !== 0){
 			useresolver = descent.resolver_mode;
 			queue.addJob({type:"descent", file:this.descentfile, task: descent.process});
@@ -72,7 +72,7 @@ class FileFormat {
 		// Ped data
 		if (this.pedfile !== 0){
 			queue.addJob({type:"pedfile", file:that.pedfile, task:ped.process});
-		}		
+		}
 
 
 		// Process all jobs, then run finish func
@@ -107,7 +107,7 @@ class FileFormat {
 	// If useresolver === null, we ignore assignHGroups
 	//   altogether (useful when loading a prior analysis)
 	static __endFuncs(descentmode = 0){
-		
+
 		graphInitPos(nodeSize + 10, grid_rezY);
 
 		console.groupCollapsed("Haploblock Assignment")
@@ -140,7 +140,7 @@ class FileFormat {
 	// Shared utils
 	static updateFamily(text_unformatted){
 //		console.log("::Pedin --- start");
-		
+
 		var lines = text_unformatted.split('\n');
 
 		for (var l=0; l < lines.length; l++)

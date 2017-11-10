@@ -8,7 +8,7 @@ class Person {
 		this.gender = Number(gender);     // 1 - male, 2-female, 0-unknown
 		this.affected = Number(affected); // 0,1,2
 
-		this.mother = Number(mother); 
+		this.mother = Number(mother);
 		this.father = Number(father);
 		this.haplo_data = [];  			// [Allele1, Allele2]
 
@@ -33,7 +33,7 @@ class Person {
 			this.haplo_data[1].addDescent(normal_array); //maternal
 			return 0;
 		}
-		throw new Error(this.id+" already has populated Alleles");
+		error(this.id+" already has populated Alleles");
 	}
 
 	insertFlowData(normal_array){
@@ -47,7 +47,7 @@ class Person {
 			this.haplo_data[1].addFlow(normal_array); //maternal
 			return 0;
 		}
-		throw new Error(this.id+" already has populated Alleles");
+		error(this.id+" already has populated Alleles");
 	}
 
 
@@ -61,9 +61,9 @@ class Person {
 			this.haplo_data[1].haplogroup_array = new Int8Array(normal_array);
 			return 0;
 		}
-		throw new Error(this.id+" already has haplogroups set!");
+		error(this.id+" already has haplogroups set!");
 	}
-	
+
 
 	insertHaploData(normal_array){
 		var num_alleles = this.haplo_data.length;
@@ -79,9 +79,9 @@ class Person {
 				return 0;
 			}
 			console.log(this);
-			throw new Error(this.id+" Allele sizes not consistent! "+chromlen+" vs "+normal_array.length);
+			error(this.id+" Allele sizes not consistent! "+chromlen+" vs "+normal_array.length);
 		}
-		throw new Error(this.id+" already has populated Alleles");
+		error(this.id+" already has populated Alleles");
 	}
 
 	// Identical in relationships

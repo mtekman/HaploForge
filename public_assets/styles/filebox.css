@@ -3,7 +3,7 @@
   display: none;
   position:absolute;
   top:50%;
-  left: 50%; 
+  left: 50%;
   -webkit-transform: translateX(-50%) translateY(-50%);
   -moz-transform: translateX(-50%) translateY(-50%);
   transform: translateX(-50%) translateY(-50%);
@@ -76,7 +76,7 @@
 .border {
   margin: 6px;
   border-radius: 10px;
-  border: 2px solid;  
+  border: 2px solid;
 }
 
 
@@ -90,6 +90,12 @@
   margin: 40px;
   font-size: 0.85em;
   font-style: italic;
+}
+
+#mapped_ticker label {
+  font-size: 0.7em;
+  font-style: italic;
+  display: inline;
 }
 
 #fileselector {

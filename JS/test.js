@@ -34,9 +34,9 @@ var Test = {
 
 
 							if (!(key in run_map)){
-								run_map[key] = { 
-									passes:  0, 
-									attempts :  0, 
+								run_map[key] = {
+									passes:  0,
+									attempts :  0,
 									record: []
 								};
 							}
@@ -103,7 +103,7 @@ var Test = {
 
     	start() {
 			var key = "benchmark_runner";
-    		
+
     		if (localStorage.getItem(key) === null){
     			Test.Benchmark.disable();
     		}
@@ -123,21 +123,21 @@ var Test = {
     		localStorage.setItem(key, false)
     	}
     },
-        
-    
+
+
 
     Tutorial : {
 	Main(){
 
 	    var pages = [
-		["Title1", "This is the text at the top that explains quickly", 
+		["Title1", "This is the text at the top that explains quickly",
 		 "This is the bottom text that rambles on and on about nothing in particular and most people think is a bit much to be honest", null],
 
-		["Title2", "This is the text at the top that explains quickly", 
-		 "This is the bottom text that rambles on and on about nothing in particular and most people think is a bit much to be honest", null, 
+		["Title2", "This is the text at the top that explains quickly",
+		 "This is the bottom text that rambles on and on about nothing in particular and most people think is a bit much to be honest", null,
 		 {enter:function(){console.log("page2 enter action")}, exit:function(){console.log("page2 exit action")}}],
 
-		["Title3", "This is the text at the top that explains quickly", 
+		["Title3", "This is the text at the top that explains quickly",
 		 "This is the bottom text that rambles on and on about nothing in particular and most people think is a bit much to be honest", null],
 	    ];
 
@@ -152,7 +152,7 @@ var Test = {
 
 	    setTimeout(function(){
 		var tutbutt = document.getElementById('selection_tools').childNodes[3].childNodes[1].childNodes[0].cells[0].childNodes[0]
-		bb =  new ButtonTutorial(tutbutt, "Go away", "Test this tdiasd andso", "right");				
+		bb =  new ButtonTutorial(tutbutt, "Go away", "Test this tdiasd andso", "right");
 	    },1000)
 	}
     },
@@ -180,7 +180,7 @@ var Test = {
 
 		    Genehunter.populateFamilyAndHaploMap(haplo_text);
 		    Genehunter.populateMarkerMap(map_text);
-		    
+
 		    HaploPedProps.init();
 		    FileFormat.__endFuncs( AssignHGroups.resolvers.FLOW );
 
@@ -254,13 +254,14 @@ var Test = {
 		    var map_text   = localStorage.getItem("MERLINMAP");
 		    var ped_text   = localStorage.getItem("MERLINPED");
 
-		    Merlin.populateFamilyAndHaploMap(haplo_text);
-		    Merlin.populateMarkerMap(map_text)
-		    Merlin.populateFlow(chr_text);
-		    FileFormat.updateFamily(ped_text);
+		    Merlin.populateFamilyAndHaploMap(haplo_text, true); ;// testing mapped
 
-		    HaploPedProps.init(familyMapOps.inferGenders);
-		    FileFormat.__endFuncs( AssignHGroups.resolvers.FLOW );
+		    // Merlin.populateMarkerMap(map_text)
+		    // Merlin.populateFlow(chr_text);
+		    // FileFormat.updateFamily(ped_text);
+            //
+		    // HaploPedProps.init(familyMapOps.inferGenders);
+		    // FileFormat.__endFuncs( AssignHGroups.resolvers.FLOW );
 
 		    /*			setTimeout(function(){
 					SelectionMode.init();
@@ -289,7 +290,7 @@ var Test = {
 			       HaploPedProps.init();
 			       FileFormat.__endFuncs(usedesc);
 			   }, 500);
-	    }, 500);			
+	    }, 500);
 	}
     },
 
@@ -333,7 +334,7 @@ var Test = {
     },
 
     Colors : FounderColor.testColors,
-    
+
     PedCreate : {
 	run(){
 	    MainButtonActions.createNewPed()
@@ -357,5 +358,3 @@ var Test = {
 	}
     }
 }
-
-//Test.Homology.run()

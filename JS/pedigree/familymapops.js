@@ -21,7 +21,7 @@ var familyMapOps = {
 		if (fam_id === null){
 			for (var fid in familyMapOps._map){
 				for (var pid in familyMapOps.getFam(fid)){
-					callback(pid, fid, 
+					callback(pid, fid,
 						familyMapOps.getPerc(pid,fid)
 					);
 				}
@@ -29,7 +29,7 @@ var familyMapOps = {
 		}
 		else{
 			for (var pid in familyMapOps.getFam(fam_id)){
-				callback(pid, 
+				callback(pid,
 					familyMapOps.getPerc(pid,fam_id)
 				);
 			}
@@ -57,7 +57,7 @@ var familyMapOps = {
 		for (var fam in familyMapOps._map){
 			return familyMapOps.getFirst(fam);
 		}
-		throw new Error("No families");
+		error("No families");
 	},
 
 	/* Grab the first individual */
@@ -105,7 +105,7 @@ var familyMapOps = {
 	_removePercAsParent: function(person, family_id){
 		if (person.children.length > 0){
 			var isMother = person.gender === PED.FEMALE;
-			
+
 			person.foreachmate(function(mate)
 			{
 				person.foreachchild(mate, function(child){
@@ -154,13 +154,13 @@ var familyMapOps = {
 
 
 	insertPerc: function(person, family_id){
-		
+
 		if (!(family_id in familyMapOps._map)){
 			familyMapOps._map[family_id] = {}
 			console.log("FMO: added new fam", family_id);
 		}
-		
-		var num_attempts = familyMapOps._loginsertion(person.id, family_id);		
+
+		var num_attempts = familyMapOps._loginsertion(person.id, family_id);
 
 		if (!(person.id in familyMapOps._map[family_id])){
 			familyMapOps._map[family_id][person.id] = person;
@@ -228,7 +228,7 @@ var familyMapOps = {
 		if (person_id in familyMapOps._map[family_id]){
 			return familyMapOps._map[family_id][person_id];
 		}
-		throw new Error(person_id + " not in " + family_id);
+		error(person_id + " not in " + family_id);
 	},
 
 	inferGenders : function(family_id = null){
@@ -253,7 +253,7 @@ var familyMapOps = {
 						perc.gender = PED.MALE
 					}
 					else {
-						throw new Error(perc, firstChild);
+						error(perc, firstChild);
 					}
 				}
 			}
@@ -297,7 +297,7 @@ var familyMapOps = {
 					if (res01 === true){
 						return true;
 					}
-				}								
+				}
 			}
 
 			// Parents
@@ -312,4 +312,3 @@ var familyMapOps = {
 		return recurseSearch(perc1);
 	}
 }
-

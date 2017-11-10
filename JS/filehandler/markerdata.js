@@ -27,7 +27,7 @@ var MarkerData = {
 				console.log("GP array and RS array do not match",
 					MarkerData.gp_array.length,
 					MarkerData.rs_array.length);
-				throw new Error();
+				error("GP array and RS array do not match");
 			}
 		}
 	},

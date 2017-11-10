@@ -23,16 +23,16 @@ var userOpts = {
 				res = true;
 			}
 			else{
-				res = (value === "true");				
+				res = (value === "true");
 			}
-			
-			
+
+
 			// Set
 			userOpts[key] = res;
 
 			return res;
 		}
-		throw new Error(key+" not in userOpts");
+		error(key+" not in userOpts");
 	},
 
 	setGraphics: function(){
@@ -41,7 +41,7 @@ var userOpts = {
 		{
 			HaploBlockFormat.applyFancy();
 			BackgroundVidMain.addVid();
-		} 
+		}
 		else {
 			HaploBlockFormat.applyDefault();
 			BackgroundVidMain.removeVid();

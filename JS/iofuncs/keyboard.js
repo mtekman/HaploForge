@@ -1,7 +1,7 @@
 //Keyboard
 
 var Keyboard = {
-	
+
 	__map : {
 		"Control" : false,
 		"Shift": false,
@@ -13,10 +13,10 @@ var Keyboard = {
 
 	overridewindowdefaults: false,
 
-	__listening: false, 
+	__listening: false,
 
 	__pause_state: null,	// Pausing is useful for input entering operations.
-	__tmptasks : [],        // holds each layer of up and down tasks, pops/pushes each 
+	__tmptasks : [],        // holds each layer of up and down tasks, pops/pushes each
 
 	__dn_tasks : {},  // keydn --> function()
 	__up_tasks : {},    // keyup --> function()
@@ -24,7 +24,7 @@ var Keyboard = {
 
 	// -- Layer handling
 
-	/** Store previous config and override if neccesary, restoring on layerOff **/	
+	/** Store previous config and override if neccesary, restoring on layerOff **/
 	layerOn(name, replace = true){
 		Keyboard.__beginListen();
 
@@ -70,7 +70,7 @@ var Keyboard = {
 		Keyboard.__prevlistenstate = Keyboard.__listening;
 		Keyboard.__endListen();
 	},
-	
+
 	unpause(){
 		if (Keyboard.__prevlistenstate){
 			Keyboard.__beginListen();
@@ -196,7 +196,7 @@ var Keyboard = {
 
 	addKeyDownTask(key, func){
 		if (key in Keyboard.__dn_tasks){
-			throw new Error("This will override the down task for "+key);
+			error("This will override the down task for "+key);
 		}
 		Keyboard.__dn_tasks[key] = func;
 	},

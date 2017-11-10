@@ -2,7 +2,7 @@
 debugGH = {};
 
 class Genehunter extends FileFormat {
-	
+
 	constructor(mode_init = null){
 
 		var haplo = {
@@ -29,7 +29,7 @@ class Genehunter extends FileFormat {
 		}
 
 		super(haplo, map, ped, null, mode_init);
-		
+
 	}
 
 	static populateMarkerMap(text_unformatted){
@@ -52,7 +52,7 @@ class Genehunter extends FileFormat {
 				current_chrom = tokens[0]
 			}
 			else if (current_chrom !== tokens[0]){
-				throw new Error("Chrom changed from "+ current_chrom + " to " + tokens[0])
+				error("Chrom changed from "+ current_chrom + " to " + tokens[0])
 			}
 
 			var genpos = Number(tokens[1]),
@@ -73,7 +73,7 @@ class Genehunter extends FileFormat {
 	}
 
 	static populateFamilyAndHaploMap(text_unformatted){
-		
+
 		var lines = text_unformatted.split('\n'),
 			tmp_perc = null,
 			current_fam = null;
@@ -99,7 +99,7 @@ class Genehunter extends FileFormat {
 
 				tmp_perc.insertHaploData(haplo2);
 
-				familyMapOps.insertPerc(tmp_perc, current_fam);		
+				familyMapOps.insertPerc(tmp_perc, current_fam);
 				tmp_perc = null;
 				continue
 			}
