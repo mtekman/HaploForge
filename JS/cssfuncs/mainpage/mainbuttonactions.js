@@ -1,4 +1,10 @@
 
+function reload(){
+	//if (utility.notify.isshowing)
+	//location.reload()
+}
+
+
 var MainButtonActions  = {
 
 	_temphaploload: null,
@@ -13,9 +19,9 @@ var MainButtonActions  = {
 	loadHaploFromStorage: function(hap_data = null)
 	{
 		FileFormat.__begFuncs();
-		
+
 		if (hap_data === null){
-			hap_data = localStorage.getItem( localStor.hap_save );			
+			hap_data = localStorage.getItem( localStor.hap_save );
 		}
 
 		// Still empty?
@@ -27,7 +33,7 @@ var MainButtonActions  = {
 
 		SerialParse.All.import( hap_data );
 		HaploPedProps.init();
-		
+
 		FileFormat.__endFuncs(null);  // :=null  ensures that HGroups aren't reassigned.
 	},
 
@@ -35,7 +41,7 @@ var MainButtonActions  = {
 	loadPedFromStorage: function(haplotransfer = false) {
 		MainButtonActions.preamble();
 		MainPageHandler.createpedmode();
-		
+
 		var ped_data, ped_type;
 
 		if (!haplotransfer){
@@ -52,7 +58,7 @@ var MainButtonActions  = {
 
 	savePedToStorage: function() {
 
-		var ped_to_string = Pedfile.export(true); 
+		var ped_to_string = Pedfile.export(true);
 		if (ped_to_string === -1){
 			return;
 		}
@@ -67,7 +73,7 @@ var MainButtonActions  = {
 	saveHaploToStorage: function(){
 		//Save to local storage
 		localStorage.setItem(localStor.hap_save, SerialParse.All.export() )
-		utility.notify("Haplo File Saved","...");		
+		utility.notify("Haplo File Saved","...");
 	},
 
 	exitToMenu: function(){
@@ -80,22 +86,22 @@ var MainButtonActions  = {
 					"Yes", function(){
 			 			MainButtonActions.savePedToStorage();
 			 			//MainPageHandler.defaultload();
-			 			location.reload();
+			 			reload();
 			 		},
 			 		"No", function(){
-			 			MainPageHandler.defaultload();	
+			 			MainPageHandler.defaultload();
 				 	}
 				 );
 			}
 			else{
 				//MainPageHandler.defaultload();
-				location.reload();
+				reload();
 			}
 		}
 		// Haplo Types are automatically saved and loaded
 		else{
 			//MainPageHandler.defaultload();
-			location.reload();
+			reload();
 		}
 	},
 
