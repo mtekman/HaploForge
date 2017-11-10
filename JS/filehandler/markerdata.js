@@ -1,3 +1,15 @@
+var ObservedBases = {
+	_nullbase : 0,
+	_map : {'A': 1, 'C': 2, 'T': 3, 'G': 4},
+
+	recodeBase(base){
+		if (base in ObservedBases._map){
+			return ObservedBases._map[base];
+		}
+		return ObservedBases._nullbase;
+	}
+}
+
 
 var MarkerData = {
 	rs_array: [], // rsid
