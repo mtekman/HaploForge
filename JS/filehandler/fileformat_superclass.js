@@ -26,10 +26,7 @@ class FileFormat {
 			useresolver = AssignHGroups.resolvers.ASTAR,
 			queue = new PromiseQueue(PromiseQueue.pFileRead);
 
-
-
 		FileFormat.__begFuncs();
-
 
 		console.groupCollapsed("File Processing")
 
@@ -47,6 +44,12 @@ class FileFormat {
 				if (!haplo.hasMarkerNames && that.mapfile === 0){
 					// Enumerate map based on number of locus
 					FileFormat.enumerateMarkers();
+				}
+
+				// For observed GT bases: clone sequence data, assert biallelic
+				// marker over all individuals
+				if (haplo.observedGTs){
+					SequenceChecker.recodeAll()
 				}
 			}
 		});

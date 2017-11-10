@@ -1,7 +1,6 @@
 
 var debugMerlin = {};
 
-
 class Merlin extends FileFormat {
 
 	constructor(mode_init = null)
@@ -14,6 +13,7 @@ class Merlin extends FileFormat {
 			},
 			hasMarkerNames : false,
 			inferGenders : true,
+			observedGTs: true
 		}
 
 		var descent = {
@@ -38,14 +38,13 @@ class Merlin extends FileFormat {
 		super(haplo, map, pedin, descent, mode_init);
 	}
 
-	static populateFlow(text_unformatted){
-		Merlin.populateFamilyAndHaploMap(text_unformatted, true);
+	static populateFlow(text_unformatted, mapped_gts){
+		Merlin.populateFamilyAndHaploMap(text_unformatted, mapped_gts, true);
 	}
 
 
-	static populateFamilyAndHaploMap(text_unformatted, flow = false){
+	static populateFamilyAndHaploMap(text_unformatted, mapped_gts = true, flow = false){
 		//console.log("::"+(flow?"Flow":"Chr")+" --- start");
-
 		var lines = text_unformatted.split('\n');
 
 		var tmp = {
@@ -54,23 +53,18 @@ class Merlin extends FileFormat {
 			_alleles_array : [] // vertical haplos [ [[],[]] , [[],[]] ]
 		}
 
-
-
 		function flushTmpData(tmp){
 			// Finish populating alleles and insert percs
 			if (tmp._perc_array.length > 0)
 			{
 				if (tmp._perc_array.length !== tmp._alleles_array.length){
-					console.log("Length mismatch");
-					throw new Error("");
+					error("Length mismatch");
 				}
-
 
 				for (var tpa=0; tpa < tmp._perc_array.length; tpa ++)
 				{
 					var perc_alleles = tmp._alleles_array[tpa],
 						perc = tmp._perc_array[tpa];
-
 
 					if (flow){ // flow relies on prior perc existence
 						var perc = familyMapOps.getPerc(perc.id, tmp._fam);
@@ -126,7 +120,7 @@ class Merlin extends FileFormat {
 
 						if (parents !== "F"){
 							parents = parents.split(",").map(x => Number(x));
-							
+
 							mother_id = parents[0];
 							father_id = parents[1];
 						}
@@ -152,7 +146,7 @@ class Merlin extends FileFormat {
 
 			if (multiple_alleles.length  !== tmp._perc_array.length){
 				console.log(trimmed, multiple_alleles, tmp._perc_array)
-				throw new Error("Num alleles and num percs do not align");
+				error("Num alleles and num percs do not align");
 			}
 
 			for (var a=0; a < multiple_alleles.length; a++)
@@ -161,17 +155,22 @@ class Merlin extends FileFormat {
 					left_right = null;
 
 				if (!flow){
-					// We ignore all types of phasing and for 
+					// We ignore all types of phasing and for
 					// ambiguously marker alleles "A", we pick the
 					// first (this holds consistent for inherited).
 					//var left_right = alleles.split(/\s[+:|\\/]\s/)
 
 					left_right = alleles.split(/\s[^\d]\s/)
-						.map(x=> Number(
-							x.split(",")[0]
-							 .replace("A","")
-							 //.replace("?","9")
-						));
+						.map(x=> x.split(",")[0].replace("A",""));
+
+					if (mapped_gts){
+						left_right = left_right.map(
+							x => ObservedBases.recodeBase(x)
+						)
+					}
+					else {
+						left_right = left_right.map(x=> Number(x))
+					}
 				}
 				else {
 					left_right = alleles.split(/\s[^\d]\s/);
