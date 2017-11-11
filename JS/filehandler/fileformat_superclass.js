@@ -38,7 +38,7 @@ class FileFormat {
 			task:     function(haplo_text)
 			{
 				MainButtonActions._temphaploload = haplo_text; // for transferring from haplo to pedcreate
-				haplo.process(haplo_text, haplo.observedGTs);
+				haplo.process(haplo_text);
 
 				// Sometimes the haplo file has RS data and this step is not neccesary.
 				if (!haplo.hasMarkerNames && that.mapfile === 0){
@@ -48,7 +48,7 @@ class FileFormat {
 
 				// For observed GT bases: clone sequence data, assert biallelic
 				// marker over all individuals
-				if (SequenceChecker.use){
+				if (SequenceChecker.hasSequence){
 					SequenceChecker.recodeAll()
 				}
 			}
@@ -121,6 +121,13 @@ class FileFormat {
 			BenchStopwatch.stop();
 		}
 		console.groupEnd();
+
+		// Test random individual to see if resolver worked
+		if (familyMapOps.getRandomPerc()
+			.haplo_data[0].haplogroup_array
+			.filter(x => x != -1).length === 0){
+				error("Invalid filetype, haplotypes not resolved.")
+		}
 
 		MarkerData.padMarkerMap();
 	}
