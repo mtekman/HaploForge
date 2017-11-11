@@ -1,12 +1,24 @@
 var ObservedBases = {
 	_nullbase : 0,
-	_map : {'A': 1, 'C': 2, 'T': 3, 'G': 4},
+	_nulltide : '?',
+	_fmap : {'A': 1, 'C': 2, 'T': 3, 'G': 4},
+	_bmap : {1: 'A', 2: 'C', 3: 'T', 4: 'G'},
 
-	recodeBase(base){
-		if (base in ObservedBases._map){
-			return ObservedBases._map[base];
+	recodeBase(baseraw){
+		let base = baseraw.trim()
+		var res = ObservedBases._nullbase
+		if (base in ObservedBases._fmap){
+			res = ObservedBases._fmap[base];
 		}
-		return ObservedBases._nullbase;
+		return res;
+	},
+
+	decodeBase(onetworaw){
+		let onetwo = onetworaw.trim()
+		if (onetwo in ObservedBases._bmap){
+			return ObservedBases._bmap[onetwo]
+		}
+		return ObservedBases._nulltide
 	}
 }
 
