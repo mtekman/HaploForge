@@ -1,7 +1,8 @@
 
 var SequenceChecker = {
 
-    use : true, // set by checkbox, read by each respective fileformat subclass
+    hasSequence : false, // set by file upload checkbox
+    use : false, // set by "Togg. Seq", read by each respective fileformat subclass
 
     _marker_map : [], // 10 → {"T":0, "G":0}
     _marker_ab : [], // 10 → {"T": 1, "G": 2}
@@ -14,23 +15,26 @@ var SequenceChecker = {
 
         familyMapOps.foreachperc(function(pid, fid, perc){
             let allele1data = perc.haplo_data[0].data_array,
-            allele2data = perc.haplo_data[1].data_array
+                allele2data = perc.haplo_data[1].data_array
 
-            // Clone
-            perc.haplo_data[0].sequence = allele1data.slice(0)
-            perc.haplo_data[1].sequence = allele2data.slice(1)
+            // Clone + Recode -- has to be done in a for loop due Int8 -> Char
+            var olo1 = []
+            var olo2 = []
+            for (var i=0; i < allele1data.length; i++){
+                olo1.push(ObservedBases.decodeBase(allele1data[i]))
+                olo2.push(ObservedBases.decodeBase(allele2data[i]))
+            }
+
+            perc.haplo_data[0].sequence = olo1
+            perc.haplo_data[1].sequence = olo2
 
             // Iterate over all marker states
             for (let m=0; m < MarkerData.rs_array.length; m++){
                 let all1 = allele1data[m],
                     all2 = allele2data[m];
 
-                if (m==10 || m==9){
-                    console.log(m, all1, all2)
-                }
-
                 if (!(m in SequenceChecker._marker_map)){
-                    SequenceChecker._marker_map[m] = {}
+                    SequenceChecker._marker_map[m] = new Map()
                 }
                 SequenceChecker._marker_map[m][all1] = true
                 SequenceChecker._marker_map[m][all2] = true
@@ -56,7 +60,7 @@ var SequenceChecker = {
                     break;
                 default:
                     console.log("FR", base_array);
-                    error("Marker " + MarkerData.rs_array[m] + " not bialleic" );
+                    error("Marker " + m + " not bialleic" );
                 break;
             }
 
@@ -76,10 +80,10 @@ var SequenceChecker = {
             for (let m=0; m < MarkerData.rs_array.length; m++)
             {
                 let all1 = perc.haplo_data[0].data_array[m],
-                all2 = perc.haplo_data[1].data_array[m];
+                    all2 = perc.haplo_data[1].data_array[m];
 
                 let onetwo1 = SequenceChecker._marker_ab[m][all1],
-                onetwo2 = SequenceChecker._marker_ab[m][all2];
+                    onetwo2 = SequenceChecker._marker_ab[m][all2];
 
                 // assign
                 perc.haplo_data[0].data_array[m] = onetwo1;
