@@ -49,7 +49,7 @@ class PromiseQueue {
 		    			resolve();
 
 		    		} catch(e){
-		    			reject(file.name + " is not a " + type + ". and:" + e);
+		    			reject(file.name + " is not a " + type + ", and " + e);
 		    		}
 		    	}
 				fr.readAsText(file);
@@ -62,13 +62,15 @@ class PromiseQueue {
 	{
 		this.promise.then( finishfunc ).catch(
 			function(errors){
-				MainButtonActions.exitToMenu();
 
 				if (BenchStopwatch.__timeStart !== null ){
 					BenchStopwatch.terminate();
 				}
+				utility.notify("Check your inputs", errors, 5);
 
-				utility.notify("Check your inputs", errors, 10);
+				setTimeout(function(){
+					MainButtonActions.exitToMenu();
+				}, 5000);
 			}
 		);
 	}

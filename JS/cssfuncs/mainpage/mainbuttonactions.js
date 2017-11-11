@@ -1,7 +1,6 @@
 
 function reload(){
-	//if (utility.notify.isshowing)
-	//location.reload()
+	location.reload()
 }
 
 
