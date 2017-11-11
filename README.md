@@ -50,3 +50,5 @@ Vector files describe the *flow* of genetic information from one generation to t
 
 Simply go to the [live application](https://mtekman.github.io/haploforge/) and go through the quick video tutorials (in total no longer than 10 minutes).
 
+
+***NOTE:*** Family names and Sample IDs *must* be numeric
