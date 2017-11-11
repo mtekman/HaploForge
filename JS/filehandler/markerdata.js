@@ -14,7 +14,7 @@ var ObservedBases = {
 	},
 
 	decodeBase(onetworaw){
-		let onetwo = onetworaw.trim()
+		let onetwo = onetworaw
 		if (onetwo in ObservedBases._bmap){
 			return ObservedBases._bmap[onetwo]
 		}
