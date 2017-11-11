@@ -7,10 +7,10 @@ class PromiseQueue {
 		this.generaltask = jobfunc;
 	}
 
-	
+
 	addJob(job){
 		console.log("---Queuing:", job.file.name)
-		
+
 		var that = this;
 
 		this.promise = this.promise.then(function(){
@@ -42,14 +42,14 @@ class PromiseQueue {
 
 			else {
 				var fr = new FileReader();
-				
+
 				fr.onload = function(e){
 					try {
 			    		task(e.target.result);
 		    			resolve();
 
 		    		} catch(e){
-		    			reject(file.name + " is not a " + type);
+		    			reject(file.name + " is not a " + type + ". and:" + e);
 		    		}
 		    	}
 				fr.readAsText(file);
@@ -89,7 +89,7 @@ class PromiseQueue_eski {
 		this.async_task = jobfunc;
 	}
 
-	
+
 	addJob(job){
 
 
@@ -99,12 +99,12 @@ class PromiseQueue_eski {
 		this.jobs.push(p1);
 	}
 
-	
+
 
 	static pFileRead(file, task){
 		return new Promise((resolve, reject) => {
 			var fr = new FileReader();
-			
+
 			fr.onload = function(e){
 	    		task(e.target.result);
 	    		resolve();
@@ -161,7 +161,7 @@ class Queue2 {
 			finish();
 			return 0
 		}
-		
+
 		var job = this.activejobs.pop();
 		console.log("THINK", job.file.name);
 		this.jobtask( job, this.rchain(finish))
@@ -228,7 +228,7 @@ class Queuer {
 	    	return 0;
 	    }
 
-        // Otherwise  - store previous job 
+        // Otherwise  - store previous job
 	    var lastjob = this.firstjob;
 
 	    var that = this;
