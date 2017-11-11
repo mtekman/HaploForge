@@ -1,7 +1,7 @@
 /* Class that rewrites the selection_tools div to swap in tools for each mode */
 var BottomButtons = {
 
-	table_keys : {}, 
+	table_keys : {},
 	div   : document.getElementById("save_and_close"),
 	table : document.getElementById("save_and_close_table"),
 
@@ -59,16 +59,16 @@ var BottomButtons = {
 		{
 			BottomButtons.modes.__preamble();
 
-			BottomButtons.addToolsButton("Save", 
+			BottomButtons.addToolsButton("Save",
 				Settings.bindings.global["Save"],
-				"Saves current pedigree to be automatically loaded next time", 
+				"Saves current pedigree to be automatically loaded next time",
 				MainButtonActions.savePedToStorage);
 
-			BottomButtons.addToolsButton("Export", 
+			BottomButtons.addToolsButton("Export",
 				Settings.bindings.pedcreate["Export"],
 				"Exports pedigree in LINKAGE format with or without graphics positions saved",
 				function(){
-					utility.yesnoprompt("Export", "Strip graphics tags?", 
+					utility.yesnoprompt("Export", "Strip graphics tags?",
 						"Yes", function(){
 							Pedfile.exportToTab(false);
 						},
@@ -79,7 +79,7 @@ var BottomButtons = {
 				}
 			);
 
-			BottomButtons.addToolsButton("Exit", 
+			BottomButtons.addToolsButton("Exit",
 				Settings.bindings.global["Exit Mode"],
 				"Exits to Main Menu", function(){
 				MainButtonActions.exitToMenu();
@@ -92,12 +92,12 @@ var BottomButtons = {
 		setToHaploView: function(){
 			BottomButtons.modes.__preamble();
 
-			BottomButtons.addToolsButton("Save", 
+			BottomButtons.addToolsButton("Save",
 				Settings.bindings.global["Save"],
 				"Save current analysis data to be automatically loaded next time",
 				MainButtonActions.saveHaploToStorage);
-			
-			BottomButtons.addToolsButton("Exit", 
+
+			BottomButtons.addToolsButton("Exit",
 				Settings.bindings.global["Exit Mode"],
 				"Exits to Main Menu",
 				MainButtonActions.exitToMenu);
@@ -118,15 +118,26 @@ var BottomButtons = {
 			BottomButtons.addToolsButton("Align Pedigree",
 				Settings.bindings.comparison["Align Pedigree"],
 				"Shifts individuals vertically to be at the same position, or offset by generation", function(){
-				HaploWindow.alignTopSelection( DOS.haplo_group_nodes, DOS.haplo_group_lines);
+					HaploWindow.alignTopSelection( DOS.haplo_group_nodes, DOS.haplo_group_lines);
 			});
 
 			BottomButtons.addToolsButton("Recolour",
 				Settings.bindings.comparison["Recolour Haploblocks"],
 				"Random colour assignment to haplo blocks. Founder groups are preserved.", function(){
-				FounderColor.makeUniqueColors(true); //random = true
-				HaploBlock.redrawHaplos(false);
+					FounderColor.makeUniqueColors(true); //random = true
+					HaploBlock.redrawHaplos(false);
 			});
+
+			if (SequenceChecker.hasSequence)
+			{
+				BottomButtons.addToolsButton("Togg. Seq.",
+					Settings.bindings.comparison["Toggle Sequence"],
+					"Switch between allele calls and observable ACGT calls", function()
+					{
+						SequenceChecker.use = !SequenceChecker.use;
+						HaploBlock.redrawHaplos(false);
+				});
+			}
 
 //			BottomButtons.modes.__clearMode();
 			ModeTracker.setMode( "comparison" );
@@ -148,6 +159,3 @@ var BottomButtons = {
 		}
 	}
 }
-
-
-
