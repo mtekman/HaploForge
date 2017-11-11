@@ -9,7 +9,7 @@ class Merlin extends FileFormat {
 			id: "merlin_haplo",
 			process: function(haplo_text){
 				debugMerlin.haplo = haplo_text;
-				Merlin.populateFamilyAndHaploMap(haplo_text);
+				Merlin.populateFamilyAndHaploMap(haplo_text, true);
 			},
 			hasMarkerNames : false,
 			inferGenders : true,
@@ -160,8 +160,14 @@ class Merlin extends FileFormat {
 					// first (this holds consistent for inherited).
 					//var left_right = alleles.split(/\s[+:|\\/]\s/)
 
-					left_right = alleles.split(/\s[^\d]\s/)
-						.map(x=> x.split(",")[0].replace("A",""));
+					left_right = alleles.split(/\s[^\d]\s/).map(x=> {
+							var chosen = x.split(",")[0].trim() // first potential allele is taken and assumed outright
+							if (chosen.length === 2){
+								chosen = chosen.replace("A","")
+							}
+							return chosen
+						}
+					);
 
 					if (mapped_gts){
 						left_right = left_right.map(
