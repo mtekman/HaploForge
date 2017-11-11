@@ -6,7 +6,7 @@ var Settings = {
 
 	__set: false,
 
-	__storageoverridekey: "overridewindow", 
+	__storageoverridekey: "overridewindow",
 	__storagebindingskey: "bindings",
 
 	init(){ // called by window load
@@ -63,7 +63,8 @@ var Settings = {
 			"Prev. Recomb."  			: '[',
 			"Next  Recomb."  			: ']',
 			"Align Pedigree" 			: 'V',
-			"Recolour Haploblocks" 		: 'R'
+			"Recolour Haploblocks" 		: 'R',
+			"Toggle Sequence"           : '#'
 		},
 
 		"haploview" : {
@@ -195,9 +196,9 @@ var Settings = {
     			li2.appendChild(inp);
     			uul.appendChild(li1);
     			uul.appendChild(li2);
-    			
+
     			uul.onclick = Settings.changeBinding.bind(inp);
-    			
+
     			lli.appendChild(uul);
 
 //    			lli.appendChild(document.createElement('br'));
@@ -231,7 +232,7 @@ var Settings = {
 			"yes",
 			function(){
 				clearLocalHaploStorage()  // -> formats.js
-				MainPageHandler.defaultload()				
+				MainPageHandler.defaultload()
 			},
 			"no",
 			function(){});
@@ -260,7 +261,7 @@ var Settings = {
 		input.onchange = function(){
 			userTutorials.setFirstRun( this.checked );
 		}
-		
+
 		label.appendChild(input);
 		linew.appendChild(label);
 		 unew.appendChild(linew);
@@ -284,7 +285,7 @@ var Settings = {
 		input.onchange = function(){
 			Keyboard.overridewindowdefaults = this.checked;
 		}
-		
+
 		label.appendChild(input);
 		linew.appendChild(label);
 		 unew.appendChild(linew);

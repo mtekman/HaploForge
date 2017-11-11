@@ -171,14 +171,16 @@ var HaploBlock = {
 					total_text +=  (haploblock_buffers.ht_offset
 						+ HaploBlock.haploinfos[i][0].sequence[m]
 						+ haploblock_buffers.ht_2_ht
-						+ HaploBlock.haploinfos[i][1].sequence[m]);				
+						+ HaploBlock.haploinfos[i][1].sequence[m]
+					);
 			}
 			else {
 				for (var i=0; i < HaploBlock.haploinfos.length; i++)
 					total_text +=  (haploblock_buffers.ht_offset
 						+ HaploBlock.haploinfos[i][0].data_array[m]
 						+ haploblock_buffers.ht_2_ht
-						+ HaploBlock.haploinfos[i][1].data_array[m]);
+						+ HaploBlock.haploinfos[i][1].data_array[m]
+					);
 			}
 
 			total_text +='\n';
