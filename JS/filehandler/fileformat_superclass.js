@@ -48,7 +48,7 @@ class FileFormat {
 
 				// For observed GT bases: clone sequence data, assert biallelic
 				// marker over all individuals
-				if (haplo.observedGTs){
+				if (SequenceChecker.use){
 					SequenceChecker.recodeAll()
 				}
 			}

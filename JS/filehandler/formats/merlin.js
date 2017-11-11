@@ -9,11 +9,10 @@ class Merlin extends FileFormat {
 			id: "merlin_haplo",
 			process: function(haplo_text){
 				debugMerlin.haplo = haplo_text;
-				Merlin.populateFamilyAndHaploMap(haplo_text, true);
+				Merlin.populateFamilyAndHaploMap(haplo_text);
 			},
 			hasMarkerNames : false,
-			inferGenders : true,
-			observedGTs: true
+			inferGenders : true
 		}
 
 		var descent = {
@@ -38,12 +37,12 @@ class Merlin extends FileFormat {
 		super(haplo, map, pedin, descent, mode_init);
 	}
 
-	static populateFlow(text_unformatted, mapped_gts){
-		Merlin.populateFamilyAndHaploMap(text_unformatted, mapped_gts, true);
+	static populateFlow(text_unformatted){
+		Merlin.populateFamilyAndHaploMap(text_unformatted, true);
 	}
 
 
-	static populateFamilyAndHaploMap(text_unformatted, mapped_gts = true, flow = false){
+	static populateFamilyAndHaploMap(text_unformatted, flow = false){
 		//console.log("::"+(flow?"Flow":"Chr")+" --- start");
 		var lines = text_unformatted.split('\n');
 
@@ -169,7 +168,7 @@ class Merlin extends FileFormat {
 						}
 					);
 
-					if (mapped_gts){
+					if (SequenceChecker.use){
 						left_right = left_right.map(
 							x => ObservedBases.recodeBase(x)
 						)

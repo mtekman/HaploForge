@@ -1,6 +1,8 @@
 
 var SequenceChecker = {
 
+    use : true, // set by checkbox, read by each respective fileformat subclass
+
     _marker_map : [], // 10 → {"T":0, "G":0}
     _marker_ab : [], // 10 → {"T": 1, "G": 2}
 

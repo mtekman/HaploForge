@@ -5,7 +5,7 @@ var HaploBlock = {
 	sta_index : 0,
 	end_index : 0,
 
-	haploinfos : null, // what addHaploBlocksAll uses 
+	haploinfos : null, // what addHaploBlocksAll uses
 
 
 	/* Called once - displays multiple individuals across any family */
@@ -47,7 +47,7 @@ var HaploBlock = {
 		}
 
 		SliderHandler.inputsLocked = true;
-		HaploBlock.redrawHaplos(true);		
+		HaploBlock.redrawHaplos(true);
 	},
 
 
@@ -132,7 +132,7 @@ var HaploBlock = {
 
 					rec.attrs.y = ((ind - HaploBlock.sta_index - 2) * HAP_VERT_SPA);
 					rec.attrs.height = (iter-ind) * HAP_VERT_SPA;
-					rec.attrs.fill = FounderColor.unique[color_group];		
+					rec.attrs.fill = FounderColor.unique[color_group];
 					rec.attrs.x = haploblock_spacers.marker_offset_px + (
 							(q * haploblock_spacers.person_offset_px)
 							+ (j * haploblock_spacers.block_offset_px) );
@@ -166,11 +166,21 @@ var HaploBlock = {
 		{
 			total_text += MarkerData.padded[m] + haploblock_buffers.marker_offset;
 
-			for (var i=0; i < HaploBlock.haploinfos.length; i++)
-				total_text +=  (haploblock_buffers.ht_offset
-								+ HaploBlock.haploinfos[i][0].data_array[m]
-								+ haploblock_buffers.ht_2_ht
-								+ HaploBlock.haploinfos[i][1].data_array[m]);
+			if (SequenceChecker.use){
+				for (var i=0; i < HaploBlock.haploinfos.length; i++)
+					total_text +=  (haploblock_buffers.ht_offset
+						+ HaploBlock.haploinfos[i][0].sequence[m]
+						+ haploblock_buffers.ht_2_ht
+						+ HaploBlock.haploinfos[i][1].sequence[m]);				
+			}
+			else {
+				for (var i=0; i < HaploBlock.haploinfos.length; i++)
+					total_text +=  (haploblock_buffers.ht_offset
+						+ HaploBlock.haploinfos[i][0].data_array[m]
+						+ haploblock_buffers.ht_2_ht
+						+ HaploBlock.haploinfos[i][1].data_array[m]);
+			}
+
 			total_text +='\n';
 		}
 
@@ -255,4 +265,3 @@ var HaploBlock = {
 		HaploBlock.__scrollRecomb(false);
 	}
 }
-
