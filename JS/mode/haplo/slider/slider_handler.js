@@ -1,4 +1,4 @@
-
+import { MouseStyle } from '/JS/iofuncs/mousestyle.js';
 
 var SliderHandler = {
 
@@ -17,9 +17,9 @@ var SliderHandler = {
 
 			var center = (SliderHandler.i_slider_top_y + SliderHandler.i_slider_length/2);
 			var diff_from_center = Math.abs(center - abspos.y);
-			
+
 			abspos.y = center + 0.2 * diff_from_center;
-		
+
 		} else {
 			this.isTop?MouseStyle.changeToVerticalN():MouseStyle.changeToVerticalS();
 		}

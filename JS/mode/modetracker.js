@@ -1,3 +1,5 @@
+import { MouseResize } from '/JS/iofuncs/mouseresize.js';
+
 // Set by cssfuncs/buttonmodes/general.js
 // -- but good to keep it here
 

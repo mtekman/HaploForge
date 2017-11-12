@@ -1,3 +1,4 @@
+import { MouseStyle } from '/JS/iofuncs/mousestyle.js';
 
 var MarkerSlider = {
 
@@ -102,7 +103,7 @@ var MarkerSlider = {
 			x: ms_s.bevel + 3 + ms_c.I_slider_offset*2,
 			y: (top?
 				-ms_c.I_slider_extension
-				:ms_c.I_slider_extension) 
+				:ms_c.I_slider_extension)
 				- HAP_VERT_SPA/2,
 			text: "",
 			fontFamily: "Arial",
@@ -127,12 +128,12 @@ var MarkerSlider = {
 
 		input_group.on('mousedown', function(val){
 			input_group.is_being_dragged = true;
-		
+
 			function uponMouseUp(){
 				if (input_group.is_being_dragged){
 					SliderHandler.updateHaploPositions(true);
 					MouseStyle.restoreCursor();
-					
+
 					input_group.is_being_dragged = false;
 
 					document.removeEventListener("mouseup", uponMouseUp, false);
@@ -143,7 +144,7 @@ var MarkerSlider = {
 		});
 
 
-		input_group.on('mouseover', 
+		input_group.on('mouseover',
 			top?MouseStyle.changeToVerticalN:MouseStyle.changeToVerticalS
 		);
 		input_group.add(mark_label);
@@ -212,7 +213,7 @@ var MarkerSlider = {
 				SliderHandler.updateHaploPositions();
 			}
 		});
-		
+
 		MarkerSlider._slwin_group.on('mousedown', function(){
 			MouseStyle.changeToGrab();
 			function mouseUpFunc(){

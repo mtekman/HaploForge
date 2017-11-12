@@ -1,4 +1,4 @@
-var uniqueGraphOps = {
+export default var uniqueGraphOps = {
 
 	_map : {}, // fam_id --> Holds node and edge data, including pointers to graphics
 	/*haplo_scroll : null,

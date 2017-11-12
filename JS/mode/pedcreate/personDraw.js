@@ -1,3 +1,7 @@
+import Person from '/JS/pedigree/person.js';
+import familyMapOps from '/JS/pedigree/familymapops.js';
+import uniqueGraphOps from '/JS/pedigree/uniquegraphops.js';
+
 var personDraw = {
 	//Ids MUST be unique, even if user doesn't have a specific ID in mind
 	// -- Required for makeTempPerson() to have unique hooks in family and graph data
@@ -40,24 +44,24 @@ var personDraw = {
 			// Update ids list
 			delete personDraw.used_ids[oldID]
 
-			
+
 			uniqueGraphOps.deleteNode(oldID, famid);
-			
+
 			familyMapOps.removePerc(oldID, famid);
 			personDraw.addNode(new_person, famid, {x:oldX, y:oldY})
 
 
 
 			// One cannot simply update name/id/gender/affectation, because
-			// mateline and childlines are hardcoded to IDs. Easier to delete and reinsert.	
-			
+			// mateline and childlines are hardcoded to IDs. Easier to delete and reinsert.
+
 			familyMapOps.insertPerc(new_person, famid);
 
 			// -- child lines to parents
 			if (old_person.father !== 0){
 
 				var childline = uniqueGraphOps.getChildEdge(
-					famid, 
+					famid,
 					old_person.father.id, old_person.mother.id,
 					old_person.id);
 
@@ -69,7 +73,7 @@ var personDraw = {
 				(new OffspringDraw(famid, mateline_key, new_person.id));
 			}
 
-			// -- mate lines to partners 
+			// -- mate lines to partners
 			if (old_person.mates.length > 0){
 				old_person.foreachmate(function(mate)
 				{
@@ -91,7 +95,7 @@ var personDraw = {
 
 							var isMother = new_person.gender === PED.FEMALE,
 								new_childline = null;
-							
+
 							if (isMother){
 								new_childline = uniqueGraphOps.makeChildEdge(famid, mate.id, new_person.id, child.id)
 								child.mother = new_person;
@@ -111,7 +115,7 @@ var personDraw = {
 						console.log("detach this and childs!");
 					}
 				})
-			}			
+			}
 
 			// Regenerate the level grid otherwise drag functions cry
 			//GlobalLevelGrid.refreshGrid(famid);
@@ -146,7 +150,7 @@ var personDraw = {
 			else {
 				utility.notify("No family selected", "Creating new family");
 
-				familyDraw.addFam(null, null, 
+				familyDraw.addFam(null, null,
 					function(){
 						personDraw._addNodeToActiveFam(person, position)
 					}
@@ -163,11 +167,11 @@ var personDraw = {
 		var fam_group = familyDraw.active_fam_group;
 		uniqueGraphOps.insertFam(fam_group.id, fam_group);
 
-		if (person === null ){ 
+		if (person === null ){
 			person = this.makeTempPerson();
 		}
 
-		var perc = Graphics.Pedigree.addPerson( person, fam_group,  
+		var perc = Graphics.Pedigree.addPerson( person, fam_group,
 				grid_rezX ,
 				-nodeSize // + Math.random()*grid_rezY*2
 		);

@@ -1,8 +1,11 @@
+import Person from '/JS/pedigree/person.js';
+import familyMapOps from '/JS/pedigree/familymapops.js';
+import uniqueGraphOps from '/JS/pedigree/uniquegraphops.js';
 
 var Pedfile = {
 
 	__tmpfamdata : {}, // fid --> stored position
-	
+
 	import: function(text_unformatted){
 
 		var text = text_unformatted.split('\n');
@@ -12,7 +15,7 @@ var Pedfile = {
 		for (var l=0; l< text.length; l++)
 		{
 			var line = text[l];
-	
+
 			if (line.length < 5 ){continue};
 
 			// family lines first
@@ -22,7 +25,7 @@ var Pedfile = {
 				continue;
 			}
 
-			// Split in to Data and Metadata parts		
+			// Split in to Data and Metadata parts
 			var data_and_meta = line.split('//');
 
 			//Handle Person info
@@ -109,7 +112,7 @@ var Pedfile = {
 					if (!(targ in mentions[fid])){
 						mentions[fid][targ] = 0
 					}
-					mentions[fid][targ] += 1				
+					mentions[fid][targ] += 1
 				}
 			}
 		}
@@ -133,7 +136,7 @@ var Pedfile = {
 				"These will be truncated from the pedigree. Continue with save?",
 				"Yes", function(){},
 				"No", function(){
-					return -1;					
+					return -1;
 				}
 			);
 		}
@@ -141,7 +144,7 @@ var Pedfile = {
 		var text = "";
 
 
-		// Family-header specific 
+		// Family-header specific
 		if (store_graphics)
 		{
 			var fid_array = []
@@ -155,12 +158,12 @@ var Pedfile = {
 		familyMapOps.foreachperc(function(pid, fid, perc)
 		{
 			var array = [
-				fid, 
-				perc.id, 
-				perc.father.id || 0, 
-				perc.mother.id || 0, 
+				fid,
+				perc.id,
+				perc.father.id || 0,
+				perc.mother.id || 0,
 				perc.gender, perc.affected
-			]			
+			]
 
 			if (store_graphics){
 				var gfx = uniqueGraphOps.getNode(pid, fid);
@@ -178,7 +181,7 @@ var Pedfile = {
 			text += "\n"+ array.join('\t');
 		});
 
-		return text;	
+		return text;
 	},
 
 

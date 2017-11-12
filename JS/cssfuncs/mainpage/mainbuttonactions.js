@@ -1,3 +1,4 @@
+import { SerialParse } from '/JS/iofuncs/serialparse.js';
 
 function reload(){
 	location.reload()

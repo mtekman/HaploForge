@@ -1,7 +1,8 @@
+import Person from '/JS/pedigree/person.js';
+import familyMapOps from '/JS/pedigree/familymapops.js';
+import uniqueGraphOps from '/JS/pedigree/uniquegraphops.js';
 
-
-
-var SerialParse = {
+export var SerialParse = {
 
 	Canvas : {
 		export : function(){
@@ -22,7 +23,7 @@ var SerialParse = {
 			var rs_gp = string.split('|');
 
 			MarkerData.rs_array = rs_gp[0].split("rs_array:")[1].trim().split(",");
-			MarkerData.gp_array = rs_gp[1].split("gp_array:")[1].trim().split(",");	
+			MarkerData.gp_array = rs_gp[1].split("gp_array:")[1].trim().split(",");
 		},
 
 		export : function(){
@@ -45,7 +46,7 @@ var SerialParse = {
 				+ '|' + JSON.stringify(FounderColor.hgroup);
 		}
 	},
-	
+
 	// Fam + Graphics
 	Person : {
 		import : function(string){
@@ -87,7 +88,7 @@ var SerialParse = {
 				graphx.getY(),
 				SerialParse.Alleles.export(person),
 				].join(",");
-		}	
+		}
 	},
 
 	Alleles : {

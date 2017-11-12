@@ -1,3 +1,6 @@
+import Person from '/JS/pedigree/person.js';
+import familyMapOps from '/JS/pedigree/familymapops.js';
+import uniqueGraphOps from '/JS/pedigree/uniquegraphops.js';
 
 var famProps = {
 	_box : document.getElementById('family_props'),
@@ -5,7 +8,7 @@ var famProps = {
 	_name : document.getElementById('family_name'),
 	_submit: document.getElementById('family_submit'),
 
-	hide: function(){ 
+	hide: function(){
 		Keyboard.unpause()
 		famProps._box.style.display = "none";
 		famProps._box.style.zIndex = -2;
@@ -66,7 +69,7 @@ var benchProps = {
 	inbreedchance: -1,
 	exportFile: false,
 
-	hide: function(){ 
+	hide: function(){
 		Keyboard.unpause()
 		this._box.style.display = "none";
 		this._box.style.zIndex = -99;
@@ -117,7 +120,7 @@ var benchProps = {
 
 
 var persProps = {
-	_box : document.getElementById('person_props'),	
+	_box : document.getElementById('person_props'),
 	_genderInput : document.getElementById('pers_gender'),
 	_genderUnknown: document.getElementById('pers_gender_unknown'),
 	_affectInput : document.getElementById('pers_affect'),
@@ -129,7 +132,7 @@ var persProps = {
 	name : document.getElementById('pers_name'),
 	gender : -1,
 	affect: -1,
-	
+
 	_getGender: function(){
 		if (!(this._genderUnknown.checked)){
 			return 0;
@@ -169,7 +172,7 @@ var persProps = {
 	},
 
 
-	hide: function(){ 
+	hide: function(){
 		Keyboard.unpause()
 		this._box.style.display = "none";
 		this._box.style.zIndex = -99;
@@ -233,7 +236,7 @@ var persProps = {
 					familyMapOps.removePerc(person.id, famid);
 
 					main_layer.draw();
-					
+
 					messProps.hide();
 					persProps.hide();
 					utility.hideBG();

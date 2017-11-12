@@ -1,3 +1,5 @@
+import Person from '/JS/pedigree/person.js';
+import familyMapOps from '/JS/pedigree/familymapops.js';
 
 var debugMerlin = {};
 

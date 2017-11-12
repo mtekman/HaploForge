@@ -1,3 +1,5 @@
+import familyMapOps from '/JS/pedigree/familymapops.js';
+import uniqueGraphOps from '/JS/pedigree/uniquegraphops.js';
 
 var FamSpacing = {
 
@@ -39,8 +41,8 @@ var FamSpacing = {
 				r_offs = l_offs;
 
 			if (min_x > xer - l_offs  ){ min_x = xer - l_offs; }
-			if (max_x < xer + r_offs  ){ max_x = xer + r_offs; }		
-			if (min_y > yer - nodeSize){ min_y = yer - nodeSize; }		
+			if (max_x < xer + r_offs  ){ max_x = xer + r_offs; }
+			if (min_y > yer - nodeSize){ min_y = yer - nodeSize; }
 			if (max_y < yer + nodeSize){ max_y = yer + nodeSize; }
 
 		}, fgroup.id);
@@ -102,7 +104,7 @@ var FamSpacing = {
 				width: 5,
 				height: stage.getHeight()
 			});
-			
+
 			main_layer.add(ma_rect);
 			main_layer.draw();
 		}
@@ -183,12 +185,12 @@ var FamSpacing = {
 	__colliding: function(r1,r2){
 	 	var spacing = nodeSize * 2 ;
 
-		var rect1 = {x: r1.getX(), y: r1.getY(), 
-			width: r1.getWidth() + spacing, 
+		var rect1 = {x: r1.getX(), y: r1.getY(),
+			width: r1.getWidth() + spacing,
 			height: r1.getHeight() + spacing
 		}
-		var rect2 = {x: r2.getX(), y: r2.getY(), 
-			width: r2.getWidth() + spacing, 
+		var rect2 = {x: r2.getX(), y: r2.getY(),
+			width: r2.getWidth() + spacing,
 			height: r2.getHeight() + spacing
 		}
 
@@ -196,7 +198,7 @@ var FamSpacing = {
 	   		rect1.x + rect1.width > rect2.x &&
 	   		rect1.y < rect2.y + rect2.height &&
 	   		rect1.height + rect1.y > rect2.y) {
-	    	
+
 	    	return true;
 		}
 	    return false;
@@ -231,8 +233,8 @@ function spaceFamGroups2(){
 
 			if (min_x > xer - l_offs){ min_x = xer - l_offs; }
 			if (max_x < xer + r_offs){ max_x = xer + r_offs; }
-			
-			if (min_y > yer - nodeSize){ min_y = yer - nodeSize; }		
+
+			if (min_y > yer - nodeSize){ min_y = yer - nodeSize; }
 			if (max_y < yer + nodeSize){ max_y = yer + nodeSize; }
 
 			if (fid === "1001"){
@@ -264,7 +266,7 @@ function spaceFamGroups2(){
 			h = pack[3],
 			title_pos = pack[4]
 
-		
+
 		var new_x = start_x - pos.x.min;
 
 		group.setX( new_x );

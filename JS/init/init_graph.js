@@ -1,3 +1,5 @@
+import familyMapOps from '/JS/pedigree/familymapops.js';
+import uniqueGraphOps from '/JS/pedigree/uniquegraphops.js';
 /*Drawing a pedigree - trickier than you'd think, simple draw rec messes up lines
 
 Steps:
@@ -69,7 +71,7 @@ function graphInitPos(start_x, start_y, enable_ped_edit = false){
 			nodes = fam_gfx.nodes,
 			edges = fam_gfx.edges;
 
- 
+
 		// Init Nodes, ordered by generation
 		GlobalLevelGrid.foreachgeneration(fam, function(indivs_in_gen){
 
@@ -226,7 +228,7 @@ function graphInitPos(start_x, start_y, enable_ped_edit = false){
 	// --- Placement Positions
 	if (isEmpty(Pedfile.__tmpfamdata)){
 		// Space automatically
-		FamSpacing.init(20);		
+		FamSpacing.init(20);
 	}
 	else {
 		// Use stored positions
@@ -290,7 +292,7 @@ function checkConsanginuity(fam_id, pers1_id, pers2_id)
         	var perc = routes2.shift(); // remove from search
 
 /*        	if (perc === undefined){
-        		
+
         	}
 */
         	//Try mother + father

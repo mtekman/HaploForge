@@ -1,3 +1,5 @@
+import uniqueGraphOps from '/JS/pedigree/uniquegraphops.js';
+
 var familyDraw = {
 
 	active_fam_group : null,
@@ -17,7 +19,7 @@ var familyDraw = {
 		familyDraw.active_fam_group = fam;
 	},
 
-	addFam: function(fam_id = null, position = null, callback = null){	
+	addFam: function(fam_id = null, position = null, callback = null){
 
 		if (fam_id === null){
 			utility.inputprompt("Family ID?", function(family){
@@ -49,10 +51,10 @@ var familyDraw = {
 		}
 
 		if (callback !== null){
-			callback();		
+			callback();
 		}
 
-		
+
 		main_layer.draw()
-	},	
+	},
 }

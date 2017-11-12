@@ -1,3 +1,4 @@
+import familyMapOps from '/JS/pedigree/familymapops.js';
 
 var HomologyPlot = {
 
@@ -11,11 +12,11 @@ var HomologyPlot = {
 		HomologyPlot.plotScoresOnMarkerScale( spec_plot, stretch, score )
 	},
 
-	printToFile: function( ht_ids, 
-		start_index = 0, 
+	printToFile: function( ht_ids,
+		start_index = 0,
 		stop_index = (MarkerData.rs_array.length - 1))
 	{
-		var padding_marker = "            ", 
+		var padding_marker = "            ",
 			padding_score  = "     ",
 			padding_names  = "       ",
 			padding_leftmost= padding_names.slice(-(padding_names.length-1)); // must be one less than padding_names
@@ -36,7 +37,7 @@ var HomologyPlot = {
 		}
 
 		var text = padding_marker;
-		
+
 		// Print names, get their ordering
 		var ordering = {};
 		var order_index = [];
@@ -52,7 +53,7 @@ var HomologyPlot = {
 
 				ordering[index] = f_id;
 				order_index.push (index )
-				
+
 				padding_fam += padding_names;
 			}
 
@@ -165,10 +166,10 @@ var HomologyPlot = {
 		{
 			MarkerSlider._instance.plotline.destroy();
 			//haplo_layer.draw();
-			//debugger		
+			//debugger
 		}
 		HomologyPlot.rendered_filtered_plot = null;
-		
+
 		if (redrawtoo){
 			HaploBlock.redrawHaplos();
 			//haplo_layer.draw();
@@ -199,14 +200,14 @@ var HomologyPlot = {
 
 		var inform_points = point_and_max.plot,
 			points_max    = point_and_max.max;
-		
+
 		// Insert [0,0] at the start
 		inform_points.splice(0,0,0)
 		inform_points.splice(0,0,0)
 
 		HomologyPlot.rendered_filtered_plot = inform_points;
 		HomologyPlot.rendered_filtered_plot_max = points_max;
-		
+
 		var infline = new Kinetic.Line({
 			x: rangeline.getX(),
 			y: rangeline.getY(),
@@ -284,8 +285,8 @@ var HomologyPlot = {
 		for (var p=0; p++ < plen;)
 		{
 			new_plot[p] = new_plot[p] || 0;
-			
-			if (new_plot[p] < 0) {			new_plot[p] = 0;   }	
+
+			if (new_plot[p] < 0) {			new_plot[p] = 0;   }
 			else if (new_plot[p] > max_score){	max_score = new_plot[p];	}
 
 			return_xy.push( new_plot[p], p );

@@ -1,3 +1,6 @@
+import { MouseStyle } from '/JS/iofuncs/mousestyle.js';
+import familyMapOps from '/JS/pedigree/familymapops.js';
+import uniqueGraphOps from '/JS/pedigree/uniquegraphops.js';
 
 var SelectionGraphics = {
 
@@ -23,7 +26,7 @@ var SelectionGraphics = {
 
 			if (!hasHaplo){
 				utility.notify("Error", "No haplotypes for individual "+key.split('_')[1]);
-			
+
 			} else{
 				//Toggle selection
 				this.setStrokeEnabled(!SelectionMode._items[key].selected);

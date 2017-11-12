@@ -1,3 +1,5 @@
+import familyMapOps from '/JS/pedigree/familymapops.js';
+import uniqueGraphOps from '/JS/pedigree/uniquegraphops.js';
 //var htext = null; // DEBUG
 
 var HaploBlock = {

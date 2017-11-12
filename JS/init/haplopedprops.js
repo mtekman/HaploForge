@@ -1,3 +1,6 @@
+import Allele from '/JS/pedigree/allele.js';
+import familyMapOps from '/JS/pedigree/familymapops.js';
+import uniqueGraphOps from '/JS/pedigree/uniquegraphops.js';
 
 var HaploPedProps = {
 
@@ -34,8 +37,8 @@ var HaploPedProps = {
 			HaploPedProps._correctAllMaleAlleles();
 		}
 
-		utility.notify("Pedigree", 
-			 (HaploPedProps.xlinked?"X-Linked":"Autosomal") 
+		utility.notify("Pedigree",
+			 (HaploPedProps.xlinked?"X-Linked":"Autosomal")
 			+ " "
 			+(HaploPedProps.dominant?"Dominant":"Recessive")
 		);
@@ -118,16 +121,16 @@ var HaploPedProps = {
 						}
 					}
 					if (num_all_zero_alleles === 2){ // skip this guy, completely uninformative
-						skip_uninformative = true;  
+						skip_uninformative = true;
 					}
 					else{
-						all_zero_Ychroms += num_all_zero_alleles;					
+						all_zero_Ychroms += num_all_zero_alleles;
 					}
 				}
 				if (!skip_uninformative){
 					num_males_checked ++;
 				}
-			}			
+			}
 		}, fam_id);
 
 		if (num_males_with_single_allele === num_males_checked){return true};
@@ -187,7 +190,7 @@ var HaploPedProps = {
 		//First root indiv for each family -- all members must be connected!
 		familyMapOps.foreachfam(function(fam_id){
 
-			//Populate gridmap and uniq map		
+			//Populate gridmap and uniq map
 			var nodes_edges = (new GraphicsLevelGrid(fam_id, null)).getMap();
 			var generation_array = GlobalLevelGrid.getGrid(fam_id);
 
@@ -203,7 +206,7 @@ var HaploPedProps = {
 
 			// Check if root tree contains ALL individuals
 			var num_peeps = familyMapOps.numPercs(fam_id),
-				num_nodes = -1; // skip 0 indiv	
+				num_nodes = -1; // skip 0 indiv
 
 			for (var node in nodes_edges.nodes){num_nodes ++;}
 
@@ -215,12 +218,12 @@ var HaploPedProps = {
 					+ num_peeps
 				);
 
-				// This is where we need to manually insert the 
+				// This is where we need to manually insert the
 				//  other non-connected individuals
-				
+
 				familyMapOps.foreachperc(function(perc_id, perp){
 					if (!(perc_id in nodes_edges.nodes)){
-				
+
 						// Restore meta
 						if (typeof perp.stored_meta !== "undefined"){
 							console.log("using stored meta", perc_id, perp.stored_meta);
@@ -233,7 +236,7 @@ var HaploPedProps = {
 							// manually for each person and set their graphics that way.
 							//  Basically ._populateGraphics only should apply to haploview mode and I need
 							// to create my own way of parsing saved pedigrees.
-							
+
 							console.log("HERE", perp.stored_meta);
 							delete perp.stored_meta;
 						}

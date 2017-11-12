@@ -1,6 +1,6 @@
 
-var MouseStyle = {
-	
+export var MouseStyle = {
+
 	restoreCursor(){document.body.style.cursor = "";},
 
 	//"url('styles/Precision.cur'),auto";

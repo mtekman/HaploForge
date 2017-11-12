@@ -1,3 +1,4 @@
+import uniqueGraphOps from '/JS/pedigree/uniquegraphops.js';
 
 var DOS = {
 
@@ -42,10 +43,10 @@ var DOS = {
 
 			var fid_id = slot_array[fd][0].split('_'),
 				y_pos = slot_array[fd][1];
-		
+
 			if (min_pos.y > y_pos) min_pos.y = y_pos;
 
-			var fid = fid_id[0], 
+			var fid = fid_id[0],
 				id = fid_id[1];
 
 			var gfx = uniqueGraphOps.getFam(fid).nodes[id].graphics;
@@ -55,7 +56,7 @@ var DOS = {
 			gfx.main_layer_group = uniqueGraphOps.getFam(fid).group;
 			gfx.remove()
 			gfx.listening( false );
-			
+
 			DOS.haplo_group_nodes.add(gfx);
 
 			let mscale = main_layer.getScale(),
@@ -77,7 +78,7 @@ var DOS = {
 					if (render_counter-- === 0){
 
 						mapLines(line_points, DOS.haplo_group_lines);
-						
+
 						if (finishfunc !== 0){
 							finishfunc();
 						}
@@ -112,7 +113,7 @@ var DOS = {
 function mapLinesAndNodes(line_map )
 {
 	var slot_array = []; // index --> gfx
-	
+
 	function sortXHaplo(pos_y, id, fid ){
 		var key  = fid+'_'+id;
 
@@ -130,7 +131,7 @@ function mapLinesAndNodes(line_map )
 	var line_points = {};
 	var end_point_nodes_drawn = {}; // Nodes with lines already attached (no multiple lines)
 
-	
+
 	function addLinePoint( fid, key, obj )
 	{
 		if (key in line_points[fid]){
@@ -185,7 +186,7 @@ function mapLinesAndNodes(line_map )
 						fid, fath_id,
 						{to:moth_id, consang:consang, drop:null, text:null, lastgen:(g==line_map[fid].length-1)}
 					);
-					
+
 					// Sib line from mateline
 					var dos = mateline[mline];
 
@@ -193,7 +194,7 @@ function mapLinesAndNodes(line_map )
 					if (isLastGen){
 						addLinePoint(
 							fid, fath_id+'_'+moth_id,
-							{to: sgroup, consang: false, drop:drop_amount, 
+							{to: sgroup, consang: false, drop:drop_amount,
 							text: dos, lastgen:isLastGen}
 						);
 					}
@@ -232,13 +233,13 @@ function mapLinesAndNodes(line_map )
 						var dos = directline[dline]
 
 						addLinePoint(
-							fid, dline, 
-							{to:sgroup, consang:false, drop:drop_amount, 
+							fid, dline,
+							{to:sgroup, consang:false, drop:drop_amount,
 							 text:dos, lastgen:(g==line_map[fid].length-1)}
 						);
 					}
 				}
-				
+
 				//Iterate over all sibs and hang from anchor
 				var sib_ids = sgroup.split('_');
 				var sib_stepper = (start_y + drop_amount); // + (back_step*(sib_ids.length -1));
@@ -282,7 +283,7 @@ function mapLines(line_points, haplo_group_lines){
 
 					haplo_group_lines.add( Graphics.Lines.addRLine_simple(from_gfx_pos, to_gfx_pos, info.consang ) );
 				}
-			 	else {  
+			 	else {
 			 		// DOS line -- direct
 			 		sib_anchor_pos = {x: from_gfx_pos.x, y:from_gfx_pos.y + info.drop/3};
 			 		haplo_group_lines.add( Graphics.Lines.addRLine_simple(from_gfx_pos, sib_anchor_pos, false) );
@@ -372,5 +373,3 @@ var createDOSCircle = function(xx,yy, dos_text){
 
 	return group;
 }
-
-

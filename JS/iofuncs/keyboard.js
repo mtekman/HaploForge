@@ -1,6 +1,6 @@
 //Keyboard
 
-var Keyboard = {
+export var Keyboard = {
 
 	__map : {
 		"Control" : false,

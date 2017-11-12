@@ -1,6 +1,5 @@
+export var MouseWheel = {
 
-var MouseWheel = {
-	
 	__mousewheellistener_on : false,
 	__lasthandler : null,
 

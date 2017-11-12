@@ -1,9 +1,11 @@
+import familyMapOps from '/JS/pedigree/familymapops.js';
+import uniqueGraphOps from '/JS/pedigree/uniquegraphops.js';
 
 var init = {
 
 	clearMaps: function(){
 		familyDraw.active_fam_group = null;
-		
+
 		FounderColor.clear();
 		GlobalLevelGrid.clear();
 		MarkerData.clear();

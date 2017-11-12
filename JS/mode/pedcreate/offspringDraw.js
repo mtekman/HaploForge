@@ -1,3 +1,5 @@
+import familyMapOps from '/JS/pedigree/familymapops.js';
+import uniqueGraphOps from '/JS/pedigree/uniquegraphops.js';
 /* This class also updates the grid for all parent-offspring connections */
 
 class OffspringDraw extends LineDrawOps {
@@ -10,7 +12,7 @@ class OffspringDraw extends LineDrawOps {
 		{
 			this.init = null;
 			console.log("No matelines detected");
-		
+
 		} else {
 
 			this._RLineMethod = Graphics.Lines.changeRLine
@@ -34,7 +36,7 @@ class OffspringDraw extends LineDrawOps {
 					console.log("childNodeID", this.childNodeID)
 
 					circlegroup.destroy(); // For offspring, hide circles as soon as one is picked as a start point
-					
+
 					this.__drawNodes();
 				}
 			}
@@ -102,7 +104,7 @@ class OffspringDraw extends LineDrawOps {
 
 				});
 				mateline_graphics.sib_anchor = node; // changeRline can now update
-				
+
 				nodeGroup.add( node );
 
 				var startID = edge_map[key].start_join_id,
@@ -132,7 +134,7 @@ class OffspringDraw extends LineDrawOps {
 			mother = familyMapOps.getPerc(Number(father_mother_ids[1]), this._family),
 			child = familyMapOps.getPerc(this.childNodeID, this._family);
 
-		father.children.push(child); 
+		father.children.push(child);
 		mother.children.push(child);
 
 		child.mother = mother;
@@ -154,8 +156,8 @@ class OffspringDraw extends LineDrawOps {
 
 		uniqueGraphOps.insertEdge(
 			u_childline, this._family, new_line,
-			this.matelineID, 
-			child.id, 
+			this.matelineID,
+			child.id,
 			2,
 			false
 		)

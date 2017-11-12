@@ -1,3 +1,5 @@
+import Person from '/JS/pedigree/person.js';
+
 class BenchPerson  extends Person {
 
 	init(){
@@ -18,7 +20,7 @@ class BenchPerson  extends Person {
 			this.id = this.randomID()
 		} catch (rangerror){
 			location.refresh(true)
-		} 
+		}
 
 		this.mother = mother
 		this.father = father
@@ -33,7 +35,7 @@ class BenchPerson  extends Person {
 		else {
 		    this.generateFounderAlleles(); // Founder
 		}
-		
+
 		this.affected = this.determineAffectation(); // has the right disease allele locus ?
 	}
 
@@ -57,9 +59,9 @@ class BenchPerson  extends Person {
 		     // Available? If can't find a match use this indiv
 		    if (cousin.mates.length > 0){
 		    	already_married_match = cousin;
-		    	continue; 
+		    	continue;
 		    }
-		    //  console.log("inbreeding:", this.id, cousin.id);	    
+		    //  console.log("inbreeding:", this.id, cousin.id);
 		    return cousin;
 		}
 
@@ -92,7 +94,7 @@ class BenchPerson  extends Person {
 	}
 
 	randomID(modif = 1){
-		
+
 		let ext = this.gender * modif, // males odd, females even,
 		num = (this.generation * 10000) + ext;
 

@@ -1,6 +1,7 @@
+import Allele from '/JS/pedigree/allele.js';
 // This should not be optimized for graphics, this is for data processing only(!!)
 //
-class Person {
+export default class Person {
 
 	constructor(id, gender, affected, mother = 0, father = 0, name = null)
 	{

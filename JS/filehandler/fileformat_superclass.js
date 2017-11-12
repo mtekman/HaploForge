@@ -1,3 +1,5 @@
+import Person from '/JS/pedigree/person.js';
+import familyMapOps from '/JS/pedigree/familymapops.js';
 
 function debugSaveHaplo(){
 	localStorage.setItem("TEST", MainButtonActions._temphaploload);

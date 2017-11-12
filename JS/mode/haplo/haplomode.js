@@ -1,9 +1,9 @@
-
+import uniqueGraphOps from '/JS/pedigree/uniquegraphops.js';
 
 var HaploWindow = {
 
 	_left: new Kinetic.Rect({    //  side bar underlying markers
-		x: 10, 
+		x: 10,
 		y: 95,
 		height: 100,
 		width: 65,
@@ -43,7 +43,7 @@ var HaploWindow = {
 					var perc_gfx =  uniqueGraphOps.getFam(fid).nodes[id].graphics;
 					var old_pos = perc_gfx.main_layer_pos;
 					var old_group = perc_gfx.main_layer_group;
-					
+
 					// alert("here1");
 					perc_gfx.remove();
 					perc_gfx.listening( true );
@@ -86,10 +86,10 @@ var HaploWindow = {
 		});
 	},
 
-	
+
 	init: function launchHaplomode()
 	{
-		SelectionAction.reset();	
+		SelectionAction.reset();
 		SelectionMode.markSelecteds();
 
 		if (SelectionMode.noneSelected()){
@@ -145,7 +145,7 @@ var HaploWindow = {
 		HaploWindow._background.setZIndex(-20);
 
 		//DOS.js
-		DOS.render( line_points, slot_array, 
+		DOS.render( line_points, slot_array,
 			// After nodes have moved, they are then popped
 			// off SelectionMode._select_group, and added to haplo_window_top
 			HaploWindow._makeTop
@@ -153,7 +153,7 @@ var HaploWindow = {
 	},
 
 	// cs + cs + mu + to + ca + ca + ba = 100 + 100 + 100 + 40 + 60 + 60 + 100 = 560
-	// pi + ch + fi + sa + ol = 120 + 80 + 80 + 20 + 20 = 320 
+	// pi + ch + fi + sa + ol = 120 + 80 + 80 + 20 + 20 = 320
 	// 880
 
 
@@ -169,7 +169,7 @@ var HaploWindow = {
 
 		// White Rect
 		HaploWindow._top.setPosition(
-			// {x:min_pos.x - HaploWindow.white_margin, y: min_pos.y - HaploWindow.white_margin} 
+			// {x:min_pos.x - HaploWindow.white_margin, y: min_pos.y - HaploWindow.white_margin}
 			{x: DOS.initial_group_node_offset.x + (min_pos.x - HaploWindow.white_margin),
 			 y: DOS.initial_group_node_offset.y + (min_pos.y - HaploWindow.white_margin)}
 		);
@@ -200,7 +200,7 @@ var HaploWindow = {
 		HaploWindow._group.add(HaploWindow._top);
 
 		ButtonModes.setToComparisonMode();
-		
+
 		kineticTween({
 			node: HaploWindow._top,
 			x: HaploWindow.left_margin_x,
@@ -212,7 +212,7 @@ var HaploWindow = {
 		}).play()
 
 		main_layer.draw();
-		haplo_layer.draw();	
+		haplo_layer.draw();
 	},
 
 	_toggleBottom: function( show, finishfunc){
@@ -221,7 +221,7 @@ var HaploWindow = {
 		if (show){
 			HaploModeEvents._addMouseWheel();
 			HaploModeEvents.addKeys();
-			
+
 			HaploWindow.__showBottom( finishfunc );
 		} else {
 			HaploModeEvents._removeMouseWheel();
@@ -234,7 +234,7 @@ var HaploWindow = {
 
 	__showBottom: function(finishfunc = 0){
 		HaploWindow._bottom = null; // delete old
-		
+
 		//Scroll window
 		HaploWindow._bottom = new Kinetic.Group({
 			x:HaploWindow._top.getX() ,
@@ -247,7 +247,7 @@ var HaploWindow = {
 			width: HaploWindow._top.rect.getWidth()
 		});
 
-		
+
 		// Expand Top box
 		HaploWindow._bottom.add( HaploWindow._bottom.rect );
 		HaploWindow._group.add( HaploWindow._bottom );
@@ -257,7 +257,7 @@ var HaploWindow = {
 			node: HaploWindow._bottom.rect,
 			height: (3+HAP_DRAW_LIM) * HAP_VERT_SPA,
 			onFinish: function(){
-		
+
 				var scroll_area__ = new Kinetic.Group({
 					draggable:true,
 					dragBoundFunc: function(pos){
@@ -275,7 +275,7 @@ var HaploWindow = {
 
 					function mouseUp(){
 						HaploBlock.redrawHaplos(false); // starting=300
-						SliderHandler.updateInputsByIndex();					
+						SliderHandler.updateInputsByIndex();
 						SliderHandler.updateSlide();
 						haplo_layer.draw();
 						document.removeEventListener("mouseup", mouseUp, false);

@@ -1,3 +1,5 @@
+import familyMapOps from '/JS/pedigree/familymapops.js';
+import uniqueGraphOps from '/JS/pedigree/uniquegraphops.js';
 
 var SelectionMode = {
 
@@ -29,7 +31,7 @@ var SelectionMode = {
 		SelectionMode._select_group.destroyChildren();
 		SelectionMode._select_group.destroy();
 		SelectionMode._background.destroy();
-		
+
 		if (SelectionMode._exit !== null){
 			SelectionMode._exit.destroy();
 		}
@@ -139,7 +141,7 @@ var SelectionMode = {
 			3
 		);
 		SelectionMode._select_group.add( SelectionMode._exit );
-	
+
 		main_layer.add(SelectionMode._select_group);
 		SelectionMode._select_group.setZIndex(20);
 
@@ -155,13 +157,13 @@ var SelectionMode = {
 		  	var item = SelectionMode._items[fam_pid];
 
 		 	if (!item.selected) continue;
-		 	
+
 		 	var fam = fam_pid.split("_")[0],
 		 		pid = fam_pid.split("_")[1];
 
 		 	if (!(fam in SelectionMode._ids_map)){
 		 		SelectionMode._ids_map[fam] = {}; // generations, key first - array later
-		 		
+
 		 		SelectionMode._ids[fam] = {};
 		 	}
 		 	SelectionMode._ids[fam][pid] = 1;

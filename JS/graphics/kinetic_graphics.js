@@ -1,3 +1,6 @@
+import { MouseStyle } from '/JS/iofuncs/mousestyle.js'
+import uniqueGraphOps from '/JS/pedigree/uniquegraphops.js';
+
 // ------------ Kinetic globals ------------
 var stage = null;
 

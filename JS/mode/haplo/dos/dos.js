@@ -1,3 +1,4 @@
+import familyMapOps from '/JS/pedigree/familymapops.js';
 
 var SubSelectLevel = {
 
@@ -38,7 +39,7 @@ function findDOSinSelection(selection_map){
 
 	// Replace this as the main argument, if generations are not needed....
 	var selection_map_map = {}; // This is an actual map, no generations
-	
+
 	for (var fam in selection_map){
 		selection_map_map[fam] = {};
 		for (var g=0; g < selection_map[fam].length; g ++){
@@ -74,7 +75,7 @@ function findDOSinSelection(selection_map){
 				}
 				else {
 					//Founders are in their own sibgroups
-					fm_key = perc.id;					
+					fm_key = perc.id;
 				}
 				sib_groups[fm_key] = sib_groups[fm_key] || [];
 				sib_groups[fm_key].push(perc);
@@ -95,7 +96,7 @@ function findDOSinSelection(selection_map){
 				var matelines = {},
 				directlines = {};
 				// siblines = []; // not needed, there's only one
-				
+
 				// Populates matelines and directlines, does not return anything.
 				var search = function recurseParents(root, level)
 				{
@@ -141,7 +142,7 @@ function findDOSinSelection(selection_map){
 
 							// Are they connected at another level?
 							var lower_dos_obj, higher_dos_obj;
-							
+
 							if (moth_rez.dos < fath_rez.dos){
 								lower_dos_obj = moth_rez;
 								higher_dos_obj = fath_rez;
@@ -152,7 +153,7 @@ function findDOSinSelection(selection_map){
 							}
 
 							//Check if higher_dos_obj is linked to lower_one
-							
+
 
 
 
@@ -218,7 +219,7 @@ function findDOSinSelection(selection_map){
 //	console.log("fam_lines", fam_lines)
 
 
-	// If an indiv exists 
+	// If an indiv exists
 
 
 

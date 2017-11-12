@@ -1,5 +1,7 @@
-// Super class of offspringDraw and matelineDraw classes
+import { MouseStyle } from '/JS/iofuncs/mousestyle.js';
+import { MouseResize } from '/JS/iofuncs/mouseresize.js';
 
+// Super class of offspringDraw and matelineDraw classes
 
 class LineDrawOps {
 
@@ -21,7 +23,7 @@ class LineDrawOps {
 		this._oncirclemousedown = null;
 		this._oncirclemousedown_final = null;
 		this._onaddhit = null;
-		this._ondelhit = null;		
+		this._ondelhit = null;
 		this._onbeginlinedraw = null;
 		this._onbeginlinedraw_mousemove = null;
 		this._onbeginlinedraw_mouseup = null;
@@ -92,7 +94,7 @@ class LineDrawOps {
 			strokeWidth: 2,
 		});
 
-		_this._layer.add(_this._tmpLine);	
+		_this._layer.add(_this._tmpLine);
 
 		_this._tmpRect.on("mousemove", function(event){
 			if (_this._startPoint.x !== -1){
@@ -101,7 +103,7 @@ class LineDrawOps {
 					mouseY = Math.floor(event.evt.clientY/grid_rezY)*grid_rezY;
 
 				_this._endPoint = {
-					x: mouseX, 
+					x: mouseX,
 					y: mouseY
 				};
 
@@ -110,7 +112,7 @@ class LineDrawOps {
 				if (_this._onbeginlinedraw_mousemove !== null){
 					_this._onbeginlinedraw_mousemove(); // pass this?
 				}
-	
+
 				_this._layer.draw();
 			}
 		});
@@ -127,13 +129,13 @@ class LineDrawOps {
 
 	endLineDraw() {
 
-		this._delHitRect();	
-		
+		this._delHitRect();
+
 		if (this._tmpLine !== null){
 			this._tmpLine.destroy();
 			this._tmpLine = null;
 		}
-		
+
 		MouseStyle.restoreCursor();
 
 		if (this._onendlinedraw !== null){
@@ -170,7 +172,7 @@ class LineDrawOps {
 				rad = 15 ;
 
 			var circle = new Kinetic.Circle({
-				x: apos.x, 
+				x: apos.x,
 				y: apos.y,
 				radius: rad*2,
 				stroke:"red",
@@ -179,7 +181,7 @@ class LineDrawOps {
 			circle.id = perc_id;
 
 			circle.on("mouseover", function(event){
-				
+
 				if (_this._startPoint.x === -1){
 					MouseStyle.changeToArrowCursor();
 				}
@@ -214,12 +216,12 @@ class LineDrawOps {
 					_this.beginLineDraw();
 				}
 				else {
-					
+
 					// Execute callback on second selection/completion
 					if (_this._oncirclemousedown_final !== null){
 						_this._oncirclemousedown_final(this);
 					}
-					
+
 					_this.endLineDraw();
 				}
 

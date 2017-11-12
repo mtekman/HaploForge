@@ -1,4 +1,4 @@
-
+import familyMapOps from '/JS/pedigree/familymapops.js';
 /* Needs to be rerun for each selection */
 
 function scan_alleles_for_homology( ids_to_scan, same_family_hblock = true ){
@@ -19,7 +19,7 @@ function scan_alleles_for_homology( ids_to_scan, same_family_hblock = true ){
 	for (var i=0; i < ids_to_scan.length; i++)
 	{
 		var fid_id = ids_to_scan[i].split('_'),
-			fid = fid_id[0], 
+			fid = fid_id[0],
 			id = fid_id[1];
 
 		var perc_affected = (familyMapOps.getPerc(id,fid).affected === PED.AFFECTED),
@@ -48,7 +48,7 @@ function scan_alleles_for_homology( ids_to_scan, same_family_hblock = true ){
 	{
 		var hom_allele_global = -1,					// 11 11
 			het_allele_global_h1 = -1,
-			het_allele_global_h2 = -1;				// 12 12 
+			het_allele_global_h2 = -1;				// 12 12
 
 
 		for (var afs = 0; afs < alleles.length; afs++) 		// Iterate over group
@@ -56,7 +56,7 @@ function scan_alleles_for_homology( ids_to_scan, same_family_hblock = true ){
 			var fd = alleles[afs].fam;
 
 			var hom_at_marker_score = 0,
-				het_at_marker_score = 0, 
+				het_at_marker_score = 0,
 				chet_at_marker_score= 0;
 
 			var affected_indiv = alleles[afs].aff,
@@ -99,7 +99,7 @@ function scan_alleles_for_homology( ids_to_scan, same_family_hblock = true ){
 					het_allele_global_h1 = ht1;
 					het_allele_global_h2 = ht2;
 					het_at_marker_score += (2*mult)
-				
+
 					chet_at_marker_score += (2*mult)
 				}
 			}
@@ -160,6 +160,3 @@ function scan_alleles_for_homology( ids_to_scan, same_family_hblock = true ){
 		}
 	};
 }
-
-
-

@@ -1,4 +1,5 @@
-
+import familyMapOps from '/JS/pedigree/familymapops.js';
+import uniqueGraphOps from '/JS/pedigree/uniquegraphops.js';
 
 class MatelineDraw extends LineDrawOps {
 
@@ -40,7 +41,7 @@ class MatelineDraw extends LineDrawOps {
 		//   1. Two types of lines
 		//      a. Mateline
 		//      b. Parentline
-		//   
+		//
 		//   2. Parentline hangs from center of Mateline
 		//      there requires a Mateline to be present before creation
 		//
@@ -107,16 +108,14 @@ class MatelineDraw extends LineDrawOps {
 			}
 		}
 
-
-
 		var fam_gfx = uniqueGraphOps.getFam(this._family),
 			fam_group = fam_gfx.group,
 			group_pos = fam_group.getAbsolutePosition(),
-			
+
 			points = this._tmpLine.getPoints(),
 			start = {x:points[0], y:points[1]},
 			end = {x:points[6], y:points[7]},
-			
+
 			consang = checkConsanginuity(fam_group.id, this.startNodeID, this.endNodeID),
 			new_line = Graphics.Lines.addRLine(fam_group, start, end, consang);
 
@@ -130,8 +129,8 @@ class MatelineDraw extends LineDrawOps {
 
 		uniqueGraphOps.insertEdge(
 			u_matesline, fam_group.id, new_line,
-			fath.id, 
-			moth.id, 
+			fath.id,
+			moth.id,
 			0,
 			consang
 		)

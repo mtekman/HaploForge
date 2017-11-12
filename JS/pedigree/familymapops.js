@@ -1,4 +1,4 @@
-var familyMapOps = {
+export default var familyMapOps = {
 
 	_map : {}, // fam_id ---> pedigree map --> person
 

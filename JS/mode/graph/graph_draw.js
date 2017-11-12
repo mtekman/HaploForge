@@ -1,3 +1,5 @@
+import familyMapOps from '/JS/pedigree/familymapops.js';
+import uniqueGraphOps from '/JS/pedigree/uniquegraphops.js';
 // TODO: Update node_map to point at unique_graph_obs.nodes, and retrieve family name
 
 var edgeAccessor = {
@@ -148,7 +150,7 @@ function redrawNodes(pers_id, fam_id, drawLinesToo)
 			}
 
 			// -- mate's childline
-			updateGraph.childline(fam_id, mate.id);	
+			updateGraph.childline(fam_id, mate.id);
 
 
 			// -- mate's mate's mateline
@@ -199,7 +201,7 @@ function redrawNodes(pers_id, fam_id, drawLinesToo)
 
 				n_sib.setY(npers_pos.y);
 
-				if (drawLinesToo){ //Update childlines			
+				if (drawLinesToo){ //Update childlines
 					updateGraph.childline(fam_id, sib_id);
 				}
 			}
@@ -210,7 +212,7 @@ function redrawNodes(pers_id, fam_id, drawLinesToo)
 	//Update own childnode.
 	if (drawLinesToo && (pers.father != 0 && pers.mother !=0))
 	{
-		updateGraph.childline(fam_id, pers.id);	
+		updateGraph.childline(fam_id, pers.id);
 	}
 }
 
@@ -243,5 +245,3 @@ function linesShow(fid, show){
 
 	main_layer.draw();
 }
-
-

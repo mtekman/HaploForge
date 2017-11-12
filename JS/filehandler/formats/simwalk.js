@@ -1,4 +1,5 @@
-
+import Person from '/JS/pedigree/person.js';
+import familyMapOps from '/JS/pedigree/familymapops.js';
 
 class Simwalk extends FileFormat {
 
@@ -166,6 +167,6 @@ class Simwalk extends FileFormat {
 
 	static populateMarkerMap(text_unformatted){}
 
-	
+
 
 }

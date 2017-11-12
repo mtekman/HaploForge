@@ -1,4 +1,5 @@
-
+import Person from '/JS/pedigree/person.js';
+import familyMapOps from '/JS/pedigree/familymapops.js';
 //debugAllegro = {}
 
 class Allegro extends FileFormat {
@@ -134,7 +135,7 @@ class Allegro extends FileFormat {
 			actual_num = markers.length;
 
 		if (expected_num !== actual_num){
-			error("Error, allele sizes do not match:" 
+			error("Error, allele sizes do not match:"
 				+ expected_num + " != " + actual_num);
 		}
 

@@ -1,5 +1,6 @@
+import { MouseWheel } from '/JS/iofuncs/mousewheel.js';
 
-var MouseResize = {
+export var MouseResize = {
 
 	resize_modes : {
 		pedcreate: ModeTracker.modes.pedcreate,
@@ -27,9 +28,9 @@ var MouseResize = {
 		if (!wheelstatechanged){
 			let new_scale = main_layer.getScale().x + delta;
 			if (new_scale < 0.1){ new_scale = 0.1;}
-			
+
 			main_layer.setScale({
-				x : new_scale, 
+				x : new_scale,
 				y : new_scale
 			});
 			utility.notify("Scale", new_scale.toFixed(1))
@@ -50,4 +51,3 @@ var MouseResize = {
 		stage.setDraggable(false)
 	}
 }
-
