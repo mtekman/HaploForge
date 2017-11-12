@@ -1,6 +1,6 @@
 import familyMapOps from '/JS/pedigree/familymapops.js';
 
-var GlobalLevelGrid = {
+export var GlobalLevelGrid = {
 
 	_map : {}, //fid --> [[gen1], [gen2]]
 

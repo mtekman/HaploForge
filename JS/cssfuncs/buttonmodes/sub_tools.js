@@ -1,4 +1,5 @@
-import { SerialParse } from '/JS/iofuncs/serialparse.js';
+import SerialParse from '/JS/iofuncs/serialparse.js';
+import FamSpacing from '/JS/mode/graph/famgroupspacing.js'
 
 /* Class that rewrites the selection_tools div to swap in tools for each mode */
 var ToolButtons = {

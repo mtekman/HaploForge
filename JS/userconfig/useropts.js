@@ -1,3 +1,4 @@
+import BackgroundVidMain from '/JS/window/backgroundvid.js';
 
 // UI configurable:
 var userOpts = {

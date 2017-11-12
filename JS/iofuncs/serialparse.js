@@ -2,7 +2,7 @@ import Person from '/JS/pedigree/person.js';
 import familyMapOps from '/JS/pedigree/familymapops.js';
 import uniqueGraphOps from '/JS/pedigree/uniquegraphops.js';
 
-export var SerialParse = {
+export default var SerialParse = {
 
 	Canvas : {
 		export : function(){

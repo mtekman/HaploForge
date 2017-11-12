@@ -1,4 +1,5 @@
-import { MouseStyle } from '/JS/iofuncs/mousestyle.js';
+import MouseStyle from '/JS/iofuncs/mousestyle.js';
+import Resize from '/JS/window/resizing.js';
 
 var SliderHandler = {
 

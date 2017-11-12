@@ -1,13 +1,14 @@
+import { edgeAccessor } from '/JS/mode/graph/graph_draw.js'
 /* Family map must be populated and connected before a level map can ge generated */
 
 /** A level grid is made to facilitate determining which generations individuals belong to
     This class hooks into Level Grid */
 
-class GraphicsLevelGrid {
+export default class GraphicsLevelGrid {
 
 
 	constructor(fid, graphicsMap = null){
-		this.graphics_map = graphicsMap;	
+		this.graphics_map = graphicsMap;
 		this._populate(fid);
 	}
 
@@ -25,17 +26,17 @@ class GraphicsLevelGrid {
 				graphics: null
 			}
 		};
-	
+
 		/* LevelGrid generates a level map whilst using
 		   graphic callbacks */
 		var that = this;
 
-		var level_grid = GlobalLevelGrid.__populate(fid, 
+		var level_grid = GlobalLevelGrid.__populate(fid,
 			function cb1(perc){
 				// Populates this._unique_nodes_fam
 				that.insertNode(perc.id);
 			},
-		
+
 			function cb2(perc){
 				if (perc.mother != 0 && perc.father != 0){
 					// Populates this._unique_edges_fam
@@ -77,7 +78,7 @@ class GraphicsLevelGrid {
 		if (!(id in this._unique_nodes_fam))
 		{
 			var graphicsObj = null;
-			
+
 			// If node already has graphics, reinsert it into new map
 			if (this.graphics_map !== null ){
 				graphicsObj = this.graphics_map.nodes[id];
@@ -97,7 +98,7 @@ class GraphicsLevelGrid {
 		}
 	}
 
-	insertEdges(id, start_join, end_join, type, 
+	insertEdges(id, start_join, end_join, type,
 		consang = false,
 		mapper = this._unique_edges_fam,
 		graphicsObj = null){

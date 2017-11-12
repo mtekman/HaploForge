@@ -1,4 +1,5 @@
 import uniqueGraphOps from '/JS/pedigree/uniquegraphops.js';
+import { touchlines } from '/JS/mode/graph/graph_draw.js'
 /// DO NOT BOTHER TO CHAIN THE END OF ONE TWEEN TO THE START OF ANOTHER
 // the onFinish function in the tweening stage executes only after a node
 // has been launched, and it does not wait for it to finish.
@@ -6,7 +7,7 @@ import uniqueGraphOps from '/JS/pedigree/uniquegraphops.js';
 // Rely on the more or less precise timings set by the setTimeout wrapper.
 
 
-var FancyGraphics = {
+export default var FancyGraphics = {
 
 	__start : null,
 	__step : 50,

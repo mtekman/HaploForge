@@ -1,5 +1,9 @@
 import familyMapOps from '/JS/pedigree/familymapops.js';
 import uniqueGraphOps from '/JS/pedigree/uniquegraphops.js';
+import Resize from '/JS/window/resizing.js'
+import FamSpacing from '/JS/mode/graph/famgroupspacing.js'
+import FancyGraphics from '/JS/mode/graph/famgraphicsplacement.js'
+import { touchlines } from '/JS/mode/graph/graph_draw.js'
 /*Drawing a pedigree - trickier than you'd think, simple draw rec messes up lines
 
 Steps:

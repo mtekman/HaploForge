@@ -1,4 +1,4 @@
-var BackgroundVidMain = {
+export default var BackgroundVidMain = {
 
 	__source : "public_assets/videos/background_general.lesser2.webm",
 	__id : "bgvid",
@@ -22,7 +22,7 @@ var BackgroundVidMain = {
 
 	addVid(){
 		// Only works on MainPage, does nothing otherwise
-		if (MainPageHandler._currentMode === MainPageHandler.modes.main 
+		if (MainPageHandler._currentMode === MainPageHandler.modes.main
 			&& userOpts.fancyGraphics
 			&& BackgroundVidMain.__instance === null
 			&& TutorialActions.getNumTutorials() == 0)

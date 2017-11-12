@@ -1,5 +1,5 @@
-import { MouseStyle } from '/JS/iofuncs/mousestyle.js';
-import { MouseResize } from '/JS/iofuncs/mouseresize.js';
+import MouseStyle from '/JS/iofuncs/mousestyle.js';
+import MouseResize from '/JS/iofuncs/mouseresize.js';
 
 // Super class of offspringDraw and matelineDraw classes
 

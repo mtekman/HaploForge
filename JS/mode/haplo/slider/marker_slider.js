@@ -1,4 +1,4 @@
-import { MouseStyle } from '/JS/iofuncs/mousestyle.js';
+import MouseStyle from '/JS/iofuncs/mousestyle.js';
 
 var MarkerSlider = {
 

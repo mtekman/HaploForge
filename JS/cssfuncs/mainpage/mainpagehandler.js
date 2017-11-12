@@ -1,4 +1,4 @@
-
+import BackgroundVidMain from '/JS/window/backgroundvid.js';
 
 var MainPageHandler = {
 
@@ -41,18 +41,18 @@ var MainPageHandler = {
 		MainPageHandler.showDiv("pedexist",
 			(localStorage.getItem(localStor.ped_save) !== null)
 		);
-		
-		MainPageHandler.showDiv("hapexist", 
+
+		MainPageHandler.showDiv("hapexist",
 			(localStorage.getItem(localStor.hap_save) !== null)
 		);
 	},
 
 	defaultload: function(){
-		
+
 		init.clearMaps();
 
 		MainPageHandler._currentMode = MainPageHandler.modes.main
-		BackgroundVidMain.addVid(); //Must come after above 
+		BackgroundVidMain.addVid(); //Must come after above
 
 		userTutorials.run();
 
@@ -84,12 +84,12 @@ var MainPageHandler = {
 		MainPageHandler.showDiv("container", true);
 		MainPageHandler.showDiv("ToolButtons", true);
 		MainPageHandler.showDiv("BottomButtons", true);
-		
+
 		ButtonModes.setToHaploView();
 	},
 
 	createpedmode: function(){
-		
+
 		MainPageHandler._currentMode = MainPageHandler.modes.pedcreate
 		BackgroundVidMain.removeVid();
 
@@ -98,12 +98,12 @@ var MainPageHandler = {
 
 		/** Show haplotypes, after file (up)load **/
 		MainPageHandler.showDiv("main", false);
-		
+
 		MainPageHandler.showDiv("container", true);
 
 		MainPageHandler.showDiv("ToolButtons", true);
 		MainPageHandler.showDiv("BottomButtons", true);
-		
+
 		ButtonModes.setToPedCreate();
 	}
 }

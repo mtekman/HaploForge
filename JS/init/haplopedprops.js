@@ -1,6 +1,7 @@
 import Allele from '/JS/pedigree/allele.js';
 import familyMapOps from '/JS/pedigree/familymapops.js';
 import uniqueGraphOps from '/JS/pedigree/uniquegraphops.js';
+import GraphicsLevelGrid from '/JS/mode/graph/graphicslevelgrid.js';
 
 var HaploPedProps = {
 

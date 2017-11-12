@@ -1,4 +1,4 @@
-
+import BackgroundVidMain from '/JS/window/backgroundvid.js';
 
 class TutorialActions {
 
@@ -40,7 +40,7 @@ class TutorialActions {
 
 	backwardVisible(vis){ TutorialActions.__buttonVisibility(this.back, vis);}
 	forwardVisible(vis){  TutorialActions.__buttonVisibility(this.forw, vis);}
-	
+
 	quit(){
 		Keyboard.layerOff();
 
@@ -78,7 +78,7 @@ class TutorialActions {
 		var prev = this._currentpage - 1;
 
 		this.backwardVisible(prev !== 0);
-		this.forwardVisible(true) 
+		this.forwardVisible(true)
 
 		this._currentpage = prev;
 		this.__hidepage(this._currentpage + 1);
@@ -111,7 +111,7 @@ class TutorialActions {
 			wait_step);
 		}
 
-		recur(obj, num_levels, start, callback);			
+		recur(obj, num_levels, start, callback);
 
 
 	}
@@ -136,14 +136,14 @@ class TutorialActions {
 				console.log(plot);
 				if (plot.enterAction !== null){plot.enterAction();}
 				page.style.display = "block";
-			
+
 			}, TutorialActions.__wait_amount);
 		}
 		else {
 			this.__fadeTransition(page, 4, 1, 200, function(){
 				page.style.opacity = 0;
 				if (plot.exitAction !== null){plot.exitAction();}
-				
+
 				page.style.display = "none";
 			});
 		}

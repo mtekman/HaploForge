@@ -1,4 +1,4 @@
-import { MouseStyle } from '/JS/iofuncs/mousestyle.js';
+import MouseStyle from '/JS/iofuncs/mousestyle.js';
 import familyMapOps from '/JS/pedigree/familymapops.js';
 import uniqueGraphOps from '/JS/pedigree/uniquegraphops.js';
 

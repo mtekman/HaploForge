@@ -1,15 +1,16 @@
+import Resize from '/JS/window/resizing.js'
 
 HaploWindow.__aligntoggle = false;
 
 HaploWindow.alignTopSelection = function(group_nodes, group_lines)
 {
-	// Group lines = DOS lines 
+	// Group lines = DOS lines
 	// Group nodes = Pedigree nodes.
 
 	HaploWindow.__aligntoggle = !HaploWindow.__aligntoggle;
 
 	var tween_array = [];
-	
+
 	if (HaploWindow.__aligntoggle){
 		group_lines.hide();
 
@@ -126,5 +127,3 @@ HaploWindow.alignTopSelection = function(group_nodes, group_lines)
 
 	haplo_layer.draw();
 }
-
-

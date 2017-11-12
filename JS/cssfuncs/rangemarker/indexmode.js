@@ -1,3 +1,4 @@
+import Resize from '/JS/window/resizing.js'
 
 var CSSMarkerRange = {
 
@@ -18,14 +19,14 @@ var CSSMarkerRange = {
 		}
 
 		CSSMarkerRange._min_input.onchange = CSSMarkerRange.updateMaxIndexDataList;
-		CSSMarkerRange._submit.onclick = CSSMarkerRange.submitIndexRange;		
+		CSSMarkerRange._submit.onclick = CSSMarkerRange.submitIndexRange;
 		CSSMarkerRange.__populateIndexDataList();
 	},
 
 	//One off
 	__populateIndexDataList(){
 		var inner_options = "";
-		
+
 		for (var m=0; m < MarkerData.rs_array.length; m++){
 			inner_options += '<option value="' + MarkerData.rs_array[m] + '" />';
 		}

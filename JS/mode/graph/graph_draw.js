@@ -2,7 +2,7 @@ import familyMapOps from '/JS/pedigree/familymapops.js';
 import uniqueGraphOps from '/JS/pedigree/uniquegraphops.js';
 // TODO: Update node_map to point at unique_graph_obs.nodes, and retrieve family name
 
-var edgeAccessor = {
+export var edgeAccessor = {
 
 	_UUID: function (type, from_id, to_id){
 		// m Father_id Mother_id   // MAYBE UNITE m and p?
@@ -25,7 +25,7 @@ var edgeAccessor = {
 
 
 
-var updateGraph = {
+/*export var updateGraph = {
 
 
 	childline: function(family_id, person_id, parents_mateline_id = -1)
@@ -59,11 +59,9 @@ var updateGraph = {
 
 		Graphics.Lines.changeRLine( childline, {x:mid_xx, y:mid_yy}, person_graphics.getPosition());
 	}
-}
+}*/
 
-
-
-function redrawNodes(pers_id, fam_id, drawLinesToo)
+export function redrawNodes(pers_id, fam_id, drawLinesToo)
 {
 	var pers      = familyMapOps.getPerc(pers_id, fam_id),
 		fam_gfx   = uniqueGraphOps.getFam(fam_id),
@@ -218,7 +216,7 @@ function redrawNodes(pers_id, fam_id, drawLinesToo)
 
 
 // Performs redrawNodes upon all
-function touchlines()
+export function touchlines()
 {
 	familyMapOps.foreachperc(function( perid, famid){
 
@@ -232,7 +230,7 @@ function touchlines()
 }
 
 
-function linesShow(fid, show){
+/*function linesShow(fid, show){
 	//Hide lines
 	var edges = uniqueGraphOps.getFam(fid).edges;
 	for (var eid in edges)
@@ -245,3 +243,4 @@ function linesShow(fid, show){
 
 	main_layer.draw();
 }
+/*

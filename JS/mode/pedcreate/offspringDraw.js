@@ -1,5 +1,6 @@
 import familyMapOps from '/JS/pedigree/familymapops.js';
 import uniqueGraphOps from '/JS/pedigree/uniquegraphops.js';
+import { edgeAccessor, redrawNodes, touchlines } from '/JS/mode/graph/graph_draw.js'
 /* This class also updates the grid for all parent-offspring connections */
 
 class OffspringDraw extends LineDrawOps {

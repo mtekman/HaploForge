@@ -1,6 +1,7 @@
 import Person from '/JS/pedigree/person.js';
 import familyMapOps from '/JS/pedigree/familymapops.js';
 import uniqueGraphOps from '/JS/pedigree/uniquegraphops.js';
+import { edgeAccessor } from '/JS/mode/graph/graph_draw.js'
 
 var personDraw = {
 	//Ids MUST be unique, even if user doesn't have a specific ID in mind

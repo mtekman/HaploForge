@@ -1,6 +1,6 @@
 import { MouseWheel } from '/JS/iofuncs/mousewheel.js';
 
-export var MouseResize = {
+export default var MouseResize = {
 
 	resize_modes : {
 		pedcreate: ModeTracker.modes.pedcreate,

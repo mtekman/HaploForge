@@ -1,5 +1,6 @@
+import FamSpacing from '/JS/mode/graph/famgroupspacing.js'
 
-var Resize = {
+export default var Resize = {
 
 	numVisibleHaplos: -1,
 
@@ -15,9 +16,9 @@ var Resize = {
 
 
 		HaploBlock.end_index = HaploBlock.sta_index + HAP_DRAW_LIM;
-	
+
 		HaploWindow._bottom.rect.setHeight(
-			(HAP_DRAW_LIM+3) * HAP_VERT_SPA 
+			(HAP_DRAW_LIM+3) * HAP_VERT_SPA
 		);
 
 		HaploBlock.redrawHaplos();
@@ -26,14 +27,14 @@ var Resize = {
 	},
 
 	getYOffset : function (){
-		return HaploWindow._top.rect.getAbsolutePosition().y 
+		return HaploWindow._top.rect.getAbsolutePosition().y
 			+ HaploWindow._top.rect.getHeight()
 			+ 10;
 
 	},
 
 	resizeCanvas : function(playing = 90)
-	{  	
+	{
 	    if (stage !== null){
 	        var stageHeight = window.innerHeight - 4;
 
@@ -43,7 +44,7 @@ var Resize = {
 	        {
 	        	// Check width
 	            var defWidth = HaploWindow._top.rect.getWidth()
-	                         + HaploWindow._top.rect.getAbsolutePosition().x 
+	                         + HaploWindow._top.rect.getAbsolutePosition().x
 	                         + 120; // 120 for CSS
 
 	            var width_over = false;
@@ -68,7 +69,7 @@ var Resize = {
 	            }
 
 	            Resize.updateHaploScrollHeight(
-	            	SliderHandler.inputsLocked?null:HAP_DRAW_LIM 
+	            	SliderHandler.inputsLocked?null:HAP_DRAW_LIM
 	            );
 
 	            if (width_over){
@@ -85,7 +86,7 @@ var Resize = {
 	                  FamSpacing.init(20);
 	            }
 
-	            
+
 	            haplo_layer.draw();
 	        }
 	        else {

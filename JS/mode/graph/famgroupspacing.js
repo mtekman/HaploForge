@@ -1,7 +1,7 @@
 import familyMapOps from '/JS/pedigree/familymapops.js';
 import uniqueGraphOps from '/JS/pedigree/uniquegraphops.js';
 
-var FamSpacing = {
+export default var FamSpacing = {
 
 
 	init(offset, max_width, debug = false){

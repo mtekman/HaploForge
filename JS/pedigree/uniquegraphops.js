@@ -1,3 +1,5 @@
+import { edgeAccessor } from '/JS/mode/graph/graph_draw.js'
+
 export default var uniqueGraphOps = {
 
 	_map : {}, // fam_id --> Holds node and edge data, including pointers to graphics
