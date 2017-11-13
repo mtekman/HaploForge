@@ -1,3 +1,4 @@
+import FounderColor from '/JS/mode/haplo/blocks/colors.js';
 
 var FlowResolver = {
 
@@ -16,14 +17,14 @@ var FlowResolver = {
 			data[v] = FlowResolver.unique_haplos.indexOf(alpha);
 		}
 	},
-	
+
 
 	initFounderAlleles : function(){
 		FounderColor.hgroup = FlowResolver.unique_haplos;
 	},
 
 	child2parent_link: function(child, mother, father, fam){
-		
+
 //		console.log(child, mother, father)
 
 		var chil_allele1 = child.haplo_data[0],
@@ -45,7 +46,7 @@ var FlowResolver = {
 			chil_allele1.pter_array[i].color_group = [chil_allele1.flow[i]];
 			moth_allele1.pter_array[i].color_group = [moth_allele1.flow[i]];
 			fath_allele1.pter_array[i].color_group = [fath_allele1.flow[i]];
-			
+
 			chil_allele2.pter_array[i].color_group = [chil_allele2.flow[i]];
 			moth_allele2.pter_array[i].color_group = [moth_allele2.flow[i]];
 			fath_allele2.pter_array[i].color_group = [fath_allele2.flow[i]];

@@ -1,5 +1,6 @@
 import Person from '/JS/pedigree/person.js';
 import familyMapOps from '/JS/pedigree/familymapops.js';
+import AssignHGroups from '/JS/mode/haplo/blocks/assignhgroups.js';
 
 function debugSaveHaplo(){
 	localStorage.setItem("TEST", MainButtonActions._temphaploload);

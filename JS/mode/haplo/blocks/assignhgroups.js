@@ -1,6 +1,7 @@
 import familyMapOps from '/JS/pedigree/familymapops.js';
+import FounderColor from '/JS/mode/haplo/blocks/colors.js';
 
-var AssignHGroups = {
+export default var AssignHGroups = {
 
 	resolvers : {
 		ASTAR : 0,    // default

@@ -1,6 +1,6 @@
 import uniqueGraphOps from '/JS/pedigree/uniquegraphops.js';
 
-var familyDraw = {
+export default var familyDraw = {
 
 	active_fam_group : null,
 

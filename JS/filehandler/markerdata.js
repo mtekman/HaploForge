@@ -1,3 +1,6 @@
+import HaploBlock from '/JS/mode/haplo/blocks/haploblock_frontend.js';
+import HaploBlockFormat from '/JS/mode/haplo/blocks/haploblockformat.js';
+
 var ObservedBases = {
 	_nullbase : 0,
 	_nulltide : '?',

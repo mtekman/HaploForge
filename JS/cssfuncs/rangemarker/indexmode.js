@@ -1,4 +1,5 @@
 import Resize from '/JS/window/resizing.js'
+import HaploBlock from '/JS/mode/haplo/blocks/haploblock_frontend.js';
 
 var CSSMarkerRange = {
 

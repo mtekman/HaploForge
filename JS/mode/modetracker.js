@@ -3,7 +3,7 @@ import MouseResize from '/JS/iofuncs/mouseresize.js';
 // Set by cssfuncs/buttonmodes/general.js
 // -- but good to keep it here
 
-var ModeTracker = {
+export default var ModeTracker = {
 
 	currentMode : null,
 

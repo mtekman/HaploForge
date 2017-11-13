@@ -1,9 +1,10 @@
 import MouseStyle from '/JS/iofuncs/mousestyle.js';
 import MouseResize from '/JS/iofuncs/mouseresize.js';
+import personDraw from '/JS/mode/pedcreate/personDraw.js';
 
 // Super class of offspringDraw and matelineDraw classes
 
-class LineDrawOps {
+export default class LineDrawOps {
 
 	constructor(familyID) {
 

@@ -1,4 +1,5 @@
 import BackgroundVidMain from '/JS/window/backgroundvid.js';
+import personDraw from '/JS/mode/pedcreate/personDraw.js';
 
 var MainPageHandler = {
 

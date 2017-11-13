@@ -1,5 +1,7 @@
 import familyMapOps from '/JS/pedigree/familymapops.js';
 import uniqueGraphOps from '/JS/pedigree/uniquegraphops.js';
+import FounderColor from '/JS/mode/haplo/blocks/colors.js';
+import familyDraw from '/JS/mode/pedcreate/familyDraw.js';
 
 var init = {
 

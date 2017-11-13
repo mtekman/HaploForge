@@ -1,5 +1,10 @@
+import MarkerSlider from '/JS/mode/haplo/slider/marker_slider.js';
+import HaploWindow from '/JS/mode/haplo/haplomode.js';
+import HomologyButtons from '/JS/mode/homology/homology_buttons.js';
+import HomologyPlot from '/JS/mode/homology/homology_plot.js';
+import HomologySelectionMode from '/JS/mode/homology/homology_selection.js';
 
-var HomologyMode = {
+export default var HomologyMode = {
 
 	selected_for_homology: null,
 

@@ -95,7 +95,7 @@ export var GlobalLevelGrid = {
 
 
 /* Family Specific */
-class LevelGrid {
+/*class LevelGrid {
 
 	constructor(root_indiv, callback1 = 0, callback2 = 0)
 	{
@@ -156,4 +156,4 @@ class LevelGrid {
 
 		return 0;
 	}
-}
+}*/

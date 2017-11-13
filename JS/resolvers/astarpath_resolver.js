@@ -1,4 +1,4 @@
-
+import FounderColor from '/JS/mode/haplo/blocks/colors.js';
 
 var a_star_bestfirst__DEBUG = function(array, exclude_list)
 {

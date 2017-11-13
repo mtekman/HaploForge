@@ -1,6 +1,6 @@
 // Founder color groups are unique, even across families
 
-var FounderColor = {
+export default var FounderColor = {
 
 	hgroup : [], // [founder_id], where array index = color/group
 	unique : [], // [color --> hex]

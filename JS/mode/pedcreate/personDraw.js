@@ -1,9 +1,13 @@
 import Person from '/JS/pedigree/person.js';
 import familyMapOps from '/JS/pedigree/familymapops.js';
 import uniqueGraphOps from '/JS/pedigree/uniquegraphops.js';
+import familyDraw from '/JS/mode/pedcreate/familyDraw.js';
+import MatelineDraw from '/JS/mode/pedcreate/matelineDraw.js';
+import OffspringDraw from '/JS/mode/pedcreate/offspringDraw.js';
+import SelectionGraphics from '/JS/mode/selection/selection_graphics.js'
 import { edgeAccessor } from '/JS/mode/graph/graph_draw.js'
 
-var personDraw = {
+export default var personDraw = {
 	//Ids MUST be unique, even if user doesn't have a specific ID in mind
 	// -- Required for makeTempPerson() to have unique hooks in family and graph data
 	// -- The user can then change it later

@@ -1,7 +1,7 @@
 import familyMapOps from '/JS/pedigree/familymapops.js';
 /* Needs to be rerun for each selection */
 
-function scan_alleles_for_homology( ids_to_scan, same_family_hblock = true ){
+export default function scan_alleles_for_homology( ids_to_scan, same_family_hblock = true ){
 
 	var alleles = [];
 

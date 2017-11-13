@@ -1,8 +1,10 @@
 import familyMapOps from '/JS/pedigree/familymapops.js';
 import uniqueGraphOps from '/JS/pedigree/uniquegraphops.js';
+import LineDrawOps from '/JS/mode/pedcreate/lineDrawOps.js';
+import personDraw from '/JS/mode/pedcreate/personDraw.js';
 import { edgeAccessor, redrawNodes, touchlines } from '/JS/mode/graph/graph_draw.js'
 
-class MatelineDraw extends LineDrawOps {
+export default class MatelineDraw extends LineDrawOps {
 
 	constructor(familyID, startID = null, endID = null)
 	{

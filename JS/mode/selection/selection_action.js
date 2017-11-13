@@ -1,5 +1,6 @@
+import SelectionMode from '/JS/mode/selection/selection_mode.js';
 
-var SelectionAction = {
+export default var SelectionAction = {
 
 	toggle_selection_all : false,
 	toggle_selection_affecteds : false,
@@ -37,7 +38,7 @@ var SelectionAction = {
 				}
 			}
 		}
-//		console.log("affecteds:", 
+//		console.log("affecteds:",
 //			Object.keys(SelectionMode._items).filter( function (n){ return SelectionMode._items[n].affected === true;})
 //		);
 	}

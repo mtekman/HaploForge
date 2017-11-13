@@ -1,4 +1,5 @@
 import uniqueGraphOps from '/JS/pedigree/uniquegraphops.js';
+import FounderColor from '/JS/mode/haplo/blocks/colors.js';
 
 var AstarHandler = {
 

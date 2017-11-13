@@ -1,5 +1,12 @@
+import HaploWindow from '/JS/mode/haplo/haplomode.js';
+import scan_alleles_for_homology from '/JS/mode/homology/homology_initial_allele_scan.js';
+import HomologyMode from '/JS/mode/homology/homology_mode.js';
+import HomologyPlot from '/JS/mode/homology/homology_plot.js';
+import SelectionGraphics from '/JS/mode/selection/selection_graphics.js'
+import SelectionMode from '/JS/mode/selection/selection_mode.js';
+import { DOS } from '/JS/mode/haplo/dos/render_dos.js';
 
-var HomologySelectionMode = {
+export default var HomologySelectionMode = {
 
 	_exit : null,
 	_active : false,
@@ -30,11 +37,11 @@ var HomologySelectionMode = {
 		HaploWindow._top.moveTo( HaploWindow._group )
 
 		HomologySelectionMode.sub_select_group.destroyChildren();
-		HomologySelectionMode.sub_select_group.destroy();	
+		HomologySelectionMode.sub_select_group.destroy();
 	},
 
 
-	// HomologySelection --> HaploMode/Comparison	
+	// HomologySelection --> HaploMode/Comparison
 	quit: function(){
 		HomologySelectionMode._active = false;
 		HomologySelectionMode.cleanup();
@@ -42,7 +49,7 @@ var HomologySelectionMode = {
 		ButtonModes.setToComparisonMode();
 
 		HaploWindow._exit.show();
-		haplo_layer.draw();		
+		haplo_layer.draw();
 	},
 
 
@@ -53,7 +60,7 @@ var HomologySelectionMode = {
 		ButtonModes.setToHomologyMode();
 
 		HomologyMode.selected_for_homology = [];
-	
+
 		for (var s in SelectionMode._items){
 			if (SelectionMode._items[s].selected)
 			{
@@ -75,7 +82,6 @@ var HomologySelectionMode = {
 			utility.notify("Info", "Please select individuals for analysis");
 			return -1;
 		}
-
 
 		HomologyPlot.plots = scan_alleles_for_homology( HomologyMode.selected_for_homology );
 

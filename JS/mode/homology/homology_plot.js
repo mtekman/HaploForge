@@ -1,6 +1,9 @@
 import familyMapOps from '/JS/pedigree/familymapops.js';
+import HaploBlock from '/JS/mode/haplo/blocks/haploblock_frontend.js';
+import MarkerSlider from '/JS/mode/haplo/slider/marker_slider.js';
+import HaploWindow from '/JS/mode/haplo/haplomode.js';
 
-var HomologyPlot = {
+export default var HomologyPlot = {
 
 	plots: null, // valid: HOM, HET, CHET, family_specific.{HOM,HET,CHET}
 	rendered_filtered_plot: null,

@@ -1,6 +1,8 @@
 import MouseStyle from '/JS/iofuncs/mousestyle.js';
+import SliderHandler from '/JS/mode/haplo/slider/slider_handler.js';
+import HaploWindow from '/JS/mode/haplo/haplomode.js';
 
-var MarkerSlider = {
+export default var MarkerSlider = {
 
 	_instance : null, //markerInstance
 
@@ -16,7 +18,6 @@ var MarkerSlider = {
 	_slwin_group : null,
 	_sl_input1 : null,
 	_sl_input2 : null,
-
 
 	_config : {
 		slideinp_w : 20,

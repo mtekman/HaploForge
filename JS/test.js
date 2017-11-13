@@ -1,5 +1,14 @@
 import Person from '/JS/pedigree/person.js';
 import familyMapOps from '/JS/pedigree/familymapops.js';
+import AssignHGroups from '/JS/mode/haplo/blocks/assignhgroups.js';
+import FounderColor from '/JS/mode/haplo/blocks/colors.js';
+import HaploWindow from '/JS/mode/haplo/haplomode.js';
+import HomologyButtons from '/JS/mode/homology/homology_buttons.js';
+import HomologySelectionMode from '/JS/mode/homology/homology_selection.js';
+import familyDraw from '/JS/mode/pedcreate/familyDraw.js';
+import personDraw from '/JS/mode/pedcreate/personDraw.js';
+import SelectionAction from '/JS/mode/selection/selection_action.js';
+import SelectionMode from '/JS/mode/selection/selection_mode.js';
 
 var bb;
 

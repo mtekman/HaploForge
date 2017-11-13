@@ -1,3 +1,4 @@
+import FounderColor from '/JS/mode/haplo/blocks/colors.js';
 
 var DescentResolver = {
 
@@ -92,7 +93,7 @@ var DescentResolver = {
 					}
 					break;
 
-				default: error("Invalid descent assignment");	
+				default: error("Invalid descent assignment");
 			}
 			c2_cls[index].color_group = color_assign_c2;
 		}

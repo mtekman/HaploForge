@@ -1,8 +1,9 @@
 import MouseStyle from '/JS/iofuncs/mousestyle.js';
 import familyMapOps from '/JS/pedigree/familymapops.js';
 import uniqueGraphOps from '/JS/pedigree/uniquegraphops.js';
+import SelectionMode from '/JS/mode/selection/selection_mode.js';
 
-var SelectionGraphics = {
+export default var SelectionGraphics = {
 
 	// Shared with homology_selection.js
 	// Replicate existing objects with bounding square

@@ -1,3 +1,9 @@
+import FounderColor from '/JS/mode/haplo/blocks/colors.js';
+import HaploBlock from '/JS/mode/haplo/blocks/haploblock_frontend.js';
+import HaploWindow from '/JS/mode/haplo/haplomode.js';
+import ModeTracker from '/JS/mode/modetracker.js';
+import { DOS } from '/JS/mode/haplo/dos/render_dos.js';
+
 /* Class that rewrites the selection_tools div to swap in tools for each mode */
 var BottomButtons = {
 

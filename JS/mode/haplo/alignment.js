@@ -1,4 +1,6 @@
 import Resize from '/JS/window/resizing.js'
+import HaploWindow from '/JS/mode/haplo/haplomode.js';
+import { DOS } from '/JS/mode/haplo/dos/render_dos.js';
 
 HaploWindow.__aligntoggle = false;
 

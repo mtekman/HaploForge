@@ -1,6 +1,8 @@
 import Person from '/JS/pedigree/person.js';
 import familyMapOps from '/JS/pedigree/familymapops.js';
 import uniqueGraphOps from '/JS/pedigree/uniquegraphops.js';
+import familyDraw from '/JS/mode/pedcreate/familyDraw.js';
+import personDraw from '/JS/mode/pedcreate/personDraw.js';
 
 var famProps = {
 	_box : document.getElementById('family_props'),

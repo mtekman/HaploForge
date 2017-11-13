@@ -1,7 +1,12 @@
 import familyMapOps from '/JS/pedigree/familymapops.js';
 import uniqueGraphOps from '/JS/pedigree/uniquegraphops.js';
+import MarkerSlider from '/JS/mode/haplo/slider/marker_slider.js';
+import HaploWindow from '/JS/mode/haplo/haplomode.js';
+import HomologyMode from '/JS/mode/homology/homology_mode.js';
+import SelectionAction from '/JS/mode/selection/selection_action.js'
+import SelectionGraphics from '/JS/mode/selection/selection_graphics.js'
 
-var SelectionMode = {
+export default var SelectionMode = {
 
 	_ids_map : {}, // Generational map
 	_ids 	 : {}, // Just a map of ids
@@ -70,8 +75,6 @@ var SelectionMode = {
 			height: stage_h
 		});
 
-
-
 		SelectionMode._background = new Kinetic.Rect({
 			x: 0,
 			y: 0,
@@ -83,7 +86,6 @@ var SelectionMode = {
 		})
 
 		SelectionMode._select_group.add( SelectionMode._background );
-
 
 		uniqueGraphOps.foreachfam(function(fid){
 			var text_butt = uniqueGraphOps.getFam(fid).group.fam_title_text;

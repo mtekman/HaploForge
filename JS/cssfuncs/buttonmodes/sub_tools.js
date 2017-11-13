@@ -1,5 +1,14 @@
 import SerialParse from '/JS/iofuncs/serialparse.js';
 import FamSpacing from '/JS/mode/graph/famgroupspacing.js'
+import HaploBlock from '/JS/mode/haplo/blocks/haploblock_frontend.js';
+import HaploWindow from '/JS/mode/haplo/haplomode.js';
+import HomologySelectionMode from '/JS/mode/homology/homology_selection.js';
+import familyDraw from '/JS/mode/pedcreate/familyDraw.js';
+import MatelineDraw from '/JS/mode/pedcreate/matelineDraw.js';
+import OffspringDraw from '/JS/mode/pedcreate/offspringDraw.js';
+import personDraw from '/JS/mode/pedcreate/personDraw.js';
+import SelectionAction from '/JS/mode/selection/selection_action.js'
+import SelectionMode from '/JS/mode/selection/selection_mode.js'
 
 /* Class that rewrites the selection_tools div to swap in tools for each mode */
 var ToolButtons = {

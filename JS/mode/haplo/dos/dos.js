@@ -1,6 +1,6 @@
 import familyMapOps from '/JS/pedigree/familymapops.js';
 
-var SubSelectLevel = {
+/*var SubSelectLevel = {
 
 /* The naive approach would be to use the existing LevelGrid to
    determine DOS between individuals, but we would still need
@@ -10,7 +10,7 @@ var SubSelectLevel = {
 
    The better approach -- (1) For each individual
 */
-	function(selection_map){
+/*	function(selection_map){
 
 		// Grab level grids for each family member
 
@@ -28,12 +28,12 @@ var SubSelectLevel = {
 			}
 		}
 	}
-}
+}*/
 
 
 
 
-function findDOSinSelection(selection_map){
+export default function findDOSinSelection(selection_map){
 
 	console.log(selection_map)
 

@@ -1,7 +1,15 @@
 import uniqueGraphOps from '/JS/pedigree/uniquegraphops.js';
 import Resize from '/JS/window/resizing.js';
+import HaploBlock from '/JS/mode/haplo/blocks/haploblock_frontend.js';
+import findDOSinSelection from '/JS/mode/haplo/dos/dos.js';
+import MarkerSlider from '/JS/mode/haplo/slider/marker_slider.js';
+import SliderHandler from '/JS/mode/haplo/slider/slider_handler.js';
+import HaploModeEvents from '/JS/mode/haplo/alignment.js';
+import SelectionAction from '/JS/mode/selection/selection_action.js';
+import SelectionMode from '/JS/mode/selection/selection_mode.js';
+import { mapLinesAndNodes, DOS } from '/JS/mode/haplo/dos/render_dos.js';
 
-var HaploWindow = {
+export default var HaploWindow = {
 
 	_left: new Kinetic.Rect({    //  side bar underlying markers
 		x: 10,

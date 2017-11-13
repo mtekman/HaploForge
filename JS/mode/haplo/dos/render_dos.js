@@ -1,6 +1,7 @@
 import uniqueGraphOps from '/JS/pedigree/uniquegraphops.js';
+import HaploWindow from '/JS/mode/haplo/haplomode.js';
 
-var DOS = {
+export var DOS = {
 
 	initial_group_node_offset : {
 		x:HaploWindow.left_margin_x,
@@ -110,7 +111,7 @@ var DOS = {
 
 
 // Line map is given by DOS
-function mapLinesAndNodes(line_map )
+export function mapLinesAndNodes(line_map )
 {
 	var slot_array = []; // index --> gfx
 

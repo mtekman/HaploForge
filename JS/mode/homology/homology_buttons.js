@@ -1,6 +1,8 @@
+import HaploBlock from '/JS/mode/haplo/blocks/haploblock_frontend.js';
+import HomologyMode from '/JS/mode/homology/homology_mode.js';
+import HomologyPlot from '/JS/mode/homology/homology_plot.js';
 
-
-var HomologyButtons = {
+export default var HomologyButtons = {
 
 	_alreadyset : false,
 
@@ -69,7 +71,7 @@ var HomologyButtons = {
 
 	_printCurrent: function(){
 		HomologyPlot.printToFile(HomologyMode.selected_for_homology,
-			HaploBlock.sta_index, 
+			HaploBlock.sta_index,
 			HaploBlock.end_index
 		);
 	},

@@ -1,6 +1,7 @@
 import Person from '/JS/pedigree/person.js';
 import familyMapOps from '/JS/pedigree/familymapops.js';
 import uniqueGraphOps from '/JS/pedigree/uniquegraphops.js';
+import FounderColor from '/JS/mode/haplo/blocks/colors.js';
 
 export default var SerialParse = {
 

@@ -3,6 +3,7 @@ import uniqueGraphOps from '/JS/pedigree/uniquegraphops.js';
 import Resize from '/JS/window/resizing.js'
 import FamSpacing from '/JS/mode/graph/famgroupspacing.js'
 import FancyGraphics from '/JS/mode/graph/famgraphicsplacement.js'
+import personDraw from '/JS/mode/pedcreate/personDraw.js';
 import { touchlines } from '/JS/mode/graph/graph_draw.js'
 /*Drawing a pedigree - trickier than you'd think, simple draw rec messes up lines
 

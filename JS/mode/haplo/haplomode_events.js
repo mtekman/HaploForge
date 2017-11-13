@@ -1,5 +1,7 @@
+import HaploBlock from '/JS/mode/haplo/blocks/haploblock_frontend.js';
+import SliderHandler from '/JS/mode/haplo/slider/slider_handler.js';
 
-var HaploModeEvents = {
+export default var HaploModeEvents = {
 
 	shiftHaplotypes : function(delta)
 	{
@@ -14,8 +16,8 @@ var HaploModeEvents = {
 	{
 		SliderHandler.updateInputsByIndex();
 		SliderHandler.updateSlide();
-		
-		HaploBlock.redrawHaplos(false);	
+
+		HaploBlock.redrawHaplos(false);
 	},
 
 

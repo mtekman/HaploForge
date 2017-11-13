@@ -1,9 +1,15 @@
 import familyMapOps from '/JS/pedigree/familymapops.js';
 import uniqueGraphOps from '/JS/pedigree/uniquegraphops.js';
 import Resize from '/JS/window/resizing.js'
+import FounderColor from '/JS/mode/haplo/blocks/colors.js';
+import HaploBlockFormat from '/JS/mode/haplo/blocks/haploblockformat.js';
+import SliderHandler from '/JS/mode/haplo/slider/slider_handler.js';
+import HaploModeEvents from '/JS/mode/haplo/alignment.js';
+import HaploWindow from '/JS/mode/haplo/haplomode.js';
+import HomologyPlot from '/JS/mode/homology/homology_plot.js';
 //var htext = null; // DEBUG
 
-var HaploBlock = {
+export default var HaploBlock = {
 
 	sta_index : 0,
 	end_index : 0,

@@ -1,5 +1,6 @@
+import HaploWindow from '/JS/mode/haplo/haplomode.js';
 
-var HaploBlockFormat = {
+export default var HaploBlockFormat = {
 
 	hasGPData(show){
 		HaploBlockFormat.format.textprops.x = show?-85:-37;
@@ -59,7 +60,7 @@ var HaploBlockFormat = {
 	},
 
 	applyFancy: function(){
-	
+
 		HaploBlockFormat.applyDefault();
 
 		for (var prop_super in HaploBlockFormat.__fancy){
