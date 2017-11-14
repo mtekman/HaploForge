@@ -1,3 +1,5 @@
+import { error } from '/JS/globals.js';
+
 export default var familyMapOps = {
 
 	_map : {}, // fam_id ---> pedigree map --> person

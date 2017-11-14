@@ -1,7 +1,9 @@
 import uniqueGraphOps from '/JS/pedigree/uniquegraphops.js';
 import FounderColor from '/JS/mode/haplo/blocks/colors.js';
+import a_star_bestfirst from '/JS/resolvers/astarpath_resolver.js';
+import { error } from '/JS/globals.js';
 
-var AstarHandler = {
+export default var AstarHandler = {
 
 	/** Inherit all unique color groups from one person to another **/
 	pushAll: function(from, to){

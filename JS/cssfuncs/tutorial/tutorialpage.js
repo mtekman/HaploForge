@@ -1,5 +1,6 @@
+import VideoTranscript from '/JS/cssfuncs/tutorial/videotranscript.js';
 
-class TutorialPage {
+export default class TutorialPage {
 
 	constructor(object){
 
@@ -54,7 +55,7 @@ class TutorialPage {
 		toptext.innerText = this.__text_top;
 
 		var that = this;
-		
+
 		if (this.__text_bot!== null){
 			bottext.innerText = this.__text_bot;
 		}
@@ -69,7 +70,7 @@ class TutorialPage {
 
 		if (this.__media !== undefined)
 		{
-			var med;	
+			var med;
 			if (this.__type === "video")
 			{
 				var vt = new VideoTranscript(that, this.__media.src, this.__media.text);
@@ -103,10 +104,10 @@ class TutorialPage {
 					}
 				}
 			}
-			
+
 			else { //"img"
 				med = document.createElement('img');
-				med.src = this.__mediasrc; 
+				med.src = this.__mediasrc;
 //				divmain.appendChild(toptext);
 //				divmain.appendChild(med);
 			}

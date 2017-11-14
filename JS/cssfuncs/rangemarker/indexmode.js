@@ -1,7 +1,8 @@
 import Resize from '/JS/window/resizing.js'
 import HaploBlock from '/JS/mode/haplo/blocks/haploblock_frontend.js';
+import { MarkerData } from '/JS/filehandler/markerdata.js';
 
-var CSSMarkerRange = {
+export default var CSSMarkerRange = {
 
 	_submit : document.getElementById('index_submit'),
 	_min : document.getElementById('marker_list_min'),

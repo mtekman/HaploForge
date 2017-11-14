@@ -1,5 +1,8 @@
 import familyMapOps from '/JS/pedigree/familymapops.js';
 import FounderColor from '/JS/mode/haplo/blocks/colors.js';
+import AstarHandler from '/JS/resolvers/astar_handler.js';
+import DescentResolver from '/JS/resolvers/descent_resolver.js';
+import FlowResolver from '/JS/resolvers/flow_resolver.js';
 
 export default var AssignHGroups = {
 

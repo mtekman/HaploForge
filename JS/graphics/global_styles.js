@@ -1,3 +1,4 @@
+import userOpts from '/JS/userconfig/useropts.js';
 // Global graphic styles
 function addWhiteRect(props, color_override)
  {

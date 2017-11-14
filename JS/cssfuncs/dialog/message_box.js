@@ -3,6 +3,7 @@ import familyMapOps from '/JS/pedigree/familymapops.js';
 import uniqueGraphOps from '/JS/pedigree/uniquegraphops.js';
 import familyDraw from '/JS/mode/pedcreate/familyDraw.js';
 import personDraw from '/JS/mode/pedcreate/personDraw.js';
+import { messProps } from '/JS/cssfuncs/dialog/utility.js';
 
 var famProps = {
 	_box : document.getElementById('family_props'),
@@ -55,7 +56,7 @@ var famProps = {
 }
 
 
-var benchProps = {
+export var benchProps = {
 	_box :              document.getElementById('bench_props'),
 	_rootfounderInput : document.getElementById('bench_root_founder'),
 	_maxgenInput:       document.getElementById('bench_max_gen'),
@@ -121,7 +122,7 @@ var benchProps = {
 }
 
 
-var persProps = {
+export var persProps = {
 	_box : document.getElementById('person_props'),
 	_genderInput : document.getElementById('pers_gender'),
 	_genderUnknown: document.getElementById('pers_gender_unknown'),

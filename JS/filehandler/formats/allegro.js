@@ -1,9 +1,13 @@
 import Person from '/JS/pedigree/person.js';
 import familyMapOps from '/JS/pedigree/familymapops.js';
 import AssignHGroups from '/JS/mode/haplo/blocks/assignhgroups.js';
+import FlowResolver from '/JS/resolvers/flow_resolver.js';
+import FileFormat from '/JS/filehandler/fileformat_superclass.js';
+import { MarkerData } from '/JS/filehandler/markerdata.js';
+import { error } from '/JS/globals.js';
 //debugAllegro = {}
 
-class Allegro extends FileFormat {
+export default class Allegro extends FileFormat {
 
 	constructor(mode_init = null, fed_data = null){
 

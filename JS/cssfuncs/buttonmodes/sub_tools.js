@@ -9,9 +9,13 @@ import OffspringDraw from '/JS/mode/pedcreate/offspringDraw.js';
 import personDraw from '/JS/mode/pedcreate/personDraw.js';
 import SelectionAction from '/JS/mode/selection/selection_action.js'
 import SelectionMode from '/JS/mode/selection/selection_mode.js'
+import Settings from '/JS/userconfig/settings.js';
+import ButtonModes from '/JS/cssfuncs/buttonmodes/buttonmodes_wrapper.js';
+import MainButtonActions from '/JS/cssfuncs/mainpage/mainbuttonactions.js';
+import CSSMarkerRange from '/JS/cssfuncs/rangemarker/indexmode.js';
 
 /* Class that rewrites the selection_tools div to swap in tools for each mode */
-var ToolButtons = {
+export default var ToolButtons = {
 
 	table_keys : {},
 	div   : document.getElementById("selection_tools"),

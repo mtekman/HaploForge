@@ -1,3 +1,7 @@
+import userOpts from '/JS/userconfig/useropts.js';
+import MainPageHandler from '/JS/cssfuncs/mainpage/mainpagehandler.js';
+import TutorialActions from '/JS/cssfuncs/tutorial/tutorialactions.js';
+
 export default var BackgroundVidMain = {
 
 	__source : "public_assets/videos/background_general.lesser2.webm",

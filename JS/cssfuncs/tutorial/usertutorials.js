@@ -1,5 +1,6 @@
+import Tutorial from '/JS/cssfuncs/tutorial/tutorial.js';
 
-var userTutorials = {
+export default var userTutorials = {
 
 	__firstrun : false,
 	__firstkey : "firstrun",
@@ -43,14 +44,14 @@ var userTutorials = {
 			});
 		}
 	},
-	
+
 	__first(exitfunc = null){
 		var pages = [
 /*				["Welcome to HaploHTML5!",
 			"This is a tool that helps you draw pedigrees from scratch, and or analyze haplotypes."],
 */
 			{
-				title: "Getting Started", 
+				title: "Getting Started",
 			 	text : [
 			  		"Since this is your first time, let's go through some tutorials!",
 			  		"Tutorials can be navigated using the arrows in the top right corner, or exited completely by closing this window.\n\nTo move to the next screen, please click the forward direction icon\n(or press the Enter key)."
@@ -92,9 +93,6 @@ var userTutorials = {
 	setToHomologySelection : {},
 	setToHomologyMode : {}*/
 }
-
-
-
 
 
 var transcript = {
@@ -140,7 +138,7 @@ var transcript = {
 		}
 	},
 
-	bindings : {  
+	bindings : {
 		/* Show settings, haploview, resume analysis, haplo scrolling, genotypes mode, marker */
 		src   : "public_assets/videos/bindings.post.webm",
 		text  : {
@@ -159,7 +157,7 @@ var transcript = {
 		}
 	},
 
-	finecontrol : {  
+	finecontrol : {
 		/* Shows scrolling in haploview */
 		src   : "public_assets/videos/finecontrol.post.webm",
 		text  : {

@@ -4,7 +4,10 @@ import Resize from '/JS/window/resizing.js'
 import FamSpacing from '/JS/mode/graph/famgroupspacing.js'
 import FancyGraphics from '/JS/mode/graph/famgraphicsplacement.js'
 import personDraw from '/JS/mode/pedcreate/personDraw.js';
+import userOpts from '/JS/userconfig/useropts.js';
+import Pedfile from '/JS/filehandler/formats/pedfile.js';
 import { touchlines } from '/JS/mode/graph/graph_draw.js'
+import { isEmpty } from '/JS/globals.js';
 /*Drawing a pedigree - trickier than you'd think, simple draw rec messes up lines
 
 Steps:

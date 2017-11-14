@@ -4,6 +4,7 @@ import HomologyMode from '/JS/mode/homology/homology_mode.js';
 import HomologyPlot from '/JS/mode/homology/homology_plot.js';
 import SelectionGraphics from '/JS/mode/selection/selection_graphics.js'
 import SelectionMode from '/JS/mode/selection/selection_mode.js';
+import ButtonModes from '/JS/cssfuncs/buttonmodes/buttonmodes_wrapper.js';
 import { DOS } from '/JS/mode/haplo/dos/render_dos.js';
 
 export default var HomologySelectionMode = {

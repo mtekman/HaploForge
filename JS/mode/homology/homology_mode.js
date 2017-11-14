@@ -3,6 +3,7 @@ import HaploWindow from '/JS/mode/haplo/haplomode.js';
 import HomologyButtons from '/JS/mode/homology/homology_buttons.js';
 import HomologyPlot from '/JS/mode/homology/homology_plot.js';
 import HomologySelectionMode from '/JS/mode/homology/homology_selection.js';
+import ButtonModes from '/JS/cssfuncs/buttonmodes/buttonmodes_wrapper.js';
 
 export default var HomologyMode = {
 

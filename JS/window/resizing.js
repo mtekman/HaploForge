@@ -4,6 +4,7 @@ import SliderHandler from '/JS/mode/haplo/slider/slider_handler.js';
 import HaploWindow from '/JS/mode/haplo/haplomode.js';
 import SelectionMode from '/JS/mode/selection/selection_mode.js';
 import ModeTracker from '/JS/mode/modetracker.js';
+import { MarkerData } from '/JS/filehandler/markerdata.js';
 
 export default var Resize = {
 

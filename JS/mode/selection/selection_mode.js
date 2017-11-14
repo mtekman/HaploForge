@@ -4,7 +4,9 @@ import MarkerSlider from '/JS/mode/haplo/slider/marker_slider.js';
 import HaploWindow from '/JS/mode/haplo/haplomode.js';
 import HomologyMode from '/JS/mode/homology/homology_mode.js';
 import SelectionAction from '/JS/mode/selection/selection_action.js'
-import SelectionGraphics from '/JS/mode/selection/selection_graphics.js'
+import SelectionGraphics from '/JS/mode/selection/selection_graphics.js';
+import ButtonModes from '/JS/cssfuncs/buttonmodes/buttonmodes_wrapper.js';
+import { isEmpty, map2orderedArray } from '/JS/globals.js';
 
 export default var SelectionMode = {
 

@@ -1,10 +1,11 @@
+import TutorialActions from '/JS/cssfuncs/tutorial/tutorialactions.js';
+import TutorialPage from '/JS/cssfuncs/tutorial/tutorialpage.js';
 
-
-class Tutorial extends TutorialActions {
+export default class Tutorial extends TutorialActions {
 
 	constructor( page_array_of_details, exit_function = null ){
 		super(exit_function);
-		
+
 		this.__tps = {}; // for destroy
 
 		this._pages = [];
@@ -45,7 +46,7 @@ class Tutorial extends TutorialActions {
 
 			newpage.style.display = "none"; // hide by default
 			this._pages.push( newpage );
-		
+
 			pageholder.appendChild( newpage );
 		}
 

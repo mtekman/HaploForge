@@ -2,6 +2,8 @@ import familyMapOps from '/JS/pedigree/familymapops.js';
 import HaploBlock from '/JS/mode/haplo/blocks/haploblock_frontend.js';
 import MarkerSlider from '/JS/mode/haplo/slider/marker_slider.js';
 import HaploWindow from '/JS/mode/haplo/haplomode.js';
+import { haploblock_spacers, exportToTab } from '/JS/globals.js';
+import { MarkerData } from '/JS/filehandler/markerdata.js';
 
 export default var HomologyPlot = {
 

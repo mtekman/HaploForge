@@ -1,6 +1,7 @@
+import BenchStopwatch from '/JS/benchmarking/bench_stopwatch.js';
+import MainButtonActions from '/JS/cssfuncs/mainpage/mainbuttonactions.js';
 
-
-class PromiseQueue {
+export default class PromiseQueue {
 
 	constructor(jobfunc){
 		this.promise = Promise.resolve();

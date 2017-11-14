@@ -1,6 +1,8 @@
 import familyMapOps from '/JS/pedigree/familymapops.js';
+import { MarkerData, ObservedBases } from '/JS/filehandler/markerdata.js';
+import { error } from '/JS/globals.js';
 
-var SequenceChecker = {
+export default var SequenceChecker = {
 
     hasSequence : false, // set by file upload checkbox
     use : false, // set by "Togg. Seq", read by each respective fileformat subclass

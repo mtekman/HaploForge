@@ -1,4 +1,5 @@
-
+import Settings from '/JS/userconfig/settings.js';
+import userOpts from '/JS/userconfig/useropts.js';
 // Singleton
 
 function onWindowLoad(){

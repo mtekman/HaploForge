@@ -1,6 +1,7 @@
 import Person from '/JS/pedigree/person.js';
+import BenchAllele from '/JS/benchmarking/bench_allele.js';
 
-class BenchPerson  extends Person {
+export class BenchPerson  extends Person {
 
 	init(){
 		if (BenchPerson.generation_map === undefined){

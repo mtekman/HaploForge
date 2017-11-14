@@ -5,7 +5,8 @@ import familyDraw from '/JS/mode/pedcreate/familyDraw.js';
 import MatelineDraw from '/JS/mode/pedcreate/matelineDraw.js';
 import OffspringDraw from '/JS/mode/pedcreate/offspringDraw.js';
 import SelectionGraphics from '/JS/mode/selection/selection_graphics.js'
-import { edgeAccessor } from '/JS/mode/graph/graph_draw.js'
+import { edgeAccessor } from '/JS/mode/graph/graph_draw.js';
+import { persProps } from '/JS/cssfuncs/dialog/message_box.js';
 
 export default var personDraw = {
 	//Ids MUST be unique, even if user doesn't have a specific ID in mind

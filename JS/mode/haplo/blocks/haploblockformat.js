@@ -1,4 +1,5 @@
 import HaploWindow from '/JS/mode/haplo/haplomode.js';
+import { haploblock_settings, haploblock_spacers } from '/JS/globals.js';
 
 export default var HaploBlockFormat = {
 

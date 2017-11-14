@@ -1,6 +1,6 @@
 import BackgroundVidMain from '/JS/window/backgroundvid.js';
 
-class TutorialActions {
+export default class TutorialActions {
 
 	static getNumTutorials(){
 		TutorialActions.__numTutorials = TutorialActions.__numTutorials || 0;

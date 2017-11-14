@@ -1,5 +1,10 @@
+import BenchStopwatch from '/JS/benchmarking/bench_stopwatch.js';
+import TreeGenerator from '/JS/benchmarking/tree_generator.js';
+import Allegro from '/JS/filehandler/formats/allegro.js';
+import { exportToTab } from '/JS/globals.js';
+import { benchProps} from '/JS/cssfuncs/dialog/message_box.js';
 
-var BenchMark = {
+export default var BenchMark = {
 
     /*record(text){
         let key = "benchrecords";
@@ -39,7 +44,7 @@ var BenchMark = {
         BenchStopwatch.start(
             function (rendertime) {
                 endfunction(treetime, metrics.numpeople, metrics.numinbredcouples, rendertime, metrics.numallelerecombinations);
-                utility.notify("Benchmark", 
+                utility.notify("Benchmark",
                     metrics.numpeople+" individuals, " +
                     metrics.numinbredcouples + " inbred couples," +
                     "Render Time=" + (rendertime/1000).toFixed(3) +" s", 5);
@@ -53,7 +58,7 @@ var BenchMark = {
         }
         //BenchStopwatch.terminate(errors);
 
-        new Allegro(null, text);    
+        new Allegro(null, text);
     },
 
     launch_display(){

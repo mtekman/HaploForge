@@ -1,6 +1,7 @@
 import FounderColor from '/JS/mode/haplo/blocks/colors.js';
+import { error } from '/JS/globals.js';
 
-var DescentResolver = {
+export default var DescentResolver = {
 
 	child2parent_link: function(child, mother, father, fam){
 

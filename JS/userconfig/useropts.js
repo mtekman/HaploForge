@@ -2,9 +2,11 @@ import BackgroundVidMain from '/JS/window/backgroundvid.js';
 import HaploBlock from '/JS/mode/haplo/blocks/haploblock_frontend.js';
 import HaploBlockFormat from '/JS/mode/haplo/blocks/haploblockformat.js';
 import HaploWindow from '/JS/mode/haplo/haplomode.js';
+import { MarkerData } from '/JS/filehandler/markerdata.js';
+import { error } from '/JS/globals.js';
 
 // UI configurable:
-var userOpts = {
+export default var userOpts = {
 	showTooltips: true,
 	fancyGraphics: true,
 

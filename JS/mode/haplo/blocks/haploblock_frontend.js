@@ -7,6 +7,9 @@ import SliderHandler from '/JS/mode/haplo/slider/slider_handler.js';
 import HaploModeEvents from '/JS/mode/haplo/alignment.js';
 import HaploWindow from '/JS/mode/haplo/haplomode.js';
 import HomologyPlot from '/JS/mode/homology/homology_plot.js';
+import SequenceChecker from '/JS/filehandler/sequencechecker.js';
+import { haploblock_settings, haploblock_spacers } from '/JS/globals.js';
+import { MarkerData } from '/JS/filehandler/markerdata.js';
 //var htext = null; // DEBUG
 
 export default var HaploBlock = {

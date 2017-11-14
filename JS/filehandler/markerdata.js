@@ -1,7 +1,8 @@
 import HaploBlock from '/JS/mode/haplo/blocks/haploblock_frontend.js';
 import HaploBlockFormat from '/JS/mode/haplo/blocks/haploblockformat.js';
+import { error } from '/JS/globals.js';
 
-var ObservedBases = {
+export var ObservedBases = {
 	_nullbase : 0,
 	_nulltide : '?',
 	_fmap : {'A': 1, 'C': 2, 'T': 3, 'G': 4},
@@ -25,8 +26,7 @@ var ObservedBases = {
 	}
 }
 
-
-var MarkerData = {
+export var MarkerData = {
 	rs_array: [], // rsid
 	gp_array: [], // genpos
 

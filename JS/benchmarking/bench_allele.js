@@ -1,9 +1,6 @@
-function randomIndex(len){
-	return Math.floor(Math.random() * len);
-}
+import { randomIndex } from '/JS/globals.js';
 
-
-var BenchAllele  = {
+export default var BenchAllele  = {
 
 	disease_allele : null,
 	allele_size : 16,
@@ -15,10 +12,10 @@ var BenchAllele  = {
 		if (BenchAllele.disease_allele === null)
 		{
 			BenchAllele.disease_allele = [];
-			for (let i=0; i < BenchAllele.allele_size; i++){ 
-				BenchAllele.disease_allele.push(1); 
+			for (let i=0; i < BenchAllele.allele_size; i++){
+				BenchAllele.disease_allele.push(1);
 			}
-				
+
 			BenchAllele.__alleles_in_use[ BenchAllele.disease_allele.join("") ] = true;
 			//console.log("Defining new disease_allele", BenchAllele.disease_allele);
 		};

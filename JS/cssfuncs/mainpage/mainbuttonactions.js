@@ -1,12 +1,15 @@
 import SerialParse from '/JS/iofuncs/serialparse.js';
 import ModeTracker from '/JS/mode/modetracker.js';
+import MainPageHandler from '/JS/cssfuncs/mainpage/mainpagehandler.js';
+import Pedfile from '/JS/filehandler/formats/pedfile.js';
+import fileSelector from '/JS/filehandler/boxselector.js';
+import FileFormat from '/JS/filehandler/fileformat_superclass.js';
 
 function reload(){
 	location.reload()
 }
 
-
-var MainButtonActions  = {
+export default var MainButtonActions  = {
 
 	_temphaploload: null,
 

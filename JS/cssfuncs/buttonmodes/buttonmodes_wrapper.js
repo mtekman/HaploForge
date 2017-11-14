@@ -1,8 +1,10 @@
+import BottomButtons from '/JS/cssfuncs/buttonmodes/sub_bottom.js';
+import ToolButtons from '/JS/cssfuncs/buttonmodes/sub_tools.js';
 /*Wrapper for selection tools and general button
-  -- No need to call either directly 
+  -- No need to call either directly
 */
 
-var ButtonModes = {
+export default var ButtonModes = {
 
 	__modespopulated: false,
 
@@ -82,7 +84,7 @@ var ButtonModes = {
 		if (alt_key.length == 2){
 			alt = alt_key[0];
 			key = alt_key[1];
-			
+
 			if (alt === "Ctrl"){
 				alt = "Control"
 			}
@@ -120,7 +122,7 @@ var ButtonModes = {
 		ToolButtons.modes[funcname]();
 
 	},
-	
+
 	__preamble: function(nameOfMode){
 
 		if (!ButtonModes.__modespopulated){
@@ -146,6 +148,3 @@ var ButtonModes = {
 		ButtonModes.__switchMode(arguments.callee.name)
 	},
 }
-
-
-

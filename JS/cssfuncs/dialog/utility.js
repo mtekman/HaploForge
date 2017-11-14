@@ -1,6 +1,6 @@
 
 
-var messProps = {
+export var messProps = {
 	_header : document.getElementById('message_head'),
 	_text   : document.getElementById('message_text'),
 	_exit : document.getElementById('message_exit'),
@@ -19,13 +19,13 @@ var messProps = {
 		this._text.style.display = "block";
 	},
 
-	hide: function(){ 
+	hide: function(){
 		Keyboard.unpause()
 		this._box.style.display = "none";
 		this._box.style.zIndex = -99;
 	},
 
-	show: function(){ 
+	show: function(){
 		Keyboard.pause()
 		this._box.style.display = "block";
 		this._box.style.zIndex = 502;
@@ -55,7 +55,7 @@ var messProps = {
 		if (submit){
 			this._buttonrow.style.display = "none";
 			this._inputrow.style.display = "block";
-			
+
 			this._submit.value = "Submit";
 			var that = this;
 			this._submit.onclick = function(){
@@ -102,7 +102,7 @@ var messProps = {
 
 	prompt: function(header, text, yes, onYes, no, onNo)
 	{
-		var promptcallback = { 
+		var promptcallback = {
 			yes: yes, yescallback: onYes,
 			no : no ,  nocallback: onNo
 		}
@@ -136,7 +136,7 @@ var messProps = {
 
 		var that = this;
 
-		that.display(header, "", 
+		that.display(header, "",
 			function exit(){
 				//restore
 				that._buttonrow.innerHTML = that._buttonrow._old_html
@@ -148,15 +148,15 @@ var messProps = {
 }
 
 
-var statusProps = {
+/*var statusProps = {
 	_box: document.getElementById('status_props'),
 	_header: document.getElementById('status_head'),
 	_message: document.getElementById('status_text'),
 
-	hide: function(){ 
+	hide: function(){
 		this._box.style.display = "none";
 	},
-	show: function(){ 
+	show: function(){
 		this._box.style.display = "block";
 		this._box.style.opacity = 1;
 		this._box.style.zIndex = 503;
@@ -233,4 +233,4 @@ var utility = {
 		this._bg.style.display = "none";
 		this._bg.style.zIndex = -99;
 	}
-}
+}*/

@@ -2,6 +2,7 @@ import MouseStyle from '/JS/iofuncs/mousestyle.js';
 import Resize from '/JS/window/resizing.js';
 import HaploBlock from '/JS/mode/haplo/blocks/haploblock_frontend.js';
 import MarkerSlider from '/JS/mode/haplo/slider/marker_slider.js';
+import { MarkerData } from '/JS/filehandler/markerdata.js';
 
 export default var SliderHandler = {
 

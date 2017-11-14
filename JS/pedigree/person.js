@@ -1,6 +1,8 @@
 import Allele from '/JS/pedigree/allele.js';
+import { error } from '/JS/globals.js';
 // This should not be optimized for graphics, this is for data processing only(!!)
 //
+
 export default class Person {
 
 	constructor(id, gender, affected, mother = 0, father = 0, name = null)
@@ -127,9 +129,27 @@ export default class Person {
 		}
 	}
 
+	static intersectArrays(a, b){
+		var ai=0, bi=0;
+		var result = new Array();
+
+		while( ai < a.length && bi < b.length )
+		{
+			if      (a[ai].id < b[bi].id ){ ai++; }
+			else if (a[ai].id > b[bi].id ){ bi++; }
+			else /* they're equal */
+			{
+				result.push(a[ai]);
+				ai++;
+				bi++;
+			}
+		}
+		return result;
+	}
+
 	foreachchild(mate, callback){
 
-		var common_children = intersectArrays(this.children, mate.children)
+		var common_children = Person.intersectArrays(this.children, mate.children)
 
 		for (var c=0; c < common_children.length; c++){
 			var child = common_children[c];

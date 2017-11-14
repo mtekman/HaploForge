@@ -1,6 +1,6 @@
 import FounderColor from '/JS/mode/haplo/blocks/colors.js';
 
-var FlowResolver = {
+export default var FlowResolver = {
 
 	unique_haplos : [], // accessed by Merlin
 

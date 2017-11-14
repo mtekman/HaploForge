@@ -1,4 +1,4 @@
-
+import { MarkerData } from '/JS/filehandler/markerdata.js';
 
 var PED = {
 	MALE : 1,
@@ -7,10 +7,6 @@ var PED = {
 	AFFECTED : 2,
 	UNKNOWN : 0,
 }
-
-
-
-
 
 // Draw globals
 var nodeSize = 10;
@@ -33,38 +29,12 @@ var col_affs = [
     'white',       // 1 - Unaffected
     'red'];        // 2 - Affected
 
-
-
-
-
-function error(message) {
+export function error(message) {
 	utility.notify("Error", message, 5);
 	throw new Error(message)
 }
 
-
-function intersectArrays(a,b){
-	var ai=0, bi=0;
-	var result = new Array();
-
-	while( ai < a.length && bi < b.length )
-	{
-		if      (a[ai].id < b[bi].id ){ ai++; }
-		else if (a[ai].id > b[bi].id ){ bi++; }
-		else /* they're equal */
-		{
-			result.push(a[ai]);
-			ai++;
-			bi++;
-		}
-	}
-	return result;
-}
-
-
-
-
-function exportToTab(text)
+export function exportToTab(text)
 {
 	function makeTextFile(tex, textFile = null)
 	{
@@ -79,7 +49,6 @@ function exportToTab(text)
 	}
 	window.open(makeTextFile(text));
 }
-
 
 // Padding for fixed width output
 String.prototype.paddingLeft = function (paddingValue) {
@@ -100,17 +69,16 @@ String.prototype.center = function(padding){
 		leftN  = todist - rightN;
 
 	return String(padding.slice(0,leftN) + this + padding.slice(-rightN));
-
 }
 
 
-// for some reason keys wont sort numerically for negative keys
-function sortedKeys(mapper){
-	return Object.keys(mapper).sort(function (a,b){ return a - b});
+export function randomIndex(len){
+	return Math.floor(Math.random() * len);
 }
 
-function map2orderedArray(mapper){
-	var keys = sortedKeys(mapper);
+export function map2orderedArray(mapper){
+	// Sorted keys
+	var keys = Object.keys(mapper).sort(function (a,b){ return a - b});
 
 	var ordered_array = [];
 
@@ -123,7 +91,7 @@ function map2orderedArray(mapper){
 	return ordered_array;
 }
 
-function isEmpty(map){
+export function isEmpty(map){
 	return Object.getOwnPropertyNames(map).length === 0;
 }
 
@@ -135,7 +103,7 @@ var in2Space = function(integ){
 }
 
 // units are em except when px is used
-var haploblock_settings = {
+export var haploblock_settings = {
 	space_pixels: 6,    // 1em for monospace 10
 	marker_offset: 1,
 	ht_offset: 7,
@@ -143,14 +111,14 @@ var haploblock_settings = {
 	font_family: "Roboto Mono"
 };
 //Do not edit this!
-var haploblock_buffers = {
+export var haploblock_buffers = {
 	marker_offset : in2Space(haploblock_settings.marker_offset),
 	ht_offset : in2Space(haploblock_settings.ht_offset),
 	ht_2_ht : in2Space(haploblock_settings.ht_2_ht)
 };
 
 
-var haploblock_spacers = {
+export var haploblock_spacers = {
 	marker_offset_px: ((MarkerData.maxlen_marker+1)*haploblock_settings.space_pixels)+1,
 	person_offset_px: 10 * haploblock_settings.space_pixels,
 	block_width_px: HAP_VERT_SPA*1.2,

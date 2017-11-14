@@ -197,7 +197,7 @@ var starbest_body = (function() {
 
 var strre = starbest_body.replace(/console\.log\(.*\)\;/g,"");
 
-var a_star_bestfirst = new Function(
+export var a_star_bestfirst = new Function(
 	'array',
 	'exclude_list',
 	strre

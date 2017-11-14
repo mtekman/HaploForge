@@ -1,10 +1,11 @@
+import userOpts from '/JS/userconfig/useropts.js';
 
-class ButtonTutorial {
+export default class ButtonTutorial {
 
-	constructor(button, 
-				head, text,  
-				direction, 
-				onclick = null, 
+	constructor(button,
+				head, text,
+				direction,
+				onclick = null,
 				styleprops = null){
 
 		console.assert(['top','bot','left','right'].indexOf(direction)!==-1, "not a valid direction" + direction);
@@ -161,6 +162,6 @@ class ButtonTutorial {
 			tock += mult;
 
 			box.style.borderButtonWidth = tock+'px';
-			box.style.padding = tock+'px'; 
+			box.style.padding = tock+'px';
 		},80)
 */

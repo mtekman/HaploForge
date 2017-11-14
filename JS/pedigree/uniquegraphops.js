@@ -1,4 +1,5 @@
 import { edgeAccessor } from '/JS/mode/graph/graph_draw.js'
+import { error } from '/JS/globals.js';
 
 export default var uniqueGraphOps = {
 

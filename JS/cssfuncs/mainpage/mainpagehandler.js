@@ -1,7 +1,10 @@
 import BackgroundVidMain from '/JS/window/backgroundvid.js';
 import personDraw from '/JS/mode/pedcreate/personDraw.js';
+import ButtonModes from '/JS/cssfuncs/buttonmodes/buttonmodes_wrapper.js';
+import userTutorials from '/JS/cssfuncs/tutorial/usertutorials.js';
+import fileSelector from '/JS/filehandler/boxselector.js';
 
-var MainPageHandler = {
+export default var MainPageHandler = {
 
 	_currentMode : null,
 

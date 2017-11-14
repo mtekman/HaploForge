@@ -1,13 +1,20 @@
 import Person from '/JS/pedigree/person.js';
 import familyMapOps from '/JS/pedigree/familymapops.js';
 import AssignHGroups from '/JS/mode/haplo/blocks/assignhgroups.js';
+import BenchStopwatch from '/JS/benchmarking/bench_stopwatch.js';
+import MainButtonActions from '/JS/cssfuncs/mainpage/mainbuttonactions.js';
+import MainPageHandler from '/JS/cssfuncs/mainpage/mainpagehandler.js';
+import PromiseQueue from '/JS/filehandler/queuer.js';
+import SequenceChecker from '/JS/filehandler/sequencechecker.js';
+import { MarkerData } from '/JS/filehandler/markerdata.js';
+import { error } from '/JS/globals.js';
 
-function debugSaveHaplo(){
+/*function debugSaveHaplo(){
 	localStorage.setItem("TEST", MainButtonActions._temphaploload);
-}
+}*/
 
 
-class FileFormat {
+export default class FileFormat {
 
 	constructor(haplo,
 		map = null ,

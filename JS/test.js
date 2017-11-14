@@ -9,6 +9,18 @@ import familyDraw from '/JS/mode/pedcreate/familyDraw.js';
 import personDraw from '/JS/mode/pedcreate/personDraw.js';
 import SelectionAction from '/JS/mode/selection/selection_action.js';
 import SelectionMode from '/JS/mode/selection/selection_mode.js';
+import userOpts from '/JS/userconfig/useropts.js';
+import BenchMark from '/JS/benchmarking/benchmark.js';
+import MainButtonActions from '/JS/cssfuncs/mainpage/mainbuttonactions.js';
+import MainPageHandler from '/JS/cssfuncs/mainpage/mainpagehandler.js';
+import ButtonTutorial from '/JS/cssfuncs/tutorial/buttontutorial.js';
+import Tutorial from '/JS/cssfuncs/tutorial/tutorial.js';
+
+import FileFormat from '/JS/filehandler/fileformat_superclass.js';
+import Allegro from '/JS/filehandler/formats/allegro.js';
+import Genehunter from '/JS/filehandler/formats/genehunter.js';
+import Merlin from '/JS/filehandler/formats/merlin.js';
+import Simwalk from '/JS/filehandler/formats/simwalk.js';
 
 var bb;
 

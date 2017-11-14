@@ -1,8 +1,9 @@
 import Person from '/JS/pedigree/person.js';
 import familyMapOps from '/JS/pedigree/familymapops.js';
 import uniqueGraphOps from '/JS/pedigree/uniquegraphops.js';
+import { exportToTab } from '/JS/globals.js';
 
-var Pedfile = {
+export default var Pedfile = {
 
 	__tmpfamdata : {}, // fid --> stored position
 

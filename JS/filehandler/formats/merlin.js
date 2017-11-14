@@ -1,10 +1,15 @@
 import Person from '/JS/pedigree/person.js';
 import familyMapOps from '/JS/pedigree/familymapops.js';
 import AssignHGroups from '/JS/mode/haplo/blocks/assignhgroups.js';
+import FlowResolver from '/JS/resolvers/flow_resolver.js';
+import FileFormat from '/JS/filehandler/fileformat_superclass.js';
+import SequenceChecker from '/JS/filehandler/sequencechecker.js';
+import { MarkerData } from '/JS/filehandler/markerdata.js';
+import { error } from '/JS/globals.js';
 
 var debugMerlin = {};
 
-class Merlin extends FileFormat {
+export default class Merlin extends FileFormat {
 
 	constructor(mode_init = null)
 	{

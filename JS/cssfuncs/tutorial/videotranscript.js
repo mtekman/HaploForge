@@ -1,4 +1,4 @@
-class VideoTranscript {
+export default class VideoTranscript {
 
 	constructor(pageTutorial, source, transcript)
 	{
@@ -12,7 +12,7 @@ class VideoTranscript {
 
 		this.time_array = VideoTranscript.__makeTimeMap(transcript);
 		this.container  = this.__makeVideoDiv(source);
-		this.paused     = true;	
+		this.paused     = true;
 
 		this.video.ontimeupdate = this.__runTranscript.bind(this);
 		this.video.onend        = this.__endTranscript.bind(this);
@@ -112,7 +112,7 @@ class VideoTranscript {
 		},100);
 	}
 
-	playVideo(user_set = false){ 
+	playVideo(user_set = false){
 		this.paused = false;
 		this.user_set = user_set;
 
@@ -162,7 +162,7 @@ class VideoTranscript {
 
 		this.__nextTime = this.time_array[++this.__lastIndex];
 
-		// Too late, find 
+		// Too late, find
 		if (timediff > 5){
 			return 1;
 		}
@@ -215,11 +215,11 @@ class VideoTranscript {
 			divmain = document.createElement('div'), /* absolute */
 			med 	= document.createElement('video'),
 			source  = document.createElement('source');
-		
+
 		med.controls = "";
 		source.type  = "video/webm";
 		source.src   = src;
-	
+
 		med.appendChild(source);
 
 
@@ -233,7 +233,7 @@ class VideoTranscript {
 		divmain.className = 'videocontainer';
 		div.className     = "videobuttons";
 		play.id           = 'vidplay';
-		
+
 		//div.appendChild(play);
 		div.appendChild(prev);
 		div.appendChild(next);
@@ -243,7 +243,7 @@ class VideoTranscript {
 
 		parent.appendChild(play);
 		parent.appendChild(divmain);
-		
+
 		play.innerHTML = this.__symbolplay;
 		prev.innerHTML = '<'
 		next.innerHTML = '>'
@@ -260,15 +260,15 @@ class VideoTranscript {
 
 		// Autoplay
 /*		var that = this;
-		
+
 		var check = document.createElement('input'),
 			label = document.createElement('label');
-		
+
 		div.appendChild(label);
 
 		label.innerHTML = "autoplay";
 		label.appendChild(check);
-		
+
 		check.type = "checkbox";
 		check.checked = true;
 		check.onchange = function(){

@@ -1,5 +1,5 @@
 
-var BenchStopwatch = {
+export default var BenchStopwatch = {
     __timeStart : null,
     __timeEnd   : null,
     __diff      : null,
@@ -7,7 +7,7 @@ var BenchStopwatch = {
 
     /*_records : [],
     _record_names : [],*/
-   
+
     start : function(callback = null){
         BenchStopwatch.__diff = null;
         BenchStopwatch.__callback = callback;

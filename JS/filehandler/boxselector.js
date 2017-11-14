@@ -1,4 +1,4 @@
-var fileSelector = {
+export default var fileSelector = {
 
   __initialised: false,
 
@@ -42,7 +42,7 @@ var fileSelector = {
 
 
       if (format in init.haploview){
-        submit.onclick = init.haploview[format];       
+        submit.onclick = init.haploview[format];
       }
     }
   },
@@ -79,7 +79,7 @@ var fileSelector = {
       fileSelector._close.onclick = fileSelector.end;
 
       fileSelector._initSubmits();
-      
+
 
       fileSelector.__initialised = true;
     }

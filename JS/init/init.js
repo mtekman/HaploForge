@@ -2,6 +2,12 @@ import familyMapOps from '/JS/pedigree/familymapops.js';
 import uniqueGraphOps from '/JS/pedigree/uniquegraphops.js';
 import FounderColor from '/JS/mode/haplo/blocks/colors.js';
 import familyDraw from '/JS/mode/pedcreate/familyDraw.js';
+import MainPageHandler from '/JS/cssfuncs/mainpage/mainpagehandler.js';
+import Allegro from '/JS/filehandler/formats/allegro.js';
+import Genehunter from '/JS/filehandler/formats/genehunter.js';
+import Merlin from '/JS/filehandler/formats/merlin.js';
+import Simwalk from '/JS/filehandler/formats/simwalk.js';
+import { MarkerData } from '/JS/filehandler/markerdata.js';
 
 var init = {
 

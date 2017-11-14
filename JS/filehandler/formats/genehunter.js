@@ -1,9 +1,12 @@
 import Person from '/JS/pedigree/person.js';
 import familyMapOps from '/JS/pedigree/familymapops.js';
+import FileFormat from '/JS/filehandler/fileformat_superclass.js';
+import { MarkerData } from '/JS/filehandler/markerdata.js';
+import { error } from '/JS/globals.js';
 
 debugGH = {};
 
-class Genehunter extends FileFormat {
+export class Genehunter extends FileFormat {
 
 	constructor(mode_init = null){
 

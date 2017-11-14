@@ -2,6 +2,9 @@ import Person from '/JS/pedigree/person.js';
 import familyMapOps from '/JS/pedigree/familymapops.js';
 import uniqueGraphOps from '/JS/pedigree/uniquegraphops.js';
 import FounderColor from '/JS/mode/haplo/blocks/colors.js';
+import Pedfile from '/JS/filehandler/formats/pedfile.js';
+import { exportToTab } from '/JS/globals.js';
+import { MarkerData } from '/JS/filehandler/markerdata.js';
 
 export default var SerialParse = {
 

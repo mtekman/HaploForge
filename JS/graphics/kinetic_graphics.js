@@ -3,6 +3,7 @@ import uniqueGraphOps from '/JS/pedigree/uniquegraphops.js';
 import FamSpacing from '/JS/mode/graph/famgroupspacing.js';
 import familyDraw from '/JS/mode/pedcreate/familyDraw.js';
 import { redrawNodes } from '/JS/mode/graph/graph_draw.js';
+import { error } from '/JS/globals.js';
 
 // ------------ Kinetic globals ------------
 var stage = null;

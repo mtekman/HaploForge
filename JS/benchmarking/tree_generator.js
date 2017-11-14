@@ -1,5 +1,7 @@
+import BenchAllele from '/JS/benchmarking/bench_allele.js';
+import BenchPerson	from '/JS/benchmarking/bench_person.js';
 
-class TreeGenerator {
+export default class TreeGenerator {
 
     constructor(num_roots, num_gens, allele_size = 16, inbreed_chance = 0.1)
     {
@@ -22,7 +24,7 @@ class TreeGenerator {
         {
             let root_indiv = new BenchPerson(1); // generation 0
             this.num_people += 1;                // count each root
-            this.germinate(root_indiv);    
+            this.germinate(root_indiv);
         }
     }
 
@@ -30,8 +32,8 @@ class TreeGenerator {
         /*console.log(" [Results: num_people=" + this.num_people + "inbred_couples=" + Object.keys(this.inbred_couples).length + "] ");
         console.log("   Inbred_couples=", this.inbred_couples)
         console.log("   Generations", Object.keys(BenchPerson.generation_map).map( i => i+": "+Object.keys(BenchPerson.generation_map[i]).length ), BenchPerson.generation_map);*/
-        return { 
-            numpeople: this.num_people, 
+        return {
+            numpeople: this.num_people,
             numinbredcouples: Object.keys(this.inbred_couples).length,
             numallelerecombinations: this.num_recombinant_alleles
         };
@@ -84,7 +86,7 @@ class TreeGenerator {
             let father = perc_gender===1?perc:mate;
             let mother = perc_gender===2?perc:mate;
 
-                // All mates must produce at least 1 offspring 
+                // All mates must produce at least 1 offspring
                 let numOff = 1 + randomIndex(gen_modif)
                 //console.log("   kids:", numOff)
                 for (let n=0; n < numOff; n++)
@@ -203,10 +205,9 @@ class TreeGenerator {
                 let pers = new Person(ind.id, ind.gender, ind.affected, mat, pat);
                 pers.insertHaploData( ind.__temp_haplo_data[0] )
                 pers.insertHaploData( ind.__temp_haplo_data[1] )
-                familyMapOps.insertPerc(pers, fam);  
+                familyMapOps.insertPerc(pers, fam);
             }
             //console.log(gen, indivs);
         }
     }*/
 }
-

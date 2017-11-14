@@ -7,6 +7,7 @@ import SliderHandler from '/JS/mode/haplo/slider/slider_handler.js';
 import HaploModeEvents from '/JS/mode/haplo/alignment.js';
 import SelectionAction from '/JS/mode/selection/selection_action.js';
 import SelectionMode from '/JS/mode/selection/selection_mode.js';
+import ButtonModes from '/JS/cssfuncs/buttonmodes/buttonmodes_wrapper.js';
 import { mapLinesAndNodes, DOS } from '/JS/mode/haplo/dos/render_dos.js';
 
 export default var HaploWindow = {

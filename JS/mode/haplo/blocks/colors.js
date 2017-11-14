@@ -1,3 +1,4 @@
+import { error } from '/JS/globals.js';
 // Founder color groups are unique, even across families
 
 export default var FounderColor = {

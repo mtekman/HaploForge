@@ -1,4 +1,5 @@
 import familyMapOps from '/JS/pedigree/familymapops.js';
+import { MarkerData } from '/JS/filehandler/markerdata.js';
 /* Needs to be rerun for each selection */
 
 export default function scan_alleles_for_homology( ids_to_scan, same_family_hblock = true ){

@@ -1,8 +1,10 @@
 import Person from '/JS/pedigree/person.js';
 import familyMapOps from '/JS/pedigree/familymapops.js';
 import AssignHGroups from '/JS/mode/haplo/blocks/assignhgroups.js';
+import FileFormat from '/JS/filehandler/fileformat_superclass.js';
+import { MarkerData } from '/JS/filehandler/markerdata.js';
 
-class Simwalk extends FileFormat {
+export default class Simwalk extends FileFormat {
 
 	constructor(mode_init = null)
 	{

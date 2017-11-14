@@ -1,5 +1,7 @@
+import MainPageHandler from '/JS/cssfuncs/mainpage/mainpagehandler.js';
+import userTutorials from '/JS/cssfuncs/tutorial/usertutorials.js';
 
-var Settings = {
+export default var Settings = {
 
 	__img : document.getElementById('settings_wheel'),
 	__div : document.getElementById('settings_box'),

@@ -2,10 +2,16 @@ import FounderColor from '/JS/mode/haplo/blocks/colors.js';
 import HaploBlock from '/JS/mode/haplo/blocks/haploblock_frontend.js';
 import HaploWindow from '/JS/mode/haplo/haplomode.js';
 import ModeTracker from '/JS/mode/modetracker.js';
+import Settings from '/JS/userconfig/settings.js';
+import ButtonModes from '/JS/cssfuncs/buttonmodes/buttonmodes_wrapper.js';
+import MainButtonActions from '/JS/cssfuncs/mainpage/mainbuttonactions.js';
+import Pedfile from '/JS/filehandler/formats/pedfile.js';
+import SequenceChecker from '/JS/filehandler/sequencechecker.js';
 import { DOS } from '/JS/mode/haplo/dos/render_dos.js';
 
+
 /* Class that rewrites the selection_tools div to swap in tools for each mode */
-var BottomButtons = {
+export default var BottomButtons = {
 
 	table_keys : {},
 	div   : document.getElementById("save_and_close"),
