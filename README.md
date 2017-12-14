@@ -12,15 +12,18 @@ HaploForge is licensed under the [GPLv3](https://www.gnu.org/licenses/gpl-3.0.en
 
 If HaploForge is used to analyse your work, please cite [Tekman et al, 2017](https://doi.org/10.1093/bioinformatics/btx510).
 
+
     @article{Tekman2017,
-      doi = {10.1093/bioinformatics/btx510},
-      url = {https://doi.org/10.1093/bioinformatics/btx510},
-      year  = {2017},
-      month = {aug},
-      publisher = {Oxford University Press ({OUP})},
-      author = {Mehmet Tekman and Alan Medlar and Monika Mozere and Robert Kleta and Horia Stanescu},
-      title = {{HaploForge}: a comprehensive pedigree drawing and haplotype visualization web application},
-      journal = {Bioinformatics}
+        author = {Tekman, Mehmet and Medlar, Alan and Mozere, Monika and Kleta, Robert and Stanescu, Horia},
+        title = {HaploForge: a comprehensive pedigree drawing and haplotype visualization web application},
+        journal = {Bioinformatics},
+        volume = {33},
+        number = {24},
+        pages = {3871-3877},
+        year = {2017},
+        doi = {10.1093/bioinformatics/btx510},
+        URL = { + http://dx.doi.org/10.1093/bioinformatics/btx510},
+        eprint = {/oup/backfile/content_public/journal/bioinformatics/33/24/10.1093_bioinformatics_btx510/1/btx510.pdf}
     }
 
 The live web application is hosted [here](https://mtekman.github.io/haploforge/)
