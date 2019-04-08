@@ -53,5 +53,15 @@ Vector files describe the *flow* of genetic information from one generation to t
 
 Simply go to the [live application](https://mtekman.github.io/haploforge/) and go through the quick video tutorials (in total no longer than 10 minutes).
 
+### Can I install HaploForge locally? ###
+
+Yes, though there will be no performance benefit since HaploForge processess all data within the client web browser.
+
+However, there is a helper script availiable in this regard:
+
+    helpers/public/generate_public.sh
+
+Simply run this (examples provided in help text) to generate a public webpage and then host it using your preferred hosting software (e.g. apache2, nginx, lighttpd).
+
 
 ***NOTE:*** Family names and Sample IDs *must* be numeric
