@@ -1,3 +1,9 @@
+### This repo has migrated to GitLab
+https://gitlab.com/mtekman/HaploForge
+###### (The copy here is archived. Please see the above link for the latest developments)
+
+
+
 # HaploForge #
 
 ##### A Comprehensive Pedigree Drawing and Haplotype Visualisation Web Application #####
